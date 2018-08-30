@@ -1,0 +1,36 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(5048,1196)(0,-10)
+\put(2325.000,2824.000){\arc{5100.000}{1.0808}{2.0608}}
+\blacken\path(1245.684,546.884)(1125.000,574.000)(1218.726,493.281)(1245.684,546.884)
+\put(1125,874){\ellipse{474}{474}}
+\put(3525,799){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Csf$}}}
+\put(2925,949){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\zerosf$}}}
+\put(2325,49){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\onesf$}}}
+\put(4725,799){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Dsf$}}}
+\put(4125,949){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\zerosf$}}}
+\path(525,874)(825,874)
+\blacken\path(705.000,844.000)(825.000,874.000)(705.000,904.000)(705.000,844.000)
+\path(1425,874)(2025,874)
+\blacken\path(1905.000,844.000)(2025.000,874.000)(1905.000,904.000)(1905.000,844.000)
+\path(3825,874)(4425,874)
+\blacken\path(4305.000,844.000)(4425.000,874.000)(4305.000,904.000)(4305.000,844.000)
+\put(0,799){\makebox(0,0)[lb]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}Start}}}
+\put(1117,799){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Asf$}}}
+\put(2325,799){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Bsf$}}}
+\put(1125,874){\ellipse{600}{600}}
+\put(2327,874){\ellipse{600}{600}}
+\put(3529,874){\ellipse{600}{600}}
+\put(1725,949){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\zerosf$}}}
+\put(4740,874){\ellipse{600}{600}}
+\path(2625,874)(3225,874)
+\blacken\path(3105.000,844.000)(3225.000,874.000)(3105.000,904.000)(3105.000,844.000)
+\end{picture}
+}

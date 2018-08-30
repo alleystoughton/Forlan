@@ -1,0 +1,6 @@
+letSimp(equal,
+        lam(p,
+            calc(isZero,
+                 calc(compare, var(p)))),
+        app(var(equal),
+            pair(str(0110), str(0110))))

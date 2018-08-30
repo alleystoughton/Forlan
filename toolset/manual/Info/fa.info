@@ -1,0 +1,65 @@
+@FILES
+  ["fa"; "The FA Module";]
+@SIGNATURE FA "fa" [
+  @TYPES 
+    @TYPE concr
+    @TYPE fa
+  @VALS 
+    jforlanEdit
+    fromReg
+    genConcat
+    genUnion
+    toPP
+    jforlanPretty
+    emptyCloseBackwards
+    renameStatesCanonically
+    isomorphism
+    fromString
+    closure
+    startState
+    output
+    states
+    numStates
+    concat
+    union
+    fromConcr
+    accepted
+    sub
+    findAcceptingLP
+    validLP
+    rev
+    fromSym
+    findLP
+    isomorphic
+    findAcceptingLPOpt
+    findLPOpt
+    valid
+    input
+    alphabet
+    transitionFun
+    reachified
+    emptyClose
+    jforlanValidate
+    simplified
+    transitionFunBackwards
+    emptyStr
+    toConcr
+    equal
+    checkLP
+    reachify
+    findIsomorphism
+    renameStates
+    simplify
+    transitions
+    numTransitions
+    findIsomorphismOpt
+    acceptingStates
+    jforlanNew
+    compare
+    processStr
+    renameAlphabet
+    toString
+    emptySet
+    fromStr
+]
+@STRUCTURE FA "fa" FA

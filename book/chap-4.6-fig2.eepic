@@ -1,0 +1,38 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(3093,3238)(0,-10)
+\path(2747,2383)(2747,2308)(2747,2233)
+	(2747,2158)(2747,2083)
+\path(2747,1783)(2747,1483)
+\put(2747,2458){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Tsf$}}}}}
+\put(2747,1858){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Fsf$}}}}}
+\put(2747,1258){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\idsym$}}}}}
+\path(1847,2983)(1847,2683)
+\path(1847,2983)(947,2683)
+\path(1847,2983)(2747,2683)
+\path(947,2383)(947,2083)
+\path(947,1783)(947,1483)
+\path(947,1783)(347,1483)
+\path(947,1783)(1547,1483)
+\path(347,1183)(347,883)
+\path(347,583)(347,283)
+\path(1547,1183)(1547,883)
+\put(1847,3058){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Esf$}}}}}
+\put(1847,2458){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\plussym$}}}}}
+\put(947,2458){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Esf$}}}}}
+\put(947,1858){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Tsf$}}}}}
+\put(347,58){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\idsym$}}}}}
+\put(947,1258){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\timessym$}}}}}
+\put(347,1258){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Tsf$}}}}}
+\put(1547,1258){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Fsf$}}}}}
+\put(347,658){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Fsf$}}}}}
+\put(1547,658){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\idsym$}}}}}
+\end{picture}
+}

@@ -1,0 +1,345 @@
+<!-- str-set.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The StrSet Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/StrSet/ Module</HEAD>
+
+<PP>This module provides operations on finite sets of Forlan strings,
+i.e., values of type <CD><STRREF/Str/.<TYREF STRID="Str"/str/
+<STRREF/Set/.<TYREF STRID="Set"/set/</CD> that are <EM>standard</EM>
+in the sense that they are compatible with
+<STRREF/Str/.<VALREF STRID="Str"/compare/.  All values of type
+<CD>Str.str Set.set</CD> will implicitly be assumed/required to be
+standard.</PP>
+
+<STRUCTURE STRID="StrSet">
+<OPAQUE>
+<SIGBODY SIGID="STR_SET" FILE=STR-SET>
+
+<SPEC>
+<VAL>memb<TY>Str.str * Str.str Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+memb(<ARG/x/, <ARG/ys/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/x/</CD> is a member of <CD><ARG/ys/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromList<TY>Str.str list -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromList <ARG/xs/
+</PROTOTY>
+<PP>returns the set whose elements are the elements
+of <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>Str.str Set.set Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compare
+</PROTOTY>
+<PP>is
+<CD><STRREF TOPID/Set/.<VALREF STRID="Set"/compare/
+<STRREF TOPID/Str/.<VALREF STRID="Str"/compare/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>subset<TY>Str.str Set.set * Str.str Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+subset(<ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/xs/</CD> is a subset of <CD><ARG/ys/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>Str.str Set.set * Str.str Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal(<ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/xs/</CD> is equal to <CD><ARG/ys/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>map<TY>('a -> Str.str) -> 'a Set.set -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+map <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> is compatible with a value <CD><ARG/cmp/</CD>
+of type <CD><ARG/'a/ Sort.total_ordering</CD>, then <CD>map</CD>
+returns the set of all Forlan strings <CD><ARG/f/ <ARG/x/</CD> such
+that <CD><ARG/x/</CD> is a member of <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>mapFromList<TY>('a -> Str.str) -> 'a list -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+mapFromList <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>returns the set of all Forlan strings <CD><ARG/f/ <ARG/x/</CD> such
+that <CD><ARG/x/</CD> is a member of <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>union<TY>Str.str Set.set * Str.str Set.set -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+union(<ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>returns the union of <CD><ARG/xs/</CD> and <CD><ARG/ys/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genUnion<TY>Str.str Set.set list -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genUnion <ARG/xss/
+</PROTOTY>
+<PP>returns the generalized union of <CD><ARG/xss/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inter<TY>Str.str Set.set * Str.str Set.set -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+inter(<ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>returns the intersection of <CD><ARG/xs/</CD> and <CD><ARG/ys/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genInter<TY>Str.str Set.set list -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genInter <ARG/xss/
+</PROTOTY>
+<PP>returns the generalized intersection of <CD><ARG/xss/</CD>.  Issues
+an error message if <CD><ARG/xss/</CD> is empty.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>minus<TY>Str.str Set.set * Str.str Set.set -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+minus(<ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>returns the difference of <CD><ARG/xs/</CD> and <CD><ARG/ys/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inputFromLabToks
+<TY>(int * Lex.tok)list -> Str.str Set.set * (int * Lex.tok)list</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+inputFromLabToks <ARG/lts/
+</PROTOTY>
+<PP>tries to input a set of Forlan strings from <CD><ARG/lts/</CD>,
+consuming as much of <CD><ARG/lts/</CD> as possible, and returning the
+pair of the set of strings and the rest of <CD><ARG/lts/</CD>.  Issues
+an error message if it fails. Will only return the empty set
+if <CD><ARG/lts/</CD> doesn't begin with a symbol or <CD>"%"</CD>
+(<CD><STRREF TOPID/Lex/.<CONREF STRID="Lex"/Perc/</CD>).If, after
+reading a string, the next element of the labeled token list
+is <CD>","</CD> (<CD>Lex.Comma</CD>), then <CD>inputFromLabToks</CD>
+insists on reading another string, even if this results in
+failure.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs a set of string from <CD><ARG/s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs a set of strings from the file <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>Str.str Set.set -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toPP <ARG/xs/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>Str.str Set.set -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/xs/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/xs/</CD> to a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>string * Str.str Set.set -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+output(<ARG/fil/, <ARG/xs/)
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/xs/</CD> to file <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>concat<TY>Str.str Set.set * Str.str Set.set -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+concat(<ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>returns the concatentation of <CD><ARG/xs/</CD> and <CD><ARG/ys/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>power<TY>(Str.str Set.set * int) -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+power(<ARG/xs/, <ARG/n/)
+</PROTOTY>
+<PP>raises <CD><ARG/xs/</CD> to the power <CD><ARG/n/</CD>.  Issues an
+error message if <CD><ARG/n/</CD> is negative.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>rev<TY>Str.str Set.set -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+rev <ARG/xs/
+</PROTOTY>
+<PP>returns the reversal of <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>prefixes<TY>Str.str -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+prefixes <ARG/x/
+</PROTOTY>
+<PP>returns the set of all prefixes of <CD><ARG/x/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>prefix<TY>Str.str Set.set -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+prefix <ARG/xs/
+</PROTOTY>
+<PP>returns the prefix closure of <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>suffix<TY>Str.str Set.set -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+suffix <ARG/xs/
+</PROTOTY>
+<PP>returns the suffix closure of <CD><ARG/xs/</CD>. It
+is defined by
+<CODE>
+  fun suffix xs = rev(prefix(rev xs))
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>substring<TY>Str.str Set.set -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+substring <ARG/xs/
+</PROTOTY>
+<PP>returns the substring closure of <CD><ARG/xs/</CD>.  It is defined
+by
+<CODE>
+  fun substring xs = suffix(prefix xs)
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>alphabet<TY>Str.str Set.set -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+alphabet <ARG/xs/
+</PROTOTY>
+<PP>returns the alphabet of <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>renameAlphabet
+<TY>Str.str Set.set * SymRel.sym_rel -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+renameAlphabet <ARG/xs/
+</PROTOTY>
+<PP>renames the alphabet of <CD><ARG/xs/</CD> using the
+bijection <CD><ARG/rel/</CD>.  Issues an error message if
+<CD><ARG/rel/</CD> is not a bijection from a superset of the
+alphabet of <CD><ARG/xs/</CD> to some set.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

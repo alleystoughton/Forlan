@@ -1,0 +1,932 @@
+\section{Equivalence and  Correctness of Regular  Expressions}
+\label{EquivalenceOfRegularExpressions}
+
+\index{regular expression|(}%
+In this section, we say what it means for regular expressions to be
+equivalent, show a series of results about regular expression
+equivalence, and consider how regular expressions may be designed and
+proved correct.
+
+\subsection{Equivalence of Regular Expressions}
+
+Regular expressions $\alpha$ and $\beta$ are
+\index{regular expression!equivalence|(}%
+\index{ equiv@$\approx$}%
+\index{regular expression! equiv@$\approx$}%
+\emph{equivalent} iff $L(\alpha) = L(\beta)$.  In other words, $\alpha$
+and $\beta$ are equivalent iff $\alpha$ and $\beta$ generate the same
+language.  We define a relation $\approx$ on $\Reg$ by:
+$\alpha\approx\beta$ iff $\alpha$ and $\beta$ are equivalent.
+For example, $L(\mathsf{(00)}^*+\%)=L(\mathsf{{(00)}^*})$,
+and thus $\mathsf{(00)}^*+\%\approx\mathsf{(00)^*}$.
+
+One approach to showing that $\alpha\approx\beta$ is to show that
+$L(\alpha)\sub L(\beta)$ and $L(\beta)\sub L(\alpha)$.  The
+\index{inclusion}%
+\index{set!inclusion}%
+following proposition is useful for showing language inclusions, not just
+ones involving regular languages.
+
+\begin{proposition}
+\label{Inclusions}
+
+\begin{enumerate}[(1)]
+\item For all $A_1,A_2,B_1,B_2\in\Lan$, if
+$A_1\sub B_1$ and $A_2\sub B_2$, then $A_1\cup A_2\sub B_1\cup B_2$.
+
+\item For all $A_1,A_2,B_1,B_2\in\Lan$, if
+$A_1\sub B_1$ and $A_2\sub B_2$, then $A_1\cap A_2\sub B_1\cap B_2$.
+
+\item For all $A_1,A_2,B_1,B_2\in\Lan$, if
+$A_1\sub B_1$ and $B_2\sub A_2$, then $A_1-A_2\sub B_1-B_2$.
+
+\item For all $A_1,A_2,B_1,B_2\in\Lan$, if
+$A_1\sub B_1$ and $A_2\sub B_2$, then $A_1A_2\sub B_1B_2$.
+
+\item For all $A,B\in\Lan$ and $n\in\nats$,
+if $A\sub B$, then $A^n\sub B^n$.
+
+\item For all $A,B\in\Lan$, if $A\sub B$, then $A^*\sub B^*$.
+\end{enumerate}
+\end{proposition}
+
+In Part~(3), note that the second part of the sufficient condition for
+knowing $A_1-A_2\sub B_1-B_2$ is $B_2\sub A_2$, not $A_2\sub B_2$.
+
+\begin{proof}
+(1) and (2) are straightforward.  We show (3) as an example, below.
+(4) is easy.  (5) is proved by mathematical induction, using (4).  (6)
+is proved using (5).
+
+For (3), suppose that $A_1,A_2,B_1,B_2\in\Lan$, $A_1\sub B_1$ and
+$B_2\sub A_2$.  To show that $A_1-A_2\sub B_1-B_2$, suppose $w\in
+A_1-A_2$.  We must show that $w\in B_1-B_2$.  It will suffice to show
+that $w\in B_1$ and $w\not\in B_2$.
+
+Since $w\in A_1-A_2$, we have that $w\in A_1$ and
+$w\not\in A_2$.  Since $A_1\sub B_1$, it follows that $w\in B_1$.
+Thus, it remains to show that $w\not\in B_2$.
+
+Suppose, toward a contradiction, that $w\in B_2$.  Since
+$B_2\sub A_2$, it follows that $w\in A_2$---contradiction.  Thus we
+have that $w\not\in B_2$.
+\end{proof}
+
+Next we show that our relation $\approx$ has some of the familiar
+properties of equality.
+\index{reflexive on set! equiv@$\approx$}%
+\index{symmetric! equiv@$\approx$}%
+\index{transitive! equiv@$\approx$}%
+\index{regular expression! equiv@$\approx$!reflexive}%
+\index{regular expression! equiv@$\approx$!symmetric}%
+\index{regular expression! equiv@$\approx$!transitive}%
+\begin{proposition}
+\label{RegEquivalence}
+\begin{enumerate}[(1)]
+\item $\approx$ is reflexive on $\Reg$, symmetric and transitive.
+
+\item For all $\alpha,\beta\in\Reg$,
+if $\alpha\approx\beta$, then $\alpha^*\approx{\beta}^*$.
+
+\item For all $\alpha_1,\alpha_2,\beta_1,\beta_2\in\Reg$,
+if $\alpha_1\approx\beta_1$ and $\alpha_2\approx\beta_2$,
+then $\alpha_1\alpha_2\approx \beta_1\beta_2$.
+
+\item For all $\alpha_1,\alpha_2,\beta_1,\beta_2\in\Reg$,
+if $\alpha_1\approx\beta_1$ and $\alpha_2\approx\beta_2$,
+then $\alpha_1+\alpha_2\approx \beta_1+\beta_2$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Follows from the properties of $=$.  As an example, we show
+Part~(4).
+
+Suppose $\alpha_1,\alpha_2,\beta_1,\beta_2\in\Reg$, and assume that
+$\alpha_1\approx\beta_1$ and $\alpha_2\approx\beta_2$.
+Then $L(\alpha_1)=L(\beta_1)$ and $L(\alpha_2)=L(\beta_2)$, so that
+\begin{align*}
+L(\alpha_1+\alpha_2) &= L(\alpha_1)\cup L(\alpha_2) =
+L(\beta_1)\cup L(\beta_2) \\
+&= L(\beta_1+\beta_2) .
+\end{align*}
+Thus $\alpha_1+\alpha_2\approx \beta_1+\beta_2$.
+\end{proof}
+
+A consequence of Proposition~\ref{RegEquivalence} is the following
+proposition, which says that, if we replace a subtree of a regular
+expression $\alpha$ by an equivalent regular expression, that the
+resulting regular expression is equivalent to $\alpha$.
+
+\begin{proposition}
+\label{RegContext}
+Suppose $\alpha,\beta,\beta'\in\Reg$, $\beta\approx\beta'$,
+$\pat\in\Path$ is valid for $\alpha$, and $\beta$ is
+the subtree of $\alpha$ at position $\pat$.
+Let $\alpha'$ be the result of replacing the subtree at
+position $\pat$ in $\alpha$ by $\beta'$.  Then $\alpha\approx\alpha'$.
+\end{proposition}
+
+\begin{proof}
+By induction on $\alpha$.
+\end{proof}
+
+Next, we state and prove some equivalences involving union.
+
+\begin{proposition}
+\label{RegUnion}
+
+\begin{enumerate}[(1)]
+\item For all $\alpha,\beta\in\Reg$,
+$\alpha + \beta\approx\beta + \alpha$.
+
+\item For all $\alpha,\beta,\gamma\in\Reg$,
+$(\alpha + \beta) + \gamma\approx\alpha + (\beta + \gamma)$.
+
+\item For all $\alpha\in\Reg$, $\$ +
+\alpha\approx\alpha$.
+
+\item For all $\alpha\in\Reg$, $\alpha +
+\alpha\approx\alpha$.
+
+\item If $L(\alpha)\sub L(\beta)$, then $\alpha + \beta\approx
+\beta$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}[(1)]
+\item Follows from the commutativity of $\cup$.
+
+\item Follows from the associativity of $\cup$.
+
+\item Follows since $\emptyset$ is the identity for $\cup$.
+
+\item Follows since $\cup$ is idempotent: $A\cup A=A$,
+for all sets $A$.
+
+\item Follows since, if $L_1\sub L_2$, then $L_1\cup L_2=L_2$.
+\end{enumerate}
+\end{proof}
+
+Next, we consider equivalences for concatenation.
+\index{language!concatenation}%
+
+\begin{proposition}
+\label{RegConcat}
+\begin{enumerate}[(1)]
+\item For all $\alpha,\beta,\gamma\in\Reg$,
+$(\alpha\beta)\gamma\approx\alpha(\beta\gamma)$.
+
+\item For all $\alpha\in\Reg$, $\%\alpha\approx\alpha\approx\alpha\%$.
+
+\item For all $\alpha\in\Reg$, $\$\alpha\approx\$ \approx
+\alpha\$$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}[(1)]
+\item Follows from the associativity of language concatenation.
+
+\item Follows since $\{\%\}$ is the identity for language concatenation.
+
+\item Follows since $\emptyset$ is the zero for language
+concatenation.
+\end{enumerate}
+\end{proof}
+
+Next we consider the distributivity of concatenation over union.
+First, we prove a proposition concerning languages.  Then,
+we use this proposition to show the corresponding proposition
+for regular expressions.
+
+\begin{proposition}
+\label{DistribLan}
+\begin{enumerate}[(1)]
+\item For all $L_1,L_2,L_3\in\Lan$,
+$L_1(L_2\cup L_3) = L_1L_2\cup L_1L_3$.
+
+\item For all $L_1,L_2,L_3\in\Lan$,
+$(L_1\cup L_2)L_3 = L_1L_3\cup L_2L_3$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+We show the proof of Part~(1); the proof of the other part is
+similar.  Suppose $L_1,L_2,L_3\in\Lan$.  It will suffice to show that
+\begin{gather*}
+L_1(L_2\cup L_3)\sub L_1L_2\cup L_1L_3\sub L_1(L_2\cup L_3).
+\end{gather*}
+
+To see that
+$L_1(L_2\cup L_3)\sub L_1L_2\cup L_1L_3$, suppose
+$w\in L_1(L_2\cup L_3)$.  We must show that $w\in L_1L_2\cup L_1L_3$.
+By our assumption, $w=xy$ for some $x\in L_1$ and $y\in L_2\cup L_3$.
+There are two cases to consider.
+\begin{itemize}
+\item Suppose $y\in L_2$.  Then $w=xy\in L_1L_2\sub L_1L_2\cup L_1L_3$.
+
+\item Suppose $y\in L_3$.  Then $w=xy\in L_1L_3\sub L_1L_2\cup L_1L_3$.
+\end{itemize}
+
+To see that $L_1L_2\cup L_1L_3\sub L_1(L_2\cup L_3)$, suppose
+$w\in L_1L_2\cup L_1L_3$.  We must show that $w\in L_1(L_2\cup L_3)$.
+There are two cases to consider.
+\begin{itemize}
+\item Suppose $w\in L_1L_2$.  Then $w=xy$ for some $x\in L_1$ and $y\in L_2$.
+Thus $y\in L_2\cup L_3$, so that $w=xy\in L_1(L_2\cup L_3)$.
+
+\item Suppose $w\in L_1L_3$.  Then $w=xy$ for some $x\in L_1$ and $y\in L_3$.
+Thus $y\in L_2\cup L_3$, so that $w=xy\in L_1(L_2\cup L_3)$.
+\end{itemize}
+\end{proof}
+
+\begin{proposition}
+\label{DistribReg}
+\begin{enumerate}[(1)]
+\item For all $\alpha,\beta,\gamma\in\Reg$,
+$\alpha(\beta+\gamma)\approx \alpha\beta+\alpha\gamma$.
+
+\item For all $\alpha,\beta,\gamma\in\Reg$,
+$(\alpha+\beta)\gamma\approx \alpha\gamma+\beta\gamma$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Follows from Proposition~\ref{DistribLan}.  Consider, e.g., the proof
+of Part~(1).  By Proposition~\ref{DistribLan}(1), we have that
+\begin{align*}
+L(\alpha(\beta+\gamma)) &= L(\alpha)L(\beta+\gamma) \\
+&= L(\alpha)(L(\beta)\cup L(\gamma))  \\
+&= L(\alpha)L(\beta)\cup L(\alpha)L(\gamma) \\
+&= L(\alpha\beta)\cup L(\alpha\gamma) \\
+&= L(\alpha\beta + \alpha\gamma)
+\end{align*}
+Thus $\alpha(\beta+\gamma)\approx \alpha\beta+\alpha\gamma$.
+\end{proof}
+
+Finally, we turn our attention to equivalences for Kleene closure,
+\index{language!closure}%
+first stating and proving some results for languages, and then stating
+and proving the corresponding results for regular expressions.
+
+\begin{proposition}
+\label{ClosureInclusions}
+\begin{itemize}
+\item For all $L\in\Lan$, $LL^*\sub L^*$.
+
+\item For all $L\in\Lan$, $L^*L\sub L^*$.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+E.g., to see that $LL^*\sub L^*$, suppose $w\in LL^*$.
+Then $w=xy$ for some $x\in L$ and $y\in L^*$.  Hence
+$y\in L^n$ for some $n\in\nats$.  Thus $w=xy\in LL^n=L^{n+1}\sub L^*$.
+\end{proof}
+
+\begin{proposition}
+\label{ClosureLan}
+\begin{enumerate}[(1)]
+\item $\emptyset^* = \{\%\}$.
+
+\item $\{\%\}^* = \{\%\}$.
+
+\item For all $L\in\Lan$, $L^*L = LL^*$.
+
+\item For all $L\in\Lan$, $L^*L^* = L^*$.
+
+\item For all $L\in\Lan$, $(L^*)^* = L^*$.
+
+\item For all $L_1L_2\in\Lan$, $(L_1L_2)^*L_1 = L_1(L_2L_1)^*$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The six parts can be proven in order using
+Proposition~\ref{Inclusions}.  All parts but (2), (5) and (6) can be
+proved without using induction.
+
+As an example, we show the proof of (5).  To show that
+$(L^*)^*=L^*$, it will suffice to show that $(L^*)^*\sub L^*\sub
+(L^*)^*$.
+
+To see that $(L^*)^*\sub L^*$, we use mathematical induction
+to show that, for all $n\in\nats$,
+$(L^*)^n\sub L^*$.
+\begin{description}
+\item[\quad(Basis Step)] We have that $(L^*)^0=\{\%\}=L^0\sub L^*$.
+
+\item[\quad(Inductive Step)] Suppose $n\in\nats$, and assume the inductive
+hypothesis: $(L^*)^n\sub L^*$.  We must show that $(L^*)^{n+1}\sub
+L^*$.  By the inductive hypothesis, Proposition~\ref{Inclusions}(4) and
+Part~(4), we have that $(L^*)^{n+1}=L^*(L^*)^n\sub L^*L^*=L^*$.
+\end{description}
+
+Now, we use the result of the induction to prove that
+$(L^*)^*\sub L^*$.  Suppose $w\in (L^*)^*$.  We must show that
+$w\in L^*$.  Since $w\in (L^*)^*$, we have that $w\in 
+(L^*)^n$ for some $n\in\nats$.  Thus, by the result of the
+induction, $w\in (L^*)^n\sub L^*$.
+
+Finally, for the other inclusion, we have that $L^*=(L^*)^1\sub
+(L^*)^*$.
+\end{proof}
+
+\begin{exercise}
+Prove Proposition~\ref{ClosureLan}(6), i.e., for all
+$L_1L_2\in\Lan$, $(L_1L_2)^*L_1 = L_1(L_2L_1)^*$.
+\end{exercise}
+
+\begin{proposition}
+\label{ClosureReg}
+\begin{enumerate}[(1)]
+\item $\$^*\approx\%$.
+
+\item $\%^*\approx\%$.
+
+\item For all $\alpha\in\Reg$, $\alpha^*\alpha \approx \alpha\,\alpha^*$.
+
+\item For all $\alpha\in\Reg$, $\alpha^*\alpha^* \approx \alpha^*$.
+
+\item For all $\alpha\in\Reg$, $(\alpha^*)^* \approx \alpha^*$.
+
+\item For all $\alpha,\beta\in\Reg$,
+$(\alpha\beta)^*\alpha \approx \alpha(\beta\alpha)^*$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Follows from Proposition~\ref{ClosureLan}.  Consider, e.g., the proof
+of Part~(5).  By Proposition~\ref{ClosureLan}(5), we have that
+\begin{gather*}
+L((\alpha^*)^*) = L(\alpha^*)^* = (L(\alpha)^*)^* = L(\alpha)^* =
+L(\alpha^*) .
+\end{gather*}
+Thus $(\alpha^*)^* \approx \alpha^*$.
+\end{proof}
+\index{regular expression!equivalence|)}%
+
+\subsection{Proving the Correctness of Regular Expressions}
+\label{ProvingTheCorrectnessOfRegularExpressions}
+
+\index{regular expression!design(}%
+\index{regular expression!proof of correctness(}%
+In this subsection, we use two examples to show how regular
+expressions can be designed and proved correct.
+
+For our first example, define a function
+$\zeros\in\{\mathsf{0,1}\}^*\fun\nats$ by recursion:
+\begin{align*}
+\zeros\,\% &= 0 , \\
+\zeros(\zerosf w) &= \zeros\,w + 1,
+\eqtxtr{for all} w\in\{\mathsf{0,1}\}^* , \eqtxt{and}\\
+\zeros(\onesf w) &= \zeros\,w, \eqtxtr{for all} w\in\{\mathsf{0,1}\}^* .
+\end{align*}
+Thus $\zeros\,w$ is the number of occurrences of $\zerosf$ in $w$.
+It is easy to show that:
+\begin{itemize}
+\item $\zeros\,\zerosf = 1$;
+
+\item $\zeros\,\onesf = 0$;
+
+\item for all $x,y\in\{\mathsf{0,1}\}^*$, $\zeros(xy) = \zeros\,x +
+\zeros\,y$;
+
+\item for all $n\in\nats$, $\zeros(\zerosf^n) = n$; and
+
+\item for all $n\in\nats$, $\zeros(\onesf^n) = 0$.
+\end{itemize}
+Let
+\begin{displaymath}
+X=\setof{w\in\{\mathsf{0,1}\}^*}{\zeros\,w\eqtxtl{is even}} ,
+\end{displaymath}
+so that $X$ is all strings of $\zerosf$'s and $\onesf$'s with an even
+number of $\zerosf$'s.  Clearly, $\%\in X$ and $\{\onesf\}^*\sub X$.
+
+Let's consider the problem of finding a regular expression that
+generates $X$.  A string with this property would begin with some
+number of $\onesf$'s (possibly none).  After this, the string would
+have some number of parts (possibly none), each consisting of a
+$\zerosf$, followed by some number of $\onesf$'s, followed by a
+$\zerosf$, followed by some number of $\onesf$'s.  The above
+considerations lead us to the regular expression
+\begin{displaymath}
+\alpha=\onesf^*(\zerosf\onesf^*\zerosf\onesf^*)^* .
+\end{displaymath}
+
+To prove $L(\alpha) = X$, it's helpful to give names
+to the meanings of two parts of $\alpha$.  Let
+\begin{displaymath}
+Y = \{\zerosf\}\{\onesf\}^*\{\zerosf\}\{\onesf\}^*
+\quad \eqtxt{and} \quad
+Z = \{\onesf\}^* Y^* ,
+\end{displaymath}
+so that $L(\zerosf\onesf^*\zerosf\onesf^*) = Y$ and
+$L(\alpha) = Z$.  Thus it will suffice to prove that $Z = X$,
+and we do this by showing $Z\sub X\sub Z$.  We begin by showing
+$Z\sub X$.
+
+\begin{lemma}
+\label{RegSyn1Lem1}
+\begin{enumerate}[\quad(1)]
+\item $Y\sub X$.
+
+\item $XX\sub X$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\begin{enumerate}[\quad(1)]
+\item Suppose $w\in Y$, so that $w=\zerosf x\zerosf y$ for some
+$x,y\in\{\onesf\}^*$.  Thus $\zeros\,w = \zeros(\zerosf x\zerosf y) =
+\zeros\,\zerosf + \zeros\,x + \zeros\,\zerosf + \zeros\,y =
+1 + 0 + 1 + 0 = 2$ is even, so that $w\in X$.
+
+\item Suppose $w\in XX$, so that $w=xy$ for some $x,y\in X$.  Then
+$\zeros\,x$ and $\zeros\,y$ are even, so that $\zeros\,w =
+\zeros\,x + \zeros\,y$ is even.  Hence $w\in X$.
+\end{enumerate}
+\end{proof}
+
+\begin{lemma}
+\label{RegSyn1Lem2}
+$Y^*\sub X$.
+\end{lemma}
+
+\begin{proof}
+It will suffice to show that, for all $n\in\nats$, $Y^n\sub X$, and
+we show this using mathematical induction.
+\begin{description}
+\item[\quad(Basis Step)] We have that $Y^0 = \{\%\}\sub X$.
+
+\item[\quad(Inductive Step)] Suppose $n\in\nats$, and assume the
+inductive hypothesis: $Y^n\sub X$. Then $Y^{n+1} = YY^n\sub XX\sub X$,
+by Lemma~\ref{RegSyn1Lem1}
+\end{description}
+\end{proof}
+
+\begin{lemma}
+\label{RegSyn1Lem3}
+$Z\sub X$.
+\end{lemma}
+
+\begin{proof}
+By Lemmas~\ref{RegSyn1Lem1} and \ref{RegSyn1Lem2}, we have that
+$Z = \{\onesf\}^*Y^* \sub XX \sub X$.
+\end{proof}
+
+To prove $X\sub Z$, it's helpful to define another language:
+\begin{displaymath}
+  U = \setof{w\in X}{\onesf\eqtxt{is not a prefix of} w} .
+\end{displaymath}
+
+\begin{lemma}
+\label{RegSyn1Lem4}
+$U\sub Y^*$.
+\end{lemma}
+
+\begin{proof}
+Because $U\sub\{\mathsf{0,1}\}^*$, it will suffice to show that,
+for all $w\in\{\mathsf{0,1}\}^*$,
+\begin{displaymath}
+  \eqtxtr{if} w\in U, \eqtxt{then} w\in Y^* .
+\end{displaymath}
+We proceed by strong string induction.  Suppose $w\in\{\mathsf{0,1}\}^*$,
+and assume the inductive hypothesis: for all $x\in\{\mathsf{0,1}\}^*$,
+if $x$ is a proper substring of $w$, then
+\begin{displaymath}
+  \eqtxtr{if} x\in U, \eqtxt{then} x\in Y^* .
+\end{displaymath}
+We must show that
+\begin{displaymath}
+  \eqtxtr{if} w\in U, \eqtxt{then} w\in Y^* .
+\end{displaymath}
+Suppose $w\in U$, so that $\zeros\,w$ is even and $\onesf$ is not a
+prefix of $w$.  We must show that $w\in Y^*$.  If $w=\%$, then $w\in
+Y^*$.  Otherwise, $w=\zerosf x$ for some $x\in\{\mathsf{0,1}\}^*$.
+Since $1 + \zeros\,x = \zeros\,\zerosf + \zeros\,x = \zeros(\zerosf x)
+= \zeros\,w$ is even, we have that $\zeros\,x$ is odd. Let $n$ be the
+largest element of $\nats$ such that $\onesf^n$ is a prefix of
+$x$. ($n$ is well-defined, since $\onesf^0=\%$ is a prefix of $x$.)
+Thus $x = \onesf^ny$ for some $y\in\{\mathsf{0,1}\}^*$.  Since
+$\zeros\, y = 0 + \zeros\,y = \zeros\,\onesf^n + \zeros\,y =
+\zeros(\onesf^n y) = \zeros\,x$ is odd, we have that $y\neq\%$.  And,
+by the definition of $n$, $\onesf$ is not a prefix of $y$.  Hence
+$y=\zerosf z$ for some $z\in\{\mathsf{0,1}\}^*$.  Since $1 + \zeros\,z
+= \zeros\,\zerosf + \zeros\,z = \zeros(\zerosf z) = \zeros\,y$ is odd,
+we have that $\zeros\,z$ is even.  Let $m$ be the largest element of
+$\nats$ such that $\onesf^m$ is a prefix of $z$.  Thus $z=\onesf^m u$
+for some $u\in\{\mathsf{0,1}\}^*$, and $\onesf$ is not a prefix of
+$u$.  Since $\zeros\,u = 0 + \zeros\,u = \zeros\,\onesf^m + \zeros\,u
+= \zeros(\onesf^m u) = \zeros\,z$ is even, it follows that $u\in U$.
+Summarizing, we have that $w = \zerosf x = \zerosf \onesf^n y =
+\zerosf \onesf^n \zerosf z = \zerosf \onesf^n \zerosf \onesf^m u$ and
+$u\in U$.  Since $u$ is a proper substring of $w$, the inductive
+hypothesis tells us that $u\in Y^*$.  Hence $w = \zerosf \onesf^n
+\zerosf \onesf^m u = (\zerosf \onesf^n \zerosf \onesf^m) u \in
+YY^*\sub Y^*$.
+\end{proof}
+
+\begin{lemma}
+\label{RegSyn1Lem5}
+$X\sub Z$.
+\end{lemma}
+
+\begin{proof}
+Suppose $w\in X$.  Let $n$ be the largest element of $\nats$ such that
+$\onesf^n$ is a prefix of $w$.  Thus $w=\onesf^n x$ for some
+$x\in\{\mathsf{0,1}\}^*$. Since $w\in X$, we have that $\zeros\,x = 0
++ \zeros\,x = \zeros\,\onesf^n + \zeros\,x = \zeros\,w$ is even, so
+that $x\in X$.  By the definition of $n$, we have that $\onesf$
+is not a prefix of $x$, and thus $x\in U$.  Hence $w=\onesf^n x\in
+\{\onesf\}^* U\sub \{\onesf\}^*Y^* = Z$, by Lemma~\ref{RegSyn1Lem4}.
+\end{proof}
+
+By Lemmas~\ref{RegSyn1Lem3} and \ref{RegSyn1Lem5}, we have
+that $Z\sub X\sub Z$, completing our proof that $\alpha$ is correct.
+
+Our second example of regular expression design and proof
+of correction involves the languages
+\begin{align*}
+A &=\{\mathsf{001, 011, 101, 111}\} , \eqtxt{and} \\
+B &=\{\,w\in\{\mathsf{0,1}\}^* \mid \eqtxtr{for all}x,y\in\{\mathsf{0,1}\}^*,
+\eqtxt{if}w=x\zerosf y, \eqtxtr{then there is a} z\in A \\
+&\quad\;\;\; \eqtxt{such that} z\eqtxt{is a prefix of} y\,\}.
+\end{align*}
+The elements of $A$ can be thought of as the odd numbers between $1$
+and $7$, expressed in binary, and $B$ consists of those strings
+of $\zerosf$'s and $\onesf$'s in which every occurrence of $\zerosf$
+is immediately followed by an element of $A$.
+
+E.g., $\%\in B$, since the empty string
+has no occurrences of $\zerosf$, and $\mathsf{00111}$ is in $B$, since
+its first $\zerosf$ is followed by $\mathsf{011}$ and its second
+$\zerosf$ is followed by $\mathsf{111}$.  But $\mathsf{0000111}$ is
+not in $B$, since its first $\zerosf$ is followed by $\mathsf{000}$,
+which is not in $A$.  And $\mathsf{011}$ is not in $B$, since
+$|11|<3$.
+
+Note that, for all $x,y\in B$, $xy\in B$, i.e., $BB\sub B$.  This
+holds, since: each occurrence of $\zerosf$ in $x$ is followed by an
+element of $A$ in $x$, and is thus followed by the same element of $A$
+in $xy$; and each occurrence of $\zerosf$ in $y$ is followed by an
+element of $A$ in $y$, and is thus followed by the same element of $A$
+in $xy$.
+
+Furthermore, for all strings $x,y$, if $xy\in B$, then $y$ is in $B$,
+i.e., every suffix of an element of $B$ is also in $B$.  This holds
+since if there was an occurrence of $\zerosf$ in $y$ that wasn't
+followed by an element of $A$, then this same occurrence of $\zerosf$
+in the suffix $y$ of $xy$ would also not be followed by an element of
+$A$, contradicting $xy\in B$.
+
+How should we go about finding a regular expression $\alpha$ such that
+$L(\alpha)=B$?  Because $\%\in B$, for all $x,y\in B$, $xy\in B$, and
+for all strings $x,y$, if $xy\in B$ then $y\in B$,
+our regular expression can have the form $\beta^*$, where $\beta$
+generates all the strings that are \emph{basic} in the sense that they
+are nonempty elements of $B$ with no non-empty proper prefixes that
+are in $B$.
+
+Let's try to understand what the basic strings look like.  Clearly,
+$\onesf$ is basic, so there will be no more basic strings that begin
+with $\onesf$.  But what about the basic strings beginning with
+$\zerosf$?  No sequence of $\zerosf$'s is basic, and any string that
+begins with four or more $\zerosf$'s will not be basic.  It is easy to
+see that $\mathsf{000111}$ is basic.  In fact, it is the only basic
+string of the form $\mathsf{000}u$.  (The first $\zerosf$ forces $u$
+to begin with $\onesf$, the second $\zerosf$ forces $u$ to continue
+with $\mathsf{1}$, and the third forces $u$ to continue with
+$\mathsf{1}$.  And, if $|u|>3$, then the overall string would have a
+nonempty, proper prefix in $B$, and so wouldn't be basic.)  Similarly,
+$\mathsf{00111}$ is the only basic string beginning with
+$\mathsf{001}$.  But what about the basic strings beginning with
+$\mathsf{01}$?  It's not hard to see that there are infinitely many
+such strings: $\mathsf{0111}$, $\mathsf{010111}$, $\mathsf{01010111}$,
+$\mathsf{0101010111}$, etc.  Fortunately, there is a simple pattern
+here: we have all strings of the form
+$\zerosf(\mathsf{10})^n\mathsf{111}$ for $n\in\nats$.
+
+By the above considerations, it seems that we can let our regular
+expression be
+\begin{displaymath}
+(\mathsf{1} + \zerosf(\mathsf{10})^*\mathsf{111} + \mathsf{00111} +
+\mathsf{000111})^* .
+\end{displaymath}
+But, using some of the equivalences we learned about above,
+we can turn this regular expression into
+\begin{displaymath}
+\mathsf{(1 + 0(0 + 00 + (10)^*)111)^*} ,
+\end{displaymath}
+which we take as our $\alpha$.  Now, we prove that $L(\alpha)=B$.
+
+Let
+\begin{displaymath}
+X = \mathsf{\{0\} \cup \{00\} \cup \{10\}^*} \quad \eqtxt{and} \quad
+Y = \{\onesf\}\cup\{\zerosf\}X\{\mathsf{111}\} .
+\end{displaymath}
+Then, we have that
+\begin{align*}
+X &= L(\mathsf{0 + 00 + (10)^*}) , \\
+Y &= L(\mathsf{1 + 0(0 + 00 + (10)^*)111}) , \eqtxt{and} \\
+Y^* &= L(\mathsf{(1 + 0(0 + 00 + (10)^*)111)^*}) = L(\alpha) .
+\end{align*}
+Thus, it will suffice to show that $Y^* = B$.  We will show that
+$Y^*\sub B\sub Y^*$.
+
+To begin with, we would like to use mathematical induction to prove
+that, for all $n\in\nats$,
+$\{\zerosf\}\{\mathsf{10}\}^n\{\mathsf{111}\}\sub B$.  But in order
+for the inductive step to succeed, we must prove something stronger.
+Let
+\begin{displaymath}
+C = \setof{w\in B}{\mathsf{01}\eqtxt{is a prefix of}w} .
+\end{displaymath}
+
+\begin{lemma}
+\label{RegSyn2Lem1}
+For all $n\in\nats$, $\{\zerosf\}\{\mathsf{10}\}^n\{\mathsf{111}\}\sub
+C$.
+\end{lemma}
+
+\begin{proof}
+We proceed by mathematical induction.
+\begin{description}
+\item[\quad(Basis Step)] Since $\mathsf{01}$ is a prefix of $\mathsf{0111}$,
+and $\mathsf{0111}\in B$, we have that $\mathsf{0111}\in C$.  Hence
+  ${\{\zerosf\}\{\mathsf{10}\}^0\{\mathsf{111}\}} =
+  \mathsf{\{0\}\{\%\}\{111\}} = \mathsf{\{0\}\{111\}} =
+  \mathsf{\{0111\}}\sub C$.
+
+\item[\quad(Inductive Step)] Suppose $n\in\nats$, and assume the
+  inductive hypothesis:
+  $\{\zerosf\}\{\mathsf{10}\}^n\{\mathsf{111}\}\sub C$.  We must show
+  that ${\{\mathsf{0}\}\{\mathsf{10}\}^{n+1}\{\mathsf{111}\}\sub C}$.
+  Since
+  \begin{alignat*}{2}
+    \{\mathsf{0}\}\{\mathsf{10}\}^{n+1}\{\mathsf{111}\} &=
+    \{\mathsf{0}\}\{\mathsf{10}\}\{\mathsf{10}\}^n\{\mathsf{111}\} \\
+    &= \{\mathsf{01}\}\{\mathsf{0}\}\{\mathsf{10}\}^n\{\mathsf{111}\} \\
+    &\sub \mathsf{\{01\}}C &&\by{inductive hypothesis} ,
+  \end{alignat*}
+  it will suffice to show that $\mathsf{\{01\}}C\sub C$.  Suppose
+  $w\in\mathsf{\{01\}}C$.  We must show that $w\in C$.  We have that
+  $w=\mathsf{01}x$ for some $x\in C$.  Thus $w$ begins with
+  $\mathsf{01}$.  It remains to show that $w\in B$.  Since $x\in C$,
+  we have that $x$ begins with $\mathsf{01}$.  Thus the first
+  occurrence of $\zerosf$ in $w=\mathsf{01}x$ is followed by
+  $\mathsf{101}\in A$.  Furthermore, any other occurrence of
+  $\zerosf$ in $w=\mathsf{01}x$ is within $x$, and so is followed by
+  an element of $A$ because $x\in C\sub B$.  Thus $w\in B$.
+\end{description}
+\end{proof}
+
+\begin{lemma}
+\label{RegSyn2Lem2}
+$Y\sub B$.
+\end{lemma}
+
+\begin{proof}
+Suppose $w\in Y$.  We must show that $w\in B$.  If $w=\onesf$, then
+$w\in B$.  Otherwise, we have that $w=\zerosf x\mathsf{111}$ for some
+$x\in X$.  There are three cases to consider.
+\begin{itemize}
+\item Suppose $x=\zerosf$.  Then $w=\mathsf{00111}$ is in $B$.
+
+\item Suppose $x=\mathsf{00}$.  Then $w=\mathsf{000111}$ is in $B$.
+
+\item Suppose $x\in\{\mathsf{10}\}^*$.  Then $x\in \{\mathsf{10}\}^n$
+for some $n\in\nats$.  By Lemma~\ref{RegSyn2Lem1},
+we have that $w=\zerosf x\mathsf{111}\in
+\{\zerosf\}\{\mathsf{10}\}^n\{\mathsf{111}\}\sub C\sub B$.
+\end{itemize}
+\end{proof}
+
+\begin{lemma}
+\label{RegSyn2Lem3}
+$Y^*\sub B$.
+\end{lemma}
+
+\begin{proof}
+It will suffice to show that, for all $n\in\nats$, $Y^n\sub B$, and
+we proceed by mathematical induction.
+\begin{description}
+\item[\quad(Basis Step)] Since $\%\in B$, we have that $Y^0=\{\%\}\sub B$.
+
+\item[\quad(Inductive Step)] Suppose $n\in\nats$, and assume the
+  inductive hypothesis: $Y^n\sub B$.  Then $Y^{n+1} = YY^n \sub BB
+  \sub B$, by Lemma~\ref{RegSyn2Lem2} and the inductive hypothesis.
+\end{description}
+\end{proof}
+
+\begin{lemma}
+\label{RegSyn2Lem5}
+$B\sub Y^*$.
+\end{lemma}
+
+\begin{proof}
+Since $B\sub\{\mathsf{0,1}\}^*$, it will suffice to show that, for
+all $w\in\{\mathsf{0,1}\}^*$,
+\begin{displaymath}
+\eqtxtr{if}w\in B,\eqtxt{then}w\in Y^* .
+\end{displaymath}
+We proceed by strong string induction.  Suppose
+$w\in\{\mathsf{0,1}\}^*$, and assume the inductive hypothesis: for all
+$x\in \{\mathsf{0,1}\}^*$, if $x$ is a proper substring of $w$, then
+\begin{displaymath}
+\eqtxtr{if}x\in B,\eqtxt{then}x\in Y^* .
+\end{displaymath}
+We must show that
+\begin{displaymath}
+\eqtxtr{if}w\in B,\eqtxt{then}w\in Y^* .
+\end{displaymath}
+Suppose $w\in B$.  We must show that $w\in Y^*$.
+There are three main cases to consider.
+\begin{itemize}
+\item Suppose $w=\%$.  Then $w\in\{\%\}=Y^0\sub Y^*$.
+
+\item Suppose $w=\zerosf x$ for some $x\in\mathsf{\{0,1\}}^*$.  Since
+  $w\in B$, the first $\zerosf$ of $w$ must be followed by an element
+  of $A$.  Hence $x\neq\%$, so that there are two cases to consider.
+  \begin{itemize}
+  \item Suppose $x=\zerosf y$ for some $y\in\mathsf{\{0,1\}}^*$.  Thus
+    $w=\zerosf x=\mathsf{00}y$.  Since $\mathsf{00}y=w\in B$, we have
+    that $y\neq\%$.  Thus, there are two cases to consider.
+    \begin{itemize}
+    \item Suppose $y=\zerosf z$ for some $z\in\mathsf{\{0,1\}}^*$.
+      Thus $w=\mathsf{00}y=\mathsf{000}z$.  Since the first $\zerosf$
+      in $\mathsf{000}z=w$ is followed by an element of $A$, and the
+      only element of $A$ that begins with $\mathsf{00}$ is
+      $\mathsf{001}$, we have that $z=\onesf u$ for some
+      $u\in\mathsf{\{0,1\}}^*$.  Thus $w=\mathsf{0001}u$.  Since the
+      second $\zerosf$ in $\mathsf{0001}u=w$ is followed by an element
+      of $A$, and $\mathsf{011}$ is the only element of $A$ that
+      begins with $\mathsf{01}$, we have that $u=\onesf v$ for some
+      $v\in\mathsf{\{0,1\}}^*$.  Thus $w=\mathsf{00011}v$.  Since the
+      third $\zerosf$ in $\mathsf{00011}v=w$ is followed by an element
+      of $A$, and $\mathsf{111}$ is the only element of $A$ that
+      begins with $\mathsf{11}$, we have that $v=\onesf t$ for some
+      $t\in\mathsf{\{0,1\}}^*$.  Thus $w=\mathsf{000111}t$.  Since
+      $\mathsf{00}\in X$, we have that
+      $\mathsf{000111}=\mathsf{(0)(00)(111)}\in\{\zerosf\}X\{\mathsf{111}\}\sub
+      Y$.  Because $t$ is a suffix of $w$, it follows that $t\in B$.
+      Thus the inductive hypothesis tells us that $t\in Y^*$.  Hence
+      $w=\mathsf{(000111)}t\in YY^*\sub Y^*$.
+    \item Suppose $y=\onesf z$ for some $z\in\mathsf{\{0,1\}}^*$.
+      Thus $w=\mathsf{00}y=\mathsf{001}z$.  Since the first $\zerosf$
+      in $\mathsf{001}z=w$ is followed by an element of $A$, and the
+      only element of $A$ that begins with $\mathsf{01}$ is
+      $\mathsf{011}$, we have that $z=\onesf u$ for some
+      $u\in\mathsf{\{0,1\}}^*$.  Thus $w=\mathsf{0011}u$.  Since the
+      second $\zerosf$ in $\mathsf{0011}u=w$ is followed by an element
+      of $A$, and $\mathsf{111}$ is the only element of $A$ that
+      begins with $\mathsf{11}$, we have that $u=\onesf v$ for some
+      $v\in\mathsf{\{0,1\}}^*$.  Thus $w=\mathsf{00111}v$.  Since
+      $\mathsf{0}\in X$, we have that
+      $\mathsf{00111}=\mathsf{(0)(0)(111)}\in\{\zerosf\}X\{\mathsf{111}\}\sub
+      Y$.  Because $v$ is a suffix of $w$, it follows that $v\in B$.
+      Thus the inductive hypothesis tells us that $v\in Y^*$.  Hence
+      $w=\mathsf{(00111)}v\in YY^*\sub Y^*$.
+    \end{itemize}
+  \item Suppose $x=\onesf y$ for some $y\in\mathsf{\{0,1\}}^*$.  Thus
+    $w=\zerosf x=\mathsf{01}y$.  Since $w\in B$, we have that
+    $y\neq\%$.  Thus, there are two cases to consider.
+    \begin{itemize}
+    \item Suppose $y=\zerosf z$ for some $z\in\mathsf{\{0,1\}}^*$.
+      Thus $w=\mathsf{010}z$.  Let $u$ be the longest prefix of $z$
+      that is in $\{\mathsf{10}\}^*$.  (Since $\%$ is a prefix of $z$
+      and is in $\{\mathsf{10}\}^*$, it follows that $u$ is
+      well-defined.)  Let $v\in\mathsf{\{0,1\}}^*$ be such that
+      $z=uv$.  Thus $w=\mathsf{010}z=\mathsf{010}uv$.
+
+      Suppose, toward a contradiction, that $v$ begins with
+      $\mathsf{10}$.  Then $u\mathsf{10}$ is a prefix of $z=uv$ that
+      is longer than $u$.  Furthermore
+      $u\mathsf{10}\in\{\mathsf{10}\}^*\{\mathsf{10}\}\sub
+      \{\mathsf{10}\}^*$, contradicting the definition of $u$.  Thus
+      we have that $v$ does not begin with $\mathsf{10}$.
+
+      Next, we show that $\mathsf{010}u$ ends with $\mathsf{010}$.
+      Since $u\in\{\mathsf{10}\}^*$, we have that
+      $u\in\{\mathsf{10}\}^n$ for some $n\in\nats$.  There are three
+      cases to consider.
+      \begin{itemize}
+      \item Suppose $n=0$.  Since $u\in\{\mathsf{10}\}^0=\{\%\}$, we
+        have that $u=\%$.  Thus $\mathsf{010}u=\mathsf{010}$ ends with
+        $\mathsf{010}$.
+      \item Suppose $n=1$.  Since
+        $u\in\{\mathsf{10}\}^1=\{\mathsf{10}\}$, we have that
+        $u=\mathsf{10}$.  Hence $\mathsf{010}u= \mathsf{01010}$ ends
+        with $\mathsf{010}$.
+      \item Suppose $n\geq 2$.  Then $n-2\geq 0$, so that
+        $u\in\{\mathsf{10}\}^{(n-2)+2}=\{\mathsf{10}\}^{n-2}\{\mathsf{10}\}^2$.
+        Hence $u$ ends with $\mathsf{1010}$, showing that
+        $\mathsf{010}u$ ends with $\mathsf{010}$.
+      \end{itemize}
+      Summarizing, we have that $w=\mathsf{010}uv$,
+      $u\in\{\mathsf{10}\}^*$, $\mathsf{010}u$ ends with
+      $\mathsf{010}$, and $v$ does not begin with $\mathsf{10}$.
+      Since the second-to-last $\zerosf$ in $\mathsf{010}u$ is
+      followed in $w$ by an element of $A$, and $\mathsf{101}$ is the
+      only element of $A$ that begins with $\mathsf{10}$, we have that
+      $v=\onesf s$ for some $s\in\mathsf{\{0,1\}}^*$.  Thus
+      $w=\mathsf{010}u\onesf s$, and $\mathsf{010}u\onesf$ ends with
+      $\mathsf{0101}$.  Since the second-to-last symbol of
+      $\mathsf{010}u\onesf$ is a $\zerosf$, we have that $s\neq\%$.
+      Furthermore, $s$ does not begin with $\zerosf$, since, if it
+      did, then $v=\onesf s$ would begin with $\mathsf{10}$.  Thus we
+      have that $s=\onesf t$ for some $t\in\mathsf{\{0,1\}}^*$.  Hence
+      $w=\mathsf{010}u\mathsf{11}t$.  Since $\mathsf{010}u\mathsf{11}$
+      ends with $\mathsf{011}$, it follows that the last $\zerosf$ in
+      $\mathsf{010}u\mathsf{11}$ must be followed in $w$ by an element
+      of $A$.  Because $\mathsf{111}$ is the only element of $A$ that
+      begins with $\mathsf{11}$, we have that $t=\onesf r$ for some
+      $r\in \mathsf{\{0,1\}}^*$.  Thus $w=\mathsf{010}u\mathsf{111}r$.
+      Since $(\mathsf{10})u\in\{\mathsf{10}\}\{\mathsf{10}\}^*\sub
+      \{\mathsf{10}\}^*\sub X$, we have that
+      $\mathsf{010}u\mathsf{111}=(\zerosf)((\mathsf{10})u)\mathsf{111}\in
+      \{\zerosf\}X\{\mathsf{111}\}\sub Y$.  Since $r$ is a suffix of
+      $w$, it follows that $r\in B$.  Thus, the inductive hypothesis
+      tells us that $r\in Y^*$.  Hence
+      $w=(\mathsf{010}u\mathsf{111})r\in YY^*\sub Y^*$.
+    \item Suppose $y=\onesf z$ for some $z\in\mathsf{\{0,1\}}^*$.
+      Thus $w=\mathsf{011}z$.  Since the first $\zerosf$ of $w$ is
+      followed by an element of $A$, and $\mathsf{111}$ is the only
+      element of $A$ that begins with $\mathsf{11}$, we have that
+      $z=\onesf u$ for some $u\in\mathsf{\{0,1\}}^*$.  Thus
+      $w=\mathsf{0111}u$.  Since $\%\in\{\mathsf{10}\}^*\sub X$, we
+      have that
+      $\mathsf{0111}=\mathsf{(0)(\%)(111)}\in\{\zerosf\}X\{\mathsf{111}\}\sub
+      Y$.  Because $u$ is a suffix of $w$, it follows that $u\in B$.
+      Thus, since $u$ is a proper substring of $w$, the inductive
+      hypothesis tells us that $u\in Y^*$.  Hence
+      $w=\mathsf{(0111)}u\in YY^*\sub Y^*$.
+    \end{itemize}
+  \end{itemize}
+
+\item Suppose $w=\onesf x$ for some $x\in\mathsf{\{0,1\}}^*$.  Since
+  $x$ is a suffix of $w$, we have that $x\in B$.  Because $x$ is a
+  proper substring of $w$, the inductive hypothesis tells us that
+  $x\in Y^*$.  Thus $w=\onesf x\in YY^*\sub Y^*$.
+\end{itemize}
+\end{proof}
+
+By Lemmas~\ref{RegSyn2Lem3} and \ref{RegSyn2Lem5}, we have that $Y^*\sub
+B\sub Y^*$, so that $Y^*=B$.  This completes our regular expression
+design and proof of correctness example.
+
+\begin{exercise}
+Let $X=\setof{w\in\{\mathsf{0,1}\}^*}{\mathsf{010}\eqtxt{is not a
+    substring of}w}$.  Find a regular expression $\alpha$ such that
+$L(\alpha)=X$, and prove that your answer is correct.
+\end{exercise}
+
+\begin{exercise}
+Define $\diff\in\{\mathsf{0,1}\}^*\fun\ints$ as in
+Section~\ref{UsingInductionToProveLanguageEqualities}, so
+that, for all $w\in\{\mathsf{0,1}\}^*$,
+\begin{displaymath}
+\diff\,w =
+\eqtxtr{the number of $\mathsf{1}$'s in}w -
+\eqtxtr{the number of $\mathsf{0}$'s in}w .
+\end{displaymath}
+Thus $\diff\,\%=0$, $\diff\,\zerosf = -1$, $\diff\,\onesf = 1$, and
+for all $x,y\in\{\mathsf{0,1}\}^*$, $\diff(xy) = \diff\,x + \diff\,y$.
+Let $X=\setof{w\in\{\mathsf{0,1}\}^*}{\diff\,w=3m,\eqtxt{for some}m\in\ints}$.
+Find a regular expression $\alpha$ such that $L(\alpha)=X$, and
+prove that your answer is correct.
+\end{exercise}
+
+\begin{exercise}
+Define a function $\diff\in\{\mathsf{0,1}\}^*\fun\ints$ by:
+for all $w\in\{\mathsf{0,1}\}^*$,
+\begin{displaymath}
+\diff\,w =
+\eqtxtr{the number of $\mathsf{0}$'s in}w -
+2(\eqtxtr{the number of $\mathsf{1}$'s in}w) .
+\end{displaymath}
+Thus $\diff\,w = 0$ iff $w$ has twice as many $\onesf$'s as
+$\zerosf$'s.  Furthermore $\diff\,\%=0$, $\diff\,\zerosf = 1$,
+$\diff\,\onesf = -2$, and, for all $x,y\in\{\mathsf{0,1}\}^*$,
+$\diff(xy) = \diff\,x + \diff\,y$.  Let
+$X=\setof{w\in\{\mathsf{0,1}\}^*}{\diff\,w=0\eqtxt{and, for all
+    prefixes} v\eqtxt{of}w,\,0\leq\diff\,v\leq 3}$.  Find a regular
+expression $\alpha$ such that $L(\alpha)=X$, and prove that your
+answer is correct.
+\end{exercise}
+
+\index{regular expression!design)}%
+\index{regular expression!proof of correctness)}%
+\index{regular expression)}%
+
+\subsection{Notes}
+
+Our approach in this section is somewhat more formal than is common, but
+is otherwise standard.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

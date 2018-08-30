@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<TITLE>&title;</TITLE>
+<BODY>
+<A NAME="top"></A>
+<H1 align=center>Forlan Manual</H1>
+<HR>
+&body;
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="&parent.url;">Parent</A>
+   | <A HREF="&root.url;">Root</A>
+   | <A HREF="&toc.url">Contents</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Forlan Version 4.7</I><BR>
+<I>Copyright &copy; 2018 Alley Stoughton</I><BR>
+<HR>
+</BODY>
+</HTML>

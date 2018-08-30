@@ -1,0 +1,12 @@
+val fa = FA.input "";
+{states}
+A, B, C
+{start state}
+A
+{accepting states}
+A, C
+{transitions}
+A, 01 -> B; B, 23 -> C; C, 45 -> A
+.
+val fa' = FA.rev fa;
+FA.output("", fa');

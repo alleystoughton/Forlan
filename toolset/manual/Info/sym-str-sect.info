@@ -1,0 +1,10 @@
+@FILES
+  [@EMPTY "sym-str-sect"; "Symbols and Strings";
+    @SECTION "Symbols and Strings" [
+       @FILE "sym"
+       @FILE "str"
+       @FILE "sym-set"
+       @FILE "str-set"
+       @FILE "sym-rel"
+    ]
+  ]

@@ -1,0 +1,14 @@
+val dfa = DFA.input "";
+{states}
+A, B
+{start state}
+A
+{accepting states}
+A
+{transitions}
+A, 0 -> B; B, 0 -> A;
+A, 1 -> A; B, 1 -> B
+.
+val rel = SymRel.fromString "(0, a), (1, b)";
+val dfa' = DFA.renameAlphabet(dfa, rel);
+DFA.output("", dfa');

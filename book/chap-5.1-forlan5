@@ -1,0 +1,18 @@
+val pr = Prog.input "";
+letRec(x, y,
+       app(var(x), calc(plus, pair(var(y), int(1)))),
+       app(var(x), int(0)))
+.
+val pr1 = Prog.toClosed pr;
+Prog.step pr1;
+val Prog.Next pr2 = it;
+Prog.output("", Prog.fromClosed pr2);
+Prog.step pr2;
+val Prog.Next pr3 = it;
+Prog.output("", Prog.fromClosed pr3);
+Prog.step pr3;
+val Prog.Next pr4 = it;
+Prog.output("", Prog.fromClosed pr4);
+Prog.step pr4;
+val Prog.Next pr5 = it;
+Prog.output("", Prog.fromClosed pr5);

@@ -1,0 +1,9 @@
+val simp = #2 o Reg.locallySimplify(NONE, Reg.obviousSubset);
+val fa = FA.input "";
+{states} A, B {start state} A {accepting states} B
+{transitions}
+A, 0 -> A; A, 1 -> B; A, 2 -> B;
+B, 3 -> B; B, 34 -> B
+.
+val rfa = RFA.fromFA simp fa;
+RFA.output("", rfa);

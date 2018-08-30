@@ -1,0 +1,9 @@
+val pr = Prog.input "";
+calc(plus, pair(int(~6), int(5)))
+.
+Prog.height pr;
+Prog.size pr;
+val x = Prog.toStr pr;
+Str.output("", x);
+val pr' = Prog.fromStr x;
+Prog.equal(pr', pr);

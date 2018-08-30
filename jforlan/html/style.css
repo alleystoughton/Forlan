@@ -1,0 +1,154 @@
+body {
+    color: black;
+    background-color: #f0e0a0;
+    font-family: serif;
+    font-size: 14pt;
+}
+
+pre {
+    color: black;
+    background: #99ff99;
+    font-family: monospace;
+    font-size: 14pt;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+kbd {
+    font-family: monospace;
+    font-size: 14pt;
+    word-wrap: break-word;
+}
+
+a img { color: #f0e0a0; }
+
+a:link {
+    color: blue;
+    text-decoration: none;
+}
+
+a:visited {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    color: red;
+    text-decoration: none;
+}
+
+a:active {
+    color: blue;
+    text-decoration: none;
+}
+
+h1.top { margin-top: 0em; }
+h1.bottom { margin-bottom: 0em; }
+h1.both { margin-top: 0em; margin-bottom: 0em; }
+
+h2.top { margin-top: 0em; }
+h2.bottom { margin-bottom: 0em; }
+h2.both { margin-top: 0em; margin-bottom: 0em; }
+
+hr.after { margin-bottom: 1em; }
+hr.before { margin-top: 1em; }
+hr.both { margin-top: 1em; margin-bottom: 1em; }
+
+table.std, th.std, td.std {
+    border: 1px solid black;
+}
+
+th.std, td.std {
+    padding: 3px;
+    text-align: left;
+}
+
+table.indent { margin-left: .9em; }
+
+table.std_indent {
+    margin-left: .9em;
+    border: 1px solid black;
+}
+
+img.button {
+  background: white;
+  padding: 4px;
+  width: 25px; }
+
+/* home page */
+
+body.home {
+    max-width: 33em;
+}
+
+div.home_photo {
+    text-align: center;
+}
+
+img.home_photo {
+    width: 40%;
+    max-width: 10em;
+}
+
+div.home_name {
+    text-align: center;
+    font-size: 200%;
+}
+
+div.home_bio {
+    text-align: center;
+}
+
+div.home_links {
+    text-align: center;
+}
+
+/* iPhone-like devices */
+
+@media only screen
+  and (max-device-width: 450px)
+  and (orientation: portrait) {
+  body, pre, kbd {
+      font-size: 5.5vw;
+  }
+  body.home {
+      max-width: 100%;
+  }
+}
+
+@media only screen
+  and (max-device-width: 450px)
+  and (orientation: landscape) {
+  body, pre, kbd {
+      font-size: 5.5vh;
+  }
+  body.home {
+      max-width: 100%;
+  }
+}
+
+/* iPad-like devices */
+
+@media only screen
+  and (min-device-width: 451px)
+  and (max-device-width: 1100px)
+  and (orientation: portrait) {
+  body, pre, kbd {
+      font-size: 3.5vw;
+  }
+  body.home {
+      max-width: 100%;
+  }
+}
+
+@media only screen
+  and (min-device-width: 451px)
+  and (max-device-width: 1100px)
+  and (orientation: landscape) {
+  body, pre, kbd {
+      font-size: 3.5vh;
+  }
+  body.home {
+      max-width: 100%;
+  }
+}

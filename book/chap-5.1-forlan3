@@ -1,0 +1,28 @@
+val cp = Prog.toClosed(Prog.fromString "const(true)");
+val pr1 = Prog.input "";
+cond(var(x), var(y), int(4))
+.
+val pr1' = Prog.subst(cp, Var.fromString "y", pr1);
+Prog.output("", pr1');
+val pr2 = Prog.input "";
+letSimp(x, var(x), pair(var(x), var(y)))
+.
+val pr2' = Prog.subst(cp, Var.fromString "x", pr2);
+Prog.output("", pr2');
+val pr3 = Prog.input "";
+letSimp(x, var(y), pair(var(x), var(y)))
+.
+val pr3' = Prog.subst(cp, Var.fromString "y", pr3);
+Prog.output("", pr3');
+val pr4 = Prog.input "";
+letRec
+(x, y,
+ app(var(x), app(var(y), var(z))),
+ app(var(x), app(var(y), var(z))))
+.
+val pr4' = Prog.subst(cp, Var.fromString "x", pr4);
+Prog.output("", pr4');
+val pr4'' = Prog.subst(cp, Var.fromString "y", pr4);
+Prog.output("", pr4'');
+val pr4''' = Prog.subst(cp, Var.fromString "z", pr4);
+Prog.output("", pr4''');

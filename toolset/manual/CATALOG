@@ -1,0 +1,7 @@
+-- Catalog for Forlan --
+
+-- The CATALOG pathname must be fully qualified and point to the lib/catalog
+-- subdirectory of the ML-Doc distribution
+
+ENTITY   %document-entities  "Entities.sgml"
+CATALOG                      "/usr/local/share/ml-doc/lib/catalog"

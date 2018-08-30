@@ -1,0 +1,185 @@
+<!-- list-aux.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The ListAux Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/ListAux/ Module</HEAD>
+
+<PP>This module defines auxiliary functions on lists.</PP>
+
+<STRUCTURE STRID="ListAux">
+<OPAQUE>
+<SIGBODY SIGID="LIST_AUX" FILE=LIST-AUX>
+
+<SPEC>
+<VAL>sum<TY>int list -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+sum <ARG/xs/
+</PROTOTY>
+<PP>computes the sum of the elements in <ARG/xs/, yielding
+<CD>0</CD> if <ARG/xs/ is empty.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>prod<TY>int list -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+prod <ARG/xs/
+</PROTOTY>
+<PP>computes the product of the elements in <ARG/xs/, yielding
+<CD>1</CD> if <ARG/xs/ is empty.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>max<TY>int list -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+max <ARG/xs/
+</PROTOTY>
+<PP>returns the largest element of <ARG/xs/. Raises
+<CD>Empty</CD> if <ARG/xs/ is empty.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>min<TY>int list -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+min <ARG/xs/
+</PROTOTY>
+<PP>returns the smallest element of <ARG/xs/. Raises
+<CD>Empty</CD> if <ARG/xs/ is empty.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>sub<TY>('a list * int) -> 'a</TY></VAL>
+<COMMENT>
+<PROTOTY>
+sub(<ARG/xs/, <ARG/n/)
+</PROTOTY>
+<PP>returns the <ARG/n/th element of <ARG/xs/, counting from
+<CD>1</CD>. Raises <CD>Subscript</CD> if <ARG/n/ is less
+than <CD>1</CD> or greater than the length of <ARG/xs/.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>update<TY>('a list * int * 'a) -> 'a list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+update(<ARG/xs/, <ARG/n/, <ARG/y/)
+</PROTOTY>
+<PP>returns a list that is just like <ARG/xs/ except that the
+element at position <ARG/n/ (counting from <CD>1</CD>) is y.
+Raises <CD>Subscript</CD> if <ARG/n/ is less than <CD>1</CD> or
+greater than the length of <ARG/xs/.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>position<TY>('a -> bool) -> 'a list -> int option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+position <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>returns <CD>NONE</CD> if <CD><ARG/f/ <ARG/x/</CD> returns
+<CD>false</CD> for all elements <ARG/x/ of <ARG/xs/. Otherwise
+returns <CD>SOME <ARG/n/</CD> where <ARG/n/ is least such that
+<CD><ARG/f/(sub(<ARG/xs/, <ARG/n/))</CD> returns <CD>true</CD>.
+<ARG/f/ is called on the elements of <ARG/xs/ in order, until
+the needed <ARG/n/ is found, or the elements of <ARG/xs/ are
+exausted.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>repeat<TY>'a * int -> 'a list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+repeat(<ARG/x/, <ARG/n/)
+</PROTOTY>
+<PP>returns the list of length <ARG/n/, all of whose elements are
+<ARG/x/. Raises <CD>Domain</CD> if <ARG/n/ is negative.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>allButLast<TY>'a list -> 'a list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+allButLast <ARG/xs/
+</PROTOTY>
+<PP>return the sub-list consisting of all but the last element of
+<ARG/xs/. Raises <CD>Empty</CD> if <ARG/xs/ is empty.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>splitAt<TY>'a list * int -> 'a list * 'a list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+splitAt(<ARG/xs/, n)
+</PROTOTY>
+<PP>returns <CD>(<ARG/ys/, <ARG/zs/)</CD>, where <ARG/ys/ is
+the first <ARG/n/ elements of <ARG/xs/, and <ARG/ys/ is the
+rest of <ARG/xs/. Raises <CD>Domain</CD> if <ARG/n/ is negative
+or greater than the length of <ARG/xs/.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>allSplittings<TY>'a list -> ('a list * 'a list) list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+allSplittings <ARG/xs/
+</PROTOTY>
+<PP>returns the list of pairs <CD>(<ARG/ys/, <ARG/zs/)</CD> such that
+<CD><ARG/ys/ @ <ARG/zs/ = <ARG/xs/</CD>, ordered according to the length
+of their first components (length <CD>0</CD>, then <CD>1</CD>, etc.).</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>adjacentElts<TY>'a list -> ('a * 'a) list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+adjacentElts <ARG/xs/
+</PROTOTY>
+returns the list whose first element is
+<CD>(sub(<ARG/xs/, 1), sub(<ARG/xs/, 2))</CD>, second element is
+<CD>(sub(<ARG/xs/, 2), sub(<ARG/xs/, 3))</CD>, third element is
+<CD>(sub(<ARG/xs/, 3), sub(<ARG/xs/, 4))</CD>, etc., until one or
+thus, returns <CD>nil</CD> if <ARG/xs/ doesn't have at least
+two elements.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromTo<TY>int * int -> int list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromTo(<ARG/n/, <ARG/m/)
+</PROTOTY>
+<PP>returns the list of integers that are greater than or equal to
+<ARG/n/ and less than or equal to <ARG/m/, listed in strictly ascending
+order.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

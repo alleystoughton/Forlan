@@ -1,0 +1,8 @@
+@FILES
+  ["prog-subsect"; "Programs";
+    @SECTION "Programs" [
+       @FILE "var"
+       @FILE "var-set"
+       @FILE "prog"
+    ]
+  ]

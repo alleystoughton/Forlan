@@ -1,0 +1,3 @@
+pair(pair(const(nil), pair(const(true), const(false))),
+     pair(pair(int(1), int(~1)),
+          pair(var(hello),var(hell8))))

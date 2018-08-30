@@ -1,0 +1,31 @@
+<!-- utility-subsect.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>Utilities</TITLE>
+
+<SECTION>
+<HEAD>Utilities</HEAD>
+
+<PP>The subsection describes modules for determining Forlan's version
+(the <BF>Version</BF> module), querying and setting various
+Forlan parameters (the <BF>Params</BF> module), doing pretty-printing
+(the <BF>PP</BF> module), issuing informational and error messages
+(the <BF>Messages</BF> module), loading SML files (the <BF>Use</BF>
+module), doing debugging (the <BF>Debug</BF> module), and interacting
+with the operating system (the <BF>System</BF> module).</PP>
+
+<INCLFILE FILE="version">
+<INCLFILE FILE="params">
+<INCLFILE FILE="pp">
+<INCLFILE FILE="messages">
+<INCLFILE FILE="use">
+<INCLFILE FILE="debug">
+<INCLFILE FILE="system">
+</SECTION>

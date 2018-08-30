@@ -1,0 +1,33 @@
+@FILES
+  ["str-set"; "The StrSet Module";]
+@SIGNATURE STR_SET "str-set" [
+  @VALS 
+    input
+    alphabet
+    memb
+    toPP
+    genUnion
+    prefixes
+    equal
+    fromString
+    prefix
+    map
+    fromList
+    substring
+    output
+    inter
+    inputFromLabToks
+    suffix
+    subset
+    compare
+    concat
+    renameAlphabet
+    union
+    toString
+    minus
+    genInter
+    rev
+    power
+    mapFromList
+]
+@STRUCTURE StrSet "str-set" STR_SET

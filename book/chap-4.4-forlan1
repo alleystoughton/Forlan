@@ -1,0 +1,2 @@
+val gram' = Gram.simplify gram;
+Gram.output("", gram');

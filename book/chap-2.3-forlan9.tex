@@ -1,0 +1,51 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ bs\ =\ SymSet.input\ "";
+\item[]\textsl{@\ }a,\ <id>,\ 0,\ <num>
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ bs\ =\ -\ :\ sym\ set}
+\item[]\textsl{-\ }SymSet.output("",\ bs);
+\item[]\textsl{0,\ a,\ <id>,\ <num>}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ cs\ =\ SymSet.input\ "";\ 
+\item[]\textsl{@\ }a,\ <char>\ 
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ cs\ =\ -\ :\ sym\ set}
+\item[]\textsl{-\ }SymSet.subset(cs,\ bs);
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\item[]\textsl{-\ }SymSet.output("",\ SymSet.union(bs,\ cs));
+\item[]\textsl{0,\ a,\ <id>,\ <num>,\ <char>}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }SymSet.output("",\ SymSet.inter(bs,\ cs));
+\item[]\textsl{a}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }SymSet.output("",\ SymSet.minus(bs,\ cs));
+\item[]\textsl{0,\ <id>,\ <num>}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ ds\ =\ SymSet.fromString\ "<char>,\ <>";
+\item[]\textsl{val\ ds\ =\ -\ :\ sym\ set}
+\item[]\textsl{-\ }SymSet.output("",\ SymSet.genUnion\symbol{'133}bs,\ cs,\ ds\symbol{'135});
+\item[]\textsl{0,\ a,\ <>,\ <id>,\ <num>,\ <char>}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }SymSet.output("",\ SymSet.genInter\symbol{'133}bs,\ cs,\ ds\symbol{'135});
+\item[]
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

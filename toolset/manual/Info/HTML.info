@@ -1,0 +1,1220 @@
+@FILES
+  ["tran-reg"; "The TranReg Module";]
+  ["pp"; "The PP Module";]
+  ["str-set"; "The StrSet Module";]
+  ["params"; "The Params Module";]
+  ["pt"; "The PT Module";]
+  ["tab"; "The Tab Module";]
+  ["index"; "Forlan Manual";
+    @SECTION "Introduction" []
+    @SECTION "Loading SML Files, and Forlan Input/Output" []
+    @SECTION "Modules" [
+       @FILE "auxiliary-subsect"
+       @FILE "utility-subsect"
+       @FILE "sort-set-rel-tab-subsect"
+       @FILE "lex-subsect"
+       @FILE "sym-str-subsect"
+       @FILE "reg-fa-subsect"
+       @FILE "gram-subsect"
+       @FILE "prog-subsect"
+    ]
+    @SECTION "Top-level Environment" [
+       @FILE "top-level-subsect"
+    ]
+  ]
+  ["str"; "The Str Module";]
+  ["gram-subsect"; "Grammars";
+    @SECTION "Grammars" [
+       @FILE "pt"
+       @FILE "prod"
+       @FILE "prod-set"
+       @FILE "gram"
+    ]
+  ]
+  ["tran-set"; "The TranSet Module";]
+  ["top-level-subsect"; "Top-level Environment";
+    @SECTION "Top-level Environment" [
+      @SECTION "Version" []
+      @SECTION "Parameters" []
+      @SECTION "Debugging" []
+      @SECTION "Using Files" []
+      @SECTION "Basic Types" []
+      @SECTION "Conversions Between Basic Types and Strings" []
+      @SECTION "Regular Expressions" []
+      @SECTION "Labeled Paths" []
+      @SECTION "Finite Automata" []
+      @SECTION "Injections and Projections Between Finite Automata" []
+      @SECTION "Conversions Between Finite Automata" []
+      @SECTION "Conversions Between Finite Automata and Regular Expressions" []
+      @SECTION "Regular Expression Finite Automata" []
+      @SECTION "Parse Trees" []
+      @SECTION "Grammars" []
+      @SECTION "Programs" []
+    ]
+  ]
+  ["prod-set"; "The ProdSet Module";]
+  ["reg"; "The Reg Module";]
+  ["var-set"; "The VarSet Module";]
+  ["string-aux"; "The StringAux Module";]
+  ["rel"; "The Rel Module";]
+  ["tran"; "The Tran Module";]
+  ["prod"; "The Prod Module";]
+  ["version"; "The Version Module";]
+  ["debug"; "The Debug Module";]
+  ["list-aux"; "The ListAux Module";]
+  ["messages"; "The Messages Module";]
+  ["prog"; "The Prog Module";]
+  ["reg-fa-subsect"; "Regular Expressions and Finite Automata";
+    @SECTION "Regular Expressions and Finite Automata" [
+       @FILE "reg"
+       @FILE "lp"
+       @FILE "tran"
+       @FILE "tran-set"
+       @FILE "fa"
+       @FILE "efa"
+       @FILE "nfa"
+       @FILE "dfa"
+       @FILE "tran-reg"
+       @FILE "tran-reg-set"
+       @FILE "rfa"
+    ]
+  ]
+  ["var"; "The Var Module";]
+  ["lex"; "The Lex Module";]
+  ["sym-rel"; "The SymRel Module";]
+  ["dfa"; "The DFA Module";]
+  ["sort-set-rel-tab-subsect"; "Sorting, Sets, Relations and Tables";
+    @SECTION "Sorting, Sets, Relations and Tables" [
+       @FILE "sort"
+       @FILE "set"
+       @FILE "rel"
+       @FILE "tab"
+    ]
+  ]
+  ["efa"; "The EFA Module";]
+  ["set"; "The Set Module";]
+  ["use"; "The Use Module";]
+  ["sym-set"; "The SymSet Module";]
+  ["system"; "The System Module";]
+  ["nfa"; "The NFA Module";]
+  ["fa"; "The FA Module";]
+  ["gram"; "The Gram Module";]
+  ["sort"; "The Sort Module";]
+  ["sym"; "The Sym Module";]
+  ["rfa"; "The RFA Module";]
+  ["utility-subsect"; "Utilities";
+    @SECTION "Utilities" [
+       @FILE "version"
+       @FILE "params"
+       @FILE "pp"
+       @FILE "messages"
+       @FILE "use"
+       @FILE "debug"
+       @FILE "system"
+    ]
+  ]
+  ["auxiliary-subsect"; "Auxiliary Functions";
+    @SECTION "Auxiliary Functions" [
+       @FILE "string-aux"
+       @FILE "list-aux"
+    ]
+  ]
+  ["sym-str-subsect"; "Symbols and Strings";
+    @SECTION "Symbols and Strings" [
+       @FILE "sym"
+       @FILE "str"
+       @FILE "sym-set"
+       @FILE "str-set"
+       @FILE "sym-rel"
+    ]
+  ]
+  ["tran-reg-set"; "The TranRegSet Module";]
+  ["lp"; "The LP Module";]
+  ["prog-subsect"; "Programs";
+    @SECTION "Programs" [
+       @FILE "var"
+       @FILE "var-set"
+       @FILE "prog"
+    ]
+  ]
+  ["lex-subsect"; "Lexical Analysis";
+    @SECTION "Lexical Analysis" [
+       @FILE "lex"
+    ]
+  ]
+@SIGNATURE PP "pp" [
+  @TYPES 
+    @TYPE pp
+  @VALS 
+    newline
+    decorate
+    colon
+    fromString
+    fromStringSplitEscape
+    semicolon
+    toString
+    block
+    comma
+    quote
+    empty
+]
+@SIGNATURE VAR_SET "var-set" [
+  @VALS 
+    input
+    memb
+    genUnion
+    toPP
+    equal
+    fromString
+    map
+    fromList
+    output
+    inter
+    inputFromLabToks
+    subset
+    compare
+    union
+    toString
+    genInter
+    minus
+    mapFromList
+]
+@SIGNATURE PARAMS "params" [
+  @VALS 
+    getCompilationManagerVerbosity
+    setTrackExceptions
+    setPrintingListLength
+    getPrintingLineLength
+    getWorkingDirectory
+    setPrintingDataStructureDepth
+    getPrintingStringSize
+    setCompilationManagerVerbosity
+    setPrintingLineLength
+    setWorkingDirectory
+    getSearchPath
+    getTrackExceptions
+    getPrintingListLength
+    setPrintingStringSize
+    setPrintingOfGarbageCollectionMessages
+    getPrintingDataStructureDepth
+    setSearchPath
+]
+@SIGNATURE PT "pt" [
+  @TYPES 
+    @TYPE pt
+    @TYPE pumping_division
+    @DATATYPE concr [ Node]
+  @VALS 
+    jforlanEdit
+    toPP
+    update
+    jforlanPretty
+    validLeafPath
+    yield
+    fromString
+    output
+    cons
+    rootLabel
+    validPumpingDivision
+    strsOfValidPumpingDivision
+    findValidPumpingDivision
+    pumpValidPumpingDivision
+    fromConcr
+    size
+    maximumLengthPath
+    input
+    numLeaves
+    checkPumpingDivision
+    selectPT
+    jforlanValidate
+    toConcr
+    equal
+    validPath
+    jforlanNew
+    compare
+    leaf
+    height
+    findValidPumpingDivisionOpt
+    toString
+    decons
+]
+@SIGNATURE NFA "nfa" [
+  @TYPES 
+    @TYPE nfa
+  @VALS 
+    toPP
+    renameStatesCanonically
+    isomorphism
+    fromString
+    startState
+    fromEFA
+    injToEFA
+    output
+    inter
+    states
+    numStates
+    accepted
+    sub
+    findAcceptingLP
+    validLP
+    fromSym
+    findLP
+    isomorphic
+    findAcceptingLPOpt
+    findLPOpt
+    valid
+    input
+    alphabet
+    transitionFun
+    reachified
+    simplified
+    transitionFunBackwards
+    emptyStr
+    equal
+    checkLP
+    findIsomorphism
+    projFromEFA
+    reachify
+    renameStates
+    simplify
+    findIsomorphismOpt
+    numTransitions
+    transitions
+    prefix
+    acceptingStates
+    projFromFA
+    compare
+    processStr
+    renameAlphabet
+    toString
+    injToFA
+    emptySet
+    genInter
+]
+@SIGNATURE RFA "rfa" [
+  @TYPES 
+    @TYPE concr
+    @TYPE rfa
+  @VALS 
+    jforlanEdit
+    toPP
+    jforlanPretty
+    renameStatesCanonically
+    fromString
+    faToRegPermsTrace
+    startState
+    faToRegPerms
+    output
+    standard
+    toReg
+    states
+    numStates
+    fromConcr
+    sub
+    validLP
+    valid
+    input
+    alphabet
+    jforlanValidate
+    toConcr
+    equal
+    standardize
+    checkLP
+    renameStates
+    transitions
+    numTransitions
+    acceptingStates
+    jforlanNew
+    compare
+    faToReg
+    eliminateState
+    toString
+    fromFA
+]
+@SIGNATURE SYM "sym" [
+  @TYPES 
+    @DATATYPE top [ Basic Compound]
+    @TYPE sym
+    @TYPE basic
+  @VALS 
+    input
+    toPP
+    jforlanPretty
+    toTop
+    jforlanValidate
+    equal
+    fromString
+    output
+    charToBasic
+    basicToChar
+    inputFromLabToks
+    fromTop
+    compare
+    toString
+    size
+]
+@SIGNATURE SYM_REL "sym-rel" [
+  @TYPES 
+    @TYPE sym_rel
+  @VALS 
+    toPP
+    genUnion
+    function
+    mlFunctionToFunction
+    makeBijectionFromAvoiding
+    fromString
+    bijectionFromAvoiding
+    symmetric
+    map
+    fromList
+    reflexiveTransitiveClosure
+    output
+    inter
+    injection
+    relationFromTo
+    restrictFunction
+    domain
+    union
+    antisymmetric
+    symmetricClosure
+    applyFunction
+    functionFromTo
+    range
+    input
+    memb
+    comparePair
+    transitiveSymmetricClosure
+    compose
+    bijectionFromSupersetAvoiding
+    reflexiveClosure
+    equal
+    transitive
+    updateFunction
+    inverse
+    total
+    inputFromLabToks
+    transitiveClosure
+    apply
+    subset
+    compare
+    reflexive
+    toString
+    relationOn
+    minus
+    genInter
+    reflexiveTransitiveSymmetricClosure
+    mapFromList
+    bijectionFromTo
+]
+@SIGNATURE TRAN_REG "tran-reg" [
+  @TYPES 
+    @TYPE tran_reg
+  @VALS 
+    equal
+    compare
+]
+@SIGNATURE SYM_SET "sym-set" [
+  @VALS 
+    input
+    memb
+    genUnion
+    toPP
+    equal
+    fromString
+    map
+    fromList
+    output
+    inter
+    inputFromLabToks
+    subset
+    compare
+    union
+    toString
+    genInter
+    minus
+    mapFromList
+]
+@SIGNATURE TRAN "tran" [
+  @TYPES 
+    @TYPE tran
+  @VALS 
+    equal
+    compare
+]
+@SIGNATURE PROD "prod" [
+  @TYPES 
+    @TYPE prod
+  @VALS 
+    equal
+    compare
+]
+@SIGNATURE MESSAGES "messages" [
+  @EXCEPTIONS 
+    Error
+    CannotHappen
+  @VALS 
+    messageString
+    errorString
+    messagePP
+    quiet
+    errorPP
+    cannotHappen
+]
+@SIGNATURE PROG "prog" [
+  @TYPES 
+    @DATATYPE concr [ Var Const Int Sym Str Pair Calc Cond App Lam LetSimp LetRec]
+    @DATATYPE run [ Ans Fail Intermed]
+    @DATATYPE accept [ Accept RejectWithFalse RejectOtherwise Unknown]
+    @TYPE cp
+    @DATATYPE oper [ IsNil IsInt IsNeg IsZero IsPos IsSym IsStr IsPair IsLam Plus Minus Compare Fst Snd ConsSym DeconsSym SymListToStr StrToSymList]
+    @DATATYPE const [ True False Nil]
+    @TYPE prog
+    @DATATYPE step [ Value Error Next]
+  @VALS 
+    subst
+    jforlanEdit
+    free
+    toPP
+    update
+    jforlanPretty
+    cond
+    validLeafPath
+    str
+    lam
+    fromRep
+    fromString
+    pair
+    toStr
+    accept
+    output
+    isRep
+    accepted
+    fromConcr
+    var
+    toRep
+    size
+    toClosed
+    maximumLengthPath
+    letRec
+    input
+    numLeaves
+    select
+    run
+    jforlanValidate
+    toConcr
+    equal
+    sym
+    isValue
+    validPath
+    letSimp
+    fromClosed
+    app
+    calc
+    jforlanNew
+    compare
+    const
+    evaluate
+    height
+    toString
+    int
+    step
+    fromStr
+]
+@SIGNATURE TRAN_REG_SET "tran-reg-set" [
+  @VALS 
+    input
+    memb
+    genUnion
+    toPP
+    equal
+    fromString
+    map
+    fromList
+    output
+    inter
+    inputFromLabToks
+    subset
+    compare
+    union
+    toString
+    genInter
+    minus
+    mapFromList
+]
+@SIGNATURE PROD_SET "prod-set" [
+  @VALS 
+    input
+    memb
+    genUnion
+    toPP
+    equal
+    fromString
+    map
+    fromList
+    output
+    inter
+    inputFromLabToks
+    subset
+    compare
+    union
+    toString
+    genInter
+    minus
+    mapFromList
+]
+@SIGNATURE TRAN_SET "tran-set" [
+  @VALS 
+    input
+    memb
+    genUnion
+    toPP
+    equal
+    fromString
+    map
+    fromList
+    output
+    inter
+    inputFromLabToks
+    subset
+    compare
+    union
+    toString
+    genInter
+    minus
+    mapFromList
+]
+@SIGNATURE STRING_AUX "string-aux" [
+  @VALS 
+    removeWhiteSpace
+]
+@SIGNATURE SYSTEM "system" [
+  @VALS 
+    runJForlan
+    makeTempFile
+]
+@SIGNATURE FA "fa" [
+  @TYPES 
+    @TYPE concr
+    @TYPE fa
+  @VALS 
+    jforlanEdit
+    fromReg
+    genConcat
+    genUnion
+    toPP
+    jforlanPretty
+    emptyCloseBackwards
+    renameStatesCanonically
+    isomorphism
+    fromString
+    closure
+    startState
+    output
+    states
+    numStates
+    concat
+    union
+    fromConcr
+    accepted
+    sub
+    findAcceptingLP
+    validLP
+    rev
+    fromSym
+    findLP
+    isomorphic
+    findAcceptingLPOpt
+    findLPOpt
+    valid
+    input
+    alphabet
+    reachified
+    transitionFun
+    emptyClose
+    transitionFunBackwards
+    simplified
+    jforlanValidate
+    equal
+    toConcr
+    emptyStr
+    checkLP
+    findIsomorphism
+    reachify
+    renameStates
+    simplify
+    findIsomorphismOpt
+    numTransitions
+    transitions
+    acceptingStates
+    jforlanNew
+    compare
+    processStr
+    renameAlphabet
+    toString
+    emptySet
+    fromStr
+]
+@SIGNATURE GRAM "gram" [
+  @TYPES 
+    @TYPE concr
+    @TYPE gram
+  @VALS 
+    renameVariables
+    inChomskyNormalForm
+    toPP
+    startVariable
+    toStrSet
+    fromString
+    closure
+    output
+    inter
+    union
+    fromConcr
+    sub
+    fromSym
+    valid
+    input
+    alphabet
+    reachified
+    simplified
+    parseAlphabetFromVariable
+    emptyStr
+    numVariables
+    numProductions
+    parsable
+    chomskyNormalForm
+    findIsomorphism
+    findIsomorphismOpt
+    compare
+    renameAlphabet
+    generatedFromVariable
+    toString
+    emptySet
+    reachableFrom
+    minus
+    renameVariablesCanonically
+    genConcat
+    fromReg
+    genUnion
+    parseAlphabetFromVariableOpt
+    isomorphism
+    parseAlphabetOpt
+    eliminateEmptyProductions
+    hasNoEmptyProductions
+    hasNoEmptyOrUnitProductions
+    nullableVariables
+    concat
+    fromStrSet
+    isomorphic
+    reachableFromBackwards
+    rev
+    validPT
+    equal
+    toConcr
+    variables
+    productions
+    parse
+    reachify
+    toStrSetOpt
+    parseAlphabet
+    simplify
+    parseOpt
+    prefix
+    checkPT
+    eliminateEmptyAndUnitProductions
+    fromFA
+    fromStr
+    generated
+]
+@SIGNATURE TAB "tab" [
+  @TYPES 
+    @TYPE tab
+  @VALS 
+    update
+    fromList
+    domain
+    lookup
+    isEmpty
+    empty
+    toList
+]
+@SIGNATURE SORT "sort" [
+  @TYPES 
+    @TYPE total_ordering
+  @VALS 
+    merge
+    equal
+    sort
+    sorted
+    insert
+    less
+    lessEqual
+]
+@SIGNATURE LIST_AUX "list-aux" [
+  @VALS 
+    repeat
+    update
+    sum
+    splitAt
+    adjacentElts
+    min
+    prod
+    position
+    max
+    fromTo
+    allButLast
+    sub
+    allSplittings
+]
+@SIGNATURE STR "str" [
+  @TYPES 
+    @TYPE str
+  @VALS 
+    input
+    alphabet
+    possBeginsWithStr
+    toPP
+    substr
+    removeSuffix
+    jforlanPretty
+    jforlanValidate
+    equal
+    fromString
+    prefix
+    output
+    inputFromLabToks
+    last
+    suffix
+    compare
+    allButLast
+    renameAlphabet
+    toString
+    removePrefix
+    power
+]
+@SIGNATURE REG "reg" [
+  @TYPES 
+    @DATATYPE concr [ EmptyStr EmptySet Sym Closure Concat Union]
+    @TYPE cc
+    @TYPE reg
+  @VALS 
+    jforlanEdit
+    toPP
+    globallySimplify
+    sortUnions
+    jforlanPretty
+    rightConcat
+    rightUnion
+    toStrSet
+    isClosure
+    fromString
+    obviousSubset
+    closure
+    output
+    isUnion
+    fromConcr
+    union
+    size
+    maximumLengthPath
+    fromSym
+    input
+    numLeaves
+    alphabet
+    isEmptyStr
+    ccToList
+    isSym
+    jforlanValidate
+    emptyStr
+    locallySimplifyTrace
+    validPath
+    locallySimplify
+    allStr
+    weaklySimplified
+    inputFromLabToks
+    succCC
+    compare
+    isEmptySet
+    renameAlphabet
+    compareComplexityTotal
+    toString
+    concatsToList
+    weaklySimplify
+    emptySet
+    globallySimplified
+    power
+    hasEmp
+    globallySimplifyTrace
+    genConcat
+    update
+    genUnion
+    validLeafPath
+    compareComplexity
+    cc
+    numSyms
+    allSym
+    isConcat
+    hasSym
+    singCC
+    localSimplificationRelations
+    concat
+    fromStrSet
+    unionsToList
+    numConcats
+    split
+    rev
+    unionCC
+    select
+    locallySimplified
+    toConcr
+    equal
+    toStrSetOpt
+    prefix
+    jforlanNew
+    height
+    standardized
+    compareCC
+    fromStr
+]
+@SIGNATURE REL "rel" [
+  @TYPES 
+    @TYPE rel
+  @VALS 
+    transitiveSymmetricClosure
+    compose
+    function
+    reflexiveClosure
+    bijectionFromSupersetAvoiding
+    mlFunctionToFunction
+    transitive
+    updateFunction
+    inverse
+    bijectionFromAvoiding
+    symmetric
+    reflexiveTransitiveClosure
+    injection
+    total
+    relationFromTo
+    apply
+    transitiveClosure
+    restrictFunction
+    domain
+    antisymmetric
+    reflexive
+    symmetricClosure
+    relationOn
+    applyFunction
+    range
+    reflexiveTransitiveSymmetricClosure
+    functionFromTo
+    bijectionFromTo
+]
+@SIGNATURE STR_SET "str-set" [
+  @VALS 
+    input
+    memb
+    alphabet
+    genUnion
+    toPP
+    prefixes
+    equal
+    fromString
+    map
+    prefix
+    fromList
+    output
+    substring
+    inter
+    inputFromLabToks
+    suffix
+    subset
+    compare
+    concat
+    union
+    renameAlphabet
+    toString
+    genInter
+    minus
+    power
+    rev
+    mapFromList
+]
+@SIGNATURE VERSION "version" [
+  @VALS 
+    getVersion
+]
+@SIGNATURE DEBUG "debug" [
+  @VALS 
+    debug
+]
+@SIGNATURE VAR "var" [
+  @TYPES 
+    @TYPE var
+  @VALS 
+    input
+    toPP
+    equal
+    fromString
+    beginsWithVar
+    output
+    inputLabFromLabToks
+    compare
+    toString
+]
+@SIGNATURE LEX "lex" [
+  @TYPES 
+    @TYPE sym
+    @TYPE basic
+    @DATATYPE sym_top [ BasicSymTop CompoundSymTop]
+    @DATATYPE tok [ Bar Comma Dollar Perc Plus Semicolon Star Tilde OpenPar ClosPar SingArr DoubArr Sym Heading EOF]
+  @VALS 
+    compareSym
+    expectedLetter
+    symToString
+    sizeSym
+    expectedLetterOrDigit
+    checkInLabToks
+    equalTok
+    symToPP
+    expectedTok
+    lexString
+    errorNotEOFTerminated
+    charToBasic
+    basicToChar
+    expectedDigit
+    unexpectedTok
+    symTopToSym
+    symToSymTop
+    lexFile
+    error
+]
+@SIGNATURE DFA "dfa" [
+  @TYPES 
+    @DATATYPE relationship [ Equal ProperSub ProperSup Incomp]
+    @TYPE dfa
+  @VALS 
+    toPP
+    determTransitionFun
+    renameStatesCanonically
+    isomorphism
+    fromString
+    startState
+    injToEFA
+    output
+    inter
+    states
+    numStates
+    fromNFA
+    injToNFA
+    accepted
+    determAccepted
+    sub
+    findAcceptingLP
+    validLP
+    findLP
+    isomorphic
+    equivalent
+    findAcceptingLPOpt
+    findLPOpt
+    valid
+    input
+    alphabet
+    minimize
+    transitionFun
+    reachified
+    transitionFunBackwards
+    determSimplified
+    equal
+    emptyStr
+    checkLP
+    reachify
+    projFromEFA
+    findIsomorphism
+    renameStates
+    findIsomorphismOpt
+    numTransitions
+    transitions
+    determSimplify
+    acceptingStates
+    relationship
+    projFromNFA
+    complement
+    projFromFA
+    subset
+    compare
+    processStr
+    renameAlphabet
+    determProcessStr
+    toString
+    injToFA
+    emptySet
+    genInter
+    minus
+    relation
+]
+@SIGNATURE EFA "efa" [
+  @TYPES 
+    @TYPE efa
+  @VALS 
+    genConcat
+    genUnion
+    toPP
+    emptyCloseBackwards
+    renameStatesCanonically
+    isomorphism
+    fromString
+    closure
+    startState
+    output
+    inter
+    states
+    numStates
+    concat
+    union
+    accepted
+    sub
+    findAcceptingLP
+    validLP
+    rev
+    fromSym
+    findLP
+    isomorphic
+    findAcceptingLPOpt
+    findLPOpt
+    valid
+    input
+    alphabet
+    transitionFun
+    reachified
+    emptyClose
+    transitionFunBackwards
+    simplified
+    equal
+    emptyStr
+    checkLP
+    findIsomorphism
+    reachify
+    renameStates
+    simplify
+    findIsomorphismOpt
+    numTransitions
+    transitions
+    prefix
+    acceptingStates
+    projFromFA
+    compare
+    processStr
+    renameAlphabet
+    toString
+    injToFA
+    emptySet
+    fromFA
+    genInter
+]
+@SIGNATURE LP "lp" [
+  @TYPES 
+    @TYPE pumping_division
+    @DATATYPE concr [ Sym Cons]
+    @TYPE lp
+  @VALS 
+    input
+    length
+    toPP
+    checkPumpingDivision
+    toConcr
+    equal
+    sym
+    fromString
+    startState
+    label
+    join
+    output
+    splitAt
+    cons
+    validPumpingDivision
+    strsOfValidPumpingDivision
+    findValidPumpingDivision
+    compare
+    pumpValidPumpingDivision
+    endState
+    fromConcr
+    findValidPumpingDivisionOpt
+    toString
+]
+@SIGNATURE SET "set" [
+  @TYPES 
+    @TYPE set
+  @VALS 
+    tl
+    exists
+    genUnion
+    filter
+    map
+    fromList
+    sing
+    inter
+    union
+    isEmpty
+    size
+    genTimes
+    empty
+    memb
+    comparePair
+    compareTriple
+    equal
+    all
+    partition
+    hd
+    mapToList
+    times
+    compareList
+    position
+    times3
+    isNonEmpty
+    subset
+    compare
+    genInter
+    minus
+    mapFromList
+    toList
+]
+@SIGNATURE USE "use" [
+  @VALS 
+    use
+]
+@STRUCTURE PP "pp" PP
+@STRUCTURE TranReg "tran-reg" TRAN_REG
+@STRUCTURE PT "pt" PT
+@STRUCTURE NFA "nfa" NFA
+@STRUCTURE StrSet "str-set" STR_SET
+@STRUCTURE System "system" SYSTEM
+@STRUCTURE Gram "gram" GRAM
+@STRUCTURE Sort "sort" SORT
+@STRUCTURE RFA "rfa" RFA
+@STRUCTURE Sym "sym" SYM
+@STRUCTURE ProdSet "prod-set" PROD_SET
+@STRUCTURE TranSet "tran-set" TRAN_SET
+@STRUCTURE VarSet "var-set" VAR_SET
+@STRUCTURE StringAux "string-aux" STRING_AUX
+@STRUCTURE SymRel "sym-rel" SYM_REL
+@STRUCTURE TranRegSet "tran-reg-set" TRAN_REG_SET
+@STRUCTURE Params "params" PARAMS
+@STRUCTURE SymSet "sym-set" SYM_SET
+@STRUCTURE FA "fa" FA
+@STRUCTURE Tab "tab" TAB
+@STRUCTURE Str "str" STR
+@STRUCTURE Reg "reg" REG
+@STRUCTURE Rel "rel" REL
+@STRUCTURE Tran "tran" TRAN
+@STRUCTURE Prod "prod" PROD
+@STRUCTURE Version "version" VERSION
+@STRUCTURE Debug "debug" DEBUG
+@STRUCTURE Messages "messages" MESSAGES
+@STRUCTURE Prog "prog" PROG
+@STRUCTURE Var "var" VAR
+@STRUCTURE Lex "lex" LEX
+@STRUCTURE ListAux "list-aux" LIST_AUX
+@STRUCTURE DFA "dfa" DFA
+@STRUCTURE EFA "efa" EFA
+@STRUCTURE LP "lp" LP
+@STRUCTURE Set "set" SET
+@STRUCTURE Use "use" USE

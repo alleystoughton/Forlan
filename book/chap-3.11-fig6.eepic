@@ -1,0 +1,34 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(3886,1162)(0,-10)
+\put(3525.000,652.000){\arc{510.000}{2.6516}{6.7731}}
+\blacken\path(3241.413,640.939)(3300.000,532.000)(3299.571,655.692)(3241.413,640.939)
+\put(3525,319){\ellipse{474}{474}}
+\put(3525,232){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Csf$}}}}}
+\put(2925,382){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\onesf$}}}}}
+\put(3525,982){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\zerosf$}}}}}
+\put(1125.000,652.000){\arc{510.000}{2.6516}{6.7731}}
+\blacken\path(841.413,640.939)(900.000,532.000)(899.571,655.692)(841.413,640.939)
+\put(1125,307){\ellipse{600}{600}}
+\put(2327,307){\ellipse{600}{600}}
+\put(3529,307){\ellipse{600}{600}}
+\path(525,307)(825,307)
+\blacken\path(705.000,277.000)(825.000,307.000)(705.000,337.000)(705.000,277.000)
+\path(2625,307)(3225,307)
+\blacken\path(3105.000,277.000)(3225.000,307.000)(3105.000,337.000)(3105.000,277.000)
+\path(1425,307)(2025,307)
+\blacken\path(1905.000,277.000)(2025.000,307.000)(1905.000,337.000)(1905.000,277.000)
+\put(0,232){\makebox(0,0)[lb]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}Start}}}}}
+\put(1117,232){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Asf$}}}}}
+\put(2325,232){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Bsf$}}}}}
+\put(1125,982){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\onesf$}}}}}
+\put(1725,382){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\onesf$}}}}}
+\end{picture}
+}

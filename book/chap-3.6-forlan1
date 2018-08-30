@@ -1,0 +1,4 @@
+val processStr = FA.processStr fa;
+val accepted = FA.accepted fa;
+val findLP = FA.findLP fa;
+val findAcceptingLP = FA.findAcceptingLP fa;

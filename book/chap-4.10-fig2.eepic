@@ -1,0 +1,44 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(5037,3985)(0,-10)
+\dashline{45.000}(2625,3958)(225,358)(5025,358)(2625,3958)
+\dashline{60.000}(2625,2758)(1125,358)
+\dashline{60.000}(2625,2758)(4125,358)
+\dashline{60.000}(2625,1558)(1875,358)
+\dashline{60.000}(2625,1558)(3375,358)
+\path(2625,3583)(2625,2833)
+\path(2625,2383)(2625,1633)
+\path(2625,1183)(2625,358)
+\blacken\path(1755.000,3028.000)(1875.000,3058.000)(1755.000,3088.000)(1755.000,3028.000)
+\dottedline{45}(1875,3058)(225,3058)
+\blacken\path(1905.000,1978.000)(2025.000,2008.000)(1905.000,2038.000)(1905.000,1978.000)
+\dottedline{45}(2025,2008)(225,2008)
+\blacken\path(1980.000,928.000)(2100.000,958.000)(1980.000,988.000)(1980.000,928.000)
+\dottedline{45}(2100,958)(225,958)
+\blacken\path(2895.000,3088.000)(2775.000,3058.000)(2895.000,3028.000)(2895.000,3088.000)
+\dottedline{45}(2775,3058)(4425,3058)
+\blacken\path(2860.133,2097.735)(2775.000,2008.000)(2892.346,2047.115)(2860.133,2097.735)
+\dottedline{45}(2775,2008)(4425,3058)
+\blacken\path(2825.549,1070.893)(2775.000,958.000)(2872.728,1033.824)(2825.549,1070.893)
+\dottedline{45}(2775,958)(4425,3058)
+\put(2625,3658){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$s_G$}}}}}
+\put(2625,2458){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$q$}}}}}
+\put(2625,1258){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$q$}}}}}
+\put(675,58){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$u$}}}}}
+\put(1500,58){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$v$}}}}}
+\put(2625,58){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$w$}}}}}
+\put(3750,58){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$x$}}}}}
+\put(4575,58){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$y$}}}}}
+\put(0,2983){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\pt$}}}}}
+\put(0,1933){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\pt'$}}}}}
+\put(0,883){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\pt''$}}}}}
+\put(4650,2983){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\pat$}}}}}
+\end{picture}
+}

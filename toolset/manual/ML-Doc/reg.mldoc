@@ -1,0 +1,1043 @@
+<!-- reg.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Reg Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Reg/ Module</HEAD>
+
+<PP>This module defines the abstract type of regular expressions.</PP>
+
+<STRUCTURE STRID="Reg">
+<OPAQUE>
+<SIGBODY SIGID="REG" FILE=REG>
+
+<SPEC>
+<DATATYPE><ID>concr</ID>
+<CONS>EmptyStr</CONS>
+<CONS>EmptySet</CONS>
+<CONS>Sym<TY>Sym.sym</TY></CONS>
+<CONS>Closure<TY>concr</TY></CONS>
+<CONS>Concat<TY>concr * concr</TY></CONS>
+<CONS>Union<TY>concr * concr</TY></CONS>
+</DATATYPE>
+<COMMENT>
+<PP>The concrete datatype of regular expressions.  <CD>EmptyStr</CD>
+is <CD>%</CD>, <CD>EmptySet</CD> is <CD>$</CD>, and, for all symbols
+<CD><ARG/a/</CD>, <CD>Sym <ARG/a/</CD> is the one node tree whose
+label is <CD><ARG/a/</CD>.  For all regular expressions <CD><ARG/reg/</CD>,
+<CD>Closure <ARG/reg/</CD> is the tree whose root node is labeled by
+<CD>"*"</CD> and whose only child is <CD><ARG/reg/</CD>.  And,
+for all regular expressions <CD><ARG/reg1/</CD> and <CD><ARG/reg2/</CD>:
+<CD>Concat(<ARG/reg1/, <ARG/reg2/)</CD> is the tree whose root node
+is labeled by <CD>"@"</CD>, with left child <CD><ARG/reg1/</CD> and
+right child <CD><ARG/reg2/</CD>; and 
+<CD>Union(<ARG/reg1/, <ARG/reg2/)</CD> is the tree whose root node
+is labeled by <CD>"+"</CD>, with left child <CD><ARG/reg1/</CD> and
+right child <CD><ARG/reg2/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<TYPE><ID>reg</ID>
+<COMMENT>
+<PP>The abstract type of regular expressions, consisting of the values
+of type <CD>concr</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromConcr<TY>concr -> reg
+<COMMENT>
+<PROTOTY>
+fromConcr <ARG/concr/
+</PROTOTY>
+<PP>returns <CD><ARG/concr/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toConcr<TY>reg -> concr</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toConcr <ARG/reg/
+</PROTOTY>
+<PP>returns <CD><ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inputFromLabToks
+<TY>(int * Lex.tok)list -> reg * (int * Lex.tok)list</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+inputFromLabToks <ARG/lts/
+</PROTOTY>
+<PP>tries to input a regular expression from <CD><ARG/lts/</CD>, consuming
+as much of <CD><ARG/lts/</CD> as possible, and returning the pair of
+that regular expression and the rest of <CD><ARG/lts/</CD>.  Issues an error
+message if this can't be done.  The labeled token list that is returned
+will never begin with <CD>"+"</CD>
+(<CD><STRREF TOPID/Lex/.<CONREF STRID="Lex"/Plus/</CD>) or
+<CD>"("</CD> (<CD><STRREF TOPID/Lex/.<CONREF STRID="Lex"/OpenPar/</CD>).
+Either such a token will be consumed in the process of parsing a
+bigger regular expression, or an error will occur during the attempt to do
+so.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs a regular expression from <CD><ARG/s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs a regular expression from the file named by <CD><ARG/fil/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>reg -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toPP <ARG/reg/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>reg -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/reg/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/reg/</CD> to a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>string * reg -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+output <ARG/reg/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/reg/</CD> to the file named
+by <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>validPath<TY>reg * int list -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+validPath(<ARG/reg/, <ARG/ns/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/ns/</CD> is a valid path for <CD><ARG/reg/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>height<TY>reg -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+height <ARG/reg/
+</PROTOTY>
+<PP>returns the height of <CD><ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>size<TY>reg -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+size <ARG/reg/
+</PROTOTY>
+<PP>returns the size of <CD><ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>numLeaves<TY>reg -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+numLeaves <ARG/reg/
+</PROTOTY>
+<PP>returns the number of leaves of <CD><ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>select<TY>reg * int list -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+select(<ARG/reg/, <ARG/ns/)
+</PROTOTY>
+<PP>returns the subtree of <CD><ARG/reg/</CD> pointed to by <CD><ARG/ns/</CD>.
+Issues an error message if <CD><ARG/ns/</CD> isn't a valid path for
+<CD><ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>update<TY>reg * int list * reg -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+update(<ARG/reg/, <ARG/ns/, <ARG/reg'/)
+</PROTOTY>
+<PP>replaces the subtree of <CD><ARG/reg/</CD>
+pointed to by <CD><ARG/ns/</CD> with <CD><ARG/reg'/</CD>.  Issues an
+error message if <CD><ARG/ns/</CD> isn't valid for <CD><ARG/reg/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>maximumLengthPath<TY>reg -> int list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+maximumLengthPath <ARG/reg/
+</PROTOTY>
+<PP>returns a leftmost, maximum length path for <CD><ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>validLeafPath<TY>reg * int list -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+validLeafPath(<ARG/reg/, <ARG/ns/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/ns/</CD> is a valid path for <CD><ARG/reg/</CD>
+that points to a leaf of <CD><ARG/reg/</CD>, i.e., to a subtree with
+no children.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>emptyStr<TY>reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+emptyStr
+</PROTOTY>
+<PP>is <CD>EmptyStr</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>emptySet<TY>reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+emptySet
+</PROTOTY>
+<PP>is <CD>EmptySet</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromSym<TY>Sym.sym -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromSym <ARG/a/
+</PROTOTY>
+<PP>returns <CD>Sym <ARG/a/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>closure<TY>reg -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+closure <ARG/reg/
+</PROTOTY>
+<PP>returns <CD>Closure <ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>concat<TY>reg * reg -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+concat(<ARG/reg1/, <ARG/reg2/)
+</PROTOTY>
+<PP>returns <CD>Concat(<ARG/reg1/, <ARG/reg2/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>union<TY>reg * reg -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+union(<ARG/reg1/, <ARG/reg2/)
+</PROTOTY>
+<PP>returns <CD>Union(<ARG/reg1/, <ARG/reg2/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isEmptyStr<TY>reg -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isEmptyStr <ARG/reg/
+</PROTOTY>
+<PP>tests whether <CD><ARG/reg/</CD> is <CD>EmptyStr</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isEmptySet<TY>reg -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isEmptySet <ARG/reg/
+</PROTOTY>
+<PP>tests whether <CD><ARG/reg/</CD> is <CD>EmptySet</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isSym<TY>reg -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isSym <ARG/reg/
+</PROTOTY>
+<PP>tests whether <CD><ARG/reg/</CD> is a symbol.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isClosure<TY>reg -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isClosure <ARG/reg/
+</PROTOTY>
+<PP>tests whether <CD><ARG/reg/</CD> is a closure.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isConcat<TY>reg -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isConcat <ARG/reg/
+</PROTOTY>
+<PP>tests whether <CD><ARG/reg/</CD> is a concatenation.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isUnion<TY>reg -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isUnion <ARG/reg/
+</PROTOTY>
+<PP>tests whether <CD><ARG/reg/</CD> is a union.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>reg Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compare(<ARG/reg1/, <ARG/reg2/)
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  local
+    fun kind EmptyStr    = 0
+      | kind EmptySet    = 1
+      | kind (Sym _)     = 2
+      | kind (Closure _) = 3
+      | kind (Concat _)  = 4
+      | kind (Union _)   = 5
+  in
+    fun compare(reg, reg') =
+          case Int.compare(kind reg, kind reg') of
+               LESS    => LESS
+             | EQUAL   =>
+                 (case (reg, reg') of
+                       (Sym a,              Sym a')               =>
+                         Sym.compare(a, a')
+                     | (Closure reg,        Closure reg')         =>
+                         compare(reg, reg')
+                     | (Concat(reg1, reg2), Concat(reg1', reg2')) =>
+                         (case compare(reg1, reg1') of
+                               LESS    => LESS
+                             | EQUAL   => compare(reg2, reg2')
+                             | GREATER => GREATER)
+                     | (Union(reg1, reg2),  Union(reg1', reg2'))  =>
+                         (case compare(reg1, reg1') of
+                               LESS    => LESS
+                             | EQUAL   => compare(reg2, reg2')
+                             | GREATER => GREATER)
+                     | _                                          => EQUAL)
+             | GREATER => GREATER
+  end
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>reg * reg -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal(<ARG/reg1/, <ARG/reg2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/reg1/</CD> and <CD><ARG/reg2/</CD> are
+equal.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromStr<TY>Str.str -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromStr <ARG/x/
+</PROTOTY>
+<PP>returns the regular expression that looks, in unabbreviated form,
+just like <CD><ARG/x/</CD>.  It's implemented by:
+<CODE>
+  fun fromStr nil       = EmptyStr
+    | fromStr [b]       = Sym b
+    | fromStr (b :: bs) = Concat(Sym b, fromStr bs)
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>power<TY>reg * int -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+power(<ARG/reg/, <ARG/n/)
+</PROTOTY>
+<PP>raises <CD><ARG/reg/</CD> to the power
+<CD><ARG/n/</CD>. Issues an error message if <CD><ARG/n/</CD> is negative.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>alphabet<TY>reg -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+alphabet <ARG/reg/
+</PROTOTY>
+<PP>returns the alphabet of <CD><ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>split<TY>reg -> Str.str * reg option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+split
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  local
+    fun splt (Sym a)              = ([a], NONE)
+      | splt (Concat(Sym a, reg)) =
+          let val (bs, regOpt) = splt reg
+          in (a :: bs, regOpt) end
+      | splt reg                  = (nil, SOME reg)
+  in
+    fun split EmptyStr = (nil, NONE)
+      | split reg      = splt reg
+  end
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genConcat<TY>reg list -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genConcat
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  fun genConcat nil           = EmptyStr
+    | genConcat [reg]         = reg
+    | genConcat (reg :: regs) = Concat(reg, genConcat regs)
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genUnion<TY>reg list -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genUnion
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  fun genUnion nil           = EmptySet
+    | genUnion [reg]         = reg
+    | genUnion (reg :: regs) = Union(reg, genUnion regs)
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>rightConcat<TY>reg * reg -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+rightConcat
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  fun rightConcat(Concat(reg1, reg2), reg3) =
+        Concat(reg1, rightConcat(reg2, reg3))
+    | rightConcat(reg1, reg2)               = Concat(reg1, reg2)
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>rightUnion<TY>reg * reg -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+rightUnion
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  fun rightUnion(Union(reg1, reg2), reg3) =
+        Union(reg1, rightUnion(reg2, reg3))
+    | rightUnion(reg1, reg2)              = Union(reg1, reg2)
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>concatsToList<TY>reg -> reg list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+concatsToList
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  fun concatsToList (Concat(reg1, reg2)) = reg1 :: concatsToList reg2
+    | concatsToList reg                  = [reg]
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>unionsToList<TY>reg -> reg list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+unionsToList
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  fun unionsToList (Union(reg1, reg2)) = reg1 :: unionsToList reg2
+    | unionsToList reg                 = [reg]
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>sortUnions<TY>reg -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+sortUnions <ARG/reg/
+</PROTOTY>
+<PP>returns <CD>genUnion <ARG/regs/</CD>, where <CD><ARG/regs/</CD> is
+the result of sorting (using <CD>compare</CD>) <CD>unionsToList
+<ARG/reg/</CD> into strictly ascending order (no duplicates).</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>allSym<TY>Sym.sym Set.set -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+allSym <ARG/bs/
+</PROTOTY>
+<PP>returns the all symbols regular expression for <CD><ARG/bs/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>allStr<TY>Sym.sym Set.set -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+allStr <ARG/bs/
+</PROTOTY>
+<PP>returns the all strings regular expression for <CD><ARG/bs/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromStrSet<TY>Str.str Set.set -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromStrSet <ARG/xs/
+</PROTOTY>
+<PP>returns
+<CODE>
+  genUnion(map fromStr (Set.toList xs))
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<TYPE><ID>cc</ID></TYPE>
+<COMMENT>
+<PP>The abstract type of closure complexities, consisting of nonempty
+lists of natural numbers sorted in (not necessarily strictly)
+descending order.</PP>
+</SPEC>
+
+<SPEC>
+<VAL>ccToList<TY>cc -> int list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+ccToList <ARG/cc/
+</PROTOTY>
+<PP>returns <CD><ARG/cc/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>singCC<TY>int -> cc</TY></VAL>
+<COMMENT>
+<PROTOTY>
+singCC <ARG/n/
+</PROTOTY>
+<PP>returns <CD>[<ARG/n/]</CD>, if <CD><ARG/n/</CD> is non-negative.
+Issues an error message, if <CD><ARG/n/</CD> is negative.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>unionCC<TY>cc * cc -> cc</TY></VAL>
+<COMMENT>
+<PROTOTY>
+unionCC(<ARG/cc1/, <ARG/cc2/)
+</PROTOTY>
+<PP>returns the union of <CD><ARG/cc1/</CD> and <CD><ARG/cc2/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>succCC<TY>cc -> cc</TY></VAL>
+<COMMENT>
+<PROTOTY>
+succCC <ARG/cc/
+</PROTOTY>
+<PP>returns the successor of <CD><ARG/cc/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>cc<TY>reg -> cc</TY></VAL>
+<COMMENT>
+<PROTOTY>
+cc <ARG/reg/
+</PROTOTY>
+<PP>returns the closure complexity of <CD><ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compareCC<TY>cc Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compareCC(<ARG/cc1/, <ARG/cc2/)
+</PROTOTY>
+<PP>compares <CD><ARG/cc1/</CD> and <CD><ARG/cc2/</CD> in the total
+ordering on closure complexities.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>numConcats<TY>reg -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+numConcats <ARG/reg/
+</PROTOTY>
+<PP>returns the number of concatenations in <CD><ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>numSyms<TY>reg -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+numSyms <ARG/reg/
+</PROTOTY>
+<PP>returns the number of symbols in <CD><ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>standardized<TY>reg -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+standardized <ARG/reg/
+</PROTOTY>
+<PP>tests whether <CD><ARG/reg/</CD> is standardized.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compareComplexity<TY>reg * reg -> order</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compareComplexity(<ARG/reg1/, <ARG/reg2/)
+</PROTOTY>
+<PP>compares the complexities of <CD><ARG/reg1/</CD> and
+<CD><ARG/reg2/</CD>: <CD>LESS</CD> means <CD><ARG/reg1/</CD> is
+strictly simpler (less complex) than <CD><ARG/reg2/</CD>; <CD>EQUAL</CD> means
+<CD><ARG/reg1/</CD> and <CD><ARG/reg2/</CD> are equally
+simple/complex; and <CD>GREATER</CD> means <CD><ARG/reg1/</CD> is more
+complex (less simple) than <CD><ARG/reg2/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compareComplexityTotal<TY>reg Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compareComplexityTotal(<ARG/reg1/, <ARG/reg2/)
+</PROTOTY>
+<PP>returns
+<CODE>
+  case compareComplexity(<ARG/reg1/, <ARG/reg2/) of
+       LESS    => LESS
+     | EQUAL   => compare(<ARG/reg1/, <ARG/reg2/)
+     | GREATER => GREATER
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>weaklySimplified<TY>reg -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+weaklySimplified <ARG/reg/
+</PROTOTY>
+<PP>tests whether <CD><ARG/reg/</CD> is weakly simplified.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>weaklySimplify<TY>reg -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+weaklySimplify <ARG/reg/
+</PROTOTY>
+<PP>returns the weak simplification of <CD><ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toStrSetOpt<TY>reg -> Str.str Set.set option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toStrSet
+</PROTOTY>
+<PP>returns <CD>SOME</CD> of the language generated by <CD><ARG/reg/</CD>,
+if this language is finite, and <CD>NONE</CD>, if this language is
+infinite.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toStrSet<TY>reg -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toStrSet
+</PROTOTY>
+<PP>returns the language generated by <CD><ARG/reg/</CD>.  Issues an
+error message if the language generated by <CD><ARG/reg/</CD> is
+infinite.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>hasEmp<TY>reg -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+hasEmp <ARG/reg/
+</PROTOTY>
+<PP>tests whether <CD><ARG/reg/</CD> generates the empty string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>hasSym<TY>Sym.sym * reg -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+hasSym(<ARG/a/, <ARG/reg/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/reg/</CD> generates <CD>[<ARG/a/]</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>obviousSubset<TY>reg * reg -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+obviousSubset(<ARG/reg1/, <ARG/reg2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/reg1/</CD> is obviously a subset of
+<CD><ARG/reg2/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>localSimplificationRelations<TY>reg * reg -> order</TY></VAL>
+<COMMENT>
+<PROTOTY>
+localSimplificationRelations(<ARG/reg1/, <ARG/reg2/)
+</PROTOTY>
+<PP>returns:
+<ITEMIZE>
+<ITEM><CD>LESS</CD> if <CD><ARG/reg1/</CD> is related to <CD><ARG/reg2/</CD>
+in the local simplification well-ordering;
+
+<ITEM><CD>EQUAL</CD> if <CD><ARG/reg1/</CD> is related to <CD><ARG/reg2/</CD>
+in the local simplification equivalence relation; and
+
+<ITEM><CD>GREATER</CD> if <CD><ARG/reg2/</CD> is related to <CD><ARG/reg1/</CD>
+in the local simplification well-ordering.
+</ITEMIZE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>locallySimplified<TY>(reg * reg -> bool) -> reg -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+locallySimplified <ARG/sub/ <ARG/reg/
+</PROTOTY>
+<PP>If <CD><ARG/sub/</CD> is a conservative approximation to
+subset testing, then <CD>locallySimplified</CD> tests whether
+<CD><ARG/reg/</CD> is locallySimplified with respect to <CD><ARG/sub/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>locallySimplifyTrace
+<TY>int option * (reg * reg -> bool) -> reg -> bool * reg</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+locallySimplifyTrace (NONE, <ARG/sub/) <ARG/reg/
+</PROTOTY>
+<PP>If <CD><ARG/sub/</CD> is a conservative approximation to subset
+testing, then <CD>locallySimplifyTrace</CD> returns the local
+simplification of <CD><ARG/reg/</CD> with respect
+to <CD><ARG/sub/</CD>.  <CD>locallySimplifyTrace</CD> issues a
+series of tracing messages, explaining its operation.</PP>
+
+<PROTOTY>
+locallySimplifyTrace (SOME <ARG/n/, <ARG/sub/) <ARG/reg/
+</PROTOTY>
+<PP>If <CD><ARG/sub/</CD> is a conservative approximation to subset
+testing, then <CD>locallySimplifyTrace</CD> returns the local
+simplification of <CD><ARG/reg/</CD> with respect
+to <CD><ARG/sub/</CD>, except that&DASH;at each recursive call of its
+principal function&DASH;it considers at most <CD><ARG/n/</CD>
+structural reorganizations of its argument.
+<CD>locallySimplifyTrace</CD> issues a series of tracing
+messages, explaining its operation.  Issues an error message
+if <CD><ARG/n/</CD> isn't at least <CD>1</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>locallySimplify
+<TY>int option * (reg * reg -> bool) -> reg -> bool * reg</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+locallySimplify
+</PROTOTY>
+<PP>is like <CD>locallySimplifyTrace</CD>, except that no tracing
+messages are issued.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>globallySimplified<TY>bool * (reg * reg -> bool) -> reg -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+globallySimplified (<ARG/true/, <ARG/sub/) <ARG/reg/
+</PROTOTY>
+<PP>If <CD><ARG/sub/</CD> is a conservative approximation to
+subset testing, then <CD>globallySimplified</CD> tests whether
+<CD><ARG/reg/</CD> is distributively, globally simplified with respect
+to <CD><ARG/sub/</CD>.</PP>
+
+<PROTOTY>
+globallySimplified (<ARG/false/, <ARG/sub/) <ARG/reg/
+</PROTOTY>
+<PP>If <CD><ARG/sub/</CD> is a conservative approximation to
+subset testing, then <CD>globallySimplified</CD> tests whether
+<CD><ARG/reg/</CD> is non-distributively, globally simplified with
+respect to <CD><ARG/sub/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>globallySimplifyTrace
+<TY>int option * bool * (reg * reg -> bool) -> reg -> bool * reg</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+globallySimplifyTrace (NONE, <ARG/b/, <ARG/sub/) <ARG/reg/
+</PROTOTY>
+<PP>If <CD><ARG/sub/</CD> is a conservative approximation to
+subset testing, then <CD>globallySimplifyTrace</CD> returns the
+global simplification of <CD><ARG/reg/</CD> with respect to
+<CD><ARG/b/</CD> and <CD><ARG/sub/</CD>.
+<CD>globallySimplifyTrace</CD> issues a
+series of tracing messages, explaining its operation.</PP>
+
+<PROTOTY>
+globallySimplifyTrace (SOME <ARG/n/, <ARG/b/, <ARG/sub/) <ARG/reg/
+</PROTOTY>
+<PP>If <CD><ARG/sub/</CD> is a conservative approximation to
+subset testing, then <CD>globallySimplifyTrace</CD> returns the
+global simplification of <CD><ARG/reg/</CD> with respect to
+<CD><ARG/b/</CD> and <CD><ARG/sub/</CD>, except it curtails its search after
+considering <CD><ARG/n/</CD> candidates. 
+<CD>globallySimplifyTrace</CD> issues a series of tracing messages,
+explaining its operation.  Issues an error message if <CD><ARG/n/</CD>
+isn't at least <CD>1</CD>.</PP>
+
+<SPEC>
+<VAL>globallySimplify
+<TY>int option * bool * (reg * reg -> bool) -> reg -> bool * reg</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+globallySimplify
+</PROTOTY>
+<PP>is like <CD>globallySimplifyTrace</CD> except that no tracing
+messages are issued.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>renameAlphabet<TY>reg * SymRel.sym_rel -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+renameAlphabet(<ARG/reg/, <ARG/rel/)
+</PROTOTY>
+<PP>renames the alphabet of <CD><ARG/reg/</CD> using the
+bijection <CD><ARG/rel/</CD>.  Issues an error message if
+<CD><ARG/rel/</CD> is not a bijection from a superset of the
+alphabet of <CD><ARG/reg/</CD> to some set.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>rev<TY>reg -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+rev <ARG/reg/
+</PROTOTY>
+<PP>returns the reversal of <CD><ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>prefix<TY>reg -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+prefix <ARG/reg/
+</PROTOTY>
+<PP>returns the prefix-closure of <CD><ARG/reg/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanNew<TY>unit -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanNew()
+</PROTOTY>
+<PP>invokes JForlan, and returns the regular expression that the user creates
+and commits.  Issues an error message if the user aborts, instead.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanEdit<TY>reg -> reg</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanEdit <ARG/reg/
+</PROTOTY>
+<PP>invokes JForlan, letting the user edit <CD><ARG/reg/</CD>, and
+returning the resulting regular expression that the user commits.  Issues an
+error message if the user aborts, instead.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanValidate<TY>string -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanValidate
+</PROTOTY>
+<PP>is a low-level function used by JForlan.  See the code for
+more information.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanPretty<TY>string -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanPretty
+</PROTOTY>
+<PP>is a low-level function used by JForlan.  See the code for
+more information.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

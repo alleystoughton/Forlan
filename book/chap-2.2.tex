@@ -1,0 +1,615 @@
+\section{Using Induction to Prove Language Equalities}
+\label{UsingInductionToProveLanguageEqualities}
+
+In this section, we introduce three string induction principles, ways
+of showing that every $w\in A^*$ has property $P(w)$, where $A$ is
+some set of symbols.
+Typically, $A$ will be an alphabet, i.e., a finite set of symbols.
+But when we want to prove that all strings have some
+property, we can let $A=\Sym$, so that $A^*=\Str$.
+Each of these principles corresponds to an
+instance of well-founded induction.  We also look at how different
+kinds of induction can be used to show that two languages are equal.
+
+\subsection{String Induction Principles}
+
+Suppose $A$ is a set of symbols.  We define well-founded relations
+$\myright_A$, $\myleft_A$ and $\strong_A$ on $A^*$ by:
+\begin{itemize}
+\item $x\myright_A y$ iff $y=ax$ for some $a\in A$
+(it's called \emph{right} because the string $x$ is on the right
+side of $ax$);
+\item $x\myleft_A y$ iff $y=xa$ for some $a\in A$
+(it's called \emph{left} because the string $x$ is on the left
+side of $xa$);
+\item $x\strong_A y$ iff $x$ is a proper substring of $y$.
+\end{itemize}
+Thus, for all $a\in A$ and $x\in A^*$, the only predecessor of $ax$ in
+$\myright_A$ is $x$, and the only predecessor of $xa$ in
+$\myleft_A$ is $x$.  And, for all $y\in A^*$, the predecessors
+of $y$ in $\strong_A$ are the proper substrings of $y$.
+
+The well-foundedness of $\myright_A$, $\myleft_A$ and $\strong_A$
+follows by Proposition~\ref{WellFoundedSubset}, since each of these
+relations is a subset of $\length_{\List\,A}$, which is a well-founded
+relation on $\List\,A$.
+
+We now introduce string induction principles corresponding to
+well-founded induction on each of these relations.
+
+\index{string induction!right|see {right string induction}}%
+\index{right string induction}%
+\begin{theorem}[Principle of Right String Induction]
+Suppose $A\sub\Sym$ and $P(w)$ is a property of a string $w$.
+If
+\begin{description}
+\item[\quad(basis step)]
+\begin{gather*}
+P(\%) \eqtxtl{and}
+\end{gather*}
+\item[\quad(inductive step)]
+\begin{gather*}
+\eqtxtr{for all}a\in A\eqtxt{and}w\in A^*,
+\eqtxt{if}\eqtxt{\rm(\dag)} P(w),\eqtxt{then}P(aw),
+\end{gather*}
+\end{description}
+then,
+\begin{gather*}
+\eqtxtr{for all}w\in A^*,\,P(w) .
+\end{gather*}
+\end{theorem}
+
+We refer to the formula (\dag) as the \emph{inductive hypothesis}.
+According to the induction principle, to show that every $w\in A^*$
+has property $P$, we show that the empty string has property $P$, and
+then assume that $a\in A$, $w\in A^*$ and that (the inductive
+hypothesis) $w$ has property $P$, and show that $aw$ has property
+$P$.
+
+\begin{proof}
+Equivalent to well-founded induction on $\myright_A$.
+\end{proof}
+
+By switching $aw$ to $wa$ in the inductive step, we get the principle
+of left string induction.
+
+\index{string induction!left|see {left string induction}}%
+\index{left string induction}%
+\begin{theorem}[Principle of Left String Induction]
+Suppose $A\sub\Sym$ and $P(w)$ is a property of a string $w$.
+If
+\begin{description}
+\item[\quad(basis step)]
+\begin{gather*}
+P(\%) \eqtxtl{and}
+\end{gather*}
+\item[\quad(inductive step)]
+\begin{gather*}
+\eqtxtr{for all}a\in A\eqtxt{and}w\in A^*,
+\eqtxt{if} \eqtxt{\rm(\dag)} P(w),\eqtxt{then}P(wa),
+\end{gather*}
+\end{description}
+then,
+\begin{gather*}
+\eqtxtr{for all}w\in A^*,\,P(w) .
+\end{gather*}
+\end{theorem}
+
+We refer to the formula (\dag) as the \emph{inductive hypothesis}.
+
+\begin{proof}
+Equivalent to well-founded induction on $\myleft_A$.
+\end{proof}
+
+\index{strong string induction}%
+\index{string induction!strong|see{strong string induction}}%
+\begin{theorem}[Principle of Strong String Induction]
+Suppose $A\sub\Sym$ and $P(w)$ is a property of a string $w$.
+If
+\begin{ctabbing}
+for all $w\in A^*$, \\
+if {\rm(\dag)} for all $x\in A^*$, if $x$ is a proper substring
+of $w$, then $P(x)$, \\
+then $P(w)$,
+\end{ctabbing}
+then,
+\begin{gather*}
+\eqtxtr{for all}w\in A^*,\,P(w) .
+\end{gather*}
+\end{theorem}
+
+We refer to (\dag) as the inductive hypothesis.  It says that all the
+proper substrings of $w$ have property $P$.  According to the
+induction principle, to show that every $w\in A^*$ has property $P$,
+we let $w\in A^*$, and assume (the inductive hypothesis) that every
+proper substring of $w$ has property $P$.  Then we must show that $w$
+has property $P$.
+
+\begin{proof}
+Equivalent to well-founded induction on $\strong_A$.
+\end{proof}
+
+The next subsection, on proving language equalities, contains two
+examples of proofs by strong string induction.  Before moving on to
+that subsection, we give an example proof by right string induction.
+
+We define the
+\emph{reversal}
+\index{reversal!string}%
+\index{string!reversal}%
+$x^R\in\Str$
+\index{ reversal@$\cdot^R$}%
+\index{string! reversal@$\cdot^R$}%
+\emph{of} a string $x$ by right recursion
+\index{recursion!string}%
+on strings:
+\begin{align*}
+\%^R &= \% ; \\
+(ax)^R &= x^Ra, \eqtxt{for all} a\in\Sym \eqtxt{and} x\in\Str .
+\end{align*}
+E.g., we have that $\mathsf{(021)}^R=\mathsf{120}$.  And, an easy
+calculation shows that, for all $a\in\Sym$, $a^R=a$.  We let the
+reversal operation have higher precedence than string concatenation,
+so that, e.g., $xx^R = x(x^R)$.
+
+\begin{proposition}
+\label{StrRevProp1}
+For all $x,y\in\Str$, $(xy)^R = y^R x^R$.
+\end{proposition}
+
+As usual, we must start by figuring out which of $x$ and $y$
+to do induction on, as well as what sort of induction to use.
+Because we defined string reversal using right recursion,
+it turns out that we should do right string induction
+\index{right string induction}%
+on $x$.
+
+\begin{proof}
+Suppose $y\in\Str$.  Since $\Sym^*=\Str$, it will suffice to
+show that, for all $x\in\Sym^*$, $(xy)^R = y^R x^R$.  We proceed by
+right string induction.
+\begin{description}
+\item[\quad(Basis Step)] We have that $(\%y)^R = y^R = y^R\% = y^R\%^R$.
+
+\item[\quad(Inductive Step)] Suppose $a\in\Sym$ and $x\in\Sym^*$.  Assume
+the inductive hypothesis: $(xy)^R = y^R x^R$.  Then,
+\begin{alignat*}{2}
+((ax)y)^R &= (a(xy))^R \\
+&= (xy)^Ra && \by{definition of $(a(xy))^R$} \\
+&= (y^Rx^R)a && \by{inductive hypothesis} \\
+&= y^R(x^Ra) \\
+&= y^R(ax)^R && \by{definition of $(ax)^R$}.
+\end{alignat*}
+\end{description}
+\end{proof}
+
+\begin{exercise}
+\label{StrRevEx}
+Use right string induction and Proposition~\ref{StrRevProp1} to prove
+that, for all $x\in\Str$, $(x^R)^R=x$.
+\end{exercise}
+
+\begin{exercise}
+In Section~\ref{SymbolsStringsAlphabetsAndFormalLanguages}, we used
+right recursion to define the function
+$\alphabet\in\Str\fun\Alp$.  Use right string induction to show
+that,
+\index{alphabet@$\alphabet$}%
+\index{string!alphabet}%
+\index{string!alphabet@$\alphabet$}%
+for all $x,y\in\Str$, $\alphabet(xy)=\alphabet\,x\cup\alphabet\,y$.
+\end{exercise}
+
+\subsection{Proving Language Equalities}
+
+In this subsection, we show two examples of how strong string induction
+and induction over inductively defined languages can be used to
+show that two languages are equal.
+
+For the first example, let $X$ be the least subset of
+$\{\mathsf{0,1}\}^*$ such that:
+\begin{enumerate}[\quad(1)]
+\item $\%\in X$; and
+
+\item for all $a\in\{\mathsf{0,1}\}$ and $x\in X$, $axa\in X$.
+\end{enumerate}
+This is another example of an inductive definition:
+\index{inductive definition}%
+$X$ consists of just those strings of $\zerosf$'s and $\onesf$'s that
+can be constructed using (1) and (2).  For example, by (1) and (2), we
+have that $\zerosf\zerosf=\zerosf\%\zerosf\in X$.  Thus, by (2), we have
+that $\mathsf{1001=1(00)1}\in X$.  In general, we have that $X$
+contains the elements:
+\begin{gather*}
+\mathsf{\%, 00, 11, 0000, 0110, 1001, 1111,\,\ldots}
+\end{gather*}
+
+We will show that $X=Y$, where
+\index{palindrome}%
+\index{string!palindrome}%
+$Y=\setof{w\in\{\mathsf{0,1}\}^*}{w\eqtxt{is a palindrome and}|w|
+\eqtxtl{is even}}$.
+
+\begin{lemma}
+\label{SSIProp1Lem1}
+$Y\sub X$.
+\end{lemma}
+
+\begin{proof}
+Since $Y\sub\{\zerosf,\onesf\}^*$, it will suffice to show that,
+for all $w\in\{\mathsf{0,1}\}^*$,
+\begin{gather*}
+\eqtxt{if}w\in Y, \eqtxt{then}w\in X.
+\end{gather*}
+We proceed by strong string induction.
+
+Suppose $w\in\{\mathsf{0,1}\}^*$,
+and assume the inductive hypothesis: for all $x\in\{\mathsf{0,1}\}^*$,
+if $x$ is a proper substring of $w$, then
+\begin{gather*}
+\eqtxt{if}x\in Y, \eqtxt{then}x\in X .
+\end{gather*}
+We must show that
+\begin{gather*}
+\eqtxt{if}w\in Y, \eqtxt{then}w\in X .
+\end{gather*}
+
+Suppose $w\in Y$, so that $w\in\{\mathsf{0,1}\}^*$, $w$ is a
+palindrome and $|w|$ is even.  It remains to show that $w\in X$.  If
+$w=\%$, then $w=\%\in X$, by Part~(1) of the definition of $X$.  So,
+suppose $w\neq\%$.  Since $|w|$ is even, we have that $|w|\geq 2$, and
+thus that $w=axb$ for some $a,b\in\{\zerosf,\onesf\}$ and
+$x\in\{\zerosf,\onesf\}^*$.  Because $|w|$ is even, it follows that
+$|x|$ is even.  Furthermore, because $w$ is a palindrome, it follows
+that $a=b$ and $x$ is a palindrome.  Thus $w=axa$ and $x\in Y$.  Since
+$x$ is a proper substring of $w$, the inductive hypothesis tells us
+that
+\begin{gather*}
+\eqtxt{if}x\in Y, \eqtxt{then}x\in X .
+\end{gather*}
+But $x\in Y$, and thus $x\in X$.  Thus, by Part~(2) of the definition
+of $X$, we have that $w=axa\in X$.
+\end{proof}
+
+We could also prove $X\sub Y$ by strong string induction.
+But an alternative approach is more elegant and generally applicable:
+we use the induction principle that comes from the inductive definition
+of $X$.
+
+\index{inductive definition!induction principle}%
+\begin{proposition}[Principle of Induction on $X$]
+Suppose $P(w)$ is a property of a string $w$.
+If
+\begin{enumerate}[\quad(1)]
+\item\quad
+\begin{gather*}
+P(\%), and
+\end{gather*}
+\item\quad
+\begin{gather*}
+\eqtxtr{for all}a\in\{\mathsf{0,1}\}\eqtxt{and}x\in X,
+\eqtxt{if}\eqtxt{\rm(\dag)} P(x),\eqtxt{then} P(axa) ,
+\end{gather*}
+\end{enumerate}
+then,
+\begin{gather*}
+\eqtxtr{for all}w\in X,\,P(w) .
+\end{gather*}
+\end{proposition}
+
+We refer to (\dag) as the \emph{inductive hypothesis} of Part~(2).
+By Part~(1) of the definition of $X$, $\%\in X$.  Thus Part~(1) of the
+induction principle requires us to show $P(\%)$.  By Part~(2) of the
+definition of $X$, if $a\in\{\zerosf,\onesf\}$ and $x\in X$, then
+$axa\in X$.  Thus in Part~(2) of the induction principle, when proving
+that the ``new'' element $axa$ has property $P$, we're allowed to
+assume that the ``old'' element has property $P$.
+
+\begin{lemma}
+\label{SSIProp1Lem2}
+$X\sub Y$.
+\end{lemma}
+
+\begin{proof}
+We use induction on $X$ to show that, for all $w\in X$, $w\in Y$.
+
+There are two steps to show.
+\begin{enumerate}[\quad(1)]
+\item Since $\%\in\{\mathsf{0,1}\}^*$, $\%$ is a palindrome and
+  $|\%|=0$ is even, we have that $\%\in Y$.
+
+\item Let $a\in\{\mathsf{0,1}\}$ and $x\in X$.  Assume the inductive
+  hypothesis: $x\in Y$.  We must show that $axa\in Y$.  Since $x\in
+  Y$, we have that $x\in\{\mathsf{0,1}\}^*$, $x$ is a palindrome and
+  $|x|$ is even.  Because $a\in\{\mathsf{0,1}\}$ and
+  $x\in\{\mathsf{0,1}\}^*$, it follows that
+  $axa\in\{\mathsf{0,1}\}^*$.  Since $x$ is a palindrome, we have that
+  $axa$ is also a palindrome.  And, because $|axa|=|x|+2$ and $|x|$ is
+  even, it follows that $|axa|$ is even.  Thus $axa\in Y$, as
+  required.
+\end{enumerate}
+\end{proof}
+
+\begin{proposition}
+\label{SSIProp1}
+$X=Y$.
+\end{proposition}
+
+\begin{proof}
+Follows immediately from Lemmas~\ref{SSIProp1Lem1} and \ref{SSIProp1Lem2}.
+\end{proof}
+
+We end this subsection by proving a more complex language equality.
+One of the languages is defined using a ``difference'' function
+\index{difference function}%
+\index{string!difference function}%
+on strings, which we will use a number of times in later chapters.
+Define $\diff\in\{\mathsf{0,1}\}^*\fun\ints$ by:
+\index{diff@$\diff$}%
+\index{string!diff@$\diff$}%
+for all $w\in\{\mathsf{0,1}\}^*$,
+\begin{displaymath}
+\diff\,w =
+\eqtxtr{the number of $\mathsf{1}$'s in}w -
+\eqtxtr{the number of $\mathsf{0}$'s in}w .
+\end{displaymath}
+Then:
+\begin{itemize}
+\item $\diff\,\% = 0$;
+
+\item $\diff\,\mathsf{1} = 1$;
+
+\item $\diff\,\mathsf{0} = -1$; and
+
+\item for all $x,y\in\{\mathsf{0,1}\}^*$, $\diff(xy) = \diff\,x +
+\diff\,y$.
+\end{itemize}
+Note that, for all $w\in\{\zerosf,\onesf\}^*$, $\diff\,w=0$
+iff $w$ has an equal number of $\zerosf$'s and $\onesf$'s.
+If we think of a $\onesf$ as representing the production of
+one unit of some resource, and of a $\zerosf$ as representing
+the consumption of one unit of that resource, then a string
+will have a diff of $0$ iff it is balanced in terms of production
+and consumption.  Note that such such a string may have prefixes
+with negative diff's, i.e., it may temporarily go ``into the red''.
+
+Let $X$ (forget the previous definition of $X$) be the least subset of
+$\{\mathsf{0,1}\}^*$ such that:
+\begin{enumerate}[\quad (1)]
+\item $\%\in X$;
+
+\item for all $x,y\in X$, $xy\in X$;
+
+\item for all $x\in X$, $\zerosf x\onesf\in X$; and
+
+\item for all $x\in X$, $\onesf x\zerosf\in X$.
+\end{enumerate}
+\index{inductive definition}%
+Let $Y=\setof{w\in\{\mathsf{0,1}\}^*}{\diff\,w=0}$.
+
+For example, since $\%\in X$, it follows, by (3) and (4) that
+$\zerosf\onesf=\zerosf\%\onesf\in X$ and
+$\onesf\zerosf=\onesf\%\zerosf\in X$.  Thus, by (2), we have that
+$\mathsf{0110}=(\zerosf\onesf)(\onesf\zerosf)\in X$.
+And, $Y$ consists of all strings of $\zerosf$'s and $\onesf$'s
+with an equal number of $\zerosf$'s and $\onesf$'s.
+
+Our goal is to prove that $X=Y$, i.e., that: (the easy direction)
+every string that can be constructed using $X$'s rules has an equal
+number of $\zerosf$'s and $\onesf$'s; and (the hard direction)
+that every string of $\zerosf$'s and $\onesf$'s with an equal number
+of $\zerosf$'s and $\onesf$'s can be constructed using $X$'s
+rules.
+
+Because $X$ was defined inductively, it gives rise to an
+induction principle, which we will use to prove the following lemma.
+\index{inductive definition!induction principle}%
+(Because of Part~(2) of the definition of $X$, we wouldn't be
+able to prove this lemma using strong string induction.)
+
+\begin{lemma}
+\label{SSIProp2Lem1}
+$X\sub Y$.
+\end{lemma}
+
+\begin{proof}
+We use induction on $X$ to show that, for all $w\in X$, $w\in Y$.
+There are four steps to show, corresponding to the four rules
+of $X$'s definition.
+\begin{enumerate}[\quad(1)]
+\item We must show $\%\in Y$.  Since $\%\in\{\mathsf{0,1}\}^*$ and
+  $\diff\,\%=0$, we have that $\%\in Y$.
+
+\item Suppose $x,y\in X$, and assume the inductive hypothesis: $x,y\in
+  Y$.  We must show that $xy\in Y$.  Since $x,y\in Y$, we have that
+  $xy\in\{\mathsf{0,1}\}^*$ and $\diff(xy)=\diff\,x+\diff\,y=0+0=0$.
+  Thus $xy\in Y$.
+
+\item Suppose $x\in X$, and assume the inductive hypothesis: $x\in Y$.
+  We must show that $\zerosf x\onesf\in Y$.  Since $x\in Y$, we have
+  that $\zerosf x\onesf\in \{\mathsf{0,1}\}^*$ and $\diff(\zerosf
+  x\onesf)= \diff\,\zerosf+\diff\,x+\diff\,\onesf=-1+0+1=0$.  Thus
+  $\zerosf x\onesf\in Y$.
+
+\item Suppose $x\in X$, and assume the inductive hypothesis: $x\in Y$.
+  We must show that $\onesf x\zerosf\in Y$.  Since $x\in Y$, we have
+  that $\onesf x\zerosf\in\{\mathsf{0,1}\}^*$ and $\diff(\onesf
+  x\zerosf)= \diff\,\onesf+\diff\,x+\diff\,\zerosf=1+0+-1=0$.  Thus
+  $\onesf x\zerosf\in Y$.
+\end{enumerate}
+\end{proof}
+
+\begin{lemma}
+\label{SSIProp2Lem2}
+$Y\sub X$.
+\end{lemma}
+
+\begin{proof}
+Since $Y\sub\{\mathsf{0,1}\}^*$, it will suffice to show that, for all
+$w\in\{\mathsf{0,1}\}^*$,
+\begin{displaymath}
+\eqtxtr{if}w\in Y,\eqtxt{then}w\in X .
+\end{displaymath}
+We proceed by strong string induction.
+\index{strong string induction}%
+Suppose
+$w\in\{\mathsf{0,1}\}^*$, and assume the inductive hypothesis: for all
+$x\in \{\mathsf{0,1}\}^*$, if $x$ is a proper substring of $w$, then
+\begin{displaymath}
+\eqtxtr{if}x\in Y,\eqtxt{then}x\in X .
+\end{displaymath}
+We must show that
+\begin{displaymath}
+\eqtxtr{if}w\in Y,\eqtxt{then}w\in X .
+\end{displaymath}
+Suppose $w\in Y$.  We must show that $w\in X$.  There are three cases
+to consider.
+\begin{itemize}
+\item Suppose $w=\%$.  Then $w=\%\in X$, by Part~(1) of the definition of $X$.
+
+\item Suppose $w=\zerosf t$ for some $t\in\{\mathsf{0,1}\}^*$. Since
+  $w\in Y$, we have that
+  $-1+\diff\,t=\diff\,\zerosf+\diff\,t=\diff(\zerosf t)=\diff\,w=0$,
+  and thus that $\diff\,t=1$.
+
+  Let $u$ be the shortest prefix of $t$ such that $\diff\,u\geq 1$.
+  (Since $t$ is a prefix of itself and $\diff\,t=1\geq 1$, it follows
+  that $u$ is well-defined.)  Let $z\in\{\mathsf{0,1}\}^*$ be such
+  that $t=uz$.  Clearly, $u\neq\%$, and thus $u=yb$ for some
+  $y\in\{\mathsf{0,1}\}^*$ and $b\in\{\mathsf{0,1}\}$.  Hence
+  $t=uz=ybz$.  Since $y$ is a shorter prefix of $t$ than $u$, we have
+  that $\diff\,y\leq 0$.
+
+  Suppose, toward a contradiction, that $b=\zerosf$.  Then
+  $\diff\,y+-1=\diff\,y+\diff\,\zerosf=\diff\,y+\diff\,b=\diff(yb)=\diff\,u\geq
+  1$, so that $\diff\,y\geq 2$.  But $\diff\,y\leq 0$---contradiction.
+  Hence $b=\onesf$.
+
+  Summarizing, we have that $u=yb=y\onesf$, $t=uz=y\onesf z$ and
+  $w=\zerosf t=\zerosf y\onesf z$.  Since
+  $\diff\,y+1=\diff\,y+\diff\,\onesf=\diff(y\onesf)=\diff\,u\geq 1$,
+  it follows that $\diff\,y\geq 0$.  But $\diff\,y\leq 0$, and thus
+  $\diff\,y=0$.  Thus $y\in Y$.  Since
+  $1+\diff\,z=0+1+\diff\,z=\diff\,y+\diff\,\onesf+\diff\,z=\diff(y\onesf
+  z)=\diff\,t=1$, it follows that $\diff\,z = 0$.  Thus $z\in Y$.
+
+  Because $y$ and $z$ are proper substrings of $w$, and $y,z\in Y$,
+  the inductive hypothesis tells us that $y,z\in X$.  Thus, by
+  Part~(3) of the definition of $X$, we have that $\zerosf y\onesf\in
+  X$.  Hence, Part~(2) of the definition of $X$ tells us that
+  $w=\zerosf y\onesf z= (\zerosf y\onesf)z\in X$.
+
+\item Suppose $w=\onesf t$ for some $t\in\{\mathsf{0,1}\}^*$. Since
+  $w\in Y$, we have that
+  $1+\diff\,t=\diff\,\onesf+\diff\,t=\diff(\onesf t)=\diff\,w=0$, and
+  thus that $\diff\,t=-1$.
+
+  Let $u$ be the shortest prefix of $t$ such that $\diff\,u\leq -1$.
+  (Since $t$ is a prefix of itself and $\diff\,t=-1\leq -1$, it
+  follows that $u$ is well-defined.)  Let $z\in\{\mathsf{0,1}\}^*$ be
+  such that $t=uz$.  Clearly, $u\neq\%$, and thus $u=yb$ for some
+  $y\in\{\mathsf{0,1}\}^*$ and $b\in\{\mathsf{0,1}\}$.  Hence
+  $t=uz=ybz$.  Since $y$ is a shorter prefix of $t$ than $u$, we have
+  that $\diff\,y\geq 0$.
+
+  Suppose, toward a contradiction, that $b=\onesf$.  Then
+  $\diff\,y+1=\diff\,y+\diff\,\onesf=\diff\,y+\diff\,b=\diff(yb)=\diff\,u\leq
+  -1$, so that $\diff\,y\leq -2$.  But $\diff\,y\geq
+  0$---contradiction.  Hence $b=\zerosf$.
+
+  Summarizing, we have that $u=yb=y\zerosf$, $t=uz=y\zerosf z$ and
+  $w=\onesf t=\onesf y\zerosf z$.  Since
+  $\diff\,y+-1=\diff\,y+\diff\,\zerosf=\diff(y\zerosf)=\diff\,u\leq
+  -1$, it follows that $\diff\,y\leq 0$.  But $\diff\,y\geq 0$, and
+  thus $\diff\,y=0$.  Thus $y\in Y$.  Since
+  $-1+\diff\,z=0+-1+\diff\,z=\diff\,y+\diff\,\zerosf+\diff\,z=\diff(y\zerosf
+  z)= \diff\,t=-1$, it follows that $\diff\,z = 0$.  Thus $z\in Y$.
+
+  Because $y$ and $z$ are proper substrings of $w$, and $y,z\in Y$,
+  the inductive hypothesis tells us that $y,z\in X$.  Thus, by
+  Part~(4) of the definition of $X$, we have that $\onesf y\zerosf\in
+  X$.  Hence, Part~(2) of the definition of $X$ tells us that
+  $w=\onesf y\zerosf z= (\onesf y\zerosf)z\in X$.
+\end{itemize}
+\end{proof}
+
+In the proof of the preceding lemma we made use of all four rules of
+$X$'s definition.  If this had not been the case, we would have known
+that the unused rules were redundant (or that we had made a mistake in
+our proof!).
+
+\begin{proposition}
+\label{SSIProp2}
+$X=Y$.
+\end{proposition}
+
+\begin{proof}
+Follows immediately from Lemmas~\ref{SSIProp2Lem1} and \ref{SSIProp2Lem2}.
+\end{proof}
+
+\begin{exercise}
+Define a function $\diff\in\{\mathsf{0,1}\}^*\fun\ints$ by:
+for all $w\in\{\mathsf{0,1}\}^*$,
+\begin{displaymath}
+\diff\,w =
+\eqtxtr{the number of $\mathsf{1}$'s in}w -
+\eqtxtr{the number of $\mathsf{0}$'s in}w .
+\end{displaymath}
+Thus $\diff\,\%=0$, $\diff\,\zerosf = -1$, $\diff\,\onesf = 1$, and
+for all $x,y\in\{\mathsf{0,1}\}^*$, $\diff(xy) = \diff\,x + \diff\,y$.
+Furthermore, for all $w\in\{\mathsf{0,1}\}^*$, $\diff\,w=0$ iff $w$
+has an equal number of $\zerosf$'s and $\onesf$'s.
+Let $X$ be the least subset of $\{\mathsf{0,1}\}^*$ such that:
+\begin{enumerate}[\quad(1)]
+\item $\%\in X$;
+
+\item for all $x\in X$, $\zerosf x\onesf\in X$; and
+
+\item for all $x,y\in X$, $xy\in X$.
+\end{enumerate}
+Let $Y=\setof{w\in\{\mathsf{0,1}\}^*}{\diff\,w=0\eqtxt{and,
+for all prefixes}v\eqtxt{of}w,\diff\,v\leq 0}$.
+Prove that $X=Y$.
+\end{exercise}
+
+\begin{exercise}
+Define a function $\diff\in\{\mathsf{0,1}\}^*\fun\ints$ by:
+for all $w\in\{\mathsf{0,1}\}^*$,
+\begin{displaymath}
+\diff\,w =
+\eqtxtr{the number of $\mathsf{1}$'s in}w -
+2(\eqtxtr{the number of $\mathsf{0}$'s in}w) .
+\end{displaymath}
+Thus $\diff\,\%=0$,
+$\diff\,\zerosf = -2$,
+$\diff\,\onesf = 1$, and
+for all $x,y\in\{\mathsf{0,1}\}^*$, $\diff(xy) = \diff\,x + \diff\,y$.
+Furthermore, for all $w\in\{\mathsf{0,1}\}^*$,
+$\diff\,w=0$ iff $w$ has twice as many $\onesf$'s as $\zerosf$'s.
+Let $X$ be the least subset of $\{\mathsf{0,1}\}^*$ such that:
+\begin{enumerate}[\quad(1)]
+\item $\%\in X$;
+
+\item $\onesf\in X$;
+
+\item for all $x,y\in X$, $\onesf x\onesf y\zerosf\in X$; and
+
+\item for all $x,y\in X$, $xy\in X$.
+\end{enumerate}
+Let $Y=\setof{w\in\{\mathsf{0,1}\}^*}{\eqtxtr{for all
+prefixes}v\eqtxt{of}w,\diff\,v\geq 0}$.
+Prove that $X=Y$.
+\end{exercise}
+
+\subsection{Notes}
+
+A novel feature of this book is the introduction and use of explicit
+string induction principles, as an alternative to doing proofs by
+induction (mathematical or strong) on the length of strings.  Also
+novel is our focus on languages defined using ``difference''
+functions.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

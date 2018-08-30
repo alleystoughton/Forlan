@@ -1,0 +1,39 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(5057,1190)(0,-10)
+\put(4740,317){\ellipse{474}{474}}
+\put(3540.000,662.000){\arc{510.000}{2.6516}{6.7731}}
+\blacken\path(3256.413,650.939)(3315.000,542.000)(3314.571,665.692)(3256.413,650.939)
+\put(1140,317){\ellipse{618}{618}}
+\put(4740,317){\ellipse{618}{618}}
+\put(4140,392){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\%$}}}}
+\put(3540,992){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\mathsf{3(\%+4)}$}}}}
+\put(2340,992){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\zerosf$}}}}
+\put(4740,242){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\Bsf$}}}}
+\put(1740,392){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\%$}}}}
+\put(2340.000,662.000){\arc{510.000}{2.6516}{6.7731}}
+\blacken\path(2056.413,650.939)(2115.000,542.000)(2114.571,665.692)(2056.413,650.939)
+\path(1440,317)(2040,317)
+\blacken\path(1920.000,287.000)(2040.000,317.000)(1920.000,347.000)(1920.000,287.000)
+\path(2640,317)(3240,317)
+\blacken\path(3120.000,287.000)(3240.000,317.000)(3120.000,347.000)(3120.000,287.000)
+\path(3840,317)(4440,317)
+\blacken\path(4320.000,287.000)(4440.000,317.000)(4320.000,347.000)(4320.000,287.000)
+\put(1140,242){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\Asf$}}}}
+\put(3540,242){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\langle\Bsf\rangle$}}}}
+\put(2940,392){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\onesf+\twosf$}}}}
+\put(3540,317){\ellipse{600}{600}}
+\put(2340,317){\ellipse{600}{600}}
+\path(540,317)(840,317)
+\blacken\path(720.000,287.000)(840.000,317.000)(720.000,347.000)(720.000,287.000)
+\put(2332,242){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\langle\Asf\rangle$}}}}
+\put(15,242){\makebox(0,0)[lb]{\smash{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}Start}}}}
+\end{picture}
+}

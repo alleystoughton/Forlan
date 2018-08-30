@@ -1,0 +1,8 @@
+letRec(even, n,
+       cond(calc(isZero, var(n)), const(true),
+            letSimp(m, calc(minus, pair(var(n), int(1))),
+                    cond(calc(isZero, var(m)), const(false),
+                         app(var(even),
+                             calc(minus,
+                                  pair(var(m), int(1))))))),
+       var(even))

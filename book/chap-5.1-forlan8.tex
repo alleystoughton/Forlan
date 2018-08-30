@@ -1,0 +1,76 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ pr1\ =\ Prog.input\ "";
+\item[]\textsl{@\ }calc(consSym,\ int(12))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pr1\ =\ -\ :\ prog}
+\item[]\textsl{-\ }Prog.evaluate(pr1,\ 2);
+\item[]\textsl{terminated\ with\ value\ "sym(b)"}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pr2\ =\ Prog.input\ "";
+\item[]\textsl{@\ }calc(consSym,
+\item[]\textsl{@\ }\ \ \ \ \ pair(sym(9),
+\item[]\textsl{@\ }\ \ \ \ \ \ \ \ \ \ pair(const(nil),
+\item[]\textsl{@\ }\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pair(sym(<hi>),\ const(nil)))))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pr2\ =\ -\ :\ prog}
+\item[]\textsl{-\ }Prog.evaluate(pr2,\ 2);
+\item[]\textsl{terminated\ with\ value\ "sym(<9,<hi>>)"}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pr3\ =\ Prog.input\ "";
+\item[]\textsl{@\ }calc(deconsSym,\ sym(c))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pr3\ =\ -\ :\ prog}
+\item[]\textsl{-\ }Prog.evaluate(pr3,\ 2);
+\item[]\textsl{terminated\ with\ value\ "int(13)"}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pr4\ =\ Prog.input\ "";
+\item[]\textsl{@\ }calc(deconsSym,\ sym(<on,,to>))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pr4\ =\ -\ :\ prog}
+\item[]\textsl{-\ }Prog.evaluate(pr4,\ 2);
+\item[]\textsl{terminated\ with\ value}
+\item[]\textsl{"pair(sym(o),}
+\item[]\textsl{\ \ \ \ \ \ pair(sym(n),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ pair(const(nil),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pair(const(nil),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pair(sym(t),\ pair(sym(o),\ const(nil)))))))"}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pr5\ =\ Prog.input\ "";
+\item[]\textsl{@\ }calc(symListToStr,
+\item[]\textsl{@\ }\ \ \ \ \ pair(sym(9),
+\item[]\textsl{@\ }\ \ \ \ \ \ \ \ \ \ pair(sym(<hi>),
+\item[]\textsl{@\ }\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ const(nil))))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pr5\ =\ -\ :\ prog}
+\item[]\textsl{-\ }Prog.evaluate(pr5,\ 2);
+\item[]\textsl{terminated\ with\ value\ "str(9<hi>)"}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pr6\ =\ Prog.input\ "";
+\item[]\textsl{@\ }calc(strToSymList,\ str(ab<hi><>))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pr6\ =\ -\ :\ prog}
+\item[]\textsl{-\ }Prog.evaluate(pr6,\ 2);
+\item[]\textsl{terminated\ with\ value}
+\item[]\textsl{"pair(sym(a),}
+\item[]\textsl{\ \ \ \ \ \ pair(sym(b),\ pair(sym(<hi>),\ pair(sym(<>),\ const(nil)))))"}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

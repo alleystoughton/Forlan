@@ -1,0 +1,25 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(1396,1380)(0,-10)
+\path(289,975)(964,75)
+\blacken\path(868.000,153.000)(964.000,75.000)(916.000,189.000)(868.000,153.000)
+\path(289,525)(964,525)
+\blacken\path(844.000,495.000)(964.000,525.000)(844.000,555.000)(844.000,495.000)
+\path(289,75)(964,975)
+\blacken\path(916.000,861.000)(964.000,975.000)(868.000,897.000)(916.000,861.000)
+\put(139,450){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$1$}}}}}
+\put(139,900){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$0$}}}}}
+\put(139,0){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$2$}}}}}
+\put(1189,900){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$0.5$}}}}}
+\put(1189,0){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$5.1$}}}}}
+\put(1189,450){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$2.6$}}}}}
+\put(664,1200){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$f$}}}}}
+\end{picture}
+}

@@ -1,0 +1,845 @@
+<!-- gram.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Gram Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Gram/ Module</HEAD>
+
+<PP>This module defines the abstract type of grammars.</PP>
+
+<STRUCTURE STRID="Gram">
+<OPAQUE>
+<SIGBODY SIGID="GRAM" FILE=GRAM>
+
+<SPEC>
+<TYPE><ID>concr</ID>
+<TY>{vars : Sym.sym Set.set, start : Sym.sym, prods : Prod.prod Set.set}</TY>
+</TYPE>
+<COMMENT>
+<PP>The concrete type of <EM>pre-grammars</EM>, records consisting of
+a finite set <CD>vars</CD> ("variables") of symbols,
+a symbol <CD>start</CD> ("start variable"), and
+a finite set <CD>prods</CD> ("productions") of productions.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<TYPE><ID>gram</ID></TYPE>
+<COMMENT>
+<PP>The abstract type of grammars, consisting of those pre-grammars
+<CD><ARG/concr/</CD> of type <CD>concr</CD> such that:
+<ITEMIZE>
+<ITEM>
+<CD>#start <ARG/concr/</CD> is an element of <CD>#vars <ARG/concr/</CD>; and
+</ITEM>
+
+<ITEM>for all elements <CD>(<ARG/q/, <ARG/bs/)</CD> of <CD>#prods
+<ARG/concr/</CD>, <CD><ARG/q/</CD> is an element of <CD>#vars <ARG/concr/</CD>.
+</ITEM>
+</ITEMIZE>
+We say that <CD><ARG/concr/</CD> is <EM>valid</EM> iff <CD><ARG/concr/</CD>
+satisfies the above conditions.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>valid<TY>concr -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+valid <ARG/concr/
+</PROTOTY>
+<PP>tests whether <CD><ARG/conr/</CD> is valid.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromConcr<TY>concr -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromConcr <ARG/concr/
+</PROTOTY>
+<PP>returns <CD><ARG/concr/</CD>.  Issues an error message if
+<CD><ARG/concr/</CD> is not valid.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toConcr<TY>gram -> concr</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toConcr <ARG/gram/
+</PROTOTY>
+<PP>returns <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs a grammar from <CD><ARG/s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs a grammar from the file named <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>gram -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toPP <ARG/gram/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>gram -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/gram/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/gram/</CD> to a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>string * gram -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+output(<ARG/fil/, <ARG/gram/)
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/gram/</CD> to the file <CD><ARG/fil/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>variables<TY>gram -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+variables <ARG/gram/
+</PROTOTY>
+<PP>returns the variables of <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>startVariable<TY>gram -> Sym.sym</TY></VAL>
+<COMMENT>
+<PROTOTY>
+startVariable <ARG/gram/
+</PROTOTY>
+<PP>returns the start variable of <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>productions<TY>gram -> Prod.prod Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+productions <ARG/gram/
+</PROTOTY>
+<PP>returns the productions of <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>gram Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compare(<ARG/gram1/, <ARG/gram2/)
+</PROTOTY>
+<PP>returns
+<CODE>
+  case SymSet.compare(variables <ARG/gram1/, variables <ARG/gram2/) of
+       LESS    => LESS
+     | EQUAL   =>
+         (case Sym.compare(startVariable <ARG/gram1/, startVariable <ARG/gram2/) of
+               LESS    => LESS
+             | EQUAL   =>
+                 ProdSet.compare(productions <ARG/gram1/, productions <ARG/gram2/)
+             | GREATER => GREATER)
+     | GREATER => GREATER
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>gram * gram -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal(<ARG/gram1/, <ARG/gram2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/gram1/</CD> and <CD><ARG/gram2/</CD> are
+equal.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>numVariables<TY>gram -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+numVariables <ARG/gram/
+</PROTOTY>
+<PP>returns the number of variables of <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>numProductions<TY>gram -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+numProductions <ARG/gram/
+</PROTOTY>
+<PP>returns the number of productions of <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>alphabet<TY>gram -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+alphabet <ARG/gram/
+</PROTOTY>
+<PP>returns the alphabet of <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>sub<TY>gram * gram -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+sub(<ARG/gram1/, <ARG/gram2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/gram1/</CD> is a sub-grammar of
+<CD><ARG/gram2/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>checkPT<TY>gram -> PT.pt -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+checkPT <ARG/gram/ <ARG/pt/
+</PROTOTY>
+<PP>checks whether <CD><ARG/pt/</CD> is valid for <CD><ARG/gram/</CD>,
+silently returning <CD>()</CD>, if it is, and explaining why it isn't,
+if it's not.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>validPT<TY>gram -> PT.pt -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+validPT <ARG/gram/ <ARG/pt/
+</PROTOTY>
+<PP>tests whether <CD><ARG/pt/</CD> is valid for <CD><ARG/gram/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>renameVariables<TY>gram * SymRel.sym_rel -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+renameVariables(<ARG/gram/, <ARG/rel/)
+</PROTOTY>
+<PP>renames the variables of <CD><ARG/gram/</CD> using the
+bijection <CD><ARG/rel/</CD>.  Issues an error message
+if <CD><ARG/rel/</CD> isn't a bijection from the variables
+of <CD><ARG/gram/</CD> to a set that's disjoint from the alphabet
+of <CD><ARG/gram/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>renameVariablesCanonically<TY>gram -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+renameVariablesCanonically <ARG/gram/
+</PROTOTY>
+<PP>canonically renames the variables of <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isomorphism<TY>gram * gram * SymRel.sym_rel -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isomorphism(<ARG/gram1/, <ARG/gram2/, <ARG/rel/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is an isomorphism from <CD><ARG/gram1/</CD>
+to <CD><ARG/gram2/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findIsomorphismOpt<TY>gram * gram -> SymRel.sym_rel option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+findIsomorphismOpt(<ARG/gram1/, <ARG/gram2/)
+</PROTOTY>
+<PP>returns <CD>SOME</CD> of an isomorhism from <CD><ARG/gram1/</CD> to
+<CD><ARG/gram2/</CD>, if <CD><ARG/gram1/</CD> and <CD><ARG/gram2/</CD>
+are isomorphic, and <CD>NONE</CD>, if <CD><ARG/gram1/</CD> and
+<CD><ARG/gram2/</CD> are not isomorphic.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findIsomorphism<TY>gram * gram -> SymRel.sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+findIsomorphism(<ARG/gram1/, <ARG/gram2/)
+</PROTOTY>
+<PP>tries to find an isomorphism from <CD><ARG/gram1/</CD>
+to <CD><ARG/gram2/</CD>.  Issues an error message if such an
+isomorphism doesn't exist.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isomorphic<TY>gram * gram -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isomorphic(<ARG/gram1/, <ARG/gram2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/gram1/</CD> and <CD><ARG/gram2/</CD> are
+isomorphic.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>renameAlphabet<TY>gram * SymRel.sym_rel -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+renameAlphabet(<ARG/gram/, <ARG/rel/)
+</PROTOTY>
+<PP>renames the alphabet of <CD><ARG/gram/</CD> using the
+bijection <CD><ARG/rel/</CD>.  Issues an error message if
+<CD><ARG/rel/</CD> is not a bijection from a superset of the
+alphabet of <CD><ARG/gram/</CD> to some set.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>parsable<TY>gram -> Sym.sym * Str.str -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+parsableFrom <ARG/gram/ (<ARG/a/, <ARG/w/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/w/</CD> is parsable from <CD><ARG/a/</CD>
+using <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>generatedFromVariable<TY>gram -> Sym.sym * Str.str -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+generatedFromVariable <ARG/gram/ (<ARG/q/, <ARG/w/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/w/</CD> is generated from the variable
+<CD><ARG/q/</CD> using <CD><ARG/gram/</CD>.  Issues an error message
+if <CD><ARG/q/</CD> is not a variable of <CD><ARG/gram/</CD>.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>generated<TY>gram -> Str.str -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+generated <ARG/gram/ <ARG/w/
+</PROTOTY>
+<PP>tests whether <CD><ARG/w/</CD> is generated by <CD><ARG/gram/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>parseOpt<TY>gram -> Sym.sym * Str.str -> PT.pt option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+parseOpt <ARG/gram/ (<ARG/a/, <ARG/w/)
+</PROTOTY>
+<PP>If <CD><ARG/w/</CD> is a string over the union of the variables of
+<CD><ARG/gram/</CD> and the alphabet of <CD><ARG/gram/</CD>,
+and <CD><ARG/a/</CD> is a variable of <CD><ARG/gram/</CD> or a symbol
+of <CD><ARG/w/</CD>, then <CD>parseOpt</CD> returns <CD>SOME</CD> of a
+minimal parse of <CD><ARG/w/</CD> from <CD><ARG/a/</CD>
+using <CD><ARG/gram/</CD>, if such a parse exists, and <CD>NONE</CD>,
+if such a parse does not exist.  Issues an error message
+if <CD><ARG/w/</CD> has a symbol that is neither a variable
+of <CD><ARG/gram/</CD> nor an element of the alphabet of
+<CD><ARG/gram/</CD>, or if <CD><ARG/a/</CD> is neither a variable
+of <CD><ARG/gram/</CD> nor a symbol of <CD><ARG/w/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>parse<TY>gram -> Sym.sym * Str.str -> PT.pt</TY></VAL>
+<COMMENT>
+<PROTOTY>
+parse <ARG/gram/ (<ARG/a/, <ARG/w/)
+</PROTOTY>
+<PP>If <CD><ARG/w/</CD> is a string over the union of the variables of
+<CD><ARG/gram/</CD> and the alphabet of <CD><ARG/gram/</CD>,
+and <CD><ARG/a/</CD> is a variable of <CD><ARG/gram/</CD> or a symbol
+of <CD><ARG/w/</CD>, then <CD>parse</CD> tries to find a minimal parse
+of <CD><ARG/w/</CD> from <CD><ARG/a/</CD> using <CD><ARG/gram/</CD>.
+Issues an error message if <CD><ARG/w/</CD> has a symbol that is
+neither a variable of <CD><ARG/gram/</CD> nor an element of the
+alphabet of <CD><ARG/gram/</CD>, or if <CD><ARG/a/</CD> is neither a
+variable of <CD><ARG/gram/</CD> nor a symbol of <CD><ARG/w/</CD>, or
+if such a parse doesn't exist.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>parseAlphabetFromVariableOpt
+<TY>gram -> Sym.sym * Str.str -> PT.pt option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+parseAlphabetFromVariableOpt <ARG/gram/ (<ARG/q/, <ARG/w/)
+</PROTOTY>
+<PP>If <CD><ARG/q/</CD> is a variable of <CD><ARG/gram/</CD>
+and <CD><ARG/w/</CD> is a string over the alphabet
+of <CD><ARG/gram/</CD>, then <CD>parseAlphabetFromVariableOpt</CD>
+returns <CD>SOME</CD> of a minimal parse of <CD><ARG/w/</CD>
+from <CD><ARG/q/</CD> using <CD><ARG/gram/</CD>, if such a parse
+exists, and <CD>NONE</CD>, if such a parse does not exist.  Issues an
+error message if <CD><ARG/q/</CD> is not a variable
+of <CD><ARG/gram/</CD>, or <CD><ARG/w/</CD> contains a symbol that
+isn't in the alphabet of <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>parseAlphabetFromVariable<TY>gram -> Sym.sym * Str.str -> PT.pt</TY></VAL>
+<COMMENT>
+<PROTOTY>
+parseAlphabetFromVariable <ARG/gram/ (<ARG/q/, <ARG/w/)
+</PROTOTY>
+<PP>If <CD><ARG/q/</CD> is a variable of <CD><ARG/gram/</CD>
+and <CD><ARG/w/</CD> is a string over the alphabet
+of <CD><ARG/gram/</CD>, then <CD>parseAlphabetFromVariable</CD>
+tries to find a minimal parse of
+<CD><ARG/w/</CD> from <CD><ARG/q/</CD> using <CD><ARG/gram/</CD>.
+Issues an error message if <CD><ARG/q/</CD> is not a variable
+of <CD><ARG/gram/</CD>, or <CD><ARG/w/</CD> contains a symbol that
+isn't in the alphabet of <CD><ARG/gram/</CD>, or such a parse doesn't
+exist.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>parseAlphabetOpt<TY>gram -> Str.str -> PT.pt option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+parseAlphabetOpt <ARG/gram/ <ARG/w/
+</PROTOTY>
+<PP>If <CD><ARG/w/</CD> is a string over the alphabet
+of <CD><ARG/gram/</CD>, then <CD>parseAlphabetOpt</CD>
+returns <CD>SOME</CD> of a minimal parse of
+<CD><ARG/w/</CD> from the start variable of <CD><ARG/gram/</CD> using
+<CD><ARG/gram/</CD>, if such a parse exists, and <CD>NONE</CD>, if
+such a parse does not exist.  Issues an error message
+if <CD><ARG/w/</CD> contains a symbol that isn't in the alphabet
+of <CD><ARG/gram/</CD>.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>parseAlphabet<TY>gram -> Str.str -> PT.pt</TY></VAL>
+<COMMENT>
+<PROTOTY>
+parseAlphabet <ARG/gram/ <ARG/w/
+</PROTOTY>
+<PP>If <CD><ARG/w/</CD> is a string over the alphabet
+of <CD><ARG/gram/</CD>, then <CD>parseAlphabet</CD> tries to find a
+minimal parse of <CD><ARG/w/</CD> from the start variable
+of <CD><ARG/gram/</CD> using <CD><ARG/gram/</CD>.  Issues an error
+message if <CD><ARG/w/</CD> contains a symbol that isn't in the
+alphabet of <CD><ARG/gram/</CD>, or such a parse doesn't exist.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reachableFrom<TY>gram -> Sym.sym Set.set -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+reachableFrom <ARG/gram/ <ARG/qs/
+</PROTOTY>
+<PP>returns the set of variables of <CD><ARG/gram/</CD> that
+are reachable from the variables <CD><ARG/qs/</CD>.
+Issues an error message if <CD><ARG/qs/</CD> contains a symbol
+that isn't a variable of <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reachableFromBackwards
+<TY>gram -> Sym.sym Set.set -> Sym.sym Set.set</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+reachableFromBackwards <ARG/gram/ <ARG/qs/
+</PROTOTY>
+<PP>returns the set of variables of <CD><ARG/gram/</CD> that
+are backwards-reachable from the variables <CD><ARG/qs/</CD>.
+Issues an error message if <CD><ARG/qs/</CD> contains a symbol
+that isn't a variable of <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reachify<TY>gram -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+reachify <ARG/gram/
+</PROTOTY>
+<PP>reachifies <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reachified<TY>gram -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+reachified <ARG/gram/
+</PROTOTY>
+<PP>tests whether <CD><ARG/gram/</CD> is reachified.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>simplify<TY>gram -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+simplify <ARG/gram/
+</PROTOTY>
+<PP>simplifies <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>simplified<TY>gram -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+simplified <ARG/gram/
+</PROTOTY>
+<PP>tests whether <CD><ARG/gram/</CD> is simplified.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>nullableVariables<TY>gram -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+nullableVariables <ARG/gram/
+</PROTOTY>
+<PP>returns the set of nullable variables of <CD><ARG/gram/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>hasNoEmptyProductions<TY>gram -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+hasNoEmptyProductions <ARG/gram/
+</PROTOTY>
+<PP>tests whether <CD><ARG/gram/</CD> has no empty productions.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>eliminateEmptyProductions<TY>gram -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+eliminateEmptyProductions <ARG/gram/
+</PROTOTY>
+<PP>convert <CD><ARG/gram/</CD> to a grammar with no empty productions.
+(The new grammar will be equivalent to <CD><ARG/gram/</CD>,
+except that it won't generate <CD>%</CD>, even if <CD><ARG/gram/</CD> does.)
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>hasNoEmptyOrUnitProductions<TY>gram -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+hasNoEmptyOrUnitProductions <ARG/gram/
+</PROTOTY>
+<PP>tests whether <CD><ARG/gram/</CD> has no empty or unit
+productions.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>eliminateEmptyAndUnitProductions<TY>gram -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+eliminateEmptyAndUnitProductions <ARG/gr/
+</PROTOTY>
+<PP>convert <CD><ARG/gram/</CD> to a grammar with no empty or
+unit productions.  (The new grammar will be equivalent to <CD><ARG/gram/</CD>,
+except that it won't generate <CD>%</CD>, even if <CD><ARG/gram/</CD> does.)
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inChomskyNormalForm<TY>gram -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+inChomskyNormalForm <ARG/gram/
+</PROTOTY>
+<PP>tests whether <CD><ARG/gram/</CD> is in Chomsky Normal Form.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>chomskyNormalForm<TY>gram -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+chomskyNormalForm <ARG/gram/
+</PROTOTY>
+<PP>puts <CD><ARG/gram/</CD> into Chomsky Normal Form.
+(The new grammar will be equivalent to <CD><ARG/gram/</CD>,
+except that it won't generate <CD>%</CD>, even if <CD><ARG/gram/</CD> does.)
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toStrSetOpt<TY>gram -> Str.str Set.set option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toStrSetOpt <ARG/gram/
+</PROTOTY>
+<PP>returns <CD>SOME</CD> of the language denoted by <CD><ARG/gram/</CD>,
+if this language is finite, and <CD>NONE</CD>, if this language is
+infinite.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toStrSet<TY>gram -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toStrSet <ARG/gram/
+</PROTOTY>
+<PP>returns the language denoted by <CD><ARG/gram/</CD>.
+Issues an error message if the language denoted by <CD><ARG/gram/</CD> is
+infinite.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>emptyStr<TY>gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+emptyStr
+</PROTOTY>
+<PP>is the canonical empty string grammar.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>emptySet<TY>gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+emptySet
+</PROTOTY>
+<PP>is the canonical empty set grammar.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromStr<TY>Str.str -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromStr <ARG/x/
+</PROTOTY>
+<PP>returns the canonical grammar for <CD><ARG/x/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromSym<TY>Sym.sym -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromSym <ARG/a/
+</PROTOTY>
+<PP>returns the canonical grammar for <CD><ARG/a/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromStrSet<TY>Str.str Set.set -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromStrSet <ARG/xs/
+</PROTOTY>
+<PP>returns the canonical grammar for <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>union<TY>gram * gram -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+union(<ARG/gram1/, <ARG/gram2/)
+</PROTOTY>
+<PP>returns the union of <CD><ARG/gram1/</CD> and <CD><ARG/gram2/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>concat<TY>gram * gram -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+concat(<ARG/gram1/, <ARG/gram2/)
+</PROTOTY>
+<PP>returns the concatentation of <CD><ARG/gram1/</CD> and <CD><ARG/gram2/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>closure<TY>gram -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+closure <ARG/gram/
+</PROTOTY>
+<PP>returns the closure of <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genUnion<TY>gram list -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genUnion
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  fun genUnion nil             = emptySet
+    | genUnion [gram]          = gram
+    | genUnion (gram :: grams) = union(gram, genUnion grams)
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genConcat<TY>gram list -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genConcat
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  fun genConcat nil             = emptyStr
+    | genConcat [gram]          = gram
+    | genConcat (gram :: grams) = concat(gram, genConcat grams)
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromFA<TY>FA.fa -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromFA <ARG/fa/
+</PROTOTY>
+<PP>converts <CD><ARG/fa/</CD> to a grammar.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromReg<TY>Reg.reg -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromReg <ARG/reg/
+</PROTOTY>
+<PP>converts <CD><ARG/reg/</CD> to a grammar.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>rev<TY>gram -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+rev <ARG/gram/
+</PROTOTY>
+<PP>returns the reversal of <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>prefix<TY>gram -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+prefix <ARG/gram/
+</PROTOTY>
+<PP>returns the prefix-closure of <CD><ARG/gram/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inter<TY>gram * EFA.efa -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+inter(<ARG/gram/, <ARG/efa/)
+</PROTOTY>
+<PP>returns the intersection of <CD><ARG/gram/</CD> and <CD><ARG/efa/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>minus<TY>gram * DFA.dfa -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+minus(<ARG/gram/, <ARG/dfa/)
+</PROTOTY>
+<PP>returns the difference of <CD><ARG/gram/</CD> and <CD><ARG/dfa/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

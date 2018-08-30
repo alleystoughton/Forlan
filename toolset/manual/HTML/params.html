@@ -1,0 +1,185 @@
+<!-- HTML/params.html -->
+
+<!-- COPYRIGHT (c) 2012 Alley Stoughton. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The Params Module</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY><A NAME="top"></A>
+<H1 align=CENTER>Forlan Manual</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>Params</CODE> Module</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="PARAMS:SIG:SPEC"></A><CODE>PARAMS</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Params:STR:SPEC"></A><CODE>Params</CODE><B> :> </B>PARAMS<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+This module contains functions for querying and setting Forlan parameters.
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>val</B>&nbsp;<A NAME="STR:Params.getSearchPath:VAL:SPEC" HREF="#STR:Params.getSearchPath:VAL">getSearchPath</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setSearchPath:VAL:SPEC" HREF="#STR:Params.setSearchPath:VAL">setSearchPath</A>&nbsp;<B>:</B>&nbsp;string&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.getWorkingDirectory:VAL:SPEC" HREF="#STR:Params.getWorkingDirectory:VAL">getWorkingDirectory</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setWorkingDirectory:VAL:SPEC" HREF="#STR:Params.setWorkingDirectory:VAL">setWorkingDirectory</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.getPrintingListLength:VAL:SPEC" HREF="#STR:Params.getPrintingListLength:VAL">getPrintingListLength</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingListLength:VAL:SPEC" HREF="#STR:Params.setPrintingListLength:VAL">setPrintingListLength</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.getPrintingStringSize:VAL:SPEC" HREF="#STR:Params.getPrintingStringSize:VAL">getPrintingStringSize</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingStringSize:VAL:SPEC" HREF="#STR:Params.setPrintingStringSize:VAL">setPrintingStringSize</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.getPrintingDataStructureDepth:VAL:SPEC" HREF="#STR:Params.getPrintingDataStructureDepth:VAL">getPrintingDataStructureDepth</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingDataStructureDepth:VAL:SPEC" HREF="#STR:Params.setPrintingDataStructureDepth:VAL">setPrintingDataStructureDepth</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.getPrintingLineLength:VAL:SPEC" HREF="#STR:Params.getPrintingLineLength:VAL">getPrintingLineLength</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingLineLength:VAL:SPEC" HREF="#STR:Params.setPrintingLineLength:VAL">setPrintingLineLength</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingOfGarbageCollectionMessages:VAL:SPEC" HREF="#STR:Params.setPrintingOfGarbageCollectionMessages:VAL">setPrintingOfGarbageCollectionMessages</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.getTrackExceptions:VAL:SPEC" HREF="#STR:Params.getTrackExceptions:VAL">getTrackExceptions</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setTrackExceptions:VAL:SPEC" HREF="#STR:Params.setTrackExceptions:VAL">setTrackExceptions</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.getCompilationManagerVerbosity:VAL:SPEC" HREF="#STR:Params.getCompilationManagerVerbosity:VAL">getCompilationManagerVerbosity</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setCompilationManagerVerbosity:VAL:SPEC" HREF="#STR:Params.setCompilationManagerVerbosity:VAL">setCompilationManagerVerbosity</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="STR:Params.getSearchPath:VAL"></A>
+<DT> <CODE>getSearchPath()</CODE>
+<DD>
+returns the search path used by <CODE><CODE><A HREF="use.html#Use:STR:SPEC">Use</A></CODE>.<CODE><A HREF="use.html#SIG:USE.use:VAL:SPEC">use</A></CODE></CODE> and the various Forlan <CODE>input</CODE> functions for loading SML/Forlan files. The default is <CODE>nil</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.setSearchPath:VAL"></A>
+<DT> <CODE>setSearchPath <VAR>xs</VAR></CODE>
+<DD>
+sets the search path used by <CODE><CODE><A HREF="use.html#Use:STR:SPEC">Use</A></CODE>.<CODE><A HREF="use.html#SIG:USE.use:VAL:SPEC">use</A></CODE></CODE> and the various Forlan <CODE>input</CODE> functions to <CODE><VAR>xs</VAR></CODE>. Non-absolute paths are made absolute by prepending the current working directory.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.getWorkingDirectory:VAL"></A>
+<DT> <CODE>getWorkingDirectory()</CODE>
+<DD>
+returns the current working directory. Non-absolute paths are interpreted relative to this directory.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.setWorkingDirectory:VAL"></A>
+<DT> <CODE>setWorkingDirectory <VAR>dir</VAR></CODE>
+<DD>
+sets the current working directory to <CODE><VAR>dir</VAR></CODE>. Raises an exception if this directory doesn't exist or isn't accessible.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.getPrintingListLength:VAL"></A>
+<DT> <CODE>getPrintingListLength()</CODE>
+<DD>
+returns the number of elements of a list that the Forlan top-level will display. The default is <CODE>250</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.setPrintingListLength:VAL"></A>
+<DT> <CODE>setPrintingListLength <VAR>n</VAR></CODE>
+<DD>
+sets the number of elements of a list that the Forlan top-level will display to <CODE><VAR>n</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.getPrintingStringSize:VAL"></A>
+<DT> <CODE>getPrintingStringSize()</CODE>
+<DD>
+returns the number of characters of a string that the Forlan top-level will display. The default is <CODE>250</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.setPrintingStringSize:VAL"></A>
+<DT> <CODE>setPrintingStringSize <VAR>n</VAR></CODE>
+<DD>
+sets the number of characters of a string that the Forlan top-level will display to <CODE><VAR>n</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.getPrintingDataStructureDepth:VAL"></A>
+<DT> <CODE>getPrintingDataStructureDepth()</CODE>
+<DD>
+returns the number of levels of a data structure that the top-level loop will display. The default is <CODE>20</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.setPrintingDataStructureDepth:VAL"></A>
+<DT> <CODE>setPrintingDataStructureDepth <VAR>n</VAR></CODE>
+<DD>
+sets the number of levels of a data structure that the top-level loop will display to <CODE><VAR>n</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.getPrintingLineLength:VAL"></A>
+<DT> <CODE>getPrintingLineLength()</CODE>
+<DD>
+returns the line length that the Forlan pretty-printer works with. The default is <CODE>80</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.setPrintingLineLength:VAL"></A>
+<DT> <CODE>setPrintingLineLength <VAR>n</VAR></CODE>
+<DD>
+sets the line length that the Forlan pretty-printer works with to <CODE><VAR>n</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.setPrintingOfGarbageCollectionMessages:VAL"></A>
+<DT> <CODE>setPrintingOfGarbageCollectionMessages <VAR>b</VAR></CODE>
+<DD>
+sets whether garbage collection messages will be printed; the default is not to print them.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.getTrackExceptions:VAL"></A>
+<DT> <CODE>getTrackExceptions()</CODE>
+<DD>
+returns whether a function call trace will be printed when an exception has been raised. The default is not to do so.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.setTrackExceptions:VAL"></A>
+<DT> <CODE>setTrackExceptions <VAR>b</VAR></CODE>
+<DD>
+sets whether a function call trace will be printed when an exception has been raised.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.getCompilationManagerVerbosity:VAL"></A>
+<DT> <CODE>getCompilationManagerVerbosity()</CODE>
+<DD>
+returns whether the Compilation Manager (CM) is verbose in its messaging.  The default is that it isn't verbose.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Params.setCompilationManagerVerbosity:VAL"></A>
+<DT> <CODE>setCompilationManagerVerbosity <VAR>b</VAR></CODE>
+<DD>
+sets whether the compilation manager will be verbose in its messaging.
+<BR>
+<BR>
+
+</DL>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="utility-subsect.html">Parent</A>
+   | <A HREF="index.html">Root</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Forlan Version 4.7</I><BR>
+<I>Copyright &copy; 2018 Alley Stoughton</I><BR>
+
+<HR>
+</BODY></HTML>

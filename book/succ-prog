@@ -1,0 +1,3 @@
+lam(n,
+    calc(plus,
+         pair(var(n), int(1))))

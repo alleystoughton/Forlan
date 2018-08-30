@@ -1,0 +1,4 @@
+val gram = regToGram(Reg.input "");
+01 + 10(11)*
+.
+Gram.output("", Gram.renameVariablesCanonically gram);

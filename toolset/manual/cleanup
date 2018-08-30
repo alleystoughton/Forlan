@@ -1,0 +1,3 @@
+#!/bin/bash
+
+rm -f HTML/* Sigs/* Proof/* Info/* Hardcopy/*

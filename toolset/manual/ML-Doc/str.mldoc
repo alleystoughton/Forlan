@@ -1,0 +1,279 @@
+<!-- str.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Str Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Str/ Module</HEAD>
+
+<PP>This module provides operations on Forlan strings, i.e., lists of
+Forlan symbols.</PP>
+
+<STRUCTURE STRID="Str">
+<OPAQUE>
+<SIGBODY SIGID="STR" FILE=STR>
+
+<SPEC>
+<TYPE><ID>str</ID><TY>Sym.sym list</TY></TYPE>
+<COMMENT>
+<PP>The type of Forlan strings, i.e., lists of Forlan symbols.</PP>
+
+<PP>In the concrete syntax for strings, the empty string is written
+as <CD>%</CD>, and a nonempty string <CD>[<ARG/a1/, ... <ARG/an/]</CD>
+is written as <CD><ARG/a1/ ... <ARG/an/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>possBeginsWithStr<TY>(int * Lex.tok)list -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+possBeginsWithStr <ARG/lts/
+</PROTOTY>
+<PP>tests whether <CD><ARG/lts/</CD> begins with a symbol
+or <CD>%</CD> (<CD><STRREF TOPID/Lex/.<CONREF STRID="Lex"/Perc/</CD>),
+making it possible that a Forlan string could be parsed
+from <CD><ARG/lts/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inputFromLabToks
+<TY>(int * Lex.tok)list -> str * (int * Lex.tok)list</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+inputFromLabToks <ARG/lts/
+</PROTOTY>
+<PP>tries to input a Forlan string from <CD><ARG/lts/</CD>, consuming
+as much of <CD><ARG/lts/</CD> as possible, and returning the pair of
+that string and the rest of <CD><ARG/lts/</CD>.  Issues an error
+message if this can't be done.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> str</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs a Forlan string from <CD><ARG/s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> str</TY></VAL>
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs a Forlan string from the file named by <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>str -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toPP <ARG/x/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/x/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>str -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/x/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/x/</CD> to a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>string * str -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+output(<ARG/fil/, <ARG/x/)
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/x/</CD> to the file named by <CD><ARG/fil/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>last<TY>str -> Sym.sym</TY></VAL>
+<COMMENT>
+<PROTOTY>
+last x
+</PROTOTY>
+<PP>returns the last element of <CD><ARG/x/</CD>.
+Raises <CD>Empty</CD> if <CD><ARG/x/</CD> is empty.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>allButLast<TY>str -> str</TY></VAL>
+<COMMENT>
+<PROTOTY>
+last x
+</PROTOTY>
+<PP>returns all but the last element of <CD><ARG/x/</CD>.
+Raises <CD>Empty</CD> if <CD><ARG/x/</CD> is empty.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>str Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compare
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  val compare = Set.compareList Sym.compare
+</CODE>
+This ordering first uses the length of strings (shorter is smaller), and
+then uses the lexicographic ordering on equal length strings.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>str * str -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal(<ARG/x/, <ARG/y/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/x/</CD> and <CD><ARG/y/</CD> are equal.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>alphabet<TY>str -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+alphabet <ARG/x/
+</PROTOTY>
+<PP>returns the alphabet of <CD><ARG/x/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>renameAlphabet<TY>str * SymRel.sym_rel -> str</TY></VAL>
+<COMMENT>
+<PROTOTY>
+renameAlphabet(<ARG/x/, <ARG/rel/)
+</PROTOTY>
+<PP>renames the alphabet of <CD><ARG/x/</CD> using the
+bijection <CD><ARG/rel/</CD>.  Issues an error message if
+<CD><ARG/rel/</CD> is not a bijection from a superset of the
+alphabet of <CD><ARG/x/</CD> to some set.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>prefix<TY>str * str -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+prefix(<ARG/x/, <ARG/y/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/x/</CD> is a prefix of <CD><ARG/y/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>suffix<TY>str * str -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+suffix(<ARG/x/, <ARG/y/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/x/</CD> is a suffix of <CD><ARG/y/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>substr<TY>str * str -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+substr(<ARG/x/, <ARG/y/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/x/</CD> is a substring of <CD><ARG/y/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>power<TY>str * int -> str</TY></VAL>
+<COMMENT>
+<PROTOTY>
+power(<ARG/x/, <ARG/n/)
+</PROTOTY>
+<PP>raises <CD><ARG/x/</CD> to the power <CD><ARG/n/</CD>.
+Issues an error message if <CD><ARG/n/</CD> is negative.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>removePrefix<TY>str * str -> str option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+removePrefix(<ARG/x/, <ARG/y/)
+</PROTOTY>
+<PP>If <CD><ARG/x/</CD> is a prefix of <CD><ARG/y/</CD>, then
+<CD>removePrefix</CD> returns <CD>SOME <ARG/z/</CD>, where <CD><ARG/z/</CD>
+is the result of removing <CD><ARG/x/</CD> from the beginning of
+<CD><ARG/y/</CD>.  Otherwise, <CD>removePrefix</CD> returns <CD>NONE</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>removeSuffix<TY>str * str -> str option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+removeSuffix(<ARG/x/, <ARG/y/)
+</PROTOTY>
+<PP>If <CD><ARG/x/</CD> is a suffix of <CD><ARG/y/</CD>, then
+<CD>removeSuffix</CD> returns <CD>SOME <ARG/z/</CD>, where <CD><ARG/z/</CD>
+is the result of removing <CD><ARG/x/</CD> from the end of
+<CD><ARG/y/</CD>.  Otherwise, <CD>removeSuffix</CD> returns <CD>NONE</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanValidate<TY>string -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanValidate
+</PROTOTY>
+<PP>is a low-level function used by JForlan.  See the code for
+more information.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanPretty<TY>string -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanPretty
+</PROTOTY>
+<PP>is a low-level function used by JForlan.  See the code for
+more information.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

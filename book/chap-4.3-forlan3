@@ -1,0 +1,6 @@
+Gram.parsable gram
+(Sym.fromString "A", Str.fromString "0D0C");
+PT.output
+("",
+ Gram.parse gram
+ (Sym.fromString "A", Str.fromString "0D0C"));

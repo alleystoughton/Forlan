@@ -1,0 +1,650 @@
+\section{Equivalence-testing and Minimization of DFAs}
+\label{EquivalenceTestingAndMinimizationOfDFAs}
+
+In this section, we give algorithms for testing whether two DFAs are
+equivalent, and for minimizing the alphabet size and number of states
+of a DFA.  We also see how these functions can be used in Forlan.
+
+\subsection{Testing the Equivalence of DFAs}
+
+Suppose $M$ and $N$ are DFAs.  Our algorithm for checking whether they
+are equivalent proceeds as follows.  First, it converts $M$ and $N$
+into DFAs with identical alphabets.  Let
+$\Sigma=\alphabet\,M\cup\alphabet\,N$, and define the DFAs $M'$ and
+$N'$ by:
+\begin{align*}
+M' &= \determSimplify(M,\Sigma) , \eqtxt{and}\\
+N' &= \determSimplify(N,\Sigma) .
+\end{align*}
+Since $\alphabet(L(M))\sub\alphabet\,M\sub\Sigma$, we have that
+$\alphabet\,M'=\alphabet(L(M))\cup\Sigma=\Sigma$.  Similarly,
+$\alphabet\,N'=\Sigma$.  Furthermore, $M'\approx M$ and $N'\approx N$,
+so that it will suffice to determine whether $M'$ and $N'$ are
+equivalent.
+
+For example, if $M$ and $N$ are the DFAs
+\begin{center}
+\input{chap-3.13-fig1.eepic}
+\end{center}
+then $\Sigma=\{\zerosf,\onesf\}$, $M'=M$ and $N'=N$.
+
+Next, the algorithm generates the least subset $X$ of $Q_{M'}\times Q_{N'}$
+such that
+\begin{itemize}
+\item $(s_{M'},s_{N'})\in X$; and
+
+\item for all $q\in Q_{M'}$, $r\in Q_{N'}$ and $a\in\Sigma$,
+if $(q,r)\in X$, then $(\delta_{M'}(q,a),\delta_{N'}(r,a))\in X$.
+\end{itemize}
+With our example DFAs $M'$ and $N'$, we have that
+\begin{itemize}
+\item $(\Asf,\Asf)\in X$;
+
+\item since $(\Asf,\Asf)\in X$, we have that {$(\Bsf,\Bsf)\in X$ and
+    $(\Asf,\Csf)\in X$;}
+
+\item since $(\Bsf,\Bsf)\in X$, we have that (again) $(\Asf,\Csf)\in
+  X$ and (again) $(\Bsf,\Bsf)\in X$; and
+
+\item since $(\Asf,\Csf)\in X$, we have that (again) $(\Bsf,\Bsf)\in
+  X$ and (again) $(\Asf,\Asf)\in X$.
+\end{itemize}
+
+Back in the general case, we have the following lemmas.
+
+\begin{lemma}
+\label{EquivLem1}
+For all $w\in\Sigma^*$, $(\delta_{M'}(s_{M'},w),\delta_{N'}(s_{N'},w))\in X$.
+\end{lemma}
+
+\begin{proof}
+By left string induction on $w$.
+\end{proof}
+
+\begin{lemma}
+\label{EquivLem2}
+For all $q\in Q_{M'}$ and $r\in Q_{N'}$, if $(q,r)\in X$, then there
+is a $w\in\Sigma^*$ such that $q=\delta_{M'}(s_{M'},w)$ and
+$r=\delta_{N'}(s_{N'},w)$.
+\end{lemma}
+
+\begin{proof}
+By induction on $X$.
+\end{proof}
+
+Finally, the algorithm checks that, for all $(q,r)\in X$,
+\begin{gather*}
+q\in A_{M'}\myiff r\in A_{N'} .
+\end{gather*}
+If this is true, it says that the machines are equivalent; otherwise
+it says they are not equivalent.
+
+We can easily prove the correctness of our algorithm.
+
+Suppose every pair $(q,r)\in X$ consists of two accepting states or
+of two non-accepting states.  Suppose, toward a contradiction, that
+$L(M')\neq L(N')$.  Then there is a string $w$ that is accepted by
+one of the machines but is not accepted by the other.  Since both
+machines have alphabet $\Sigma$, Lemma~\ref{EquivLem1} tells
+us that $(\delta_{M'}(s_{M'},w),\delta_{N'}(s_{N'},w))\in X$.
+But one side of this pair is an accepting state and the other is
+a non-accepting one---contradiction.  Thus $L(M')=L(N')$.
+
+Suppose we find a pair $(q,r)\in X$ such that one of $q$ and $r$
+is an accepting state but the other is not.  By Lemma~\ref{EquivLem2},
+it will follow that there is a string $w$ that is accepted by one of
+the machines but not accepted by the other one, i.e., that $L(M')\neq L(N')$.
+
+In the case of our example, we have that
+$X=\{(\Asf,\Asf), (\Bsf,\Bsf), (\Asf,\Csf)\}$.
+Since $(\Asf,\Asf)$ and $(\Asf,\Csf)$ are pairs of accepting states,
+and $(\Bsf,\Bsf)$ is a pair of non-accepting states, it follows
+that $L(M')=L(N')$.  Hence $L(M)=L(N)$.
+
+By annotating each element $(q,r)\in X$ with a string $w$ such that
+$q=\delta_{M'}(s_{M'},w)$ and $r=\delta_{N'}(s_{N'},w)$, instead of
+just reporting that $M'$ and $N'$ are not equivalent, we can
+explain why they are not equivalent,
+\begin{itemize}
+\item giving a string that is accepted by the first machine but not by
+  the second; and/or
+
+\item giving a string that is accepted by the second machine but not
+  by the first.
+\end{itemize}
+We can even arrange for these strings to be of minimum length.
+The Forlan implementation of our algorithm always produces minimum-length
+counterexamples.
+
+The Forlan module \texttt{DFA} defines the functions:
+\begin{verbatim}
+val relationship : dfa * dfa -> unit
+val subset       : dfa * dfa -> bool
+val equivalent   : dfa * dfa -> bool
+\end{verbatim}
+The function \texttt{relationship} figures out the relationship
+between the languages accepted by two DFAs (are they equal, is one a
+proper subset of the other, is neither a subset of the other), and
+supplies minimum-length counterexamples to justify negative answers.
+The function \texttt{subset} tests whether its first argument's
+language is a subset of its second argument's language.
+The function \texttt{equivalent} tests whether two DFAs are
+equivalent.
+
+Note that \texttt{subset} (when turned into a function of type
+\texttt{reg~*~reg~->~bool}---see below) can be used in conjunction
+with the local and global simplification algorithms of Section~3.3.
+
+For example, suppose \texttt{dfa1} and \texttt{dfa2} of type \texttt{dfa} are
+bound to our example DFAs $M$ and $N$, respectively:
+\begin{center}
+\input{chap-3.13-fig1.eepic}
+\end{center}
+We can verify that these machines are equivalent as follows:
+\input{chap-3.13-forlan1}
+
+On the other hand, suppose that \texttt{dfa3} and \texttt{dfa4} of type
+texttt{dfa} are bound to the DFAs:
+\begin{center}
+\input{chap-3.13-fig2.eepic}
+\end{center}
+We can find out why these machines are not equivalent as follows:
+\input{chap-3.13-forlan3}
+
+We can find the relationship between the languages generated by regular
+expressions \texttt{reg1} and \texttt{reg2} by:
+\begin{itemize}
+\item  converting \texttt{reg1} and \texttt{reg2} to DFAs
+texttt{dfa1} and \texttt{dfa2}, and then
+
+\item  running \texttt{DFA.relationship(dfa1, dfa2)} to find
+the relationship between those DFAs.
+\end{itemize}
+
+Of course, we can define an ML/Forlan function that
+carries out these actions:
+\input{chap-3.13-forlan3a}
+
+\subsection{Minimization of DFAs}
+
+Now, we consider an algorithm for minimizing the sizes of the alphabet
+and set of states of a DFA $M$.  First, the algorithm minimizes the
+size of $M$'s alphabet, and makes the automaton be deterministically
+simplified, by letting $M'=\determSimplify(M,\emptyset)$.  Thus
+$M'\approx M$ and $\alphabet\,M'=\alphabet(L(M))$.
+
+For example, if $M$ is the DFA
+\begin{center}
+\input{chap-3.13-fig3.eepic}
+\end{center}
+then $M'=M$.
+
+Next, the algorithm generates the least subset $X$ of $Q_{M'}\times
+Q_{M'}$ such that:
+\begin{enumerate}[\quad(1)]
+\item $A_{M'}\times(Q_{M'}-A_{M'})\sub X$;
+
+\item $(Q_{M'}-A_{M'})\times A_{M'}\sub X$; and
+
+\item for all $q,q',r,r'\in Q_{M'}$ and $a\in\alphabet\,M'$,
+if $(q,r)\in X$, $(q',a, q)\in T_{M'}$ and $(r',a, r)\in T_{M'}$, then
+$(q',r')\in X$.
+\end{enumerate}
+We read ``$(q,r)\in X$'' as ``$q$ and $r$ cannot be merged''.
+The idea of (1) and (2) is that an accepting state can never be merged
+with a non-accepting state.  And (3) says that if $q$ and $r$ can't
+be merged, and we can get from $q'$ to $q$ by processing an $a$, and
+from $r'$ to $r$ by processing an $a$, then
+$q'$ and $r'$ also can't be merged---since if we merged $q'$ and $r'$,
+there would have to be an $a$-transition from the merged state
+to the merging of $q$ and $r$.
+
+In the case of our example $M'$, (1) tells us to add the pairs
+$(\Esf,\Asf)$, $(\Esf,\Bsf)$, $(\Esf,\Csf)$, $(\Esf,\Dsf)$,
+$(\Fsf,\Asf)$, $(\Fsf,\Bsf)$, $(\Fsf,\Csf)$ and $(\Fsf,\Dsf)$ to $X$.
+And, (2) tells us to add the pairs $(\Asf,\Esf)$, $(\Bsf,\Esf)$,
+$(\Csf,\Esf)$, $(\Dsf,\Esf)$, $(\Asf,\Fsf)$, $(\Bsf,\Fsf)$,
+$(\Csf,\Fsf)$ and $(\Dsf,\Fsf)$ to $X$.
+
+Now we use rule (3) to compute the rest of $X$'s elements.  To begin
+with, we must handle each pair that has already been added to $X$.
+\begin{itemize}
+\item Since there are no transitions leading into $\Asf$, no pairs can
+  be added using $(\Esf,\Asf)$, $(\Asf,\Esf)$, $(\Fsf,\Asf)$ and
+  $(\Asf,\Fsf)$.
+
+\item Since there are no $\zerosf$-transitions leading into $\Esf$,
+  and there are no $\onesf$-transitions leading into $\Bsf$, no pairs
+  can be added using $(\Esf,\Bsf)$ and $(\Bsf,\Esf)$.
+
+\item Since $(\Esf,\Csf),(\Csf,\Esf)\in X$ and $(\Bsf,\onesf,\Esf)$,
+  $(\Dsf,\onesf,\Esf)$, $(\Fsf,\onesf,\Esf)$ and $(\Asf,\onesf,\Csf)$
+  are the $\onesf$-transitions leading into $\Esf$ and $\Csf$, we add
+  {$(\Bsf,\Asf)$ and $(\Asf,\Bsf)$, and $(\Dsf,\Asf)$ and
+    $(\Asf,\Dsf)$} to $X$; {we would also have added $(\Fsf,\Asf)$ and
+    $(\Asf,\Fsf)$ to $X$ if they hadn't been previously added.}  Since
+  there are no $\zerosf$-transitions into $\Esf$, nothing can be added
+  to $X$ using $(\Esf,\Csf)$ and $(\Csf,\Esf)$ and
+  $\zerosf$-transitions.
+
+\item Since $(\Esf,\Dsf),(\Dsf,\Esf)\in X$ and $(\Bsf,\onesf,\Esf)$,
+  $(\Dsf,\onesf,\Esf)$, $(\Fsf,\onesf,\Esf)$ and $(\Csf,\onesf,\Dsf)$
+  are the $\onesf$-transitions leading into $\Esf$ and $\Dsf$, we add
+  {$(\Bsf,\Csf)$ and $(\Csf,\Bsf)$, and $(\Dsf,\Csf)$ and
+    $(\Csf,\Dsf)$} to $X$; { we would also have added $(\Fsf,\Csf)$
+    and $(\Csf,\Fsf)$ to $X$ if they hadn't been previously added.}
+  Since there are no $\zerosf$-transitions into $\Esf$, nothing can be
+  added to $X$ using $(\Esf,\Dsf)$ and $(\Dsf,\Esf)$ and
+  $\zerosf$-transitions.
+
+\item Since $(\Fsf,\Bsf),(\Bsf,\Fsf)\in X$ and $(\Esf,\zerosf,\Fsf)$,
+  $(\Fsf,\zerosf,\Fsf)$, $(\Asf,\zerosf,\Bsf)$, and
+  $(\Dsf,\zerosf,\Bsf)$ are the $\zerosf$-transitions leading into
+  $\Fsf$ and $\Bsf$, we would have to add the following pairs to $X$,
+  if they were not already present: $(\Esf,\Asf)$, $(\Asf,\Esf)$,
+  $(\Esf,\Dsf)$, $(\Dsf,\Esf)$, $(\Fsf,\Asf)$, $(\Asf,\Fsf)$,
+  $(\Fsf,\Dsf)$, $(\Dsf,\Fsf)$.  Since there are no
+  $\onesf$-transitions leading into $\Bsf$, no pairs can be added
+  using $(\Fsf,\Bsf)$ and $(\Bsf,\Fsf)$ and $\onesf$-transitions.
+
+\item Since $(\Fsf,\Csf),(\Csf,\Fsf)\in X$ and $(\Esf,\onesf,\Fsf)$
+  and $(\Asf,\onesf,\Csf)$ are the $\onesf$-transitions leading into
+  $\Fsf$ and $\Csf$, we would have to add $(\Esf,\Asf)$ and
+  $(\Asf,\Esf)$ to $X$ if these pairs weren't already present.  Since
+  there are no $\zerosf$-transitions leading into $\Csf$, no pairs can
+  be added using $(\Fsf,\Csf)$ and $(\Csf,\Fsf)$ and
+  $\zerosf$-transitions.
+
+\item Since $(\Fsf,\Dsf),(\Dsf,\Fsf)\in X$ and $(\Esf,\zerosf,\Fsf)$,
+  $(\Fsf,\zerosf,\Fsf)$, $(\Bsf,\zerosf,\Dsf)$ and
+  $(\Csf,\zerosf,\Dsf)$ are the $\zerosf$-transitions leading into
+  $\Fsf$ and $\Dsf$, we would add $(\Esf,\Bsf)$, $(\Bsf,\Esf)$,
+  $(\Esf,\Csf)$, $(\Csf,\Esf)$, $(\Fsf,\Bsf)$, $(\Bsf,\Fsf)$,
+  $(\Fsf,\Csf)$, and $(\Csf,\Fsf)$ to $X$, if these pairs weren't
+  already present.  Since $(\Fsf,\Dsf),(\Dsf,\Fsf)\in X$ and
+  $(\Esf,\onesf,\Fsf)$ and $(\Csf,\onesf,\Dsf)$ are the
+  $\onesf$-transitions leading into $\Fsf$ and $\Dsf$, we would add
+  $(\Esf,\Csf)$ and $(\Csf,\Esf)$ to $X$, if these pairs weren't
+  already in $X$.
+\end{itemize}
+
+We've now handled all of the elements of $X$ that were added using
+rules~(1) and (2).  We must now handle the pairs that were
+subsequently added: $(\Asf,\Bsf)$, $(\Bsf,\Asf)$, $(\Asf,\Dsf)$,
+$(\Dsf,\Asf)$, $(\Bsf,\Csf)$, $(\Csf,\Bsf)$, $(\Csf,\Dsf)$,
+$(\Dsf,\Csf)$.
+\begin{itemize}
+\item Since there are no transitions leading into $\Asf$, no pairs can
+  be added using $(\Asf,\Bsf)$, $(\Bsf,\Asf)$, $(\Asf,\Dsf)$ and
+  $(\Dsf,\Asf)$.
+
+\item Since there are no $\onesf$-transitions leading into $\Bsf$, and
+  there are no $\zerosf$-transitions leading into $\Csf$, no pairs can
+  be added using $(\Bsf,\Csf)$ and $(\Csf,\Bsf)$.
+
+\item Since $(\Csf,\Dsf), (\Dsf,\Csf)\in X$ and $(\Asf,\onesf,\Csf)$
+  and $(\Csf,\onesf,\Dsf)$ are the $\onesf$-transitions leading into
+  $\Csf$ and $\Dsf$, we add the pairs {$(\Asf,\Csf)$ and $(\Csf,\Asf)$
+    to $X$}.  Since there are no $\zerosf$-transitions leading into
+  $\Csf$, no pairs can be added to $X$ using $(\Csf,\Dsf)$ and
+  $(\Dsf,\Csf)$ and $\zerosf$-transitions.
+\end{itemize}
+
+Now, we must handle the pairs that were added in the last
+phase: $(\Asf,\Csf)$ and $(\Csf,\Asf)$.
+\begin{itemize}
+\item Since there are no transitions leading into $\Asf$, no pairs can
+  be added using $(\Asf,\Csf)$ and $(\Csf,\Asf)$.
+\end{itemize}
+
+Since we have handled all the pairs we added to $X$, we are now done.
+Here are the 26 elements of $X$: $(\Asf,\Bsf)$, $(\Asf,\Csf)$,
+$(\Asf,\Dsf)$, $(\Asf,\Esf)$, $(\Asf,\Fsf)$, $(\Bsf,\Asf)$,
+$(\Bsf,\Csf)$, $(\Bsf,\Esf)$, $(\Bsf,\Fsf)$, $(\Csf,\Asf)$,
+$(\Csf,\Bsf)$, $(\Csf,\Dsf)$, $(\Csf,\Esf)$, $(\Csf,\Fsf)$,
+$(\Dsf,\Asf)$, $(\Dsf,\Csf)$, $(\Dsf,\Esf)$, $(\Dsf,\Fsf)$,
+$(\Esf,\Asf)$, $(\Esf,\Bsf)$, $(\Esf,\Csf)$, $(\Esf,\Dsf)$,
+$(\Fsf,\Asf)$, $(\Fsf,\Bsf)$, $(\Fsf,\Csf)$, $(\Fsf,\Dsf)$.
+
+Back in the general case, we have the following lemmas.
+
+\begin{lemma}
+\label{MinimizationLemma1}
+For all $(q,r)\in X$, there is a $w\in(\alphabet\,M')^*$, such that
+exactly one of $\delta_{M'}(q,w)$ and $\delta_{M'}(r,w)$ is in $A_{M'}$.
+\end{lemma}
+
+\begin{proof}
+By induction on $X$.
+\end{proof}
+
+\begin{lemma}
+\label{MinimizationLemma2}
+For all $w\in(\alphabet\,M')^*$, for all $q,r\in Q_{M'}$, if
+exactly one of $\delta_{M'}(q,w)$ and $\delta_{M'}(r,w)$ is
+in $A_{M'}$, then $(q,r)\in X$.
+\end{lemma}
+
+\begin{proof}
+By right string induction.
+\end{proof}
+
+Next, the algorithm lets the relation $Y=(Q_{M'}\times Q_{M'})-X$.  We
+read ``$(q,r)\in Y$'' as ``$q$ and $r$ can be merged''.
+Back with our example, we have that $Y$ is
+\begin{gather*}
+\{\mathsf{(A,A), (B,B), (C,C), (D,D), (E,E), (F,F)}\} \\
+\cup \\
+\{\mathsf{(B,D), (D,B), (F,E), (E,F)}\} .
+\end{gather*}
+
+\begin{lemma}
+\label{MinimizationLemma3}
+\begin{enumerate}[\quad (1)]
+\item For all $q,r\in Q_{M'}$, $(q,r)\in Y$ iff, for all
+  $w\in(\alphabet\,M')^*$, $\delta_{M'}(q,w)\in A_{M'}$ iff
+  $\delta_{M'}(r,w)\in A_{M'}$.
+
+\item For all $q,r\in Q_{M'}$, if $(q,r)\in Y$, then $q\in A_{M'}$ iff
+  $r\in A_{M'}$.
+
+\item For all $q,r\in Q_{M'}$ and $a\in\alphabet\,M'$, if $(q,r)\in
+  Y$, then $(\delta_{M'}(q,a),\delta_{M'}(r,a))\in Y$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\begin{enumerate}[\quad(1)]
+\item Follows using Lemmas~\ref{MinimizationLemma1} and
+  \ref{MinimizationLemma2}.
+
+\item Follows by Part~(1), when $w=\%$.
+
+\item Follows by Part~(1).
+\end{enumerate}
+\end{proof}
+
+The following lemma says that $Y$ is an \emph{equivalence relation on}
+$Q_{M'}$.
+
+\begin{lemma}
+\label{MinimizationLemma4}
+$Y$ is reflexive on $Q_{M'}$, symmetric and transitive.
+\end{lemma}
+
+\begin{proof}
+Follows from Lemma~\ref{MinimizationLemma3}(1).
+\end{proof}
+
+In order to define the DFA $N$ that is the result of our minimization
+algorithm, we need a bit more notation.  As in Section~3.10, we write
+$\overline{P}$ for the result of coding a finite set of symbols $P$ as
+a symbol.  E.g., $\overline{\{\Bsf,\Asf\}} = \langle\Asf,\Bsf\rangle$.
+
+If $q\in Q_{M'}$, we write $[q]$ for $\setof{r\in Q_{M'}}{(r,q)\in
+  Y}$, which is called the \emph{equivalence class} of $q$.  Using
+Lemma~\ref{MinimizationLemma4}, it is easy to show that, $q\in[q]$,
+for all $q\in Q_{M'}$, and $[q]=[r]$ iff $(q,r)\in Y$, for all $q,r\in
+Q_{M'}$.
+
+If $P$ is a nonempty, finite set of symbols, then we write $\min\,P$
+for the least element of $P$, according to our standard ordering on
+symbols.
+
+The algorithm lets $Z=\setof{[q]}{q\in Q_{M'}}$, which is finite since
+$Q_{M'}$ is finite.
+In the case of our example, $Z$ is
+\begin{gather*}
+\mathsf{\{\{A\}, \{B,D\}, \{C\}, \{E,F\}\}} .
+\end{gather*}
+Finally, the algorithm defines the DFA $N$ as follows:
+\begin{itemize}
+\item $Q_N = \setof{\overline{P}}{P\in Z}$;
+
+\item $s_N = \overline{[s_{M'}]}$;
+
+\item $A_N = \setof{\overline{P}}{P\in Z\eqtxt{and}\min\,P\in
+ A_{M'}}$; and
+
+\item $T_N = \setof{(\overline{P},a,
+{\overline{[\delta_{M'}(\min\,P,a)]}})}%
+{P\in Z\eqtxt{and}a\in\alphabet\,M'}$.
+\end{itemize}
+Then $N$ is a DFA with alphabet $\alphabet\,M'$ and, for all $P\in Z$
+and $a\in\alphabet\,M'$, $\delta_N(\overline{P},a)=
+\overline{[\delta_{M'}(\min\,P,a)]}$.
+
+In the case of our example, we have that
+\begin{itemize}
+\item $Q_N = \{\mathsf{\langle A\rangle, \langle B,D\rangle,
+\langle C\rangle, \langle E,F\rangle}\}$;
+
+\item $s_N = \langle A\rangle$; and
+
+\item $A_N = \{\langle\Esf,\Fsf\rangle\}$.
+\end{itemize}
+We compute the elements of $T_N$ as follows.
+\begin{itemize}
+\item Since $\{\Asf\}\in Z$ and $[\delta_{M'}(\Asf,\zerosf)]=
+  [\Bsf]=\{\Bsf,\Dsf\}$, we have that
+  $(\langle\Asf\rangle,\zerosf,\langle\Bsf,\Dsf\rangle)\in T_N$.
+
+  Since $\{\Asf\}\in Z$ and $[\delta_{M'}(\Asf,\onesf)]=
+  [\Csf]=\{\Csf\}$, we have that
+  $(\langle\Asf\rangle,\onesf,\langle\Csf\rangle)\in T_N$.
+
+\item Since $\{\Csf\}\in Z$ and $[\delta_{M'}(\Csf,\zerosf)]=
+  [\Dsf]=\{\Bsf,\Dsf\}$, we have that
+  $(\langle\Csf\rangle,\zerosf,\langle\Bsf,\Dsf\rangle)\in T_N$.
+
+  Since $\{\Csf\}\in Z$ and $[\delta_{M'}(\Csf,\onesf)]=
+  [\Dsf]=\{\Bsf,\Dsf\}$, we have that
+  $(\langle\Csf\rangle,\onesf,\langle\Bsf,\Dsf\rangle)\in T_N$.
+
+\item Since $\{\Bsf,\Dsf\}\in Z$ and $[\delta_{M'}(\Bsf,\zerosf)]=
+  [\Dsf]=\{\Bsf,\Dsf\}$, we have that
+  $(\langle\Bsf,\Dsf\rangle,\zerosf,\langle\Bsf,\Dsf\rangle)\in T_N$.
+
+  Since $\{\Bsf,\Dsf\}\in Z$ and $[\delta_{M'}(\Bsf,\onesf)]=
+  [\Esf]=\{\Esf,\Fsf\}$, we have that
+  $(\langle\Bsf,\Dsf\rangle,\onesf,\langle\Esf,\Fsf\rangle)\in T_N$.
+
+\item Since $\{\Esf,\Fsf\}\in Z$ and $[\delta_{M'}(\Esf,\zerosf)]=
+  [\Fsf]=\{\Esf,\Fsf\}$, we have that
+  $(\langle\Esf,\Fsf\rangle,\zerosf,\langle\Esf,\Fsf\rangle)\in T_N$.
+
+  Since $\{\Esf,\Fsf\}\in Z$ and $[\delta_{M'}(\Esf,\onesf)]=
+  [\Fsf]=\{\Esf,\Fsf\}$, we have that
+  $(\langle\Esf,\Fsf\rangle,\onesf,\langle\Esf,\Fsf\rangle)\in T_N$.
+\end{itemize}
+Thus our DFA $N$ is:
+\begin{center}
+\input{chap-3.13-fig4.eepic}
+\end{center}
+
+Back in the general case, we have the following lemmas.
+
+\begin{lemma}
+\label{MinimizationLemma5}
+\begin{enumerate}[\quad(1)]
+\item For all $q\in Q_{M'}$, $\overline{[q]}\in A_N$ iff $q\in A_{M'}$.
+
+\item For all $q\in Q_{M'}$ and $a\in\alphabet\,M'$,
+  $\delta_N(\overline{[q]},a) = \overline{[\delta_{M'}(q,a)]}$.
+
+\item For all $q\in Q_{M'}$ and $w\in(\alphabet\,M')^*$,
+  $\delta_N(\overline{[q]},w) = \overline{[\delta_{M'}(q, w)]}$.
+
+\item For all $w\in(\alphabet\,M')^*$, $\delta_N(s_N,w) =
+  \overline{[\delta_{M'}(s_{M'}, w)]}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) and (2) follow easily by Lemma~\ref{MinimizationLemma3}(2)--(3).
+Part~(3) follows from Part~(2) by left string induction.  For
+Part~(4), suppose $w\in(\alphabet\,M')^*$.  By Part~(3), we have
+\begin{gather*}
+\delta_N(s_N,w) =
+\delta_N(\overline{[s_{M'}]}, w) =
+\overline{[\delta_{M'}(s_{M'}, w)]} .
+\end{gather*}
+\end{proof}
+
+\begin{lemma}
+\label{MinimizationLemma6}
+$L(N)=L(M')$.
+\end{lemma}
+
+\begin{proof}
+Suppose $w\in L(N)$.  Then $w\in(\alphabet\,N)^*=(\alphabet\,M')^*$ and
+$\delta_N(s_N,w)\in A_N$.
+By Lemma~\ref{MinimizationLemma5}(4), we have that
+\begin{gather*}
+  \overline{[\delta_{M'}(s_{M'}, w)]} =
+  \delta_N(s_N,w) \in A_N ,
+\end{gather*}
+so that $\delta_{M'}(s_{M'}, w)\in A_{M'}$, by
+Lemma~\ref{MinimizationLemma5}(1).  Thus $w\in L(M')$.
+
+Suppose $w\in L(M')$.  Then $w\in(\alphabet\,M')^*=(\alphabet\,N)^*$ and
+$\delta_{M'}(s_{M'}, w)\in A_{M'}$.  By 
+Lemma~\ref{MinimizationLemma5}(1) and (4), we have that
+\begin{gather*}
+  \delta_N(s_N,w) =
+  \overline{[\delta_{M'}(s_{M'}, w)]}
+  \in A_N .
+\end{gather*}
+Hence $w\in L(N)$.
+\end{proof}
+
+\begin{lemma}
+\label{MinimizationLemma7}
+$N$ is deterministically simplified.
+\end{lemma}
+
+\begin{proof}
+To see that all elements of $N$ are reachable, suppose $q\in Q_{M'}$.
+Because $M'$ is deterministically simplified, there is a
+$w\in(\alphabet\,M')^*$ such that $q=\delta_{M'}(s_{M'},w)$.  Thus
+$\delta_N(s_N,w) = \overline{[\delta_{M'}(s_{M'},w)]} = \overline{[q]}$.
+
+Next, we show that, for all $q\in Q_{M'}$, if $q$ is live, then
+$\overline{[q]}$ is live.  Suppose $q\in Q_{M'}$ is live,
+so there is a $w\in(\alphabet\,M')^*$ such that $\delta_{M'}(q,w)\in A_{M'}$.
+Thus $\delta_N(\overline{[q]},w)=\overline{[\delta_{M'}(q,w)]}\in A_N$,
+showing that $\overline{[q]}$ is live.
+
+Thus, we have that, for all $q\in Q_{M'}$, if $\overline{[q]}$ is
+dead, then $q$ is dead.  But, $M'$ has at most one dead state, and
+thus we have that $N$ has at most one dead state.
+\end{proof}
+
+\begin{lemma}
+\label{MinimizationLemma8}
+Suppose $N'$ is a DFA such that $N'\approx M'$,
+$\alphabet\,N'=\alphabet\,M'$ and $|Q_{N'}|\leq|Q_N|$.  Then $N'$ is
+isomorphic to $N$.
+\end{lemma}
+
+\begin{proof}
+We have that $L(N')=L(M')$.  And the states of $M'$ and $N$ are
+all reachable.  Let the relation $h$ between $Q_{N'}$ and $Q_N$ be
+\begin{gather*}
+  \setof{(\delta_{N'}(s_{N'},w),\delta_N(s_N,w))}{w\in(\alphabet\,M')^*}
+  .
+\end{gather*}
+Since every state of $N$ is reachable, it follows that $\range\,h=
+Q_N$.
+
+To see that $h$ is a function, suppose $x,y\in(\alphabet\,M')^*$ and
+$\delta_{N'}(s_{N'},x)=\delta_{N'}(s_{N'},y)$.  We must show that
+$\delta_N(s_N,x)=\delta_N(s_N,y)$.  Since
+$\delta_N(s_N,x)=\overline{[\delta_{M'}(s_{M'},x)]}$ and
+$\delta_N(s_N,y)=\overline{[\delta_{M'}(s_{M'},y)]}$, it will suffice
+to show that $(\delta_{M'}(s_{M'},x),\delta_{M'}(s_{M'},y))\in Y$.  By
+Lemma~\ref{MinimizationLemma3}(1), it will suffice to show that,
+$\delta_{M'}(\delta_{M'}(s_{M'},x), z)\in A_{M'}$ iff
+$\delta_{M'}(\delta_{M'}(s_{M'},y), z)\in A_{M'}$, for all
+$z\in(\alphabet\,M')^*$.  Suppose $z\in(\alphabet\,M')^*$.  We must
+show that $\delta_{M'}(\delta_{M'}(s_{M'},x), z)\in A_{M'}$ iff
+$\delta_{M'}(\delta_{M'}(s_{M'},y), z)\in A_{M'}$
+
+We will show the ``only if'' direction, the other direction being
+similar.  Suppose $\delta_{M'}(\delta_{M'}(s_{M'},x), z)\in A_{M'}$.
+We must show that $\delta_{M'}(\delta_{M'}(s_{M'},y), z)\in A_{M'}$.
+Because $\delta_{M'}(s_{M'},xz) = \delta_{M'}(\delta_{M'}(s_{M'},x),
+z)\in A_{M'}$, we have that $xz\in L(M')=L(N')$.  Since $xz\in L(N')$
+and $\delta_{N'}(s_{N'},x)=\delta_{N'}(s_{N'},y)$, we have that
+\begin{align*}
+  \delta_{N'}(s_{N'},yz) &= \delta_{N'}(\delta_{N'}(s_{N'},y), z) =
+  \delta_{N'}(\delta_{N'}(s_{N'},x), z)\\
+  &= \delta_{N'}(s_{N'},xz) \in A_{N'} ,
+\end{align*}
+so that $yz\in L(N')=L(M')$.  Hence
+$\delta_{M'}(\delta_{M'}(s_{M'},y), z) = \delta_{M'}(s_{M'},yz) \in
+A_{M'}$.
+
+Because $h$ is a function, $\range\,h=Q_N$ is finite, $\domain\,h\sub
+Q_{N'}$ and $|Q_{N'}|\leq|Q_N|$, we have that $|Q_{N'}|=|Q_N|$ and $h$
+is a bijection from $Q_{N'}$ to $Q_N$.  Thus, every state of $N'$ is
+reachable, and, for all $w\in(\alphabet\,M')^* = (\alphabet\,N)^* =
+(\alphabet\,N')^*$, $h(\delta_{N'}(s_{N'},w))=\delta_N(s_N,w)$.  The
+remainder of the proof that $h$ is an isomorphism from $N'$ to $N$ is
+easy.
+\end{proof}
+
+We define a function $\minimize\in\DFA\fun\DFA$ by:
+$\minimize\,M$ is the result of running the above algorithm on
+input $M$.
+
+Putting the above results together, we have the following theorem:
+\begin{theorem}
+\label{Minimization}
+For all $M\in\DFA$:
+\begin{itemize}
+\item $\minimize\,M\approx M$;
+
+\item $\alphabet(\minimize\,M)=\alphabet(L(M))$;
+
+\item $\minimize\,M$ is deterministically simplified; and
+
+\item for all $N\in\DFA$, if $N\approx M$, $\alphabet\,N=\alphabet(L(M))$ and
+$|Q_N|\leq|Q_{\minimize\,M}|$, then $N$ is isomorphic to $\minimize\,M$.
+\end{itemize}
+\end{theorem}
+
+Thus
+\begin{center}
+\input{chap-3.13-fig4.eepic}
+\end{center}
+is, up to isomorphism, the only four-or-fewer state DFA with alphabet
+$\{\zerosf,\onesf\}$ that is equivalent to $M$.
+
+The Forlan module DFA includes the function
+\begin{verbatim}
+val minimize : dfa -> dfa
+\end{verbatim}
+for minimizing DFAs.
+
+For example, if \texttt{dfa} of type \texttt{dfa} is bound to our example
+DFA
+\begin{center}
+\input{chap-3.13-fig3.eepic}
+\end{center}
+then we can minimize the alphabet size and number of states of \texttt{dfa}
+as follows.
+\input{chap-3.13-forlan5}
+
+\subsection{Notes}
+
+Our algorithm for testing whether two DFAs are equivalent can be found
+in the literature, but I don't know of other textbooks that present
+it.  As described above, a simple extension of the algorithm provides
+counterexamples to justify non-equivalence.  The material on DFA
+minimization is completely standard.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

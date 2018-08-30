@@ -1,0 +1,28 @@
+@FILES
+  ["widget"; "The Widget structure";]
+@SIGNATURE WIDGET "widget" [
+  @TYPES 
+    @TYPE widget
+    @DATATYPE relief [ Flat Raised Sunken Groove Ridge]
+    @TYPE realize_fn
+  @EXCEPTIONS 
+    AlreadyRealized
+    BoundsFunctionAlreadyCalled
+  @VALS 
+    boundsOf
+    argsFn
+    argsOf
+    filterCmd
+    sameWidget
+    natSize
+    okaySize
+    realizeFn
+    rootOf
+    mkWidget
+    ignoreKey
+    ignoreMouse
+    filterKey
+    filterMouse
+    boundsFn
+]
+@STRUCTURE Widget "widget" WIDGET

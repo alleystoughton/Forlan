@@ -1,0 +1,732 @@
+\section{Introduction to Forlan}
+\label{IntroductionToForlan}
+
+The Forlan
+\index{Forlan|(}%
+toolset is an extension of the Standard ML of New Jersey (SML/NJ)
+implementation of Standard ML (SML).  It is implemented as a set of
+SML modules.  It is used interactively, and users can extend Forlan by
+definining SML functions.
+
+Instructions for installing and running Forlan on machines running
+\index{Forlan!installing}%
+\index{Forlan!running}%
+Linux, Mac OS X and Windows can be found on the Forlan website:
+\begin{center}
+\url{http://alleystoughton.us/forlan}.
+\end{center}
+
+A manual for Forlan is available on the Forlan website, and describes
+Forlan's modules in considerably more detail than does this book.  See
+the manual for instructions for setting system parameters controlling
+such things as the search path used for loading files, the line
+length used by Forlan's pretty printer, and the number of elements of
+a list that the Forlan top-level displays.
+
+In the concrete syntax for describing Forlan objects---automata,
+grammars, etc.---\emph{comments} begin with a ``\texttt{\#}'', and run
+through the end of the line.  Comments and whitespace may be
+arbitrarily inserted into the descriptions of Forlan objects without
+changing how the objects will be lexically analyzed and parsed.
+For instance,
+\begin{verbatim}
+ab cd # this is a comment
+efg h
+\end{verbatim}
+describes the Forlan string $\mathsf{abcdefgh}$.
+Forlan's input functions prompt with ``\texttt{@}'' when reading from
+the standard input, in which case the user signifies end-of-file
+by typing a line consisting of a single dot (``\texttt{.}'').
+
+We begin this section by showing how to invoke Forlan, and giving a
+quick introduction to the SML core of Forlan.  We then show how
+symbols, strings, finite sets of symbols and strings, and finite
+relations on symbols can be manipulated using Forlan.
+
+\subsection{Invoking Forlan}
+
+To invoke Forlan, type the command \texttt{forlan} to your shell
+(command processor):
+\begin{myalltt}
+\hspace{\leftmargini}% forlan
+\hspace{\leftmargini}\textsl{Forlan Version \(m\) (based on Standard ML of New Jersey Version \(n\))}
+\hspace{\leftmargini}\textsl{val it = () : unit}
+\hspace{\leftmargini}-
+\end{myalltt}
+($m$ and $n$ will be the Forlan and SML/NJ versions, respectively.)
+The identifier \texttt{it} is normally bound to the value of the most
+recently evaluated expression.
+Initially, though, its value is the
+empty tuple \texttt{()}, the single element of the type \texttt{unit}.
+\index{unit@\texttt{unit}}%
+\index{ empty tuple@\texttt{()}}%
+The value \texttt{()} is used in circumstances when a value is required,
+but it makes no difference what that value is.
+
+Forlan's primary prompt is ``\texttt{-}''.
+\index{Forlan!primary prompt}%
+\index{prompt!primary}%
+To exit Forlan, type \emph{CTRL}-\texttt{d}
+under Linux and Mac OS X, and \emph{CTRL}-\texttt{z} under Windows.
+To interrupt back to the Forlan top-level, type \emph{CTRL}-\texttt{c}.
+\index{Forlan!exiting}%
+\index{Forlan!interrupting}%
+
+On Windows, you may find it more convenient to invoke Forlan by
+double-clicking on the Forlan icon.  On all platforms, a much more flexible
+and satisfying way of running Forlan is as a subprocess of an IDE (integrated
+development environment).  See the Forlan website for
+information about how to do this.
+
+\subsection{The SML Core of Forlan}
+
+This subsection gives a quick introduction to the SML core
+of Forlan. Let's begin by using Forlan as a calculator:
+\input{chap-2.3-forlan1}
+Forlan responds to each expression by printing its value and type
+(\texttt{int} is the type of integers),
+\index{Standard ML!value}%
+\index{Standard ML!type}%
+\index{int@\texttt{int}}%
+\index{Standard ML!int@\texttt{int}}%
+and noting that the expression's value has been bound to
+the identifier \texttt{it}.  Expressions must be terminated with
+semicolons.
+\index{Standard ML!semicolon@\texttt{;}}%
+The operators \texttt{div} and \texttt{mod} compute integer division
+and remainder, respectively, and negative numbers begin with
+\texttt{\tildesym}.
+
+In addition to the type \texttt{int} of integers,
+\index{int@\texttt{int}}%
+\index{Standard ML!int@\texttt{int}}%
+SML has types \texttt{string} and \texttt{bool}, product types
+$t_1\mathbin{\mathtt{*}}\cdots\mathbin{\mathtt{*}}t_n$, and list types
+$t\;\mathtt{list}$.  \index{Standard ML!product type}%
+\index{string@\texttt{string}}%
+\index{bool@\texttt{bool}}%
+\index{int@\texttt{int}}%
+\index{Standard ML!string@\texttt{string}}%
+\index{Standard ML!bool@\texttt{bool}}%
+\index{Standard ML!int@\texttt{int}}%
+\input{chap-2.3-forlan2}
+The operator \texttt{\uparrowsym} is string
+concatenation.  The conjunction \texttt{andalso} evaluates its
+left-hand side first, and yields \texttt{false} without evaluating its
+right-hand side, if the value of the left-hand side is \texttt{false}.
+Similarly, the disjunction \texttt{orelse} evaluates its left-hand
+side first, and yields \texttt{true} without evaluating its right-hand
+side, if the value of the left-hand side is \texttt{true}.  A
+conditional (\texttt{if}-\texttt{then}-\texttt{else}) is evaluated by
+first evaluating its boolean expression, and then evaluating its
+\texttt{then}-part, if the boolean expression's value is
+\texttt{true}, and evaluating its \texttt{else}-part, if its value is
+\texttt{false}.  Tuples are evaluated from left to right, and the
+function $\texttt{\#}n$ selects the $n$th (starting from $1$) element
+of a tuple. The operator \texttt{@} appends lists.   The function
+\texttt{rev} reverses a list, the function \texttt{length} computes
+the length of a list, and the function \texttt{null} tests
+whether a list is empty.  Finally, the functions \texttt{hd} and
+\texttt{tl} return the head (first element) and tail (all but the
+first element) of a list.
+
+\texttt{nil} and \texttt{::} (pronounced ``cons'', for
+``constructor''), which have types \texttt{'a~list} and
+\texttt{'a~*~'a~list~->~'a~list}, respectively, are the constructors
+for type \texttt{'a~list}.
+These constructors are \emph{polymorphic}, having all of the types
+that can be formed by instantiating the type variable \texttt{'a} with
+a type.  E.g., \texttt{nil} has type \texttt{int~list}, \texttt{bool~list},
+\texttt{(int~*~bool)list}, etc.  \texttt{::} is an infix operator,
+i.e., one writes $x\mathbin{\mathtt{::}}\xs$ for the list whose
+first element is $x$ and remaining elements are those in the list
+$\xs$.
+\input{chap-2.3-forlan2a}
+Lists are implemented as linked-lists, so that doing a cons involves
+the creation of a single list node.
+
+SML also has option types $t\;\mathtt{option}$, whose values are
+\index{Standard ML!option type}%
+built using the type's two constructors: \texttt{NONE}
+\index{Standard ML!NONE@\texttt{NONE}}%
+of type \texttt{'a\;option}, and \texttt{SOME}
+\index{Standard ML!SOME@\texttt{NONE}}%
+of type \texttt{'a~->~'a~option}.  This is a predefined
+datatype, declared by
+\begin{verbatim}
+datatype 'a option = NONE | SOME of 'a
+\end{verbatim}
+E.g., \texttt{NONE}, \texttt{SOME\;1} and
+\texttt{SOME\;\tildesym 6} are three of the values of type
+\texttt{int\;option}, and \texttt{NONE}, \texttt{SOME\;true} and
+\texttt{SOME\;false} are the only values of type
+\texttt{bool\;option}.
+\input{chap-2.3-forlan2b}
+
+Instead of using \texttt{<}, \texttt{<=}, \texttt{>} and \texttt{>=}
+for comparing integers, SML offers a function \texttt{Int.compare} of
+type \texttt{int~*~int~->~order}, where the \texttt{order} type
+contains three elements: \texttt{LESS}, \texttt{EQUAL} and
+\texttt{GREATER}.
+\input{chap-2.3-forlan2c}
+
+It is possible to bind the value of an expression to an
+identifier using a value declaration:
+\index{Standard ML!declaration}%
+\index{val@\texttt{val}}%
+\input{chap-2.3-forlan3}
+In the first declaration of \texttt{x}, its right-hand side is first
+evaluated, resulting in \texttt{7}, and then \texttt{x} is bound to
+this value.  Note that the redeclaration of \texttt{x} doesn't change
+the value of the previous declaration of \texttt{x}, it just makes
+that declaration inaccessible.
+
+One can use a value declaration to give names to the
+components of a tuple, or give a name to the data of a
+non-\texttt{NONE} optional value:
+\input{chap-2.3-forlan4}
+This last declaration uses pattern matching: \texttt{SOME(4~*~25)}
+is evaluated to $\mathtt{SOME}\;100$, and is then matched against the
+pattern \texttt{SOME~n}.  Because the constructors match, the
+pattern matching succeeds, and \texttt{n} becomes bound to \texttt{100}.
+
+One can use a \texttt{let} expression to carry out some declarations
+in local environment, evaluate an expression in that environment, and
+yield the result of that evaluation:
+\input{chap-2.3-forlan4a}
+When a declaration or expression spans more than one line, Forlan
+uses its secondary prompt, \texttt{=}, on all of the lines except
+\index{Forlan!secondary prompt}%
+\index{prompt!secondary}%
+for the first one.  Forlan doesn't process a declaration or expression
+until it is terminated with a semicolon.
+\index{Standard ML!semicolon@\texttt{;}}%
+
+One can declare functions, and apply those functions to arguments:%
+\index{Standard ML!function}%
+\index{function}%
+\input{chap-2.3-forlan5}
+The function \texttt{f} doubles its argument.
+All function values are printed as \texttt{fn}.
+\index{fn@\texttt{fn}}%
+A type \texttt{$t_1$\;->\;$t_2$} is the type of all functions taking
+\index{Standard ML!function type}%
+arguments of type $t_1$ and producing results (if they terminate
+without raising exceptions) of type $t_2$.  SML infers the types of
+functions.  The function application \texttt{f(4~+~5)} is evaluated as
+follows.  First, the argument \texttt{4~+~5} is evaluated, resulting
+in \texttt{9}.  Then a local envionment is created in which \texttt{n}
+is bound to \texttt{9}, and \texttt{f}'s body is evaluated in that
+environment, producing \texttt{18}.  Function application has higher
+precedence than operators like \texttt{+}.
+
+Technically, the function \texttt{g} matches its single argument,
+which must be a pair, against the pair pattern \texttt{(x,~y)},
+binding \texttt{x} and \texttt{y} to the left and right sides of this
+argument, and then evaluates its body.  But we can think such a
+function as having multiple arguments.
+\index{Standard ML!precedence}%
+The type operator \texttt{*} has higher precedence
+than the operator \texttt{->}.
+
+Except for basic entities like integers and booleans, all values in
+SML are represented by pointers, so that passing such a value to a
+function, or putting it in a datastructure, only involves copying a
+pointer.
+
+Given functions $f$ and $g$ of types \texttt{$t_1$\;->\;$t_2$} and
+\texttt{$t_2$\;->\;$t_3$}, respectively, \texttt{$g$\;o\;$f$} is the
+composition
+\index{Standard ML!composition}%
+\index{Standard ML! composition@\texttt{o}}%
+of $g$ and $f$, the function of type
+\texttt{$t_1$\;->\;$t_3$} that, when given an argument $x$ of type
+$t_1$, evaluates the expression \texttt{$g$($f$\;$x$)}.
+For example, we have that:
+\input{chap-2.3-forlan5a}
+
+SML also has anonymous functions, which may also be given names
+using value declarations:
+\input{chap-2.3-forlan5b}
+The anonymous function \texttt{fn x => x + 1} has type
+\texttt{int~->~int} and adds one to its argument.
+
+Functions are data: they may be passed to functions, returned from
+functions (a function that returns a function is called
+\emph{curried}), be components of tuples or lists, etc.
+For example,
+\begin{verbatim}
+val map : ('a -> 'b) -> 'a list -> 'b list
+\end{verbatim}
+is a polymorphic, curried function.  The type operator \texttt{->}
+associates
+\index{Standard ML!associativity}%
+to the right, so that \texttt{map}'s type is
+\begin{verbatim}
+val map : ('a -> 'b) -> ('a list -> 'b list)
+\end{verbatim}
+\texttt{map} takes in a function
+$f$ of type \texttt{'a~->~'b}, and returns a function that when called
+with a list of elements of type \texttt{'a}, transforms each element
+using $f$, forming a list of elements of type \texttt{'b}.
+\input{chap-2.3-forlan5c}
+In the last use of \texttt{map}, we are using the fact that
+function application associates to the left, so that
+\index{Standard ML!associativity}%
+$f\,x\,y$ means $(f\,x)y$, i.e., apply $f$ to $x$, and
+then apply the resulting function to $y$.
+
+The following example shows that local envionments are kept alive as
+as long as there are accessible function values referring to them:
+\input{chap-2.3-forlan5d}
+If the local environment containing the binding of \texttt{x} was
+discarded, then calling \texttt{f} would fail.
+
+It's also possible to declare recursive functions, like the
+\index{Standard ML!function!recursive}%
+factorial function:
+\input{chap-2.3-forlan6}
+One can load the contents of a file into Forlan using the function
+\begin{verbatim}
+val use : string -> unit
+\end{verbatim}
+\index{use@\texttt{use}}%
+For example, if the file \url{fact.sml} contains the declaration of
+the factorial function, then this declaration can be loaded into the
+system as follows:
+\input{chap-2.3-forlan7}
+
+The factorial function can also be defined using pattern matching,
+either by using a case expression in the body of the function, or
+by using multiple clauses in the function's definition:
+\input{chap-2.3-forlan7a}
+The order of the clauses of a case expression or function definition
+is significant.  If the clauses of either the case expression or
+the function definition were reversed, the function being defined
+would never return.
+
+Pattern matching is especially useful when doing list processing.
+E.g., we can define the list reversal function like this:
+\input{chap-2.3-forlan7b}
+Calling \texttt{rev} with the empty list will result in the empty
+list being returned.  And calling it with a nonempty list will
+temporarily bind \texttt{x} to the list's head, bind \texttt{xs} to its
+tail, and then evaluate the expression \texttt{rev~xs~@~[x]}.
+\index{Standard ML|)}%
+
+\subsection{Symbols}
+
+The Forlan module \texttt{Sym}
+\index{Sym@\texttt{Sym}}%
+defines the abstract type \texttt{sym}
+\index{sym@\texttt{sym}}%
+\index{Sym@\texttt{Sym}!sym@\texttt{sym}}%
+of Forlan symbols,
+\index{symbol}%
+as well as some functions for processing symbols, including:
+\begin{verbatim}
+val input   : string -> sym
+val output  : string * sym -> unit
+val compare : sym * sym -> order
+val equal   : string * string -> bool
+\end{verbatim}
+\index{Sym@\texttt{Sym}!input@\texttt{input}}%
+\index{Sym@\texttt{Sym}!output@\texttt{output}}%
+\index{Sym@\texttt{Sym}!compare@\texttt{compare}}%
+Symbols are expressed in Forlan's syntax as sequences of symbol
+characters, i.e., as $\mathsf{a}$ or $\langle\mathsf{id}\rangle$,
+rather than $[\mathsf{a}]$ or $\mathsf{[\,\langle,\,i,\,d,\,\rangle]}$.
+The above functions behave as follows:
+\begin{itemize}
+\item $\mathtt{input}\,\mathit{fil}$ reads a symbol from file
+$\mathit{fil}$; if $\mathit{fil} = \texttt{""}$, then the symbol is
+read from the standard input;
+
+\item \texttt{output($\mathit{fil}$,\,$a$)} writes the symbol $a$ to
+the file $\mathit{fil}$; if $\mathit{fil} = \texttt{""}$, then the
+string is written to the standard output;
+
+\item \texttt{compare} implements our total ordering on symbols; and
+
+\item \texttt{equal} tests whether two symbols are equal.
+\end{itemize}
+All of Forlan's input functions read from the standard input
+when called with \texttt{""}, and all of Forlan's
+output functions write to the standard output when given
+\texttt{""} instead of a file.
+
+The type \texttt{sym} is bound in the top-level environment.  On the
+other hand, one must write $\mathtt{Sym.}f$ to select the function $f$
+of module \texttt{Sym}.
+As described above, interactive input is terminated by a
+line consisting of a single ``\texttt{.}'' (dot), and Forlan's
+input prompt is ``\texttt{@}''.
+\index{interactive input}%
+\index{Forlan!input prompt}%
+\index{prompt!input}%
+
+The module \texttt{Sym} also provides the functions
+\begin{verbatim}
+val fromString : string -> sym
+val toString   : sym -> string
+\end{verbatim}
+\index{Sym@\texttt{Sym}!fromString@\texttt{fromString}}%
+\index{Sym@\texttt{Sym}!toString@\texttt{toString}}%
+where \texttt{fromString} is like \texttt{input}, except that it takes
+its input from a string, and \texttt{toString} is like
+\texttt{output}, except that it writes its output to a string.  These
+functions are especially useful when defining functions.  In the
+sequel, whenever a module/type has \texttt{input} and \texttt{output}
+functions, you may assume that it also has \texttt{fromString} and
+\texttt{toString} functions.
+
+Here are some example uses of the functions of \texttt{Sym}:
+\input{chap-2.3-forlan8}
+Values of abstract types (like \texttt{sym}) are printed
+as ``\texttt{-}''.
+
+\subsection{Sets}
+
+The module \texttt{Set}
+\index{Set@\texttt{Set}}%
+defines the abstract type
+\begin{verbatim}
+type 'a set
+\end{verbatim}
+\index{set@\texttt{\primesym a~set}}%
+\index{Set@\texttt{Set}!set@\texttt{\primesym a~set}}%
+of finite sets
+\index{set!finite}%
+of elements of type \texttt{\primesym a}.  It is bound in the
+top-level environment.  E.g., \texttt{sym\;set} is the type of sets of
+symbols.
+
+Each set has an associated total ordering, and some of the functions
+of \texttt{Set} take total orderings as arguments.  See the Forlan
+manual for the details.  In the book, we won't have to work with
+such functions explicitly.
+
+\texttt{Set} provides various constants and functions for
+processing sets, but we will only make direct use of a few of them:
+\begin{verbatim}
+val toList : 'a set -> 'a list
+val size   : 'a set -> int
+val empty  : 'a set
+val sing   : 'a -> 'a set
+val filter : ('a -> bool) -> 'a set -> 'a set
+\end{verbatim}
+\index{Set@\texttt{Set}!toList@\texttt{toList}}%
+\index{Set@\texttt{Set}!size@\texttt{size}}%
+\index{Set@\texttt{Set}!empty@\texttt{empty}}%
+\index{Set@\texttt{Set}!sing@\texttt{sing}}%
+\index{Set@\texttt{Set}!filter@\texttt{filter}}%
+These values are polymorphic: \texttt{'a} can be \texttt{int},
+\texttt{sym}, etc.
+The function \texttt{toList} returns the elements of a set, listing
+them in ascending order, according to the set's total ordering.
+The function \texttt{size} returns the size of a set.
+The value \texttt{empty} is the empty set.
+The function \texttt{sing} makes a value $x$ into the singleton
+set $\{x\}$. And \texttt{filter} goes through the elements of a set,
+keeping those elements on which the supplied predicate function
+returns \texttt{true}.
+
+\subsection{Sets of Symbols}
+
+The module \texttt{SymSet}
+\index{SymSet@\texttt{SymSet}}%
+defines various functions for processing
+finite sets of symbols (elements of type \texttt{sym\;set};
+\index{set@\texttt{\primesym a~set}}%
+alphabets), including:
+\begin{verbatim}
+val input    : string -> sym set
+val output   : string * sym set -> unit
+val fromList : sym list -> sym set
+val memb     : sym * sym set -> bool
+val subset   : sym set * sym set -> bool
+val equal    : sym set * sym set -> bool
+val union    : sym set * sym set -> sym set
+val inter    : sym set * sym set -> sym set
+val minus    : sym set * sym set -> sym set
+val genUnion : sym set list -> sym set
+val genInter : sym set list -> sym set
+\end{verbatim}
+\index{SymSet@\texttt{SymSet}!input@\texttt{input}}%
+\index{SymSet@\texttt{SymSet}!output@\texttt{output}}%
+\index{SymSet@\texttt{SymSet}!fromList@\texttt{fromList}}%
+\index{SymSet@\texttt{SymSet}!memb@\texttt{memb}}%
+\index{SymSet@\texttt{SymSet}!subset@\texttt{subset}}%
+\index{SymSet@\texttt{SymSet}!equal@\texttt{equal}}%
+\index{SymSet@\texttt{SymSet}!union@\texttt{union}}%
+\index{SymSet@\texttt{SymSet}!inter@\texttt{inter}}%
+\index{SymSet@\texttt{SymSet}!minus@\texttt{minus}}%
+\index{SymSet@\texttt{SymSet}!genUnion@\texttt{genUnion}}%
+\index{SymSet@\texttt{SymSet}!genInter@\texttt{genInter}}%
+The total ordering associated with sets of symbols is our total
+ordering on symbols.  Sets of symbols are expressed in Forlan's syntax
+as sequences of symbols, separated by commas.
+
+The function \texttt{fromList} returns a set with the same elements of
+the list of symbols it is called with.  The function \texttt{memb}
+tests whether a symbol is a member (element) of a set of symbols,
+\texttt{subset} tests whether a first set of symbols is a subset of a
+second one, and \texttt{equal} tests whether two sets of symbols are
+equal.  The functions \texttt{union}, \texttt{inter} and
+\texttt{minus} compute the union, intersection and difference of two
+sets of symbols.  The function \texttt{genUnion} computes the
+generalized intersection of a list of sets of symbols $\xss$,
+returning the set of all symbols appearing in at least one element of
+$\xss$.  And, the function \texttt{genInter} computes the generalized
+intersection of a nonempty list of sets of symbols $\xss$, returning
+the set of all symbols appearing in all elements of $\xss$.
+
+Here are some example uses of the functions of \texttt{SymSet}:
+\input{chap-2.3-forlan9}
+
+\subsection{Strings}
+
+We will be working with two kinds of strings:
+\begin{itemize}
+\item SML strings, i.e., elements of type \texttt{string};
+
+\item The strings of formal language theory, which we call
+``formal language strings'', when necessary.
+\end{itemize}
+
+The module \texttt{Str}
+\index{Str@\texttt{Str}}%
+defines the type \texttt{str} of formal language
+\index{Str@\texttt{Str}!str@\texttt{str}}%
+\index{str@\texttt{str}}%
+\index{string}%
+strings, which is bound in the top-level environment, and is
+equal to \texttt{sym\;list}, the type of lists of symbols.
+Because strings are lists, we can use SML's list processing functions
+on them.
+Strings are expressed in Forlan's syntax as either a
+single \texttt{\%} or a nonempty sequence of symbols.
+\index{string!Forlan syntax}%
+\index{Forlan!string syntax}%
+
+The module \texttt{Str} also defines some functions for processing strings,
+including:
+\begin{verbatim}
+val input      : string -> str
+val output     : string * str -> unit
+val alphabet   : str -> sym set
+val compare    : str * str -> order
+val equal      : str * str -> bool
+val prefix     : str * str -> bool
+val suffix     : str * str -> bool
+val substr     : str * str -> bool
+val power      : str * int -> str
+val last       : str -> sym
+val allButLast : str -> str
+\end{verbatim}
+\index{Str@\texttt{Str}!input@\texttt{input}}%
+\index{Str@\texttt{Str}!output@\texttt{output}}%
+\index{Str@\texttt{Str}!alphabet@\texttt{alphabet}}%
+\index{Str@\texttt{Str}!compare@\texttt{compare}}%
+\index{Str@\texttt{Str}!prefix@\texttt{prefix}}%
+\index{Str@\texttt{Str}!suffix@\texttt{suffix}}%
+\index{Str@\texttt{Str}!substr@\texttt{substr}}%
+\index{Str@\texttt{Str}!power@\texttt{power}}%
+\index{Str@\texttt{Str}!last@\texttt{last}}%
+\index{Str@\texttt{Str}!allButLast@\texttt{allButLast}}%
+
+The function \texttt{alphabet} returns the alphabet of a string,
+and \texttt{compare} implements our total ordering on
+strings.  \texttt{prefix($x$,\;$y$)} tests whether $x$ is a prefix of
+$y$, and \texttt{suffix} and \texttt{substring} work similarly.
+\texttt{power($x$,\;$n$)} raises $x$ to the power $n$.  And
+\texttt{last} and \texttt{allButLast} return the last symbol and all
+but the last symbol of a string, respectively.
+
+Here are some example uses of the functions of \texttt{Str}:
+\input{chap-2.3-forlan11}
+
+\subsection{Sets of Strings}
+
+The module \texttt{StrSet}
+\index{StrSet@\texttt{StrSet}}%
+defines various functions for processing
+finite sets of strings (elements of type \texttt{str\;set};
+\index{set@\texttt{\primesym a~set}}%
+finite languages),
+\index{language}%
+including:
+\begin{verbatim}
+val input    : string -> str set
+val output   : string * str set -> unit
+val fromList : str list -> str set
+val memb     : str * str set -> bool
+val subset   : str set * str set -> bool
+val equal    : str set * str set -> bool
+val union    : str set * str set -> str set
+val inter    : str set * str set -> str set
+val minus    : str set * str set -> str set
+val genUnion : str set list -> str set
+val genInter : str set list -> str set
+val alphabet : str set -> sym set
+\end{verbatim}
+\index{StrSet@\texttt{StrSet}!input@\texttt{input}}%
+\index{StrSet@\texttt{StrSet}!output@\texttt{output}}%
+\index{StrSet@\texttt{StrSet}!fromList@\texttt{fromList}}%
+\index{StrSet@\texttt{StrSet}!memb@\texttt{memb}}%
+\index{StrSet@\texttt{StrSet}!subset@\texttt{subset}}%
+\index{StrSet@\texttt{StrSet}!equal@\texttt{equal}}%
+\index{StrSet@\texttt{StrSet}!union@\texttt{union}}%
+\index{StrSet@\texttt{StrSet}!inter@\texttt{inter}}%
+\index{StrSet@\texttt{StrSet}!minus@\texttt{minus}}%
+\index{StrSet@\texttt{StrSet}!genUnion@\texttt{genUnion}}%
+\index{StrSet@\texttt{StrSet}!genInter@\texttt{getInter}}%
+\index{StrSet@\texttt{StrSet}!alphabet@\texttt{alphabet}}%
+The total ordering associated with sets of strings is our
+total ordering on strings.
+Sets of strings are expressed in Forlan's syntax as sequences of strings,
+separated by commas.
+
+Here are some example uses of the functions of \texttt{StrSet}:
+\input{chap-2.3-forlan14}
+In this transcript, \texttt{us} was declared to be all the even-length
+elements of \texttt{zs}.
+
+\subsection{Relations on Symbols}
+
+The module \texttt{SymRel}
+\index{SymRel@\texttt{SymRel}}%
+defines the type \texttt{sym\underscoresym rel}
+\index{sym_rel@\texttt{sym\underscoresym rel}}%
+\index{SymRel@\texttt{SymRel}!sym_rel@\texttt{sym\underscoresym rel}}%
+of finite relations on symbols.
+\index{relation}%
+It is bound in the top-level environment, and is
+equal to \texttt{(sym * sym)set}, i.e., its elements are finite sets
+of pairs of symbols.  The total ordering associated with relations
+on symbols orders pairs of symbols first according to their
+left-hand sides (using the total ordering on symbols), and then
+according to their right-hand sides.
+Relations on symbols are expressed in Forlan's syntax as sequences of ordered
+pairs \texttt{($a$,$b$)} of symbols, separated by commas.
+\index{ordered pair}%
+\index{ ordered pair@$(\cdot,\cdot)$}%
+
+\texttt{SymRel} also defines various functions for processing finite relations
+on symbols, including:
+\begin{verbatim}
+val input            : string -> sym_rel
+val output           : string * sym_rel -> unit
+val fromList         : (sym * sym)list -> sym_rel
+val memb             : (sym * sym) * sym_rel -> bool
+val subset           : sym_rel * sym_rel -> bool
+val equal            : sym_rel * sym_rel -> bool
+val union            : sym_rel * sym_rel -> sym_rel
+val inter            : sym_rel * sym_rel -> sym_rel
+val minus            : sym_rel * sym_rel -> sym_rel
+val genUnion         : sym_rel list -> sym_rel
+val genInter         : sym_rel list -> sym_rel
+val domain           : sym_rel -> sym set
+val range            : sym_rel -> sym set
+val relationFromTo   : sym_rel * sym_set * sym_set -> bool
+val reflexive        : sym_rel * sym set -> bool
+val symmetric        : sym_rel -> bool
+val antisymmetric    : sym_rel -> bool
+val transitive       : sym_rel -> bool
+val total            : sym_rel -> bool
+val inverse          : sym_rel -> sym_rel
+val compose          : sym_rel * sym_rel -> sym_rel
+val function         : sym_rel -> bool
+val functionFromTo   : sym_rel * sym_set * sym_set -> bool
+val injection        : sym_rel -> bool
+val bijectionFromTo  : sym_rel * sym_set * sym_set -> bool
+val applyFunction    : sym_rel -> sym -> sym
+val restrictFunction : sym_rel * sym_set -> sym_rel
+val updateFunction   : sym_rel * sym * sym -> sym_rel
+\end{verbatim}
+\index{SymRel@\texttt{SymRel}!input@\texttt{input}}%
+\index{SymRel@\texttt{SymRel}!output@\texttt{output}}%
+\index{SymRel@\texttt{SymRel}!fromList@\texttt{fromList}}%
+\index{SymRel@\texttt{SymRel}!memb@\texttt{memb}}%
+\index{SymRel@\texttt{SymRel}!subset@\texttt{subset}}%
+\index{SymRel@\texttt{SymRel}!equal@\texttt{equal}}%
+\index{SymRel@\texttt{SymRel}!union@\texttt{union}}%
+\index{SymRel@\texttt{SymRel}!inter@\texttt{inter}}%
+\index{SymRel@\texttt{SymRel}!minus@\texttt{minus}}%
+\index{SymRel@\texttt{SymRel}!genUnion@\texttt{genUnion}}%
+\index{SymRel@\texttt{SymRel}!genInter@\texttt{genInter}}%
+\index{SymRel@\texttt{SymRel}!domain@\texttt{domain}}%
+\index{SymRel@\texttt{SymRel}!range@\texttt{range}}%
+\index{SymRel@\texttt{SymRel}!relationFromTo@\texttt{relationFromTo}}%
+\index{SymRel@\texttt{SymRel}!reflexive@\texttt{reflexive}}%
+\index{SymRel@\texttt{SymRel}!symmetric@\texttt{symmetric}}%
+\index{SymRel@\texttt{SymRel}!antisymmetric@\texttt{antisymmetric}}%
+\index{SymRel@\texttt{SymRel}!transitive@\texttt{transitive}}%
+\index{SymRel@\texttt{SymRel}!total@\texttt{total}}%
+\index{SymRel@\texttt{SymRel}!inverse@\texttt{inverse}}%
+\index{SymRel@\texttt{SymRel}!compose@\texttt{compose}}%
+\index{SymRel@\texttt{SymRel}!function@\texttt{function}}%
+\index{SymRel@\texttt{SymRel}!functionFromTo@\texttt{functionFromTo}}%
+\index{SymRel@\texttt{SymRel}!injection@\texttt{injection}}%
+\index{SymRel@\texttt{SymRel}!bijectionFromTo@\texttt{bijectionFromTo}}%
+\index{SymRel@\texttt{SymRel}!applyFunction@\texttt{applyFunction}}%
+The functions \texttt{domain} and \texttt{range} return the domain
+and range, respectively, of a \texttt{relation}.
+$\mathtt{relationFromTo}(\rel, \bs, \cs)$ tests whether $\rel$
+is a relation from $\bs$ to $\cs$.
+
+$\mathtt{reflexive}(\rel, \bs)$ tests whether $\rel$ is reflexive
+on $\bs$.
+The functions \texttt{symmetric}, \texttt{antisymmetric} and
+\texttt{transitive} test whether a relation is symmetric, antisymmetric
+or transitive, respectively.
+$\mathtt{total}(\rel, \bs)$ tests whether $\rel$ is total
+on $\bs$.
+
+The function \texttt{inverse} computes the inverse of a relation,
+and \texttt{compose} composes two relations.
+
+The function \texttt{function} tests whether a relation is a
+function.
+The function \texttt{applyFunction} is curried.
+\index{curried function}%
+\index{Standard ML!curried function}%
+\index{Standard ML!function!curried}%
+Given a relation $\rel$, \texttt{applyFunction} checks that $\rel$ is a
+function, issuing an error message, and raising an exception,
+otherwise.  If it is a function, it returns a function of type
+\texttt{sym -> sym} that, when called with a symbol $a$, will apply
+the function $\rel$ to $a$, issuing an error message if $a$ is
+not in the domain of $\rel$.
+$\mathtt{functionFromTo}(\rel, \bs, \cs)$ tests whether $\rel$
+is a function from $\bs$ to $\cs$.
+The function \texttt{injection} tests whether a relation is
+an injective function.
+$\mathtt{bijectionFromTo}(\rel, \bs, \cs)$ tests whether $\rel$
+is a bijection from $\bs$ to $\cs$.
+
+$\mathtt{restrictFunction}(\rel, \bs)$ restricts the function
+$\rel$ to $\bs$; it issues an error message if $\rel$ is not
+a function, or $\bs$ is not a subset of the domain of $\rel$.
+And, $\mathtt{updateFunction}(\rel, a, b)$ returns the
+updating of the function $\rel$ to send $a$ to $b$; it issues
+an error message if $\rel$ isn't a function.
+
+Here is how we can work with total orderings using functions from
+\texttt{SymRel}:
+\input{chap-2.3-forlan15}
+
+And here is how we can work with relations that are functions:
+\input{chap-2.3-forlan16}
+
+\subsection{Notes}
+
+The book and toolset were designed and developed together, which made
+it possible to minimize the notational and conceptual distance between
+the two.
+\index{Forlan|)}%
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

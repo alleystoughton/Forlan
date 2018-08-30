@@ -1,0 +1,275 @@
+\section{Checking Acceptance and Finding Accepting Paths}
+\label{CheckingAcceptanceAndFindingAcceptingPaths}
+
+In this section we study algorithms for checking whether a string is
+\index{finite automaton!checking for string acceptance}%
+\index{finite automaton!searching for labeled paths}%
+accepted by a finite automaton, and for finding a labeled path that
+explains why a string is accepted by a finite automaton.
+
+\subsection{Processing a String from a Set of States}
+
+Suppose $M$ is a finite automaton.  We define a function
+$\Delta_M\in\powset\,Q_M\times\Str\fun\powset\,Q_M$ by:
+\index{Delta@$\Delta_\cdot$}%
+\index{finite automaton!Delta@$\Delta_\cdot$}%
+$\Delta_M(P,w)$ is the set of all $r\in Q_M$ such that there is
+an $\lp\in\LP$ such that
+\begin{itemize}
+\item $w$ is the label of $\lp$;
+
+\item $\lp$ is valid for $M$;
+
+\item the start state of $\lp$ is in $P$; and
+
+\item $r$ is the end state of $\lp$.
+\end{itemize}
+In other words, $\Delta_M(P,w)$ consists of all of the states that can
+be reached from elements of $P$ by labeled paths that are labeled by
+$w$ and valid for $M$.  When the FA $M$ is clear from the context, we
+sometimes abbreviate $\Delta_M$ to $\Delta$.
+
+Suppose $M$ is the finite automaton
+\begin{center}
+\input{chap-3.6-fig1.eepic}
+\end{center}
+Then, $\Delta_M(\{\Asf\},\mathsf{12111111}) =
+\{\Bsf,\Csf\}$, since
+\begin{gather*}
+\mathsf{A\lparr{1}A\lparr{2}B\lparr{11}B\lparr{11}B\lparr{11}B}
+\quad\eqtxt{and}\quad
+\mathsf{A\lparr{1}A\lparr{2}C\lparr{111}C\lparr{111}C}
+\end{gather*}
+are all of the labeled paths that are labeled by $\mathsf{12111111}$,
+valid in $M$ and whose start states are $\Asf$.
+Furthermore, $\Delta_M(\{\Asf,\Bsf,\Csf\},\mathsf{11}) =
+\{\Asf,\Bsf\}$, since
+\begin{gather*}
+\mathsf{A\lparr{1}A\lparr{1}A}
+\quad\eqtxt{and}\quad
+\mathsf{B\lparr{11}B}
+\end{gather*}
+are all of the labeled paths that are labeled by $\mathsf{11}$ and
+valid in $M$.
+
+Suppose $M$ is a finite automaton, $P\sub Q_M$ and $w\in Str$.
+We can calculate $\Delta_M(P,w)$ as follows.
+\index{Delta@$\Delta_\cdot$}%
+\index{finite automaton!Delta@$\Delta_\cdot$}%
+\index{finite automaton!calculating Delta@calculating $\Delta_\cdot(\cdot,\cdot)$}%
+
+Let $S$ be the set of all suffixes of $w$.  Given $y\in S$, we write
+$\pre\,y$ for the unique $x$ such that $w=xy$.
+
+First, we generate the least subset $X$ of $Q_M\times S$ such that:
+\begin{enumerate}[(1)]
+\item for all $p\in P$, $(p,w)\in X$; and
+
+\item for all $q,r\in Q_M$ and $x,y\in\Str$, if
+$(q,xy)\in X$ and $q,x\fun r\in T_M$, then
+$(r,y)\in X$.
+\end{enumerate}
+We start by using rule (1), adding $(p,w)$ to $X$, whenever $p\in P$.
+Then $X$ (and any superset of $X$) will satisfy property (1).
+Then, rule (2) is used repeatedly to add more pairs to $X$.  Since
+$Q_M\times S$ is a finite set, eventually $X$ will satisfy property (2).
+
+If $M$ is our example finite automaton, then here are the elements of
+$X$, when $P=\{\Asf\}$ and $w=\mathsf{2111}$:
+\begin{itemize}
+\item $(\Asf,\mathsf{2111})$;
+
+\item $(\Bsf,\mathsf{111})$, because of $(\Asf,\mathsf{2111})$ and the
+  transition $\Asf,\twosf\fun\Bsf$;
+
+\item $(\Csf, \mathsf{111})$, because of $(\Asf,\mathsf{2111})$ and
+  the transition $\Asf,\twosf\fun\Csf$ (now, we're done with
+  $(\Asf,\mathsf{2111})$);
+
+\item $(\Bsf,\mathsf{1})$, because of $(\Bsf,\mathsf{111})$ and the
+  transition $\Bsf,\mathsf{11}\fun\Bsf$ (now, we're done with
+  $(\Bsf,\mathsf{111})$);
+
+\item $(\Csf, \%)$, because of $(\Csf, \mathsf{111})$ and the
+  transition $\Csf,\mathsf{111}\fun\Csf$ (now, we're done with $(\Csf,
+  \mathsf{111})$); and
+
+\item nothing can be added using $(\Bsf,\mathsf{1})$ and $(\Csf, \%)$,
+and so we've found all the elements of $X$.
+\end{itemize}
+
+The following lemma explains when pairs show up in $X$.
+
+\begin{lemma}
+\label{AcceptLem1}
+For all $q\in Q_M$ and $y\in S$,
+\begin{gather*}
+(q,y)\in X\quad\eqtxt{iff}\quad q\in\Delta_M(P,\pre\,y) .
+\end{gather*}
+\end{lemma}
+
+\begin{proof}
+The ``only if'' (left-to-right) direction is by induction on $X$:
+we show that, for all $(q,y)\in X$, $q\in\Delta_M(P,\pre(y))$.
+\begin{itemize}
+\item Suppose $p\in P$.  Then $p\in\Delta_M(P,\%)$.  But
+$\pre(w)=\%$, so that $p\in\Delta_M(P,\pre(w))$.
+
+\item Suppose $q,r\in Q_M$, $x,y\in\Str$, $(q,xy)\in X$ and
+$(q,x,r)\in T_M$.  Assume the inductive hypothesis:
+$q\in\Delta_M(P,\pre(xy))$.
+Thus there is an $\lp\in\LP$
+such that $\pre(xy)$ is the label of $\lp$, $\lp$ is valid for $M$,
+the start state of $\lp$ is in $P$, and $q$ is the end state of $\lp$.
+Let $lp'\in\LP$ be the result of adding the step $q,x\Rightarrow r$ at
+the end of $\lp$.  Thus $\pre(y)$ is the label of $\lp'$, $\lp'$ is
+valid for $M$, the start state of $\lp'$ is in $P$, and $r$ is the end
+state of $\lp'$, showing that $r\in\Delta_M(P,\pre(y))$.
+\end{itemize}
+
+For the `if'' (right-to-left) direction, we have that there is a
+labeled path
+\begin{gather*}
+q_1\lparr{x_1}q_2\lparr{x_2}\cdots\,q_{n-1}\lparr{x_{n-1}}q_n ,
+\end{gather*}
+that is valid for $M$ and where $\pre(y)=x_1x_2\cdots x_{n-1}$,
+$q_1\in P$ and $q_n=q$.  Since $q_1\in P$ and $w=\pre(y)y=x_1x_2\cdots
+x_{n-1}y$, we have that $(q_1, x_1x_2\cdots x_{n-1}y)=(q_1,w)\in X$.  But
+$(q_1,x_1,q_2)\in T_M$, and thus $(q_2, x_2\cdots x_{n-1}y)\in X$.
+Continuing on in this way, (we could do this by mathematical induction),
+we finally get that $(q,y)=(q_n,y)\in X$.
+\end{proof}
+
+\begin{lemma}
+\label{AcceptLem2}
+For all $q\in Q_M$, $(q,\%)\in X$ iff $q\in\Delta_M(P,w)$.
+\end{lemma}
+
+\begin{proof}
+Suppose $(q,\%)\in X$.  Lemma~\ref{AcceptLem1} tells us that
+$q\in\Delta_M(P,\pre\,\%)$.  But $\pre\,\%=w$, and thus
+$q\in\Delta_M(P,w)$.
+
+Suppose $q\in\Delta_M(P,w)$.  Since $w=\pre\,\%$, we have that
+$q\in\Delta_M(P,\pre\,\%)$.  Lemma~\ref{AcceptLem1} tells us that
+$(q,\%)\in X$.
+\end{proof}
+
+By Lemma~\ref{AcceptLem2}, we have that
+\begin{gather*}
+\Delta_M(P,w)=\setof{q\in Q_M}{(q,\%)\in X} .
+\end{gather*}
+Thus, we return the set of all states $q$ that are paired with $\%$ in
+$X$.
+
+\subsection{Checking String Acceptance and Finding Accepting Paths}
+
+\begin{proposition}
+\label{AcceptLem3}
+Suppose $M$ is a finite automaton.  Then
+\begin{gather*}
+L(M) = \setof{w\in\Str}{\Delta_M(\{s_M\}, w)
+\index{L(.)@$L(\cdot)$}%
+\index{finite automaton!L(.)@$L(\cdot)$}%
+\index{finite automaton!characterizing L(.)@characterizing $L(\cdot)$}%
+\mathbin{\cap}A_M\mathrel{\neq}\emptyset} .
+\end{gather*}
+\end{proposition}
+
+\begin{proof}
+Suppose $w\in L(M)$.  Then $w$ is the label of a labeled path $\lp$
+such that $\lp$ is valid in $M$, the start state of $\lp$ is $s_M$ and
+the end state of $\lp$ is in $A_M$.  Let $q$ be the end state of
+$\lp$.  Thus $q\in\Delta_M(\{s_M\}, w)$ and $q\in A_M$, showing that
+$\Delta_M(\{s_M\}, w)\cap A_M\neq\emptyset$.
+
+Suppose $\Delta_M(\{s_M\}, w)\cap A_M\neq\emptyset$, so that
+there is a $q$ such that $q\in\Delta_M(\{s_M\}, w)$ and
+$q\in A_M$.  Thus $w$ is the label of a labeled path $\lp$ such that
+$\lp$ is valid in $M$, the start state of $\lp$ is $s_M$,
+and the end state of $\lp$ is $q\in A_M$.  Thus $w\in L(M)$.
+\end{proof}
+
+According to Proposition~\ref{AcceptLem3}, to check if a string $w$ is
+accepted by a finite automaton $M$, we simply 
+use our algorithm to generate $\Delta_M(\{s_M\}, w)$,
+and then check if this set contains at least one accepting state.
+
+Given a finite automaton $M$, subsets $P,R$ of $Q_M$ and a string $w$,
+\index{finite automaton!searching for labeled paths}%
+how do we search for a labeled path that is labeled by $w$, valid
+in $M$, starts from an element of $P$, and ends with an element of $R$?
+What we need to do is associate with each pair
+\begin{gather*}
+(q,y)
+\end{gather*}
+of the set $X$ that we generate when computing $\Delta_M(P,w)$ a
+labeled path $\lp$ such that $\lp$ is labeled by $\pre(y)$, $\lp$ is
+valid in $M$, the start state of $\lp$ is an element of $P$, and the
+end state of $\lp$ is $q$.  If we process the elements of $X$ in a
+breadth-first (rather than depth-first) manner, this will ensure that
+these labeled paths are as short as possible.  As we generate the
+elements of $X$, we look for a pair of the form $(q,\%)$, where $q\in
+R$.  Our answer will then be the labeled path associated with this
+pair.
+
+The Forlan module \texttt{FA}
+\index{FA@\texttt{FA}}%
+also contains the following functions
+for processing strings and checking string acceptance:
+\begin{verbatim}
+val processStr          : fa -> sym set * str -> sym set
+val accepted            : fa -> str -> bool
+\end{verbatim}
+\index{FA@\texttt{FA}!processStr@\texttt{processStr}}%
+\index{FA@\texttt{FA}!accepted@\texttt{accepted}}%
+The function \texttt{processStr} takes in a finite automaton $M$,
+and returns a function that takes in a pair $(P, w)$ and returns
+$\Delta_M(P, w)$.
+And, the function \texttt{accepted} takes in a finite automaton $M$,
+and returns a function that checks whether a string $x$ is
+accepted by $M$.
+
+The Forlan module \texttt{FA}
+\index{FA@\texttt{FA}}%
+also contains the following functions for finding labeled paths:
+\begin{verbatim}
+val findLP          : fa -> sym set * str * sym set -> lp
+val findAcceptingLP : fa -> str -> lp
+\end{verbatim}
+\index{FA@\texttt{FA}!findLP@\texttt{findLP}}%
+\index{FA@\texttt{FA}!findAcceptingLP@\texttt{findAcceptingLP}}%
+The function \texttt{findLP} takes in a finite automaton $M$, and
+returns a function that takes in a triple $(P,w,R)$ and tries
+to find a labeled path $\lp$ that is labeled by $w$, valid for $M$,
+starts out with an element of $P$, and ends up at an element of $R$.
+It issues an error message when there is no such labeled path.
+The function \texttt{findAcceptingLP} takes in a finite automaton $M$,
+and returns a function that looks for a labeled path $\lp$ that
+explains why a string $w$ is accepted by $M$.  It issues an error
+message when there is no such labeled path.  The labeled paths
+returned by these functions are always of minimal length.
+
+Suppose \texttt{fa} is the finite automaton
+\begin{center}
+\input{chap-3.6-fig1.eepic}
+\end{center}
+We begin by applying our five functions to \texttt{fa}, and giving names
+to the resulting functions:
+\input{chap-3.6-forlan1}
+Next, we'll define a set of states and a string to use later:
+\input{chap-3.6-forlan3}
+Here are some example uses of our functions:
+\input{chap-3.6-forlan4}
+
+\subsection{Notes}
+
+The material in this section is original.  Our definition of the
+meaning of FAs via labeled paths allows us not simply to test \emph{whether}
+an FA accepts a string $w$, but to ask for evidence---in the form of a
+labeled path---for \emph{why} FA accepts $w$.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

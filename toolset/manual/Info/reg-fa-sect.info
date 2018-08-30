@@ -1,0 +1,16 @@
+@FILES
+  [@EMPTY "reg-fa-sect"; "Regular Expressions and Finite Automata";
+    @SECTION "Regular Expressions and Finite Automata" [
+       @FILE "reg"
+       @FILE "lp"
+       @FILE "tran"
+       @FILE "tran-set"
+       @FILE "fa"
+       @FILE "efa"
+       @FILE "nfa"
+       @FILE "dfa"
+       @FILE "tran-reg"
+       @FILE "tran-reg-set"
+       @FILE "rfa"
+    ]
+  ]

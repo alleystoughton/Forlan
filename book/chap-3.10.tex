@@ -1,0 +1,306 @@
+\section{Nondeterministic Finite Automata}
+\label{NondeterministicFiniteAutomata}
+
+In this section, we study the second of our more restricted kinds of
+finite automata: nondeterministic finite automata.
+
+\subsection{Definition of NFAs}
+
+A \emph{nondeterministic finite automaton} (NFA) $M$ is a finite
+automaton such that
+\begin{gather*}
+T_M\sub\setof{q,x\fun r}{q,r\in\Sym\eqtxt{and}x\in\Str\eqtxt{and}|x|=1}.
+\end{gather*}
+In other words, an FA is an NFA iff every string of every transition
+of the FA has a single symbol.
+For example, $\Asf,\onesf\fun \Bsf$ is a legal NFA transition, but
+$\Asf, \%\fun \Bsf$ and $\Asf,\onesf\onesf\fun \Bsf$ are not legal.
+We write $\NFA$ for the set of all nondeterministic finite automata.
+Thus $\NFA\subsetneq\EFA\subsetneq\FA$.
+
+The following proposition obviously holds.
+
+\begin{proposition}
+Suppose $M$ is an NFA.
+\begin{itemize}
+\item For all $N\in\FA$, if $M\iso N$, then $N$ is an NFA.
+
+\item For all bijections $f$ from $Q_M$ to some set of symbols,
+$\renameStates(M, f)$ is an NFA.
+
+\item $\renameStatesCanonically\,M$ is an NFA.
+
+\item $\simplify\,M$ is an NFA.
+\end{itemize}
+\end{proposition}
+
+\subsection{Converting EFAs to NFAs}
+
+Suppose $M$ is the EFA
+\begin{center}
+\input{chap-3.10-fig2.eepic}
+\end{center}
+To convert $M$ into an equivalent NFA, we will have to:
+\begin{itemize}
+\item replace the transitions $\Asf,\%\fun\Bsf$ and $\Bsf,\%\fun\Csf$
+  with legal transitions (for example, because of the valid labeled
+  path
+  \begin{gather*}
+    \Asf\lparr{\%}\Bsf\lparr{\onesf}\Bsf\lparr{\%}\Csf,
+  \end{gather*}
+  we will add the transition $\Asf,\onesf\fun\Csf$);
+
+\item make (at least) $\Asf$ be an accepting state (so that $\%$ is
+  accepted by the NFA).
+\end{itemize}
+
+Before defining a general procedure for converting EFAs to NFAs, we
+first say what we mean by the empty-closure of a set of states.
+Suppose $M$ is a finite automaton and $P\sub Q_M$.  The
+\emph{empty-closure} of $P$ ($\emptyClose_M\,P$) is the least subset
+$X$ of $Q_M$ such that
+\begin{itemize}
+\item $P\sub X$; and
+
+\item for all $q,r\in Q_M$, if $q\in X$ and $q,\%\fun r\in T_M$, then
+$r\in X$.
+\end{itemize}
+We sometimes abbreviate $\emptyClose_M\,P$ to $\emptyClose\,P$, when
+$M$ is clear from the context.
+For example, if $M$ is our example EFA and $P=\{\Asf\}$, then:
+\begin{itemize}
+\item $\Asf\in X$;
+
+\item $\Bsf\in X$, since $\Asf\in X$ and $\Asf,\%\fun\Bsf\in T_M$;
+
+\item $\Csf\in X$, since $\Bsf\in X$ and $\Bsf,\%\fun\Csf\in T_M$.
+\end{itemize}
+Thus $\emptyClose\,P=\{\Asf,\Bsf,\Csf\}$.
+
+Suppose $M$ is a finite automaton and $P\sub Q_M$.  The \emph{backwards
+empty-closure} of $P$ ($\emptyCloseBackwards_M\,P$) is the least
+subset $X$ of $Q_M$ such that
+\begin{itemize}
+\item $P\sub X$; and
+
+\item for all $q,r\in Q_M$, if $r\in X$ and $q,\%\fun r\in T_M$, then
+$q\in X$.
+\end{itemize}
+We sometimes drop the $M$ from $\emptyCloseBackwards_M$, when
+it's clear from the context.
+For example, if $M$ is our example EFA and $P=\{\Csf\}$, then:
+\begin{itemize}
+\item $\Csf\in X$;
+
+\item $\Bsf\in X$, since $\Csf\in X$ and $\Bsf,\%\fun\Csf\in T_M$;
+
+\item $\Asf\in X$, since $\Bsf\in X$ and $\Asf,\%\fun\Bsf\in T_M$.
+\end{itemize}
+Thus $\emptyCloseBackwards\,P=\{\Asf,\Bsf,\Csf\}$.
+  
+\begin{proposition}
+Suppose $M$ is a finite automaton.  For all $P\sub Q_M$,
+\begin{displaymath}
+\emptyClose_M\,P=\Delta_M(P,\%) .  
+\end{displaymath}
+\end{proposition}
+
+In other words, $\emptyClose_M\,P$ is all of the states that can be
+reached from elements of $P$ by sequences of $\%$-transitions.
+
+\begin{proposition}
+Suppose $M$ is a finite automaton.  For all $P\sub Q_M$,
+\begin{displaymath}
+\emptyCloseBackwards_M\,P=
+\setof{q\in Q_M}{\Delta_M(\{q\},\%)\cap P\neq\emptyset} .
+\end{displaymath}
+\end{proposition}
+
+In other words, $\emptyCloseBackwards_M\,P$ is all of the states from
+which it is possible to reach elements of $P$ by sequences of
+$\%$-transitions.
+
+We define a function/algorithm $\efaToNFA\in\EFA\fun\NFA$ that
+converts EFAs into NFAs by saying that $\efaToNFA\,M$ is the NFA $N$
+such that:
+\begin{itemize}
+\item $Q_N=Q_M$;
+
+\item $s_N=s_M$;
+
+\item $A_N=\emptyCloseBackwards\,A_M$; and
+
+\item $T_N$ is the set of all transitions $q', a\fun r'$ such that
+  $q',r'\in Q_M$, $a\in\Sym$, and there are $q,r\in Q_M$ such that:
+\begin{itemize}
+\item $q,a\fun r\in T_M$;
+\item $q'\in{\emptyCloseBackwards\,\{q\}}$; and
+\item $r'\in{\emptyClose\,\{r\}}$.
+\end{itemize}
+\end{itemize}
+
+To compute the set $T_N$, we process each transition $q,x\fun r$ of
+$M$ as follows.  If $x=\%$, then we generate no transitions.
+Otherwise, our transition is $q, a\fun r$ for some symbol $a$.  We
+then compute the backwards empty-closure of $\{q\}$, and call the
+result $X$, and compute the (forwards) empty-closure of $\{r\}$, and
+call the result $Y$.  We then add all of the elements of
+\begin{gather*}
+\setof{q', a\fun r'}{q'\in X\eqtxt{and}r'\in Y}
+\end{gather*}
+to $T_N$.
+
+Because the algorithm defines $A_N$ to be $\emptyCloseBackwards\,A_M$,
+it could let $T_N$ be the set of all transitions $q',a\fun r$
+such that $q',r\in Q_M$, $a\in\Sym$, and there is a $q\in Q_M$ such
+that:
+\begin{itemize}
+\item $q,a\fun r\in T_M$; and
+\item $q'\in{\emptyCloseBackwards\,\{q\}}$.
+\end{itemize}
+This would mean that $N$ would have fewer transitions.  However, for
+esthetic reasons, we'll stick with the symmetric definition of $T_N$.
+
+Let $M$ be our example EFA
+\begin{center}
+\input{chap-3.10-fig2.eepic}
+\end{center}
+and let $N=\efaToNFA\,M$.  Then
+\begin{itemize}
+\item $Q_N=Q_M=\{\Asf,\Bsf,\Csf\}$;
+
+\item $s_N=s_M=\Asf$;
+
+\item $A_N=\emptyCloseBackwards\,A_M=\emptyCloseBackwards\,\{\Csf\}=
+  \{\Asf,\Bsf,\Csf\}$.
+\end{itemize}
+Now, let's work out what $T_N$ is, by processing each of $M$'s transitions.
+\begin{itemize}
+\item From the transitions $\Asf,\%\fun\Bsf$ and $\Bsf,\%\fun\Csf$, we
+  get no elements of $T_N$.
+
+\item Consider the transition $\Asf,\zerosf\fun\Asf$.  Since
+  $\emptyCloseBackwards\,\{\Asf\}=\{\Asf\}$ and
+  $\emptyClose\,\{\Asf\}=\{\Asf,\Bsf,\Csf\}$, we add
+  $\Asf,\zerosf\fun\Asf$, $\Asf,\zerosf\fun\Bsf$ and
+  $\Asf,\zerosf\fun\Csf$ to $T_N$.
+
+\item Consider the transition $\Bsf,\onesf\fun\Bsf$.  Since
+  $\emptyCloseBackwards\,\{\Bsf\}=\{\Asf,\Bsf\}$ and
+  $\emptyClose\,\{\Bsf\}=\{\Bsf,\Csf\}$, we add
+  $\Asf,\onesf\fun\Bsf$, $\Asf,\onesf\fun\Csf$, $\Bsf,\onesf\fun\Bsf$
+  and $\Bsf,\onesf\fun\Csf$ to $T_N$.
+
+\item Consider the transition $\Csf,\twosf\fun\Csf$.  Since
+  $\emptyCloseBackwards\,\{\Csf\}=\{\Asf,\Bsf,\Csf\}$ and
+  $\emptyClose\,\{\Csf\}=\{\Csf\}$, we add
+  $\Asf,\twosf\fun\Csf$, $\Bsf,\twosf\fun\Csf$ and $\Csf,\twosf\fun\Csf$
+  to $T_N$.
+\end{itemize}
+
+Thus our NFA $N$ is
+\begin{center}
+\input{chap-3.10-fig3.eepic}
+\end{center}
+
+\begin{theorem}
+\label{EFAToNFATheorem}
+For all $M\in\EFA$:
+\begin{itemize}
+\item $\efaToNFA\,M\approx M$; and
+
+\item $\alphabet(\efaToNFA\,M) = \alphabet\,M$.
+\end{itemize}
+\end{theorem}
+
+\subsection{Converting EFAs to NFAs, and
+Processing NFAs in Forlan}
+
+The Forlan module \texttt{FA} defines the following functions
+for computing forwards and backwards empty-closures:
+\begin{verbatim}
+val emptyClose          : fa -> sym set -> sym set
+val emptyCloseBackwards : fa -> sym set -> sym set
+\end{verbatim}
+For example, if \texttt{fa} is bound to the finite automaton
+\begin{center}
+\input{chap-3.10-fig2.eepic}
+\end{center}
+then we can compute the empty-closure of $\{\Asf\}$ as follows:
+\input{chap-3.10-forlan1}
+
+The Forlan module \texttt{NFA} defines an abstract type \texttt{nfa}
+(in the top-level environment) of nondeterministic finite automata,
+along with various functions for processing NFAs.  Values of type
+\texttt{nfa} are implemented as values of type \texttt{fa}, and the
+module NFA provides the following injection and projection functions:
+\begin{verbatim}
+val injToFA     : nfa -> fa
+val injToEFA    : nfa -> efa
+val projFromFA  : fa -> nfa
+val projFromEFA : efa -> nfa
+\end{verbatim}
+The functions \texttt{injToFA}, \texttt{injToEFA}, \texttt{projFromFA} and
+texttt{projFromEFA} are available in the top-level environment as
+texttt{injNFAToFA}, \texttt{injNFAToEFA}, \texttt{projFAToNFA} and
+texttt{projEFAToNFA}, respectively.
+
+The module \texttt{NFA} also defines the functions:
+\begin{verbatim}
+val input   : string -> nfa
+val fromEFA : efa -> nfa
+\end{verbatim}
+The function \texttt{input} is used to input an NFA, and
+the function \texttt{fromEFA} corresponds to our
+conversion function $\efaToNFA$, and is available in the top-level
+environment with that name:
+\begin{verbatim}
+val efaToNFA : efa -> nfa
+\end{verbatim}
+
+Most of the functions for processing FAs that were introduced
+in previous sections are inherited by \texttt{NFA}:
+\begin{verbatim}
+val output                  : string * nfa -> unit 
+val numStates               : nfa -> int
+val numTransitions          : nfa -> int
+val alphabet                : nfa -> sym set
+val equal                   : nfa * nfa -> bool
+val checkLP                 : nfa -> lp -> unit
+val validLP                 : nfa -> lp -> bool
+val isomorphism             : nfa * nfa * sym_rel -> bool
+val findIsomorphism         : nfa * nfa -> sym_rel
+val isomorphic              : nfa * nfa -> bool
+val renameStates            : nfa * sym_rel -> nfa
+val renameStatesCanonically : nfa -> nfa
+val processStr              : nfa -> sym set * str -> sym set
+val accepted                : nfa -> str -> bool
+val findLP                  : nfa -> sym set * str * sym set -> lp
+val findAcceptingLP         : nfa -> str -> lp
+val simplified              : nfa -> bool
+val simplify                : nfa -> nfa
+\end{verbatim}
+Finally, the functions for computing forwards and backwards
+empty-closures are inherited by the EFA module
+\begin{verbatim}
+val emptyClose          : efa -> sym set -> sym set
+val emptyCloseBackwards : efa -> sym set -> sym set
+\end{verbatim}
+
+Suppose that \texttt{efa} is the \texttt{efa}
+\begin{center}
+\input{chap-3.10-fig2.eepic}
+\end{center}
+Here are some example uses of a few of the above functions:
+\input{chap-3.10-forlan2}
+
+\subsection{Notes}
+
+Because we have defined the meaning of finite automata via labeled
+paths instead of transition functions, our EFA to NFA conversion algorithm
+is easy to understand and prove correct.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

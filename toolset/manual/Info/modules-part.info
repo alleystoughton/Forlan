@@ -1,0 +1,13 @@
+@FILES
+  ["modules-part"; "Modules";
+    @SECTION "Modules" [
+       @FILE "auxiliary-sect"
+       @FILE "low-level-sect"
+       @FILE "sort-set-rel-tab-sect"
+       @FILE "lex-sect"
+       @FILE "sym-str-sect"
+       @FILE "fa-reg-sect"
+       @FILE "gram-sect"
+       @FILE "prog-sect"
+    ]
+  ]

@@ -1,0 +1,381 @@
+<!-- HTML/rfa.html -->
+
+<!-- COPYRIGHT (c) 2012 Alley Stoughton. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The RFA Module</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY><A NAME="top"></A>
+<H1 align=CENTER>Forlan Manual</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>RFA</CODE> Module</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="RFA:SIG:SPEC"></A><CODE>RFA</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="RFA:STR:SPEC"></A><CODE>RFA</CODE><B> :> </B>RFA<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+This module defines the abstract type of regular expression finite automata (RFAs).
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>type</B>&nbsp;<A NAME="STR:RFA.concr:TY:SPEC" HREF="#STR:RFA.concr:TY">concr</A>&nbsp;=&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stats&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;<B>:</B>&nbsp;Sym.sym,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;accepting&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trans&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>
+<B>type</B>&nbsp;<A NAME="STR:RFA.rfa:TY:SPEC" HREF="#STR:RFA.rfa:TY">rfa</A><BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.valid:VAL:SPEC" HREF="#STR:RFA.valid:VAL">valid</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.fromConcr:VAL:SPEC" HREF="#STR:RFA.fromConcr:VAL">fromConcr</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.toConcr:VAL:SPEC" HREF="#STR:RFA.toConcr:VAL">toConcr</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;concr<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.fromString:VAL:SPEC" HREF="#STR:RFA.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.input:VAL:SPEC" HREF="#STR:RFA.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.toPP:VAL:SPEC" HREF="#STR:RFA.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.toString:VAL:SPEC" HREF="#STR:RFA.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.output:VAL:SPEC" HREF="#STR:RFA.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.states:VAL:SPEC" HREF="#STR:RFA.states:VAL">states</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.startState:VAL:SPEC" HREF="#STR:RFA.startState:VAL">startState</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.acceptingStates:VAL:SPEC" HREF="#STR:RFA.acceptingStates:VAL">acceptingStates</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.transitions:VAL:SPEC" HREF="#STR:RFA.transitions:VAL">transitions</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.compare:VAL:SPEC" HREF="#STR:RFA.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;Sort.total_ordering<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.equal:VAL:SPEC" HREF="#STR:RFA.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.numStates:VAL:SPEC" HREF="#STR:RFA.numStates:VAL">numStates</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.numTransitions:VAL:SPEC" HREF="#STR:RFA.numTransitions:VAL">numTransitions</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.alphabet:VAL:SPEC" HREF="#STR:RFA.alphabet:VAL">alphabet</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.sub:VAL:SPEC" HREF="#STR:RFA.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.renameStates:VAL:SPEC" HREF="#STR:RFA.renameStates:VAL">renameStates</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.renameStatesCanonically:VAL:SPEC" HREF="#STR:RFA.renameStatesCanonically:VAL">renameStatesCanonically</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.checkLP:VAL:SPEC" HREF="#STR:RFA.checkLP:VAL">checkLP</A>&nbsp;<B>:</B>&nbsp;(Str.str&nbsp;<B>*</B>&nbsp;Reg.reg&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.validLP:VAL:SPEC" HREF="#STR:RFA.validLP:VAL">validLP</A>&nbsp;<B>:</B>&nbsp;(Str.str&nbsp;<B>*</B>&nbsp;Reg.reg&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.standard:VAL:SPEC" HREF="#STR:RFA.standard:VAL">standard</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.standardize:VAL:SPEC" HREF="#STR:RFA.standardize:VAL">standardize</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.fromFA:VAL:SPEC" HREF="#STR:RFA.fromFA:VAL">fromFA</A>&nbsp;<B>:</B>&nbsp;(Reg.reg&nbsp;<B>-&gt;</B>&nbsp;Reg.reg)&nbsp;<B>-&gt;</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.eliminateState:VAL:SPEC" HREF="#STR:RFA.eliminateState:VAL">eliminateState</A>&nbsp;<B>:</B>&nbsp;(Reg.reg&nbsp;<B>-&gt;</B>&nbsp;Reg.reg)&nbsp;<B>-&gt;</B>&nbsp;rfa&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.toReg:VAL:SPEC" HREF="#STR:RFA.toReg:VAL">toReg</A>&nbsp;<B>:</B>&nbsp;(Reg.reg&nbsp;<B>-&gt;</B>&nbsp;Reg.reg)&nbsp;<B>-&gt;</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;Reg.reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.faToReg:VAL:SPEC" HREF="#STR:RFA.faToReg:VAL">faToReg</A>&nbsp;<B>:</B>&nbsp;(Reg.reg&nbsp;<B>-&gt;</B>&nbsp;Reg.reg)&nbsp;<B>-&gt;</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;Reg.reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.faToRegPerms:VAL:SPEC" HREF="#STR:RFA.faToRegPerms:VAL">faToRegPerms</A>&nbsp;<B>:</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;(Reg.reg&nbsp;<B>-&gt;</B>&nbsp;Reg.reg)&nbsp;<B>-&gt;</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;Reg.reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.faToRegPermsTrace:VAL:SPEC" HREF="#STR:RFA.faToRegPermsTrace:VAL">faToRegPermsTrace</A>&nbsp;<B>:</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;(Reg.reg&nbsp;<B>-&gt;</B>&nbsp;Reg.reg)&nbsp;<B>-&gt;</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;Reg.reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.jforlanNew:VAL:SPEC" HREF="#STR:RFA.jforlanNew:VAL">jforlanNew</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.jforlanEdit:VAL:SPEC" HREF="#STR:RFA.jforlanEdit:VAL">jforlanEdit</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.jforlanValidate:VAL:SPEC" HREF="#STR:RFA.jforlanValidate:VAL">jforlanValidate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.jforlanPretty:VAL:SPEC" HREF="#STR:RFA.jforlanPretty:VAL">jforlanPretty</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="STR:RFA.concr:TY"></A><CODE><B>type</B>&nbsp;concr&nbsp;=&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stats&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;<B>:</B>&nbsp;Sym.sym,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;accepting&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trans&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</CODE>
+<DD>
+The concrete type of <EM>pre-regular expression finite automata</EM>, records consisting of a finite set <CODE>stats</CODE> (&quot;states&quot;) of symbols, a symbol <CODE>start</CODE> (&quot;start state&quot;), a finite set <CODE>accepting</CODE> (&quot;accepting states&quot;) of symbols, and a finite set <CODE>trans</CODE> (&quot;transitions&quot;) of RFA transitions.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.rfa:TY"></A><CODE><B>type</B>&nbsp;rfa</CODE>
+<DD>
+The abstract type of regular expression finite automata, consisting of those pre-regular expression finite automata <CODE><VAR>concr</VAR></CODE> of type <CODE>concr</CODE> such that: 
+<UL>
+<LI>
+<CODE>#start <VAR>concr</VAR></CODE> is an element of <CODE>#stats <VAR>concr</VAR></CODE>;
+<LI>
+<CODE>#accepting <VAR>concr</VAR></CODE> is a subset of <CODE>#stats <VAR>concr</VAR></CODE>;
+<LI>
+for all elements <CODE>(<VAR>q</VAR>, <VAR>reg</VAR>, <VAR>r</VAR>)</CODE> of <CODE>#trans
+<VAR>concr</VAR></CODE>, <CODE><VAR>q</VAR></CODE> and <CODE><VAR>r</VAR></CODE> are elements of <CODE>#stats <VAR>concr</VAR></CODE>; and
+<LI>
+for all elements <CODE><VAR>q</VAR></CODE> and <CODE><VAR>r</VAR></CODE> of <CODE>#stats <VAR>concr</VAR></CODE>, there is at most one regular expression <CODE><VAR>reg</VAR></CODE> such that <CODE>(<VAR>q</VAR>, <VAR>reg</VAR>, <VAR>r</VAR>)</CODE> is an element of <CODE>#trans <VAR>concr</VAR></CODE>.
+</UL>
+ We say that <CODE><VAR>concr</VAR></CODE> is <EM>valid</EM> iff <CODE><VAR>concr</VAR></CODE> satisfies the above conditions.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.valid:VAL"></A>
+<DT> <CODE>valid <VAR>concr</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>concr</VAR></CODE> is valid.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.fromConcr:VAL"></A>
+<DT> <CODE>fromConcr <VAR>concr</VAR></CODE>
+<DD>
+returns <CODE><VAR>concr</VAR></CODE>.  Issues an error message if <CODE><VAR>concr</VAR></CODE> is not valid.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.toConcr:VAL"></A>
+<DT> <CODE>toConcr <VAR>rfa</VAR></CODE>
+<DD>
+returns rfa.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.fromString:VAL"></A>
+<DT> <CODE>fromString <VAR>s</VAR></CODE>
+<DD>
+inputs an RFA from <CODE><VAR>s</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.input:VAL"></A>
+<DT> <CODE>input <VAR>fil</VAR></CODE>
+<DD>
+inputs an RFA from the file named <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.toPP:VAL"></A>
+<DT> <CODE>toPP <VAR>rfa</VAR></CODE>
+<DD>
+returns a pretty-printing expression for <CODE><VAR>rfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.toString:VAL"></A>
+<DT> <CODE>toString <VAR>rfa</VAR></CODE>
+<DD>
+pretty-prints <CODE><VAR>rfa</VAR></CODE> to a string.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.output:VAL"></A>
+<DT> <CODE>output(<VAR>fil</VAR>, <VAR>rfa</VAR>)</CODE>
+<DD>
+pretty-prints <CODE><VAR>rfa</VAR></CODE> to the file <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.states:VAL"></A>
+<DT> <CODE>states <VAR>rfa</VAR></CODE>
+<DD>
+returns the states of <CODE><VAR>rfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.startState:VAL"></A>
+<DT> <CODE>startState <VAR>rfa</VAR></CODE>
+<DD>
+returns the start state of <CODE><VAR>rfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.acceptingStates:VAL"></A>
+<DT> <CODE>acceptingStates <VAR>rfa</VAR></CODE>
+<DD>
+returns the accepting states of <CODE><VAR>rfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.transitions:VAL"></A>
+<DT> <CODE>transitions <VAR>rfa</VAR></CODE>
+<DD>
+returns the transitions of <CODE><VAR>rfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.compare:VAL"></A>
+<DT> <CODE>compare(<VAR>rfa1</VAR>, <VAR>rfa2</VAR>)</CODE>
+<DD>
+returns 
+<PRE>
+  case SymSet.compare(states <VAR>rfa1</VAR>, states <VAR>rfa2</VAR>) of
+       LESS    =&gt; LESS
+     | EQUAL   =&gt;
+         (case Sym.compare(startState <VAR>rfa1</VAR>, startState <VAR>rfa2</VAR>) of
+               LESS    =&gt; LESS
+             | EQUAL   =&gt;
+                 (case SymSet.compare(acceptingStates <VAR>rfa1</VAR>, acceptingStates <VAR>rfa2</VAR>) of
+                       LESS    =&gt; LESS
+                     | EQUAL   =&gt;
+                         TranRegSet.compare
+                         (transitions <VAR>rfa1</VAR>, transitions <VAR>rfa2</VAR>)
+                     | GREATER =&gt; GREATER)
+             | GREATER =&gt; GREATER)
+     | GREATER =&gt; GREATER
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.equal:VAL"></A>
+<DT> <CODE>equal(<VAR>rfa1</VAR>, <VAR>rfa2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>rfa1</VAR></CODE> and <CODE><VAR>rfa2</VAR></CODE> are equal.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.numStates:VAL"></A>
+<DT> <CODE>numStates <VAR>rfa</VAR></CODE>
+<DD>
+returns the number of states of <CODE><VAR>rfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.numTransitions:VAL"></A>
+<DT> <CODE>numTransitions <VAR>rfa</VAR></CODE>
+<DD>
+returns the number of transitions of <CODE><VAR>rfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.alphabet:VAL"></A>
+<DT> <CODE>alphabet <VAR>rfa</VAR></CODE>
+<DD>
+returns the alphabet of <CODE><VAR>rfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.sub:VAL"></A>
+<DT> <CODE>sub(<VAR>rfa1</VAR>, <VAR>rfa2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>rfa1</VAR></CODE> is a sub-RFA of <CODE><VAR>rfa2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.renameStates:VAL"></A>
+<DT> <CODE>renameStates(<VAR>rfa</VAR>, <VAR>rel</VAR>)</CODE>
+<DD>
+renames the states of <CODE><VAR>rfa</VAR></CODE> using the bijection <CODE><VAR>rel</VAR></CODE>.  Issues an error message if <CODE><VAR>rel</VAR></CODE> is not a bijection from the states of <CODE><VAR>rfa</VAR></CODE> to some set.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.renameStatesCanonically:VAL"></A>
+<DT> <CODE>renameStatesCanonically <VAR>rfa</VAR></CODE>
+<DD>
+canonically renames the states of <CODE><VAR>rfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.checkLP:VAL"></A>
+<DT> <CODE>checkLP (<VAR>memb</VAR>, <VAR>rfa</VAR>) <VAR>lp</VAR></CODE>
+<DD>
+checks whether <CODE><VAR>lp</VAR></CODE> is valid for <CODE><VAR>rfa</VAR></CODE>, using <CODE><VAR>memb</VAR></CODE> for testing whether the strings of <CODE><VAR>lp</VAR></CODE> are generated by regular expressions of <CODE><VAR>rfa</VAR></CODE>. <CODE>checkLP</CODE> silently returns <CODE>()</CODE>, if <CODE><VAR>lp</VAR></CODE> is valid, and explains why it isn't valid, if it's not valid.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.validLP:VAL"></A>
+<DT> <CODE>checkLP (<VAR>memb</VAR>, <VAR>rfa</VAR>) <VAR>lp</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>lp</VAR></CODE> is valid for <CODE><VAR>rfa</VAR></CODE>, using <CODE><VAR>memb</VAR></CODE> for testing whether the strings of <CODE><VAR>lp</VAR></CODE> are generated by regular expressions of <CODE><VAR>rfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.standard:VAL"></A>
+<DT> <CODE>standard <VAR>rfa</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>rfa</VAR></CODE> is standard.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.standardize:VAL"></A>
+<DT> <CODE>standardize <VAR>rfa</VAR></CODE>
+<DD>
+standardizes <CODE><VAR>rfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.fromFA:VAL"></A>
+<DT> <CODE>fromFA <VAR>simp</VAR> <VAR>fa</VAR></CODE>
+<DD>
+Converts <CODE><VAR>fa</VAR></CODE> to an RFA, using <CODE><VAR>simp</VAR></CODE> to simplify the regular expressions of transitions.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.eliminateState:VAL"></A>
+<DT> <CODE>eliminateState <VAR>simp</VAR> (<VAR>rfa</VAR>, <VAR>q</VAR>)</CODE>
+<DD>
+eliminates the state <CODE><VAR>q</VAR></CODE> from <CODE><VAR>rfa</VAR></CODE>, using <CODE><VAR>simp</VAR></CODE> for regular expression simplification. Issues an error message if <CODE><VAR>q</VAR></CODE> is not a state of <CODE><VAR>rfa</VAR></CODE>, <CODE><VAR>q</VAR></CODE> is the start state of <CODE><VAR>rfa</VAR></CODE>, or <CODE><VAR>q</VAR></CODE> is one of the accepting states of <CODE><VAR>rfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.toReg:VAL"></A>
+<DT> <CODE>toReg <VAR>simp</VAR> <VAR>rfa</VAR></CODE>
+<DD>
+converts the standardization of <CODE><VAR>rfa</VAR></CODE> to a regular expression by the state elimination algorithm, using <CODE><VAR>simp</VAR></CODE> for regular expression simplification.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.faToReg:VAL"></A>
+<DT> <CODE>faToReg <VAR>simp</VAR> <VAR>fa</VAR></CODE>
+<DD>
+converts the standardization of <CODE>fromReg <VAR>simp</VAR> <VAR>fa</VAR></CODE> to a regular expression by the state elimination algorithm, using <CODE><VAR>simp</VAR></CODE> for regular expression simplification.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.faToRegPerms:VAL"></A>
+<DT> <CODE>faToRegPerms (NONE, <VAR>simp</VAR>) <VAR>fa</VAR></CODE>
+<DD>
+works through all the bijections (permutations) <CODE><VAR>rel</VAR></CODE> on the states of <CODE><VAR>fa</VAR></CODE>, evaluating <CODE>faToReg <VAR>simp</VAR>
+(<CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE>.<CODE><A HREF="fa.html#SIG:FA.renameStates:VAL:SPEC">renameStates</A></CODE>(<VAR>fa</VAR>, <VAR>rel</VAR>))</CODE>, and selecting the simplest answer (judged using <CODE><CODE><A HREF="reg.html#Reg:STR:SPEC">Reg</A></CODE>.<CODE><A HREF="reg.html#SIG:REG.compareComplexityTotal:VAL:SPEC">compareComplexityTotal</A></CODE></CODE>).
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.faToRegPerms:VAL"></A>
+<DT> <CODE>faToRegPerms (SOME <VAR>n</VAR>, <VAR>simp</VAR>) <VAR>fa</VAR></CODE>
+<DD>
+works through the first <CODE><VAR>n</VAR></CODE> bijections (ordered by <CODE><CODE><A HREF="sym-rel.html#SymRel:STR:SPEC">SymRel</A></CODE>.<CODE><A HREF="sym-rel.html#SIG:SYM_REL.compare:VAL:SPEC">compare</A></CODE></CODE>) <CODE><VAR>rel</VAR></CODE> on the states of <CODE><VAR>fa</VAR></CODE>, evaluating <CODE>faToReg <VAR>simp</VAR>
+(<CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE>.<CODE><A HREF="fa.html#SIG:FA.renameStates:VAL:SPEC">renameStates</A></CODE>(<VAR>fa</VAR>, <VAR>rel</VAR>))</CODE>, and selecting the simplest answer (judged using <CODE><CODE><A HREF="reg.html#Reg:STR:SPEC">Reg</A></CODE>.<CODE><A HREF="reg.html#SIG:REG.compareComplexityTotal:VAL:SPEC">compareComplexityTotal</A></CODE></CODE>). Issues an error message if <CODE><VAR>n</VAR></CODE> is negative.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.faToRegPermsTrace:VAL"></A><CODE><B>val</B>&nbsp;faToRegPermsTrace&nbsp;<B>:</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;(Reg.reg&nbsp;<B>-&gt;</B>&nbsp;Reg.reg)&nbsp;<B>-&gt;</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;Reg.reg</CODE>
+<DD>
+is like <CODE>faToRegPerms</CODE>, but issues tracing messages, explaining its operation.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.jforlanNew:VAL"></A>
+<DT> <CODE>jforlanNew()</CODE>
+<DD>
+invokes JForlan, and returns the RFA that the user creates and commits.  Issues an error message if the user aborts, instead.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.jforlanEdit:VAL"></A>
+<DT> <CODE>jforlanEdit <VAR>rfa</VAR></CODE>
+<DD>
+invokes JForlan, letting the user edit <CODE><VAR>rfa</VAR></CODE>, and returning the resulting RFA that the user commits.  Issues an error message if the user aborts, instead.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.jforlanValidate:VAL"></A>
+<DT> <CODE>jforlanValidate</CODE>
+<DD>
+is a low-level function used by JForlan.  See the code for more information.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:RFA.jforlanPretty:VAL"></A>
+<DT> <CODE>jforlanPretty</CODE>
+<DD>
+is a low-level function used by JForlan.  See the code for more information.
+<BR>
+<BR>
+
+</DL>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="reg-fa-subsect.html">Parent</A>
+   | <A HREF="index.html">Root</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Forlan Version 4.7</I><BR>
+<I>Copyright &copy; 2018 Alley Stoughton</I><BR>
+
+<HR>
+</BODY></HTML>

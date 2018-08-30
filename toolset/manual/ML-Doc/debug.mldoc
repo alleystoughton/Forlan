@@ -1,0 +1,66 @@
+<!-- debug.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Debug Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Debug/ Module</HEAD>
+
+<PP>This module contains a function for debugging Forlan code.</PP>
+
+<STRUCTURE STRID="Debug">
+<OPAQUE>
+<SIGBODY SIGID="DEBUG" FILE=DEBUG>
+
+<SPEC>
+<VAL>debug<TY>('a -> PP.pp) -> (PP.pp * 'a) -> 'a
+
+<COMMENT>
+<PROTOTY>
+debug <ARG/h/
+</PROTOTY>
+
+<PP>returns the function that, when called with <CD>(<ARG/msgPP/,
+<ARG/x/)</CD>, prints on the standard output <CD>PP.toString
+<ARG/msgPP/</CD>, followed by a colon, followed by
+<CD>PP.toString(<ARG/h/ <ARG/x/)</CD>, followed by a newline, followed
+by <CD>"(press RETURN to continue or interrupt character to interrupt)
+"</CD>; it then waits for user input; if the user responds by
+typing <em>RETURN</em>, then the function will return <CD><ARG/x/</CD>.
+
+<EXAMPLE>
+We can instrument the factorial function
+<CODE>
+  fun fact n =
+        if n = 0
+        then 1
+        else n * fact(n - 1);
+</CODE>
+for debugging as follows:
+<CODE>
+  val debugInt = Debug.debug(PP.fromString o Int.toString);
+
+  fun fact n =
+        debugInt
+        (PP.fromString
+         ("returning from fact " ^ Int.toString n ^ " with result"),
+         if debugInt(PP.fromString "entering fact with argument", n) = 0
+         then 1
+         else n * fact(n - 1));
+</CODE>
+</EXAMPLE>
+</PP>
+</COMMENT>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

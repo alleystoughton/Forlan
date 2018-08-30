@@ -1,0 +1,14 @@
+val gram = Gram.input "";
+{variables}
+A
+{start variable}
+A
+{productions}
+A -> % | 0A1
+.
+val gram' = Gram.prefix gram;
+Gram.output("", gram');
+fun test s = Gram.generated gram' (Str.fromString s);
+test "000111";
+test "0001";
+test "0001111";

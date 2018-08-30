@@ -1,0 +1,8 @@
+val gram = Gram.input "";
+{variables} A {start variable} A
+{productions} A -> % | 0A1A | 1A0A
+.
+val efa = EFA.input "";
+{states} A, B {start state} A {accepting states} B
+{transitions} A, 0 -> A; A, % -> B; B, 1 -> B
+.

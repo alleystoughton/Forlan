@@ -1,0 +1,23 @@
+Reg.output("", Reg.genConcat nil);
+Reg.output("", Reg.genUnion nil);
+val regs =
+      [Reg.fromString "01", Reg.fromString "01 + 12",
+       Reg.fromString "(1 + 2)*", Reg.fromString "3 + 4"];
+Reg.output("", Reg.genConcat regs);
+Reg.output("", Reg.genUnion regs);
+Reg.output
+("",
+ Reg.rightConcat
+ (Reg.fromString "0123", Reg.fromString "4567"));
+Reg.output
+("",
+ Reg.rightUnion
+ (Reg.fromString "0 + 1 + 2", Reg.fromString "1 + 2 + 3"));
+map
+Reg.toString
+(Reg.concatsToList(Reg.fromString "0(12)34"));
+map
+Reg.toString
+(Reg.unionsToList(Reg.fromString "0 + (1 + 2) + 3 + 0"));
+Reg.output
+("", Reg.sortUnions(Reg.fromString "12 + 0 + 3 + 0"));

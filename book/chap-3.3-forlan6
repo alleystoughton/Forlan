@@ -1,0 +1,9 @@
+Reg.globallySimplifyTrace
+(NONE, false, Reg.obviousSubset)
+(Reg.fromString "(00*1)*");
+locSimp NONE (Reg.fromString "(00*11*)*");
+Reg.output("", #2 it);
+fun globSimp(nOpt, b) =
+      Reg.globallySimplify(nOpt, b, Reg.obviousSubset);
+globSimp (NONE, false) (Reg.fromString "(00*11*)*");
+Reg.output("", #2 it);

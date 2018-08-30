@@ -1,0 +1,51 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(5033,1696)(0,-10)
+\put(2325.000,1219.000){\arc{510.000}{2.6516}{6.7731}}
+\blacken\path(2041.413,1207.939)(2100.000,1099.000)(2099.571,1222.692)(2041.413,1207.939)
+\put(2325.000,2824.000){\arc{5100.000}{1.0808}{2.0608}}
+\blacken\path(1245.684,546.884)(1125.000,574.000)(1218.726,493.281)(1245.684,546.884)
+\put(4725.000,1219.000){\arc{510.000}{2.6516}{6.7731}}
+\blacken\path(4441.413,1207.939)(4500.000,1099.000)(4499.571,1222.692)(4441.413,1207.939)
+\put(1125,874){\ellipse{600}{600}}
+\put(1125,874){\ellipse{474}{474}}
+\put(2325,49){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\%$}}}
+\put(4725,1549){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\onesf$}}}
+\put(4725,799){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\langle\Csf\rangle$}}}
+\put(4125,1024){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\zerosf$}}}
+\put(4125,1024){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\zerosf$}}}
+\put(4125,649){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\zerosf$}}}
+\path(2625,874)(3225,874)
+\blacken\path(3105.000,844.000)(3225.000,874.000)(3105.000,904.000)(3105.000,844.000)
+\path(1425,949)(2025,949)
+\blacken\path(1905.000,919.000)(2025.000,949.000)(1905.000,979.000)(1905.000,919.000)
+\path(2025,799)(1425,799)
+\blacken\path(1545.000,829.000)(1425.000,799.000)(1545.000,769.000)(1545.000,829.000)
+\path(3825,949)(4425,949)
+\blacken\path(4305.000,919.000)(4425.000,949.000)(4305.000,979.000)(4305.000,919.000)
+\path(4425,799)(4350,799)(4275,799)
+	(4200,799)(4125,799)(4050,799)
+	(3975,799)(3900,799)(3825,799)
+\blacken\path(3945.000,829.000)(3825.000,799.000)(3945.000,769.000)(3945.000,829.000)
+\put(1125,799){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Asf$}}}
+\put(3525,799){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\langle\Bsf\rangle$}}}
+\put(2925,949){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\mathsf{11}$}}}
+\put(2325,1549){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\zerosf$}}}
+\put(1725,1024){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\%$}}}
+\put(1725,574){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\%$}}}
+\put(2325,874){\ellipse{600}{600}}
+\put(3525,874){\ellipse{600}{600}}
+\put(4725,874){\ellipse{600}{600}}
+\path(525,874)(825,874)
+\blacken\path(705.000,844.000)(825.000,874.000)(705.000,904.000)(705.000,844.000)
+\put(2317,799){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\langle\Asf\rangle$}}}
+\put(0,799){\makebox(0,0)[lb]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}Start}}}
+\end{picture}
+}

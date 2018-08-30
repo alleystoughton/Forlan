@@ -1,0 +1,23 @@
+#!/bin/bash
+
+smlnjtrans forlan "@" \
+chap-3.12-forlan0 \
+chap-3.12-forlan1 \
+chap-3.12-forlan1a \
+chap-3.12-forlan2 \
+chap-3.12-forlan2a \
+chap-3.12-forlan2b \
+chap-3.12-forlan3 \
+chap-3.12-forlan3a \
+chap-3.12-forlan3b \
+chap-3.12-forlan3c \
+chap-3.12-forlan3d \
+chap-3.12-forlan5 \
+chap-3.12-forlan6 \
+chap-3.12-forlan7 \
+chap-3.12-forlan8 \
+chap-3.12-forlan10 \
+chap-3.12-forlan12 \
+chap-3.12-forlan12a \
+chap-3.12-forlan13 \
+chap-3.12-forlan15

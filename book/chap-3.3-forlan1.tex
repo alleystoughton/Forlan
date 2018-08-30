@@ -1,0 +1,41 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ ns\ =\ Reg.succCC(Reg.unionCC(Reg.singCC\ 1,\ Reg.singCC\ 1));
+\item[]\textsl{val\ ns\ =\ -\ :\ Reg.cc}
+\item[]\textsl{-\ }Reg.ccToList\ ns;
+\item[]\textsl{val\ it\ =\ \symbol{'133}2,2\symbol{'135}\ :\ int\ list}
+\item[]\textsl{-\ }val\ ms\ =\ Reg.unionCC(ns,\ Reg.succCC\ ns);
+\item[]\textsl{val\ ms\ =\ -\ :\ Reg.cc}
+\item[]\textsl{-\ }Reg.ccToList\ ms;
+\item[]\textsl{val\ it\ =\ \symbol{'133}3,3,2,2\symbol{'135}\ :\ int\ list}
+\item[]\textsl{-\ }Reg.ccToList(Reg.cc(Reg.fromString\ "(00\symbol{'052}11\symbol{'052})\symbol{'052}"));
+\item[]\textsl{val\ it\ =\ \symbol{'133}2,2,1,1\symbol{'135}\ :\ int\ list}
+\item[]\textsl{-\ }Reg.ccToList(Reg.cc(Reg.fromString\ "%\ +\ 0(0\ +\ 11\symbol{'052}0)\symbol{'052}11\symbol{'052}"));
+\item[]\textsl{val\ it\ =\ \symbol{'133}2,1,1,1,1,0,0,0\symbol{'135}\ :\ int\ list}
+\item[]\textsl{-\ }Reg.compareCC
+\item[]\textsl{=\ }(Reg.cc(Reg.fromString\ "(00\symbol{'052}11\symbol{'052})\symbol{'052}"),
+\item[]\textsl{=\ }\ Reg.cc(Reg.fromString\ "%\ +\ 0(0\ +\ 11\symbol{'052}0)\symbol{'052}11\symbol{'052}"));
+\item[]\textsl{val\ it\ =\ GREATER\ :\ order}
+\item[]\textsl{-\ }Reg.compareCC
+\item[]\textsl{=\ }(Reg.cc(Reg.fromString\ "(00\symbol{'052}11\symbol{'052})\symbol{'052}"),
+\item[]\textsl{=\ }\ Reg.cc(Reg.fromString\ "(1\symbol{'052}10\symbol{'052}0)\symbol{'052}"));
+\item[]\textsl{val\ it\ =\ EQUAL\ :\ order}
+\end{list}

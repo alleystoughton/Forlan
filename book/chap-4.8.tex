@@ -1,0 +1,95 @@
+\section{Converting Regular Expressions and FA to Grammars}
+\label{ConvertingRegularExpressionsAndFAToGrammars}
+
+In this section, we give simple algorithms for converting regular
+expressions and finite automata to grammars.  Since we have algorithms
+for converting between regular expressions and finite automata, it is
+tempting to only define one of these algorithms.  But better results
+can be obtained by defining direct conversions.
+
+\subsection{Converting Regular Expressions to Grammars}
+
+Regular expressions are converted to grammars using a recursive
+algorithm that makes use of the operations on grammars that were
+defined in Section~\ref{ClosurePropertiesOfContextFreeLanguages}.  The
+structure of the algorithm is very similar to the structure of our
+algorithm for converting regular expressions to finite automata.
+
+The algorithm is implemented in Forlan by the function
+\begin{verbatim}
+val fromReg : reg -> gram
+\end{verbatim}
+of the \texttt{Gram} module.  It's available in the top-level
+environment with the name \texttt{regToGram}.
+
+Here is how we can convert the regular expression $\mathsf{01 +
+10(11)^*}$ to a grammar using Forlan:
+\input{chap-4.8-forlan1}
+
+\subsection{Converting Finite Automata to Grammars}
+
+We'll explain the process of converting finite automata to grammars
+using an example.  Suppose $M$ is the DFA
+\begin{center}
+  \input{chap-4.8-fig1.eepic}
+\end{center}
+The variables of our grammar $G$ consist of the states of $M$, and its
+start variable is the start state $\Asf$ of $M$.
+(If the symbols of the labels of $M$'s transitions conflict with $M$'s states,
+we'll have to rename the states of $M$ first.)
+We can translate each transition $q, x\fun r$ to a production
+$q\fun xr$.  And, since $\Asf$ is an accepting state of
+$M$, we add the production $\Asf\fun\%$.
+This gives us the grammar
+\begin{align*}
+  \Asf &\fun \% \mid \mathsf{0B} \mid \mathsf{1A} , \\
+  \Bsf &\fun \mathsf{0A} \mid \mathsf{1B} .
+\end{align*}
+
+Consider, e.g., the valid labeled path for $M$
+\begin{gather*}
+\Asf\lparr{\onesf}\Asf\lparr{\zerosf}\Bsf\lparr{\zerosf}\Asf ,
+\end{gather*}
+which explains why $\mathsf{100}\in L(M)$.  It corresponds to the
+valid parse tree for $G$
+\begin{center}
+\input{chap-4.8-fig2.eepic}
+\end{center}
+which explains why $\mathsf{100}\in L(G)$.
+
+The Forlan module \texttt{Gram} contains the function
+\begin{verbatim}
+val fromFA : fa -> gram
+\end{verbatim}
+which implements our algorithm for converting finite automata to
+grammars.  It's available in the top-level environment with the name
+texttt{faToGram}.
+
+Suppose \texttt{fa} of type \texttt{fa} is bound to $M$.  Here is how
+we can convert $M$ to a grammar using Forlan:
+\input{chap-4.8-forlan3}
+
+Because of the existence of our conversion functions, we have that
+every regular language is a context-free language.
+On the other hand, the language $\setof{\zerosf^n\onesf^n}{n\in\nats}$
+is context-free, because of the grammar
+\begin{gather*}
+  \Asf\fun\%\mid\zerosf\Asf\onesf ,
+\end{gather*}
+but is not regular, as we proved in Section 3.13.
+
+Summarizing, we have:
+
+\begin{theorem}
+The regular languages are a proper subset of the context-free
+languages: $\RegLan\subsetneq\CFLan$.
+\end{theorem}
+
+\subsection{Notes}
+
+The material in this section is standard.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

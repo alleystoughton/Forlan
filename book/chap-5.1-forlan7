@@ -1,0 +1,8 @@
+val even = Prog.input "even-prog";
+fun test(n, m) =
+      let val pr = Prog.app(even, Prog.int n)
+      in Prog.evaluate(pr, m) end;
+test(3, 100);
+test(4, 100);
+test(5, 100);
+test(6, 100);

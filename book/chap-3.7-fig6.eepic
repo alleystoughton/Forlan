@@ -1,0 +1,40 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(2948,1861)(0,-10)
+\put(1688,949){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\%$}}}}
+\put(1140,1507){\ellipse{450}{450}}
+\path(1342,1275)(1800,592)
+\blacken\path(1708.250,674.958)(1800.000,592.000)(1758.083,708.374)(1708.250,674.958)
+\put(2640,1432){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\Bsf$}}}}
+\put(1890,232){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\Csf$}}}}
+\put(1875,1687){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\%$}}}}
+\put(1875,1207){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\%$}}}}
+\put(1290,682){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\%$}}}}
+\put(2527,727){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\%$}}}}
+\put(2098,949){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\%$}}}}
+\path(2610,1200)(2145,487)
+\blacken\path(2185.424,603.901)(2145.000,487.000)(2235.680,571.125)(2185.424,603.901)
+\path(2025,600)(2460,1282)
+\blacken\path(2420.762,1164.695)(2460.000,1282.000)(2370.176,1196.961)(2420.762,1164.695)
+\path(1657,494)(1185,1200)
+\blacken\path(1276.634,1116.915)(1185.000,1200.000)(1226.755,1083.567)(1276.634,1116.915)
+\put(1132,1432){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Asf$}}}}
+\put(1888,307){\ellipse{600}{600}}
+\path(540,1507)(840,1507)
+\blacken\path(720.000,1477.000)(840.000,1507.000)(720.000,1537.000)(720.000,1477.000)
+\path(1440,1582)(2340,1582)
+\blacken\path(2220.000,1552.000)(2340.000,1582.000)(2220.000,1612.000)(2220.000,1552.000)
+\blacken\path(1560.000,1462.000)(1440.000,1432.000)(1560.000,1402.000)(1560.000,1462.000)
+\path(1440,1432)(2340,1432)
+\put(1140,1507){\ellipse{600}{600}}
+\put(15,1432){\makebox(0,0)[lb]{\smash{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}Start}}}}
+\put(2640,1516){\ellipse{600}{600}}
+\end{picture}
+}

@@ -1,0 +1,3 @@
+lam(p,
+    calc(isZero,
+         calc(compare, var(p))))

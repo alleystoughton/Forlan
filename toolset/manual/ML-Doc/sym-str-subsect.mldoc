@@ -1,0 +1,37 @@
+<!-- sym-str-subsect.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>Symbols and Strings</TITLE>
+
+<SECTION>
+<HEAD>Symbols and Strings</HEAD>
+
+<PP>This subsection describes modules relating to Forlan symbols and
+strings.
+
+The <BF>Sym</BF> module provides the abstract type of Forlan symbols.
+
+The <BF>Str</BF> modules provides operations on Forlan strings, i.e.,
+lists of Forlan symbols.
+
+The <BF>SymSet</BF> module provides operations on finite sets of Forlan symbols.
+
+The <BF>StrSet</BF> module provides operations on finite sets of Forlan strings.
+
+And the <BF>SymRel</BF> module provides operations on finite relations
+on Forlan symbols.
+</PP>
+
+<INCLFILE FILE="sym">
+<INCLFILE FILE="str">
+<INCLFILE FILE="sym-set">
+<INCLFILE FILE="str-set">
+<INCLFILE FILE="sym-rel">
+</SECTION>

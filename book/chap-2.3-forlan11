@@ -1,0 +1,20 @@
+val x = Str.input "";
+hello<there>
+.
+length x;
+Str.output("", x);
+SymSet.output("", Str.alphabet x);
+Str.output("", Str.power(x, 3));
+val y = Str.fromString "ello";
+Str.compare(y, x);
+Str.equal(y, x);
+Str.prefix(y, x);
+Str.substr(y, x);
+val z = Str.fromString "h" @ y;
+Str.prefix(z, x);
+val x = Str.fromString "hellothere";
+null x;
+Sym.output("", hd x);
+Str.output("", tl x);
+Sym.output("", Str.last x);
+Str.output("", Str.allButLast x);

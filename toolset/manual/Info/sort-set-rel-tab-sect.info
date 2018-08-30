@@ -1,0 +1,9 @@
+@FILES
+  ["sort-set-rel-tab-sect"; "Sorting, Sets, Relations and Tables";
+    @SECTION "Sorting, Sets, Relations and Tables" [
+       @FILE "sort"
+       @FILE "set"
+       @FILE "rel"
+       @FILE "tab"
+    ]
+  ]

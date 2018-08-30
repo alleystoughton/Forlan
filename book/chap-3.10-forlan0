@@ -1,0 +1,16 @@
+setPrintingLineLength 66;
+val efa = EFA.input "";
+{states}
+A, B, C
+{start state}
+A
+{accepting states}
+C
+{transitions}
+A, 0 -> A;
+B, 1 -> B;
+C, 2 -> C;
+A, % -> B;
+B, % -> C
+.
+val fa = injEFAToFA efa;

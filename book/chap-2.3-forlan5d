@@ -1,0 +1,5 @@
+val f =
+      let val x = 2 * 10
+      in fn y => y * x end;
+f 4;
+f 7;

@@ -1,0 +1,11 @@
+{states}
+A, B, C
+{start state}
+A
+{accepting states}
+B, C
+{transitions}
+A, % -> B;
+B, 0+1 -> A;
+B, (01*)* -> C;
+C, (01)*(1+0*)* -> A

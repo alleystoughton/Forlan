@@ -1,0 +1,50 @@
+<!-- system.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The System Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/System/ Module</HEAD>
+
+<PP>This module consists of functions for interacting with the operating
+system.  Most users of Forlan won't need to use it.</PP>
+
+<STRUCTURE STRID="System">
+<OPAQUE>
+<SIGBODY SIGID="SYSTEM" FILE=SYSTEM>
+
+<SPEC>
+<VAL>makeTempFile<TY>unit -> string
+
+<COMMENT>
+<PROTOTY>
+makeTempFile()
+</PROTOTY>
+<PP>creates a new, empty temporary file, returning its name; issues
+an error message if it's impossible to create the file.</PP>
+
+<SPEC>
+<VAL>runJForlan<TY>string -> OS.Process.status
+
+<COMMENT>
+<PROTOTY>
+runJForlan <ARG/s/
+</PROTOTY>
+<PP>runs JForlan with the (whitespace separated) contents of
+<CD><ARG/s/</CD> as its arguments, returning the status that JForlan
+exits with; issues an error message if JForlan can't be
+executed.</PP>
+</COMMENT>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

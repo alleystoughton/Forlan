@@ -1,0 +1,24 @@
+@FILES
+  ["var-set"; "The VarSet Module";]
+@SIGNATURE VAR_SET "var-set" [
+  @VALS 
+    input
+    memb
+    toPP
+    genUnion
+    equal
+    fromString
+    map
+    fromList
+    output
+    inter
+    inputFromLabToks
+    subset
+    compare
+    union
+    toString
+    minus
+    genInter
+    mapFromList
+]
+@STRUCTURE VarSet "var-set" VAR_SET

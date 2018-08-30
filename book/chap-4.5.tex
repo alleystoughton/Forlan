@@ -1,0 +1,388 @@
+\section{Proving the Correctness of Grammars}
+\label{ProvingTheCorrectnessOfGrammars}
+
+In this section, we consider techniques for proving the correctness of
+grammars, i.e., for proving that grammars generate the languages we want
+them to.
+
+\subsection{Preliminaries}
+
+Suppose $G$ is a grammar and $a\in Q_G\cup\alphabet\,G$.  Then
+\begin{displaymath}
+\Pi_{G,a}=\setof{w\in(\alphabet\,G)^*}{w \eqtxt{is parsable from} a
+  \eqtxt{using} G} .  
+\end{displaymath}
+I.e., $\Pi_{G,a}$ is all strings over $\alphabet\,G$ that are the
+yields of valid parse trees for $G$ whose root labels are $a$ If it's
+clear which grammar we are talking about, we often abbreviate
+$\Pi_{G,a}$ to $\Pi_a$.  Clearly, $\Pi_{G,s_G} = L(G)$.
+
+For example, if $G$ is the grammar
+\begin{gather*}
+  \Asf \fun \% \mid \zerosf\Asf\onesf
+\end{gather*}
+then $\Pi_\zerosf=\{\zerosf\}$, $\Pi_\onesf=\{\onesf\}$ and $\Pi_\Asf=
+\setof{\zerosf^n\onesf^n}{n\in\nats}= L(G)$.
+
+\begin{proposition}
+\label{PiProp}
+Suppose $G$ is a grammar.
+\begin{enumerate}[\quad(1)]
+\item For all $a\in\alphabet\,G$, ${a}\in\Pi_{G,a}$.
+
+\item For all $q\in Q_G$, if $q\fun\%\in P_G$, then
+  ${\%}\in\Pi_{G,q}$.
+
+\item For all $q\in Q_G$, $n\in\nats-\{0\}$, $a_1,\ldots,a_n\in\Sym$
+  and $w_1,\ldots,w_n\in\Str$, if $q\fun a_1\cdots a_n\in P_G$ and
+  $w_1\in\Pi_{G,a_1}$, \ldots, $w_n\in\Pi_{G,a_n}$, then
+  ${w_1\cdots w_n}\in\Pi_{G,q}$.
+\end{enumerate}
+\end{proposition}
+
+Our main example will be the grammar $G$:
+\begin{align*}
+\Asf &\fun \% \mid \zerosf\Bsf\Asf \mid \onesf\Csf\Asf , \\
+\Bsf &\fun \onesf \mid \zerosf\Bsf\Bsf , \\
+\Csf &\fun \zerosf \mid \onesf\Csf\Csf .
+\end{align*}
+Define $\diff\in\{\mathsf{0,1}\}^*\fun\ints$ by:
+for all $w\in\{\mathsf{0,1}\}^*$,
+\begin{gather*}
+\diff\,w =
+\eqtxtr{the number of $\mathsf{1}$'s in}w -
+\eqtxtr{the number of $\mathsf{0}$'s in}w .
+\end{gather*}
+Then: $\diff\,\% = 0$, $\diff\,\mathsf{1} = 1$, $\diff\,\mathsf{0} =
+-1$, and, for all $x,y\in\{\mathsf{0,1}\}^*$, $\diff(xy) = \diff\,x +
+\diff\,y$.
+Let
+\begin{align*}
+  X &= \setof{w\in\{\mathsf{0,1}\}^*}{\diff\,w = 0} , \\
+  Y &= \setof{w\in\{\mathsf{0,1}\}^*}{\diff\,w = 1\eqtxt{and,}\\
+    &\quad\hspace{.25cm}
+    \eqtxt{for all proper prefixes}v\eqtxt{of}w,\diff\,v\leq 0} , \eqtxt{and}\\
+  Z &= \setof{w\in\{\mathsf{0,1}\}^*}{\diff\,w = -1\eqtxt{and,}\\
+    &\quad\hspace{.25cm} \eqtxt{for all proper
+      prefixes}v\eqtxt{of}w,\diff\,v\geq 0} .
+\end{align*}
+We will prove that $L(G) = \Pi_{G,\Asf} = X$, $\Pi_{G,\Bsf} = Y$ and
+$\Pi_{G,\Csf} = Z$.
+
+\begin{lemma}
+\label{GramCorrLem1}
+Suppose $x\in\{\mathsf{0,1}\}^*$.
+\begin{enumerate}[\quad(1)]
+\item If $\diff\,x\geq 1$, then $x=yz$ for some $y,z\in\{\mathsf{0,1}\}^*$
+  such that $y\in Y$ and $\diff\,z = \diff\,x - 1$.
+
+\item If $\diff\,x\leq -1$, then $x=yz$ for some $y,z\in\{\mathsf{0,1}\}^*$
+  such that $y\in Z$ and $\diff\,z = \diff\,x + 1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+We show the proof of (1), the proof of (2) being similar.
+
+Let $y\in\{\mathsf{0,1}\}^*$ be the shortest prefix of $x$ such
+that $\diff\,y\geq 1$, and let $z\in\{\mathsf{0,1}\}^*$ be such
+that $x=yz$.
+
+Because $\diff\,y\geq 1$, we have that $y\neq\%$.  Thus $y=y'a$
+for some $y'\in\{\mathsf{0,1}\}^*$ and $a\in\{\mathsf{0,1}\}$.
+By the definition of $y$, we have that $\diff\,y'\leq 0$.
+Suppose, toward a contradiction, that $a=\zerosf$.  Since
+$\diff\,y' + -1=\diff\,y\geq 1$, we have that $\diff\,y'\geq 2$,
+contradicting the definition of $y$.  Thus $a=\onesf$, so
+that $y=y'\onesf$.
+
+Because $\diff\,y' + 1 = \diff\,y\geq 1$, we have that $\diff\,y'\geq
+0$.  Thus $\diff\,y' = 0$, so that $\diff y = \diff\,y' + 1 = 1$.  By
+the definition of $y$, every prefix of $y'$ has a diff that is
+$\leq$ $0$.  Thus $y\in Y$.
+
+Finally, because $\diff\,x = \diff\,y + \diff\,z = 1 + \diff\,z$ we have
+that $\diff\,z = \diff\,x - 1$.
+\end{proof}
+
+\subsection{Proving that Enough is Generated}
+
+First we study techniques for showing that everything we want a
+grammar to generate is really generated.
+
+Since $X,Y,Z\sub\{\mathsf{0,1}\}^*$, to prove that
+$X\sub\Pi_{G,\Asf}$, $Y\sub\Pi_{G,\Bsf}$ and $Z\sub\Pi_{G,\Csf}$, it
+will suffice to use strong string induction to show that, for all
+$w\in\mathsf{\{0,1\}^*}$:
+
+\begin{enumerate}[\quad(A)]
+\item if $w\in X$, then $w\in\Pi_{G,\Asf}$;
+
+\item if $w\in Y$, then $w\in\Pi_{G,\Bsf}$; and
+
+\item if $w\in Z$, then $w\in\Pi_{G,\Csf}$.
+\end{enumerate}
+
+We proceed by strong string induction.  Suppose
+$w\in\{\mathsf{0,1}\}^*$, and assume the inductive hypothesis:
+for all $x\in\{\mathsf{0,1}\}^*$, if $x$ is a proper substring of
+$w$, then:
+\begin{enumerate}[\quad(A)]
+\item if $x\in X$, then $x\in\Pi_\Asf$;
+
+\item if $x\in Y$, then $x\in\Pi_\Bsf$; and
+
+\item if $x\in Z$, then $x\in\Pi_\Csf$.
+\end{enumerate}
+We must prove that:
+\begin{enumerate}[\quad(A)]
+\item if $w\in X$, then $w\in\Pi_\Asf$;
+
+\item if $w\in Y$, then $w\in\Pi_\Bsf$; and
+
+\item if $w\in Z$, then $w\in\Pi_\Csf$.
+\end{enumerate}
+
+\begin{enumerate}[\quad(A)]
+\item Suppose $w\in X$.  We must show that $w\in\Pi_\Asf$.  There are
+  three cases to consider.
+  \begin{itemize}
+  \item Suppose $w=\%$.  Because $\Asf\fun\%\in P$,
+    Proposition~\ref{PiProp}(2) tells us that $w=\%\in\Pi_\Asf$.
+  
+  \item Suppose $w=\zerosf x$, for some $x\in\{\mathsf{0,1}\}^*$.
+    Because $-1 + \diff\,x = \diff\,w = 0$, we have that $\diff\,x =
+    1$.  Thus, by Lemma~\ref{GramCorrLem1}(1), we have that $x=yz$,
+    for some $y,z\in\{\mathsf{0,1}\}^*$ such that $y\in Y$ and
+    $\diff\,z = \diff\,x - 1 = 1 - 1 = 0$.  Thus $w=\zerosf yz$, $y\in
+    Y$ and $z\in X$.  By Proposition~\ref{PiProp}(1), we have
+    $\zerosf\in\Pi_\zerosf$.  Because $y\in Y$ and $z\in X$ are proper
+    substrings of $w$, parts~(B) and (A) of the inductive hypothesis
+    tell us that $y\in\Pi_\Bsf$ and $z\in\Pi_\Asf$.  Thus, because
+    $\Asf\fun\zerosf\Bsf\Asf\in P$, Proposition~\ref{PiProp}(3) tells
+    us that $w=\zerosf yz\in\Pi_\Asf$.
+  
+  \item Suppose $w=\onesf x$, for some $x\in\{\mathsf{0,1}\}^*$.  The
+    proof is analogous to the preceding case.
+  \end{itemize}
+
+\item Suppose $w\in Y$.  We must show that $w\in\Pi_\Bsf$.  Because
+  $\diff\,w=1$, there are two cases to consider.
+  \begin{itemize}
+  \item Suppose $w=\onesf x$, for some $x\in\{\mathsf{0,1}\}^*$.
+    Because all proper prefixes of $w$ have diffs $\leq$ $0$, we
+    have that $x=\%$, so that $w=\onesf$.  Since $\Bsf\fun\onesf\in P$,
+    we have that $w=\onesf\in\Pi_\Bsf$.
+  
+  \item Suppose $w=\zerosf x$, for some $x\in\{\mathsf{0,1}\}^*$.
+    Thus $\diff\,x = 2$.  Because $\diff\,x\geq 1$, by
+    Lemma~\ref{GramCorrLem1}(1), we have that $x=yz$, for some
+    $y,z\in\{\mathsf{0,1}\}^*$ such that $y\in Y$ and $\diff\,z =
+    \diff\,x - 1 = 2 - 1 = 1$.  Hence $w=\zerosf yz$.  To finish the
+    proof that $z\in Y$, suppose $v$ is a proper prefix of $z$.
+    Thus $\zerosf yv$ is a proper prefix of $w$.  Since $w\in Y$, it
+    follows that $\diff\,v = \diff(\zerosf yv)\leq 0$, as required.
+    Since $y,z\in Y$, part~(B) of the inductive hypothesis tell us
+    that $y,z\in\Pi_\Bsf$.  Thus, because $\Bsf\fun\zerosf\Bsf\Bsf\in
+    P$ we have that $w=\zerosf yz\in\Pi_\Bsf$.
+  \end{itemize}
+
+\item Suppose $w\in Z$.  We must show that $w\in\Pi_\Csf$.  The
+  proof is analogous to the proof of part~(B).
+\end{enumerate}
+
+Suppose $H$ is the grammar
+\begin{gather*}
+\Asf \fun \Bsf \mid \zerosf\Asf\threesf , \qquad
+\Bsf \fun \% \mid \onesf\Bsf\twosf ,
+\end{gather*}
+and let
+\begin{gather*}
+X = \setof{\zerosf^n\onesf^m\twosf^m\threesf^n}{n,m\in\nats} , \qquad
+Y = \setof{\onesf^m\twosf^m}{m\in\nats} .
+\end{gather*}
+We can prove that $X\sub \Pi_{H,\Asf} = L(H)$ and $Y\sub \Pi_{H,\Bsf}$
+using the above technique, but the production $\Asf\fun\Bsf$, which is
+called a \emph{unit production} because its right side is a single
+variable, makes part~(A) tricky.  In
+Section~\ref{ProvingTheCorrectnessOfFiniteAutomata}, when considering
+techniques for showing the correctness of finite automata, we ran into
+a similar problem having to do with $\%$-transitions.
+
+If $w=\zerosf^0\onesf^m\twosf^m\threesf^0 = \onesf^m\twosf^m\in Y$, we
+would like to use part~(B) of the inductive hypothesis to conclude
+$w\in\Pi_\Bsf$, and then use the fact that $\Asf\fun\Bsf\in P$ to
+conclude that $w\in\Pi_\Asf$.  But $w$ is not a proper substring of
+itself, and so the inductive hypothesis in not applicable.  Instead,
+we must split into cases $m=0$ and $m\geq 1$, using $\Asf\fun\Bsf$ and
+$\Bsf\fun\%$, in the first case, and $\Asf\fun\Bsf$ and
+$\Bsf\fun\onesf\Bsf\twosf$, as well as the inductive hypothesis on
+$\onesf^{m-1}\twosf^{m-1}\in Y$, in the second case.
+
+Because there are no productions from $\Bsf$ back to $\Asf$, we could
+also first use strong string induction to prove that, for all
+$w\in\mathsf{\{0,1\}^*}$,
+\begin{enumerate}[\quad(A)]
+\setcounter{enumi}{1}
+\item if $w\in Y$, then $w\in\Pi_\Bsf$,
+\end{enumerate}
+and then use the result of this induction along with
+strong string induction to prove that
+for all $w\in\mathsf{\{0,1\}^*}$,
+\begin{enumerate}[\quad(A)]
+\item if $w\in X$, then $w\in\Pi_\Asf$.
+\end{enumerate}
+This works whenever two parts of a grammar are not mutually recursive.
+
+With this grammar, we could also first use mathematical induction to
+prove that, for all $m\in\nats$, $\onesf^m\twosf^m\in\Pi_\Bsf$, and
+then use the result of this induction to prove, by mathematical
+induction on $n$, that for all $n,m\in\nats$,
+$\zerosf^n\onesf^m\twosf^m\threesf^n\in\Pi_\Asf$.
+
+Note that $\%$-productions, i.e., productions of the form $q\fun\%$,
+can cause similar problems to those caused by unit productions.  E.g.,
+if we have the productions
+\begin{displaymath}
+  \Asf\fun \Bsf\Csf \quad\eqtxt{and}\quad \Bsf\fun\% ,
+\end{displaymath}
+then $\Asf\fun\Bsf\Csf$ behaves like a unit production.
+
+\subsection{Proving that Everything Generated is Wanted}
+
+When proving that everything generated by a grammar is wanted, we
+could sometimes use strong induction, simply reversing the
+implications used when proving that enough is generated.  But this
+approach fails for grammars with unit productions, where we would have
+to resort to an induction on parse trees.  
+
+In Section~\ref{ProvingTheCorrectnessOfFiniteAutomata}, when
+considering techniques for showing the correctness of finite automata,
+we ran into a similar problem having to do with $\%$-transitions, and
+this led to our introducing the Principle of Induction on $\Lambda$.
+Here, we introduce an induction principle called Induction on $\Pi$.
+
+\begin{theorem}[Principle of Induction on $\Pi$]
+Suppose $G$ is a grammar, $P_q(w)$ is a property of a
+string $w\in\Pi_{G,q}$, for all $q\in Q_G$, and
+$P_a(w)$, for $a\in\alphabet\,G$, says ``$w=a$''.
+If
+\begin{enumerate}[\quad(1)]
+\item for all $q\in Q_G$, if $q\fun\%\in P_G$, then $P_q(\%)$, and
+
+\item for all $q\in Q_G$, $n\in\nats-\{0\}$, $a_1,\ldots,a_n\in
+  Q_G\cup\alphabet\,G$, and $w_1\in\Pi_{G,a_1}$, \ldots,
+  $w_n\in\Pi_{G,a_n}$, if $q\fun a_1\cdots a_n\in P_G$ and (\dag)
+  $P_{a_1}(w_1)$, \ldots, $P_{a_n}(w_n)$, then $P_q(w_1\cdots w_n)$,
+\end{enumerate}
+then
+\begin{gather*}
+  \eqtxtr{for all}q\in Q_G, \eqtxt{for all}w\in\Pi_{G,q},\,P_q(w).
+\end{gather*}
+\end{theorem}
+We refer to (\dag) as the inductive hypothesis.
+
+\begin{proof}
+It suffices to show that, for all $\pt\in\PT$, for all 
+$q\in Q_G$ and $w\in(\alphabet\,G)^*$, if
+$\pt$ is valid for $G$, $\rootLabel\,\pt = q$ and
+$\yield\,\pt = w$, then $P_q(w)$.
+We prove this using the principle of induction on parse trees.
+\end{proof}
+
+When proving part~(2), we can make use of the fact that, for
+$a_i\in\alphabet\,G$, $\Pi_{a_i} = \{a_i\}$, so that $w_i\in\Pi_{a_i}$
+will be $a_i$.  Hence it will be unnecessary to assume that
+$P_{a_i}(a_i)$, since this says ``$a_i=a_i$'', and so is always true.
+
+Consider, again, our main example grammar $G$:
+\begin{align*}
+\Asf &\fun \% \mid \zerosf\Bsf\Asf \mid \onesf\Csf\Asf , \\
+\Bsf &\fun \onesf \mid \zerosf\Bsf\Bsf , \\
+\Csf &\fun \zerosf \mid \onesf\Csf\Csf .
+\end{align*}
+Let
+\begin{align*}
+X &= \setof{w\in\{\mathsf{0,1}\}^*}{\diff\,w = 0} , \\
+Y &= \setof{w\in\{\mathsf{0,1}\}^*}{\diff\,w = 1\eqtxt{and,}\\
+&\quad\hspace{.25cm}
+\eqtxt{for all proper prefixes}v\eqtxt{of}w,\diff\,v\leq 0} , \\
+Z &= \setof{w\in\{\mathsf{0,1}\}^*}{\diff\,w = -1\eqtxt{and,}\\
+&\quad\hspace{.25cm}
+\eqtxt{for all proper prefixes}v\eqtxt{of}w,\diff\,v\geq 0} .
+\end{align*}
+
+We have already proven that $X\sub\Pi_\Asf=L(G)$, $Y\sub\Pi_\Bsf$ and
+$Z\sub\Pi_\Csf$.  To complete the proof that
+$L(G)=\Pi_\Asf=X$, $\Pi_\Bsf=Y$ and $\Pi_\Csf=Z$, we will use
+induction on $\Pi$ to prove that
+$\Pi_\Asf\sub X$, $\Pi_\Bsf\sub Y$ and $\Pi_\Csf\sub Z$.
+
+We use induction on $\Pi$ to show that:
+\begin{enumerate}[\quad(A)]
+\item for all $w\in\Pi_\Asf$, $w\in X$;
+
+\item for all $w\in\Pi_\Bsf$, $w\in Y$; and
+
+\item for all $w\in\Pi_\Csf$, $w\in Z$.
+\end{enumerate}
+Formally, this means that we let the properties $P_\Asf(w)$,
+$P_\Bsf(w)$ and $P_\Csf(w)$ be ``$w\in X$'', ``$w\in Y$'' and ``$w\in
+Z$'', respectively, and then use the induction principle to prove
+that, for all $q\in Q_G$, for all $w\in\Pi_q$,
+$P_q(w)$.  But we will actually work more informally.
+
+There are seven productions to consider.
+\begin{description}
+\item[\quad($\Asf\fun\%$)] We must show that $\%\in X$ (as
+  ``$w\in X$'' is the property of part~(A)).  And this holds since
+  $\diff\,\% = 0$.
+
+\item[\quad($\Asf\fun\zerosf\Bsf\Asf$)] Suppose $w_1\in\Pi_\Bsf$ and
+  $w_2\in\Pi_\Asf$ (as $\zerosf\Bsf\Asf$ is the right-side of the
+  production, and $\zerosf$ is in $G$'s alphabet),
+  and assume the inductive hypothesis,
+  $w_1\in Y$ (as this is the property of part~(B)) and
+  $w_2\in X$ (as this is the property of part~(A)).  We
+  must show that $\zerosf w_1w_2\in X$, as the production
+  shows that $\zerosf w_1w_2\in\Pi_\Asf$.  Because
+  $w_1\in Y$ and $w_2\in X$, we have that $\diff\,w_1=1$ and
+  $\diff\,w_2=0$.  Thus $\diff(\zerosf w_1w_2) = -1 + 1 + 0 = 0$, showing
+  that $\zerosf w_1w_2\in X$.
+\end{description}
+
+\begin{description}
+\item[\quad($\Bsf\fun\zerosf\Bsf\Bsf$)] Suppose $w_1,w_2\in\Pi_\Bsf$,
+  and assume the inductive hypothesis, $w_1,w_2\in Y$.  We must show
+  that $\zerosf w_1w_2\in Y$.  Clearly, $\diff(\zerosf w_1w_2) =
+  -1 + 1 + 1 = 1$.  So, suppose $v$ is a proper prefix of
+  $\zerosf w_1w_2$.  We must show that $\diff\,v\leq 0$.
+  There are three cases to consider.
+  \begin{itemize}
+  \item Suppose $v = \%$.  Then $\diff\,v = 0\leq 0$.
+
+  \item Suppose $v=\zerosf u$, for a proper prefix $u$ of $w_1$.
+    Because $w_1\in Y$, we have that $\diff\,u\leq 0$.  Thus
+    $\diff\,v = -1 + \diff\,u \leq -1 + 0\leq 0$.
+
+  \item Suppose $v=\zerosf w_1u$, for a proper prefix $u$ of $w_2$.
+    Because $w_2\in Y$, we have that $\diff\,u\leq 0$.
+    Thus $\diff\,v = -1 + 1 + \diff\,u = \diff\,u\leq 0$.
+  \end{itemize}
+
+\item The remaining productions are handled similarly.
+\end{description}
+
+\subsection{Notes}
+
+Books on formal language theory typically give short shrift to the
+proof of correctness of grammars, carrying out one or two
+correctness proofs using induction on the length of strings.  In
+contrast, we have introduced and applied elegant techniques for
+proving the correctness of grammars.  Of particular note is our principle
+of induction on $\Pi$.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

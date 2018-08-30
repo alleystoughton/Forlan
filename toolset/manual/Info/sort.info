@@ -1,0 +1,15 @@
+@FILES
+  ["sort"; "The Sort Module";]
+@SIGNATURE SORT "sort" [
+  @TYPES 
+    @TYPE total_ordering
+  @VALS 
+    merge
+    sort
+    equal
+    sorted
+    insert
+    less
+    lessEqual
+]
+@STRUCTURE Sort "sort" SORT

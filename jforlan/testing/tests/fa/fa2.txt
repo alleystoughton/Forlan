@@ -1,0 +1,14 @@
+{states}
+A, B, <C,<>>
+{start state}
+<C,<>>
+{accepting states}
+A, B
+{transitions}
+A, hello -> A;
+A, % -> A;
+A, <<jkjkj>j> -> B;
+B, 0 -> A;
+B, 0 -> <C,<>>;
+<C,<>>, % -> <C,<>>;
+<C,<>>, % -> A

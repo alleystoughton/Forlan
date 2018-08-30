@@ -1,0 +1,238 @@
+<!-- prod-set.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The ProdSet Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/ProdSet/ Module</HEAD>
+
+<PP>This module provides operations on finite sets of productions,
+i.e., values of type
+<CD><STRREF/Prod/.<TYREF STRID="Prod"/prod/
+<STRREF/Set/.<TYREF STRID="Set"/set/</CD> that are <EM>standard</EM>
+in the sense that they are compatible with
+<STRREF/Prod/.<VALREF STRID="Prod"/compare/. All values of type
+<CD>Prod.prod Set.set</CD> will implicitly be assumed/required to be
+standard.</PP>
+
+<STRUCTURE STRID="ProdSet">
+<OPAQUE>
+<SIGBODY SIGID="PROD_SET" FILE=PROD-SET>
+
+<SPEC>
+<VAL>memb<TY>Prod.prod * Prod.prod Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+memb(<ARG/prod/, <ARG/prods/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/prod/</CD> is a member of <CD><ARG/prods/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromList<TY>Prod.prod list -> Prod.prod Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromList <ARG/prods/
+</PROTOTY>
+<PP>returns the set whose elements are the elements
+of <CD><ARG/prods/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>Prod.prod Set.set Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compare
+</PROTOTY>
+<PP>is
+<CD><STRREF TOPID/Set/.<VALREF STRID="Set"/compare/
+<STRREF TOPID/Prod/.<VALREF STRID="Prod"/compare/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>subset<TY>Prod.prod Set.set * Prod.prod Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+subset(<ARG/prod1s/, <ARG/prod2s/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/prod1s/</CD> is a subset of <CD><ARG/prod2s/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>Prod.prod Set.set * Prod.prod Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal(<ARG/prod1s/, <ARG/prod2s/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/prod1s/</CD> is equal to <CD><ARG/prod2s/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>map<TY>('a -> Prod.prod) -> 'a Set.set -> Prod.prod Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+map <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> is compatible with a value <CD><ARG/cmp/</CD>
+of type <CD><ARG/'a/ Sort.total_ordering</CD>, then <CD>map</CD>
+returns the set of all productions <CD><ARG/f/ <ARG/x/</CD> such
+that <CD><ARG/x/</CD> is a member of <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>mapFromList<TY>('a -> Prod.prod) -> 'a list -> Prod.prod Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+mapFromList <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>returns the set of all productions <CD><ARG/f/ <ARG/x/</CD> such
+that <CD><ARG/x/</CD> is a member of <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>union<TY>Prod.prod Set.set * Prod.prod Set.set -> Prod.prod Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+union(<ARG/prod1s/, <ARG/prod2s/)
+</PROTOTY>
+<PP>returns the union of <CD><ARG/prod1s/</CD> and <CD><ARG/prod2s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genUnion<TY>Prod.prod Set.set list -> Prod.prod Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genUnion <ARG/prodss/
+</PROTOTY>
+<PP>returns the generalized union of <CD><ARG/prodss/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inter<TY>Prod.prod Set.set * Prod.prod Set.set -> Prod.prod Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+inter(<ARG/prod1s/, <ARG/prod2s/)
+</PROTOTY>
+<PP>returns the intersection of <CD><ARG/prod1s/</CD> and <CD><ARG/prod2s/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genInter<TY>Prod.prod Set.set list -> Prod.prod Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genInter <ARG/prodss/
+</PROTOTY>
+<PP>returns the generalized intersection of <CD><ARG/prodss/</CD>.  Issues
+an error message if <CD><ARG/prodss/</CD> is empty.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>minus<TY>Prod.prod Set.set * Prod.prod Set.set -> Prod.prod Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+minus(<ARG/prod1s/, <ARG/prod2s/)
+</PROTOTY>
+<PP>returns the difference of <CD><ARG/prod1s/</CD> and <CD><ARG/prod2s/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inputFromLabToks
+<TY>(int * Lex.tok)list -> Prod.prod Set.set * (int * Lex.tok)list</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+inputFromLabToks <ARG/lts/
+</PROTOTY>
+<PP>tries to input a set of productions from <CD><ARG/lts/</CD>,
+consuming as much of <CD><ARG/lts/</CD> as possible, and returning the
+pair of the set of productions and the rest of <CD><ARG/lts/</CD>.
+Issues an error message if it fails. Will only return the empty set
+if <CD><ARG/lts/</CD> doesn't begin with a symbol. If, after reading a
+production, the next element of the labeled token list is <CD>","</CD>
+(<CD><STRREF TOPID/Lex/.<CONREF STRID="Lex"/Comma/</CD>),
+then <CD>inputFromLabToks</CD> insists on reading another production, even
+if this results in failure.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> Prod.prod Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs a set of productions from <CD><ARG/s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> Prod.prod Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs a set of productions from the file <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>Prod.prod Set.set -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toPP <ARG/prods/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/prods/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>Prod.prod Set.set -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/prods/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/prods/</CD> to a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>string * Prod.prod Set.set -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+output(<ARG/fil/, <ARG/prods/)
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/prods/</CD> to file <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

@@ -1,0 +1,7 @@
+@FILES
+  ["version"; "The Version Module";]
+@SIGNATURE VERSION "version" [
+  @VALS 
+    getVersion
+]
+@STRUCTURE Version "version" VERSION

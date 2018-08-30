@@ -1,0 +1,11 @@
+val gram' = Gram.inter(gram, efa);
+Gram.output("", gram');
+Gram.generated gram' (Str.fromString "0011");
+Gram.generated gram' (Str.fromString "0101");
+Gram.generated gram' (Str.fromString "0001");
+val dfa =
+      DFA.renameStatesCanonically
+      (DFA.minimize(nfaToDFA(efaToNFA efa)));
+val gram'' = Gram.minus(gram, dfa);
+Gram.generated gram'' (Str.fromString "0101");
+Gram.generated gram'' (Str.fromString "0011");

@@ -1,0 +1,49 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ reg\ =\ Reg.input\ "";
+\item[]\textsl{@\ }0\symbol{'052}11\ +\ 001\symbol{'052}
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ reg\ =\ -\ :\ reg}
+\item[]\textsl{-\ }val\ fa\ =\ regToFA\ reg;
+\item[]\textsl{val\ fa\ =\ -\ :\ fa}
+\item[]\textsl{-\ }FA.output("",\ fa);
+\item[]\textsl{\symbol{'173}states\symbol{'175}}
+\item[]\textsl{A,\ <1,<1,A>>,\ <1,<2,A>>,\ <1,<2,B>>,\ <2,<1,A>>,\ <2,<1,B>>,}
+\item[]\textsl{<2,<2,A>>,\ <1,<1,<A>>>,\ <1,<1,<B>>>,\ <2,<2,<A>>>,\ <2,<2,<B>>>}
+\item[]\textsl{\symbol{'173}start\ state\symbol{'175}\ A\ \symbol{'173}accepting\ states\symbol{'175}\ <1,<2,B>>,\ <2,<2,A>>}
+\item[]\textsl{\symbol{'173}transitions\symbol{'175}}
+\item[]\textsl{A,\ %\ ->\ <1,<1,A>>\ |\ <2,<1,A>>;}
+\item[]\textsl{<1,<1,A>>,\ %\ ->\ <1,<2,A>>\ |\ <1,<1,<A>>>;}
+\item[]\textsl{<1,<2,A>>,\ 11\ ->\ <1,<2,B>>;\ <2,<1,A>>,\ 00\ ->\ <2,<1,B>>;}
+\item[]\textsl{<2,<1,B>>,\ %\ ->\ <2,<2,A>>;\ <2,<2,A>>,\ %\ ->\ <2,<2,<A>>>;}
+\item[]\textsl{<1,<1,<A>>>,\ 0\ ->\ <1,<1,<B>>>;\ <1,<1,<B>>>,\ %\ ->\ <1,<1,A>>;}
+\item[]\textsl{<2,<2,<A>>>,\ 1\ ->\ <2,<2,<B>>>;\ <2,<2,<B>>>,\ %\ ->\ <2,<2,A>>}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ fa'\ =\ FA.renameStatesCanonically\ fa;\ 
+\item[]\textsl{val\ fa'\ =\ -\ :\ fa}
+\item[]\textsl{-\ }FA.output("",\ fa');
+\item[]\textsl{\symbol{'173}states\symbol{'175}\ A,\ B,\ C,\ D,\ E,\ F,\ G,\ H,\ I,\ J,\ K\ \symbol{'173}start\ state\symbol{'175}\ A}
+\item[]\textsl{\symbol{'173}accepting\ states\symbol{'175}\ D,\ G}
+\item[]\textsl{\symbol{'173}transitions\symbol{'175}}
+\item[]\textsl{A,\ %\ ->\ B\ |\ E;\ B,\ %\ ->\ C\ |\ H;\ C,\ 11\ ->\ D;\ E,\ 00\ ->\ F;\ F,\ %\ ->\ G;}
+\item[]\textsl{G,\ %\ ->\ J;\ H,\ 0\ ->\ I;\ I,\ %\ ->\ B;\ J,\ 1\ ->\ K;\ K,\ %\ ->\ G}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

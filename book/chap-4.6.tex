@@ -1,0 +1,254 @@
+\section{Ambiguity of Grammars}
+\label{AmbiguityOfGrammars}
+
+In this section, we say what it means for a grammar to be ambiguous.
+We also give a straightforward method for disambiguating
+grammars for languages with operators of various precedences and
+associativities, and consider an efficient parsing algorithm for
+such disambiguated grammars.
+
+\subsection{Definition}
+
+Suppose $G$ is our grammar of arithmetic expressions:
+\begin{gather*}
+\mathsf{E\fun E\plussym E\mid E\timessym E\mid \openparsym E\closparsym \mid
+\idsym} .
+\end{gather*}
+Unfortunately,
+there are multiple ways of parsing
+$\idsym\timessym\idsym\plussym\idsym$ according to this grammar:
+\begin{center}
+\input{chap-4.6-fig1.eepic}
+\end{center}
+In $\pt_1$, multiplication has higher precedence than addition; in
+$\pt_2$, the situation is reversed.  Because there are multiple ways
+of parsing this string, we say that our grammar is ``ambiguous''.
+
+A grammar $G$ is \emph{ambiguous} iff there is a
+$w\in(\alphabet\,G)^*$ such that $w$ is the yield of multiple valid
+parse trees for $G$ whose root labels are $s_G$; otherwise, $G$ is
+\emph{unambiguous}.
+
+The grammar
+\begin{gather*}
+\Asf \fun \% \mid \mathsf{0A1A} \mid \mathsf{1A0A}
+\end{gather*}
+is a grammar generating all elements
+of $\{\mathsf{0,1}\}^*$ with a $\diff$ of $0$, for the $\diff$
+function such that $\diff\,\zerosf = -1$ and $\diff\,\onesf = 1$.
+It is ambiguous as, e.g., $\mathsf{0101}$ can be parsed as
+$\mathsf{0\%1(01)}$ or $\mathsf{0(10)1\%}$.
+But in Section~4.5, we saw another grammar for this
+language:
+\begin{align*}
+\Asf &\fun \% \mid \zerosf\Bsf\Asf \mid \onesf\Csf\Asf , \\
+\Bsf &\fun \onesf \mid \zerosf\Bsf\Bsf , \\
+\Csf &\fun \zerosf \mid \onesf\Csf\Csf ,
+\end{align*}
+which turns out to be unambiguous.
+The reason is that $\Pi_\Bsf$ is all elements of $\{\mathsf{0,1}\}^*$
+with a $\diff$ of $1$, but with no proper prefixes with positive
+$\diff$'s, and $\Pi_\Csf$ has the corresponding property for
+$0$/negative.
+
+\subsection{Disambiguating Grammars of Operators}
+
+Not every ambiguous grammar can be turned into an equivalent
+unambiguous one.  However, we can use a simple technique to
+disambiguate our grammar of arithmetic expressions, and this technique
+works for many commonly occurring grammars involving operators of
+various precedences and associativities.
+
+Since there are two binary operators in our language of arithmetic
+expressions, we have to decide:
+\begin{itemize}
+\item whether multiplication has higher or lower precedence than
+  addition; and
+
+\item whether multiplication and addition are left or right
+  associative.
+\end{itemize}
+As usual, we'll make multiplication have higher precedence than
+addition, and let addition and multiplication be left associative.
+
+As a first step towards disambiguating our grammar, we can form
+a new grammar with the three variables: $\Esf$ (expressions),
+$\Tsf$ (terms) and $\Fsf$ (factors), start variable $\Esf$
+and productions:
+\begin{align*}
+  \Esf &\fun \Tsf\mid \Esf\plussym\Esf , \\
+  \Tsf &\fun \Fsf\mid \Tsf\timessym\Tsf , \\
+  \Fsf &\fun \idsym \mid \openparsym\Esf\closparsym .
+\end{align*}
+The idea is that the lowest precedence operator ``lives'' at the
+highest level of the grammar, that the highest precedence operator
+lives at the middle level of the grammar, and that the basic
+expressions, including the parenthesized expressions, live at
+the lowest level of the grammar.
+
+Now, there is only one way to parse the string
+$\idsym\timessym\idsym\plussym\idsym$, since, if we begin
+by using the production $\Esf\fun\Tsf$, our yield will only
+include a $\plussym$ if this symbol occurs within parentheses.
+If we had more levels of precedence in our language, we would simply
+add more levels to our grammar.
+
+On the other hand, there are still two ways of parsing the string
+$\idsym\plussym\idsym\plussym\idsym$: with left associativity or right
+associativity.  To finish disambiguating our grammar, we must break
+the symmetry of the right-sides of the productions
+\begin{align*}
+  \Esf &\fun \Esf\plussym\Esf , \\
+  \Tsf &\fun \Tsf\timessym\Tsf ,
+\end{align*}
+turning one of the $\Esf$'s into $\Tsf$, and one of the $\Tsf$'s into
+$\Fsf$.  To make our operators be left associative, we must use
+\emph{left recursion}, changing the second $\Esf$ to $\Tsf$, and the
+second $\Tsf$ to $\Fsf$; right associativity would result from making
+the opposite choices, i.e., using \emph{right recursion}.
+
+Thus, our unambiguous grammar of arithmetic expressions is
+\begin{align*}
+\Esf &\fun \Tsf \mid \Esf\plussym\Tsf , \\
+\Tsf &\fun \Fsf \mid \Tsf\timessym\Fsf , \\
+\Fsf &\fun \idsym \mid \openparsym\Esf\closparsym .
+\end{align*}
+It can be proved that this grammar is indeed unambiguous, and that it
+is equivalent to the original grammar.
+
+Now, the only parse of $\idsym\timessym\idsym\plussym\idsym$ is
+\begin{center}
+\input{chap-4.6-fig2.eepic}
+\end{center}
+And, the only parse of $\idsym\plussym\idsym\plussym\idsym$
+is
+\begin{center}
+\input{chap-4.6-fig3.eepic}
+\end{center}
+
+\subsection{Top-down Parsing}
+
+Top-down parsing is a simple and efficient parsing method for
+unambiguous grammars of operators like
+\begin{align*}
+\Esf &\fun \Tsf \mid \Esf\plussym\Tsf , \\
+\Tsf &\fun \Fsf \mid \Tsf\timessym\Fsf , \\
+\Fsf &\fun \idsym \mid \openparsym\Esf\closparsym .
+\end{align*}
+
+Let $\cal E$, $\cal T$ and $\cal F$ be all of the parse trees that
+are valid for our grammar, have yields containing no variables,
+and whose root labels are $\mathsf{E}$, $\mathsf{T}$ and $\mathsf{F}$, 
+respectively.
+Because this grammar has three mutually recursive variables, we
+will need three mutually recursive parsing functions,
+\begin{align*}
+\parE &\in \Str\fun\Option({\cal E}\times\Str) , \\
+\parT &\in \Str\fun\Option({\cal T}\times\Str) , \\
+\parF &\in \Str\fun\Option({\cal F}\times\Str) ,
+\end{align*}
+which attempt to parse an element $\pt$ of $\cal E$, $\cal T$ or $\cal
+F$ out of a string $w$, returning $\none$ to indicate failure, and
+$\some(\pt,y)$, where $y$ is the remainder of $w$, otherwise.
+
+Although most programming languages support mutual recursion, in this
+book, we haven't formally justified well-founded mutual recursion.  
+Instead, we can work with a single recursive function with domain
+$\{0,1,2\}\times\Str$, where the $0$, $1$ or $2$ indicates whether
+it's $\parE$, $\parT$ or $\parF$, respectively, that is being called.
+
+The well-founded ordering we are using allows:
+\begin{itemize}
+\item $\parE$ to call $\parT$ with strings that are no longer
+  than its argument;
+
+\item $\parT$ to call $\parF$ with strings that are no longer
+  than its argument; and
+
+\item $\parF$ to call $\parE$ with strings that are strictly shorter
+  than its argument.
+\end{itemize}
+
+When called with a string $w$, $\parE$ is supposed to
+determine whether there is a prefix $x$ of $w$ that is the
+yield of an element of $\cal E$.  If there is such an $x$,
+then it finds the \emph{longest} prefix $x$ of $w$ with this
+property, and returns $\some(\pt,y)$, where $\pt$ is the
+element of $\cal E$ whose yield is $x$, and $y$ is such
+that $w=xy$.  Otherwise, it returns $\none$.
+$\parT$ and $\parF$ have similar specifications.
+
+Given a string $w$, $\parE$ operates as follows.  Because all elements
+of $\cal E$ have yields beginning with the yield of an element of
+$\cal T$, it starts by evaluating $\parT\,w$.  If this results in
+$\none$, it returns $\none$.  Otherwise, it results in $\some(\pt,x)$,
+for some $\pt\in{\cal T}$ and $x\in\Str$, in which case $\parE$
+returns $\parELoop(E(\pt), x)$, where $\parELoop\in{\cal
+  E}\times\Str\fun\Option({\cal E}\times\Str)$ is defined recursively,
+as follows.
+
+Given $(\pt, x)\in{\cal E}\times\Str$, $\parELoop$ proceeds as
+follows.
+\begin{itemize}
+\item If $x={\plussym}y$ for some $y$, then $\parELoop$ evaluates
+  $\parT\,y$.
+  \begin{itemize}
+  \item If this results in $\none$, then $\parELoop$ returns $\none$.
+  
+  \item Otherwise, it results in $\some(\pt',z)$ for some
+    $\pt'\in{\cal T}$ and $z\in\Str$, and $\parELoop$ returns
+    $\parELoop(E(\pt,\plussym,\pt'),z)$.
+  \end{itemize}
+
+\item Otherwise, $\parELoop$ returns $\some(\pt,x)$.
+\end{itemize}
+The function $\parT$ operates analogously.
+
+Given a string $w$, $\parF$ proceeds as follows.
+\begin{itemize}
+\item If $w=\idsym x$ for some $x$, then it returns
+  $\some(F(\idsym),x)$.
+
+\item Otherwise, if $w=\openparsym x$, then $\parF$ evaluates
+  $\parE\,x$.
+  \begin{itemize}
+  \item If this results in $\none$, it returns $\none$.
+      
+  \item Otherwise, this results in $\some(\pt,y)$ for some
+    $\pt\in{\cal E}$ and $y\in\Str$.
+    \begin{itemize}
+    \item If $y=\closparsym z$ for some $z$, then $\parF$ returns
+      \begin{displaymath}
+       \some(F(\openparsym,\pt,\closparsym), z) . 
+      \end{displaymath}
+    
+    \item Otherwise, $\parF$ returns $\none$.
+    \end{itemize}
+  \end{itemize}
+
+  \item Otherwise $\parF$ returns $\none$.
+\end{itemize}
+
+Given a string $w$ to parse, the algorithm evaluates
+$\parE\,w$.  If the result of this evaluation is:
+\begin{itemize}
+\item $\none$, then the algorithm reports failure;
+
+\item $\some(\pt,\%)$, then the algorithm returns $\pt$;
+
+\item $\some(\pt,y)$, where $y\neq\%$, then the algorithm reports failure,
+  because not all of the input could be parsed.
+\end{itemize}
+
+\subsection{Notes}
+
+The standard approach to doing top-down parsing in the presence of
+left recursive productions is to first translate the left recursion to
+right recursion, and then restructure the parse trees produced by the
+parser.  In contrast, we showed a direct approach to handling left
+recursion that works for grammars of operators.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

@@ -1,0 +1,36 @@
+<!-- string-aux.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The StringAux Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/StringAux/ Module</HEAD>
+
+<PP>This module defines auxiliary functions on strings.</PP>
+
+<STRUCTURE STRID="StringAux">
+<OPAQUE>
+<SIGBODY SIGID="STRING_AUX" FILE=STRING-AUX>
+
+<SPEC>
+<VAL>removeWhiteSpace<TY>string -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+removeWhiteSpace <ARG/s/
+</PROTOTY>
+<PP>remove all the whitespace from <ARG/s/.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

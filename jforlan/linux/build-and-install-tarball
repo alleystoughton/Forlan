@@ -1,0 +1,9 @@
+#!/bin/bash
+
+rm -f jforlan/JForlan.jar
+cp ../JForlan.jar jforlan
+tar cf jforlan.tar jforlan
+gzip jforlan.tar
+rm -f jforlan/JForlan.jar
+rm -rf ../html/linux/jforlan.tgz
+mv jforlan.tar.gz ../html/linux/jforlan.tgz

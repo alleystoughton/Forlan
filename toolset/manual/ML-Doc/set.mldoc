@@ -1,0 +1,630 @@
+<!-- set.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Set Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Set/ Module</HEAD>
+
+<PP>This module implements an abstract type of finite sets.</PP>
+
+<STRUCTURE STRID="Set">
+<OPAQUE>
+<SIGBODY SIGID="SET" FILE=SET>
+
+<SPEC>
+<TYPE><TYPARAM>'a</TYPARAM><ID>set</ID></TYPE>
+<COMMENT>
+<PP>This is the abstract type of finite sets of values of
+type <CD><ARG/'a/</CD>.</PP>
+
+<PP>The module's values are specified with the help of the abstract
+proposition saying that a value <CD><ARG/xs/</CD> of type
+<CD><ARG/'a/ set</CD> <EM>is compatible with</EM> a value
+<CD><ARG/cmp/</CD> of type <CD><ARG/'a/ Sort.total_ordering</CD>.
+</PP>
+</COMMENT>
+
+<SPEC>
+<VAL>memb<TY>'a Sort.total_ordering -> 'a * 'a set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+memb <ARG/cmp/ (<ARG/x/, <ARG/ys/)
+</PROTOTY>
+<PP>Informally, if <CD><ARG/ys/</CD> is compatible with <CD><ARG/cmp/</CD>,
+then <CD>memb</CD> tests whether <CD><ARG/x/</CD> is a member (element)
+of <CD><ARG/ys/</CD>.  Formally, <CD>memb</CD> must be understood
+in relationship to the specifications of the module's other values.</PP>
+
+<PP>In a context where we know that a value <CD><ARG/xs/</CD> of
+type <CD><ARG/'a/ set</CD> is compatible with a value <CD><ARG/cmp/</CD>
+of type <CD><ARG/'a/ Sort.total_ordering</CD>, when we say that
+<CD><ARG/x/</CD> <EM>is an element of</EM> <CD><ARG/xs/</CD>, this
+means that <CD><ARG/x/</CD> is a value of type <CD><ARG/'a/</CD> such that
+<CD>memb <ARG/cmp/ (<ARG/x/, <ARG/xs/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromList<TY>'a Sort.total_ordering -> 'a list -> 'a
+set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromList <ARG/cmp/ <ARG/xs/
+</PROTOTY>
+<PP>
+returns the set that is compatible with
+<CD><ARG/cmp/</CD> and whose elements are the elements of <CD><ARG/xs/</CD>,
+i.e., the set <CD><ARG/ys/</CD> such that:
+<ITEMIZE>
+<ITEM>for all <CD>1 <= <ARG/i/ <= length <ARG/xs/</CD>,
+<CD>memb <ARG/cmp/ (List.sub(<ARG/xs/, i), <ARG/ys/)</CD>;</ITEM>
+
+<ITEM>for all values <CD><ARG/y/</CD> of type <CD><ARG/'a/</CD>,
+if <CD>memb <ARG/cmp/ (<ARG/y/, <ARG/ys/)</CD>, then there is
+an <CD>1 <= <ARG/i/ <= length <ARG/xs/</CD> such that
+<CD>Sort.equal <ARG/cmp/ (<ARG/y/, List.sub(<ARG/xs/, i))</CD>.</ITEM>
+</ITEMIZE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toList<TY>'a set -> 'a list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toList <ARG/xs/
+</PROTOTY>
+<PP>
+If <CD><ARG/xs/</CD> is compatible with a value <CD><ARG/cmp/</CD>
+of type <CD><ARG/'a/ Sort.total_ordering</CD>, then
+<CD>toList</CD> returns the list consisting of the elements of
+<CD><ARG/xs/</CD>, listed in strictly ascending order according to
+<CD><ARG/cmp/</CD>, i.e., the list <CD><ARG/ys/</CD> such that:
+<ITEMIZE>
+<ITEM><CD>Sort.sorted (false, <ARG/cmp/) <ARG/ys/</CD>;</ITEM>
+
+<ITEM>for all values <CD><ARG/x/</CD> of type <CD><ARG/'a/</CD>,
+if <CD>memb <ARG/cmp/ (<ARG/x/, <ARG/xs/)</CD>, then there is
+an <CD>1 <= <ARG/i/ <= length <ARG/ys/</CD> such that
+<CD>Sort.equal <ARG/cmp/ (<ARG/x/, List.sub(<ARG/ys/, i))</CD>;</ITEM>
+
+<ITEM>for all <CD>1 <= <ARG/i/ <= length <ARG/ys/</CD>,
+<CD>memb <ARG/cmp/ (List.sub(<ARG/ys/, i), <ARG/xs/)</CD>.</ITEM>
+</ITEMIZE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isEmpty<TY>'a set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isEmpty <ARG/xs/
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> is compatible with a value <CD><ARG/cmp/</CD> of
+type <CD><ARG/'a/ Sort.total_ordering</CD>, then
+<CD>isEmpty</CD> tests whether <CD><ARG/xs/</CD> is empty, i.e.,
+whether there is no value <CD><ARG/x/</CD> of
+type <CD><ARG/'a/</CD> such that <CD>memb <ARG/cmp/ (<ARG/x/, <ARG/xs/)</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isNonEmpty<TY>'a set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isNonEmpty <ARG/xs/
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> is compatible with a value <CD><ARG/cmp/</CD> of
+type <CD><ARG/'a/ Sort.total_ordering</CD>, then
+<CD>isNonEmpty</CD> tests whether <CD><ARG/xs/</CD> is nonempty, i.e.,
+whether there is a value <CD><ARG/x/</CD> of
+type <CD><ARG/'a/</CD> such that <CD>memb <ARG/cmp/ (<ARG/x/, <ARG/xs/)</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>size<TY>'a set -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+size <ARG/xs/
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> is compatible with a value <CD><ARG/cmp/</CD> of
+type <CD><ARG/'a/ Sort.total_ordering</CD>, then
+<CD>size</CD> returns the size of <CD><ARG/xs/</CD>, i.e.,
+the length of <CD>toList <ARG/xs/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>hd<TY>'a set -> 'a</TY></VAL>
+<COMMENT>
+<PROTOTY>
+hd <ARG/xs/
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> is compatible with a value <CD><ARG/cmp/</CD> of
+type <CD><ARG/'a/ Sort.total_ordering</CD>, then
+<CD>hd</CD> returns the <EM>head</EM> of <CD><ARG/xs/</CD>, i.e., the
+first element of <CD>toList <ARG/xs/</CD>.
+It raises <CD>Empty</CD> if this list is empty.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>tl<TY>'a set -> 'a set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+tl <ARG/xs/
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> is compatible with a value <CD><ARG/cmp/</CD> of
+type <CD><ARG/'a/ Sort.total_ordering</CD>, then
+<CD>tl</CD> returns the <EM>tail</EM> of <CD><ARG/xs/</CD>, i.e.,
+<CD>fromList <ARG/cmp/ (tl(toList <ARG/xs/))</CD>.
+It raises <CD>Empty</CD> if <CD>toList <ARG/xs/</CD> is the
+empty list.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>'a Sort.total_ordering -> 'a set * 'a set -> order</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compare <ARG/cmp/ (<ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> and <CD><ARG/ys/</CD> are compatible with
+<CD><ARG/cmp/</CD>, then <CD>compare</CD> first compares
+<CD>size <ARG/xs/</CD> and <CD>size <ARG/ys/</CD>, returning
+<CD>LESS</CD> if the former is less than the latter, and
+<CD>GREATER</CD> if the former is greater than the latter.  If the
+sizes are equal, it works through the corresponding elements of
+<CD>toList <ARG/xs/</CD> and <CD>toList <ARG/ys/</CD>, using
+<CD><ARG/cmp/</CD> to compare those elements, until a result
+of <CD>LESS</CD> or <CD>GREATER</CD> is found, in which case that
+result in returned.  If all comparisons result in <CD>EQUAL</CD>,
+then <CD>compare</CD> returns <CD>EQUAL</CD>.</PP>
+
+<PP>Unfortunately, <CD>compare <ARG/cmp/</CD> isn't
+an <CD><ARG/'a/ Sort.total_ordering</CD>. But does satisfy the
+formulas of the definition of <CD><ARG/'a/ set Sort.total_ordering</CD>
+for all values <CD><ARG/xs/</CD>, <CD><ARG/ys/</CD>
+and <CD><ARG/zs/</CD> of type <CD><ARG/'a/ set</CD> that <EM>are
+compatible with</EM>
+<CD><ARG/cmp/</CD>.  In addition, we have that
+<CD>compare <ARG/cmp/ (<ARG/xs/, <ARG/ys/) = EQUAL</CD> iff
+<CD>equal <ARG/cmp/ (<ARG/xs/, <ARG/ys/)</CD>, where the function
+<CD>equal</CD> is specified below.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>subset<TY>'a Sort.total_ordering -> ('a set * 'a set) -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+subset <ARG/cmp/ (<ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> and <CD><ARG/ys/</CD> are compatible with
+<CD><ARG/cmp/</CD>, then <CD>subset</CD> tests
+whether <CD><ARG/xs/</CD> is a subset of <CD><ARG/ys/</CD>, i.e.,
+whether, for all values
+<CD><ARG/z/</CD> of type <CD><ARG/'a/</CD>, if
+<CD>memb <ARG/cmp/ (<ARG/z/, <ARG/xs/)</CD>, then
+<CD>memb <ARG/cmp/ (<ARG/z/, <ARG/ys/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>'a Sort.total_ordering -> ('a set * 'a set) -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal <ARG/cmp/ (<ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> and <CD><ARG/ys/</CD> are compatible with
+<CD><ARG/cmp/</CD>, then <CD>equal</CD> tests
+whether <CD><ARG/xs/</CD> is equal to <CD><ARG/ys/</CD>, i.e.,
+whether, for all values
+<CD><ARG/z/</CD> of type <CD><ARG/'a/</CD>,
+<CD>memb <ARG/cmp/ (<ARG/z/, <ARG/xs/)</CD> iff
+<CD>memb <ARG/cmp/ (<ARG/z/, <ARG/ys/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>all<TY>('a -> bool) -> 'a set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+all <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> is compatible with a value
+<CD><ARG/cmp/</CD> of type <CD><ARG/'a/ Sort.total_ordering</CD>, then
+<CD>all</CD> tests whether, for all elements <CD><ARG/x/</CD> of
+<CD><ARG/xs/</CD>, <CD><ARG/f/ <ARG/x/</CD>, i.e.,
+whether, for all values <CD><ARG/x/</CD> of
+type <CD><ARG/'a/</CD>, if <CD>memb <ARG/cmp/ (<ARG/x/,
+<ARG/xs/)</CD>, then <CD><ARG/f/ <ARG/x/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>exists<TY>('a -> bool) -> 'a set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+exists <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> is compatible with a value
+<CD><ARG/cmp/</CD> of type <CD><ARG/'a/ Sort.total_ordering</CD>, then
+<CD>exists</CD> tests whether, there is an element <CD><ARG/x/</CD> of
+<CD><ARG/xs/</CD> such that <CD><ARG/f/ <ARG/x/</CD>, i.e., whether
+there is a value <CD><ARG/x/</CD> of
+type <CD><ARG/'a/</CD> such that <CD>memb <ARG/cmp/ (<ARG/x/,
+<ARG/xs/)</CD> and <CD><ARG/f/ <ARG/x/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>empty<TY>'a set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+empty
+</PROTOTY>
+<PP>If <CD><ARG/cmp/</CD> is a value of type
+<CD><ARG/'a/ Sort.total_ordering</CD>, then <CD>empty</CD> is the set
+that is compatible with <CD><ARG/cmp/</CD> and has no elements, i.e.,
+the set <CD><ARG/xs/</CD> such that there is no value <CD><ARG/x/</CD>
+of <CD><ARG/'a/</CD> such that <CD>memb <ARG/cmp/ (<ARG/x/,
+<ARG/xs/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>sing<TY>'a -> 'a set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+sing <ARG/x/
+</PROTOTY>
+<PP>If <CD><ARG/cmp/</CD> is a value of
+type <CD><ARG/'a/ Sort.total_ordering</CD>,
+then <CD>sing</CD> returns the set that is compatible with
+<CD><ARG/cmp/</CD> and whose only element is <CD><ARG/x/</CD>, i.e.,
+the set <CD><ARG/ys/</CD> such that, for all
+values <CD><ARG/y/</CD> of type <CD><ARG/'a/</CD>,
+<CD>memb <ARG/cmp/ (<ARG/y/, <ARG/ys/)</CD> iff
+<CD>Sort.equal <ARG/cmp/ (<ARG/y/, <ARG/x/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>filter<TY>('a -> bool) -> 'a set -> 'a set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+filter <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>
+If <CD><ARG/xs/</CD> is compatible with a value <CD><ARG/cmp/</CD> of
+type <CD><ARG/'a/ Sort.total_ordering</CD>, then
+<CD>filter</CD> returns the set that is compatible
+with <CD><ARG/cmp/</CD> and consists of the elements
+of <CD><ARG/xs/</CD> on which <CD><ARG/f/</CD> returns <CD>true</CD>,
+i.e., the set <CD><ARG/ys/</CD> such that, for all
+values <CD><ARG/y/</CD> of type <CD><ARG/'a/</CD>,
+<CD>memb <ARG/cmp/ (<ARG/y/, <ARG/ys/)</CD> iff
+<CD>memb <ARG/cmp/ (<ARG/y/, <ARG/xs/)</CD> and <CD>f <ARG/y/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>partition<TY>('a -> bool) -> 'a set -> 'a set * 'a set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+partition <ARG/f/ <ARG/xs/ 
+</PROTOTY>
+<PP>
+If <CD><ARG/xs/</CD> is compatible with a value
+<CD><ARG/cmp/</CD> of type <CD><ARG/'a/ Sort.total_ordering</CD>, then
+<CD>filter</CD> returns the pair of sets <CD>(<ARG/ys/, <ARG/zs/)</CD>
+such that <CD><ARG/ys/</CD> and <CD><ARG/zs/</CD> are compatible with
+<CD><ARG/cmp/</CD>, <CD><ARG/ys/</CD> consists of the elements of
+<CD><ARG/xs/</CD> on which <CD><ARG/f/</CD> returns <CD>true</CD>, and
+<CD><ARG/zs/</CD> consists of the elements of <CD><ARG/xs/</CD> on which
+<CD><ARG/f/</CD> returns <CD>false</CD>, i.e., such that
+<ITEMIZE>
+<ITEM>for all values <CD><ARG/y/</CD> of type <CD><ARG/'a/</CD>,
+<CD>memb <ARG/cmp/ (<ARG/y/, <ARG/ys/)</CD> iff
+<CD>memb <ARG/cmp/ (<ARG/y/, <ARG/xs/)</CD> and <CD>f <ARG/y/</CD>;
+</ITEM>
+
+<ITEM>for all values <CD><ARG/z/</CD> of type <CD><ARG/'a/</CD>,
+<CD>memb <ARG/cmp/ (<ARG/z/, <ARG/zs/)</CD> iff
+<CD>memb <ARG/cmp/ (<ARG/z/, <ARG/xs/)</CD> and <CD>not(f <ARG/z/)</CD>.
+</ITEM>
+</ITEMIZE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>position<TY>('a -> bool) -> 'a set -> int option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+position <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>
+If <CD><ARG/xs/</CD> is compatible with a value
+<CD><ARG/cmp/</CD> of type <CD><ARG/'a/ Sort.total_ordering</CD>, then
+<CD>position</CD> behaves the same as
+<CD>ListAux.position <ARG/f/ (toList <ARG/xs/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>map<TY>'b Sort.total_ordering -> ('a -> 'b) -> 'a set -> 'b set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+map <ARG/cmp'/ <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>
+If <CD><ARG/cmp/</CD> is a value of type <CD><ARG/'a/ Sort.total_ordering</CD>,
+<CD><ARG/cmp'/</CD> is a value of type <CD><ARG/'b/ Sort.total_ordering</CD>,
+and <CD><ARG/xs/</CD> is compatible with <CD><ARG/cmp/</CD>, then
+<CD>map</CD> returns the set that is compatible
+with <CD><ARG/cmp'/</CD> and consists of the set of
+all <CD><ARG/f/ <ARG/x/</CD> such that <CD><ARG/x/</CD> is in
+<CD><ARG/xs/</CD>, i.e., the set <CD><ARG/ys/</CD> such that, for all
+values <CD><ARG/y/</CD> of type <CD><ARG/'b/</CD>, <CD>memb
+<ARG/cmp'/ (<ARG/y/, <ARG/ys/)</CD> iff <CD>Sort.equal
+<ARG/cmp'/ (<ARG/y/, <ARG/f/ <ARG/x/)</CD>, for some
+value <CD><ARG/x/</CD> of type <CD><ARG/'a/</CD> such that <CD>memb
+<ARG/cmp/ (<ARG/x/, <ARG/xs/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>mapFromList
+<TY>'b Sort.total_ordering -> ('a -> 'b) -> 'a list -> 'b set</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+mapFromList <ARG/cmp/ <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>
+If <CD><ARG/cmp/</CD> is a value of type <CD><ARG/'b/ total_ordering</CD>,
+then <CD>mapFromList</CD> returns
+<CD>fromList <ARG/cmp/ (map <ARG/f/ <ARG/xs/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>mapToList<TY>('a -> 'b) -> 'a set -> 'b list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+mapToList <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> is compatible with a value
+<CD><ARG/cmp/</CD> of type <CD><ARG/'a/ Sort.total_ordering</CD>, then
+<CD>mapToList</CD> returns <CD>map <ARG/f/ (toList <ARG/xs/)</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>union<TY>'a Sort.total_ordering -> ('a set * 'a set) -> 'a set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+union <ARG/cmp/ (<ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> and <CD><ARG/ys/</CD> are compatible with
+<CD><ARG/cmp/</CD>, then <CD>union</CD> returns the set
+that is compatible with <CD><ARG/cmp/</CD> and is the union of
+<CD><ARG/xs/</CD> and <CD><ARG/ys/</CD>, i.e., the
+set <CD><ARG/zs/</CD> such that, for all values <CD><ARG/z/</CD> of
+type <CD><ARG/'a/</CD>,
+<CD>memb <ARG/cmp/ (<ARG/z/, <ARG/zs/)</CD> iff
+<CD>memb <ARG/cmp/ (<ARG/z/, <ARG/xs/)</CD> or
+<CD>memb <ARG/cmp/ (<ARG/z/, <ARG/ys/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genUnion<TY>'a Sort.total_ordering -> 'a set list -> 'a set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genUnion <ARG/cmp/ <ARG/xss/
+</PROTOTY>
+<PP>If all the elements of <CD><ARG/xss/</CD> are compatible with
+<CD><ARG/cmp/</CD>,
+then <CD>genUnion</CD> returns the set that is
+compatible with <CD><ARG/cmp/</CD> and is the generalized union
+of the elements of <CD><ARG/xss/</CD>, i.e., the set <CD><ARG/ys/</CD>
+such that, for all values <CD><ARG/y/</CD> of type <CD><ARG/'a/</CD>, 
+<CD>memb <ARG/cmp/ (<ARG/y/, <ARG/ys/)</CD> iff
+there is an element <CD><ARG/xs/</CD> of <CD><ARG/xss/</CD> such
+that <CD>memb <ARG/cmp/ (<ARG/y/, <ARG/xs/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inter<TY>'a Sort.total_ordering -> ('a set * 'a set) -> 'a set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+inter <ARG/cmp/ (<ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> and <CD><ARG/ys/</CD> are compatible with
+<CD><ARG/cmp/</CD>, then <CD>inter</CD> returns the set
+that is compatible with <CD><ARG/cmp/</CD> and is the intersection of
+<CD><ARG/xs/</CD> and <CD><ARG/ys/</CD>, i.e., the
+set <CD><ARG/zs/</CD> such that, for all values <CD><ARG/z/</CD> of
+type <CD><ARG/'a/</CD>,
+<CD>memb <ARG/cmp/ (<ARG/z/, <ARG/zs/)</CD> iff
+<CD>memb <ARG/cmp/ (<ARG/z/, <ARG/xs/)</CD> and
+<CD>memb <ARG/cmp/ (<ARG/z/, <ARG/ys/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genInter<TY>'a Sort.total_ordering -> 'a set list -> 'a set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genInter <ARG/cmp/ <ARG/xss/
+</PROTOTY>
+<PP>If all the elements of <CD><ARG/xss/</CD> are compatible with
+<CD><ARG/cmp/</CD>, then <CD>genInter</CD> returns the set that is
+compatible with <CD><ARG/cmp/</CD> and is the generalized intersection
+of the elements of <CD><ARG/xss/</CD>, i.e., the set <CD><ARG/ys/</CD>
+such that, for all values <CD><ARG/y/</CD> of
+type <CD><ARG/'a/</CD>, <CD>memb <ARG/cmp/ (<ARG/y/, <ARG/ys/)</CD>
+iff for all elements <CD><ARG/xs/</CD> of <CD><ARG/xss/</CD>,
+ <CD>memb <ARG/cmp/ (<ARG/y/, <ARG/xs/)</CD>.
+An error message is issued when <CD><ARG/xss/</CD> is
+the empty list.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>minus<TY>'a Sort.total_ordering -> ('a set * 'a set) -> 'a set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+minus <ARG/cmp/ (<ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> and <CD><ARG/ys/</CD> are compatible with
+<CD><ARG/cmp/</CD>, then <CD>minus</CD> returns the set
+that is compatible with <CD><ARG/cmp/</CD> and is the difference of
+<CD><ARG/xs/</CD> and <CD><ARG/ys/</CD>, i.e., the set zs such that,
+for all values <CD><ARG/z/</CD> of type <CD><ARG/'a/</CD>,
+<CD>memb <ARG/cmp/ (<ARG/z/, <ARG/zs/)</CD> iff
+<CD>memb <ARG/cmp/ (<ARG/z/, <ARG/xs/)</CD> and
+<CD>not(memb <ARG/cmp/ (<ARG/z/, <ARG/ys/))</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>comparePair
+<TY>'a Sort.total_ordering * 'b Sort.total_ordering ->
+('a * 'b)Sort.total_ordering</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+comparePair (<ARG/cmp1/, <ARG/cmp2/) ((<ARG/x/, <ARG/y/), (<ARG/x'/, <ARG/y'/))
+</PROTOTY>
+<PP>
+works lexicographically, first using <CD><ARG/cmp1/</CD> on
+<CD>(<ARG/x/, <ARG/x'/)</CD>, and then using <CD><ARG/cmp2/</CD> on
+<CD>(<ARG/y/, <ARG/y'/)</CD>.  I.e., it returns
+<CODE>
+  case <ARG/cmp1/(<ARG/x/, <ARG/x'/) of
+       LESS    => LESS
+     | EQUAL   => <ARG/cmp2/(<ARG/y/, <ARG/y'/)
+     | GREATER => GREATER
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>times<TY>'a set * 'b set -> ('a * 'b)set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+times(<ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>
+If <CD><ARG/xs/</CD> is compatible with a value <CD><ARG/cmp1/</CD> of
+type <CD><ARG/'a/ Sort.total_ordering</CD>, and
+<CD><ARG/ys/</CD> is compatible with a value <CD><ARG/cmp2/</CD> of
+type <CD><ARG/'b/ Sort.total_ordering</CD>, then
+<CD>times</CD> returns the set that is compatible
+with <CD>comparePair(<ARG/cmp1/, <ARG/cmp2/)</CD> and is the product
+of <CD><ARG/xs/</CD> and <CD><ARG/ys/</CD>, i.e., the
+set <CD><ARG/zs/</CD> such that, for all values <CD><ARG/p/</CD> of
+type <CD><ARG/'a/ * <ARG/'b/</CD>,
+<CD>memb (compairPair(<ARG/cmp1/, <ARG/cmp2/)) (<ARG/p/, <ARG/zs/)</CD>
+iff
+<CD>memb <ARG/cmp1/ (#1 <ARG/p/, <ARG/xs/)</CD> and
+<CD>memb <ARG/cmp2/ (#2 <ARG/p/, <ARG/ys/)</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compareTriple
+<TY>'a Sort.total_ordering * 'b Sort.total_ordering * 'c Sort.total_ordering ->
+('a * 'b * 'c)Sort.total_ordering</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+compareTriple
+</PROTOTY>
+<PP>is like <CD>comparePair</CD>, but for triples.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>times3<TY>'a set * 'b set * 'c set -> ('a * 'b * 'c)set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+times3
+</PROTOTY>
+<PP>
+is like <CD>times</CD>, but for triples, ordered using <CD>compareTriple</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compareList
+<TY>'a Sort.total_ordering -> 'a list Sort.total_ordering</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+compareList <ARG/cmp/ (<ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>first compares the lengths of <CD><ARG/xs/</CD> and <CD><ARG/ys/</CD>,
+returning <CD>LESS</CD>, if <CD><ARG/xs/</CD> is shorter than <CD><ARG/ys/</CD>,
+and <CD>GREATER</CD>, if <CD><ARG/xs/</CD> is longer than <CD><ARG/ys/</CD>.
+When the lengths are equal, it works lexicographically, using
+<CD><ARG/cmp/</CD> to compare corresponding elements of <CD><ARG/xs/</CD> and
+<CD><ARG/ys/</CD>, and yielding the first non-<CD>EQUAL</CD> result.  If
+all comparisons result in <CD>EQUAL</CD>, then <CD>compareList</CD> returns
+<CD>EQUAL</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genTimes<TY>'a set list -> 'a list set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genTimes <ARG/xss/
+</PROTOTY>
+<PP>
+If all the elements of <CD><ARG/xss/</CD> are compatible with
+a value <CD><ARG/cmp/</CD> of type <CD><ARG/'a/ Sort.total_ordering</CD>,
+then <CD>genTimes</CD> returns the set that
+is compatible with <CD>compareList <ARG/cmp/</CD> and is
+the generalized product of the elements of <CD><ARG/xss/</CD>, i.e., the set
+<CD><ARG/yss/</CD> such that, for all values <CD><ARG/ys/</CD> of
+type <CD><ARG/'a/ list</CD>,
+<CD>memb (compareList <ARG/cmp/) (<ARG/ys/, <ARG/yss/)</CD> iff
+<CD>length <ARG/ys/ = length <ARG/xss/</CD> and, for all
+<CD>1 <= i <= length <ARG/xss/</CD>,
+<CD>memb <ARG/cmp/ (ListAux.sub(<ARG/ys/, i), ListAux.sub(<ARG/xss/, i))</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

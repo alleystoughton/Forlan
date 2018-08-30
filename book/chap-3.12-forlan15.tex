@@ -1,0 +1,41 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ dfa\ =\ DFA.input\ "";
+\item[]\textsl{@\ }\symbol{'173}states\symbol{'175}
+\item[]\textsl{@\ }A,\ B
+\item[]\textsl{@\ }\symbol{'173}start\ state\symbol{'175}
+\item[]\textsl{@\ }A
+\item[]\textsl{@\ }\symbol{'173}accepting\ states\symbol{'175}
+\item[]\textsl{@\ }A
+\item[]\textsl{@\ }\symbol{'173}transitions\symbol{'175}
+\item[]\textsl{@\ }A,\ 0\ ->\ B;\ B,\ 0\ ->\ A;
+\item[]\textsl{@\ }A,\ 1\ ->\ A;\ B,\ 1\ ->\ B
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ dfa\ =\ -\ :\ dfa}
+\item[]\textsl{-\ }val\ rel\ =\ SymRel.fromString\ "(0,\ a),\ (1,\ b)";
+\item[]\textsl{val\ rel\ =\ -\ :\ sym_rel}
+\item[]\textsl{-\ }val\ dfa'\ =\ DFA.renameAlphabet(dfa,\ rel);
+\item[]\textsl{val\ dfa'\ =\ -\ :\ dfa}
+\item[]\textsl{-\ }DFA.output("",\ dfa');
+\item[]\textsl{\symbol{'173}states\symbol{'175}\ A,\ B\ \symbol{'173}start\ state\symbol{'175}\ A\ \symbol{'173}accepting\ states\symbol{'175}\ A}
+\item[]\textsl{\symbol{'173}transitions\symbol{'175}\ A,\ a\ ->\ B;\ A,\ b\ ->\ A;\ B,\ a\ ->\ A;\ B,\ b\ ->\ B}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

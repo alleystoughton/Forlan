@@ -1,0 +1,14 @@
+val fa' = FA.input "";
+{states} A, B, C
+{start state} A
+{accepting states} C
+{transitions}
+A, 0 -> B; A, 2 -> B; A, 0 -> C; A, 2 -> C;
+B, 0 -> C; B, 2 -> C
+.
+FA.equal(fa', fa);
+FA.sub(fa', fa);
+FA.sub(fa, fa');
+FA.numStates fa;
+FA.numTransitions fa;
+SymSet.output("", FA.alphabet fa);

@@ -1,0 +1,10 @@
+val dfa1 = nfaToDFA(efaToNFA efa1);
+val dfa2 = nfaToDFA(efaToNFA efa2);
+val dfa = DFA.minus(dfa1, dfa2);
+val efa = injDFAToEFA dfa;
+EFA.accepted efa (Str.input "");
+01
+.
+EFA.accepted efa (Str.input "");
+0
+.

@@ -1,0 +1,24 @@
+@FILES
+  ["tran-reg-set"; "The TranRegSet Module";]
+@SIGNATURE TRAN_REG_SET "tran-reg-set" [
+  @VALS 
+    input
+    memb
+    toPP
+    genUnion
+    equal
+    fromString
+    map
+    fromList
+    output
+    inter
+    inputFromLabToks
+    subset
+    compare
+    union
+    toString
+    minus
+    genInter
+    mapFromList
+]
+@STRUCTURE TranRegSet "tran-reg-set" TRAN_REG_SET

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="JForlan" default="app" basedir=".">
+    <property name="lib.dir" value="lib"/>
+
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes" classpathref="classpath"
+               includeantruntime="false"/>
+    </target>
+
+    <target name="jar" depends="compile">
+      <jar destfile="JForlan.jar">
+        <manifest>
+          <attribute name="Main-Class" value="jforlan.main.JForlan"/>
+        </manifest>
+        <fileset dir="build/classes"/>
+        <fileset dir="src/resources"/>
+      </jar>
+    </target>
+
+    <taskdef name="bundleapp"
+             classname="com.oracle.appbundler.AppBundlerTask"   
+             classpath="lib/appbundler-1.0.jar"/>
+
+    <target name="app" depends="jar">
+      <bundleapp
+          outputdirectory="."
+          name="JForlan"
+          displayname="JForlan"
+          identifier="us.alleystoughton.JForlan"
+          shortversion="2.1"
+          icon="icons/JForlan.icns"
+          mainclassname="jforlan.main.JForlan">
+        <classpath file="JForlan.jar"/>
+      </bundleapp>
+    </target>
+</project>

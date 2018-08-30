@@ -1,0 +1,753 @@
+\section{Regular Expressions and Languages}
+\label{RegularExpressionsAndLanguages}
+
+In this section, we define several operations on languages, say what
+regular expressions are, what they mean, and what regular languages
+are, and begin to show how regular expressions can be processed by Forlan.
+
+\subsection{Operations on Languages}
+
+\index{union!language}%
+\index{intersection!language}%
+\index{set difference!language}%
+The union, intersection and set-difference operations on sets are also
+operations on languages, i.e., if $L_1,L_2\in\Lan$, then $L_1\cup
+L_2$, $L_1\cap L_2$ and $L_1-L_2$ are all languages.
+(Since $L_1,L_2\in\Lan$, we have that $L_1\sub\Sigma_1^*$
+and $L_2\sub\Sigma_2^*$, for alphabets $\Sigma_1$ and $\Sigma_2$.
+Let $\Sigma=\Sigma_1\cup\Sigma_2$, so that $\Sigma$ is an alphabet,
+$L_1\sub\Sigma^*$ and $L_2\sub\Sigma^*$.
+Thus $L_1\cup L_2$, $L_1\cap L_2$ and $L_1-L_2$ are all subsets
+of $\Sigma^*$, and so are all languages.)
+
+\index{language!concatenation}%
+\index{concatenation!language}%
+The first new operation on languages is language concatenation.
+The \emph{concatenation} of languages $L_1$ and $L_2$ ($L_1\myconcat
+L_2$)
+\index{ at@$\myconcat$}%
+\index{language! at@$\myconcat$}%
+is the language
+\begin{gather*}
+\setof{x_1\myconcat x_2}{x_1\in L_1\eqtxt{and}x_2\in L_2} .
+\end{gather*}
+I.e., $L_1\myconcat L_2$ consists of all strings that can be formed by
+concatenating an element of $L_1$ with an element of $L_2$.
+For example,
+\begin{align*}
+\mathsf{\{ab,abc\}\myconcat\{cd,d\}} &=
+\mathsf{\{(ab)(cd), (ab)(d), (abc)(cd), (abc)(d)\}} \\
+&= \mathsf{\{abcd, abd, abccd\}}.
+\end{align*}
+
+Concatenation of languages is associative: for all $L_1,L_2,L_3\in\Lan$,
+\index{associative!language concatenation}%
+\index{language!concatenation!associative}%
+\index{concatenation!language!associative}%
+\begin{gather*}
+(L_1\myconcat L_2)\myconcat L_3 = L_1\myconcat(L_2\myconcat L_3) .
+\end{gather*}
+And, $\{\%\}$ is the identity for concatenation:
+\index{identity!language concatenation}%
+\index{language!concatenation!identity}%
+\index{concatenation!language!identity}%
+for all $L\in\Lan$,
+\begin{gather*}
+{\{\%\}}\myconcat L=L\myconcat{\{\%\}}=L.
+\end{gather*}
+Furthermore, $\emptyset$ is the zero for concatenation:
+\index{zero!language concatenation}%
+\index{language!concatenation!zero}%
+\index{concatenation!language!zero}%
+for all $L\in\Lan$,
+\begin{gather*}
+\emptyset\myconcat L=L\myconcat\emptyset={\emptyset} .
+\end{gather*}
+We often abbreviate $L_1\myconcat L_2$ to $L_1L_2$.
+
+Now that we know what language concatenation is, we can say what it
+means to raise a language to a power.  We define the \emph{language}
+\index{concatenation!language!power}%
+\index{language!concatenation!power}%
+$L^n$ \emph{formed by raising} a language $L$ \emph{to the
+  power} $n\in\nats$
+\index{ power@$\cdot^\cdot$}%
+\index{language! power@$\cdot^\cdot$}%
+by recursion on $n$:
+\begin{align*}
+L^0      &= {\{\%\}} , \eqtxt{for all}L\in\Lan ; \eqtxt{and} \\
+L^{n + 1} &= LL^n ,\eqtxt{for all}L\in\Lan\eqtxt{and}n\in\nats .
+\end{align*}
+We assign this exponentiation operation higher precedence than
+concatenation, so that $LL^n$ means $L(L^n)$ in the above definition.
+For example, we have that
+\begin{align*}
+\mathsf{\{a,b\}}^2 &= 
+\mathsf{\{a,b\}}\mathsf{\{a,b\}}^1 =
+\mathsf{\{a,b\}}\mathsf{\{a,b\}}\mathsf{\{a,b\}}^0 \\
+&=\mathsf{\{a,b\}}\mathsf{\{a,b\}}\{\%\} =
+\mathsf{\{a,b\}}\mathsf{\{a,b\}} \\
+&=\mathsf{\{aa, ab, ba, bb\}}.
+\end{align*}
+
+\begin{proposition}
+\label{LangExponProp1}
+For all $L\in\Lan$ and $n,m\in\nats$, $L^{n+m}=L^nL^m$.
+\end{proposition}
+
+\begin{proof}
+An easy mathematical induction on $n$.  The language $L$ and the natural
+number $m$ can be fixed at the beginning of the proof.
+\end{proof}
+
+Thus, if $L\in\Lan$ and $n\in\nats$, then
+\begin{alignat*}{2}
+L^{n+1} &= LL^n && \by{definition}, \\
+\intertext{and}
+L^{n+1} &= L^nL^1 = L^nL && \by{Proposition~\ref{LangExponProp1}} .
+\end{alignat*}
+
+Another useful fact about language exponentiation is:
+
+\begin{proposition}
+\label{LangExponProp2}
+For all $w\in\Str$ and $n\in\nats$, $\{w\}^n = \{w^n\}$.
+\end{proposition}
+
+\begin{proof}
+By mathematical induction on $n$.
+\end{proof}
+
+For example, we have that $\{\mathsf{01}\}^4=\{(\mathsf{01})^4\}=
+\{\mathsf{01010101}\}$.
+
+Now we consider a language operation that is named after
+Stephen Cole Kleene, one of the founders of formal language theory.
+\index{closure!language}%
+\index{Kleene closure|see{closure}}%
+The \emph{Kleene closure} (or just \emph{closure}) of a language
+$L$ ($L^*$) is the language
+\begin{gather*}
+\bigcup\setof{L^n}{n\in\nats}.
+\end{gather*}
+Thus, for all $w$,
+\begin{align*}
+w\in L^*&\myiff w\in A,\eqtxt{for some}A\in\setof{L^n}{n\in\nats} \\
+&\myiff w\in L^n\eqtxt{for some}n\in\nats .
+\end{align*}
+Or, in other words:
+\begin{itemize}
+\item $L^*=L^0\cup L^1\cup L^2\cup{\cdots}$; and
+
+\item $L^*$ consists of all strings that can be formed by concatenating
+together some number (maybe none) of elements of $L$ (the same element of
+$L$ can be used as many times as is desired).
+\end{itemize}
+For example,
+\begin{align*}
+\mathsf{\{a,ba\}^*} &=
+\mathsf{\{a,ba\}^0\cup\{a,ba\}^1\cup\{a,ba\}^2\cup\cdots} \\
+&= \mathsf{\{\%\}\cup
+   \{a,ba\}\cup
+   \{aa,aba,baa,baba\}\cup\cdots}
+\end{align*}
+
+Suppose $w\in\Str$.
+By Proposition~\ref{LangExponProp2}, we have
+that, for all $x$,
+\begin{align*}
+x\in\{w\}^* &\myiff x\in\{w\}^n,\eqtxt{for some}n\in\nats , \\
+&\myiff x\in\{w^n\},\eqtxt{for some}n\in\nats , \\
+&\myiff x=w^n, \eqtxt{for some} n\in\nats .
+\end{align*}
+
+If we write $\mathsf{\{0,1\}}^*$, then this could mean:
+\begin{itemize}
+\item
+all strings over the alphabet $\mathsf{\{0,1\}}$
+(Section~\ref{SymbolsStringsAlphabetsAndFormalLanguages}); or
+
+\item
+the closure of the language $\mathsf{\{0,1\}}$.
+\end{itemize}
+Fortunately, these languages are equal (both are all strings of
+$\zerosf$'s and $\onesf$'s), and this kind of ambiguity is harmless.
+
+\index{language!operation precedence}%
+We assign our operations on languages relative precedences as follows:
+\begin{description}
+\item[\quad Highest:] closure ($(\cdot)^*$) and raising to a power
+($(\cdot)^n$);
+
+\item[\quad Intermediate:] concatenation ($\myconcat$, or just
+  juxtapositioning); and
+
+\item[\quad Lowest:] union ($\cup$), intersection ($\cap$) and difference ($-$).
+\end{description}
+For example, if $n\in\nats$ and $A,B,C\in\Lan$, then $A^*BC^n\cup B$
+abbreviates $((A^*)B(C^n))\cup B$.  The language $((A\cup B)C)^*$
+can't be abbreviated, since removing either pair of parentheses will
+change its meaning.  If we removed the outer pair, then we would have
+$(A\cup B)(C^*)$, and removing the inner pair would yield $(A\cup
+(BC))^*$.
+
+\index{alphabet@$\alphabet$}%
+\index{language!alphabet@$\alphabet$}%
+\index{alphabet!language}%
+\index{language!alphabet}%
+Suppose $L$, $L_1$ and $L_2$ are languages, and $n\in\nats$.  It
+is easy to see that $\alphabet(L_1\cup L_2)=\alphabet(L_1)\cup\alphabet(L_2)$.
+And, if $L_1$ and $L_2$ are both nonempty, then
+$\alphabet(L_1L_2)=\alphabet(L_1)\cup\alphabet(L_2)$, and otherwise,
+$\alphabet(L_1L_2)=\emptyset$.
+Furthermore, if $n\geq 1$, then $\alphabet(L^n)=\alphabet(L)$; otherwise,
+$\alphabet(L^n)=\emptyset$.
+Finally, we have that $\alphabet(L^*)=\alphabet(L)$.
+
+In Section~\ref{IntroductionToForlan}, we introduced the
+Forlan module \texttt{StrSet},
+which defines various functions for processing finite sets of strings,
+i.e., finite languages.  This module also defines the
+functions
+\index{StrSet@\texttt{StrSet}!concat@\texttt{concat}}%
+\index{StrSet@\texttt{StrSet}!power@\texttt{power}}%
+\begin{verbatim}
+val concat : str set * str set -> str set
+val power  : str set * int -> str set
+\end{verbatim}
+which implement our concatenation and exponentiation operations
+on finite languages.  Here are some examples of how these functions
+can be used:
+\input{chap-3.1-forlan1}
+
+\subsection{Regular Expressions}
+
+\index{regular expression|(}%
+\index{regular expression!label}%
+\index{RegLab@$\RegLab$}%
+Next, we define the set of all regular expressions.  Let the set
+$\RegLab$ of \emph{regular expression labels} be
+\begin{gather*}
+\Sym\cup\{\%,\$,{*},@,{+}\} .
+\end{gather*}
+\index{Reg@$\Reg$}%
+Let the set $\Reg$ of
+\emph{regular expressions} be the least subset of
+$\Tree_\RegLab$ such that:
+\index{Tree sub X@$\Tree_X$}%
+\index{tree}%
+\index{tree!Tree sub X@$\Tree_X$}%
+\begin{description}
+\item[\quad(empty string)] $\%\in\Reg$;
+
+\item[\quad(empty set)] $\$\in\Reg$;
+
+\item[\quad(symbol)] for all $a\in\Sym$, $a\in\Reg$;
+
+\item[\quad(closure)] for all $\alpha\in\Reg$, ${*}(\alpha)\in\Reg$;
+\index{closure!regular expression}%
+\index{regular expression!closure}%
+
+\item[\quad(concatenation)] for all $\alpha,\beta\in\Reg$,
+$@(\alpha,\beta)\in\Reg$; and
+\index{concatenation!regular expression}%
+\index{regular expression!concatenation}%
+
+\item[\quad(union)] for all $\alpha,\beta\in\Reg$, ${+}(\alpha,\beta)\in\Reg$.
+\index{union!regular expression}%
+\index{regular expression!union}%
+\end{description}
+This is yet another example of an inductive definition.  The elements
+of $\Reg$ are precisely those $\RegLab$-trees
+(trees (See Section~\ref{TreesAndInductiveDefinitions})
+whose labels come from $\RegLab$) that can be built using these six
+rules.
+
+Whenever possible, we will use the mathematical variables
+$\alpha$, $\beta$ and $\gamma$
+\index{alpha, beta, gamma@$\alpha$, $\beta$, $\gamma$}%
+\index{regular expression!alpha, beta, gamma@$\alpha$, $\beta$, $\gamma$}%
+to name regular expressions.  Since
+regular expressions are $\RegLab$-trees, we may talk of their sizes
+and heights.
+
+For example,
+\begin{gather*}
+\mathsf{{+}(@({*}(0),@(1,{*}(0))),\%)} ,
+\end{gather*}
+i.e.,
+\begin{center}
+\input{chap-3.1-fig1.eepic}
+\end{center}
+is a regular expression.  On the other hand, the $\RegLab$-tree
+$*(*,*)$ is \emph{not} a regular expression, since it can't be
+built using our six rules.
+
+We order the elements of $\RegLab$ as follows:
+\begin{gather*}
+\% < \$ < \eqtxtn{symbols in order} < {*} < @ < {+} .
+\end{gather*}
+\index{regular expression!order}%
+It is important that ${+}$ be the greatest element of $\RegLab$;
+if this were not so, then the definition of weakly simplified regular
+expressions (see Section~\ref{SimplificationOfRegularExpressions})
+would have to be altered.
+
+We order regular expressions first by their root labels, and then,
+recursively, by their children, working from left to right.
+For example, we have that
+\begin{gather*}
+\% < {*}(\%)
+   < {*}(@(\$,{*}(\$)))
+   < {*}(@(\asf,\%))
+   < @(\%,\$) .
+\end{gather*}
+
+Because $\Reg$ is defined inductively, it gives rise to an induction
+principle.
+
+\begin{theorem}[Principle of Induction on Regular Expressions]
+Suppose $P(\alpha)$ is a property of a regular expression $\alpha$.
+If
+\begin{itemize}
+\item $P(\%)$,
+
+\item $P(\$)$,
+
+\item for all $a\in\Sym$, $P(a)$,
+
+\item for all $\alpha\in\Reg$, if $P(\alpha)$, then
+$P({*}(\alpha))$,
+
+\item for all $\alpha,\beta\in\Reg$, if $P(\alpha)$ and
+$P(\beta)$, then $P(@(\alpha,\beta))$, and
+
+\item for all $\alpha,\beta\in\Reg$, if $P(\alpha)$ and
+$P(\beta)$, then $P({+}(\alpha,\beta))$,
+\end{itemize}
+then
+\begin{gather*}
+\eqtxtr{for all}\alpha\in\Reg,\,P(\alpha) .
+\end{gather*}
+\end{theorem}
+
+To increase readability, we use infix and postfix notation, abbreviating:
+\begin{itemize}
+\item ${*}(\alpha)$ to $\alpha^*$ or $\alpha{*}$;
+
+\item $@(\alpha,\beta)$ to $\alpha\myconcat \beta$; and
+
+\item $+(\alpha,\beta)$ to $\alpha+\beta$.
+\end{itemize}
+\index{regular expression!abbreviated notation}%
+\index{regular expression!operator precedence}%
+\index{regular expression!operator associativity}%
+We assign the operators $(\cdot)^*$, $\myconcat$ and $+$ the following
+precedences and associativities:
+\begin{description}
+\item[\quad Highest:] $(\cdot)^*$;
+
+\item[\quad Intermediate:] $\myconcat$ (right associative); and
+
+\item[\quad Lowest:] $+$ (right associative).
+\end{description}
+We parenthesize regular expressions when we need to override the
+default precedences and associativities, and for reasons of clarity.
+Furthermore, we often abbreviate $\alpha\myconcat\beta$ to $\alpha\beta$.
+
+For example, we can abbreviate the regular expression
+\begin{displaymath}
+\mathsf{{+}(@({*}(0),@(1,{*}(0))),\%)}
+\end{displaymath}
+to $\mathsf{0^*\myconcat 1\myconcat 0^*+\%}$ or $\mathsf{0^*10^*+\%}$.  On
+the other hand, the regular expression $\mathsf{((0+1)2)^*}$ can't be
+further abbreviated, since removing either pair of parentheses would
+result in a different regular expression.  Removing the outer pair
+would result in $\mathsf{(0+1)(2^*)}=\mathsf{(0+1)2^*}$, and removing
+the inner pair would yield $\mathsf{(0+(12))^*}=\mathsf{(0+12)^*}$.
+
+Now we can say what regular expressions mean, using some of our
+language operations.  The \emph{language generated by} a regular
+expression $\alpha$ ($L(\alpha)$) is defined by recursion:
+\index{regular expression!meaning}%
+\index{regular expression!language generated by}%
+\index{L(.)@$L(\cdot)$}%
+\index{regular expression!L@$L(\cdot)$}%}%
+\begin{align*}
+L(\%) &= \{\%\} ; \\
+L(\$) &= \emptyset ; \\
+L(a) &= \{[a]\} = \{a\}, \eqtxt{for all}a\in\Sym ; \\
+L({*}(\alpha)) &= L(\alpha)^* , \eqtxt{for all}\alpha\in\Reg ; \\
+L(@(\alpha,\beta)) &= L(\alpha)\myconcat L(\beta) ,
+\eqtxt{for all}\alpha,\beta\in\Reg ; \eqtxt{and} \\
+L({+}(\alpha,\beta)) &= L(\alpha)\cup L(\beta) ,
+\eqtxt{for all}\alpha,\beta\in\Reg .
+\end{align*}
+This is a good definition since, if $L$ is a language, then so is
+$L^*$, and, if $L_1$ and $L_2$ are languages, then so are $L_1L_2$ and
+$L_1\cup L_2$.  We say that $w$ \emph{is generated by} $\alpha$ iff
+$w\in L(\alpha)$.
+
+For example,
+\begin{align*}
+L(\mathsf{0^*10^*+\%}) &=
+L(\mathsf{{+}(@({*}(0),@(1,{*}(0))),\%)}) \\
+&= L(\mathsf{@({*}(0),@(1,{*}(0)))})\cup L(\%) \\
+&= L(\mathsf{{*}(0)})L(\mathsf{@(1,{*}(0))})\cup \{\%\} \\
+&= L(\mathsf{0})^* L(\mathsf{1}) L(\mathsf{{*}(0)}) \cup \{\%\} \\
+&= \mathsf{\{0\}}^* \mathsf{\{1\}} L(\mathsf{0})^*
+  \cup \{\%\} \\
+&= \mathsf{\{0\}}^* \mathsf{\{1\}} \mathsf{\{0\}}^* 
+  \cup \{\%\} \\
+&= \setof{{\mathsf 0}^n{\mathsf 1}{\mathsf 0}^m}{n,m\in\nats} \cup
+\{\%\} .
+\end{align*}
+E.g., $\mathsf{0001000}$, $\mathsf{10}$,
+$\mathsf{001}$ and $\%$ are generated by $\mathsf{0^*10^*+\%}$.
+
+We define functions $\symToReg\in\Sym\fun\Reg$ and
+$\strToReg\in\Str\fun\Reg$, as follows.  Given a symbol $a\in\Sym$,
+$\symToReg\,a = a$. And, given a string $x$, $\strToReg\,x$ is the
+\emph{canonical regular expression for} $x$: $\%$, if $x = \%$, and
+${@}(a_1, {@}(a_2, \ldots a_n \ldots)) = a_1a_2\ldots a_n$, if $x =
+a_1a_2\ldots a_n$, for symbols $a_1,a_2,\ldots,a_n$ and $n\geq 1$.  It
+is easy to see that, for all $a\in\Sym$, $L(\symToReg\,a)=\{a\}$, and,
+for all $x\in\Str$, $L(\strToReg\,x)=\{x\}$.
+
+We define the \emph{regular expression} $\alpha^n$ \emph{formed by
+raising} a regular expression $\alpha$ \emph{to the power} $n\in\nats$ by
+recursion on $n$:
+\index{regular expression!power}%
+\begin{align*}
+\alpha^0       &= \%, \eqtxt{for all}\alpha\in\Reg; \\
+\alpha^1       &= \alpha, \eqtxt{for all}\alpha\in\Reg; \eqtxt{and} \\
+\alpha^{n + 1} &= \alpha\alpha^n,\eqtxt{for all}\alpha\in\Reg\eqtxt{and}
+n\in\nats-\{0\} .
+\end{align*}
+We assign this operation the same precedence as closure, so that
+$\alpha\alpha^n$ means $\alpha(\alpha^n)$ in the above definition.
+Note that, in contrast to the definitions of $x^n$ and $L^n$,
+we have made use of two base cases, so that
+$\alpha^1$ is $\alpha$, not $\alpha\%$.
+For example, $\mathsf{(0+1)^3}=\mathsf{(0+1)(0+1)(0+1)}$.
+
+\begin{proposition}
+\label{RegExponProp}
+For all $\alpha\in\Reg$ and $n\in\nats$, $L(\alpha^n)=L(\alpha)^n$.
+\end{proposition}
+
+\begin{proof}
+An easy mathematical induction on $n$.  $\alpha$ may be fixed at the
+beginning of the proof.
+\end{proof}
+
+An example consequence of the proposition is that
+$L(\mathsf{(0+1)^3})=L(\mathsf{0+1})^3=\{\mathsf{0,1}\}^3$.
+
+We define $\alphabet\in\Reg\fun\Alp$ by recursion:
+\index{regular expression!alphabet}%
+\index{alphabet@$\alphabet$}%
+\begin{align*}
+\alphabet\,\% &= \emptyset; \\
+\alphabet\,\$ &= \emptyset; \\
+\alphabet\,a &= \{a\}, \eqtxt{for all}a\in\Sym; \\
+\alphabet({*}(\alpha)) &= \alphabet\,\alpha, \eqtxt{for all}\alpha\in\Reg;\\
+\alphabet(@(\alpha,\beta)) &= \alphabet\,\alpha\cup\alphabet\,\beta ,
+\eqtxt{for all}\alpha,\beta\in\Reg; \eqtxt{and} \\
+\alphabet({+}(\alpha,\beta)) &= \alphabet\,\alpha\cup\alphabet\,\beta,
+\eqtxt{for all}\alpha,\beta\in\Reg .
+\end{align*}
+This is a good definition, since the union of two alphabets is
+an alphabet. For example,
+$\alphabet(\mathsf{0^*10^*+\%}) = \mathsf{\{0,1\}}$.
+We say that $\alphabet\,\alpha$ is \emph{the alphabet of} a regular
+expression $\alpha$.
+
+\begin{proposition}
+\label{AlphabetRegMeaning}
+For all $\alpha\in\Reg$, $\alphabet(L(\alpha))\sub\alphabet\,\alpha$.
+\end{proposition}
+
+In other words, the proposition says that every symbol of every string in
+$L(\alpha)$  comes from $\alphabet\,\alpha$.
+
+\begin{proof}
+An easy induction on regular expressions.
+\end{proof}
+
+For example, since $L(\onesf\$) = \{\onesf\}\emptyset = \emptyset$,
+we have that
+\begin{align*}
+\alphabet(L(\mathsf{0^*+1\$})) &=
+\alphabet(\{\zerosf\}^*) \\
+&= \{\zerosf\} \\
+&\sub \{\mathsf{0,1}\} \\
+&= \alphabet(\mathsf{0^*+1\$}) .
+\end{align*}
+
+Next, we define some useful auxiliary functions on regular expressions.
+The \emph{generalized concatenation} function
+$\genConcat\in\List\,\Reg\fun\Reg$ is defined by right recursion:
+\begin{align*}
+\genConcat\,[\,] &= \% , \\
+\genConcat\,[\alpha] &= \alpha , \eqtxt{and} \\
+\genConcat([\alpha] \myconcat \bar{\alpha}) &=
+{@}(\alpha, \genConcat\,\bar{\alpha}) , \eqtxt{if} \bar{\alpha}\neq [\,] .
+\end{align*}
+And the \emph{generalized union} function
+$\genUnion\in\List\,\Reg\fun\Reg$ is defined by right recursion:
+\begin{align*}
+\genUnion\,[\,] &= \% , \\
+\genUnion\,[\alpha] &= \alpha , \eqtxt{and} \\
+\genUnion([\alpha] \myconcat \bar{\alpha}) &=
+{+}(\alpha, \genUnion\,\bar{\alpha}) , \eqtxt{if} \bar{\alpha}\neq [\,] .
+\end{align*}
+E.g., $\genConcat[\mathsf{1, 0, 12, 3+4}] = \mathsf{10(12)(3+4)}$ and
+$\genUnion[\mathsf{1, 0, 12, 3+4}] = \mathsf{1 + 0 + (12) + 3 + 4}$.
+
+$\rightConcat\in\Reg\times\Reg\fun\Reg$ is defined by
+structural recursion on its first argument:
+\begin{align*}
+\rightConcat({@}(\alpha_1, \alpha_2), \beta) &=
+{@}(\alpha_1, \rightConcat(\alpha_2, \beta)) , \eqtxt{and}\\
+\rightConcat(\alpha, \beta) &= {@}(\alpha, \beta),
+\eqtxt{if} \alpha \eqtxtl{is not a concatenation}.
+\end{align*}
+And $\rightUnion\in\Reg\times\Reg\fun\Reg$ is defined by
+structural recursion on its first argument:
+\begin{align*}
+\rightUnion({+}(\alpha_1, \alpha_2), \beta) &=
+{+}(\alpha_1, \rightUnion(\alpha_2, \beta)) , \eqtxt{and} \\
+\rightUnion(\alpha, \beta) &= {+}(\alpha, \beta),
+\eqtxt{if} \alpha \eqtxtl{is not a union}.
+\end{align*}
+E.g., $\rightConcat(\mathsf{012}, \mathsf{345}) =
+\mathsf{012345}$ and $\rightUnion(\mathsf{0 + 1 + 2}, \mathsf{1 + 2 + 3}) =
+\mathsf{0 + 1 + 2 + 1 + 2 + 3}$.
+
+$\concatsToList\in\Reg\fun\List\,\Reg$ is defined by structural
+recursion:
+\begin{align*}
+\concatsToList({@}(\alpha, \beta)) &=
+[\alpha] \myconcat \concatsToList\,\beta, \eqtxt{and} \\
+\concatsToList\,\alpha &= \alpha,
+\eqtxt{if} \alpha \eqtxtl{is not a concatenation}.
+\end{align*}
+And $\unionsToList\in\Reg\fun\List\,\Reg$ is defined by structural
+recursion:
+\begin{align*}
+\unionsToList({+}(\alpha, \beta)) &=
+[\alpha] \myconcat \unionsToList\,\beta, \eqtxt{and} \\
+\unionsToList\,\alpha &= \alpha,
+\eqtxt{if} \alpha \eqtxtl{is not a union}.
+\end{align*}
+E.g., $\concatsToList(\mathsf{(12)34}) = [\mathsf{12, 3, 4}]$
+and $\unionsToList(\mathsf{(0+1)+2+3}) = [\mathsf{0 + 1, 2, 3}]$.
+
+Finally, $\sortUnions\in\Reg\fun\Reg$ is defined by:
+\begin{displaymath}
+\sortUnions\,\alpha = \genUnion\,\bar{\beta} ,
+\end{displaymath}
+where $\bar{\beta}$ is the result of sorting the elements of
+$\unionsToList\,\alpha$ into strictly ascending order (without
+duplicates), according to our total ordering on regular expressions.
+E.g., $\sortUnions(\mathsf{1 + 0 + 23 + 1}) = \mathsf{0 + 1 + 23}$.
+
+We define functions $\allSym\in\Alp\fun\Reg$ and $\allStr\in
+\Alp\fun\Reg$ as follows.  Given an alphabet $\Sigma$, $\allSym\,\Sigma$
+is the \emph{all symbols regular expression} for $\Sigma$:
+$a_1+\cdots+a_n$, where $a_1,\ldots,a_n$
+  are the elements of $\Sigma$, listed in order and without repetition
+  (when $n=0$, we use $\$$, and when $n=1$, we use $a_1$).
+And, given an alphabet $\Sigma$, $\allStr\,\Sigma$ is
+the \emph{all strings regular expression} for $\Sigma$:
+$(\allSym\,\Sigma)^*$.
+For example, 
+\begin{align*}
+\allSym\,\{\mathsf{0,1,2}\} &= \mathsf{0 + 1 + 2} , \eqtxt{and} \\
+\allStr\,\{\mathsf{0,1,2}\} &= (\mathsf{0 + 1 + 2})^* .
+\end{align*}
+Thus, for all $\Sigma\in\Alp$,
+\begin{align*}
+L(\allSym\,\Sigma) &= \setof{[a]}{a\in\Sigma} = \setof{a}{a\in\Sigma},
+\eqtxt{and} \\
+L(\allStr\,\Sigma) &= \Sigma^* .
+\end{align*}
+
+\index{language!regular|see{regular language}}%
+\index{regular language}%
+Now we are able to say what it means for a language to be regular:
+a language $L$ is \emph{regular} iff $L=L(\alpha)$ for some
+$\alpha\in\Reg$.  We define
+\index{RegLan@$\RegLan$}%
+\begin{align*}
+\RegLan &= \setof{L(\alpha)}{\alpha\in\Reg} \\
+&= \setof{L\in\Lan}{L\eqtxtl{is regular}} .
+\end{align*}
+
+Since every regular expression can be described, e.g., in fully
+parenthesized form, by a finite sequence of ASCII characters, we can
+enumerate the regular expressions, and consequently we have that
+$\Reg$ is countably infinite.  Since $\{\mathsf{0}^0\}$,
+$\{\mathsf{0}^1\}$, $\{\mathsf{0}^2\}$, \ldots, are all regular
+languages, we have that $\RegLan$ is infinite.  Furthermore, we can
+establish an injection $h$ from $\RegLan$ to $\Reg$: $h\,L$ is the
+first (in our enumeration of regular expressions) $\alpha$ such that
+$L(\alpha)=L$.  Because $\Reg$ is countably infinite, it follows
+that there is an injection from $\RegLan$ to $\nats$.  And
+we already gave an injection from $\nats$ to $\RegLan$, completing
+the proof that $\RegLan$ and $\nats$ have the same size, i.e.,
+that $\RegLan$ is countably infinite.
+
+Since $\RegLan$ is countably infinite but $\Lan$ is uncountable, it
+follows that $\RegLan\subsetneq\Lan$, i.e., there are non-regular
+languages.
+In Section~\ref{ThePumpingLemmaForRegularLanguages}, we will see a concrete
+example of a non-regular language.
+
+\subsection{Processing Regular Expressions in Forlan}
+
+Now, we turn to the Forlan implementation of regular expressions.  The
+Forlan module \texttt{Reg}
+\index{Reg@\texttt{Reg}}%
+defines the abstract type \texttt{reg}
+\index{reg@\texttt{reg}}%
+\index{Reg@\texttt{Reg}!reg@\texttt{reg}}%
+(in the top-level environment) of regular expressions, as well as various
+functions and constants for processing regular expressions, including:
+\index{Reg@\texttt{Reg}!input@\texttt{input}}%
+\index{Reg@\texttt{Reg}!output@\texttt{output}}%
+\index{Reg@\texttt{Reg}!size@\texttt{size}}%
+\index{Reg@\texttt{Reg}!numLeaves@\texttt{numLeaves}}%
+\index{Reg@\texttt{Reg}!height@\texttt{height}}%
+\index{Reg@\texttt{Reg}!emptyStr@\texttt{emptyStr}}%
+\index{Reg@\texttt{Reg}!emptySet@\texttt{emptySet}}%
+\index{Reg@\texttt{Reg}!fromSym@\texttt{fromSym}}%
+\index{Reg@\texttt{Reg}!closure@\texttt{closure}}%
+\index{Reg@\texttt{Reg}!concat@\texttt{concat}}%
+\index{Reg@\texttt{Reg}!union@\texttt{union}}%
+\index{Reg@\texttt{Reg}!compare@\texttt{compare}}%
+\index{Reg@\texttt{Reg}!equal@\texttt{equal}}%
+\index{Reg@\texttt{Reg}!fromStr@\texttt{fromStr}}%
+\index{Reg@\texttt{Reg}!power@\texttt{power}}%
+\index{Reg@\texttt{Reg}!alphabet@\texttt{alphabet}}%
+\index{Reg@\texttt{Reg}!genConcat@\texttt{genConcat}}%
+\index{Reg@\texttt{Reg}!genUnion@\texttt{genUnion}}%
+\index{Reg@\texttt{Reg}!rightConcat@\texttt{rightConcat}}%
+\index{Reg@\texttt{Reg}!rightUnion@\texttt{rightUnion}}%
+\index{Reg@\texttt{Reg}!concatsToList@\texttt{concatsToList}}%
+\index{Reg@\texttt{Reg}!unionsToList@\texttt{unionsToList}}%
+\index{Reg@\texttt{Reg}!sortUnions@\texttt{sortUnions}}%
+\index{Reg@\texttt{Reg}!allSym@\texttt{allSym}}%
+\index{Reg@\texttt{Reg}!allStr@\texttt{allStr}}%
+\index{Reg@\texttt{Reg}!fromStrSet@\texttt{fromStrSet}}%
+\begin{verbatim}
+val input         : string -> reg
+val output        : string * reg -> unit
+val size          : reg -> int
+val numLeaves     : reg -> int
+val height        : reg -> int
+val emptyStr      : reg
+val emptySet      : reg
+val fromSym       : sym -> reg
+val closure       : reg -> reg
+val concat        : reg * reg -> reg
+val union         : reg * reg -> reg
+val compare       : reg * reg -> order
+val equal         : reg * reg -> bool
+val fromStr       : str -> reg
+val power         : reg * int -> reg
+val alphabet      : reg -> sym set
+val genConcat     : reg list -> reg
+val genUnion      : reg list -> reg
+val rightConcat   : reg * reg -> reg
+val rightUnion    : reg * reg -> reg
+val concatsToList : reg -> reg list
+val unionsToList  : reg -> reg list
+val sortUnions    : reg -> reg
+val allSym        : sym set -> reg
+val allStr        : sym set -> reg
+val fromStrSet    : str set -> reg
+\end{verbatim}
+
+The Forlan syntax for regular expressions is the infix/postfix one
+\index{Forlan!regular expression syntax}%
+\index{regular expression!Forlan syntax}%
+introduced in the preceding subsection, where $\alpha\myconcat\beta$
+is always written as $\alpha\beta$, and we use parentheses
+to override default precedences/associativities, or simply
+for clarity.
+For example, $\mathsf{0^*10^*+\%}$ and $\mathsf{(0^*(1(0^*)))+\%}$
+are the same regular expression.  And, $\mathsf{((0^*)1)0^*+\%}$
+is a different regular expression, but one with the same meaning.
+Furthermore, $\mathsf{0^*1(0^*+\%)}$ is not only different from
+the two preceding regular expressions, but it has a different
+meaning (it generates $\mathsf{001}$ and fails to generate $\%$.)
+When regular expressions are outputted, as few parentheses as
+possible are used.
+
+The functions \texttt{size}, \texttt{numLeaves}
+and \texttt{height} return the size, number of leaves and
+height, respectively, of a regular expression.
+The values \texttt{emptyStr} and \texttt{emptySet} are
+$\%$ and $\$$, respectively.  The function \texttt{fromSym}
+takes in a symbol $a$ and returns the regular expression $a$.
+It is available in the
+top-level environment as \texttt{symToReg}.
+\index{symToReg@\texttt{symToReg}}%
+The function \texttt{closure} takes in a regular expression $\alpha$ and
+returns ${*}(\alpha)$.  The function \texttt{concat} takes a pair $(\alpha,
+\beta)$ of regular expressions and returns ${@}(\alpha,\beta)$.
+The function \texttt{union} takes a pair $(\alpha,
+\beta)$ of regular expressions and returns ${+}(\alpha,\beta)$.
+The function \texttt{compare} implements our total ordering on
+regular expressions, and \texttt{equal} tests whether two
+regular expressions are equal.
+The function \texttt{fromStr} implements the function $\strToReg$,
+and is also available in the top-level environment as \texttt{strToReg}.
+\index{strToReg@\texttt{strToReg}}%
+The function \texttt{power} raises a regular
+expression to a power, and the
+function \texttt{alphabet} returns the alphabet of a regular
+expression.
+Finally, the functions \texttt{genConcat}, \texttt{genUnion},
+\texttt{rightConcat}, \texttt{rightUnion}, \texttt{concatsToList},
+\texttt{unionsToList}, \texttt{sortUnions}, \texttt{allSym} and
+\texttt{allStr} implement the functions with the same names.
+The function \texttt{fromStrSet} returns $\$$, if called with
+the empty set. Otherwise, it returns $\mathtt{fromStr}\,x_1 + \cdots +
+\mathtt{fromStr}\,x_n$, where $x_1,\ldots,x_n$ are the elements
+of its argument, listed in strictly ascending order.
+
+Here are some example uses of the functions of \texttt{Reg}:
+\input{chap-3.1-forlan2}
+We can use the functions \texttt{genConcat}, \texttt{genUnion},
+\texttt{rightConcat}, \texttt{rightUnion}, \texttt{concatsToList},
+\texttt{unionsToList} and \texttt{sortUnions} as follows:
+\input{chap-3.1-forlan3}
+We can use the functions \texttt{allSym}, \texttt{allStr} and
+\texttt{fromStrSet} like this:
+\input{chap-3.1-forlan4}
+
+The Java program JForlan
+\index{JForlan}%
+can be used to view and edit regular expression trees.  It can be
+invoked directly, or run via Forlan.
+See the Forlan website for more information.
+
+\subsection{Notes}
+
+A novel feature of this book is that regular expressions are trees, so
+that our linear syntax for regular expressions is derived rather than
+primary.  Thus regular expression equality is just tree equality,
+and it's easy to explain when parentheses are necessary in
+a linear description of a regular expression.  Furthermore,
+tree-oriented concepts, notation and operations automatically
+apply to regular expressions, letting us, e.g., give definitions
+by structural recursion.
+\index{regular expression|)}%
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

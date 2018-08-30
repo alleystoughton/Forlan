@@ -1,0 +1,29 @@
+@FILES
+  ["str"; "The Str Module";]
+@SIGNATURE STR "str" [
+  @TYPES 
+    @TYPE str
+  @VALS 
+    input
+    alphabet
+    possBeginsWithStr
+    removeSuffix
+    substr
+    toPP
+    jforlanPretty
+    jforlanValidate
+    equal
+    fromString
+    prefix
+    output
+    last
+    inputFromLabToks
+    suffix
+    compare
+    allButLast
+    renameAlphabet
+    toString
+    removePrefix
+    power
+]
+@STRUCTURE Str "str" STR

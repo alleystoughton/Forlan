@@ -1,0 +1,2 @@
+val fa = FA.input "3.4-fa";
+FA.output("", fa);

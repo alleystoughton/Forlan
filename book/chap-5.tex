@@ -1,0 +1,35 @@
+\chapter{Recursive and Recursively Enumerable
+Languages}
+\label{RecursiveAndRecursivelyEnumerableLanguages}
+
+In this chapter, we will study a universal programming language, which
+we will use to define the recursive and recursively enumerable
+languages.  We will see that the context-free languages are a proper
+subset of the recursive languages, that the recursive languages are a
+proper subset of the recursively enumerable languages, and that there
+are languages that are not recursively enumerable.  Furthermore, we
+will learn that there are problems, like the halting problem (the
+problem of determining whether a program halts when run on a given
+input), or the problem of determining if two grammars generate the
+same language, that can't be solved by programs.
+
+Traditionally, one uses Turing machines for the universal programming
+language.  Turing machines are finite automata that manipulate
+infinite tapes.  Although Turing machines are very appealing in some
+ways, they are rather far-removed from conventional programming
+languages, and are hard to build and reason about.
+
+Instead, we will work with a simple functional programming language.
+This language will have the same power as Turing machines, but will be
+much easier to program in and reason about than Turing machines.
+An ``implementation'' of our language (or of Turing machines) on a
+real computer will run out of resources on some programs.
+
+\input{chap-5.1}
+\input{chap-5.2}
+\input{chap-5.3}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

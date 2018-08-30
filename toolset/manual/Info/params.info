@@ -1,0 +1,23 @@
+@FILES
+  ["params"; "The Params Module";]
+@SIGNATURE PARAMS "params" [
+  @VALS 
+    getCompilationManagerVerbosity
+    setTrackExceptions
+    getPrintingLineLength
+    setPrintingListLength
+    getWorkingDirectory
+    setPrintingDataStructureDepth
+    setCompilationManagerVerbosity
+    getPrintingStringSize
+    setPrintingLineLength
+    setWorkingDirectory
+    getSearchPath
+    getTrackExceptions
+    setPrintingOfGarbageCollectionMessages
+    setPrintingStringSize
+    getPrintingListLength
+    getPrintingDataStructureDepth
+    setSearchPath
+]
+@STRUCTURE Params "params" PARAMS

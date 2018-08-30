@@ -1,0 +1,49 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }Reg.numConcats(Reg.fromString\ "(01)\symbol{'052}(10)\symbol{'052}");
+\item[]\textsl{val\ it\ =\ 3\ :\ int}
+\item[]\textsl{-\ }Reg.numSyms(Reg.fromString\ "(01)\symbol{'052}(10)\symbol{'052}");
+\item[]\textsl{val\ it\ =\ 4\ :\ int}
+\item[]\textsl{-\ }Reg.standardized(Reg.fromString\ "00\symbol{'052}1");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }Reg.standardized(Reg.fromString\ "00\symbol{'052}0");
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\item[]\textsl{-\ }Reg.compareComplexity
+\item[]\textsl{=\ }(Reg.fromString\ "(00\symbol{'052}11\symbol{'052})\symbol{'052}",
+\item[]\textsl{=\ }\ Reg.fromString\ "%\ +\ 0(0\ +\ 11\symbol{'052}0)\symbol{'052}11\symbol{'052}");
+\item[]\textsl{val\ it\ =\ GREATER\ :\ order}
+\item[]\textsl{-\ }Reg.compareComplexity
+\item[]\textsl{=\ }(Reg.fromString\ "0\symbol{'052}\symbol{'052}1\symbol{'052}\symbol{'052}",\ \ Reg.fromString\ "(01)\symbol{'052}\symbol{'052}");
+\item[]\textsl{val\ it\ =\ GREATER\ :\ order}
+\item[]\textsl{-\ }Reg.compareComplexity
+\item[]\textsl{=\ }(Reg.fromString\ "(0\symbol{'052}1\symbol{'052})\symbol{'052}",\ \ Reg.fromString\ "(0\symbol{'052}+1\symbol{'052})\symbol{'052}");
+\item[]\textsl{val\ it\ =\ GREATER\ :\ order}
+\item[]\textsl{-\ }Reg.compareComplexity
+\item[]\textsl{=\ }(Reg.fromString\ "0+01",\ \ Reg.fromString\ "0(%+1)");
+\item[]\textsl{val\ it\ =\ GREATER\ :\ order}
+\item[]\textsl{-\ }Reg.compareComplexity
+\item[]\textsl{=\ }(Reg.fromString\ "(01)2",\ \ Reg.fromString\ "012");
+\item[]\textsl{val\ it\ =\ GREATER\ :\ order}
+\item[]\textsl{-\ }Reg.compareComplexity
+\item[]\textsl{=\ }(Reg.fromString\ "1(01+10)+(%+01)1",
+\item[]\textsl{=\ }\ Reg.fromString\ "011+1(%+01+10)");
+\item[]\textsl{val\ it\ =\ EQUAL\ :\ order}
+\end{list}

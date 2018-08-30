@@ -1,0 +1,450 @@
+\section{Finite Automata and Labeled Paths}
+\label{FiniteAutomataAndLabeledPaths}
+
+In this section, we: say what finite automata (FA) are, and show how
+they can be processed using Forlan; say what labeled paths are, and
+show how they can be processed using Forlan; and use the notion of
+labeled path to say what finite automata mean.
+
+\subsection{Finite Automata}
+
+A \emph{finite automaton} (FA) $M$ consists of:
+\begin{itemize}
+\item a finite set $Q_M$ of symbols (we call the elements of $Q_M$
+the \emph{states} of $M$);
+
+\item an element $s_M$ of $Q_M$ (we call $s_M$ the \emph{start state}
+of $M$);
+
+\item a subset $A_M$ of $Q_M$ (we call the elements of $A_M$ the
+\emph{accepting states} of $M$);
+
+\item a finite subset $T_M$ of $\setof{(q,x,r)}{q,r\in Q_M\eqtxt{and}
+x\in\Str}$ (we call the elements of $T_M$ the \emph{transitions} of
+$M$, and we often write $(q, x, r)$ as
+\begin{gather*}
+q\tranarr{x}r
+\end{gather*}
+or $q,x\fun r$).
+\end{itemize}
+
+We order transitions first by their left-hand sides, then by their
+middles, and then by their right-hand sides, using our total orderings
+on symbols and strings.  This gives us a total ordering on
+transitions.
+
+We often abbreviate $Q_M$, $s_M$, $A_M$ and $T_M$ to $Q$,
+$s$, $A$ and $T$, when it's clear which FA we are
+working with.  Whenever possible, we will use the mathematical
+variables $p$, $q$ and $r$ to name states.
+We write $\FA$ for the set of all finite automata, which is a
+countably infinite set.
+
+As an example, we can define an FA $M$ as follows:
+\begin{itemize}
+\item $Q_M=\{\mathsf{A,B,C}\}$;
+
+\item $s_M=\Asf$;
+
+\item $A_M=\{\Asf, \Csf\}$; and
+
+\item $T_M=\{\mathsf{(A,1,A), (B,11,B), (C,111,C),
+  (A,0,B),(A,2,B),(A,0,C),(A,2,C),}\abr\mathsf{(B,0,C), (B,2,C)}\}$.
+\end{itemize}
+
+Finite automata are \emph{nondeterministic} machines that take strings as
+inputs.  When a machine is run on a given input, it begins in
+its start state.
+
+If, after some number of steps, the machine is in state $p$, the
+machine's remaining input begins with $x$, and one of the machine's
+transitions is $p,x\fun q$, then the machine \emph{may} read $x$ from
+its input and switch to state $q$.  If $p, y\fun r$ is also a
+transition, and the remaining input begins with $y$, then consuming
+$y$ and switching to state $r$ will also be possible, etc.  The case
+when $x=\%$, i.e., when we have a $\%$-\emph{transition}, is
+interesting: a state switch can happen without reading anything.
+
+If \emph{at least one} execution sequence consumes all of the machine's input
+and takes it to one of its accepting states, then we say that the
+input is \emph{accepted} by the machine; otherwise, we say that the
+input is \emph{rejected}.  The meaning of a machine is the language
+consisting of all strings that it accepts.
+
+Here is how our example FA $M$ can be expressed in Forlan's syntax:
+\verbatiminput{3.4-fa}
+Since whitespace characters are ignored by Forlan's input routines,
+the preceding description of $M$ could have been formatted in many other
+ways.  States are separated by commas, and transitions are separated
+by semicolons.  The order of states and transitions is irrelevant.
+
+Transitions that only differ in their right-hand states can be
+merged into single transition families.  E.g., we can merge
+\begin{verbatim}
+A, 0 -> B
+\end{verbatim}
+and
+\begin{verbatim}
+A, 0 -> C
+\end{verbatim}
+into the transition family
+\begin{verbatim}
+A, 0 -> B | C
+\end{verbatim}
+
+The Forlan module \texttt{FA} defines an abstract type \texttt{fa} (in
+the top-level environment) of finite automata, as well as a large
+number of functions and constants for processing FAs, including:
+\begin{verbatim}
+val input  : string -> fa
+val output : string * fa -> unit 
+\end{verbatim}
+
+Remember that it's possible to read input from a file, and to write
+output to a file.  During printing, Forlan merges transitions into
+transition families whenever possible.
+
+Suppose that our example FA is in the file \texttt{3.4-fa}.
+We can input this FA into Forlan, and then output it to the
+standard output, as follows:
+\input{chap-3.4-forlan1}
+
+We also make use of graphical notation for finite automata.
+Each of the states of a machine is circled,
+and its accepting states are double-circled.  The machine's start state is
+pointed to by an arrow coming from ``Start'', and
+each transition $p, x\fun q$ is drawn as an arrow from state $p$
+to state $q$ that is labeled by the string $x$.  Multiple labeled
+arrows from one state to another can be abbreviated to a single
+arrow, whose label consists of the comma-separated list of the
+labels of the original arrows.
+
+Here is how our FA $M$ can be described graphically:
+\begin{center}
+\input{chap-3.4-fig1.eepic}
+\end{center}
+
+The Java program JForlan, can be used to view and edit finite
+automata.  It can be invoked directly, or run via Forlan.  See the
+Forlan website for more information.
+
+We define a function $\alphabet\in\FA\fun\Alp$ by: for all $M\in\FA$,
+$\alphabet\,M$ is $\setof{a\in\Sym}{\eqtxt{there are}q,x,r\eqtxt{such
+    that} q,x\fun r\in T_M\eqtxt{and}a\in\alphabet\,x}$.  I.e.,
+$\alphabet\,M$ is all of the symbols appearing in the strings of $M$'s
+transitions.  We say that $\alphabet\,M$ is \emph{the alphabet of}
+$M$.  For example, the alphabet of our example FA $M$ is
+$\{\mathsf{0,1,2}\}$.
+
+We say that an FA $M$ is a \emph{sub-FA} of an FA $N$ iff:
+\begin{itemize}
+\item $Q_M\sub Q_N$;
+\item $s_M = s_N$;
+\item $A_M\sub A_N$; and
+\item $T_M\sub T_N$.
+\end{itemize}
+Thus $M=N$ iff $M$ is a sub-FA of $N$ and $N$ is a sub-FA of $M$.
+
+The Forlan module \texttt{FA} contains the functions
+\begin{verbatim}
+val equal          : fa * fa -> bool
+val numStates      : fa -> int
+val numTransitions : fa -> int
+val alphabet       : fa -> sym set
+val sub            : fa * fa -> bool
+\end{verbatim}
+The function \texttt{equal} tests whether two FAs are equal, i.e.,
+whether they have the same states, start states, accepting states
+and transitions.
+The functions \texttt{numStates} and \texttt{numTransitions} return
+the numbers of states and transitions, respectively, of an FA.
+The function \texttt{alphabet} returns the alphabet of an FA.  
+And the function \texttt{sub} tests whether a first FA is a sub-FA of
+a second FA.
+
+For example, we can continue out Forlan session as follows:
+\input{chap-3.4-forlan1a}
+
+\subsection{Labeled Paths and FA Meaning}
+
+We will formally explain when strings are accepted by finite automata
+using the notion of a labeled path.  A \emph{labeled path} consists of
+a pair $(\xs,q)$, where $\xs\in\List(\Sym\times\Str)$ and $q\in\Sym$,
+and the set $\LP$ of labeled paths is
+$\List(\Sym\times\Str)\times\Sym$.  Clearly, $\LP$ is countably
+infinite.  We typically write
+$([(q_1,x_1),(q_2,x_2)\ldots,(q_n,x_n)],q_n+1)\in\LP$ as:
+\begin{gather*}
+q_1\lparr{x_1}q_2\lparr{x_2}\cdots\,q_n\lparr{x_n}q_{n+1}
+\end{gather*}
+or
+\begin{gather*}
+q_1,x_1\Rightarrow q_2,x_2\Rightarrow\cdots\,q_n,x_n\Rightarrow q_{n+1} .
+\end{gather*}
+This path describes a way of getting from state $q_1$ to state $q_{n+1}$
+in some unspecified machine, by reading the strings
+$x_1,\,\ldots,x_n$ from the machine's input.  We start out in
+state $q_1$, make use of the transition $q_1,x_1\fun q_2$ to read
+$x_1$ from the input and switch to state $q_2$, etc.
+
+Let $\lp=(\xs,q)\in\LP$.
+We say that:
+\begin{itemize}
+\item the \emph{start state} of $\lp$ ($\startState\,\lp$) is
+  the left-hand side of the first element of $\xs$, if $\xs$ is nonempty,
+  and is $q$, if $\xs$ is empty;
+
+\item the \emph{end state} of $\lp$ ($\myendState\,\lp$) is $q$;
+
+\item the \emph{length} of $\lp$ ($|\lp|$) is $|\xs|$; and
+
+\item the \emph{label} of $\lp$ ($\mylabel\,\lp$) is the result of
+  concatenating the right-hand sides of $\xs$ ($\%$, if $\xs$ is
+  empty).
+\end{itemize}
+This defines functions $\startState\in\LP\fun\Sym$,
+$\myendState\in\LP\fun\Sym$ and $\mylabel\in\LP\fun\Str$.
+For example $\Asf = ([\,],\Asf)$
+is a labeled path whose start and end states are both $\Asf$, whose
+length is $0$, and whose label is $\%$.  And
+\begin{gather*}
+\Asf\lparr{\mathsf{0}}\Bsf\lparr{\mathsf{11}}\Bsf\lparr{\twosf}\Csf
+\end{gather*}
+is a labeled path whose start state is $\Asf$, end state is $\Csf$,
+length is $3$, and label is $\mathsf{(0)(11)(2)}=\mathsf{0112}$.
+
+We can join compatible paths together.  Let $\JOIN=
+\setof{(\lp_1,\lp_2)\in\LP\times\LP}{\myendState\,\lp_1 = \startState\,\lp_2}$,
+and define $\join\in\JOIN\fun\LP$ by: for all $\xs,\ys\in\List(\Sym\times\Str)$
+and $q,r\in\Sym$, if $((\xs,q),(\ys,r))\in\JOIN$, then
+$\join((\xs,q), (\ys,r)) = (\xs\myconcat\ys, r)$.  E.g., if
+$\lp_1$ and $\lp_2$ are defined by
+\begin{gather*}
+\lp_1 = 
+\Asf\lparr{\mathsf{0}}\Bsf\lparr{\mathsf{11}}\Bsf , \quad\eqtxt{and}\quad
+\lp_2 =
+\Bsf\lparr{\mathsf{11}}\Bsf\lparr{\mathsf{2}}\Csf ,
+\end{gather*}
+then $\join(\lp_1,\lp_2)$ is
+\begin{gather*}
+\Asf\lparr{\mathsf{0}}\Bsf\lparr{\mathsf{11}}\Bsf
+\lparr{\mathsf{11}}\Bsf\lparr{\mathsf{2}}\Csf .
+\end{gather*}
+
+A labeled path $(\xs,q)\in\LP$ is \emph{valid for} an FA $M$ iff
+\begin{itemize}
+\item for all $i\in[1:|\xs|-1]$, $\hash{1}(\xs\,i),\hash{2}(\xs\,i)\fun
+  \hash{1}(\xs(i+1))$;
+
+\item if $\xs$ is nonempty, then $\hash{1}(\xs\,|\xs|),\hash{2}(\xs\,|\xs|)\fun
+  q$; and
+
+\item $q\in Q_M$.
+\end{itemize}
+(The last of these conditions is redundant whenever $\xs$ is nonempty.)
+
+Recall our example FA $M$:
+\begin{center}
+\input{chap-3.4-fig1.eepic}
+\end{center}
+The labeled path $\Asf=([\,],\Asf)$ is valid for $M$,
+since $A\in Q_M$.  And
+\begin{gather*}
+\Asf\lparr{\mathsf{0}}\Bsf\lparr{\mathsf{11}}\Bsf\lparr{\twosf}\Csf
+\end{gather*}
+is valid for $M$, since $\Asf\tranarr{\zerosf}\Bsf$,
+$\Bsf\tranarr{\mathsf{11}}\Bsf$ and $\Bsf\tranarr{\twosf}\Csf$ are in
+$T_M$ (and $\Csf\in Q_M$). But the labeled path
+\begin{gather*}
+\Asf\lparr{\%}\Asf
+\end{gather*}
+is not valid for $M$, since $\Asf,\%\fun\Asf\not\in T_M$.
+
+A string $w$ is \emph{accepted by} a finite automaton $M$ iff
+there is a labeled path $\lp$ such that
+\begin{itemize}
+\item $\lp$ is valid for $M$;
+
+\item the label of $\lp$ is $w$;
+
+\item the start state of $\lp$ is the start state of $M$; and
+
+\item the end state of $\lp$ is an accepting state of $M$.
+\end{itemize}
+For example, $\mathsf{0112}$ is accepted by
+$M$ because of the labeled path
+\begin{gather*}
+\Asf\lparr{\mathsf{0}}\Bsf\lparr{\mathsf{11}}\Bsf\lparr{\twosf}\Csf ,
+\end{gather*}
+since this labeled path is valid for $M$, is labeled by $\mathsf{0112} =
+\mathsf{(0)(11)(2)}$, has a start state ($\Asf$) that is $M$'s start state,
+and has an end state ($\Csf$) that is one of $M$'s accepting states.
+
+Clearly, if $w$ is accepted by $M$, then
+$\alphabet\,w\sub\alphabet\,M$.  Thus $\setof{w\in\Str}{w\eqtxt{is
+    accepted by}M}\sub(\alphabet\,M)^*$, so we may define the
+\emph{language accepted by} a finite automaton $M$ ($L(M)$) to be
+\begin{gather*}
+\setof{w\in\Str}{w\eqtxt{is accepted by}M}.
+\end{gather*}
+Furthermore:
+
+\begin{proposition}
+Suppose $M$ is a finite automaton.  Then $\alphabet(L(M))\sub\alphabet\,M$.
+\end{proposition}
+
+In other words, every symbol of every string that is accepted by $M$
+comes from the alphabet of $M$, i.e., appears in the label of one of
+$M$'s transitions.
+
+Going back to our example, we have that
+\begin{align*}
+L(M) &= \{\onesf\}^* \cup {}\\
+     &\quad\;\,\mathsf{\{1\}^*\{0,2\}\{11\}^*\{0,2\}\{111\}^*} \cup {} \\
+     &\quad\;\,\mathsf{\{1\}^*\{0,2\}\{111\}^*} .
+\end{align*}
+For example, $\%$, $\mathsf{11}$, $\mathsf{110112111}$ and
+$\mathsf{2111111}$ are accepted by $M$.  But $\mathsf{21112}$ and
+$\mathsf{2211}$ are not accepted by $M$.
+
+Suppose that $M$ is a sub-FA of $N$.  Then any labeled path that is
+valid for $M$ will also be valid for $N$.  Furthermore, we have that:
+
+\begin{proposition}
+If $M$ is a sub-FA of $N$, then $L(M)\sub L(N)$.
+\end{proposition}
+
+We say that finite automata $M$ and $N$ are \emph{equivalent} iff
+$L(M) = L(N)$.  In other words, $M$ and $N$ are equivalent iff $M$ and
+$N$ accept the same language.  We define a relation $\approx$ on $\FA$
+by: $M\approx N$ iff $M$ and $N$ are equivalent.  It is easy to see
+that $\approx$ is reflexive on $\FA$, symmetric and transitive.
+
+The Forlan module \texttt{LP} defines an abstract type \texttt{lp} (in the
+top-level environment) of labeled paths, as well as various functions
+for processing labeled paths, including:
+\begin{verbatim}
+val input      : string -> lp
+val output     : string * lp -> unit
+val equal      : lp * lp -> bool
+val startState : lp -> sym
+val endState   : lp -> sym
+val label      : lp -> str
+val length     : lp -> int
+val join       : lp * lp -> lp
+\end{verbatim}
+The function \texttt{equal} tests whether two labeled paths are
+equal.  The functions \texttt{startState}, \texttt{endState},
+\texttt{label} and \texttt{length} return the start state, end
+state, label and length, respectively, of a labeled path.  And
+the function \texttt{join} joins two compatible paths, and issues
+an error message when given paths that are incompatible.
+
+The module \texttt{FA} also defines the functions
+\begin{verbatim}
+val checkLP : fa -> lp -> unit
+val validLP : fa -> lp -> bool
+\end{verbatim}
+for checking whether a labeled path is valid in a finite automaton.
+These are curried functions---functions that return functions
+as their results.
+The function \texttt{checkLP} takes in an FA $M$ and returns a function
+that checks whether a labeled path $\lp$ is valid for $M$.  When
+$\lp$ is not valid for $M$, the function explains why it isn't;
+otherwise, it prints nothing. 
+And, the function \texttt{validLP} takes in an FA $M$ and returns a function
+that tests whether a labeled path $\lp$ is valid for $M$, silently
+returning \texttt{true}, if it is, and silently returning \texttt{false},
+otherwise.
+
+Here are some examples of labeled path and FA processing
+(\texttt{fa} is still our example FA):
+\input{chap-3.4-forlan2}
+
+\subsection{Design of Finite Automata}
+
+In this subsection, we give two examples of finite automata
+design.  First, let's find a finite automaton that accepts the set
+of all strings of $\zerosf$'s and $\onesf$'s with an even number of
+$\zerosf$'s.  Thus, we should be looking for an FA whose alphabet is
+$\{\mathsf{0,1}\}^*$.  It seems reasonable that our machine have two
+states: an accepting state $\Asf$ corresponding to the strings of
+$\zerosf$'s and $\onesf$'s with an even number of zeros, and a state
+$\Bsf$ corresponding to the strings of $\zerosf$'s and $\onesf$'s with
+an odd number of zeros.  Processing a $\onesf$ in either state should
+cause us to stay in that state, but processing a $\zerosf$ in one of
+the states should cause us to switch to the other state.  The above
+considerations lead us to the FA
+\begin{center}
+\input{chap-3.4-fig2.eepic}
+\end{center}
+
+For the second example, let's find an FA that accepts the language
+$X=\setof{w\in\mathsf{\{0,1,2\}^*}}{\eqtxtr{for all substrings}x
+  \eqtxt{of}w,\eqtxt{if}|x|=2,\eqtxt{then}x\in\{\mathsf{01,12,20}\}}$.
+We have that $\mathsf{0}$, $\mathsf{01}$, $\mathsf{012}$,
+$\mathsf{0120}$, etc., are in $X$, and so are $\mathsf{1}$,
+$\mathsf{12}$, $\mathsf{120}$, $\mathsf{1201}$, etc., and
+$\mathsf{2}$, $\mathsf{20}$, $\mathsf{201}$, $\mathsf{2012}$, etc.  On
+the other hand, no string containing $\mathsf{00}$, $\mathsf{02}$,
+$\mathsf{11}$, $\mathsf{10}$, $\mathsf{22}$ or $\mathsf{20}$ is in
+$X$.  The above observations suggest that part of our machine should
+look like:
+\begin{center}
+\input{chap-3.4-fig4.eepic}
+\end{center}
+But how should the machine get started?  The simplest approach is to
+make use of $\%$-transitions from the start state, giving us
+the FA
+\begin{center}
+\input{chap-3.4-fig3.eepic}
+\end{center}
+
+\begin{exercise}
+Let $X=\setof{w\in\{\mathsf{0,1}\}^*}{\mathsf{010}\eqtxt{is not a
+    substring of}w}$.  Find a finite automaton $M$ such that $L(M)=X$.
+\end{exercise}
+
+\begin{exercise}
+Let
+\begin{align*}
+A &=\{\mathsf{001, 011, 101, 111}\} , \eqtxt{and} \\
+B &=\{\,w\in\{\mathsf{0,1}\}^* \mid \eqtxtr{for all}x,y\in\{\mathsf{0,1}\}^*,
+\eqtxt{if}w=x\zerosf y, \eqtxtr{then there is a} z\in A \\
+&\quad\;\;\; \eqtxt{such that} z\eqtxt{is a prefix of} y\,\}.
+\end{align*}
+Find a finite automaton $M$ such that $L(M)=B$.  Hint: see the second
+example of Subsection~\ref{ProvingTheCorrectnessOfRegularExpressions}.
+\end{exercise}
+
+\subsection{Notes}
+
+Finite automata are normally defined via transition functions,
+$\delta$, which is simple to do for deterministric finite automata,
+but increasingly complicated as one adds degrees of nontermininism.
+Furthermore, this approach means that a deterministic finite automaton
+(DFA) is not a nondeterministic finite automaton (NFA), and that an
+NFA is not an $\epsilon$-NFA, because the transition function of a DFA
+is not one for an NFA, and the transition function for an NFA is not
+one of an $\epsilon$-NFA.  And formalizing our FAs, whose transition
+labels can be strings of length greater than one, is very messy if
+done via transition functions, which probably accounts for why such
+machines are not normally considered.  Furthermore, in the standard
+approach, to say when strings are accepted by finite automata, one must
+first extend the different kinds of transition functions to work on
+strings.
+
+In contrast, our approach is very simple.  Instead of transition
+functions, we work with finite sets of transitions, enabling us to
+define the deterministric finite automata, nondeterministic finite
+automata, and nondeterministic with $\%$-moves (which we call
+empty-string finite automata) as restrictions on finite automata.
+Furthermore, using labeled paths to say when---and how---strings are
+accepted by finite automata is simple, natural and diagrammatic.  It's
+the analogue of using parse trees to say when---and how---strings are
+generated by grammars.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

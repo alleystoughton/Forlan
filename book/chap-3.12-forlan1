@@ -1,0 +1,7 @@
+val reg = Reg.input "";
+0*11 + 001*
+.
+val fa = regToFA reg;
+FA.output("", fa);
+val fa' = FA.renameStatesCanonically fa; 
+FA.output("", fa');

@@ -1,0 +1,46 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ gram\ =\ Gram.input\ "";
+\item[]\textsl{@\ }\symbol{'173}variables\symbol{'175}
+\item[]\textsl{@\ }A
+\item[]\textsl{@\ }\symbol{'173}start\ variable\symbol{'175}
+\item[]\textsl{@\ }A
+\item[]\textsl{@\ }\symbol{'173}productions\symbol{'175}
+\item[]\textsl{@\ }A\ ->\ %\ |\ 0A1
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ gram\ =\ -\ :\ gram}
+\item[]\textsl{-\ }val\ gram'\ =\ Gram.prefix\ gram;
+\item[]\textsl{val\ gram'\ =\ -\ :\ gram}
+\item[]\textsl{-\ }Gram.output("",\ gram');
+\item[]\textsl{\symbol{'173}variables\symbol{'175}\ <1,A>,\ <2,0>,\ <2,1>,\ <2,A>\ \symbol{'173}start\ variable\symbol{'175}\ <2,A>}
+\item[]\textsl{\symbol{'173}productions\symbol{'175}}
+\item[]\textsl{<1,A>\ ->\ %\ |\ 0<1,A>1;\ <2,0>\ ->\ %\ |\ 0;\ <2,1>\ ->\ %\ |\ 1;}
+\item[]\textsl{<2,A>\ ->\ %\ |\ <2,0>\ |\ 0<2,A>\ |\ 0<1,A><2,1>}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }fun\ test\ s\ =\ Gram.generated\ gram'\ (Str.fromString\ s);
+\item[]\textsl{val\ test\ =\ fn\ :\ string\ ->\ bool}
+\item[]\textsl{-\ }test\ "000111";
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }test\ "0001";
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }test\ "0001111";
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\end{list}

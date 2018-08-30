@@ -1,0 +1,216 @@
+           Forlan's Concrete Syntax and Drawing Conventions
+
+------------------------------------------------------------------------------
+Whitespace Convention
+------------------------------------------------------------------------------
+
+Whitespace is not significant; it can be inserted/deleted anywhere.
+Thus, when processing input that's in Forlan syntax, one must ignore
+whitespace.  This applies even in the middle of symbols, or, e.g., in
+the middle of "{accepting states}", which is equivalent to
+"{acceptingstates}", or even "{ acc ep tingsta tes}".
+
+Comments begin with "#" and run until end of line.  They are allowed
+anywhere expect inside symbols or headings ({...}).
+
+------------------------------------------------------------------------------
+Symbols
+------------------------------------------------------------------------------
+
+A SYMBOL is one of the following finite sequences of ASCII characters:
+
+  one of the digits 0-9;
+
+  one of the upper case letters A-Z;
+
+  one of the lower case letters a-z;
+
+  a <, followed by any finite sequence of digits, letters, commas, <
+  and >, in which < and > are properly nested, followed by a >.
+
+------------------------------------------------------------------------------
+Strings
+------------------------------------------------------------------------------
+
+A STRING is either % (the empty string) or a non-empty, finite sequence
+of symbols.
+
+------------------------------------------------------------------------------
+Finite Automata (FA)
+------------------------------------------------------------------------------
+
+FA have this format (remember that whitespace is irrelevant):
+
+  {states}
+    comma-separated list of symbols
+  {start state}
+    single state
+  {accepting states}
+    comma-separated list of states (possibly empty)
+  {transitions}
+    semi-colon-separated list of transitions:
+
+      state, string -> state
+
+      or
+
+      state, string -> state_1 | ... | state_n, for n >= 2
+
+      (this abbreviates the n transitions
+
+       state, string -> state_1, ...
+       state, string -> state_n)
+
+When drawn, states are ringed (ovals, if necessary), accepting states
+are double-ringed, the start state is indicated by "Start ->", a
+transition p, x -> q is drawn as an arrow from state p to state p,
+labeled by x, and multiple transitions from one state to another are
+abbreviated by listing the labels on the arc, separated by commas.
+
+------------------------------------------------------------------------------
+Regular Expression Finite Automata (RFA)
+------------------------------------------------------------------------------
+
+Like FAs, except:
+
+  labels of transitions are regular expressions;
+
+  there is at most one transition from a state p to a state q.
+
+------------------------------------------------------------------------------
+Tree Drawing
+------------------------------------------------------------------------------
+
+Trees are drawn with arrows from children to their parents.  The order of
+a parent's children is determined by their relative x-axis positions.
+
+------------------------------------------------------------------------------
+Parse Trees
+------------------------------------------------------------------------------
+
+Parse trees pt are inductively defined:
+
+  symbol       (drawn as leaf labeled by symbol)
+  symbol(%)    (drawn as leaf labeled by %)
+  symbol(pt1, ..., ptn), for n >= 1
+    (drawn as root labeled by symbol, with n children)
+
+E.g., a and A(%) and A(B(%),c) are parse trees, but
+% and A(%,a) are not.
+
+------------------------------------------------------------------------------
+Regular Expressions and Regular Expression Trees
+------------------------------------------------------------------------------
+
+Regular expressions reg are inductively defined:
+
+  symbol        (drawn as leaf labeled by symbol)
+  %             (drawn as leaf labeled by %)
+  $             (drawn as leaf labeled by $)
+  reg*          (drawn as node labeled by *, with single child)
+  reg1 reg2     (drawn as node labeled by @, with two children)
+  reg1 + reg2   (drawn as node labeled by +, with two children)
+
+Precedence and associativity conventions:
+  + has lowest precedence, and is right associative
+  juxtapositioning (reg1 reg2) has middle precedence, and is right associative
+  * has highest precedence
+
+In concrete syntax, parentheses can be used to override default
+associativities and precedences, or simply for clarity or because
+of taste.
+
+------------------------------------------------------------------------------
+Program Trees
+------------------------------------------------------------------------------
+
+variables are strings of letters and digits, beginning with a letter
+
+constants:
+
+  nil
+  true
+  false
+
+operators:
+
+  isNil
+  isInt
+  isNeg
+  isZero
+  isPos
+  isSym
+  isStr
+  isPair
+  isLam
+  plus
+  minus
+  compare
+  fst
+  snd
+  consSym
+  deconsSym
+  symListToStr
+  strToSymList
+
+numerals:
+
+  nonempty sequence of digits or
+  ~nonempty sequence of digits
+  allow leading 0s
+
+program trees:
+
+  var(variable)
+
+    in tree diagram, no children (this is the label of the leaf node)
+
+  const(constant)
+
+    in tree diagram, no children
+
+  int(numeral)
+
+    in tree diagram, no children
+
+  sym(symbol)
+
+    in tree diagram, no children
+
+  str(string)
+
+    in tree diagram, no children
+
+  pair(x, y)
+
+    in tree diagram, two children, x and y
+
+  calc(operator, x)
+
+    in tree diagram, calc(operator) with one child, x
+
+  app(x, y)
+
+    in tree diagram, two children
+
+  cond(x, y, z)
+
+    in tree diagram, three children
+
+  lam(variable, x)
+
+    in tree diagram:
+
+      lam(variable) with one child, x
+
+  letSimp(variable, x, y)
+
+    in tree diagram:
+
+      letSimp(variable) with two children, x and y
+
+  letRec(variable, variable, x, y)
+
+    in tree diagram:
+
+      letRec(variable, variable) with two children, x and y

@@ -1,0 +1,613 @@
+<!-- top-level-subsect.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>Top-level Environment</TITLE>
+
+<SECTION>
+
+<HEAD>Top-level Environment</HEAD>
+
+<PP>This subsection lists the types and values that are available in
+Forlan's top-level environment, as well as the modules that they come
+from.</PP>
+
+<SECTION>
+<HEAD>Version</HEAD>
+
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/val/ getVersion : unit -> string</CD></TD>
+<TD><CD><STRREF/Version/.<VALREF STRID="Version"/getVersion/</CD></TD>
+</TR>
+</TABLE>
+
+</SECTION>
+
+<SECTION>
+<HEAD>Parameters</HEAD>
+
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/val/ getSearchPath : unit -> string list</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/getSearchPath/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ setSearchPath : string list -> unit</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/setSearchPath/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ getWorkingDirectory : unit -> string</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/getWorkingDirectory/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ setWorkingDirectory : string -> unit</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/setWorkingDirectory/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ getPrintingListLength : unit -> int</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/getPrintingListLength/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ setPrintingListLength : int -> unit</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/setPrintingListLength/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ getPrintingStringSize : unit -> int</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/getPrintingStringSize/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ setPrintingStringSize : int -> unit</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/setPrintingStringSize/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ getPrintingDataStructureDepth : unit -> int</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF
+STRID="Params"/getPrintingDataStructureDepth/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ setPrintingDataStructureDepth : int -> unit</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF
+STRID="Params"/setPrintingDataStructureDepth/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ getPrintingLineLength : unit -> int</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/getPrintingLineLength/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ setPrintingLineLength : int -> unit</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/setPrintingLineLength/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ setPrintingOfGarbageCollectionMessages : bool -> unit</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF
+STRID="Params"/setPrintingOfGarbageCollectionMessages/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ getTrackExceptions : unit -> bool</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/getTrackExceptions/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ setTrackExceptions : bool -> unit</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/setTrackExceptions/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ getCompilationManagerVerbosity : unit -> bool</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/getCompilationManagerVerbosity/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ setCompilationManagerVerbosity : bool -> unit</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/setCompilationManagerVerbosity/</CD></TD>
+</TR>
+</TABLE>
+
+</SECTION>
+
+<SECTION>
+<HEAD>Debugging</HEAD>
+
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/val/ debug : (<ARG/'a/ -> PP.pp) -> PP.pp * <ARG/'a/ ->
+<ARG/'a/</CD></TD>
+<TD><CD><STRREF/Debug/.<VALREF STRID="Debug"/debug/</CD></TD>
+</TR>
+</TABLE>
+
+</SECTION>
+
+<SECTION>
+
+<HEAD>Using Files</HEAD>
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/val/ use : string -> unit</CD></TD>
+<TD><CD><STRREF/Use/.<VALREF STRID="Use"/use/</CD></TD>
+</TR>
+</TABLE>
+
+</SECTION>
+
+<SECTION>
+<HEAD>Basic Types</HEAD>
+
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/type/ <ARG/'a/ set</CD></TD>
+<TD><CD><ARG/'a/ <STRREF/Set/.<TYREF STRID="Set"/set/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/type/ sym</CD></TD>
+<TD><CD><STRREF/Sym/.<TYREF STRID="Sym"/sym/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/type/ str</CD></TD>
+<TD><CD><STRREF/Str/.<TYREF STRID="Str"/str/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/type/ (<ARG/'a/, <ARG/'b/)rel</CD></TD>
+<TD><CD>(<ARG/'a/, <ARG/'b/)<STRREF/Rel/.<TYREF STRID="Rel"/rel/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/type/ sym_rel</CD></TD>
+<TD><CD><STRREF/SymRel/.<TYREF STRID="SymRel"/sym_rel/</CD></TD>
+</TR>
+</TABLE>
+Note that:
+<ITEMIZE>
+<ITEM><CD>sym</CD> and <CD>Sym.sym</CD>
+are equal to <CD><STRREF/Lex/.<TYREF STRID="Lex"/sym/</CD>;</ITEM>
+
+<ITEM><CD>str</CD> and <CD>Str.str</CD> are equal to <CD>sym
+list</CD>;</ITEM>
+
+<ITEM><CD>(<ARG/'a/, <ARG/'b/)rel</CD> and
+<CD>(<ARG/'a/, <ARG/'b/)Rel.rel</CD> are equal to <CD>(<ARG/'a/ *
+<ARG/'b/)set</CD>;</ITEM>
+
+<ITEM><CD>sym_rel</CD> and <CD>SymRel.sym_rel</CD> are equal to
+<CD>(sym, sym)rel</CD>, which is equal to
+<CD>(sym * sym)set</CD>.</ITEM>
+</ITEMIZE>
+
+</SECTION>
+
+<SECTION>
+<HEAD>Conversions Between Basic Types and Strings</HEAD>
+
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/val/ stringToSym : string -> sym</CD></TD>
+<TD><CD><STRREF/Sym/.<VALREF STRID="Sym"/fromString/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ symToString : sym -> string</CD></TD>
+<TD><CD><STRREF/Sym/.<VALREF STRID="Sym"/toString/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ stringToStr : string -> str</CD></TD>
+<TD><CD><STRREF/Str/.<VALREF STRID="Str"/fromString/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ strToString : str -> string</CD></TD>
+<TD><CD><STRREF/Str/.<VALREF STRID="Str"/toString/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ stringToSymSet : string -> sym set</CD></TD>
+<TD><CD><STRREF/SymSet/.<VALREF STRID="SymSet"/fromString/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ symSetToString : sym set -> string</CD></TD>
+<TD><CD><STRREF/SymSet/.<VALREF STRID="SymSet"/toString/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ stringToStrSet : string -> str set</CD></TD>
+<TD><CD><STRREF/StrSet/.<VALREF STRID="StrSet"/fromString/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ strSetToString : str set -> string</CD></TD>
+<TD><CD><STRREF/StrSet/.<VALREF STRID="StrSet"/toString/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ stringToSymRel : string -> sym_rel</CD></TD>
+<TD><CD><STRREF/SymRel/.<VALREF STRID="SymRel"/fromString/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ symRelToString : sym_rel -> string</CD></TD>
+<TD><CD><STRREF/SymRel/.<VALREF STRID="SymRel"/toString/</CD></TD>
+</TABLE>
+
+</SECTION>
+
+<SECTION>
+<HEAD>Regular Expressions</HEAD>
+
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/type/ reg</CD></TD>
+<TD><CD><STRREF/Reg/.<TYREF STRID="Reg"/reg/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ stringToReg : string -> reg</CD></TD>
+<TD><CD><STRREF/Reg/.<VALREF STRID="Reg"/fromString/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ regToString : reg -> string</CD></TD>
+<TD><CD><STRREF/Reg/.<VALREF STRID="Reg"/toString/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ symToReg : sym -> reg</CD></TD>
+<TD><CD><STRREF/Reg/.<VALREF STRID="Reg"/fromSym/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ strToReg : str -> reg</CD></TD>
+<TD><CD><STRREF/Reg/.<VALREF STRID="Reg"/fromStr/</CD></TD>
+</TR>
+</TABLE>
+
+</SECTION>
+
+<SECTION>
+<HEAD>Labeled Paths</HEAD>
+
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/type/ lp</CD></TD>
+<TD><CD><STRREF/LP/.<TYREF STRID="LP"/lp/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ stringToLP : string -> lp</CD></TD>
+<TD><CD><STRREF/LP/.<VALREF STRID="LP"/fromString/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ lpToString : lp -> string</CD></TD>
+<TD><CD><STRREF/LP/.<VALREF STRID="LP"/toString/</CD></TD>
+</TR>
+</TABLE>
+
+</SECTION>
+
+<SECTION>
+<HEAD>Finite Automata</HEAD>
+
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/type/ tran</CD></TD>
+<TD><CD><STRREF/Tran/.<TYREF STRID="Tran"/tran/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/type/ fa</CD></TD>
+<TD><CD><STRREF/FA/.<TYREF STRID="FA"/fa/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/type/ efa</CD></TD>
+<TD><CD><STRREF/EFA/.<TYREF STRID="EFA"/efa/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/type/ nfa</CD></TD>
+<TD><CD><STRREF/NFA/.<TYREF STRID="NFA"/nfa/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/type/ dfa</CD></TD>
+<TD><CD><STRREF/DFA/.<TYREF STRID="DFA"/dfa/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ symToNFA : sym -> nfa</CD></TD>
+<TD><CD><STRREF/NFA/.<VALREF STRID="NFA"/fromSym/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ symToEFA : sym -> efa</CD></TD>
+<TD><CD><STRREF/EFA/.<VALREF STRID="EFA"/fromSym/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ symToFA : sym -> fa</CD></TD>
+<TD><CD><STRREF/FA/.<VALREF STRID="FA"/fromSym/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ strToFA : str -> fa</CD></TD>
+<TD><CD><STRREF/FA/.<VALREF STRID="FA"/fromStr/</CD></TD>
+</TR>
+</TABLE>
+
+</SECTION>
+
+<SECTION>
+<HEAD>Injections and Projections Between Finite Automata</HEAD>
+
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/val/ injDFAToNFA : dfa -> nfa</CD></TD>
+<TD><CD><STRREF/DFA/.<VALREF STRID="DFA"/injToNFA/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ injDFAToEFA : dfa -> efa</CD></TD>
+<TD><CD><STRREF/DFA/.<VALREF STRID="DFA"/injToEFA/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ injDFAToFA : dfa -> fa</CD></TD>
+<TD><CD><STRREF/DFA/.<VALREF STRID="DFA"/injToFA/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ injNFAToEFA : nfa -> efa</CD></TD>
+<TD><CD><STRREF/NFA/.<VALREF STRID="NFA"/injToEFA/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ injNFAToFA : nfa -> fa</CD></TD>
+<TD><CD><STRREF/NFA/.<VALREF STRID="NFA"/injToFA/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ injEFAToFA : efa -> fa</CD></TD>
+<TD><CD><STRREF/EFA/.<VALREF STRID="EFA"/injToFA/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ projNFAToDFA : nfa -> dfa</CD></TD>
+<TD><CD><STRREF/DFA/.<VALREF STRID="DFA"/projFromNFA/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ projEFAToDFA : efa -> dfa</CD></TD>
+<TD><CD><STRREF/DFA/.<VALREF STRID="DFA"/projFromEFA/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ projFAToDFA : fa -> dfa</CD></TD>
+<TD><CD><STRREF/DFA/.<VALREF STRID="DFA"/projFromFA/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ projEFAToNFA : efa -> nfa</CD></TD>
+<TD><CD><STRREF/NFA/.<VALREF STRID="NFA"/projFromEFA/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ projFAToNFA : fa -> nfa</CD></TD>
+<TD><CD><STRREF/NFA/.<VALREF STRID="NFA"/projFromFA/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ projFAToEFA : fa -> efa</CD></TD>
+<TD><CD><STRREF/EFA/.<VALREF STRID="EFA"/projFromFA/</CD></TD>
+</TR>
+</TABLE>
+
+</SECTION>
+
+<SECTION>
+<HEAD>Conversions Between Finite Automata</HEAD>
+
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/val/ nfaToDFA : nfa -> dfa</CD></TD>
+<TD><CD><STRREF/DFA/.<VALREF STRID="DFA"/fromNFA/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ efaToNFA : efa -> nfa</CD></TD>
+<TD><CD><STRREF/NFA/.<VALREF STRID="NFA"/fromEFA/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ faToEFA : fa -> efa</CD></TD>
+<TD><CD><STRREF/EFA/.<VALREF STRID="EFA"/fromFA/</CD></TD>
+</TR>
+</TABLE>
+
+</SECTION>
+
+<SECTION>
+<HEAD>Conversions Between Finite Automata and Regular Expressions</HEAD>
+
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/val/ regToFA : reg -> fa</CD></TD>
+<TD><CD><STRREF/FA/.<VALREF STRID="FA"/fromReg/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ faToReg : (reg -> reg) -> fa -> reg</CD></TD>
+<TD><CD><STRREF/RFA/.<VALREF STRID="RFA"/faToReg/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ faToRegPerms : int option * (reg -> reg) -> fa -> reg</CD></TD>
+<TD><CD><STRREF/RFA/.<VALREF STRID="RFA"/faToRegPerms/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ faToRegPermsTrace : int option * (reg -> reg) -> fa ->
+reg</CD></TD>
+<TD><CD><STRREF/RFA/.<VALREF STRID="RFA"/faToRegPermsTrace/</CD></TD>
+</TR>
+</TABLE>
+
+</SECTION>
+
+<SECTION>
+
+<HEAD>Regular Expression Finite Automata</HEAD>
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/type/ tran_reg</CD></TD>
+<TD><CD><STRREF/TranReg/.<TYREF STRID="TranReg"/tran_reg/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/type/ rfa</CD></TD>
+<TD><CD><STRREF/RFA/.<TYREF STRID="RFA"/rfa/</CD></TD>
+</TR>
+</TABLE>
+
+</SECTION>
+
+<SECTION>
+<HEAD>Parse Trees</HEAD>
+
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/type/ pt</CD></TD>
+<TD><CD><STRREF/PT/.<TYREF STRID="PT"/pt/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ stringToPT : string -> pt</CD></TD>
+<TD><CD><STRREF/PT/.<VALREF STRID="PT"/fromString/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ ptToString : pt -> string</CD></TD>
+<TD><CD><STRREF/PT/.<VALREF STRID="PT"/toString/</CD></TD>
+</TR>
+</TABLE>
+
+</SECTION>
+
+<SECTION>
+<HEAD>Grammars</HEAD>
+
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/type/ prod</CD></TD>
+<TD><CD><STRREF/Prod/.<TYREF STRID="Prod"/prod/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/type/ gram</CD></TD>
+<TD><CD><STRREF/Gram/.<TYREF STRID="Gram"/gram/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ symToGram : sym -> gram</CD></TD>
+<TD><CD><STRREF/Gram/.<VALREF STRID="Gram"/fromSym/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ strToGram : str -> gram</CD></TD>
+<TD><CD><STRREF/Gram/.<VALREF STRID="Gram"/fromStr/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ faToGram : fa -> gram</CD></TD>
+<TD><CD><STRREF/Gram/.<VALREF STRID="Gram"/fromFA/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ regToGram : reg -> gram</CD></TD>
+<TD><CD><STRREF/Gram/.<VALREF STRID="Gram"/fromReg/</CD></TD>
+</TR>
+</TABLE>
+</SECTION>
+
+<SECTION>
+
+<HEAD>Programs</HEAD>
+
+<PP>
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>Identifier</TH>
+<TH>Value</TH>
+</TR>
+<TR>
+<TD><CD><KW/type/ var</CD></TD>
+<TD><CD><STRREF/Var/.<TYREF STRID="Var"/var/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/type/ prog</CD></TD>
+<TD><CD><STRREF/Prog/.<TYREF STRID="Prog"/prog/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/type/ cp</CD></TD>
+<TD><CD><STRREF/Prog/.<TYREF STRID="Prog"/cp/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ progToClosedProg : prog -> cp</CD></TD>
+<TD><CD><STRREF/Prog/.<VALREF STRID="Prog"/toClosed/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ closedProgToProg : cp -> closed</CD></TD>
+<TD><CD><STRREF/Prog/.<VALREF STRID="Prog"/fromClosed/</CD></TD>
+</TR>
+</TABLE>
+
+</SECTION>
+
+</SECTION>

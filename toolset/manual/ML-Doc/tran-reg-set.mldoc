@@ -1,0 +1,242 @@
+<!-- tran-reg-set.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The TranRegSet Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/TranRegSet/ Module</HEAD>
+
+<PP>This module provides operations on finite sets of regular
+expression transitions, i.e., values of type
+<CD><STRREF/TranReg/.<TYREF STRID="TranReg"/tran_reg/
+<STRREF/Set/.<TYREF STRID="Set"/set/</CD> that are <EM>standard</EM>
+in the sense that they are compatible with
+<STRREF/TranReg/.<VALREF STRID="TranReg"/compare/. All values of type
+<CD>TranReg.tran_reg Set.set</CD> will implicitly be assumed/required to be
+standard.</PP>
+
+<STRUCTURE STRID="TranRegSet">
+<OPAQUE>
+<SIGBODY SIGID="TRAN_REG_SET" FILE=TRAN-REG-SET>
+
+<SPEC>
+<VAL>memb<TY>TranReg.tran_reg * TranReg.tran_reg Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+memb(<ARG/tran/, <ARG/trans/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/tran/</CD> is a member of <CD><ARG/trans/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromList<TY>TranReg.tran_reg list -> TranReg.tran_reg Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromList <ARG/trans/
+</PROTOTY>
+<PP>returns the set whose elements are the elements
+of <CD><ARG/trans/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>TranReg.tran_reg Set.set Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compare
+</PROTOTY>
+<PP>is
+<CD><STRREF TOPID/Set/.<VALREF STRID="Set"/compare/
+<STRREF TOPID/TranReg/.<VALREF STRID="TranReg"/compare/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>subset<TY>TranReg.tran_reg Set.set * TranReg.tran_reg Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+subset(<ARG/tran1s/, <ARG/tran2s/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/tran1s/</CD> is a subset of <CD><ARG/tran2s/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>TranReg.tran_reg Set.set * TranReg.tran_reg Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal(<ARG/tran1s/, <ARG/tran2s/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/tran1s/</CD> is equal to <CD><ARG/tran2s/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>map<TY>('a -> TranReg.tran_reg) -> 'a Set.set -> TranReg.tran_reg Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+map <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> is compatible with a value <CD><ARG/cmp/</CD>
+of type <CD><ARG/'a/ Sort.total_ordering</CD>, then <CD>map</CD>
+returns the set of all regular expression transitions
+<CD><ARG/f/ <ARG/x/</CD> such that <CD><ARG/x/</CD> is a
+member of <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>mapFromList<TY>('a -> TranReg.tran_reg) -> 'a list -> TranReg.tran_reg Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+mapFromList <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>returns the set of all regular expression
+transitions <CD><ARG/f/ <ARG/x/</CD> such that <CD><ARG/x/</CD> is a
+member of <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>union<TY>TranReg.tran_reg Set.set * TranReg.tran_reg Set.set -> TranReg.tran_reg Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+union(<ARG/tran1s/, <ARG/tran2s/)
+</PROTOTY>
+<PP>returns the union of <CD><ARG/tran1s/</CD> and <CD><ARG/tran2s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genUnion<TY>TranReg.tran_reg Set.set list -> TranReg.tran_reg Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genUnion <ARG/transs/
+</PROTOTY>
+<PP>returns the generalized union of <CD><ARG/transs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inter<TY>TranReg.tran_reg Set.set * TranReg.tran_reg Set.set -> TranReg.tran_reg Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+inter(<ARG/tran1s/, <ARG/tran2s/)
+</PROTOTY>
+<PP>returns the intersection of <CD><ARG/tran1s/</CD> and <CD><ARG/tran2s/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genInter<TY>TranReg.tran_reg Set.set list -> TranReg.tran_reg Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genInter <ARG/transs/
+</PROTOTY>
+<PP>returns the generalized intersection of <CD><ARG/transs/</CD>.  Issues
+an error message if <CD><ARG/transs/</CD> is empty.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>minus<TY>TranReg.tran_reg Set.set * TranReg.tran_reg Set.set -> TranReg.tran_reg Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+minus(<ARG/tran1s/, <ARG/tran2s/)
+</PROTOTY>
+<PP>returns the difference of <CD><ARG/tran1s/</CD> and <CD><ARG/tran2s/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inputFromLabToks
+<TY>(int * Lex.tok)list -> TranReg.tran_reg Set.set * (int * Lex.tok)list</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+inputFromLabToks <ARG/lts/
+</PROTOTY>
+<PP>tries to input a set of regular expression transitions
+from <CD><ARG/lts/</CD>, consuming as much of <CD><ARG/lts/</CD> as
+possible, and returning the pair of the set of regular expression
+transitions and the rest of <CD><ARG/lts/</CD>.  Issues an error
+message if it fails. Will only return the empty set
+if <CD><ARG/lts/</CD> doesn't begin with a symbol. If, after reading a
+transition, the next element of the labeled token list is <CD>","</CD>
+(<CD><STRREF TOPID/Lex/.<CONREF STRID="Lex"/Comma/</CD>),
+then <CD>inputFromLabToks</CD> insists on reading another transition,
+even if this results in failure.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> TranReg.tran_reg Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs a set of regular expression transitions from <CD><ARG/s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> TranReg.tran_reg Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs a set of regular expression transitions from the
+file <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>TranReg.tran_reg Set.set -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toPP <ARG/trans/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/trans/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>TranReg.tran_reg Set.set -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/trans/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/trans/</CD> to a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>string * TranReg.tran_reg Set.set -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+output(<ARG/fil/, <ARG/trans/)
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/trans/</CD> to file <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

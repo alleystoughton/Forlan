@@ -1,0 +1,2 @@
+val reg = faToReg Reg.weaklySimplify fa;
+Reg.output("", reg);

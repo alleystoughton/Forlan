@@ -1,0 +1,6 @@
+LP.output
+("",
+ NFA.findAcceptingLP nfa (Str.fromString "111100"));
+LP.output
+("",
+ DFA.findAcceptingLP dfa (Str.fromString "111100"));

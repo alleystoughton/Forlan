@@ -1,0 +1,30 @@
+@FILES
+  ["lex"; "The Lex Module";]
+@SIGNATURE LEX "lex" [
+  @TYPES 
+    @TYPE sym
+    @TYPE basic
+    @DATATYPE sym_top [ BasicSymTop CompoundSymTop]
+    @DATATYPE tok [ Bar Comma Dollar Perc Plus Semicolon Star Tilde OpenPar ClosPar SingArr DoubArr Sym Heading EOF]
+  @VALS 
+    compareSym
+    expectedLetter
+    symToString
+    expectedLetterOrDigit
+    sizeSym
+    checkInLabToks
+    equalTok
+    symToPP
+    lexString
+    expectedTok
+    errorNotEOFTerminated
+    unexpectedTok
+    expectedDigit
+    basicToChar
+    charToBasic
+    symToSymTop
+    symTopToSym
+    lexFile
+    error
+]
+@STRUCTURE Lex "lex" LEX

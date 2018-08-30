@@ -1,0 +1,550 @@
+<!-- HTML/dfa.html -->
+
+<!-- COPYRIGHT (c) 2012 Alley Stoughton. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The DFA Module</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY><A NAME="top"></A>
+<H1 align=CENTER>Forlan Manual</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>DFA</CODE> Module</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="DFA:SIG:SPEC"></A><CODE>DFA</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="DFA:STR:SPEC"></A><CODE>DFA</CODE><B> :> </B>DFA<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+This module defines the abstract type of deterministic finite automata (DFAs).
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>type</B>&nbsp;<A NAME="STR:DFA.dfa:TY:SPEC" HREF="#STR:DFA.dfa:TY">dfa</A><BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.injToFA:VAL:SPEC" HREF="#STR:DFA.injToFA:VAL">injToFA</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;FA.fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.injToEFA:VAL:SPEC" HREF="#STR:DFA.injToEFA:VAL">injToEFA</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;EFA.efa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.injToNFA:VAL:SPEC" HREF="#STR:DFA.injToNFA:VAL">injToNFA</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;NFA.nfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.valid:VAL:SPEC" HREF="#STR:DFA.valid:VAL">valid</A>&nbsp;<B>:</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.projFromFA:VAL:SPEC" HREF="#STR:DFA.projFromFA:VAL">projFromFA</A>&nbsp;<B>:</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.projFromEFA:VAL:SPEC" HREF="#STR:DFA.projFromEFA:VAL">projFromEFA</A>&nbsp;<B>:</B>&nbsp;EFA.efa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.projFromNFA:VAL:SPEC" HREF="#STR:DFA.projFromNFA:VAL">projFromNFA</A>&nbsp;<B>:</B>&nbsp;NFA.nfa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.fromString:VAL:SPEC" HREF="#STR:DFA.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.input:VAL:SPEC" HREF="#STR:DFA.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.toPP:VAL:SPEC" HREF="#STR:DFA.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.toString:VAL:SPEC" HREF="#STR:DFA.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.output:VAL:SPEC" HREF="#STR:DFA.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.states:VAL:SPEC" HREF="#STR:DFA.states:VAL">states</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.startState:VAL:SPEC" HREF="#STR:DFA.startState:VAL">startState</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.acceptingStates:VAL:SPEC" HREF="#STR:DFA.acceptingStates:VAL">acceptingStates</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.transitions:VAL:SPEC" HREF="#STR:DFA.transitions:VAL">transitions</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Tran.tran&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.compare:VAL:SPEC" HREF="#STR:DFA.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;Sort.total_ordering<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.equal:VAL:SPEC" HREF="#STR:DFA.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.numStates:VAL:SPEC" HREF="#STR:DFA.numStates:VAL">numStates</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.numTransitions:VAL:SPEC" HREF="#STR:DFA.numTransitions:VAL">numTransitions</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.alphabet:VAL:SPEC" HREF="#STR:DFA.alphabet:VAL">alphabet</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.sub:VAL:SPEC" HREF="#STR:DFA.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.transitionFun:VAL:SPEC" HREF="#STR:DFA.transitionFun:VAL">transitionFun</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.transitionFunBackwards:VAL:SPEC" HREF="#STR:DFA.transitionFunBackwards:VAL">transitionFunBackwards</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.processStr:VAL:SPEC" HREF="#STR:DFA.processStr:VAL">processStr</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.accepted:VAL:SPEC" HREF="#STR:DFA.accepted:VAL">accepted</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.reachify:VAL:SPEC" HREF="#STR:DFA.reachify:VAL">reachify</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.reachified:VAL:SPEC" HREF="#STR:DFA.reachified:VAL">reachified</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.renameStates:VAL:SPEC" HREF="#STR:DFA.renameStates:VAL">renameStates</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.renameStatesCanonically:VAL:SPEC" HREF="#STR:DFA.renameStatesCanonically:VAL">renameStatesCanonically</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.isomorphism:VAL:SPEC" HREF="#STR:DFA.isomorphism:VAL">isomorphism</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.findIsomorphismOpt:VAL:SPEC" HREF="#STR:DFA.findIsomorphismOpt:VAL">findIsomorphismOpt</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;SymRel.sym_rel&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.findIsomorphism:VAL:SPEC" HREF="#STR:DFA.findIsomorphism:VAL">findIsomorphism</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;SymRel.sym_rel<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.isomorphic:VAL:SPEC" HREF="#STR:DFA.isomorphic:VAL">isomorphic</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.renameAlphabet:VAL:SPEC" HREF="#STR:DFA.renameAlphabet:VAL">renameAlphabet</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.checkLP:VAL:SPEC" HREF="#STR:DFA.checkLP:VAL">checkLP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.validLP:VAL:SPEC" HREF="#STR:DFA.validLP:VAL">validLP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.findLPOpt:VAL:SPEC" HREF="#STR:DFA.findLPOpt:VAL">findLPOpt</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.findLP:VAL:SPEC" HREF="#STR:DFA.findLP:VAL">findLP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;LP.lp<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.findAcceptingLPOpt:VAL:SPEC" HREF="#STR:DFA.findAcceptingLPOpt:VAL">findAcceptingLPOpt</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.findAcceptingLP:VAL:SPEC" HREF="#STR:DFA.findAcceptingLP:VAL">findAcceptingLP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;LP.lp<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.emptyStr:VAL:SPEC" HREF="#STR:DFA.emptyStr:VAL">emptyStr</A>&nbsp;<B>:</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.emptySet:VAL:SPEC" HREF="#STR:DFA.emptySet:VAL">emptySet</A>&nbsp;<B>:</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.inter:VAL:SPEC" HREF="#STR:DFA.inter:VAL">inter</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.genInter:VAL:SPEC" HREF="#STR:DFA.genInter:VAL">genInter</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.determTransitionFun:VAL:SPEC" HREF="#STR:DFA.determTransitionFun:VAL">determTransitionFun</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;<B>-&gt;</B>&nbsp;Sym.sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.determProcessStr:VAL:SPEC" HREF="#STR:DFA.determProcessStr:VAL">determProcessStr</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Sym.sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.determAccepted:VAL:SPEC" HREF="#STR:DFA.determAccepted:VAL">determAccepted</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.fromNFA:VAL:SPEC" HREF="#STR:DFA.fromNFA:VAL">fromNFA</A>&nbsp;<B>:</B>&nbsp;NFA.nfa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.determSimplified:VAL:SPEC" HREF="#STR:DFA.determSimplified:VAL">determSimplified</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.determSimplify:VAL:SPEC" HREF="#STR:DFA.determSimplify:VAL">determSimplify</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.minimize:VAL:SPEC" HREF="#STR:DFA.minimize:VAL">minimize</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.complement:VAL:SPEC" HREF="#STR:DFA.complement:VAL">complement</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.minus:VAL:SPEC" HREF="#STR:DFA.minus:VAL">minus</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>datatype</B>&nbsp;<A NAME="STR:DFA.relationship:TY:SPEC" HREF="#STR:DFA.relationship:TY">relationship</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="STR:DFA.Equal:TY:SPEC" HREF="#STR:DFA.Equal:TY">Equal</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:DFA.ProperSub:TY:SPEC" HREF="#STR:DFA.ProperSub:TY">ProperSub</A>&nbsp;<B>of</B>&nbsp;Str.str<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:DFA.ProperSup:TY:SPEC" HREF="#STR:DFA.ProperSup:TY">ProperSup</A>&nbsp;<B>of</B>&nbsp;Str.str<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:DFA.Incomp:TY:SPEC" HREF="#STR:DFA.Incomp:TY">Incomp</A>&nbsp;<B>of</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.relation:VAL:SPEC" HREF="#STR:DFA.relation:VAL">relation</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;relationship<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.relationship:VAL:SPEC" HREF="#STR:DFA.relationship:VAL">relationship</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.subset:VAL:SPEC" HREF="#STR:DFA.subset:VAL">subset</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.equivalent:VAL:SPEC" HREF="#STR:DFA.equivalent:VAL">equivalent</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;bool</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="STR:DFA.dfa:TY"></A><CODE><B>type</B>&nbsp;dfa</CODE>
+<DD>
+The abstract type of DFAs, which is a proper subset of the set of FAs.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.injToFA:VAL"></A>
+<DT> <CODE>injToFA <VAR>dfa</VAR></CODE>
+<DD>
+inject <CODE><VAR>dfa</VAR></CODE> to have type <CODE>FA.fa</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.injToEFA:VAL"></A>
+<DT> <CODE>injToEFA <VAR>df</VAR></CODE>
+<DD>
+inject <CODE><VAR>dfa</VAR></CODE> to have type <CODE>EFA.efa</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.injToNFA:VAL"></A>
+<DT> <CODE>injToNFA <VAR>dfa</VAR></CODE>
+<DD>
+inject <CODE><VAR>dfa</VAR></CODE> to have type <CODE>NFA.nfa</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.valid:VAL"></A>
+<DT> <CODE>valid <VAR>fa</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>fa</VAR></CODE> is a DFA.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.projFromFA:VAL"></A>
+<DT> <CODE>projFromFA <VAR>fa</VAR></CODE>
+<DD>
+projects <CODE><VAR>fa</VAR></CODE> to have type <CODE>dfa</CODE>. Issues an error message if <CODE><VAR>fa</VAR></CODE> is not a DFA.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.projFromEFA:VAL"></A>
+<DT> <CODE>projFromEFA <VAR>efa</VAR></CODE>
+<DD>
+projects <CODE><VAR>efa</VAR></CODE> to have type <CODE>dfa</CODE>. Issues an error message if <CODE><VAR>efa</VAR></CODE> is not a DFA.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.projFromNFA:VAL"></A>
+<DT> <CODE>projFromNFA <VAR>nfa</VAR></CODE>
+<DD>
+projects <CODE><VAR>nfa</VAR></CODE> to have type <CODE>nfa</CODE>. Issues an error message if <CODE><VAR>nfa</VAR></CODE> is not a DFA.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.fromString:VAL"></A>
+<DT> <CODE>fromString <VAR>s</VAR></CODE>
+<DD>
+inputs a DFA from <CODE><VAR>s</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.input:VAL"></A>
+<DT> <CODE>input <VAR>fil</VAR></CODE>
+<DD>
+inputs a DFA from the file named <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.toPP:VAL"></A>
+<DT> <CODE>toPP <VAR>fa</VAR></CODE>
+<DD>
+returns a pretty-printing expression for <CODE><VAR>dfa</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.toString:VAL"></A>
+<DT> <CODE>toString <VAR>dfa</VAR></CODE>
+<DD>
+pretty-prints <CODE><VAR>dfa</VAR></CODE> to a string.  (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.output:VAL"></A>
+<DT> <CODE>output(<VAR>fil</VAR>, <VAR>dfa</VAR>)</CODE>
+<DD>
+pretty-prints <CODE><VAR>dfa</VAR></CODE> to the file <CODE><VAR>fil</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.states:VAL"></A>
+<DT> <CODE>states <VAR>dfa</VAR></CODE>
+<DD>
+returns the states of <CODE><VAR>dfa</VAR></CODE>.  (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.startState:VAL"></A>
+<DT> <CODE>startState <VAR>dfa</VAR></CODE>
+<DD>
+returns the start state of <CODE><VAR>dfa</VAR></CODE>.  (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.acceptingStates:VAL"></A>
+<DT> <CODE>acceptingStates <VAR>dfa</VAR></CODE>
+<DD>
+returns the accepting states of <CODE><VAR>dfa</VAR></CODE>.  (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.transitions:VAL"></A>
+<DT> <CODE>transitions <VAR>dfa</VAR></CODE>
+<DD>
+returns the transitions of <CODE><VAR>dfa</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.compare:VAL"></A>
+<DT> <CODE>compare(<VAR>dfa1</VAR>, <VAR>dfa2</VAR>)</CODE>
+<DD>
+compares <CODE><VAR>dfa1</VAR></CODE> and <CODE><VAR>dfa2</VAR></CODE> in the total ordering on FAs.  (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.equal:VAL"></A>
+<DT> <CODE>equal(<VAR>dfa1</VAR>, <VAR>dfa2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>dfa1</VAR></CODE> and <CODE><VAR>dfa2</VAR></CODE> are equal. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.numStates:VAL"></A>
+<DT> <CODE>numStates <VAR>dfa</VAR></CODE>
+<DD>
+returns the number of states of <CODE><VAR>dfa</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.numTransitions:VAL"></A>
+<DT> <CODE>numTransitions <VAR>dfa</VAR></CODE>
+<DD>
+returns the number of transitions of <CODE><VAR>dfa</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.alphabet:VAL"></A>
+<DT> <CODE>alphabet <VAR>dfa</VAR></CODE>
+<DD>
+returns the alphabet of <CODE><VAR>dfa</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.sub:VAL"></A>
+<DT> <CODE>sub(<VAR>dfa1</VAR>, <VAR>dfa2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>dfa1</VAR></CODE> is a sub-DFA of <CODE><VAR>dfa2</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.transitionFun:VAL"></A>
+<DT> <CODE>transitionFun <VAR>dfa</VAR> (<VAR>q</VAR>, <VAR>x</VAR>)</CODE>
+<DD>
+returns the set of all states <CODE><VAR>r</VAR></CODE> such that <CODE>(<VAR>q</VAR>, <VAR>x</VAR>, <VAR>r</VAR>)</CODE> is a transition of <CODE><VAR>dfa</VAR></CODE>. Issues an error message if <CODE><VAR>q</VAR></CODE> is not a state of <CODE><VAR>dfa</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.transitionFunBackwards:VAL"></A>
+<DT> <CODE>transitionFunBackwards <VAR>dfa</VAR> (<VAR>r</VAR>, <VAR>x</VAR>)</CODE>
+<DD>
+returns the set of all states <CODE><VAR>q</VAR></CODE> such that <CODE>(<VAR>q</VAR>, <VAR>x</VAR>, <VAR>r</VAR>)</CODE> is a transition of <CODE><VAR>dfa</VAR></CODE>. Issues an error message if <CODE><VAR>r</VAR></CODE> is not a state of <CODE><VAR>dfa</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.processStr:VAL"></A>
+<DT> <CODE>processStr <VAR>dfa</VAR> (<VAR>qs</VAR>, <VAR>x</VAR>)</CODE>
+<DD>
+processes <CODE><VAR>x</VAR></CODE> from <CODE><VAR>qs</VAR></CODE> in <CODE><VAR>dfa</VAR></CODE>.  Issues an error message if <CODE><VAR>qs</VAR></CODE> has an element that's not a state of <CODE><VAR>dfa</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.accepted:VAL"></A>
+<DT> <CODE>accepted <VAR>dfa</VAR> <VAR>x</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>x</VAR></CODE> is accepted by <CODE><VAR>dfa</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.reachify:VAL"></A>
+<DT> <CODE>reachify <VAR>dfa</VAR></CODE>
+<DD>
+reachifies <CODE><VAR>dfa</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.reachified:VAL"></A>
+<DT> <CODE>reachified <VAR>dfa</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>dfa</VAR></CODE> is reachified. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.renameStates:VAL"></A>
+<DT> <CODE>renameStates(<VAR>dfa</VAR>, <VAR>rel</VAR>)</CODE>
+<DD>
+renames the states of <CODE><VAR>dfa</VAR></CODE> using the bijection <CODE><VAR>rel</VAR></CODE>.  Issues an error message if <CODE><VAR>rel</VAR></CODE> is not a bijection from the states of <CODE><VAR>dfa</VAR></CODE> to some set. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.renameStatesCanonically:VAL"></A>
+<DT> <CODE>renameStatesCanonically <VAR>dfa</VAR></CODE>
+<DD>
+canonically renames the states of <CODE><VAR>dfa</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.isomorphism:VAL"></A>
+<DT> <CODE>isomorphism(<VAR>dfa1</VAR>, <VAR>dfa2</VAR>, <VAR>rel</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>rel</VAR></CODE> is an isomorphism from <CODE><VAR>dfa1</VAR></CODE> to <CODE><VAR>dfa2</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.findIsomorphismOpt:VAL"></A>
+<DT> <CODE>findIsomorphismOpt(<VAR>dfa1</VAR>, <VAR>dfa2</VAR>)</CODE>
+<DD>
+returns <CODE>SOME</CODE> of an isomorphism from <CODE><VAR>dfa1</VAR></CODE> to <CODE><VAR>dfa2</VAR></CODE>, if <CODE><VAR>dfa1</VAR></CODE> and <CODE><VAR>dfa2</VAR></CODE> are isomorphic, and <CODE>NONE</CODE>, if <CODE><VAR>dfa1</VAR></CODE> and <CODE><VAR>dfa2</VAR></CODE> are not isomorphic.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.findIsomorphism:VAL"></A>
+<DT> <CODE>findIsomorphism(<VAR>dfa1</VAR>, <VAR>dfa2</VAR>)</CODE>
+<DD>
+tries to find an isomorphism from <CODE><VAR>dfa1</VAR></CODE> to <CODE><VAR>dfa2</VAR></CODE>.  Issues an error message if such an isomorphism doesn't exist. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.isomorphic:VAL"></A>
+<DT> <CODE>isomorphic(<VAR>dfa1</VAR>, <VAR>dfa2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>dfa1</VAR></CODE> and <CODE><VAR>dfa2</VAR></CODE> are isomorphic. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.renameAlphabet:VAL"></A>
+<DT> <CODE>renameAlphabet(<VAR>dfa</VAR>, <VAR>rel</VAR>)</CODE>
+<DD>
+renames the alphabet of <CODE><VAR>dfa</VAR></CODE> using the bijection <CODE><VAR>rel</VAR></CODE>.  Issues an error message if <CODE><VAR>rel</VAR></CODE> is not a bijection from a superset of the alphabet of <CODE><VAR>dfa</VAR></CODE> to some set. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.checkLP:VAL"></A>
+<DT> <CODE>checkLP <VAR>dfa</VAR> <VAR>lp</VAR></CODE>
+<DD>
+checks whether <CODE><VAR>lp</VAR></CODE> is valid for <CODE><VAR>dfa</VAR></CODE>, silently returning <CODE>()</CODE>, if it is, and explaining why it isn't, if it's not. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.validLP:VAL"></A>
+<DT> <CODE>validLP <VAR>dfa</VAR> <VAR>lp</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>lp</VAR></CODE> is valid for <CODE><VAR>dfa</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.findLPOpt:VAL"></A>
+<DT> <CODE>findLPOpt <VAR>dfa</VAR> (<VAR>qs</VAR>, <VAR>x</VAR>, <VAR>rs</VAR>)</CODE>
+<DD>
+returns <CODE>SOME</CODE> of a minimal labeled path for <CODE><VAR>dfa</VAR></CODE>, taking <CODE><VAR>qs</VAR></CODE> to <CODE><VAR>rs</VAR></CODE> with label <CODE><VAR>x</VAR></CODE>, if such a labeled path exists, and <CODE>NONE</CODE>, if such a labeled path does not exist.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.findLP:VAL"></A>
+<DT> <CODE>findLP <VAR>dfa</VAR> (<VAR>qs</VAR>, <VAR>x</VAR>, <VAR>rs</VAR>)</CODE>
+<DD>
+tries to find a minimal labeled path for <CODE><VAR>dfa</VAR></CODE>, taking <CODE><VAR>qs</VAR></CODE> to <CODE><VAR>rs</VAR></CODE> with label <CODE><VAR>x</VAR></CODE>. Issues an error message if there is an element of <CODE><VAR>qs</VAR></CODE> or <CODE><VAR>rs</VAR></CODE> that isn't a state of <CODE><VAR>dfa</VAR></CODE>, or such a labeled path doesn't exist. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.findAcceptingLPOpt:VAL"></A>
+<DT> <CODE>findAcceptingLPOpt <VAR>dfa</VAR> <VAR>x</VAR></CODE>
+<DD>
+returns <CODE>SOME</CODE> of a minimal, accepting labeled path for <CODE><VAR>dfa</VAR></CODE> and <CODE><VAR>x</VAR></CODE>, if such a labeled path exists, and <CODE>NONE</CODE>, if such a labeled path doesn't exist.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.findAcceptingLP:VAL"></A>
+<DT> <CODE>findAcceptingLP <VAR>dfa</VAR> <VAR>x</VAR></CODE>
+<DD>
+tries to find a minimal, accepting labeled path for <CODE><VAR>dfa</VAR></CODE> and <CODE><VAR>x</VAR></CODE>.  Issues an error message if such a labeled path doesn't exist. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.emptyStr:VAL"></A>
+<DT> <CODE>emptyStr</CODE>
+<DD>
+is the canonical DFA for the empty string. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.emptySet:VAL"></A>
+<DT> <CODE>emptySet</CODE>
+<DD>
+is the canonical DFA for the empty set. (Inherited from <CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.inter:VAL"></A>
+<DT> <CODE>inter(<VAR>dfa1</VAR>, <VAR>dfa2</VAR>)</CODE>
+<DD>
+returns the intersection of <CODE><VAR>dfa1</VAR></CODE> and <CODE><VAR>dfa2</VAR></CODE>. (Inherited from <CODE><CODE><A HREF="efa.html#EFA:STR:SPEC">EFA</A></CODE></CODE>.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.genInter:VAL"></A>
+<DT> <CODE>genInter</CODE>
+<DD>
+is defined by: 
+<PRE>
+  fun genInter nil           = (* issues an error message *)
+    | genInter [dfa]         = dfa
+    | genInter (dfa :: dfas) = inter(inter, genInter dfas)
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.determTransitionFun:VAL"></A>
+<DT> <CODE>determTransitionFun <VAR>dfa</VAR> (<VAR>q</VAR>, <VAR>a</VAR>)</CODE>
+<DD>
+returns the unique state <CODE><VAR>r</VAR></CODE> such that <CODE>(<VAR>q</VAR>, [<VAR>a</VAR>], <VAR>r</VAR>)</CODE> is a transition of <CODE><VAR>dfa</VAR></CODE>.  Issues an error message if <CODE><VAR>q</VAR></CODE> is not a state of dfa, or <CODE><VAR>a</VAR></CODE> is not a member of the alphabet of <CODE><VAR>dfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.determProcessStr:VAL"></A>
+<DT> <CODE>determProcessStr <VAR>dfa</VAR> (<VAR>q</VAR>, <VAR>x</VAR>)</CODE>
+<DD>
+uses <CODE>determTransitionFun</CODE> to deterministically process <CODE><VAR>x</VAR></CODE> from <CODE><VAR>q</VAR></CODE> in <CODE><VAR>dfa</VAR></CODE>, returning the resulting state.  Issues an error message if <CODE><VAR>q</VAR></CODE> is not a state of <CODE><VAR>dfa</VAR></CODE>, or there is a symbol of <CODE><VAR>x</VAR></CODE> that is not in the alphabet of <CODE><VAR>dfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.determAccepted:VAL"></A>
+<DT> <CODE>determAccepted <VAR>dfa</VAR> <VAR>x</VAR></CODE>
+<DD>
+uses <CODE>determProcessStr</CODE> to test whether <CODE><VAR>x</VAR></CODE> is accepted by <CODE><VAR>dfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.fromNFA:VAL"></A>
+<DT> <CODE>fromNFA <VAR>nfa</VAR></CODE>
+<DD>
+converts <CODE><VAR>nfa</VAR></CODE> to a DFA.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.determSimplified:VAL"></A>
+<DT> <CODE>determSimplified <VAR>dfa</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>dfa</VAR></CODE> is deterministically simplified.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.determSimplify:VAL"></A>
+<DT> <CODE>determSimplify(<VAR>dfa</VAR>, <VAR>bs</VAR>)</CODE>
+<DD>
+deterministically simplifies <CODE><VAR>dfa</VAR></CODE>, with reference to <CODE><VAR>bs</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.minimize:VAL"></A>
+<DT> <CODE>minimize <VAR>dfa</VAR></CODE>
+<DD>
+minimizes <CODE><VAR>dfa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.complement:VAL"></A>
+<DT> <CODE>complement(<VAR>dfa</VAR>, <VAR>bs</VAR>)</CODE>
+<DD>
+returns the complement of <CODE><VAR>dfa</VAR></CODE>, with reference to <CODE><VAR>bs</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.minus:VAL"></A>
+<DT> <CODE>minus(<VAR>dfa1</VAR>, <VAR>dfa2</VAR>)</CODE>
+<DD>
+returns the difference of <CODE><VAR>dfa1</VAR></CODE> and <CODE><VAR>dfa2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.relationship:TY"></A><CODE><B>datatype</B>&nbsp;relationship<BR>
+&nbsp;&nbsp;=&nbsp;Equal<BR>
+&nbsp;&nbsp;|&nbsp;ProperSub&nbsp;<B>of</B>&nbsp;Str.str<BR>
+&nbsp;&nbsp;|&nbsp;ProperSup&nbsp;<B>of</B>&nbsp;Str.str<BR>
+&nbsp;&nbsp;|&nbsp;Incomp&nbsp;<B>of</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str</CODE>
+<DD>
+Datatype used by <CODE>relation</CODE> function.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.relation:VAL"></A>
+<DT> <CODE>relation(<VAR>dfa1</VAR>, <VAR>dfa2</VAR>)</CODE>
+<DD>
+determines the relationship between the language accepted by <CODE><VAR>dfa1</VAR></CODE> and the language accepted by <CODE><VAR>dfa2</VAR></CODE>: 
+<UL>
+<LI>
+<CODE>Equal</CODE> means that the languages are equal;
+<LI>
+<CODE>ProperSub <VAR>x</VAR></CODE> means that the first language is a proper subset of the second, <CODE><VAR>x</VAR></CODE> is in the second language but not the first, and there is no shorter element of the second language that's not in the first one;
+<LI>
+<CODE>ProperSup <VAR>x</VAR></CODE> means that the first language is a proper superset of the second, <CODE><VAR>x</VAR></CODE> is in the first language but not the second, and there is no shorter element of the first language that's not in the second one;
+<LI>
+<CODE>Incomp(<VAR>x</VAR>, <VAR>y</VAR>)</CODE> means that the two languages are incomparable, i.e., neither is a subset of the other, <CODE><VAR>x</VAR></CODE> is in the first language but not the second, there is no shorter element of the first language that's not in the second one, <CODE><VAR>y</VAR></CODE> is in the second language but not the first, and there is no shorter element of the second language that's not in the first one.
+</UL>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.relationship:VAL"></A>
+<DT> <CODE>relationship(<VAR>dfa1</VAR>, <VAR>dfa2</VAR>)</CODE>
+<DD>
+explains the significance of the result of evaluating <CODE>relation(<VAR>dfa1</VAR>, <VAR>dfa2</VAR>)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.subset:VAL"></A>
+<DT> <CODE>subset(<VAR>dfa1</VAR>, <VAR>dfa2</VAR>)</CODE>
+<DD>
+uses <CODE>relation</CODE> to test whether the language accepted by <CODE><VAR>dfa1</VAR></CODE> is a subset of the language accepted by <CODE><VAR>dfa2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:DFA.equivalent:VAL"></A>
+<DT> <CODE>equivalent(<VAR>dfa1</VAR>, <VAR>dfa2</VAR>)</CODE>
+<DD>
+uses <CODE>relation</CODE> to test whether <CODE><VAR>dfa1</VAR></CODE> and <CODE><VAR>dfa2</VAR></CODE> are equivalent.
+<BR>
+<BR>
+
+</DL>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="reg-fa-subsect.html">Parent</A>
+   | <A HREF="index.html">Root</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Forlan Version 4.7</I><BR>
+<I>Copyright &copy; 2018 Alley Stoughton</I><BR>
+
+<HR>
+</BODY></HTML>

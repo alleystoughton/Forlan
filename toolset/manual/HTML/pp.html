@@ -1,0 +1,199 @@
+<!-- HTML/pp.html -->
+
+<!-- COPYRIGHT (c) 2012 Alley Stoughton. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The PP Module</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY><A NAME="top"></A>
+<H1 align=CENTER>Forlan Manual</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>PP</CODE> Module</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="PP:SIG:SPEC"></A><CODE>PP</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="PP:STR:SPEC"></A><CODE>PP</CODE><B> :> </B>PP<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The module implements a simple form of pretty-printing.
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>val</B>&nbsp;<A NAME="STR:PP.newline:VAL:SPEC" HREF="#STR:PP.newline:VAL">newline</A>&nbsp;<B>:</B>&nbsp;string<BR>
+<B>type</B>&nbsp;<A NAME="STR:PP.pp:TY:SPEC" HREF="#STR:PP.pp:TY">pp</A><BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.toString:VAL:SPEC" HREF="#STR:PP.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.empty:VAL:SPEC" HREF="#STR:PP.empty:VAL">empty</A>&nbsp;<B>:</B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.block:VAL:SPEC" HREF="#STR:PP.block:VAL">block</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;pp&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.decorate:VAL:SPEC" HREF="#STR:PP.decorate:VAL">decorate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;pp&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.quote:VAL:SPEC" HREF="#STR:PP.quote:VAL">quote</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-&gt;</B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.comma:VAL:SPEC" HREF="#STR:PP.comma:VAL">comma</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-&gt;</B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.colon:VAL:SPEC" HREF="#STR:PP.colon:VAL">colon</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-&gt;</B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.semicolon:VAL:SPEC" HREF="#STR:PP.semicolon:VAL">semicolon</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-&gt;</B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.fromString:VAL:SPEC" HREF="#STR:PP.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.fromStringSplitEscape:VAL:SPEC" HREF="#STR:PP.fromStringSplitEscape:VAL">fromStringSplitEscape</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;pp</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="STR:PP.newline:VAL"></A>
+<DT> <CODE>newline</CODE>
+<DD>
+is the operating system-dependent character sequence for separating lines in files. On UNIX-like systems, it is <CODE>&quot;\n&quot;</CODE>, but on Windows it is <CODE>&quot;\r\n&quot;</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PP.pp:TY"></A><CODE><B>type</B>&nbsp;pp</CODE>
+<DD>
+The type of pretty-printing expressions.  The module can be understood as if <CODE>pp</CODE> were implemented as 
+<PRE>
+  datatype pp = Block    of bool * pp list
+              | Decorate of string * pp * string
+</PRE>
+ but it's actually implemented in a way allowing more efficient processing.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PP.toString:VAL"></A>
+<DT> <CODE>toString <VAR>pp</VAR></CODE>
+<DD>
+turns <CODE><VAR>pp</VAR></CODE> into a string where, if possible, all of the string's lines are no longer than the current printing line length (see <CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.getPrintingLineLength:VAL:SPEC">getPrintingLineLength</A></CODE></CODE>). This translation is carried out using a recursive function that is supplied a value <CODE><VAR>pp</VAR></CODE> of <CODE>pp</CODE> to be turned into a string, together with the current <EM>indentation</EM> <CODE><VAR>ind</VAR></CODE> and the <EM>after size</EM> <CODE><VAR>aft</VAR></CODE>, i.e., the size of the string that will immediately follow the final line of the translation of <CODE><VAR>pp</VAR></CODE>.  A recursive call is <EM>not</EM> responsible for generating the <CODE><VAR>ind</VAR></CODE> spaces that will preceed <CODE><VAR>pp</VAR></CODE>'s translation in the overall translation.
+<P>
+<CODE>Block(<VAR>spaceNoBreak</VAR>, <VAR>pps</VAR>)</CODE> is turned into a string consisting of one of more lines, all but the first of which begin with <CODE><VAR>ind</VAR></CODE> spaces. This is done by recursively translating the elements of <CODE><VAR>pps</VAR></CODE>, in sequence, with appropriate indentations and after sizes. If the translations of a sequence of elements of <CODE><VAR>pps</VAR></CODE>&#8212;separated by blanks iff <CODE><VAR>spaceNoBreak</VAR></CODE> is true&#8212;fit on a single line (including the <CODE><VAR>ind</VAR></CODE> initial spaces, and leaving room for <CODE><VAR>aft</VAR></CODE> additional characters, if the final element of <CODE><VAR>pps</VAR></CODE> is included), then the elements' translations are combined in this way.  But when an element's translation requires multiples lines, it is never combined with other translations, either before or after.  The translation of the final element of <CODE><VAR>pp</VAR></CODE>, whether combined with other translations or not, must always be computed by taking into account that <CODE><VAR>aft</VAR></CODE> additional characters will immediately follow its last line.
+<P>
+<CODE>Decorate(<VAR>s1</VAR>, <VAR>pp</VAR>, <VAR>s2</VAR>)</CODE> is turned into the string consisting of the concatenation of: 
+<UL>
+<LI>
+<CODE><VAR>s1</VAR></CODE>,
+<LI>
+the result of translating <CODE><VAR>pp</VAR></CODE> with indentation <CODE><VAR>ind</VAR> + size <VAR>s1</VAR></CODE>, and after size <CODE>size <VAR>s2</VAR> + <VAR>aft</VAR></CODE>, and 
+<LI>
+<CODE><VAR>s2</VAR></CODE>.
+</UL>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PP.empty:VAL"></A>
+<DT> <CODE>empty</CODE>
+<DD>
+is <CODE>Block(true, nil)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PP.block:VAL"></A>
+<DT> <CODE>block</CODE>
+<DD>
+is <CODE>Block</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PP.decorate:VAL"></A>
+<DT> <CODE>decorate</CODE>
+<DD>
+is <CODE>Decorate</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PP.quote:VAL"></A>
+<DT> <CODE>quote <VAR>pp</VAR></CODE>
+<DD>
+returns <CODE>Decorate(&quot;\&quot;&quot;, <VAR>pp</VAR>, &quot;\&quot;&quot;)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PP.comma:VAL"></A>
+<DT> <CODE>comma <VAR>pp</VAR></CODE>
+<DD>
+returns <CODE>Decorate(&quot;&quot;, <VAR>pp</VAR>, &quot;,&quot;)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PP.colon:VAL"></A>
+<DT> <CODE>colon <VAR>pp</VAR></CODE>
+<DD>
+returns <CODE>Decorate(&quot;&quot;, <VAR>pp</VAR>, &quot;:&quot;)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PP.semicolon:VAL"></A>
+<DT> <CODE>semicolon <VAR>pp</VAR></CODE>
+<DD>
+returns <CODE>Decorate(&quot;&quot;, <VAR>pp</VAR>, &quot;;&quot;)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PP.fromString:VAL"></A>
+<DT> <CODE>fromString <VAR>s</VAR></CODE>
+<DD>
+returns <CODE>Decorate(<VAR>s</VAR>, empty, &quot;&quot;)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PP.fromStringSplitEscape:VAL"></A>
+<DT> <CODE>fromStringSplitEscape <VAR>s</VAR></CODE>
+<DD>
+returns 
+<PRE>
+  Block(false,
+        map (fn c =&gt; fromString(Char.toString c))
+            (explode <VAR>s</VAR>))
+</PRE>
+ where <CODE>Char.toString</CODE> escapes non-printable characters (as well as double quotes and backslashes) using SML escape sequences.
+<BR>
+<BR>
+
+</DL>
+<H4>Discussion</H4>
+<P>
+For example, if the current printing line length is <CODE>30</CODE>, running 
+<PRE>
+  val pp = 
+        PP.decorate
+        (&quot;(&quot;,
+         PP.block
+         (true,
+          [PP.fromString &quot;once&quot;, PP.fromString &quot;upon&quot;, PP.fromString &quot;a&quot;,
+           PP.fromString &quot;time&quot;]),
+         &quot;)&quot;);
+  val pp' =
+        PP.decorate
+        (&quot;[&quot;,
+         PP.block(false, [pp, pp, pp]),
+         &quot;]&quot;);
+  print(PP.toString pp' ^ &quot;\n&quot;);
+</PRE>
+ results in the output 
+<PRE>
+  [(once upon a
+    time)
+   (once upon a
+    time)
+   (once upon a
+    time)]
+</PRE>
+ And, if the current printing line length is <CODE>60</CODE>, running the same code results in 
+<PRE>
+  [(once upon a time)(once upon a time)(once upon a time)]
+</PRE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="utility-subsect.html">Parent</A>
+   | <A HREF="index.html">Root</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Forlan Version 4.7</I><BR>
+<I>Copyright &copy; 2018 Alley Stoughton</I><BR>
+
+<HR>
+</BODY></HTML>

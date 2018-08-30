@@ -1,0 +1,14 @@
+val locSimped = Reg.locallySimplified Reg.obviousSubset;
+locSimped(Reg.fromString "(1 + 00*1)*00*");
+locSimped(Reg.fromString "(0 + 1)*0");
+fun locSimp nOpt =
+      Reg.locallySimplify(nOpt, Reg.obviousSubset);
+locSimp NONE (Reg.fromString "% + 0*0(0 + 1)* + 1*1(0 + 1)*");
+Reg.output("", #2 it);
+locSimp NONE (Reg.fromString "% + 1*0(0 + 1)* + 0*1(0 + 1)*");
+Reg.output("", #2 it);
+locSimp NONE (Reg.fromString "(1 + 00*1)*00*");
+Reg.output("", #2 it);
+Reg.locallySimplifyTrace
+(NONE, Reg.obviousSubset)
+(Reg.fromString "1*(01*01*)*");

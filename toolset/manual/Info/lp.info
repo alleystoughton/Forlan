@@ -1,0 +1,33 @@
+@FILES
+  ["lp"; "The LP Module";]
+@SIGNATURE LP "lp" [
+  @TYPES 
+    @TYPE pumping_division
+    @DATATYPE concr [ Sym Cons]
+    @TYPE lp
+  @VALS 
+    input
+    length
+    checkPumpingDivision
+    toPP
+    equal
+    toConcr
+    sym
+    fromString
+    startState
+    join
+    label
+    splitAt
+    output
+    cons
+    validPumpingDivision
+    findValidPumpingDivision
+    strsOfValidPumpingDivision
+    pumpValidPumpingDivision
+    compare
+    endState
+    findValidPumpingDivisionOpt
+    fromConcr
+    toString
+]
+@STRUCTURE LP "lp" LP

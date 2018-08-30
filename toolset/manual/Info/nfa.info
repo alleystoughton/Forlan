@@ -1,0 +1,56 @@
+@FILES
+  ["nfa"; "The NFA Module";]
+@SIGNATURE NFA "nfa" [
+  @TYPES 
+    @TYPE nfa
+  @VALS 
+    toPP
+    renameStatesCanonically
+    isomorphism
+    fromString
+    startState
+    fromEFA
+    injToEFA
+    output
+    inter
+    states
+    numStates
+    accepted
+    sub
+    findAcceptingLP
+    validLP
+    fromSym
+    findLP
+    isomorphic
+    findAcceptingLPOpt
+    findLPOpt
+    valid
+    input
+    alphabet
+    transitionFun
+    reachified
+    simplified
+    transitionFunBackwards
+    emptyStr
+    equal
+    checkLP
+    projFromEFA
+    reachify
+    findIsomorphism
+    renameStates
+    simplify
+    prefix
+    transitions
+    numTransitions
+    findIsomorphismOpt
+    acceptingStates
+    projFromFA
+    compare
+    processStr
+    renameAlphabet
+    toString
+    emptySet
+    injToFA
+    genInter
+]
+@STRUCTURE NFA "nfa" NFA

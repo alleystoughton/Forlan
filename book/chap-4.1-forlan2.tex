@@ -1,0 +1,59 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ pt\ =\ PT.input\ "";
+\item[]\textsl{@\ }A(B,\ A(%),\ B(0))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pt\ =\ -\ :\ pt}
+\item[]\textsl{-\ }Sym.output("",\ PT.rootLabel\ pt);
+\item[]\textsl{A}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Str.output("",\ PT.yield\ pt);
+\item[]\textsl{B0}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Gram.validPT\ gram\ pt;
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }val\ pt'\ =\ PT.input\ "";
+\item[]\textsl{@\ }E(E(E(<id>),\ <times>,\ E(<id>)),\ <plus>,\ E(<id>))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pt'\ =\ -\ :\ pt}
+\item[]\textsl{-\ }Sym.output("",\ PT.rootLabel\ pt');
+\item[]\textsl{E}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Str.output("",\ PT.yield\ pt');
+\item[]\textsl{<id><times><id><plus><id>}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Gram.validPT\ gram'\ pt';
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }Gram.checkPT\ gram\ pt';
+\item[]\textsl{invalid\ production:\ "E\ ->\ E<plus>E"}
+\item[]
+\item[]\textsl{uncaught\ exception\ Error}
+\item[]\textsl{-\ }Gram.checkPT\ gram'\ pt;
+\item[]\textsl{invalid\ production:\ "A\ ->\ BAB"}
+\item[]
+\item[]\textsl{uncaught\ exception\ Error}
+\item[]\textsl{-\ }PT.input\ "";
+\item[]\textsl{@\ }A(B,%,B)
+\item[]\textsl{@\ }.
+\item[]\textsl{line\ 1:\ "%"\ unexpected}
+\item[]
+\item[]\textsl{uncaught\ exception\ Error}
+\end{list}

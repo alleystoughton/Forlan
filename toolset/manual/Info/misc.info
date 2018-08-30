@@ -1,0 +1,9 @@
+@FILES
+  ["misc"; "The Misc Module";]
+@SIGNATURE MISC "misc" [
+  @VALS 
+    runJForlan
+    makeTempFile
+    removeWhiteSpace
+]
+@STRUCTURE Misc "misc" MISC

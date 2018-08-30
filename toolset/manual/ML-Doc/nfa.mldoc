@@ -1,0 +1,592 @@
+<!-- nfa.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The NFA Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/NFA/ Module</HEAD>
+
+<PP>This module defines the abstract type of nondeterministic finite
+automata (NFAs).</PP>
+
+<STRUCTURE STRID="NFA">
+<OPAQUE>
+<SIGBODY SIGID="NFA" FILE=NFA>
+
+<SPEC>
+<TYPE><ID>nfa</ID></TYPE>
+<COMMENT>
+<PP>The abstract type of NFAs, which is a proper subset of the set of
+EFAs (and thus FAs).</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>injToFA<TY>nfa -> FA.fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+injToFA <ARG/nfa/
+</PROTOTY>
+<PP>inject <CD><ARG/nfa/</CD> to have type <CD>FA.fa</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>injToEFA<TY>nfa -> EFA.efa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+injToEFA <ARG/nfa/
+</PROTOTY>
+<PP>inject <CD><ARG/nfa/</CD> to have type <CD>EFA.efa</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>valid<TY>FA.fa -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+valid <ARG/fa/
+</PROTOTY>
+<PP>tests whether <CD><ARG/fa/</CD> is an NFA.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>projFromFA<TY>FA.fa -> nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+projFromFA <ARG/fa/
+</PROTOTY>
+<PP>projects <CD><ARG/fa/</CD> to have type <CD>nfa</CD>.  Issues
+an error message if <CD><ARG/fa/</CD> is not an NFA.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>projFromEFA<TY>EFA.efa -> nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+projFromEFA <ARG/efa/
+</PROTOTY>
+<PP>projects <CD><ARG/efa/</CD> to have type <CD>nfa</CD>.  Issues
+an error message if <CD><ARG/efa/</CD> is not an NFA.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs an NFA from a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs an NFA from the file named <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>nfa -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toPP <ARG/fa/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/nfa/</CD>.
+(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>nfa -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/nfa/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/nfa/</CD> to a string.  (Inherited
+from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>string * nfa -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+output(<ARG/fil/, <ARG/nfa/)
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/nfa/</CD> to the file <CD><ARG/fil/</CD>.
+(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>states<TY>nfa -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+states <ARG/nfa/
+</PROTOTY>
+<PP>returns the states of <CD><ARG/nfa/</CD>.  (Inherited
+from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>startState<TY>nfa -> Sym.sym</TY></VAL>
+<COMMENT>
+<PROTOTY>
+startState <ARG/nfa/
+</PROTOTY>
+<PP>returns the start state of <CD><ARG/nfa/</CD>.  (Inherited
+from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>acceptingStates<TY>nfa -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+acceptingStates <ARG/nfa/
+</PROTOTY>
+<PP>returns the accepting states of <CD><ARG/nfa/</CD>.  (Inherited
+from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>transitions<TY>nfa -> Tran.tran Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+transitions <ARG/nfa/
+</PROTOTY>
+<PP>returns the transitions of <CD><ARG/nfa/</CD>.
+(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>nfa Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compare(<ARG/nfa1/, <ARG/nfa2/)
+</PROTOTY>
+<PP>compares <CD><ARG/nfa1/</CD> and <CD><ARG/nfa2/</CD> in the total
+ordering on FAs.  (Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>nfa * nfa -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal(<ARG/nfa1/, <ARG/nfa2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/nfa1/</CD> and <CD><ARG/nfa2/</CD> are
+equal. (Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>numStates<TY>nfa -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+numStates <ARG/nfa/
+</PROTOTY>
+<PP>returns the number of states of <CD><ARG/nfa/</CD>.
+(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>numTransitions<TY>nfa -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+numTransitions <ARG/nfa/
+</PROTOTY>
+<PP>returns the number of transitions of <CD><ARG/nfa/</CD>.
+(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>alphabet<TY>nfa -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+alphabet <ARG/nfa/
+</PROTOTY>
+<PP>returns the alphabet of <CD><ARG/nfa/</CD>.
+(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>sub<TY>nfa * nfa -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+sub(<ARG/nfa1/, <ARG/nfa2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/nfa1/</CD> is a sub-NFA of <CD><ARG/nfa2/</CD>.
+(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>transitionFun<TY>nfa -> Sym.sym * Str.str -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+transitionFun <ARG/nfa/ (<ARG/q/, <ARG/x/)
+</PROTOTY>
+<PP>returns the set of all states <CD><ARG/r/</CD> such that
+<CD>(<ARG/q/, <ARG/x/, <ARG/r/)</CD> is a transition of <CD><ARG/nfa/</CD>.
+Issues an error message if <CD><ARG/q/</CD> is not a state of
+<CD><ARG/nfa/</CD>. (Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>transitionFunBackwards
+<TY>nfa -> Sym.sym * Str.str -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+transitionFunBackwards <ARG/nfa/ (<ARG/r/, <ARG/x/)
+</PROTOTY>
+<PP>returns the set of all states <CD><ARG/q/</CD> such that
+<CD>(<ARG/q/, <ARG/x/, <ARG/r/)</CD> is a transition of <CD><ARG/nfa/</CD>.
+Issues an error message if <CD><ARG/r/</CD> is not a state of
+<CD><ARG/nfa/</CD>. (Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>processStr<TY>nfa -> Sym.sym Set.set * Str.str -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+processStr <ARG/nfa/ (<ARG/qs/, <ARG/x/)
+</PROTOTY>
+<PP>processes <CD><ARG/x/</CD> from <CD><ARG/qs/</CD>
+in <CD><ARG/nfa/</CD>.  Issues an error message if <CD><ARG/qs/</CD>
+has an element that's not a state of <CD><ARG/nfa/</CD>. (Inherited
+from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>accepted<TY>nfa -> Str.str -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+accepted <ARG/nfa/ <ARG/x/
+</PROTOTY>
+<PP>tests whether <CD><ARG/x/</CD> is accepted by <CD><ARG/nfa/</CD>.
+(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reachify<TY>nfa -> nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+reachify <ARG/nfa/
+</PROTOTY>
+<PP>reachifies <CD><ARG/nfa/</CD>. (Inherited
+from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reachified<TY>nfa -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+reachified <ARG/nfa/
+</PROTOTY>
+<PP>tests whether <CD><ARG/nfa/</CD> is reachified.
+(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>renameStates<TY>nfa * SymRel.sym_rel -> nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+renameStates(<ARG/nfa/, <ARG/rel/)
+</PROTOTY>
+<PP>renames the states of <CD><ARG/nfa/</CD> using the
+bijection <CD><ARG/rel/</CD>.  Issues an error message if
+<CD><ARG/rel/</CD> is not a bijection from the states of <CD><ARG/nfa/</CD>
+to some set. (Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>renameStatesCanonically<TY>nfa -> nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+renameStatesCanonically <ARG/nfa/
+</PROTOTY>
+<PP>canonically renames the states of <CD><ARG/nfa/</CD>.
+(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isomorphism<TY>(nfa * nfa * SymRel.sym_rel) -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isomorphism(<ARG/nfa1/, <ARG/nfa2/, <ARG/rel/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is an isomorphism from <CD><ARG/nfa1/</CD>
+to <CD><ARG/nfa2/</CD>. (Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findIsomorphismOpt<TY>nfa * nfa -> SymRel.sym_rel option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+findIsomorphismOpt(<ARG/nfa1/, <ARG/nfa2/)
+</PROTOTY>
+<PP>returns <CD>SOME</CD> of an isomorphism from <CD><ARG/nfa1/</CD>
+to <CD><ARG/nfa2/</CD>, if <CD><ARG/nfa1/</CD> and <CD><ARG/nfa2/</CD> are
+isomorphic, and <CD>NONE</CD>, if <CD><ARG/nfa1/</CD> and <CD><ARG/nfa2/</CD>
+are not isomorphic.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findIsomorphism<TY>nfa * nfa -> SymRel.sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+findIsomorphism(<ARG/nfa1/, <ARG/nfa2/)
+</PROTOTY>
+<PP>tries to find an isomorphism from <CD><ARG/nfa1/</CD>
+to <CD><ARG/nfa2/</CD>.  Issues an error message if such an
+isomorphism doesn't exist. (Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isomorphic<TY>nfa * nfa -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isomorphic(<ARG/nfa1/, <ARG/nfa2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/nfa1/</CD> and <CD><ARG/nfa2/</CD> are
+isomorphic. (Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>renameAlphabet<TY>nfa * SymRel.sym_rel -> nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+renameAlphabet(<ARG/nfa/, <ARG/rel/)
+</PROTOTY>
+<PP>renames the alphabet of <CD><ARG/nfa/</CD> using the
+bijection <CD><ARG/rel/</CD>.  Issues an error message if
+<CD><ARG/rel/</CD> is not a bijection from a superset of
+the alphabet of <CD><ARG/nfa/</CD> to some set.
+(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>checkLP<TY>nfa -> LP.lp -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+checkLP <ARG/nfa/ <ARG/lp/
+</PROTOTY>
+<PP>checks whether <CD><ARG/lp/</CD> is valid for <CD><ARG/nfa/</CD>,
+silently returning <CD>()</CD>, if it is, and explaining why it isn't,
+if it's not. (Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>validLP<TY>nfa -> LP.lp -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+validLP <ARG/nfa/ <ARG/lp/
+</PROTOTY>
+<PP>tests whether <CD><ARG/lp/</CD> is valid for <CD><ARG/nfa/</CD>.
+(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findLPOpt
+<TY>nfa -> Sym.sym Set.set * Str.str * Sym.sym Set.set -> LP.lp option</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+findLPOpt <ARG/nfa/ (<ARG/qs/, <ARG/x/, <ARG/rs/)
+</PROTOTY>
+<PP>returns <CD>SOME</CD> of a minimal labeled path
+for <CD><ARG/nfa/</CD>, taking <CD><ARG/qs/</CD> to <CD><ARG/rs/</CD>
+with label <CD><ARG/x/</CD>, if such a labeled path exists,
+and <CD>NONE</CD>, if such a labeled path does not exist.
+<PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findLP
+<TY>nfa -> Sym.sym Set.set * Str.str * Sym.sym Set.set -> LP.lp</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+findLP <ARG/nfa/ (<ARG/qs/, <ARG/x/, <ARG/rs/)
+</PROTOTY>
+<PP>tries to find a minimal labeled path for <CD><ARG/nfa/</CD>,
+taking <CD><ARG/qs/</CD> to <CD><ARG/rs/</CD> with label <CD><ARG/x/</CD>.
+Issues an error message if there is an element of <CD><ARG/qs/</CD> or
+<CD><ARG/rs/</CD> that isn't a state of <CD><ARG/nfa/</CD>, or such a
+labeled path doesn't exist. (Inherited
+from <CD><STRREF TOPID/FA/</CD>.)<PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findAcceptingLPOpt<TY>nfa -> Str.str -> LP.lp option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+findAcceptingLPOpt <ARG/nfa/ <ARG/x/
+</PROTOTY>
+<PP>returns <CD>SOME</CD> of a minimal, accepting labeled path
+for <CD><ARG/nfa/</CD> and <CD><ARG/x/</CD>, if such a labeled path
+exists, and <CD>NONE</CD>, if such a labeled path doesn't exist.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findAcceptingLP<TY>nfa -> Str.str -> LP.lp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+findAcceptingLP <ARG/nfa/ <ARG/x/
+</PROTOTY>
+<PP>tries to find a minimal, accepting labeled path
+for <CD><ARG/nfa/</CD> and <CD><ARG/x/</CD>.  Issues an error message
+if such a labeled path doesn't exist. (Inherited
+from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>emptyStr<TY>nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+emptyStr
+</PROTOTY>
+<PP>is the canonical NFA for the empty string. (Inherited
+from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>emptySet<TY>nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+emptySet
+</PROTOTY>
+<PP>is the canonical NFA for the empty set. (Inherited
+from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromSym<TY>Sym.sym -> nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromSym <ARG/a/
+</PROTOTY>
+<PP>returns the canonical NFA for <CD><ARG/a/</CD>.
+(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>simplify<TY>nfa -> nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+simplify <ARG/nfa/
+</PROTOTY>
+<PP>simplifies <CD><ARG/nfa/</CD>. (Inherited
+from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>simplified<TY>nfa -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+simplified <ARG/nfa/
+</PROTOTY>
+<PP>tests whether <CD><ARG/nfa/</CD> is simplified.
+(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inter<TY>nfa * nfa -> nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+inter(<ARG/nfa1/, <ARG/nfa2/)
+</PROTOTY>
+<PP>returns the intersection of <CD><ARG/nfa1/</CD> and <CD><ARG/nfa2/</CD>.
+(Inherited from <CD><STRREF TOPID/EFA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genInter<TY>nfa list -> nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genInter
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  fun genInter nil           = (* issues an error message *)
+    | genInter [nfa]         = nfa
+    | genInter (nfa :: nfas) = inter(inter, genInter nfas)
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>prefix<TY>nfa -> nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+prefix <ARG/nfa/
+</PROTOTY>
+<PP>returns the prefix-closure of <CD><ARG/nfa/</CD>. (Inherited
+from <CD><STRREF TOPID/EFA/</CD>.)</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromEFA<TY>EFA.efa -> nfa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromEFA <ARG/efa/
+</PROTOTY>
+<PP>converts <CD><ARG/efa/</CD> to an NFA.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

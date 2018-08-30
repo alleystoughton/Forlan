@@ -1,0 +1,171 @@
+(********************************* forlan.cm *********************************)
+
+(* Copyright (C) 2012 Alley Stoughton
+
+   The file is part of the Forlan toolset for experimenting with
+   formal languages.  See the file COPYING.txt for copying and
+   usage restrictions. *)
+
+(********************************** Forlan ***********************************)
+
+(* To generate a heap image for Forlan, evaluate the following expressions:
+
+     CM.make();
+     open TopLevel;
+     Export.export();
+*)
+
+Library
+
+  source(-)
+
+is
+
+(************************* Basis Library and Compiler ************************)
+
+  $/basis.cm
+  $smlnj/cm.cm
+  $smlnj/compiler.cm
+  $smlnj/compiler/compiler.cm
+
+(**************************** Add MLDoc as CM Tool ***************************)
+
+(* tell CM to process .mldoc files with the script mldoc-tool, producing
+   .sig files *)
+
+  mldoc-ext.cm : tool
+
+(********************************* Auxiliary **********************************)
+
+  string-aux.mldoc  (* => string-aux.sig *)
+  string-aux.sml
+
+  list-aux.mldoc  (* => list-aux.sig *)
+  list-aux.sml
+
+(********************************* Low-level **********************************)
+
+  version.mldoc  (* => version.sig *)
+  version.sml
+
+  params.mldoc  (* => params.sig *)
+  params.sml
+
+  pp.mldoc  (* => pp.sig *)
+  pp.sml
+
+  messages.mldoc  (* => messages.sig *)
+  messages.sml
+
+  use.mldoc  (* => use.sig *)
+  use.sml
+
+  debug.mldoc  (* => debug.sig *)
+  debug.sml
+
+  system.mldoc  (* => system.sig *)
+  system.sml
+
+(******************** Sorting, Sets, Relations and Tables ********************)
+
+  sort.mldoc  (* => sort.sig *)
+  sort.sml
+
+  set.mldoc  (* => set.sig *)
+  set.sml
+
+  rel.mldoc  (* => rel.sig *)
+  rel.sml
+
+  tab.mldoc  (* => tab.sig *)
+  tab.sml
+
+(****************************** Lexical Analysis *****************************)
+
+  lex.mldoc  (* => lex.sig *)
+  lex.sml
+
+(**************************** Symbols and Strings ****************************)
+
+  sym.mldoc  (* => sym.sig *)
+  sym.sml
+
+  sym-set.mldoc  (* => sym-set.sig *)
+  sym-set.sml
+
+  sym-rel.mldoc  (* => sym-rel.sig *)
+  sym-rel.sml
+
+  str.mldoc  (* => str.sig *)
+  str.sml
+
+  str-set.mldoc  (* => str-set.sig *)
+  str-set.sml
+
+
+(****************** Finite Automata and Regular Expressions ******************)
+
+  reg.mldoc  (* => reg.sig *)
+  reg.sml
+
+  lp.mldoc  (* => lp.sig *)
+  lp.sml
+
+  tran.mldoc  (* => tran.sig *)
+  tran.sml
+
+  tran-set.mldoc  (* => tran-set.sig *)
+  tran-set.sml
+
+  fa.mldoc  (* => fa.sig *)
+  fa.sml
+
+  efa.mldoc  (* => efa.sig *)
+  efa.sml
+
+  nfa.mldoc  (* => nfa.sig *)
+  nfa.sml
+
+  dfa.mldoc  (* => dfa.sig *)
+  dfa.sml
+
+  tran-reg.mldoc  (* => tran-reg.sig *)
+  tran-reg.sml
+
+  tran-reg-set.mldoc  (* => tran-reg-set.sig *)
+  tran-reg-set.sml
+
+  rfa.mldoc  (* => rfa.sig *)
+  rfa.sml
+
+(********************************** Grammars *********************************)
+
+  pt.mldoc  (* => pt.sig *)
+  pt.sml
+
+  prod.mldoc  (* => prod.sig *)
+  prod.sml
+
+  prod-set.mldoc  (* => prod-set.sig *)
+  prod-set.sml
+
+  gram.mldoc  (* => gram.sig *)
+  gram.sml
+
+(********************************* Programs **********************************)
+
+  var.mldoc  (* => var.sig *)
+  var.sml
+
+  var-set.mldoc  (* => var-set.sig *)
+  var-set.sml
+
+  prog.mldoc  (* => prog.sig *)
+  prog.sml
+
+(************************** Top-level and Exporting **************************)
+
+  top-level.sml
+
+  export.sig
+  export.sml

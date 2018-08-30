@@ -1,0 +1,2 @@
+eliminateState(rfa, Sym.fromString "A");
+eliminateState(rfa, Sym.fromString "D");

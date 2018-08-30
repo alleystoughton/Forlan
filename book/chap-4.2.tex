@@ -1,0 +1,137 @@
+\section{Isomorphism of Grammars}
+\label{IsomorphismOfGrammars}
+
+In this section, we study grammar isomorphism, i.e., the way in
+which grammars can have the same structure, even though they may have
+different variables.
+
+\subsection{Definition and Algorithm}
+
+Suppose $G$ is the grammar with variables $\Asf$ and $\Bsf$,
+start variable $\Asf$ and productions:
+\begin{align*}
+  \Asf &\fun \zerosf\Asf\onesf \mid \Bsf , \\
+  \Bsf &\fun \% \mid \twosf\Asf .
+\end{align*}
+And, suppose $H$ is the grammar with variables $\Bsf$ and $\Asf$,
+start variable $\Bsf$ and productions:
+\begin{align*}
+  \Bsf &\fun \zerosf\Bsf\onesf \mid \Asf , \\
+  \Asf &\fun \% \mid \twosf\Bsf .
+\end{align*}
+$H$ can be formed from $G$ by renaming the variables $\Asf$ and $\Bsf$
+of $G$ to $\Bsf$ and $\Asf$, respectively.  As a result, we say that
+$G$ and $H$ are isomorphic.
+
+Suppose $G$ is as before, but that $H$ is the grammar with variables
+$\twosf$ and $\Asf$, start variable $\twosf$ and productions:
+\begin{align*}
+  \twosf &\fun \zerosf\twosf\onesf \mid \Asf , \\
+  \Asf &\fun \% \mid \twosf\twosf .
+\end{align*}
+Then $H$ can be formed from $G$ by renaming the variables $\Asf$ and
+$\Bsf$ to $\twosf$ and $\Asf$, respectively.  But we shouldn't
+consider $G$ and $H$ to be isomorphic, since the symbol $\twosf$ is in
+both $\alphabet\,G$ and $Q_H$.  In fact, $G$ and $H$ generate
+different languages.  A grammar's variables (e.g., $\Asf$) can't be
+renamed to elements of the grammar's alphabet (e.g., $\twosf$).
+
+An \emph{isomorphism} $h$ from a grammar $G$ to a grammar $H$ is
+a bijection from $Q_G$ to $Q_H$ such that:
+\begin{itemize}
+\item $h$ turns $G$ into $H$; and
+
+\item $\alphabet\,G\cap Q_H=\emptyset$, i.e., none of the symbols in
+  $G$'s alphabet are variables of $H$.
+\end{itemize}
+We say that $G$ and $H$ are \emph{isomorphic} iff there is an
+isomorphism between $G$ and $H$.
+
+As expected, we have that the relation of being isomorphic is
+reflexive on $\Gram$, symmetric and transitive, and that isomorphism
+implies having the same alphabet and equivalence.
+
+There is an algorithm for finding an isomorphism from one grammar to
+another, if one exists, or reporting that there is no such
+isomorphism.  It's similar to the algorithm for finding an isomorphism
+between finite automata.
+
+The function $\renameVariables$ takes in a pair $(G,f)$, where $G$ is
+a grammar and $f$ is a bijection from $Q_G$ to a set of symbols with
+the property that $\range\,f\cap\alphabet\,G=\emptyset$, and returns
+the grammar produced from $G$ by renaming $G$'s variables using the
+bijection $f$.  The resulting grammar will be isomorphic to $G$.
+
+The following function is a special case of $\renameVariables$.
+The function $\renameVariablesCanonically\in\Gram\fun\Gram$ renames the
+variables of a grammar $G$ to:
+\begin{itemize}
+\item $\mathsf{A}$, $\mathsf{B}$, etc., when the grammar has no more
+  than 26 variables (the smallest variable of $G$ will be renamed to
+  $\mathsf{A}$, the next smallest one to $\mathsf{B}$, etc.); or
+
+\item $\mathsf{\langle 1\rangle}$, $\mathsf{\langle 2\rangle}$, etc.,
+  otherwise.
+\end{itemize}
+These variables will actually be surrounded by a uniform number of
+extra brackets, if this is needed to make the new grammar's variables
+and the original grammar's alphabet be disjoint.
+
+\subsection{Isomorphism Finding/Checking in Forlan}
+
+The Forlan module \texttt{Gram} contains the following functions
+for finding and processing isomorphisms in Forlan:
+\begin{verbatim}
+val isomorphism                : gram * gram * sym_rel -> bool
+val findIsomorphism            : gram * gram -> sym_rel
+val isomorphic                 : gram * gram -> bool
+val renameVariables            : gram * sym_rel -> gram
+val renameVariablesCanonically : gram -> gram
+\end{verbatim}
+The function \texttt{isomorphism} checks whether a relation on symbols
+is an isomorphism from one grammar to another.  The function
+\texttt{findIsomorphism} tries to find an isomorphism from one grammar
+to another; it issues an error message if there isn't one.  The
+function \texttt{isomorphic} checks whether two grammars are
+isomorphic.  The function \texttt{renameVariables} issues an error
+message if the supplied relation isn't a bijection from the set of
+variables of the supplied grammar to some set; otherwise, it returns
+the result of $\renameVariables$.  And the function
+\texttt{renameVariablesCanonically} acts like
+$\renameVariablesCanonically$.
+
+Suppose the identifier \texttt{gram} of type \texttt{gram} is bound to the
+grammar with variables $\Asf$ and $\Bsf$, start variable $\Asf$ and
+productions:
+\begin{align*}
+\Asf &\fun \zerosf\Asf\onesf \mid \Bsf , \\
+\Bsf &\fun \% \mid \twosf\Asf .
+\end{align*}
+Suppose the identifier \texttt{gram'} of type \texttt{gram} is bound to
+the grammar with variables $\Bsf$ and $\Asf$, start variable $\Bsf$
+and productions:
+\begin{align*}
+\Bsf &\fun \zerosf\Bsf\onesf \mid \Asf , \\ \Asf &\fun \% \mid
+\twosf\Bsf .
+\end{align*}
+And, suppose the identifier \texttt{gram''} of type \texttt{gram} is bound
+to the grammar with variables $\twosf$ and $\Asf$, start variable
+$\twosf$ and productions:
+\begin{align*}
+\twosf &\fun \zerosf\twosf\onesf \mid \Asf , \\
+\Asf &\fun \% \mid \twosf\twosf .
+\end{align*}
+
+Here are some examples of how the above functions can be used:
+\input{chap-4.2-forlan1}
+
+\subsection{Notes}
+
+Considering grammar isomorphism is non-traditional, but relatively
+straightforward.  We were led to doing so mostly because of the need to
+support variable renaming.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

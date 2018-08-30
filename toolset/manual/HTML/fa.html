@@ -1,0 +1,556 @@
+<!-- HTML/fa.html -->
+
+<!-- COPYRIGHT (c) 2012 Alley Stoughton. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The FA Module</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY><A NAME="top"></A>
+<H1 align=CENTER>Forlan Manual</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>FA</CODE> Module</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="FA:SIG:SPEC"></A><CODE>FA</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="FA:STR:SPEC"></A><CODE>FA</CODE><B> :> </B>FA<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+This module defines the abstract type of finite automata (FAs).
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>type</B>&nbsp;<A NAME="STR:FA.concr:TY:SPEC" HREF="#STR:FA.concr:TY">concr</A>&nbsp;=&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stats&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;<B>:</B>&nbsp;Sym.sym,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;accepting&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trans&nbsp;<B>:</B>&nbsp;Tran.tran&nbsp;Set.set<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>
+<B>type</B>&nbsp;<A NAME="STR:FA.fa:TY:SPEC" HREF="#STR:FA.fa:TY">fa</A><BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.valid:VAL:SPEC" HREF="#STR:FA.valid:VAL">valid</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.fromConcr:VAL:SPEC" HREF="#STR:FA.fromConcr:VAL">fromConcr</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.toConcr:VAL:SPEC" HREF="#STR:FA.toConcr:VAL">toConcr</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;concr<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.fromString:VAL:SPEC" HREF="#STR:FA.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.input:VAL:SPEC" HREF="#STR:FA.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.toPP:VAL:SPEC" HREF="#STR:FA.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.toString:VAL:SPEC" HREF="#STR:FA.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.output:VAL:SPEC" HREF="#STR:FA.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.states:VAL:SPEC" HREF="#STR:FA.states:VAL">states</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.startState:VAL:SPEC" HREF="#STR:FA.startState:VAL">startState</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.acceptingStates:VAL:SPEC" HREF="#STR:FA.acceptingStates:VAL">acceptingStates</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.transitions:VAL:SPEC" HREF="#STR:FA.transitions:VAL">transitions</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Tran.tran&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.compare:VAL:SPEC" HREF="#STR:FA.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;Sort.total_ordering<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.equal:VAL:SPEC" HREF="#STR:FA.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>*</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.numStates:VAL:SPEC" HREF="#STR:FA.numStates:VAL">numStates</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.numTransitions:VAL:SPEC" HREF="#STR:FA.numTransitions:VAL">numTransitions</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.alphabet:VAL:SPEC" HREF="#STR:FA.alphabet:VAL">alphabet</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.sub:VAL:SPEC" HREF="#STR:FA.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>*</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.transitionFun:VAL:SPEC" HREF="#STR:FA.transitionFun:VAL">transitionFun</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.transitionFunBackwards:VAL:SPEC" HREF="#STR:FA.transitionFunBackwards:VAL">transitionFunBackwards</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.processStr:VAL:SPEC" HREF="#STR:FA.processStr:VAL">processStr</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.accepted:VAL:SPEC" HREF="#STR:FA.accepted:VAL">accepted</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.emptyClose:VAL:SPEC" HREF="#STR:FA.emptyClose:VAL">emptyClose</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.emptyCloseBackwards:VAL:SPEC" HREF="#STR:FA.emptyCloseBackwards:VAL">emptyCloseBackwards</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.reachify:VAL:SPEC" HREF="#STR:FA.reachify:VAL">reachify</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.reachified:VAL:SPEC" HREF="#STR:FA.reachified:VAL">reachified</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.renameStates:VAL:SPEC" HREF="#STR:FA.renameStates:VAL">renameStates</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.renameStatesCanonically:VAL:SPEC" HREF="#STR:FA.renameStatesCanonically:VAL">renameStatesCanonically</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.isomorphism:VAL:SPEC" HREF="#STR:FA.isomorphism:VAL">isomorphism</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>*</B>&nbsp;fa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.findIsomorphismOpt:VAL:SPEC" HREF="#STR:FA.findIsomorphismOpt:VAL">findIsomorphismOpt</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>*</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;SymRel.sym_rel&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.findIsomorphism:VAL:SPEC" HREF="#STR:FA.findIsomorphism:VAL">findIsomorphism</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>*</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;SymRel.sym_rel<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.isomorphic:VAL:SPEC" HREF="#STR:FA.isomorphic:VAL">isomorphic</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>*</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.renameAlphabet:VAL:SPEC" HREF="#STR:FA.renameAlphabet:VAL">renameAlphabet</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.checkLP:VAL:SPEC" HREF="#STR:FA.checkLP:VAL">checkLP</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.validLP:VAL:SPEC" HREF="#STR:FA.validLP:VAL">validLP</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.findLPOpt:VAL:SPEC" HREF="#STR:FA.findLPOpt:VAL">findLPOpt</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.findLP:VAL:SPEC" HREF="#STR:FA.findLP:VAL">findLP</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;LP.lp<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.findAcceptingLPOpt:VAL:SPEC" HREF="#STR:FA.findAcceptingLPOpt:VAL">findAcceptingLPOpt</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.findAcceptingLP:VAL:SPEC" HREF="#STR:FA.findAcceptingLP:VAL">findAcceptingLP</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;LP.lp<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.emptyStr:VAL:SPEC" HREF="#STR:FA.emptyStr:VAL">emptyStr</A>&nbsp;<B>:</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.emptySet:VAL:SPEC" HREF="#STR:FA.emptySet:VAL">emptySet</A>&nbsp;<B>:</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.fromSym:VAL:SPEC" HREF="#STR:FA.fromSym:VAL">fromSym</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.simplify:VAL:SPEC" HREF="#STR:FA.simplify:VAL">simplify</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.simplified:VAL:SPEC" HREF="#STR:FA.simplified:VAL">simplified</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.union:VAL:SPEC" HREF="#STR:FA.union:VAL">union</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>*</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.concat:VAL:SPEC" HREF="#STR:FA.concat:VAL">concat</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>*</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.closure:VAL:SPEC" HREF="#STR:FA.closure:VAL">closure</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.genUnion:VAL:SPEC" HREF="#STR:FA.genUnion:VAL">genUnion</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.genConcat:VAL:SPEC" HREF="#STR:FA.genConcat:VAL">genConcat</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.rev:VAL:SPEC" HREF="#STR:FA.rev:VAL">rev</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.fromStr:VAL:SPEC" HREF="#STR:FA.fromStr:VAL">fromStr</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.fromReg:VAL:SPEC" HREF="#STR:FA.fromReg:VAL">fromReg</A>&nbsp;<B>:</B>&nbsp;Reg.reg&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.jforlanNew:VAL:SPEC" HREF="#STR:FA.jforlanNew:VAL">jforlanNew</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.jforlanEdit:VAL:SPEC" HREF="#STR:FA.jforlanEdit:VAL">jforlanEdit</A>&nbsp;<B>:</B>&nbsp;fa&nbsp;<B>-&gt;</B>&nbsp;fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.jforlanValidate:VAL:SPEC" HREF="#STR:FA.jforlanValidate:VAL">jforlanValidate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:FA.jforlanPretty:VAL:SPEC" HREF="#STR:FA.jforlanPretty:VAL">jforlanPretty</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="STR:FA.concr:TY"></A><CODE><B>type</B>&nbsp;concr&nbsp;=&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stats&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;<B>:</B>&nbsp;Sym.sym,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;accepting&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trans&nbsp;<B>:</B>&nbsp;Tran.tran&nbsp;Set.set<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</CODE>
+<DD>
+The concrete type of <EM>pre-finite automata</EM>, records consisting of a finite set <CODE>stats</CODE> (&quot;states&quot;) of symbols, a symbol <CODE>start</CODE> (&quot;start state&quot;), a finite set <CODE>accepting</CODE> (&quot;accepting states&quot;) of symbols, and a finite set <CODE>trans</CODE> (&quot;transitions&quot;) of transitions.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.fa:TY"></A><CODE><B>type</B>&nbsp;fa</CODE>
+<DD>
+The abstract type of finite automata, consisting of those pre-finite automata <CODE><VAR>concr</VAR></CODE> of type <CODE>concr</CODE> such that: 
+<UL>
+<LI>
+<CODE>#start <VAR>concr</VAR></CODE> is an element of <CODE>#stats <VAR>concr</VAR></CODE>;
+<LI>
+<CODE>#accepting <VAR>concr</VAR></CODE> is a subset of <CODE>#stats <VAR>concr</VAR></CODE>; and
+<LI>
+for all elements <CODE>(<VAR>q</VAR>, <VAR>x</VAR>, <VAR>r</VAR>)</CODE> of <CODE>#trans
+<VAR>concr</VAR></CODE>, <CODE><VAR>q</VAR></CODE> and <CODE><VAR>r</VAR></CODE> are elements of <CODE>#stats <VAR>concr</VAR></CODE>.
+</UL>
+ We say that <CODE><VAR>concr</VAR></CODE> is <EM>valid</EM> iff <CODE><VAR>concr</VAR></CODE> satisfies the above conditions.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.valid:VAL"></A>
+<DT> <CODE>valid <VAR>concr</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>concr</VAR></CODE> is valid.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.fromConcr:VAL"></A>
+<DT> <CODE>fromConcr <VAR>concr</VAR></CODE>
+<DD>
+returns <CODE><VAR>concr</VAR></CODE>.  Issues an error message if <CODE><VAR>concr</VAR></CODE> isn't valid.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.toConcr:VAL"></A>
+<DT> <CODE>toConcr <VAR>fa</VAR></CODE>
+<DD>
+returns <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.fromString:VAL"></A>
+<DT> <CODE>fromString <VAR>s</VAR></CODE>
+<DD>
+inputs an FA from <CODE><VAR>s</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.input:VAL"></A>
+<DT> <CODE>input <VAR>fil</VAR></CODE>
+<DD>
+inputs an FA from the file named <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.toPP:VAL"></A>
+<DT> <CODE>toPP <VAR>fa</VAR></CODE>
+<DD>
+returns a pretty-printing expression for <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.toString:VAL"></A>
+<DT> <CODE>toString <VAR>fa</VAR></CODE>
+<DD>
+pretty-prints <CODE><VAR>fa</VAR></CODE> to a string.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.output:VAL"></A>
+<DT> <CODE>output(<VAR>fil</VAR>, <VAR>fa</VAR>)</CODE>
+<DD>
+pretty-prints <CODE><VAR>fa</VAR></CODE> to the file <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.states:VAL"></A>
+<DT> <CODE>states <VAR>fa</VAR></CODE>
+<DD>
+returns the states of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.startState:VAL"></A>
+<DT> <CODE>startState <VAR>fa</VAR></CODE>
+<DD>
+returns the start state of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.acceptingStates:VAL"></A>
+<DT> <CODE>acceptingStates <VAR>fa</VAR></CODE>
+<DD>
+returns the accepting states of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.transitions:VAL"></A>
+<DT> <CODE>transitions <VAR>fa</VAR></CODE>
+<DD>
+returns the transitions of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.compare:VAL"></A>
+<DT> <CODE>compare(<VAR>fa1</VAR>, <VAR>fa2</VAR>)</CODE>
+<DD>
+returns 
+<PRE>
+  case SymSet.compare(states <VAR>fa1</VAR>, states <VAR>fa2</VAR>) of
+       LESS    =&gt; LESS
+     | EQUAL   =&gt;
+         (case Sym.compare(startState <VAR>fa1</VAR>, startState <VAR>fa2</VAR>) of
+               LESS    =&gt; LESS
+             | EQUAL   =&gt;
+                 (case SymSet.compare(acceptingStates <VAR>fa1</VAR>, acceptingStates <VAR>fa2</VAR>) of
+                       LESS    =&gt; LESS
+                     | EQUAL   =&gt;
+                         TranSet.compare(transitions <VAR>fa1</VAR>, transitions <VAR>fa2</VAR>)
+                     | GREATER =&gt; GREATER)
+             | GREATER =&gt; GREATER)
+     | GREATER =&gt; GREATER
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.equal:VAL"></A>
+<DT> <CODE>equal(<VAR>fa1</VAR>, <VAR>fa2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>fa1</VAR></CODE> and <CODE><VAR>fa2</VAR></CODE> are equal.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.numStates:VAL"></A>
+<DT> <CODE>numStates <VAR>fa</VAR></CODE>
+<DD>
+returns the number of states of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.numTransitions:VAL"></A>
+<DT> <CODE>numTransitions <VAR>fa</VAR></CODE>
+<DD>
+returns the number of transitions of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.alphabet:VAL"></A>
+<DT> <CODE>alphabet <VAR>fa</VAR></CODE>
+<DD>
+returns the alphabet of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.sub:VAL"></A>
+<DT> <CODE>sub(<VAR>fa1</VAR>, <VAR>fa2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>fa1</VAR></CODE> is a sub-FA of <CODE><VAR>fa2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.transitionFun:VAL"></A>
+<DT> <CODE>transitionFun <VAR>fa</VAR> (<VAR>q</VAR>, <VAR>x</VAR>)</CODE>
+<DD>
+returns the set of all states <CODE><VAR>r</VAR></CODE> such that <CODE>(<VAR>q</VAR>, <VAR>x</VAR>, <VAR>r</VAR>)</CODE> is a transition of <CODE><VAR>fa</VAR></CODE>. Issues an error message if <CODE><VAR>q</VAR></CODE> is not a state of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.transitionFunBackwards:VAL"></A>
+<DT> <CODE>transitionFunBackwards <VAR>fa</VAR> (<VAR>r</VAR>, <VAR>x</VAR>)</CODE>
+<DD>
+returns the set of all states <CODE><VAR>q</VAR></CODE> such that <CODE>(<VAR>q</VAR>, <VAR>x</VAR>, <VAR>r</VAR>)</CODE> is a transition of <CODE><VAR>fa</VAR></CODE>. Issues an error message if <CODE><VAR>r</VAR></CODE> is not a state of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.processStr:VAL"></A>
+<DT> <CODE>processStr <VAR>fa</VAR> (<VAR>qs</VAR>, <VAR>x</VAR>)</CODE>
+<DD>
+processes <CODE><VAR>x</VAR></CODE> from <CODE><VAR>qs</VAR></CODE> in <CODE><VAR>fa</VAR></CODE>. Issues an error message if <CODE><VAR>qs</VAR></CODE> has an element that's not a state of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.accepted:VAL"></A>
+<DT> <CODE>accepted <VAR>fa</VAR> <VAR>x</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>x</VAR></CODE> is accepted by <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.emptyClose:VAL"></A>
+<DT> <CODE>emptyClose <VAR>fa</VAR> <VAR>qs</VAR></CODE>
+<DD>
+returns the empty-closure of <CODE><VAR>qs</VAR></CODE> for <CODE><VAR>fa</VAR></CODE>. Issues an error message if <CODE><VAR>qs</VAR></CODE> has an element that's not a state of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.emptyCloseBackwards:VAL"></A>
+<DT> <CODE>emptyCloseBackwards <VAR>fa</VAR> <VAR>qs</VAR></CODE>
+<DD>
+returns the backwards empty-closure of <CODE><VAR>qs</VAR></CODE> for <CODE><VAR>fa</VAR></CODE>.  Issues an error message if <CODE><VAR>qs</VAR></CODE> has an element that's not a state of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.reachify:VAL"></A>
+<DT> <CODE>reachify <VAR>fa</VAR></CODE>
+<DD>
+reachifies <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.reachified:VAL"></A>
+<DT> <CODE>reachified <VAR>fa</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>fa</VAR></CODE> is reachified.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.renameStates:VAL"></A>
+<DT> <CODE>renameStates(<VAR>fa</VAR>, <VAR>rel</VAR>)</CODE>
+<DD>
+renames the states of <CODE><VAR>fa</VAR></CODE> using the bijection <CODE><VAR>rel</VAR></CODE>.  Issues an error message if <CODE><VAR>rel</VAR></CODE> is not a bijection from the states of <CODE><VAR>fa</VAR></CODE> to some set.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.renameStatesCanonically:VAL"></A>
+<DT> <CODE>renameStatesCanonically <VAR>fa</VAR></CODE>
+<DD>
+canonically renames the states of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.isomorphism:VAL"></A>
+<DT> <CODE>isomorphism(<VAR>fa1</VAR>, <VAR>fa2</VAR>, <VAR>rel</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>rel</VAR></CODE> is an isomorphism from <CODE><VAR>fa1</VAR></CODE> to <CODE><VAR>fa2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.findIsomorphismOpt:VAL"></A>
+<DT> <CODE>findIsomorphismOpt(<VAR>fa1</VAR>, <VAR>fa2</VAR>)</CODE>
+<DD>
+returns <CODE>SOME</CODE> of an isomorphism from <CODE><VAR>fa1</VAR></CODE> to <CODE><VAR>fa2</VAR></CODE>, if <CODE><VAR>fa1</VAR></CODE> and <CODE><VAR>fa2</VAR></CODE> are isomorphic, and <CODE>NONE</CODE>, if <CODE><VAR>fa1</VAR></CODE> and <CODE><VAR>fa2</VAR></CODE> are not isomorphic.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.findIsomorphism:VAL"></A>
+<DT> <CODE>findIsomorphism(<VAR>fa1</VAR>, <VAR>fa2</VAR>)</CODE>
+<DD>
+tries to find an isomorphism from <CODE><VAR>fa1</VAR></CODE> to <CODE><VAR>fa2</VAR></CODE>.  Issues an error message if such an isomorphism doesn't exist.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.isomorphic:VAL"></A>
+<DT> <CODE>isomorphic(<VAR>fa1</VAR>, <VAR>fa2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>fa1</VAR></CODE> and <CODE><VAR>fa2</VAR></CODE> are isomorphic.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.renameAlphabet:VAL"></A>
+<DT> <CODE>renameAlphabet(<VAR>fa</VAR>, <VAR>rel</VAR>)</CODE>
+<DD>
+renames the alphabet of <CODE><VAR>fa</VAR></CODE> using the bijection <CODE><VAR>rel</VAR></CODE>.  Issues an error message if <CODE><VAR>rel</VAR></CODE> is not a bijection from a superset of the alphabet of <CODE><VAR>fa</VAR></CODE> to some set.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.checkLP:VAL"></A>
+<DT> <CODE>checkLP <VAR>fa</VAR> <VAR>lp</VAR></CODE>
+<DD>
+checks whether <CODE><VAR>lp</VAR></CODE> is valid for <CODE><VAR>fa</VAR></CODE>, silently returning <CODE>()</CODE>, if it is, and explaining why it isn't, if it's not.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.validLP:VAL"></A>
+<DT> <CODE>validLP <VAR>fa</VAR> <VAR>lp</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>lp</VAR></CODE> is valid for <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.findLPOpt:VAL"></A>
+<DT> <CODE>findLPOpt <VAR>fa</VAR> (<VAR>qs</VAR>, <VAR>x</VAR>, <VAR>rs</VAR>)</CODE>
+<DD>
+returns <CODE>SOME</CODE> of a minimal labeled path for <CODE><VAR>fa</VAR></CODE>, taking <CODE><VAR>qs</VAR></CODE> to <CODE><VAR>rs</VAR></CODE> with label <CODE><VAR>x</VAR></CODE>, if such a labeled path exists, and <CODE>NONE</CODE>, if such a labeled path does not exist.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.findLP:VAL"></A>
+<DT> <CODE>findLP <VAR>fa</VAR> (<VAR>qs</VAR>, <VAR>x</VAR>, <VAR>rs</VAR>)</CODE>
+<DD>
+tries to find a minimal labeled path for <CODE><VAR>fa</VAR></CODE>, taking <CODE><VAR>qs</VAR></CODE> to <CODE><VAR>rs</VAR></CODE> with label <CODE><VAR>x</VAR></CODE>. Issues an error message if there is an element of <CODE><VAR>qs</VAR></CODE> or <CODE><VAR>rs</VAR></CODE> that isn't a state of <CODE><VAR>fa</VAR></CODE>, or such a labeled path doesn't exist.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.findAcceptingLPOpt:VAL"></A>
+<DT> <CODE>findAcceptingLPOpt <VAR>fa</VAR> <VAR>x</VAR></CODE>
+<DD>
+returns <CODE>SOME</CODE> of a minimal, accepting labeled path for <CODE><VAR>fa</VAR></CODE> and <CODE><VAR>x</VAR></CODE>, if such a labeled path exists, and <CODE>NONE</CODE>, if such a labeled path doesn't exist.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.findAcceptingLP:VAL"></A>
+<DT> <CODE>findAcceptingLP <VAR>fa</VAR> <VAR>x</VAR></CODE>
+<DD>
+tries to find a minimal, accepting labeled path for <CODE><VAR>fa</VAR></CODE> and <CODE><VAR>x</VAR></CODE>.  Issues an error message if such a labeled path doesn't exist.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.emptyStr:VAL"></A>
+<DT> <CODE>emptyStr</CODE>
+<DD>
+is the canonical FA for the empty string.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.emptySet:VAL"></A>
+<DT> <CODE>emptySet</CODE>
+<DD>
+is the canonical FA for the empty set.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.fromSym:VAL"></A>
+<DT> <CODE>fromSym <VAR>a</VAR></CODE>
+<DD>
+returns the canonical FA for <CODE><VAR>a</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.simplify:VAL"></A>
+<DT> <CODE>simplify <VAR>fa</VAR></CODE>
+<DD>
+simplifies <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.simplified:VAL"></A>
+<DT> <CODE>simplified <VAR>fa</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>fa</VAR></CODE> is simplified.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.union:VAL"></A>
+<DT> <CODE>union(<VAR>fa1</VAR>, <VAR>fa2</VAR>)</CODE>
+<DD>
+returns the union of <CODE><VAR>fa1</VAR></CODE> and <CODE><VAR>fa2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.concat:VAL"></A>
+<DT> <CODE>concat(<VAR>fa1</VAR>, <VAR>fa2</VAR>)</CODE>
+<DD>
+returns the concatentation of <CODE><VAR>fa1</VAR></CODE> and <CODE><VAR>fa2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.closure:VAL"></A>
+<DT> <CODE>closure <VAR>fa</VAR></CODE>
+<DD>
+returns the closure of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.genUnion:VAL"></A>
+<DT> <CODE>genUnion</CODE>
+<DD>
+is defined by: 
+<PRE>
+  fun genUnion nil         = emptySet
+    | genUnion [fa]        = fa
+    | genUnion (fa :: fas) = union(fa, genUnion fas)
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.genConcat:VAL"></A>
+<DT> <CODE>genConcat</CODE>
+<DD>
+is defined by: 
+<PRE>
+  fun genConcat nil         = emptyStr
+    | genConcat [fa]        = fa
+    | genConcat (fa :: fas) = concat(fa, genConcat fas)
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.rev:VAL"></A>
+<DT> <CODE>rev <VAR>fa</VAR></CODE>
+<DD>
+returns the reversal of <CODE><VAR>fa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.fromStr:VAL"></A>
+<DT> <CODE>fromStr <VAR>x</VAR></CODE>
+<DD>
+returns the canonical FA for <CODE><VAR>x</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.fromReg:VAL"></A>
+<DT> <CODE>fromReg <VAR>reg</VAR></CODE>
+<DD>
+converts <CODE><VAR>reg</VAR></CODE> to an FA.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.jforlanNew:VAL"></A>
+<DT> <CODE>jforlanNew()</CODE>
+<DD>
+invokes JForlan, and returns the FA that the user creates and commits.  Issues an error message if the user aborts, instead.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.jforlanEdit:VAL"></A>
+<DT> <CODE>jforlanEdit <VAR>fa</VAR></CODE>
+<DD>
+invokes JForlan, letting the user edit <CODE><VAR>fa</VAR></CODE>, and returning the resulting FA that the user commits.  Issues an error message if the user aborts, instead.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.jforlanValidate:VAL"></A>
+<DT> <CODE>jforlanValidate</CODE>
+<DD>
+is a low-level function used by JForlan.  See the code for more information.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:FA.jforlanPretty:VAL"></A>
+<DT> <CODE>jforlanPretty</CODE>
+<DD>
+is a low-level function used by JForlan.  See the code for more information.
+<BR>
+<BR>
+
+</DL>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="reg-fa-subsect.html">Parent</A>
+   | <A HREF="index.html">Root</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Forlan Version 4.7</I><BR>
+<I>Copyright &copy; 2018 Alley Stoughton</I><BR>
+
+<HR>
+</BODY></HTML>

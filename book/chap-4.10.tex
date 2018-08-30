@@ -1,0 +1,369 @@
+\section{The Pumping Lemma for Context-free Languages}
+\label{ThePumpingLemmaForContextFreeLanguages}
+
+Consider the language $L =
+\setof{\zerosf^n\onesf^n\twosf^n}{n\in\nats}$.  Is $L$ context-free,
+i.e., is there a grammar that generates $L$?  Although it's easy to
+find a grammar that keeps the $\zerosf$'s and $\onesf$'s matched, or
+one that keeps the $\onesf$'s and $\twosf$'s matched, or one that
+keeps the $\zerosf$'s and $\twosf$'s matched, it seems that there is
+no way to keep all three symbols matched simultaneously.
+
+In this section, we will study the pumping lemma for context-free
+languages, which can be used to show that many languages are not
+context-free.  We will use the pumping lemma to prove that $L$ is not
+context-free, and then we will prove the lemma.  Building on this
+result, we'll be able to show that the context-free languages are not
+closed under intersection, complementation or set-difference.
+
+\subsection{Statement, Application and Proof of Pumping Lemma}
+
+\begin{lemma}[Pumping Lemma for Context Free Languages]
+For all context-free languages $L$, there is a
+$n\in\nats$ such that, for all $z\in\Str$, if $z\in L$
+and $|z|\geq n$, then there are $u,v,w,x,y\in\Str$ such
+that $z=uvwxy$ and
+\begin{enumerate}[\quad(1)]
+\item $|vwx|\leq n$;
+
+\item $vx\neq\%$; and
+
+\item $uv^iwx^iy\in L$, for all $i\in\nats$.
+\end{enumerate}
+\end{lemma}
+
+Before proving the pumping lemma, let's see how it can be used to show
+that $L=\setof{\zerosf^n\onesf^n\twosf^n}{n\in\nats}$ is not
+context-free.  Suppose, toward a contradiction that $L$ is
+context-free.  Thus there is an $n\in\nats$ with the property of the
+lemma.  Let $z={\zerosf^n\onesf^n\twosf^n}$.
+Since $z\in L$ and $|z|=3n\geq n$, we have that there are
+$u,v,w,x,y\in\Str$ such that $z=uvwxy$ and
+\begin{enumerate}[\quad(1)]
+\item $|vwx|\leq n$;
+
+\item $vx\neq\%$; and
+
+\item $uv^iwx^iy\in L$, for all $i\in\nats$.
+\end{enumerate}
+Since $\zerosf^n\onesf^n\twosf^n=z=uvwxy$, (1) tells us that
+$vwx$ doesn't contain both a $\zerosf$ and a $\twosf$.
+Thus, either $vwx$ has no $\zerosf$'s, or $vwx$ has no $\twosf$'s, so that
+there are two cases to consider.
+
+Suppose $vwx$ has no $\zerosf$'s.  Thus $vx$ has no $\zerosf$'s.
+By (2), we have that $vx$ contains a $\onesf$ or a $\twosf$.
+Thus $uwy$:
+\begin{itemize}
+\item has $n$ $\zerosf$'s;
+
+\item either has less than $n$ $\onesf$'s or has less
+than $n$ $\twosf$'s.
+\end{itemize}
+But (3) tells us that $uwy=uv^0wx^0y\in L$, so that $uwy$ has an equal
+number of $\zerosf$'s, $\onesf$'s and $\twosf$'s---contradiction.
+The case where $vwx$ has no $\twosf$'s is similar.
+Since we obtained a contradiction in both cases, we have an overall
+contradiction.  Thus $L$ is not context-free.
+
+When we prove the pumping lemma for context-free languages, we will
+make use of a fact about grammars in Chomsky Normal Form.
+Suppose $G$ is a grammar in CNF and that $w\in(\alphabet\,G)^*$
+is the yield of a valid parse tree $\pt$ for $G$ whose root label
+is a variable.
+For instance, if $G$ is the grammar with variable $\Asf$ and
+productions $\Asf\fun\Asf\Asf$ and $\Asf\fun\zerosf$, then
+$w$ could be $\mathsf{0000}$ and $\pt$ could be the following
+tree of height $3$:
+\begin{center}
+\input{chap-4.10-fig1.eepic}
+\end{center}
+
+Generalizing from this example, we can see that if $\pt$ has height
+$3$, $|w|$ will never be greater than $4=2^2=2^{3-1}$.  Generalizing
+still more, we can prove that, for all parse trees $\pt$, for all
+strings $w$, if $w$ is the yield of $\pt$, then $|w|\leq { 2^{k-1}}$.
+This can be proved by induction on $\pt$.
+
+\begin{proof}
+Suppose $L$ is a context-free language.  By the results of the
+preceding section, there is a grammar $G$ in Chomsky Normal Form such
+that $L(G)=L-\{\%\}$.  Let $k=|Q_G|$ and $n= 2^k$.  Suppose $z\in
+Str$, $z\in L$ and $|z|\geq n$.  Since $n\geq 2$, we have that
+$z\neq\%$.  Thus $z\in L-\{\%\}=L(G)$, so that there is a parse tree
+$\pt$ such that $\pt$ is valid for $G$, $\rootLabel\,\pt=s_G$ and
+$\yield\,\pt=z$.  By our fact about CNF grammars, we have that the
+height of $\pt$ is at least $k+1$.  (If $\pt$'s height were only $k$,
+then $|z|\leq 2^{k-1}<n$, which is impossible.)
+
+The rest of the proof can be visualized using the
+diagram
+\begin{center}
+\input{chap-4.10-fig2.eepic}
+\end{center}
+
+Let $\pat$ be a valid path for $\pt$ whose length is equal to the
+height of $\pt$.  Thus the length of $\pat$ is at least $k+1$, so that
+the path visits at least $k+1$ variables, with the consequence that at
+least one variable must be visited twice.  Working from the last
+variable visited upwards, we look for the first repetition of
+variables.  Suppose $q$ is this repeated variable, and let $\pat'$
+and $\pat''$ be the initial parts of $\pat$ that take us
+to the upper and lower occurrences of $q$, respectively.
+
+Let $\pt'$ and $\pt''$ be the subtrees of $\pt$ at positions
+$\pat'$ and $\pat''$, i.e., the positions of the upper and lower
+occurrences of $q$, respectively.
+Consider the tree formed from $\pt$ by replacing the subtree
+at position $\pat'$ by $q$.  This tree has yield
+$uqy$, for unique strings $u$ and $y$.
+
+Consider the tree formed from $\pt'$ by replacing the subtree
+$\pt''$ by $q$.  More precisely, form the path $\pat'''$ 
+by removing $\pat'$ from the beginning of $\pat''$.
+Then replace the subtree of $\pt'$ at position $\pat'''$ by
+$q$.  This tree has yield $vqx$, for unique strings $v$ and $x$.
+
+Furthermore, since $|\pat|$ is the height of $\pt$, the
+length of the path formed by removing $\pat'$ from $\pat$ will be the
+height of $\pt'$.  But we know that this length is at most $k+1$,
+because, when working upwards through the variables visited by $\pat$,
+we stopped as soon as we found a repetition of variables.  Thus the
+height of $\pt'$ is at most $k+1$.
+
+Let $w$ be the yield of $\pt''$.  Thus $vwx$ is the yield of $\pt'$,
+so that $z=uvwxy$ is the yield of $\pt$.  Because the height of $\pt'$
+is at most $k+1$, our fact about valid parse trees of grammars in CNF,
+tells us that $|vwx|\leq 2^{(k+1)-1} = 2^k=n$, showing that Part~(1)
+holds.
+
+Because $G$ is in CNF, $\pt'$, which has $q$ as its root label, has
+two children.  The child whose root node isn't visited by $\pat'''$
+will have a non-empty yield, and this yield will be a prefix of $v$,
+if this child is the left child, and will be a suffix of $x$, if this
+child is the right child.  Thus $vx\neq\%$, showing that Part~(2)
+holds.
+
+It remains to show Part~(3), i.e., that $uv^iwx^iy\in L(G)\sub L$, for
+all $i\in\nats$.  We define a valid parse tree $\pt_i$ for $G$, with root
+label $q$ and yield $v^iwx^i$, by recursion on $i\in\nats$.  We let $\pt_0$ be
+$\pt''$.  Then, if $i\in\nats$, we form $\pt_{i+1}$ from $\pt'$ by
+replacing the subtree at position $\pat''''$ by $\pt_i$.
+
+Suppose $i\in\nats$.  Then the parse tree formed from $\pt$ by
+replacing the subtree at position $\pat'$ by $\pt_i$ is valid for $G$,
+has root label $s_G$, and has yield $uv^iwx^iy$, showing that
+$uv^iwx^iy\in L(G)$.
+\end{proof}
+
+\subsection{Experimenting with the Pumping Lemma Using Forlan}
+
+The Forlan module \texttt{PT} defines a type and several functions
+that implement the idea behind the pumping lemma:
+\begin{verbatim}
+type pumping_division = (pt * int list) * (pt * int list) * pt
+
+val checkPumpingDivision       : pumping_division -> unit
+val validPumpingDivision       : pumping_division -> bool
+val strsOfValidPumpingDivision :
+      pumping_division -> str * str * str * str * str
+val pumpValidPumpingDivision   : pumping_division * int -> pt
+val findValidPumpingDivision   : pt -> pumping_division
+\end{verbatim}
+
+A \emph{pumping division} is a triple $((\pt_1, \pat_1), (\pt_2,
+\pat_2), \pt3)$, where $\pt_1, \pt_2, \pt_3\in\PT$ and $\pat_1,
+\pat_2\in\List\,\ints$.  We say that a pumping division $((\pt_1,
+\pat_1), (\pt_2, \pat_2), \pt_3)$ is \emph{valid} iff
+\begin{itemize}
+\item $\pat_1$ is a valid path for $\pt_1$, pointing to a leaf whose
+  label isn't $\%$;
+
+\item $\pat_2$ is a valid path for $\pt_2$, pointing to a leaf whose
+  label isn't $\%$;
+
+\item the label of the leaf of $\pt_1$ pointed to by $\pat_1$ is equal
+  to the root label of $\pt_2$;
+
+\item the label of the leaf of $\pt_2$ pointed to by $\pat_2$ is equal
+  to the root label of $\pt_2$;
+
+\item the root label of $\pt_3$ is equal to the root label of $\pt_2$;
+
+\item the yield of $\pt_2$ has at least two symbols;
+
+\item the yield of $\pt_1$ has only one occurrence of the root label
+  of $\pt_2$;
+
+\item the yield of $\pt_2$ has only one occurrence of the root label
+  of $\pt_2$; and
+
+\item the yield of $\pt_3$ does not contain the root label of $\pt_2$.
+\end{itemize}
+The function \texttt{checkPumpingDivision} checks whether a pumping division
+is valid, silently returning \texttt{()} if it is, and explaining why
+it isn't, otherwise.  The function \texttt{validPumpingDivision} tests
+whether a pumping division is valid.
+
+When the function \texttt{strsOfValidPumpingDivision} is applied to a
+valid pumping division $((\pt_1, \pat_1), (\pt_2, \pat_2), \pt_3)$, it
+returns $(u, v, w, x, y)$, where:
+\begin{itemize}
+\item $u$ is the prefix of $\yield\,\pt_1$ that precedes the unique
+  occurrence of the root label of $\pt_2$;
+
+\item $v$ is the prefix of $\yield\,\pt_2$ that precedes the unique
+  occurrence of the root label of $\pt_2$;
+
+\item $w = \yield\,\pt_3$;
+
+\item $x$ is the suffix of $\yield\,\pt_2$ that follows the unique
+  occurrence of the root label of $\pt_2$; and
+
+\item $y$ is the suffix of $\yield\,\pt_1$ that follows the unique
+  occurrence of the root label of $\pt_2$.
+\end{itemize}
+The function issues an error message if the supplied pumping division
+isn't valid.
+
+When the function \texttt{pumpValidPumpingDivision} is applied to the
+pair of a
+valid pumping division $((\pt_1, \pat_1), (\pt_2, \pat_2), \pt_3)$
+and a natural number $n$,
+it returns $\update(\pt_1, \pat_1, \pow\,n)$, where the function
+$\pow\in\nats\fun\PT$ is defined by:
+\begin{align*}
+  \pow\,0 &= \pt_3 , \\
+  \pow(n + 1) &= \update(\pt_2, \pat_2, \pow\,n) ,
+  \eqtxt{for all} n\in\nats .
+\end{align*}
+The function issues an error message if its first argument isn't valid,
+or its second argument is negative.
+
+When the function \texttt{findValidPumpingDivision} is called with a
+parse tree $\pt$, it tries to find a valid pumping division $\pd$ such
+that
+\begin{displaymath}
+\mathtt{pumpValidPumpingDivision}(\pd, 1) = \pt .  
+\end{displaymath}
+It works as follows. First, the leftmost, maximum length path $\pat$
+through pt is found. If this path points to $\%$, then an error
+message is issued. Otherwise, \texttt{findValidPumpingDivision}
+generates the following list of variables paired with prefixes of
+$\pat$:
+\begin{itemize}
+\item the root label of the subtree pointed to by the path consisting
+  of all but the last element of $\pat$, paired with that path;
+
+\item the root label of the subtree pointed to by the path consisting
+  of all but the last two elements of $\pat$, paired with that path;
+
+\item \ldots;
+
+\item the root label of the subtree pointed to by the path consisting
+  of the first element of $\pat$, paired with that path; and
+
+\item the root label of the subtree pointed to by $[\,]$, paired with $[\,]$. 
+\end{itemize}
+(Of course, the left-hand side of the last of these pairs is the root
+label of $\pt$.)
+As it works through these pairs, it looks for the first
+repetition of variables. If there is no such repetition, it issues an
+error message. Otherwise, suppose that:
+\begin{itemize}
+\item $q$ was the first repeated variable;
+
+\item $\pat_1$ was the path paired with $q$ at the point of the first
+  repetition; and
+
+\item $\pat'$ was the path paired with $q$ when it was first seen. 
+\end{itemize}
+Now, it lets:
+\begin{itemize}
+\item $\pat_2$ be the result of dropping $\pat_1$ from the beginning of
+  $\pat'$;
+
+\item $\pt_1$ be $\update(\pt, \pat_1, q)$;
+
+\item $pt'$ be the subtree of $\pt$ pointed to by $\pat_1$;
+
+\item $pt_2$ be $\update(\pt', \pat_2, q)$;
+
+\item $\pt_3$ be the subtree of $\pt'$ pointed to by $\pat_2$; and
+
+\item $\pd = ((\pt_1, \pat_1), (\pt_2, \pat_2), \pt_3)$.
+\end{itemize}
+If $\pd$ is a valid pumping division (only the last four conditions of
+the definition of validity remain to be checked), it is returned by
+\texttt{findValidPumpingDivision}. Otherwise, an error message is
+issued.
+
+For example, suppose that \texttt{gram} is bound to the
+grammar
+\begin{align*}
+\Asf &\fun \% \mid \zerosf\Bsf\Asf \mid \onesf\Csf\Asf , \\
+\Bsf &\fun \onesf \mid \zerosf\Bsf\Bsf , \\
+\Csf &\fun \zerosf \mid \onesf\Csf\Csf .
+\end{align*}
+Then we can proceed as follows:
+\input{chap-4.10-forlan1}
+
+\subsection{Consequences of Pumping Lemma}
+
+We are now in a position to show that the context-free languages are
+\emph{not} closed under either intersection or set difference.
+Suppose
+\begin{align*}
+  L &= \setof{\zerosf^n\onesf^n\twosf^n}{n\in\nats} , \\
+  A &= \setof{\zerosf^n\onesf^n\twosf^m}{n,m\in\nats} , \eqtxtl{and} \\
+  B &= \setof{\zerosf^n\onesf^m\twosf^m}{n,m\in\nats} .
+\end{align*}
+As we proved above, $L$ is not context-free.  In contrast, it's easy
+to find grammars generating $A$ and $B$, showing that $A$ and $B$ are
+context-free.  But $A\cap B=L$, and thus we have a counterexample to
+the context-free languages being closed under intersection.
+
+Now, we have that
+$\{\zerosf,\onesf,\twosf\}^*-A$ context-free, since it is the
+union of the context-free languages
+\begin{gather*}
+\{\zerosf,\onesf,\twosf\}^*-\{\zerosf\}^*\{\onesf\}^*\{\twosf\}^*
+\end{gather*}
+and
+\begin{gather*}
+\setof{\zerosf^{n_1}\onesf^{n_2}\twosf^m}{n_1,n_2,m\in\nats
+\eqtxt{and}n_1\neq n_2} ,
+\end{gather*}
+(the first of these languages is regular), and the context-free languages
+are closed under union.
+Similarly, we have that $\{\zerosf,\onesf,\twosf\}^*-B$ is
+context-free.
+
+Let
+\begin{gather*}
+C=(\{\zerosf,\onesf,\twosf\}^*-A) \cup (\{\zerosf,\onesf,\twosf\}^*-B) .
+\end{gather*}
+Thus $C$ is a context-free subset of $\{\zerosf,\onesf,\twosf\}^*$.
+Since $A,B\sub\{\zerosf,\onesf,\twosf\}^*$, it is easy to show that
+\begin{align*}
+A\cap B &= \{\zerosf,\onesf,\twosf\}^*-
+((\{\zerosf,\onesf,\twosf\}^*-A)\cup(\{\zerosf,\onesf,\twosf\}^*-B)) \\
+&= \{\zerosf,\onesf,\twosf\}^*-C .
+\end{align*}
+Thus
+\begin{gather*}
+\{\zerosf,\onesf,\twosf\}^*-C = A\cap B = L
+\end{gather*}
+is not context-free, giving us a counterexample to the
+context-free languages being closed under set difference.
+
+\subsection{Notes}
+
+Apart from the subsection on Forlan's support for experimenting with
+the pumping lemma, the material in this section is completely
+standard.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

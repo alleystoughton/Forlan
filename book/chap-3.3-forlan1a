@@ -1,0 +1,18 @@
+Reg.numConcats(Reg.fromString "(01)*(10)*");
+Reg.numSyms(Reg.fromString "(01)*(10)*");
+Reg.standardized(Reg.fromString "00*1");
+Reg.standardized(Reg.fromString "00*0");
+Reg.compareComplexity
+(Reg.fromString "(00*11*)*",
+ Reg.fromString "% + 0(0 + 11*0)*11*");
+Reg.compareComplexity
+(Reg.fromString "0**1**",  Reg.fromString "(01)**");
+Reg.compareComplexity
+(Reg.fromString "(0*1*)*",  Reg.fromString "(0*+1*)*");
+Reg.compareComplexity
+(Reg.fromString "0+01",  Reg.fromString "0(%+1)");
+Reg.compareComplexity
+(Reg.fromString "(01)2",  Reg.fromString "012");
+Reg.compareComplexity
+(Reg.fromString "1(01+10)+(%+01)1",
+ Reg.fromString "011+1(%+01+10)");

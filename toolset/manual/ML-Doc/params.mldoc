@@ -1,0 +1,219 @@
+<!-- params.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Params Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Params/ Module</HEAD>
+
+<PP>This module contains functions for querying and setting Forlan
+parameters.</PP>
+
+<STRUCTURE STRID="Params">
+<OPAQUE>
+<SIGBODY SIGID="PARAMS" FILE=PARAMS>
+
+<SPEC>
+<VAL>getSearchPath<TY>unit -> string list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+getSearchPath()
+</PROTOTY>
+<PP>returns the search path used by
+<CD><STRREF TOPID/Use/.<VALREF STRID="Use"/use/</CD> and the
+various Forlan <CD>input</CD> functions for loading SML/Forlan
+files. The default is <CD>nil</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>setSearchPath<TY>string list -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+setSearchPath <ARG/xs/
+</PROTOTY>
+<PP>sets the search path used by
+<CD><STRREF TOPID/Use/.<VALREF STRID="Use"/use/</CD> and the various
+Forlan <CD>input</CD> functions to <CD><ARG/xs/</CD>. Non-absolute
+paths are made absolute by prepending the current working
+directory.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>getWorkingDirectory<TY>unit -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+getWorkingDirectory()
+</PROTOTY>
+<PP>returns the current working directory. Non-absolute paths are
+interpreted relative to this directory.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>setWorkingDirectory<TY>string -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+setWorkingDirectory <ARG/dir/
+</PROTOTY>
+<PP>sets the current working directory to <CD><ARG/dir/</CD>. Raises
+an exception if this directory doesn't exist or isn't accessible.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>getPrintingListLength<TY>unit -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+getPrintingListLength()
+</PROTOTY>
+<PP>returns the number of elements of a list that the Forlan top-level
+will display. The default is <CD>250</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>setPrintingListLength<TY>int -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+setPrintingListLength <ARG/n/
+</PROTOTY>
+<PP>sets the number of elements of a list that the Forlan top-level
+will display to <CD><ARG/n/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>getPrintingStringSize<TY>unit -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+getPrintingStringSize()
+</PROTOTY>
+<PP>returns the number of characters of a string that the Forlan top-level
+will display. The default is <CD>250</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>setPrintingStringSize<TY>int -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+setPrintingStringSize <ARG/n/
+</PROTOTY>
+<PP>sets the number of characters of a string that the Forlan top-level
+will display to <CD><ARG/n/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>getPrintingDataStructureDepth<TY>unit -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+getPrintingDataStructureDepth()
+</PROTOTY>
+<PP>returns the number of levels of a data structure that the
+top-level loop will display. The default is <CD>20</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>setPrintingDataStructureDepth<TY>int -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+setPrintingDataStructureDepth <ARG/n/
+</PROTOTY>
+<PP>sets the number of levels of a data structure that the
+top-level loop will display to <CD><ARG/n/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>getPrintingLineLength<TY>unit -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+getPrintingLineLength()
+</PROTOTY>
+<PP>returns the line length that the Forlan pretty-printer
+works with. The default is <CD>80</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>setPrintingLineLength<TY>int -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+setPrintingLineLength <ARG/n/
+</PROTOTY>
+<PP>sets the line length that the Forlan pretty-printer
+works with to <CD><ARG/n/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>setPrintingOfGarbageCollectionMessages<TY>bool -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+setPrintingOfGarbageCollectionMessages <ARG/b/
+</PROTOTY>
+<PP>sets whether garbage collection messages will be printed; the
+default is not to print them.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>getTrackExceptions<TY>unit -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+getTrackExceptions()
+</PROTOTY>
+<PP>returns whether a function call trace will be printed when an
+exception has been raised. The default is not to do so.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>setTrackExceptions<TY>bool -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+setTrackExceptions <ARG/b/
+</PROTOTY>
+<PP>sets whether a function call trace will be printed when an
+exception has been raised.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>getCompilationManagerVerbosity<TY>unit -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+getCompilationManagerVerbosity()
+</PROTOTY>
+<PP>returns whether the Compilation Manager (CM) is verbose in
+its messaging.  The default is that it isn't verbose.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>setCompilationManagerVerbosity<TY>bool -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+setCompilationManagerVerbosity <ARG/b/
+</PROTOTY>
+<PP>sets whether the compilation manager will be verbose in
+its messaging.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

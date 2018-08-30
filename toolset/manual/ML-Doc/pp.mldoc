@@ -1,0 +1,235 @@
+<!-- pp.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The PP Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/PP/ Module</HEAD>
+
+<PP>The module implements a simple form of pretty-printing.</PP>
+
+<STRUCTURE STRID="PP">
+<OPAQUE>
+<SIGBODY SIGID="PP" FILE=PP>
+
+<SPEC>
+<VAL>newline<TY>string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+newline
+</PROTOTY>
+<PP>is the operating system-dependent character sequence for
+separating lines in files. On UNIX-like systems, it is <CD>"\n"</CD>,
+but on Windows it is <CD>"\r\n"</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<TYPE><ID>pp</ID></TYPE>
+<COMMENT>
+<PP>The type of pretty-printing expressions.  The module can be
+understood as if <CD>pp</CD> were implemented as
+<CODE>
+  datatype pp = Block    of bool * pp list
+              | Decorate of string * pp * string
+</CODE>
+but it's actually implemented in a way allowing more efficient processing.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>pp -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/pp/
+</PROTOTY>
+<PP>turns <CD><ARG/pp/</CD> into a string where, if possible, all of
+the string's lines are no longer than the current printing line length
+(see
+<CD><STRREF TOPID/Params/.<VALREF STRID="Params"/getPrintingLineLength/</CD>).
+This translation is carried out using a recursive function that is
+supplied a value <CD><ARG/pp/</CD> of <CD>pp</CD> to be turned into a
+string, together with the current <EM>indentation</EM> <CD><ARG/ind/</CD> and
+the <EM>after size</EM> <CD><ARG/aft/</CD>, i.e., the size of the string that
+will immediately follow the final line of the translation of
+<CD><ARG/pp/</CD>.  A recursive call is <EM>not</EM> responsible for
+generating the <CD><ARG/ind/</CD> spaces that will
+preceed <CD><ARG/pp/</CD>'s translation in the overall
+translation.</PP>
+
+<PP><CD>Block(<ARG/spaceNoBreak/, <ARG/pps/)</CD> is turned into a
+string consisting of one of more lines, all but the first of which
+begin with <CD><ARG/ind/</CD> spaces. This is done by recursively translating
+the elements of <CD><ARG/pps/</CD>, in sequence, with appropriate indentations
+and after sizes. If the translations of a sequence of elements of
+<CD><ARG/pps/</CD>&DASH;separated by blanks iff <CD><ARG/spaceNoBreak/</CD> is
+true&DASH;fit on a single line (including the <CD><ARG/ind/</CD> initial
+spaces, and leaving room for <CD><ARG/aft/</CD> additional characters, if the
+final element of <CD><ARG/pps/</CD> is included), then the elements'
+translations are combined in this way.  But when an element's
+translation requires multiples lines, it is never combined with
+other translations, either before or after.  The translation of the
+final element of <CD><ARG/pp/</CD>, whether combined with other translations or
+not, must always be computed by taking into account that
+<CD><ARG/aft/</CD> additional characters will immediately follow its last
+line.</PP>
+
+<PP><CD>Decorate(<ARG/s1/, <ARG/pp/, <ARG/s2/)</CD> is turned
+into the string consisting of the concatenation of:
+<ITEMIZE>
+<ITEM><CD><ARG/s1/</CD>,</ITEM>
+
+<ITEM>the result of translating <CD><ARG/pp/</CD> with indentation
+<CD><ARG/ind/ + size <ARG/s1/</CD>, and after size
+<CD>size <ARG/s2/ + <ARG/aft/</CD>, and
+
+<ITEM><CD><ARG/s2/</CD>.</ITEM>
+</ITEMIZE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>empty<TY>pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+empty
+</PROTOTY>
+<PP>is <CD>Block(true, nil)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>block<TY>(bool * pp list) -> pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+block
+</PROTOTY>
+<PP>is <CD>Block</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>decorate<TY>string * pp * string -> pp</VAL>
+<COMMENT>
+<PROTOTY>
+decorate
+</PROTOTY>
+<PP>is <CD>Decorate</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>quote<TY>pp -> pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+quote <ARG/pp/
+</PROTOTY>
+<PP>returns <CD>Decorate("\"", <ARG/pp/, "\"")</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>comma<TY>pp -> pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+comma <ARG/pp/
+</PROTOTY>
+<PP>returns <CD>Decorate("", <ARG/pp/, ",")</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>colon<TY>pp -> pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+colon <ARG/pp/
+</PROTOTY>
+<PP>returns <CD>Decorate("", <ARG/pp/, ":")</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>semicolon<TY>pp -> pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+semicolon <ARG/pp/
+</PROTOTY>
+<PP>returns <CD>Decorate("", <ARG/pp/, ";")</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>returns <CD>Decorate(<ARG/s/, empty, "")</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromStringSplitEscape<TY>string -> pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromStringSplitEscape <ARG/s/
+</PROTOTY>
+<PP>returns
+<CODE>
+  Block(false,
+        map (fn c => fromString(Char.toString c))
+            (explode <ARG/s/))
+</CODE>
+where <CD>Char.toString</CD> escapes non-printable characters (as well as
+double quotes and backslashes) using SML escape sequences.
+</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+
+<PP>For example, if the current printing line length is <CD>30</CD>, running
+<CODE>
+  val pp = 
+        PP.decorate
+        ("(",
+         PP.block
+         (true,
+          [PP.fromString "once", PP.fromString "upon", PP.fromString "a",
+           PP.fromString "time"]),
+         ")");
+  val pp' =
+        PP.decorate
+        ("[",
+         PP.block(false, [pp, pp, pp]),
+         "]");
+  print(PP.toString pp' ^ "\n");
+</CODE>
+results in the output
+<CODE>
+  [(once upon a
+    time)
+   (once upon a
+    time)
+   (once upon a
+    time)]
+</CODE>
+And, if the current printing line length is <CD>60</CD>, running the
+same code results in
+<CODE>
+  [(once upon a time)(once upon a time)(once upon a time)]
+</CODE>
+</PP>
+</INTERFACE>

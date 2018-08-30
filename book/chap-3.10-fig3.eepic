@@ -1,0 +1,42 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(4048,1710)(0,-10)
+\put(2325.000,2775.000){\arc{5100.000}{1.0808}{2.0608}}
+\blacken\path(3431.274,444.281)(3525.000,525.000)(3404.316,497.884)(3431.274,444.281)
+\put(3525,825){\ellipse{474}{474}}
+\put(2325,825){\ellipse{474}{474}}
+\put(1125,825){\ellipse{474}{474}}
+\put(2325,0){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\mathsf{0,1,2}$}}}}}
+\put(1125.000,1170.000){\arc{510.000}{2.6516}{6.7731}}
+\blacken\path(841.413,1158.939)(900.000,1050.000)(899.571,1173.692)(841.413,1158.939)
+\put(2325.000,1170.000){\arc{510.000}{2.6516}{6.7731}}
+\blacken\path(2041.413,1158.939)(2100.000,1050.000)(2099.571,1173.692)(2041.413,1158.939)
+\put(3525.000,1170.000){\arc{510.000}{2.6516}{6.7731}}
+\blacken\path(3241.413,1158.939)(3300.000,1050.000)(3299.571,1173.692)(3241.413,1158.939)
+\put(1125,825){\ellipse{600}{600}}
+\put(2327,825){\ellipse{600}{600}}
+\put(3527,825){\ellipse{600}{600}}
+\path(525,825)(825,825)
+\blacken\path(705.000,795.000)(825.000,825.000)(705.000,855.000)(705.000,795.000)
+\path(1425,825)(2025,825)
+\blacken\path(1905.000,795.000)(2025.000,825.000)(1905.000,855.000)(1905.000,795.000)
+\path(2625,825)(3225,825)
+\blacken\path(3105.000,795.000)(3225.000,825.000)(3105.000,855.000)(3105.000,795.000)
+\put(0,750){\makebox(0,0)[lb]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}Start}}}}}
+\put(1117,750){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Asf$}}}}}
+\put(2325,750){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Bsf$}}}}}
+\put(1125,1500){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\mathsf{0}$}}}}}
+\put(1725,900){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\mathsf{0,1}$}}}}}
+\put(2325,1500){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\mathsf{1}$}}}}}
+\put(3525,750){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Csf$}}}}}
+\put(3525,1500){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\mathsf{2}$}}}}}
+\put(2925,900){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\mathsf{1,2}$}}}}}
+\end{picture}
+}

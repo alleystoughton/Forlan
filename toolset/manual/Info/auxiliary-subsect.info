@@ -1,0 +1,7 @@
+@FILES
+  ["auxiliary-subsect"; "Auxiliary Functions";
+    @SECTION "Auxiliary Functions" [
+       @FILE "string-aux"
+       @FILE "list-aux"
+    ]
+  ]

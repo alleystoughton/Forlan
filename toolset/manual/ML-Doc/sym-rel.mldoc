@@ -1,0 +1,603 @@
+<!-- sym-rel.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The SymRel Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/SymRel/ Module</HEAD>
+
+<PP>This module provides operations on finite relations on Forlan
+symbols, i.e., values of type
+<CD><TYREF STRID="SymRel"/sym_rel/ = (<STRREF/Sym/.<TYREF STRID="Sym"/sym/,
+<STRREF/Sym/.<TYREF STRID="Sym"/sym/)<STRREF/Rel/.<TYREF STRID="Rel"/rel/</CD>
+that are <EM>standard</EM> in the sense that they are compatible with
+<CD><STRREF/Set/.<VALREF STRID="Set"/comparePair/(<STRREF/Sym/.<VALREF STRID="Sym"/compare/,
+<STRREF/Sym/.<VALREF STRID="Sym"/compare/)</CD>.
+All values of type <CD>sym_rel</CD> will implicitly be assumed/required to be
+standard.</PP>
+
+<STRUCTURE STRID="SymRel">
+<OPAQUE>
+<SIGBODY SIGID="SYM_REL" FILE=SYM-REL>
+
+<SPEC>
+<TYPE><ID>sym_rel</ID><TY>(Sym.sym, Sym.sym)Rel.rel</TY>
+<COMMENT>
+<PP>The type of finite relations on Forlan symbols.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>comparePair<TY>(Sym.sym * Sym.sym)Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+comparePair
+</PROTOTY>
+<PP>is 
+<CD><STRREF TOPID/Set/.<VALREF STRID="Set"/comparePair/(<STRREF TOPID/Sym/.<VALREF STRID="Sym"/compare/,
+<STRREF TOPID/Sym/.<VALREF STRID="Sym"/compare/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>memb<TY>((Sym.sym * Sym.sym) * sym_rel) -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+memb((<ARG/a/, <ARG/b/), <ARG/rel/)
+</PROTOTY>
+<PP>tests whether <CD>(<ARG/a/, <ARG/b/)</CD> is a member of
+<CD><ARG/rel/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromList<TY>(Sym.sym * Sym.sym)list -> sym_rel</VAL>
+<COMMENT>
+<PROTOTY>
+fromList <ARG/xs/
+</PROTOTY>
+<PP>returns a relation whose members are the pairs in <CD><ARG/xs/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>sym_rel Sort.total_ordering
+<COMMENT>
+<PROTOTY>
+compare
+</PROTOTY>
+<PP>is
+<CD><STRREF TOPID/Set/.<VALREF STRID="Set"/compare/ comparePair</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>subset<TY>sym_rel * sym_rel -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+subset(<ARG/rel1/, <ARG/rel2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel1/</CD> is a subset of <CD><ARG/rel2/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>sym_rel * sym_rel -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal(<ARG/rel1/, <ARG/rel2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel1/</CD> and <CD><ARG/rel2/</CD> are
+equal.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>map<TY>('a -> (Sym.sym * Sym.sym)) -> 'a Set.set -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+map <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> is compatible with a value <CD><ARG/cmp/</CD> of
+type <CD><ARG/'a/ Sort.total_ordering</CD>, then <CD>map</CD> returns
+the set of all pairs of symbols <CD><ARG/f/ <ARG/x/</CD> such that
+<CD><ARG/x/</CD> is a member of <CD><ARG/xs/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>mapFromList<TY>('a -> Sym.sym * Sym.sym) -> 'a list -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+mapFromList <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>returns the set of all pairs of symbols <CD><ARG/f/ <ARG/x/</CD>
+such that <CD><ARG/x/</CD> is a member of <CD><ARG/xs/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>union<TY>sym_rel * sym_rel -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+union(<ARG/rel1/, <ARG/rel2/)
+</PROTOTY>
+<PP>returns the union of <CD><ARG/rel1/</CD> and <CD><ARG/rel2/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genUnion<TY>sym_rel list -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genUnion <ARG/rels/
+</PROTOTY>
+<PP>returns the generalized union of <CD><ARG/rels/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inter<TY>sym_rel * sym_rel -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+inter(<ARG/rel1/, <ARG/rel2/)
+</PROTOTY>
+<PP>returns the intersection of <CD><ARG/rel1/</CD> and <CD><ARG/rel2/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genInter<TY>sym_rel list -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genInter <ARG/rels/
+</PROTOTY>
+<PP>returns the generalized intersection of <CD><ARG/rels/</CD>.
+Issues an error message if <CD><ARG/rels/</CD> is empty.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>minus<TY>sym_rel * sym_rel -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+minus(<ARG/rel1/, <ARG/rel2/)
+</PROTOTY>
+<PP>returns the difference of <CD><ARG/rel1/</CD> and <CD><ARG/rel2/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>domain<TY>sym_rel -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+domain <ARG/rel/
+</PROTOTY>
+<PP>returns the domain of <CD><ARG/rel/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>range<TY>sym_rel -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+range <ARG/rel/
+</PROTOTY>
+<PP>returns the range of <CD><ARG/rel/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>relationFromTo
+<TY>sym_rel * Sym.sym Set.set * Sym.sym Set.set -> bool</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+relationFromTo(<ARG/rel/, <ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is a relation from <CD><ARG/xs/</CD>
+to <CD><ARG/ys/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>relationOn<TY>sym_rel * Sym.sym Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+relationOn(<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is a relation on <CD><ARG/xs/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>apply<TY>sym_rel * Sym.sym Set.set -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+apply(<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>returns the set of all symbols <CD><ARG/y/</CD> such
+that there is a symbol <CD><ARG/x/</CD> in
+<CD><ARG/xs/</CD> such that <CD>(<ARG/x/, <ARG/y/)</CD>
+is a member of <CD><ARG/rel/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reflexive<TY>sym_rel * Sym.sym Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+reflexive(<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is reflexive on <CD><ARG/xs/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>symmetric<TY>sym_rel -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+symmetric <ARG/rel/
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is symmetric.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>antisymmetric<TY>sym_rel -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+antisymmetric <ARG/rel/
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is antisymmetric.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>transitive<TY>sym_rel -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+transitive <ARG/rel/
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is transitive.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>total<TY>sym_rel * Sym.sym Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+total(<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is total on <CD><ARG/xs/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inverse<TY>sym_rel -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+inverse <ARG/rel/
+</PROTOTY>
+<PP>returns the inverse of <CD><ARG/rel/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reflexiveClosure<TY>sym_rel * Sym.sym Set.set -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+reflexiveClosure(<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>returns the reflexive closure of <CD><ARG/rel/</CD> with respect
+to <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>transitiveClosure<TY>sym_rel -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+transitiveClosure <ARG/rel/
+</PROTOTY>
+<PP>returns the transitive closure of <CD><ARG/rel/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reflexiveTransitiveClosure
+<TY>(sym_rel * Sym.sym Set.set) -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+reflexiveTransitiveClosure(<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>returns the reflexive, transitive closure of <CD><ARG/rel/</CD>
+with respect to <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>symmetricClosure<TY>sym_rel -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+symmetricClosure <ARG/rel/
+</PROTOTY>
+<PP>returns the symmetric closure of <CD><ARG/rel/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>transitiveSymmetricClosure<TY>sym_rel -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+transitiveSymmetricClosure <ARG/rel/
+</PROTOTY>
+<PP>returns the transitive, symmetric closure of <CD><ARG/rel/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reflexiveTransitiveSymmetricClosure
+<TY>sym_rel * Sym.sym Set.set -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+reflexiveTransitiveSymmetricClosure(<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>returns the reflexive, transitive, symmetric closure of
+<CD><ARG/rel/</CD> with respect to <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compose<TY>sym_rel * sym_rel -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compose(<ARG/rel2/, <ARG/rel1/)
+</PROTOTY>
+<PP>returns the composition of <CD><ARG/rel2/</CD> and <CD><ARG/rel1/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>function<TY>sym_rel -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+function <ARG/rel/
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is a function.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>functionFromTo
+<TY>sym_rel * Sym.sym Set.set * Sym.sym Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+functionFromTo(<ARG/rel/, <ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is a function from
+<CD><ARG/xs/</CD> to <CD><ARG/ys/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>injection<TY>sym_rel -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+injection <ARG/rel/
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is an injection.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>bijectionFromTo
+<TY>sym_rel * Sym.sym Set.set * Sym.sym Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+bijectionFromTo(<ARG/rel/, <ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is a bijection from <CD><ARG/xs/</CD>
+to <CD><ARG/ys/</CD>.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>bijectionFromAvoiding
+<TY>sym_rel * Sym.sym Set.set * Sym.sym Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+bijectionFromAvoiding(<ARG/rel/, <ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is a bijection from <CD><ARG/xs/</CD>
+to a set that is disjoint from <CD><ARG/ys/</CD>.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>bijectionFromSupersetAvoiding
+<TY>sym_rel * Sym.sym Set.set * Sym.sym Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+bijectionFromSupersetAvoiding(<ARG/rel/, <ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is a bijection from
+a superset of <CD><ARG/xs/</CD> to a set that is disjoint from
+<CD><ARG/ys/</CD>.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>applyFunction<TY>sym_rel -> Sym.sym -> Sym.sym</TY></VAL>
+<COMMENT>
+<PROTOTY>
+applyFunction(<ARG/rel/, <ARG/a/)
+</PROTOTY>
+<PP>applies the function <CD><ARG/rel/</CD> to <CD><ARG/a/</CD>.
+It issues an error message if <CD><ARG/rel/</CD> is not a function, or
+if <CD><ARG/a/</CD> is not in the domain of <CD><ARG/rel/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>restrictFunction<TY>sym_rel * Sym.sym Set.set -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+restrictFunction(<ARG/rel/, <ARG/bs/)
+</PROTOTY>
+<PP>returns the function that is the restriction of <CD><ARG/rel/</CD>
+to <CD><ARG/bs/</CD>.  Issues an error message if <CD><ARG/rel/</CD>
+isn't a function, or if <CD><ARG/bs/</CD> isn't a subset of the domain
+of <CD><ARG/rel/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>updateFunction<TY>sym_rel * Sym.sym * Sym.sym -> sym_rel
+<COMMENT>
+<PROTOTY>
+updateFunction(<ARG/rel/, <ARG/b/, <ARG/c/)
+</PROTOTY>
+<PP>returns the function that is the updating of the
+function <CD><ARG/rel/</CD> to send <CD><ARG/b/</CD>
+to <CD><ARG/c/</CD>.  Issues an error message if <CD><ARG/rel/</CD>
+isn't a function.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>mlFunctionToFunction
+<TY>(Sym.sym -> Sym.sym) * Sym.sym Set.set -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+mlFunctionToFunction(<ARG/f/, <ARG/bs/)
+</PROTOTY>
+<PP>returns the function <CD><ARG/rel/</CD> whose domain
+is <CD><ARG/bs/</CD>, and where, for all elements
+<CD><ARG/b/</CD> of <CD><ARG/bs/</CD>, <CD>(<ARG/b/,
+<ARG/f/ <ARG/b/)</CD> is a member of <CD><ARG/rel/</CD>.  Issues an
+error message if <CD><ARG/f/</CD> raises an exception when called on one
+or more elements of <CD><ARG/bs/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inputFromLabToks
+<TY>(int * Lex.tok) list -> (sym_rel * (int * Lex.tok) list)</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+inputFromLabToks <ARG/lts/
+</PROTOTY>
+<PP>tries to input a relation from <CD><ARG/lts/</CD>, consuming as
+much of <CD><ARG/lts/</CD> as possible, and returning the pair of the
+relation and the rest of <CD><ARG/lts/</CD>. Issues an error message
+if it fails. Will only return the empty relation if <CD><ARG/lts/</CD>
+doesn't begin with a <CD>"("</CD>
+(<CD><STRREF TOPID/Lex/.<CONREF STRID="Lex"/OpenPar/</CD>).  If, after
+reading a pair of symbols, the next element of the labeled token list
+is <CD>","</CD> (<CD><STRREF TOPID
+/Lex/.<CONREF STRID="Lex"/Comma/</CD>), then <CD>inputFromLabToks</CD>
+insists on reading another pair of symbols, even if this results in
+failure.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs a relation from <CD><ARG/s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs a relation from the file <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>sym_rel -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toPP <ARG/rel/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/rel/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>sym_rel -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/rel/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/rel/</CD> to a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>(string * sym_rel) -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+output(<ARG/fil/, <ARG/rel/)
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/rel/</CD> to file <CD><ARG/fil/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>makeBijectionFromAvoiding
+<TY>Sym.sym Set.set * Sym.sym Set.set -> sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+makeBijectionFromAvoiding(<ARG/bs/, <ARG/cs/)
+</PROTOTY>
+<PP>returns a bijection <CD><ARG/rel/</CD> from <CD><ARG/bs/</CD>
+to a set that's disjoint from <CD><ARG/cs/</CD>.  If the
+set of all <CD>(<ARG/b/, <ARG/b/)</CD> such that <CD><ARG/b/</CD> is
+in <CD><ARG/bs/</CD> satisfies the disjointness property, it is returned.
+Otherwise, the set of all <CD>(<ARG/b/, &LT;<ARG/b/&GT;)</CD> such that
+<CD><ARG/b/</CD> is in <CD><ARG/bs/</CD> is tried,
+and then the set of all <CD>(<ARG/b/, &LT;&LT;<ARG/b/&GT;&GT;)</CD> such that
+<CD><ARG/b/</CD> is in <CD><ARG/bs/</CD>, etc., until a suitable relation
+is found.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

@@ -1,0 +1,27 @@
+<!-- sort-set-rel-tab-subsect.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>Sorting, Sets, Relations and Tables</TITLE>
+
+<SECTION>
+<HEAD>Sorting, Sets, Relations and Tables</HEAD>
+
+<PP>The subsection describes modules implementing sorting
+(the <BF>Sort</BF> module), the abstract type of finite sets
+(the <BF>Set</BF> module), operations on finite relations (finite sets
+of pairs; the <BF>Rel</BF> module), and the abstract type of finite
+tables (the <BF>Tab</BF> module).</PP>
+
+<INCLFILE FILE="sort">
+<INCLFILE FILE="set">
+<INCLFILE FILE="rel">
+<INCLFILE FILE="tab">
+</SECTION>
+

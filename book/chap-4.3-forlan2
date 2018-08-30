@@ -1,0 +1,7 @@
+fun test s =
+      PT.output
+      ("",
+       Gram.parseAlphabet gram (Str.fromString s));
+test "0010";
+test "0100";
+test "0101";

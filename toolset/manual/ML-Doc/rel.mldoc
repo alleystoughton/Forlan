@@ -1,0 +1,519 @@
+<!-- rel.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Rel Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Rel/ Module</HEAD>
+
+<PP>This module provides various operations on finite relations, i.e.,
+finite sets of ordered pairs.</PP>
+
+<STRUCTURE STRID="Rel">
+<OPAQUE>
+<SIGBODY SIGID="REL" FILE=REL>
+
+<SPEC>
+<TYPE><TYPARAM>('a, 'b)<ID>rel<TY>('a * 'b)Set.set
+<COMMENT>
+<PP>The type of finite relations from values of type <CD><ARG/'a/</CD> to
+values of type <CD><ARG/'b/</CD>, i.e., finite sets of values of
+type <CD><ARG/'a/ * <ARG/'b/</CD>.</PP>
+
+<PP>The module's values are specified with the help of the abstract
+proposition saying that a value <CD><ARG/rel/</CD> of type
+<CD>(<ARG/'a/, <ARG/'b/)rel</CD> <EM>is compatible with</EM> a value
+<CD><ARG/cmp/</CD> of type <CD><ARG/'a/ Sort.total_ordering</CD> and
+a value <CD><ARG/cmp'/</CD> of type <CD><ARG/'b/ Sort.total_ordering</CD>.
+</PP>
+
+<PP>In a context where we know that a value <CD><ARG/rel/</CD> of
+type <CD>(<ARG/'a/, <ARG/'b/)rel</CD> is compatible with a
+values <CD><ARG/cmp/</CD> and <CD><ARG/cmp'/</CD> of types
+<CD><ARG/'a/ Sort.total_ordering</CD> and
+<CD><ARG/'b/ Sort.total_ordering</CD>, respectively,
+when we say that
+<CD>(<ARG/x/, <ARG/y/)</CD> <EM>is an element (or member)
+of</EM> <CD><ARG/rel/</CD>, this means that <CD><ARG/x/</CD>
+and <CD><ARG/y/</CD> are values of types <CD><ARG/'a/</CD>
+and <CD><ARG/'b/</CD>, respectively, such that
+<CD>Set.memb (Set.comparePair(<ARG/cmp/, <ARG/cmp'/))
+((<ARG/x/, <ARG/y/), <ARG/rel/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>domain<TY>'a Sort.total_ordering -> ('a, 'b)rel -> 'a Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+domain <ARG/cmp/ <ARG/rel/
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and a
+value <CD><ARG/cmp'/</CD> of
+type <CD><ARG/'b/ Sort.total_ordering</CD>, then <CD>domain</CD>
+returns the set that is compatible with
+<CD><ARG/cmp/</CD> and is the domain of <CD><ARG/rel/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>range<TY>'b Sort.total_ordering -> ('a, 'b)rel -> 'b Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+range <ARG/cmp'/ <ARG/rel/
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with a value
+<CD><ARG/cmp/</CD> of type <CD><ARG/'a/ Sort.total_ordering</CD>
+and <CD><ARG/cmp'/</CD>, then <CD>range</CD> returns the set that is
+compatible with
+<CD><ARG/cmp'/</CD> and is the range of <CD><ARG/rel/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>relationFromTo
+<TY>'a Sort.total_ordering * 'b Sort.total_ordering ->
+(('a, 'b)rel * 'a Set.set * 'b Set.set) -> bool</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+relationFromTo (<ARG/cmp/, <ARG/cmp'/)
+(<ARG/rel/, <ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp'/</CD>, <CD><ARG/xs/</CD> is compatible with <CD><ARG/cmp/</CD>,
+and <CD><ARG/ys/</CD> is compatible with <CD><ARG/cmp'/</CD>, then
+<CD>relationFromTo</CD> tests whether <CD><ARG/rel/</CD> is
+a relation from <CD><ARG/xs/</CD> to <CD><ARG/ys/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>relationOn
+<TY>'a Sort.total_ordering -> ('a, 'a)rel * 'a Set.set -> bool</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+relationOn <ARG/cmp/ (<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp/</CD>, and <CD><ARG/xs/</CD> is compatible
+with <CD><ARG/cmp/</CD>, then
+<CD>relationOn</CD> tests whether <CD><ARG/rel/</CD> is a relation
+on <CD><ARG/xs/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>apply
+<TY>'a Sort.total_ordering * 'b Sort.total_ordering ->
+(('a, 'b)rel * 'a Set.set) -> 'b Set.set</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+apply (<ARG/cmp/, <ARG/cmp'/) (<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp'/</CD>, and <CD><ARG/xs/</CD> is compatible with
+<CD><ARG/cmp/</CD>, then <CD>apply</CD> returns the set that
+is compatible with <CD><ARG/cmp'/</CD> and whose elements are
+all those values <CD><ARG/y/</CD> of type <CD><ARG/'b/</CD> such
+that there is a value <CD><ARG/x/</CD> of type <CD><ARG/'a/</CD>
+such that <CD><ARG/x/</CD> is a member of <CD><ARG/xs/</CD> and
+<CD>(<ARG/x/, <ARG/y/)</CD> is a member of <CD><ARG/rel/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reflexive
+<TY>'a Sort.total_ordering -> (('a, 'a)rel * 'a Set.set) -> bool</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+reflexive <ARG/cmp/ (<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp/</CD>, and <CD><ARG/xs/</CD> is compatible with
+<CD><ARG/cmp/</CD>, then <CD>reflexive</CD> tests whether
+<CD><ARG/rel/</CD> is reflexive on <CD><ARG/xs/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>symmetric<TY>'a Sort.total_ordering -> ('a, 'a)rel -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+symmetric <ARG/cmp/ <ARG/rel/
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp/</CD>, then <CD>symmetric</CD> tests whether
+<CD><ARG/rel/</CD> is symmetric.</PP>
+</COMMENT>
+
+<SPEC>
+<VAL>antisymmetric<TY>'a Sort.total_ordering -> ('a, 'a)rel -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+antisymmetric <ARG/cmp/ <ARG/rel/
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp/</CD>, then <CD>antisymmetric</CD> tests whether
+<CD><ARG/rel/</CD> is antisymmetric.</PP>
+</COMMENT>
+
+<SPEC>
+<VAL>transitive<TY>'a Sort.total_ordering -> ('a, 'a)rel -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+transitive <ARG/cmp/ <ARG/rel/
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp/</CD>, then <CD>symmetric</CD> tests whether
+<CD><ARG/rel/</CD> is transitive.</PP>
+</COMMENT>
+
+<SPEC>
+<VAL>total<TY>'a Sort.total_ordering -> ('a, 'a)rel * 'a Set.set -> bool
+<COMMENT>
+<PROTOTY>
+total <ARG/cmp/ (<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp/</CD>, and <CD><ARG/xs/</CD> is compatible with <CD><ARG/cmp/</CD>,
+then <CD>total</CD> tests whether
+<CD><ARG/rel/</CD> is total on <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inverse
+<TY>'a Sort.total_ordering * 'b Sort.total_ordering ->
+('a, 'b)rel -> ('b, 'a)rel</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+inverse (<ARG/cmp/, <ARG/cmp'/) <ARG/rel/
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp'/</CD>, then <CD>inverse</CD> returns the inverse of
+<CD><ARG/rel/</CD>, which is compatible with <CD><ARG/cmp'/</CD> and
+<CD><ARG/cmp/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reflexiveClosure
+<TY>'a Sort.total_ordering -> (('a, 'a)rel * 'a Set.set) -> ('a, 'a)rel</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+reflexiveClosure <ARG/cmp/ (<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp/</CD>, and <CD><ARG/xs/</CD> is compatible
+with <CD><ARG/cmp/</CD>, then <CD>reflexiveClosure</CD> returns the
+relation that is compatible with <CD><ARG/cmp/</CD> and <CD><ARG/cmp/</CD>
+and is the reflexive closure of <CD><ARG/rel/</CD> with respect
+to <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>transitiveClosure
+<TY>'a Sort.total_ordering -> ('a, 'a)rel -> ('a, 'a)rel</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+transitiveClosure <ARG/cmp/ <ARG/rel/
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD>
+and <CD><ARG/cmp/</CD>, then <CD>transitiveClosure</CD> returns the
+relation that is compatible with <CD><ARG/cmp/</CD> and <CD><ARG/cmp/</CD>
+and is the transitive closure of <CD><ARG/rel/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reflexiveTransitiveClosure
+<TY>'a Sort.total_ordering -> (('a, 'a)rel * 'a Set.set) -> ('a, 'a)rel</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+reflexiveTransitiveClosure <ARG/cmp/ (<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp/</CD>, and <CD><ARG/xs/</CD> is compatible
+with <CD><ARG/cmp/</CD>, then <CD>reflexiveTransitiveClosure</CD>
+returns the relation that is compatible with <CD><ARG/cmp/</CD> and
+and <CD><ARG/cmp/</CD> and is the reflexive, transitive closure
+of <CD><ARG/rel/</CD> with respect to <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>symmetricClosure
+<TY>'a Sort.total_ordering -> ('a, 'a)rel -> ('a, 'a)rel</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+symmetricClosure <ARG/cmp/ <ARG/rel/
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD>
+and <CD><ARG/cmp/</CD>, then <CD>symmetricClosure</CD> returns the
+relation that is compatible with <CD><ARG/cmp/</CD> and <CD><ARG/cmp/</CD>
+and is the symmetric closure of <CD><ARG/rel/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>transitiveSymmetricClosure
+<TY>'a Sort.total_ordering -> ('a, 'a)rel -> ('a, 'a)rel</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+transitiveSymmetricClosure <ARG/cmp/ <ARG/rel/
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD>
+and <CD><ARG/cmp/</CD>, then <CD>transitiveSymmetricClosure</CD>
+returns the relation that is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp/</CD> and is the transitive, symmetric closure
+of <CD><ARG/rel/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reflexiveTransitiveSymmetricClosure
+<TY>'a Sort.total_ordering -> (('a, 'a)rel * 'a Set.set) -> ('a, 'a)rel</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+reflexiveTransitiveSymmetricClosure <ARG/cmp/ (<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp/</CD>, and <CD><ARG/xs/</CD> is compatible
+with <CD><ARG/cmp/</CD>,
+then <CD>reflexiveTransitiveSymmetricClosure</CD> returns the relation
+that is compatible with <CD><ARG/cmp/</CD> and <CD><ARG/cmp/</CD> and
+is the reflexive, transitive, symmetric closure of <CD><ARG/rel/</CD>
+with respect to <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compose
+<TY>'a Sort.total_ordering * 'b Sort.total_ordering * 'c Sort.total_ordering ->
+ (('b, 'c)rel * ('a, 'b)rel) -> ('a, 'c)rel
+</VAL>
+<COMMENT>
+<PROTOTY>
+compose (<ARG/cmp/, <ARG/cmp'/, <ARG/cmp''/) (<ARG/rel2/, <ARG/rel1/)
+</PROTOTY>
+<PP>
+If <CD><ARG/rel2/</CD> is compatible with <CD><ARG/cmp'/</CD> and
+<CD><ARG/cmp''/</CD>, and <CD><ARG/rel1/</CD> is compatible with
+<CD><ARG/cmp/</CD> and <CD><ARG/cmp'/</CD>, then
+<CD>compose</CD> returns the relation that is compatible with
+<CD><ARG/cmp/</CD> and <CD><ARG/cmp''/</CD> and is the
+composition of <CD><ARG/rel2/</CD> and <CD><ARG/rel1/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>function<TY>'a Sort.total_ordering -> ('a, 'b)rel -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+function <ARG/cmp/ <ARG/rel/
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD>
+and a value <CD><ARG/cmp'/</CD> of type <CD><ARG/'a/ Sort.total_ordering</CD>,
+then <CD>function</CD> tests whether <CD><ARG/rel/</CD> is a function.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>functionFromTo
+<TY>'a Sort.total_ordering * 'b Sort.total_ordering ->
+('a, 'b)rel * 'a Set.set * 'b Set.set -> bool</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+functionFromTo (<ARG/cmp/, <ARG/cmp'/) (<ARG/rel/, <ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp'/</CD>, <CD><ARG/xs/</CD> is compatible with
+<CD><ARG/cmp/</CD>, and <CD><ARG/ys/</CD> is compatible with
+<CD><ARG/cmp'/</CD>, then <CD>functionFromTo</CD> tests whether
+<CD><ARG/rel/</CD> is a function from <CD><ARG/xs/</CD> to
+<CD><ARG/ys/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>injection
+<TY>'a Sort.total_ordering * 'b Sort.total_ordering -> ('a, 'b)rel -> bool</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+injection (<ARG/cmp/, <ARG/cmp'/) <ARG/rel/
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD>
+and <CD><ARG/cmp'/</CD>, then <CD>injection</CD> tests
+whether <CD><ARG/rel/</CD> is an injection.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>bijectionFromTo
+<TY>'a Sort.total_ordering * 'b Sort.total_ordering ->
+('a, 'b)rel * 'a Set.set * 'b Set.set -> bool</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+bijectionFromTo (<ARG/cmp/, <ARG/cmp'/) (<ARG/rel/, <ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp'/</CD>, <CD><ARG/xs/</CD> is compatible with
+<CD><ARG/cmp/</CD>, and <CD><ARG/ys/</CD> is compatible with
+<CD><ARG/cmp'/</CD>, then <CD>bijectionFromTo</CD> tests whether
+<CD><ARG/rel/</CD> is a bijection from <CD><ARG/xs/</CD> to
+<CD><ARG/ys/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>bijectionFromAvoiding
+<TY>'a Sort.total_ordering * 'b Sort.total_ordering ->
+('a, 'b)rel * 'a Set.set * 'b Set.set -> bool</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+bijectionFromAvoiding (<ARG/cmp/, <ARG/cmp'/) (<ARG/rel/, <ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp'/</CD>, <CD><ARG/xs/</CD> is compatible with
+<CD><ARG/cmp/</CD>, and <CD><ARG/ys/</CD> is compatible with
+<CD><ARG/cmp'/</CD>, then <CD>bijectionFromAvoiding</CD> tests whether
+<CD><ARG/rel/</CD> is a bijection from <CD><ARG/xs/</CD> to
+a set that is disjoint from <CD><ARG/ys/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>bijectionFromSupersetAvoiding
+<TY>'a Sort.total_ordering * 'b Sort.total_ordering ->
+('a, 'b)rel * 'a Set.set * 'b Set.set -> bool</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+bijectionFromSupersetAvoiding
+(<ARG/cmp/, <ARG/cmp'/) (<ARG/rel/, <ARG/xs/, <ARG/ys/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp'/</CD>, <CD><ARG/xs/</CD> is compatible with
+<CD><ARG/cmp/</CD>, and <CD><ARG/ys/</CD> is compatible with
+<CD><ARG/cmp'/</CD>, then <CD>bijectionFromSupersetAvoiding</CD> tests
+whether <CD><ARG/rel/</CD> is a bijection from a superset of
+<CD><ARG/xs/</CD> to a set that is disjoint from <CD><ARG/ys/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>
+applyFunction<TY>'a Sort.total_ordering -> ('a, 'b)rel -> 'a -> 'b</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+applyFunction <ARG/cmp/ (<ARG/rel/, <ARG/x/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD>
+and a value <CD><ARG/cmp'/</CD> of type <CD><ARG/'b/ Sort.total_ordering</CD>,
+then <CD>applyFunction</CD> applies the
+function <CD><ARG/rel/</CD> to <CD><ARG/x/</CD>.  It issues an error
+message if <CD><ARG/rel/</CD> is not a function, or
+if <CD><ARG/x/</CD> is not in the domain of <CD><ARG/rel/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>restrictFunction
+<TY>'a Sort.total_ordering * 'b Sort.total_ordering ->
+('a, 'b)rel * 'a Set.set -> ('a, 'b)rel</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+restrictFunction (<ARG/cmp/, <ARG/cmp'/) (<ARG/rel/, <ARG/xs/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp'/</CD>, and <CD><ARG/xs/</CD> is compatible with
+<CD><ARG/cmp/</CD>, then <CD>restrictFunction</CD> returns the
+function that is compatible with <CD><ARG/cmp/</CD> and <CD><ARG/cmp'/</CD>
+and is the restriction of <CD><ARG/rel/</CD> to <CD><ARG/xs/</CD>.
+Issues an error message if <CD><ARG/rel/</CD> isn't a function, or
+if <CD><ARG/xs/</CD> isn't a subset of the domain of <CD><ARG/rel/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>updateFunction
+<TY>'a Sort.total_ordering * 'b Sort.total_ordering ->
+('a, 'b)rel * 'a * 'b -> ('a, 'b)rel</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+updateFunction (<ARG/cmp/, <ARG/cmp'/) (<ARG/rel/, <ARG/x/, <ARG/y/)
+</PROTOTY>
+<PP>If <CD><ARG/rel/</CD> is compatible with <CD><ARG/cmp/</CD> and
+<CD><ARG/cmp'/</CD>, then <CD>updateFunction</CD> returns the function
+that is compatible with <CD><ARG/cmp/</CD> and <CD><ARG/cmp'/</CD> and
+is the updating of the function <CD><ARG/rel/</CD> to
+send <CD><ARG/x/</CD> to <CD><ARG/y/</CD>.  Issues an error message
+if <CD><ARG/rel/</CD> isn't a function.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>mlFunctionToFunction
+<TY>'a Sort.total_ordering * 'b Sort.total_ordering ->
+('a -> 'b) * 'a Set.set -> ('a, 'b)rel</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+mlFunctionToFunction (<ARG/cmp/, <ARG/cmp'/) (<ARG/f/, <ARG/xs/)
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> is compatible with <CD><ARG/cmp/</CD>, then
+<CD>mlFunctionToFunction</CD> returns the function <CD><ARG/rel/</CD>
+that is compatible with <CD><ARG/cmp/</CD> and <CD><ARG/cmp'/</CD>,
+whose domain is <CD><ARG/xs/</CD>, and where, for all elements
+<CD><ARG/x/</CD> of <CD><ARG/xs/</CD>, <CD>(<ARG/x/, <ARG/f/ <ARG/x/)</CD>
+is a member of <CD><ARG/rel/</CD>.  Issues an error message if
+<CD><ARG/f/</CD> raises an exception when called on one or more
+elements of <CD><ARG/xs/</CD>.  (Will fail to terminate, if <CD><ARG/f/</CD>
+fails to terminate when called on one or more elements of <CD><ARG/xs/</CD>.)
+</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

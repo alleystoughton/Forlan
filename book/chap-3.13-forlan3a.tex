@@ -1,0 +1,27 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }fun\ regToDFA\ reg\ =
+\item[]\textsl{=\ }\ \ \ \ \ \ nfaToDFA(efaToNFA(faToEFA(regToFA\ reg)));
+\item[]\textsl{val\ regToDFA\ =\ fn\ :\ reg\ ->\ dfa}
+\item[]\textsl{-\ }fun\ relationshipReg(reg1,\ reg2)\ =
+\item[]\textsl{=\ }\ \ \ \ \ \ DFA.relationship(regToDFA\ reg1,\ regToDFA\ reg2);
+\item[]\textsl{val\ relationshipReg\ =\ fn\ :\ reg\ \symbol{'052}\ reg\ ->\ unit}
+\end{list}

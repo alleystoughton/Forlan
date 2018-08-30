@@ -1,0 +1,6 @@
+fun f x = x >= 1 andalso x <= 10;
+fun g x = if x then "inside" else "outside";
+val h = g o f;
+h ~5;
+h 6;
+h 14;

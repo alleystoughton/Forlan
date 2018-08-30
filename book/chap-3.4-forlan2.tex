@@ -1,0 +1,68 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ lp\ =\ LP.input\ "";
+\item[]\textsl{@\ }A,\ 1\ =>\ A,\ 0\ =>\ B,\ 11\ =>\ B,\ 2\ =>\ C,\ 111\ =>\ C
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ lp\ =\ -\ :\ lp}
+\item[]\textsl{-\ }Sym.output("",\ LP.startState\ lp);
+\item[]\textsl{A}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Sym.output("",\ LP.endState\ lp);
+\item[]\textsl{C}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }LP.length\ lp;
+\item[]\textsl{val\ it\ =\ 5\ :\ int}
+\item[]\textsl{-\ }Str.output("",\ LP.label\ lp);
+\item[]\textsl{10112111}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ checkLP\ =\ FA.checkLP\ fa;
+\item[]\textsl{val\ checkLP\ =\ fn\ :\ lp\ ->\ unit}
+\item[]\textsl{-\ }checkLP\ lp;
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ lp'\ =\ LP.fromString\ "A";
+\item[]\textsl{val\ lp'\ =\ -\ :\ lp}
+\item[]\textsl{-\ }LP.length\ lp';
+\item[]\textsl{val\ it\ =\ 0\ :\ int}
+\item[]\textsl{-\ }Str.output("",\ LP.label\ lp');
+\item[]\textsl{%}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }checkLP\ lp';
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ lp''\ =\ LP.input\ "";
+\item[]\textsl{@\ }A,\ %\ =>\ A,\ 1\ =>\ B
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ lp''\ =\ -\ :\ lp}
+\item[]\textsl{-\ }checkLP\ lp'';
+\item[]\textsl{invalid\ transition:\ "A,\ %\ ->\ A"}
+\item[]
+\item[]\textsl{uncaught\ exception\ Error}
+\item[]\textsl{-\ }val\ lp'''\ =\ LP.input\ "";
+\item[]\textsl{@\ }B,\ 2\ =>\ C,\ 34\ =>\ D
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ lp'''\ =\ -\ :\ lp}
+\item[]\textsl{-\ }LP.output("",\ LP.join(lp'',\ lp'''));
+\item[]\textsl{A,\ %\ =>\ A,\ 1\ =>\ B,\ 2\ =>\ C,\ 34\ =>\ D}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }LP.output("",\ LP.join(lp''',\ lp''));
+\item[]\textsl{incompatible\ labeled\ paths}
+\item[]
+\item[]\textsl{uncaught\ exception\ Error}
+\end{list}

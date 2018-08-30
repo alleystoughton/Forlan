@@ -1,0 +1,24 @@
+@FILES
+  ["tran-set"; "The TranSet Module";]
+@SIGNATURE TRAN_SET "tran-set" [
+  @VALS 
+    input
+    memb
+    toPP
+    genUnion
+    equal
+    fromString
+    map
+    fromList
+    output
+    inter
+    inputFromLabToks
+    subset
+    compare
+    union
+    toString
+    minus
+    genInter
+    mapFromList
+]
+@STRUCTURE TranSet "tran-set" TRAN_SET

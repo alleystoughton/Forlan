@@ -1,0 +1,4 @@
+val gram' = Gram.chomskyNormalForm gram;
+Gram.output("", gram');
+val gram'' = Gram.renameVariablesCanonically gram';
+Gram.output("", gram'');

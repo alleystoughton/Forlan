@@ -1,0 +1,40 @@
+@FILES
+  ["set"; "The Set Module";]
+@SIGNATURE SET "set" [
+  @TYPES 
+    @TYPE set
+  @VALS 
+    tl
+    exists
+    genUnion
+    filter
+    map
+    fromList
+    sing
+    inter
+    union
+    isEmpty
+    size
+    genTimes
+    empty
+    memb
+    comparePair
+    compareTriple
+    equal
+    all
+    partition
+    hd
+    mapToList
+    times
+    compareList
+    position
+    times3
+    isNonEmpty
+    subset
+    compare
+    genInter
+    minus
+    mapFromList
+    toList
+]
+@STRUCTURE Set "set" SET

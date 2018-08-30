@@ -1,0 +1,47 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ gram1\ =\ strToGram(Str.fromString\ "01");
+\item[]\textsl{val\ gram1\ =\ -\ :\ gram}
+\item[]\textsl{-\ }val\ gram2\ =\ strToGram(Str.fromString\ "10");
+\item[]\textsl{val\ gram2\ =\ -\ :\ gram}
+\item[]\textsl{-\ }val\ gram3\ =\ strToGram(Str.fromString\ "11");
+\item[]\textsl{val\ gram3\ =\ -\ :\ gram}
+\item[]\textsl{-\ }val\ gram\ =
+\item[]\textsl{=\ }Gram.union(gram1,
+\item[]\textsl{=\ }\ \ \ \ \ \ \ \ \ \ \ Gram.concat(gram2,
+\item[]\textsl{=\ }\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Gram.closure\ gram3));
+\item[]\textsl{val\ gram\ =\ -\ :\ gram}
+\item[]\textsl{-\ }Gram.output("",\ gram);
+\item[]\textsl{\symbol{'173}variables\symbol{'175}\ A,\ <1,A>,\ <2,A>,\ <2,<1,A>>,\ <2,<2,A>>,\ <2,<2,<A>>>}
+\item[]\textsl{\symbol{'173}start\ variable\symbol{'175}\ A}
+\item[]\textsl{\symbol{'173}productions\symbol{'175}}
+\item[]\textsl{A\ ->\ <1,A>\ |\ <2,A>;\ <1,A>\ ->\ 01;\ <2,A>\ ->\ <2,<1,A>><2,<2,A>>;}
+\item[]\textsl{<2,<1,A>>\ ->\ 10;\ <2,<2,A>>\ ->\ %\ |\ <2,<2,<A>>><2,<2,A>>;}
+\item[]\textsl{<2,<2,<A>>>\ ->\ 11}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ gram'\ =\ Gram.renameVariablesCanonically\ gram;
+\item[]\textsl{val\ gram'\ =\ -\ :\ gram}
+\item[]\textsl{-\ }Gram.output("",\ gram');
+\item[]\textsl{\symbol{'173}variables\symbol{'175}\ A,\ B,\ C,\ D,\ E,\ F\ \symbol{'173}start\ variable\symbol{'175}\ A}
+\item[]\textsl{\symbol{'173}productions\symbol{'175}}
+\item[]\textsl{A\ ->\ B\ |\ C;\ B\ ->\ 01;\ C\ ->\ DE;\ D\ ->\ 10;\ E\ ->\ %\ |\ FE;\ F\ ->\ 11}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

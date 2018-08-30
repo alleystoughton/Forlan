@@ -1,0 +1,7 @@
+@FILES
+  ["debug"; "The Debug Module";]
+@SIGNATURE DEBUG "debug" [
+  @VALS 
+    debug
+]
+@STRUCTURE Debug "debug" DEBUG

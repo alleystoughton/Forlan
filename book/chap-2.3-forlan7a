@@ -1,0 +1,8 @@
+fun fact n =
+      case n of
+           0 => 1
+         | n => n * fact(n - 1);
+fact 3;
+fun fact 0 = 1
+  | fact n = n * fact(n - 1);
+fact 4;

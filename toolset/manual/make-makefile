@@ -1,0 +1,5 @@
+#!/bin/bash
+
+find ML-Doc/*.mldoc > /tmp/$$.input
+mk-mldoc-makefile /tmp/$$.input
+rm /tmp/$$.input

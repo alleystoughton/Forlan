@@ -1,0 +1,20 @@
+<!-- lex-subsect.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>Lexical Analysis</TITLE>
+
+<SECTION>
+<HEAD>Lexical Analysis</HEAD>
+
+<PP>The subsection describes Forlan's lexical analysis module.
+Most users of Forlan won't need to use it directly.</PP>
+
+<INCLFILE FILE="lex">
+</SECTION>

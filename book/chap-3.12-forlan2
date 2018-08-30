@@ -1,0 +1,13 @@
+val rfa = RFA.input "";
+{states} A, B {start state} A {accepting states} B
+{transitions} A, 2 -> A; A, 00* -> B; B, 3 -> B; B, 11* -> A
+.
+fun memb(x, reg) = FA.accepted (regToFA reg) x;
+val lp = LP.input "";
+A, 000 => B, 3 => B
+.
+RFA.validLP (memb, rfa) lp;
+val lp' = LP.input "";
+A, 0 => B, 0 => A
+.
+RFA.checkLP (memb, rfa) lp';

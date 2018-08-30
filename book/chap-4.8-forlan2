@@ -1,0 +1,11 @@
+val fa = FA.input "";
+{states}
+A, B
+{start state}
+A
+{accepting states}
+A
+{transitions}
+A, 0 -> B; A, 1 -> A;
+B, 0 -> A; B, 1 -> B
+.

@@ -1,0 +1,4 @@
+val dfa' = DFA.determSimplify(dfa, SymSet.input "");
+2
+.
+DFA.output("", dfa');

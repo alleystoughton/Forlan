@@ -1,0 +1,12 @@
+val xs = StrSet.input "";
+hello, <id><num>, %
+.
+val ys = StrSet.input "";
+<id><num>, another 
+.
+val zs = StrSet.union(xs, ys);
+Set.size zs;
+StrSet.output("", zs);
+val us = Set.filter (fn x => length x mod 2 = 0) zs;
+StrSet.output("", us);
+SymSet.output("", StrSet.alphabet zs);

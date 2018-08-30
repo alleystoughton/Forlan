@@ -1,0 +1,275 @@
+\section{The Pumping Lemma for Regular Languages}
+\label{ThePumpingLemmaForRegularLanguages}
+
+\index{pumping lemma!regular languages|(}%
+\index{regular language!pumping lemma|(}%
+\index{regular language!showing that languages are non-regular|(}%
+In this section we consider techniques for showing that
+particular languages are not regular.
+Consider the language
+\begin{gather*}
+L=\setof{\zerosf^n\onesf^n}{n\in\nats} =
+\mathsf{\{\%, 01, 0011, 000111,\,\ldots\}} .
+\end{gather*}
+Intuitively, an automaton would have to have infinitely many states to
+accept $L$.  A finite automaton won't be able to keep track of how
+many $\zerosf$'s it has seen so far, and thus won't be able to insist
+that the correct number of $\onesf$'s follow.  We could turn the
+preceding ideas into a direct proof that $L$ is not regular.  Instead,
+we will first state a general result, called the Pumping Lemma for
+regular languages, for proving that languages are non-regular.  Next,
+we will show how the Pumping Lemma can be used to prove that $L$ is
+non-regular.  Finally, we will prove the Pumping Lemma.
+
+\begin{lemma}[Pumping Lemma for Regular Languages]
+For all regular languages $L$, there is a $n\in\nats$ such that,
+for all $z\in\Str$, if $z\in L$ and $|z|\geq n$, then
+there are $u,v,w\in\Str$ such that $z=uvw$ and
+\begin{enumerate}[\quad(1)]
+\item $|uv|\leq n$;
+
+\item $v\neq\%$; and
+
+\item $uv^iw\in L$, for all $i\in\nats$.
+\end{enumerate}
+\end{lemma}
+
+When we use the Pumping Lemma, we can imagine that we are interacting
+with it.  We can give the Pumping Lemma a regular language $L$, and
+the lemma will give us back a natural number $n$ such that the
+property of the lemma holds.  We have no control over the value of
+$n$.  We can then give the lemma a string $z$ that is in $L$ and has
+at least $n$ symbols.  (If $L$ is finite, though, there will be no
+elements of $L$ with at least $n$ symbols, and so we won't be able to
+proceed.)  The lemma will then break $z$ up into parts $u$, $v$ and
+$w$ in such way that (1)--(3) hold.  We have no control over how $z$
+is broken up into these parts.  (1) says that $uv$ has no more than
+$n$ symbols.  (2) says that $v$ is nonempty.  And (3) says that, if we
+``pump'' (duplicate) $v$ as many times as we like, the resulting
+string will still be in $L$.
+
+Before proving the Pumping Lemma, let's see how it can be used to
+prove that $L=\setof{\zerosf^n\onesf^n}{n\in\nats}$ is non-regular.
+
+\begin{proposition}
+\label{NonRegularProp1}
+$L$ is not regular.
+\end{proposition}
+
+\begin{proof}
+Suppose, toward a contradiction, that $L$ is regular.
+Thus there is an $n\in\nats$ with the property of the Pumping Lemma.
+Suppose $z=\zerosf^n\onesf^n$.  Since $z\in L$ and
+$|z|=2n\geq n$, it follows that there are $u,v,w\in\Str$ such that
+$z=uvw$ and properties (1)--(3) of the lemma hold.  Since
+$\zerosf^n\onesf^n=z=uvw$, (1) tells us that
+there are $i,j,k\in\nats$ such that
+\begin{gather*}
+u=\zerosf^i,\quad
+v=\zerosf^j,\quad
+w=\zerosf^k\onesf^n,\quad
+i+j+k=n .
+\end{gather*}
+By (2), we have that
+$j\geq 1$, and thus that $i+k = n - j < n$.  By
+(3), we have that
+\begin{gather*}
+\zerosf^{i+k}\onesf^n=\zerosf^i\zerosf^k\onesf^n=uw=u\%w=uv^0w\in L .
+\end{gather*}
+Thus $i+k=n$---contradiction.  Thus $L$ is not regular.
+\end{proof}
+
+In the preceding proof, we obtained a contradiction by pumping zero
+times ($uv^0w$), but pumping two or more times ($uv^2w$, $\ldots$) would
+also have worked.  For a case when pumping zeros times is
+insufficient, consider $A=\setof{\zerosf^n\onesf^m}{n<m}$.  Given
+$n\in\nats$ by the Pumping Lemma, we can let
+$z=\zerosf^n\onesf^{n+1}$, obliging the lemma to split $z$ into $uvw$,
+in such a way that (1)--(3) hold.  Hence $v$ will consist entirely of
+$\zerosf$'s.  Pumping $v$ zero times won't take us outside of $A$.  On
+the other hand $uv^2w$ will have at least as many $\zerosf$'s as
+$\onesf$'s, giving us the needed contradiction.
+
+Now, let's prove the Pumping Lemma.
+
+\begin{proof}
+Suppose $L$ is a regular
+language.  Thus there is a NFA $M$ such that $L(M)=L$.  Let
+$n=|Q_M|$.  Suppose $z\in\Str$, $z\in L$ and $|z|\geq n$.  Let
+$m=|z|$.  Thus $1\leq n\leq|z|=m$.
+Since $z\in L=L(M)$, there is a valid labeled path for $M$
+\begin{gather*}
+q_1\lparr{a_1}q_2\lparr{a_2}\cdots\,q_m\lparr{a_m}q_{m+1} ,
+\end{gather*}
+that is labeled by $z$ and where
+$q_1=s_M$, $q_{m+1}\in A_M$ and $a_i\in\Sym$ for all $1\leq
+i\leq m$.  Since $|Q_M|=n$,
+not all of the states $q_1,\,\ldots,q_{n+1}$ are
+distinct.  Thus, there are $1\leq i<j\leq n+1$ such that
+$q_i=q_j$.
+
+Hence, our path looks like:
+\begin{gather*}
+q_1\lparr{a_1}\cdots\,q_{i-1}\lparr{a_{i-1}}q_i
+\lparr{a_i}\cdots\,q_{j-1}\lparr{a_{j-1}}q_j
+\lparr{a_j}\cdots\,q_m\lparr{a_m}q_{m+1} .
+\end{gather*}
+Let
+\begin{gather*}
+u=a_1\cdots a_{i-1},\quad v=a_i\cdots a_{j-1},\quad
+w=a_j\cdots a_m .
+\end{gather*}
+Then $z=uvw$.  Since $|uv|=j-1$ and $j\leq n+1$,
+we have that $|uv|\leq n$.  Since $i<j$, we have that $i\leq j-1$,
+and thus that $v\neq\%$.
+
+Finally, since
+\begin{gather*}
+q_i\in\Delta(\{q_1\},u),\quad q_j\in\Delta(\{q_i\},v),\quad
+q_{m+1}\in\Delta(\{q_j\},w)
+\end{gather*}
+and $q_i=q_j$, we have that
+\begin{gather*}
+q_j\in\Delta(\{q_1\},u),\quad q_j\in\Delta(\{q_j\},v),\quad
+q_{m+1}\in\Delta(\{q_j\},w) .
+\end{gather*}
+Thus, we have that
+$q_{m+1}\in\Delta(\{q_1\},uv^iw)$ for all $i\in\nats$.  But
+$q_1=s_M$ and $q_{m+1}\in A_M$, and thus $uv^iw\in L(M)=L$ for all $i\in\nats$.
+\end{proof}
+
+Suppose $L'=\setof{w\in\mathsf{\{0,1\}^*}}{w\eqtxt{has an equal number of}
+\zerosf\eqtxtr{'s and}\onesf\eqtxtn{'s}}$.
+We could show that $L'$ is non-regular using the Pumping Lemma.
+But we can also prove this result by using some of the closure
+properties of Section~\ref{ClosurePropertiesOfRegularLanguages}
+plus the fact that
+$L=\setof{\zerosf^n\onesf^n}{n\in\nats}$ is non-regular.
+
+Suppose, toward a contradiction, that $L'$ is regular.  It is easy to
+see that $\{\zerosf\}$ and $\{\onesf\}$ are regular (e.g., they are
+generated by the regular expressions $\zerosf$ and $\onesf$).  Thus,
+by Theorem~\ref{ClosurePropTheorem}, we have that
+$\{\zerosf\}^*\{\onesf\}^*$ is regular.  Hence, by
+Theorem~\ref{ClosurePropTheorem} again, it follows that
+$L=L'\cap\{\zerosf\}^*\{\onesf\}^*$ is regular---contradiction.  Thus
+$L'$ is non-regular.
+
+As a final example, let $X$ be the least subset of
+$\{\mathsf{0,1}\}^*$ such that
+\begin{enumerate}[\quad(1)]
+\item $\%\in X$; and
+
+\item For all $x,y\in X$, $\zerosf x\onesf y\in X$.
+\end{enumerate}
+Let's try to prove that $X$ is non-regular, using the Pumping Lemma.
+We suppose, toward a contradiction, that $X$ is regular, and give it
+to the Pumping Lemma, getting back the $n\in\nats$ with the property
+of the lemma, where $X$ has been substituted for $L$.  But then, how
+do we go about choosing the $z\in\Str$ such that $z\in X$ and $|z|\geq
+n$?  We need to find a string expression $\myexp$ involving the
+variable $n$, such that, for all $n\in\nats$, $\myexp\in X$
+and $|\myexp|\geq n$.
+
+Because $\%\in X$, we have that $\zerosf\onesf=\zerosf\%\onesf\%\in
+X$.  Thus
+$\zerosf\onesf\zerosf\onesf=\zerosf\%\onesf(\zerosf\onesf)\in X$.
+Generalizing, we can easily prove that, for all $n\in\nats$,
+$(\zerosf\onesf)^n\in X$.  Thus we could let $z=(\zerosf\onesf)^n$.
+Unfortunately, this won't lead to the needed contradiction, since the
+Pumping Lemma could break $z$ up into $u=\%$, $v=\zerosf\onesf$ and
+$w=(\zerosf\onesf)^{n-1}$.
+
+Trying again, we have that $\%\in X$, $\zerosf\onesf\in X$ and
+$\zerosf(\zerosf\onesf)\onesf\%=\zerosf\zerosf\onesf\onesf\in X$.
+Generalizing, it's easy to prove that, for all $n\in\nats$,
+$\zerosf^n\onesf^n\in X$.  Thus, we can let $z=\zerosf^n\onesf^n$, so
+that $z\in X$ and $|z|\geq n$.  We can then proceed as in the proof
+that $\setof{\zerosf^n\onesf^n}{n\in\nats}$ is non-regular, getting to
+the point where we learn that $\zerosf^{i+k}\onesf^n\in X$ and
+$i+k<n$.  But an easy induction on $X$ suffices to show that, for all
+$w\in X$, $w$ has an equal number of $\zerosf$'s and $\onesf$'s.
+Hence $i+k=n$, giving us the needed contradiction.
+\index{pumping lemma!regular languages|)}%
+\index{regular language!pumping lemma|)}%
+
+\subsection{Experimenting with the Pumping Lemma Using Forlan}
+
+The Forlan module \texttt{LP}
+(see Section~\ref{FiniteAutomataAndLabeledPaths}) defines a type and
+several functions that implement the idea behind the pumping lemma:
+\begin{verbatim}
+type pumping_division = lp * lp * lp
+
+val checkPumpingDivision       : pumping_division -> unit
+val validPumpingDivision       : pumping_division -> bool
+val strsOfValidPumpingDivision :
+      pumping_division -> str * str * str
+val pumpValidPumpingDivision   : pumping_division * int -> lp
+val findValidPumpingDivision   : lp -> pumping_division
+\end{verbatim}
+A \emph{pumping division} is a triple $(\lp_1,\lp_2,\lp_3)$,
+where $\lp_1,\lp_2,\lp_3\in\LP$.  We say that a pumping division
+$(\lp_1,\lp_2,\lp_3)$ is \emph{valid} iff
+\begin{itemize}
+\item the end state of $\lp_1$ is equal to the start state of $\lp_2$;
+
+\item the start state of $\lp_2$ is equal to the end state of $\lp_2$;
+
+\item the end state of $\lp_2$ is equal to the start state of $\lp_3$; and
+
+\item the label of $\lp_2$ is nonempty.
+\end{itemize}
+The function \texttt{checkPumpingDivision} checks whether a pumping
+division is valid, silently returning \texttt{()}, if it is, and
+issuing an error message explaining why it isn't, if it isn't.  The
+function \texttt{validPumpingDivision} tests whether a pumping
+division is valid.  The function \texttt{strsOfValidPumpingDivision}
+returns the triple consisting of the labels of the three components of
+a pumping division, in order.  It issues an error message if the pumping
+division isn't valid.
+The function \texttt{pumpValidPumpingDivision} expects a pair
+$(\pd, n)$, where $\pd$ is a valid pumping division and $n\geq 0$.
+It issues an error message if $\pd$ isn't valid, or $n$ is negative.
+Otherwise, it returns
+\begin{gather*}
+\join(\hash{1}\,\pd,\join(\lp',\join(\hash{3}\,\pd))) ,
+\end{gather*}
+where $\lp'$ is the result of joining $\hash{2}\,\pd$ with itself $n$
+times (the empty labeled path whose single state is $\hash{2}\,\pd$'s
+start/end state, if $n=0$).  Finally, the function
+\texttt{findValidPumpingDivision} takes in a labeled path $\lp$, and
+tries to find a pumping division $(\lp_1, \lp_2, \lp_3)$ such that:
+\begin{itemize}
+\item $(\lp_1, \lp_2, \lp_3)$ is valid;
+
+\item $\mathtt{pumpValidPumpingDivision}((\lp_1, \lp_2, \lp_3), 1) = \lp$;
+  and
+
+\item there is no repetition of states in the result of joining $\lp_1$ and
+  the result of removing the last step of $\lp_2$.
+\end{itemize}
+\texttt{findValidPumpingDivision} issues an error message if
+no such pumping division exists.
+
+For example, suppose the DFA \texttt{dfa} is bound to the
+DFA
+\begin{center}
+\input{chap-3.14-fig1.eepic}
+\end{center}
+Then we can proceed as follows:
+\input{chap-3.14-forlan1}
+\index{regular language!showing that languages are non-regular|)}%
+
+\subsection{Notes}
+
+The Pumping Lemma is usually proved using a DFA accepting the given
+regular language.  But because we have described the meaning of
+automata via labeled paths, we can do the proof with an NFA, as it has
+nothing to do with determinacy.  Forlan's support for experimenting
+with the Pumping Lemma is novel.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

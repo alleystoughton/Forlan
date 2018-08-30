@@ -1,0 +1,6 @@
+val x = 3;
+val z = 10;
+let val x = 4 * 5
+    val y = x * z
+in (x, y, x + y) end;
+x;

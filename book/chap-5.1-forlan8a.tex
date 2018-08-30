@@ -1,0 +1,47 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ pr\ =\ Prog.input\ "";
+\item[]\textsl{@\ }app(lam(x,\ app(var(x),\ int(1))),
+\item[]\textsl{@\ }\ \ \ \ lam(y,\ var(y)))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pr\ =\ -\ :\ prog}
+\item[]\textsl{-\ }val\ pr'\ =\ Prog.toRep\ pr;
+\item[]\textsl{val\ pr'\ =\ -\ :\ prog}
+\item[]\textsl{-\ }Prog.output("",\ pr');
+\item[]\textsl{pair(str(app),}
+\item[]\textsl{\ \ \ \ \ pair(pair(str(lam),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pair(str(x),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pair(str(app),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pair(pair(str(var),\ str(x)),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pair(str(int),\ int(1)))))),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ pair(str(lam),\ pair(str(y),\ pair(str(var),\ str(y))))))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pr''\ =\ Prog.fromRep\ pr';
+\item[]\textsl{val\ pr''\ =\ -\ :\ prog}
+\item[]\textsl{-\ }Prog.equal(pr'',\ pr);
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }Prog.isRep\ pr;
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\item[]\textsl{-\ }Prog.isRep\ pr';
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }Prog.isRep(Prog.fromString\ "pair(str(x),\ str(y))");
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\end{list}

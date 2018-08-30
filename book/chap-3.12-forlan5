@@ -1,0 +1,24 @@
+val efa1 = EFA.input "";
+{states}
+A, B
+{start state}
+A
+{accepting states}
+B
+{transitions}
+A, 0 -> A;
+A, % -> B;
+B, 1 -> B
+.
+val efa2 = EFA.input "";
+{states}
+A, B
+{start state}
+A
+{accepting states}
+B
+{transitions}
+A, 1 -> A;
+A, % -> B;
+B, 0 -> B
+.

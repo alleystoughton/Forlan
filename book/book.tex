@@ -1,0 +1,230 @@
+\documentclass[11pt,twoside]{book}
+
+\includeonly{preface, chap-1}
+
+\usepackage{titlepic}
+\usepackage{epic}
+\usepackage{eepic}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{moreverb}
+\usepackage{enumerate}
+\usepackage{url}
+\usepackage{theorem}
+\usepackage{calc}
+\usepackage{index}
+\usepackage{alltt}
+
+\input{defs} % general macros
+\input{commands} % document-specific definitions
+
+% this book is designed to be printed on 7x10in paper
+% if you want to print it on other paper, I'd suggest
+% not changing the text width and height
+
+\setlength{\oddsidemargin}{-.125in}
+
+% select one of the following
+
+% so margins are correct if each page is cut down to 7 x 10 in, starting
+% from upper left corner
+\setlength{\evensidemargin}{-.125in}
+%%
+% for printing double-sided on 8.5 x 11 inch paper on a laserwriter
+% and then using paper cutter to cut down to 7 x 10 in, starting from
+% upper left corners of odd numbered pages
+%\setlength{\evensidemargin}{1.375in}
+
+\setlength{\textwidth}{5.25in}
+\setlength{\marginparsep}{0cm}
+\setlength{\marginparwidth}{0cm}
+
+\setlength{\topmargin}{-.5in}
+\setlength{\headheight}{15pt}
+\setlength{\textheight}{8.625in - \headheight - \headsep}
+
+\tolerance=6000 \hbadness=3000 \hfuzz=3pt \vfuzz=3pt
+\raggedbottom
+
+\usepackage{fancyheadings}
+\pagestyle{fancy}
+
+\renewcommand{\chaptermark}[1]{\markboth{#1}%
+                                        {#1}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+\lhead[\bfseries\thepage]%
+      {\bfseries\rightmark}
+\rhead[\bfseries\leftmark]%
+      {\bfseries\thepage}
+\cfoot{}
+
+\makeindex{}
+
+% if you want to user the hyperref package, uncomment
+% the following, as well as the lines below with text "hyperlink"
+
+% hyperref beginning
+
+%\begin{comment}
+\usepackage[%
+ps2pdf=true,%
+hyperindex=true,%
+bookmarksnumbered=true,%
+%hypertexnames=false,%
+colorlinks=false,%
+hyperfigures=true,%
+plainpages=false,%
+pdfpagelabels,%
+pdftitle={Formal Language Theory:
+Integrating Experimentation and Proof},
+pdfauthor={Alley Stoughton}
+]{hyperref}
+
+% I modified the theindex environment to do a \phantomsection and
+% add the toc entry, so that the hyperref link to the index
+% would go to the right position
+\makeatletter
+\renewenvironment{theindex}{%
+\phantomsection
+    \edef\indexname{\the\@nameuse{idxtitle@\@indextype}}%
+    \if@twocolumn
+        \@restonecolfalse
+    \else
+        \@restonecoltrue
+    \fi
+    \columnseprule \z@
+    \columnsep 35\p@
+    \twocolumn[%
+        \phantomsection
+        \addcontentsline{toc}{chapter}{Index}
+        \@makeschapterhead{\indexname}%
+        \ifx\index@prologue\@empty\else
+            \index@prologue
+            \bigskip
+        \fi
+    ]%
+    \@mkboth{\MakeUppercase\indexname}%
+            {\MakeUppercase\indexname}%
+    \thispagestyle{plain}%
+    \parindent\z@
+    \parskip\z@ \@plus .3\p@\relax
+    \let\item\@idxitem
+}
+\makeatother
+%\end{comment}
+
+% hyperref end
+
+% this must come after hyperref package is loaded
+
+\usepackage{breakurl}
+
+% arrange for lines of verbatim environments to be indented
+
+\makeatletter
+\def\verbatim@processline{\hspace{\leftmargini}\the\verbatim@line\par}
+\makeatother
+
+% arrange for verbatim environments to have \small text
+
+\makeatletter
+\def\verbatim@font{\normalfont\ttfamily\small
+                   \hyphenchar\font\m@ne
+                   \let\do\do@noligs
+                   \verbatim@nolig@list}
+\makeatother
+
+\begin{document}
+
+\pagenumbering{roman}
+
+\title{\Huge\bf Formal Language Theory\\[.3cm]
+\LARGE\bf Integrating Experimentation and Proof}
+
+\author{\LARGE\bf Alley Stoughton}
+
+\date{Draft of September 2018}
+
+\titlepic{\input{cover.eepic}}
+
+\maketitle
+
+\thispagestyle{empty}
+
+\noindent Copyright \copyright\ 2018 Alley Stoughton
+
+\vspace{.5cm}
+\noindent
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+
+The \LaTeX\ source of this book is part of the Forlan distribution,
+which is available on the Web at \url{http://alleystoughton.us/forlan}.  A
+copy of the GNU Free Documentation License is included in the
+Forlan distribution.
+
+\clearemptydoublepage
+
+\tableofcontents
+
+\clearemptydoublepage
+
+\listoffigures
+
+\clearemptydoublepage
+
+% if you don't want to use hyperref, comment-out following line
+%\phantomsection % to make hyperlink go to right place
+
+\addcontentsline{toc}{chapter}{Preface}
+
+\include{preface}
+
+\pagenumbering{arabic}
+
+%%\clearemptydoublepage
+%%
+%%\include{chap-1}
+%%
+%%\clearemptydoublepage
+%%
+%%\include{chap-2}
+%%
+%%\clearemptydoublepage
+%%
+%%\include{chap-3}
+%%
+%%\clearemptydoublepage
+%%
+%%\include{chap-4}
+%%
+%%\clearemptydoublepage
+%%
+%%\include{chap-5}
+
+\clearemptydoublepage
+
+% if you don't want to use hyperref, comment-out the following line
+
+\phantomsection % to make hyperlink go to right place
+
+\addcontentsline{toc}{chapter}{Bibliography}
+
+\bibliography{book}
+\bibliographystyle{alpha}
+
+\clearemptydoublepage
+
+{\small
+\printindex}
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

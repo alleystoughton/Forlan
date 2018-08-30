@@ -1,0 +1,21 @@
+@FILES
+  ["top-level-part"; "Top-level Environment";
+    @SECTION "Top-level Environment" [
+      @SECTION "Version" []
+      @SECTION "Parameters" []
+      @SECTION "Debugging" []
+      @SECTION "Using Files" []
+      @SECTION "Basic Types" []
+      @SECTION "Conversions Between Basic Types and Strings" []
+      @SECTION "Regular Expressions" []
+      @SECTION "Labeled Paths" []
+      @SECTION "Finite Automata" []
+      @SECTION "Injections and Projections Between Finite Automata" []
+      @SECTION "Conversions Between Finite Automata" []
+      @SECTION "Conversions Between Finite Automata and Regular Expressions" []
+      @SECTION "Regular Expression Finite Automata" []
+      @SECTION "Parse Trees" []
+      @SECTION "Grammars" []
+      @SECTION "Programs" []
+    ]
+  ]

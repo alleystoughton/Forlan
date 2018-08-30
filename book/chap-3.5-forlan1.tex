@@ -1,0 +1,59 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ rel\ =\ FA.findIsomorphism(fa1,\ fa2);
+\item[]\textsl{val\ rel\ =\ -\ :\ sym_rel}
+\item[]\textsl{-\ }SymRel.output("",\ rel);
+\item[]\textsl{(A,\ A),\ (B,\ C),\ (C,\ B)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }FA.isomorphism(fa1,\ fa2,\ rel);
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }FA.isomorphic(fa1,\ fa2);
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }val\ rel'\ =\ FA.findIsomorphism(fa1,\ fa1);
+\item[]\textsl{val\ rel'\ =\ -\ :\ sym_rel}
+\item[]\textsl{-\ }SymRel.output("",\ rel');
+\item[]\textsl{(A,\ A),\ (B,\ B),\ (C,\ C)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }FA.isomorphism(fa1,\ fa1,\ rel');
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }FA.isomorphism(fa1,\ fa2,\ rel');
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\item[]\textsl{-\ }val\ rel''\ =\ SymRel.input\ "";
+\item[]\textsl{@\ }(A,\ 2),\ (B,\ 1),\ (C,\ 0)
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ rel''\ =\ -\ :\ sym_rel}
+\item[]\textsl{-\ }val\ fa3\ =\ FA.renameStates(fa1,\ rel'');
+\item[]\textsl{val\ fa3\ =\ -\ :\ fa}
+\item[]\textsl{-\ }FA.output("",\ fa3);
+\item[]\textsl{\symbol{'173}states\symbol{'175}\ 0,\ 1,\ 2\ \symbol{'173}start\ state\symbol{'175}\ 2\ \symbol{'173}accepting\ states\symbol{'175}\ 0,\ 1,\ 2}
+\item[]\textsl{\symbol{'173}transitions\symbol{'175}\ 0,\ 1\ ->\ 1;\ 2,\ 0\ ->\ 1\ |\ 2;\ 2,\ 1\ ->\ 0}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ fa4\ =\ FA.renameStatesCanonically\ fa3;
+\item[]\textsl{val\ fa4\ =\ -\ :\ fa}
+\item[]\textsl{-\ }FA.output("",\ fa4);
+\item[]\textsl{\symbol{'173}states\symbol{'175}\ A,\ B,\ C\ \symbol{'173}start\ state\symbol{'175}\ C\ \symbol{'173}accepting\ states\symbol{'175}\ A,\ B,\ C}
+\item[]\textsl{\symbol{'173}transitions\symbol{'175}\ A,\ 1\ ->\ B;\ C,\ 0\ ->\ B\ |\ C;\ C,\ 1\ ->\ A}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }FA.equal(fa4,\ fa1);
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\item[]\textsl{-\ }FA.isomorphic(fa4,\ fa1);
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\end{list}

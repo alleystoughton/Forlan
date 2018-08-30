@@ -1,0 +1,53 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ rfa\ =\ RFA.input\ "";
+\item[]\textsl{@\ }\symbol{'173}states\symbol{'175}\ A,\ B,\ C,\ D\ \symbol{'173}start\ state\symbol{'175}\ A\ \symbol{'173}accepting\ states\symbol{'175}\ D
+\item[]\textsl{@\ }\symbol{'173}transitions\symbol{'175}
+\item[]\textsl{@\ }A,\ 0\ ->\ B;\ B,\ 1\ ->\ C;\ C,\ 2\ ->\ B;\ C,\ 3\ ->\ C;\ C,\ 4\ ->\ D
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ rfa\ =\ -\ :\ rfa}
+\item[]\textsl{-\ }val\ eliminateState\ =\ RFA.eliminateState\ simp;
+\item[]\textsl{val\ eliminateState\ =\ fn\ :\ rfa\ \symbol{'052}\ sym\ ->\ rfa}
+\item[]\textsl{-\ }val\ rfa'\ =\ eliminateState(rfa,\ Sym.fromString\ "B");
+\item[]\textsl{val\ rfa'\ =\ -\ :\ rfa}
+\item[]\textsl{-\ }RFA.output("",\ rfa');
+\item[]\textsl{\symbol{'173}states\symbol{'175}\ A,\ C,\ D\ \symbol{'173}start\ state\symbol{'175}\ A\ \symbol{'173}accepting\ states\symbol{'175}\ D}
+\item[]\textsl{\symbol{'173}transitions\symbol{'175}\ A,\ 01\ ->\ C;\ C,\ 4\ ->\ D;\ C,\ 3\ +\ 21\ ->\ C}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ rfa''\ =\ eliminateState(rfa',\ Sym.fromString\ "C");
+\item[]\textsl{val\ rfa''\ =\ -\ :\ rfa}
+\item[]\textsl{-\ }RFA.output("",\ rfa'');
+\item[]\textsl{\symbol{'173}states\symbol{'175}\ A,\ D\ \symbol{'173}start\ state\symbol{'175}\ A\ \symbol{'173}accepting\ states\symbol{'175}\ D}
+\item[]\textsl{\symbol{'173}transitions\symbol{'175}\ A,\ 01(3\ +\ 21)\symbol{'052}4\ ->\ D}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ rfa'''\ =\ eliminateState(rfa,\ Sym.fromString\ "C");
+\item[]\textsl{val\ rfa'''\ =\ -\ :\ rfa}
+\item[]\textsl{-\ }RFA.output("",\ rfa''');
+\item[]\textsl{\symbol{'173}states\symbol{'175}\ A,\ B,\ D\ \symbol{'173}start\ state\symbol{'175}\ A\ \symbol{'173}accepting\ states\symbol{'175}\ D}
+\item[]\textsl{\symbol{'173}transitions\symbol{'175}\ A,\ 0\ ->\ B;\ B,\ 13\symbol{'052}2\ ->\ B;\ B,\ 13\symbol{'052}4\ ->\ D}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ rfa''''\ =\ eliminateState(rfa''',\ Sym.fromString\ "B");
+\item[]\textsl{val\ rfa''''\ =\ -\ :\ rfa}
+\item[]\textsl{-\ }RFA.output("",\ rfa'''');
+\item[]\textsl{\symbol{'173}states\symbol{'175}\ A,\ D\ \symbol{'173}start\ state\symbol{'175}\ A\ \symbol{'173}accepting\ states\symbol{'175}\ D}
+\item[]\textsl{\symbol{'173}transitions\symbol{'175}\ A,\ 01(3\ +\ 21)\symbol{'052}4\ ->\ D}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

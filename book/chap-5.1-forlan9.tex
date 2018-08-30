@@ -1,0 +1,64 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ equal\ =\ Prog.input\ "equal-prog";
+\item[]\textsl{val\ equal\ =\ -\ :\ prog}
+\item[]\textsl{-\ }val\ succ\ =\ Prog.input\ "succ-prog";
+\item[]\textsl{val\ succ\ =\ -\ :\ prog}
+\item[]\textsl{-\ }val\ count\ =
+\item[]\textsl{=\ }\ \ \ \ \ \ Prog.app
+\item[]\textsl{=\ }\ \ \ \ \ \ (Prog.app(Prog.input\ "count-prog",\ equal),
+\item[]\textsl{=\ }\ \ \ \ \ \ \ succ);
+\item[]\textsl{val\ count\ =\ -\ :\ prog}
+\item[]\textsl{-\ }val\ zerosOnesTwos\ =
+\item[]\textsl{=\ }\ \ \ \ \ \ Prog.app
+\item[]\textsl{=\ }\ \ \ \ \ \ (Prog.app(Prog.input\ "zeros-ones-twos-prog",\ equal),
+\item[]\textsl{=\ }\ \ \ \ \ \ \ count);
+\item[]\textsl{val\ zerosOnesTwos\ =\ -\ :\ prog}
+\item[]\textsl{-\ }val\ accepted\ =\ Prog.accepted\ zerosOnesTwos;
+\item[]\textsl{val\ accepted\ =\ fn\ :\ str\ \symbol{'052}\ int\ ->\ unit}
+\item[]\textsl{-\ }accepted(Str.fromString\ "%",\ 10);
+\item[]\textsl{unknown\ if\ accepted\ or\ rejected}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }accepted(Str.fromString\ "%",\ 100);
+\item[]\textsl{accepted}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }accepted(Str.fromString\ "012",\ 100);
+\item[]\textsl{accepted}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }accepted(Str.fromString\ "000111222",\ 1000);
+\item[]\textsl{accepted}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }accepted(Str.fromString\ "00011122",\ 1000);
+\item[]\textsl{rejected\ with\ false}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }accepted(Str.fromString\ "00111222",\ 1000);
+\item[]\textsl{rejected\ with\ false}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }accepted(Str.fromString\ "00011222",\ 1000);
+\item[]\textsl{rejected\ with\ false}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }accepted(Str.fromString\ "021",\ 100);
+\item[]\textsl{rejected\ with\ false}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }accepted(Str.fromString\ "112200",\ 1000);
+\item[]\textsl{rejected\ with\ false}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

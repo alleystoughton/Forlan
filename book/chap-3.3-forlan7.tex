@@ -1,0 +1,65 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }globSimp\ (NONE,\ false)\ (Reg.fromString\ "%\ +\ 0\symbol{'052}(0\ +\ 1)");
+\item[]\textsl{val\ it\ =\ (true,-)\ :\ bool\ \symbol{'052}\ reg}
+\item[]\textsl{-\ }Reg.output("",\ #2\ it);
+\item[]\textsl{%\ +\ 0\symbol{'052}(0\ +\ 1)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Reg.globallySimplifyTrace
+\item[]\textsl{=\ }(NONE,\ true,\ Reg.obviousSubset)
+\item[]\textsl{=\ }(Reg.fromString\ "%\ +\ 0\symbol{'052}(0\ +\ 1)");
+\item[]\textsl{considering\ candidates\ with\ explanations\ of\ length\ 0}
+\item[]\textsl{simplest\ result\ now:\ %\ +\ 0\symbol{'052}(0\ +\ 1)}
+\item[]\textsl{considering\ candidates\ with\ explanations\ of\ length\ 1}
+\item[]\textsl{considering\ candidates\ with\ explanations\ of\ length\ 2}
+\item[]\textsl{considering\ candidates\ with\ explanations\ of\ length\ 3}
+\item[]\textsl{considering\ candidates\ with\ explanations\ of\ length\ 4}
+\item[]\textsl{simplest\ result\ now:\ %\ +\ 0\symbol{'052}(0\ +\ 1)\ transformed\ by\ distributive}
+\item[]\textsl{rule\ 1\ at\ position\ \symbol{'133}2\symbol{'135}\ to\ %\ +\ 0\symbol{'052}0\ +\ 0\symbol{'052}1\ transformed\ by\ structural}
+\item[]\textsl{rule\ 2\ at\ position\ \symbol{'133}\symbol{'135}\ to\ (%\ +\ 0\symbol{'052}0)\ +\ 0\symbol{'052}1\ transformed\ by\ reduction}
+\item[]\textsl{rule\ 26\ at\ position\ \symbol{'133}1\symbol{'135}\ to\ 0\symbol{'052}\ +\ 0\symbol{'052}1\ transformed\ by\ reduction\ rule}
+\item[]\textsl{21\ at\ position\ \symbol{'133}\symbol{'135}\ to\ 0\symbol{'052}(%\ +\ 1)}
+\item[]\textsl{considering\ candidates\ with\ explanations\ of\ length\ 5}
+\item[]\textsl{considering\ candidates\ with\ explanations\ of\ length\ 6}
+\item[]\textsl{considering\ candidates\ with\ explanations\ of\ length\ 7}
+\item[]\textsl{considering\ candidates\ with\ explanations\ of\ length\ 8}
+\item[]\textsl{considering\ candidates\ with\ explanations\ of\ length\ 9}
+\item[]\textsl{considering\ candidates\ with\ explanations\ of\ length\ 10}
+\item[]\textsl{considering\ candidates\ with\ explanations\ of\ length\ 11}
+\item[]\textsl{search\ completed\ after\ considering\ 76\ candidates\ with\ maximum\ size}
+\item[]\textsl{11}
+\item[]\textsl{%\ +\ 0\symbol{'052}(0\ +\ 1)\ transformed\ by\ distributive\ rule\ 1\ at\ position\ \symbol{'133}2\symbol{'135}}
+\item[]\textsl{to\ %\ +\ 0\symbol{'052}0\ +\ 0\symbol{'052}1\ transformed\ by\ structural\ rule\ 2\ at\ position\ \symbol{'133}\symbol{'135}}
+\item[]\textsl{to\ (%\ +\ 0\symbol{'052}0)\ +\ 0\symbol{'052}1\ transformed\ by\ reduction\ rule\ 26\ at\ position}
+\item[]\textsl{\symbol{'133}1\symbol{'135}\ to\ 0\symbol{'052}\ +\ 0\symbol{'052}1\ transformed\ by\ reduction\ rule\ 21\ at\ position\ \symbol{'133}\symbol{'135}\ to}
+\item[]\textsl{0\symbol{'052}(%\ +\ 1)\ is\ globally\ simplified}
+\item[]\textsl{val\ it\ =\ (true,-)\ :\ bool\ \symbol{'052}\ reg}
+\item[]\textsl{-\ }globSimp\ (NONE,\ false)\ (Reg.fromString\ "(0(0(0\ +\ 1))\symbol{'052})\symbol{'052}");
+\item[]\textsl{val\ it\ =\ (true,-)\ :\ bool\ \symbol{'052}\ reg}
+\item[]\textsl{-\ }Reg.output("",\ #2\ it);
+\item[]\textsl{%\ +\ 0(0(%\ +\ 0\ +\ 1))\symbol{'052}}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }globSimp\ (NONE,\ true)\ (Reg.fromString\ "(0(0(0\ +\ 1))\symbol{'052})\symbol{'052}");
+\item[]\textsl{val\ it\ =\ (true,-)\ :\ bool\ \symbol{'052}\ reg}
+\item[]\textsl{-\ }Reg.output("",\ #2\ it);
+\item[]\textsl{%\ +\ 0(0(%\ +\ 1))\symbol{'052}}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

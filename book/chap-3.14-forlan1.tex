@@ -1,0 +1,58 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ lp\ =\ DFA.findAcceptingLP\ dfa\ (Str.input\ "");
+\item[]\textsl{@\ }001010
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ lp\ =\ -\ :\ lp}
+\item[]\textsl{-\ }LP.output("",\ lp);
+\item[]\textsl{A,\ 0\ =>\ B,\ 0\ =>\ C,\ 1\ =>\ A,\ 0\ =>\ B,\ 1\ =>\ B,\ 0\ =>\ C}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pd\ =\ LP.findValidPumpingDivision\ lp;\ 
+\item[]\textsl{val\ pd\ =\ (-,-,-)\ :\ LP.pumping_division}
+\item[]\textsl{-\ }val\ (lp1,\ lp2,\ lp3)\ =\ pd;
+\item[]\textsl{val\ lp1\ =\ -\ :\ lp}
+\item[]\textsl{val\ lp2\ =\ -\ :\ lp}
+\item[]\textsl{val\ lp3\ =\ -\ :\ lp}
+\item[]\textsl{-\ }LP.output("",\ lp1);
+\item[]\textsl{A}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }LP.output("",\ lp2);
+\item[]\textsl{A,\ 0\ =>\ B,\ 0\ =>\ C,\ 1\ =>\ A}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }LP.output("",\ lp3);
+\item[]\textsl{A,\ 0\ =>\ B,\ 1\ =>\ B,\ 0\ =>\ C}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ (u,\ v,\ w)\ =\ LP.strsOfValidPumpingDivision\ pd;
+\item[]\textsl{val\ u\ =\ \symbol{'133}\symbol{'135}\ :\ str}
+\item[]\textsl{val\ v\ =\ \symbol{'133}-,-,-\symbol{'135}\ :\ str}
+\item[]\textsl{val\ w\ =\ \symbol{'133}-,-,-\symbol{'135}\ :\ str}
+\item[]\textsl{-\ }(Str.toString\ u,\ Str.toString\ v,\ Str.toString\ v);
+\item[]\textsl{val\ it\ =\ ("%","001","001")\ :\ string\ \symbol{'052}\ string\ \symbol{'052}\ string}
+\item[]\textsl{-\ }val\ lp'\ =\ LP.pumpValidPumpingDivision(pd,\ 2);
+\item[]\textsl{val\ lp'\ =\ -\ :\ lp}
+\item[]\textsl{-\ }LP.output("",\ lp');
+\item[]\textsl{A,\ 0\ =>\ B,\ 0\ =>\ C,\ 1\ =>\ A,\ 0\ =>\ B,\ 0\ =>\ C,\ 1\ =>\ A,\ 0\ =>\ B,\ 1\ =>}
+\item[]\textsl{B,\ 0\ =>\ C}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Str.output("",\ LP.label\ lp');
+\item[]\textsl{001001010}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

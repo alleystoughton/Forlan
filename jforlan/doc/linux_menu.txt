@@ -1,0 +1,29 @@
+ADDING JFORLAN TO THE LINUX MENU
+
+---THROUGH THE GUI---
+
+(GNOME)
+www.ubuntugeek.com/howto-add-entries-in-gnome-menu.html
+
+(KDE)
+http://docs.kde.org/kde3/en_GB/kdebase/userguide/adding-programs.html
+
+
+---WITHOUT GUI)---
+
+create "jforlan.desktop" in /usr/share/applications 
+(and place icon in appropriate location)
+
+#http://freedesktop.org/Standards/desktop-entry-spec
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=JForlan
+GenericName=Automata and Tree Builder
+Comment=Automata and Tree Builder
+Icon=<insert icon here>
+TryExec=jforlan
+Exec=jforlan
+Terminal=false
+Categories=<insert category here>;
+Encoding=UTF-8

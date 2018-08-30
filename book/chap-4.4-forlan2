@@ -1,0 +1,5 @@
+val gram'' = Gram.input "";
+{variables} A {start variable} A
+{productions}
+A -> % | 0 | AA | AAA | AAAA
+.

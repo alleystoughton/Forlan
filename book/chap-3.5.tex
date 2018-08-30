@@ -1,0 +1,371 @@
+\section{Isomorphism of Finite Automata}
+\label{IsomorphismOfFiniteAutomata}
+
+\subsection{Definition and Algorithm}
+
+\index{isomorphism!finite automaton|(}%
+\index{finite automaton!isomorphism|(}%
+Let $M$ and $N$ be the finite automata
+\begin{center}
+\input{chap-3.5-fig1.eepic}
+\end{center}
+How are $M$ and $N$ related?
+Although they are not equal, they do have the same
+``structure'', in that $M$ can be turned into $N$ by replacing
+$\Asf$, $\Bsf$ and $\Csf$ by $\Asf$, $\Csf$ and $\Bsf$, respectively.
+When FAs have the same structure, we will say they are ``isomorphic''.
+
+In order to say more formally what it means for two FAs to be
+isomorphic, we define the notion of an isomorphism from one FA to
+another.  An {\em isomorphism}
+\index{finite automaton!isomorphism from FA to FA}%
+\index{isomorphism!finite automaton!isomorphism from FA to FA}%
+$h$ from an FA $M$ to an FA $N$ is a bijection from $Q_M$ to $Q_N$
+such that:
+\begin{itemize}
+\item $h\,s_M = s_N$;
+
+\item $\setof{h\,q}{q\in A_M} = A_N$; and
+
+\item $\setof{(h\,q), x\fun (h\,r)}{q,x\fun r\in T_M} =
+T_N$.
+\end{itemize}
+We define a relation $\iso$ on $\FA$ by: $M\iso N$
+\index{iso@$\iso$}%
+\index{finite automaton!iso@$\iso$}%
+\index{isomorphism!finite automaton!iso@$\iso$}%
+iff there
+is an isomorphism from $M$ to $N$.  We say that $M$ and $N$ are
+{\em isomorphic\/}
+\index{isomorphic!finite automaton}%
+\index{finite automaton!isomorphic}%
+\index{isomorphism!finite automaton!isomorphic}%
+iff $M\iso N$.
+
+Consider our example FAs $M$ and $N$, and
+let $h$ be the function
+\begin{gather*}
+\mathsf{\{(A, A), (B, C), (C, B)\}}.
+\end{gather*}
+Then it is easy to check that $h$ is an isomorphism from $M$ to $N$.
+Hence $M\iso N$.
+
+\begin{proposition}
+\label{IsoEquivProp}
+The relation $\iso$ is reflexive on $\FA$, symmetric and transitive.
+\index{reflexive on set!iso@$\iso$}%
+\index{symmetry!iso@$\iso$}%
+\index{transitive!iso@$\iso$}%
+\index{iso@$\iso$!reflexive}%
+\index{iso@$\iso$!symmetric}%
+\index{iso@$\iso$!transitive}%
+\end{proposition}
+
+\begin{proof}
+If $M$ is an FA, then $\id_M$ is an isomorphism from $M$ to $M$.
+
+If $M,N$ are FAs, and $h$ is a isomorphism from $M$ to $N$, then
+$h^{-1}$ is an isomorphism from $N$ to $M$.
+
+If $M_1,M_2,M_3$ are FAs, $f$ is an isomorphism from $M_1$ to $M_2$,
+and $g$ is an isomorphism from $M_2$ to $M_3$, then $g\circ f$ an
+isomorphism from $M_1$ to $M_3$.
+\end{proof}
+
+Next, we see that, if $M$ and $N$ are isomorphic, then
+every string accepted by $M$ is also accepted by $N$.
+
+\begin{proposition}
+\label{IsoSubProp}
+Suppose $M$ and $N$ are isomorphic FAs.  Then $L(M)\sub L(N)$.
+\end{proposition}
+
+\begin{proof}
+Let $h$ be an isomorphism from $M$ to $N$.  Suppose $w\in L(M)$.
+Then, there is a labeled path
+\begin{gather*}
+\lp = q_1\lparr{x_1}q_2\lparr{x_2}\cdots\,q_n\lparr{x_n}q_{n+1} ,
+\end{gather*}
+such that $w=x_1x_2\cdots x_n$, $\lp$ is valid for $M$,
+$q_1 = s_M$ and $q_{n+1}\in A_M$.  Let
+\begin{gather*}
+\lp' = h\,q_1\lparr{x_1}h\,q_2\lparr{x_2}\cdots\,h\,q_n
+\lparr{x_n}h\,q_{n+1}.
+\end{gather*}
+Then the label of $\lp'$ is $w$, $\lp'$ is valid for $N$,
+$h\,q_1=h\,s_M=s_N$ and $h\,q_{n+1}\in A_N$, showing that $w\in L(N)$.
+\end{proof}
+
+A consequence of the two preceding propositions is that
+isomorphic FAs are equivalent.  Of course, the converse is
+not true, in general, since there are many FAs that accept the
+same language and yet don't have the same structure.
+
+\begin{proposition}
+Suppose $M$ and $N$ are isomorphic FAs. Then $M\approx N$.
+\end{proposition}
+
+\begin{proof}
+Since $M\iso N$, we have that $N\iso M$, by Proposition~\ref{IsoEquivProp}.
+Thus, by Proposition~\ref{IsoSubProp}, we have that $L(M)\sub L(N)\sub L(M)$.
+Hence $L(M)=L(N)$, i.e., $M\approx N$.
+\end{proof}
+
+The function $\renameStates$ takes in a pair $(M,f)$, where $M\in\FA$
+\index{finite automaton!renaming states}%
+\index{renameStates@$\renameStates$}%
+\index{finite automaton!renameStates@$\renameStates$}%
+and $f$ is a bijection from $Q_M$ to some set of symbols, and returns
+the $\FA$ produced from $M$ by renaming $M$'s states using the
+bijection $f$.
+
+\begin{proposition}
+Suppose $M$ is an FA and $f$ is a bijection from $Q_M$ to some set of
+symbols.  Then $\renameStates(M,f)\iso M$.
+\end{proposition}
+
+The following function is a special case of $\renameStates$.
+The function $\renameStatesCanonically\in\FA\fun\FA$ renames the
+\index{renameStatesCanonically@$\renameStatesCanonically$}%
+\index{finite automaton!renameStatesCanonically@$\renameStatesCanonically$}%
+states of an FA $M$ to:
+\begin{itemize}
+\item $\mathsf{A}$, $\mathsf{B}$, etc., when the automaton has no more
+than 26 states (the smallest state of $M$ will be renamed to
+$\mathsf{A}$, the next smallest one to $\mathsf{B}$, etc.); or
+
+\item $\mathsf{\langle 1\rangle}$, $\mathsf{\langle 2\rangle}$, etc.,
+otherwise.
+\end{itemize}
+Of course, the resulting automaton will always be isomorphic to the original
+one.
+
+Next, we consider an algorithm that finds an isomorphism from an FA
+\index{finite automaton!isomorphism!checking whether FAs are isomorphic}%
+\index{isomorphism!finite automaton!checking whether FAs are isomorphic}%
+$M$ to an FA $N$, if one exists, and that indicates that no such
+isomorphism exists, otherwise.
+
+Our algorithm is based on the following lemma.
+\begin{lemma}
+\label{IsoLem}
+Suppose that $h$ is a bijection from $Q_M$ to $Q_N$.  Then
+\begin{gather*}
+\setof{h\,q \tranarr{x} h\,r}{q \tranarr{x} r\in T_M} = T_N
+\end{gather*}
+iff, for all $(q, r)\in h$ and
+$x\in\Str$, there is a subset of $h$ that is a bijection from
+\begin{gather*}
+\setof{p\in Q_M}{q \tranarr{x} p\in T_M}
+\end{gather*}
+to
+\begin{gather*}
+\setof{p\in Q_N}{r \tranarr{x} p\in T_N} .
+\end{gather*}
+\end{lemma}
+
+If any of the following conditions are true, then the algorithm reports
+that there is no isomorphism from $M$ to $N$:
+\begin{itemize}
+\item $|Q_M|\neq|Q_N|$;
+
+\item $|A_M|\neq|A_N|$;
+
+\item $|T_M|\neq|T_N|$;
+
+\item $s_M\in A_M$, but $s_N\not\in A_N$; and
+
+\item $s_N\in A_N$, but $s_M\not\in A_M$.
+\end{itemize}
+Otherwise, it calls its main, recursive function, $\findIso$.
+
+The function $\findIso$ is called with an argument $(f,
+[C_1,\ldots,C_n])$, where:
+\begin{itemize}
+\item $f$ is a bijection from a subset of $Q_M$ to a subset of $Q_N$, and
+
+\item the $C_i$ are \emph{constraints} of the form $(X,Y)$, where
+  $X\sub Q_M$, $Y\sub Q_N$ and $|X|=|Y|$.
+\end{itemize}
+It returns an element of $\Option\,X$, where $X$ is the set of
+bijections from $Q_M$ to $Q_N$.  $\none$ is returned to indicate
+failure, and $\some\,h$ is returned when it has produced the bijection $h$.
+We say that a bijection \emph{satisfies} a constraint $(X,Y)$ iff it
+has a subset that is a bijection from $X$ to $Y$.
+
+We say that the \emph{weight} of a constraint $(X,Y)$ is $3^{|X|}$.
+Thus, we have the following facts:
+\begin{itemize}
+\item If $(X,Y)$ is a constraint, then its weight is at least $3^0=1$.
+
+\item If $(\{p\}\cup X,\{q\}\cup Y)$ is a constraint, $p\not\in X$,
+  $q\not\in Y$ and $|X|\geq 1$, then the weight of $(\{p\}\cup
+  X,\{q\}\cup Y)$ is $3^{1+|X|}=3\cdot 3^{|X|}$, the weight of
+  $(\{p\},\{q\})$ is $3^1=3$, and the weight of $(X,Y)$ is $3^{|X|}$.
+  Because $|X|\geq 1$, it follows that the sum of the weights of
+  $(\{p\},\{q\})$ and $(X,Y)$ ($3 + 3^{|X|}$) is strictly less than
+  the weight of $(\{p\}\cup X,\{q\}\cup Y)$.
+\end{itemize}
+
+Each argument to a recursive call of $\findIso$ will be strictly
+smaller than the argument to the original call in the \emph{termination
+relation} in which argument $(f, [C_1,\ldots,C_n])$ is less than argument
+$(f', [C'_1,\ldots,C'_m])$ iff either:
+\begin{itemize}
+\item $|f|>|f'|$ (remember that $|f|\leq|Q_M|=|Q_N|$); or
+
+\item $|f|=|f'|$ but the sum of the weights of the constraints
+  $C_1,\,\ldots,C_n$ is strictly less than the sum of the weights of
+  the constraints $C'_1, \,\ldots,C'_m$.
+\end{itemize}
+Thus every call of $\findIso$ will terminate.
+
+When $\findIso$ is called with argument $(f, [C_1,\ldots,C_n])$, the
+following property, which we call (\dag), will hold: for all bijections
+$h$ from a subset of $Q_M$ to a subset of $Q_N$, if $h\supseteq f$ and $h$
+satisfies all of the $C_i$'s, then:
+\begin{itemize}
+\item $h$ is a bijection from $Q_M$ to $Q_N$;
+
+\item $h\,s_M = s_N$;
+
+\item $\setof{h\,q}{q\in A_M} = A_N$; and
+
+\item for all $(q, r)\in f$ and $x\in\Str$, there is a subset of $h$
+  that is a bijection from $\setof{p\in Q_M}{q,x\fun p\in T_M}$ to
+  $\setof{p\in Q_N}{r,x\fun p\in T_N}$.
+\end{itemize}
+Thus, if $\findIso$ is called with a bijection $f$ and an empty list
+of constraints, it will follow, by Lemma~\ref{IsoLem},
+that $f$ is an isomorphism from $M$ to $N$.
+
+Initially, the algorithm calls $\findIso$ with the \emph{initial argument}:
+\begin{displaymath}
+(\emptyset, [(\{s_M\}, \{s_N\}), (U, V), (X, Y)]) ,
+\end{displaymath}
+where $U = A_M - \{s_M\}$, $V = A_N - \{s_N\}$, $X = (Q_M - A_M) -
+\{s_M\}$ and $Y= (Q_N - A_N) - \{s_N\}$.
+
+If $\findIso$ is called with argument $(f, [\,])$, then it returns
+$\some\,f$.
+
+Otherwise, if $\findIso$ is called with argument $(f, [(\emptyset,
+\emptyset), C_2, \ldots, C_n])$, then it calls itself recursively with
+argument $(f, [C_2, \ldots, C_n])$.  (The size of the bijection has
+been preserved, but the sum of the weights of the constraints has gone
+down by one.)
+
+Otherwise, if $\findIso$ is called with argument $(f, [(\{q\},\{r\}),
+C_2,\ldots,C_n])$, then it proceeds as follows:
+\begin{itemize}
+\item If $(q,r)\in f$, then it calls itself recursively with argument
+  $(f,[C_2,\ldots,C_n])$ and returns what the recursive call returns.
+  (The size of the bijection has been preserved, but the sum of the
+  weights of the constraints has gone down by three.)
+
+\item Otherwise, if $q\in\domain\,f$ or $r\in\range\,f$, then
+  $\findIso$ returns $\none$.
+
+\item Otherwise, it works its way through the strings appearing in the
+  transitions of $M$ and $N$, forming a list of new constraints,
+  $C'_1,\,\ldots,C'_m$.  Given such a string, $x$, it lets
+  $A_x=\setof{p\in Q_M}{q,x\fun p\in T_M}$ and $B_x=\setof{p\in
+    Q_N}{r,x\fun p\in T_N}$.  If $|A_x|\neq|B_x|$, then it returns
+  $\none$.  Otherwise, it adds the constraint $(A_x,B_x)$ to our
+  list of new constraints.  When all such strings have been exhausted,
+  it calls itself recursively with argument $(f \cup \{(q,r)\},
+  [C'_1,\ldots,C'_m,C_2,\ldots,C_n])$ and returns what this recursive
+  call returns.  (The size of the bijection has been increased by
+  one.)
+\end{itemize}
+
+Otherwise, $\findIso$ has been called with argument $(f, [(A, A'),
+C_2, \ldots, C_n])$, where $|A|>1$, and it proceeds as follows.  It
+picks the smallest symbol $q\in A$, and lets $B=A-\{q\}$.  Then,
+it works its way through the elements of $A'$.  Given $r\in A'$, it
+lets $B'=A'-\{r\}$.  Then, it tries calling itself recursively with
+argument $(f, [(\{q\},\{r\}), (B,B'), C_2,\ldots, C_n])$.  (The
+size of the bijection has been preserved, but the sum of the sizes of
+the weights of the constraints has gone down by $2\cdot
+3^{|B_1|}-3\geq 3$.)  If this call returns a result of form $\some\,h$,
+then it returns this to its caller.  But if the call returns $\none$, it
+tries the next element of $A'$.  If it exhausts the elements of $A'$,
+then it returns $\none$.
+
+\begin{lemma}
+\label{FindIsoLem}
+If $\findIso$ is called with an argument $(f,[C_1,\,\ldots,C_n])$ satisfying
+property (\dag), then it returns $\none$, if there is no isomorphism
+from $M$ to $N$ that is a superset of $f$ and satisfies the constaints
+$C_1,\ldots,C_n$, and returns $\some\,h$ where $h$ is such an isomorphism,
+otherwise.
+\end{lemma}
+
+\begin{proof}
+By well-founded induction on our termination relation.  I.e., when
+proving the result for $(f,[C_1,\ldots,C_n])$, we may assume that the
+result holds for all arguments $(f',[C'_1,\ldots,C'_m])$ that are
+strictly smaller in our termination ordering.
+\end{proof}
+
+\begin{theorem}
+If $\findIso$ is called with its initial argument, then it returns
+$\none$, if there is no isomorphism from $M$ to $N$, and returns
+$\some\,h$ where $h$ is an isomorphism from $M$ to $N$, otherwise.
+\end{theorem}
+
+\begin{proof}
+Follows easily from Lemma~\ref{FindIsoLem}.
+\end{proof}
+
+\subsection{Isomorphism Finding/Checking in Forlan}
+
+The Forlan module \texttt{FA}
+\index{FA@\texttt{FA}}%
+also defines the functions
+\begin{verbatim}
+val isomorphism             : fa * fa * sym_rel -> bool
+val findIsomorphism         : fa * fa -> sym_rel
+val isomorphic              : fa * fa -> bool
+val renameStates            : fa * sym_rel -> fa
+val renameStatesCanonically : fa -> fa
+\end{verbatim}
+\index{FA@\texttt{FA}!isomorphism@\texttt{isomorphism}}%
+\index{FA@\texttt{FA}!findIsomorphism@\texttt{findIsomorphism}}%
+\index{FA@\texttt{FA}!isomorphic@\texttt{isomorphic}}%
+\index{FA@\texttt{FA}!renameStates@\texttt{renameStates}}%
+\index{FA@\texttt{FA}!renameStatesCanonically@\texttt{renameStatesCanonically}}%
+The function \texttt{isomorphism} checks whether a relation on symbols
+is an isomorphism from one FA to another.  The function
+\texttt{findIsomorphism} tries to find an isomorphism from one FA to
+another; it issues an error message if there isn't one.  The
+function \texttt{isomorphic} checks whether two FAs are isomorphic.
+The function \texttt{renameStates} issues an error message
+if the supplied relation isn't a bijection from the set
+of states of the supplied FA to some set; otherwise, it returns the
+result of $\renameStates$.  And the function
+\texttt{renameStatesCanonically} acts like $\renameStatesCanonically$.
+
+Suppose \texttt{fa1} and \texttt{fa2} have been bound to our example
+our example finite automata $M$ and $N$:
+\begin{center}
+\input{chap-3.5-fig1.eepic}
+\end{center}
+Then, here are some example uses of the above functions:
+\input{chap-3.5-forlan1}
+\index{isomorphism!finite automaton|)}%
+\index{finite automaton!isomorphism|)}%
+
+\subsection{Notes}
+
+Books on formal language theory rarely formalize the isomorphism
+of finite automata, although most note or prove that the minimization of
+deterministic finite automata yields a result that is unique up
+to the renaming of states.  Our algorithm for trying to find an
+isomorphism between finite automata will be unsurprising to those
+familiar with graph algorithms.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

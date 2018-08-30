@@ -1,0 +1,36 @@
+@FILES
+  ["rel"; "The Rel Module";]
+@SIGNATURE REL "rel" [
+  @TYPES 
+    @TYPE rel
+  @VALS 
+    transitiveSymmetricClosure
+    function
+    compose
+    bijectionFromSupersetAvoiding
+    reflexiveClosure
+    mlFunctionToFunction
+    updateFunction
+    transitive
+    bijectionFromAvoiding
+    inverse
+    symmetric
+    reflexiveTransitiveClosure
+    injection
+    total
+    relationFromTo
+    restrictFunction
+    transitiveClosure
+    apply
+    domain
+    antisymmetric
+    symmetricClosure
+    reflexive
+    relationOn
+    applyFunction
+    functionFromTo
+    reflexiveTransitiveSymmetricClosure
+    range
+    bijectionFromTo
+]
+@STRUCTURE Rel "rel" REL

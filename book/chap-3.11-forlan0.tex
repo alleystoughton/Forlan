@@ -1,0 +1,50 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }setPrintingLineLength\ 66;
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ dfa\ =\ DFA.input\ "";
+\item[]\textsl{@\ }\symbol{'173}states\symbol{'175}
+\item[]\textsl{@\ }A,\ B,\ C,\ D
+\item[]\textsl{@\ }\symbol{'173}start\ state\symbol{'175}
+\item[]\textsl{@\ }A
+\item[]\textsl{@\ }\symbol{'173}accepting\ states\symbol{'175}
+\item[]\textsl{@\ }A,\ B,\ C
+\item[]\textsl{@\ }\symbol{'173}transitions\symbol{'175}
+\item[]\textsl{@\ }A,\ 0\ ->\ B;\ A,\ 1\ ->\ A;
+\item[]\textsl{@\ }B,\ 0\ ->\ C;\ B,\ 1\ ->\ A;
+\item[]\textsl{@\ }C,\ 0\ ->\ D;\ C,\ 1\ ->\ A;
+\item[]\textsl{@\ }D,\ 0\ ->\ D;\ D,\ 1\ ->\ D
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ dfa\ =\ -\ :\ dfa}
+\item[]\textsl{-\ }val\ nfa\ =\ NFA.input\ "";
+\item[]\textsl{@\ }\symbol{'173}states\symbol{'175}
+\item[]\textsl{@\ }A,\ B,\ C
+\item[]\textsl{@\ }\symbol{'173}start\ state\symbol{'175}
+\item[]\textsl{@\ }A
+\item[]\textsl{@\ }\symbol{'173}accepting\ states\symbol{'175}
+\item[]\textsl{@\ }C
+\item[]\textsl{@\ }\symbol{'173}transitions\symbol{'175}
+\item[]\textsl{@\ }A,\ 1\ ->\ A\ |\ B;
+\item[]\textsl{@\ }B,\ 1\ ->\ C;
+\item[]\textsl{@\ }C,\ 0\ ->\ C
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ nfa\ =\ -\ :\ nfa}
+\end{list}

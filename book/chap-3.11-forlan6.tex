@@ -1,0 +1,50 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ dfa'\ =\ nfaToDFA\ nfa';
+\item[]\textsl{val\ dfa'\ =\ -\ :\ dfa}
+\item[]\textsl{-\ }DFA.numStates\ dfa';
+\item[]\textsl{val\ it\ =\ 16\ :\ int}
+\item[]\textsl{-\ }DFA.output("",\ dfa');
+\item[]\textsl{\symbol{'173}states\symbol{'175}}
+\item[]\textsl{<>,\ <A>,\ <B>,\ <C>,\ <D>,\ <A,B>,\ <A,C>,\ <A,D>,\ <B,C>,\ <B,D>,\ <C,D>,}
+\item[]\textsl{<A,B,C>,\ <A,B,D>,\ <A,C,D>,\ <B,C,D>,\ <A,B,C,D>}
+\item[]\textsl{\symbol{'173}start\ state\symbol{'175}\ <A>}
+\item[]\textsl{\symbol{'173}accepting\ states\symbol{'175}}
+\item[]\textsl{<D>,\ <A,D>,\ <B,D>,\ <C,D>,\ <A,B,D>,\ <A,C,D>,\ <B,C,D>,\ <A,B,C,D>}
+\item[]\textsl{\symbol{'173}transitions\symbol{'175}}
+\item[]\textsl{<>,\ 0\ ->\ <>;\ <>,\ 1\ ->\ <>;\ <>,\ 2\ ->\ <>;\ <A>,\ 0\ ->\ <A>;}
+\item[]\textsl{<A>,\ 1\ ->\ <A,B>;\ <A>,\ 2\ ->\ <>;\ <B>,\ 0\ ->\ <C>;\ <B>,\ 1\ ->\ <C>;}
+\item[]\textsl{<B>,\ 2\ ->\ <B>;\ <C>,\ 0\ ->\ <D>;\ <C>,\ 1\ ->\ <D>;\ <C>,\ 2\ ->\ <C>;}
+\item[]\textsl{<D>,\ 0\ ->\ <>;\ <D>,\ 1\ ->\ <>;\ <D>,\ 2\ ->\ <D>;\ <A,B>,\ 0\ ->\ <A,C>;}
+\item[]\textsl{<A,B>,\ 1\ ->\ <A,B,C>;\ <A,B>,\ 2\ ->\ <B>;\ <A,C>,\ 0\ ->\ <A,D>;}
+\item[]\textsl{<A,C>,\ 1\ ->\ <A,B,D>;\ <A,C>,\ 2\ ->\ <C>;\ <A,D>,\ 0\ ->\ <A>;}
+\item[]\textsl{<A,D>,\ 1\ ->\ <A,B>;\ <A,D>,\ 2\ ->\ <D>;\ <B,C>,\ 0\ ->\ <C,D>;}
+\item[]\textsl{<B,C>,\ 1\ ->\ <C,D>;\ <B,C>,\ 2\ ->\ <B,C>;\ <B,D>,\ 0\ ->\ <C>;}
+\item[]\textsl{<B,D>,\ 1\ ->\ <C>;\ <B,D>,\ 2\ ->\ <B,D>;\ <C,D>,\ 0\ ->\ <D>;}
+\item[]\textsl{<C,D>,\ 1\ ->\ <D>;\ <C,D>,\ 2\ ->\ <C,D>;\ <A,B,C>,\ 0\ ->\ <A,C,D>;}
+\item[]\textsl{<A,B,C>,\ 1\ ->\ <A,B,C,D>;\ <A,B,C>,\ 2\ ->\ <B,C>;\ <A,B,D>,\ 0\ ->\ <A,C>;}
+\item[]\textsl{<A,B,D>,\ 1\ ->\ <A,B,C>;\ <A,B,D>,\ 2\ ->\ <B,D>;\ <A,C,D>,\ 0\ ->\ <A,D>;}
+\item[]\textsl{<A,C,D>,\ 1\ ->\ <A,B,D>;\ <A,C,D>,\ 2\ ->\ <C,D>;\ <B,C,D>,\ 0\ ->\ <C,D>;}
+\item[]\textsl{<B,C,D>,\ 1\ ->\ <C,D>;\ <B,C,D>,\ 2\ ->\ <B,C,D>;}
+\item[]\textsl{<A,B,C,D>,\ 0\ ->\ <A,C,D>;\ <A,B,C,D>,\ 1\ ->\ <A,B,C,D>;}
+\item[]\textsl{<A,B,C,D>,\ 2\ ->\ <B,C,D>}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

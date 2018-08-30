@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# script to be included in minimum source tarball
+
+# build compressed Forlan SML/NJ heap image
+
+sml <<'END_OF_INPUT'
+Control.trackExn := false;
+CM.make "forlan.cm";
+open TopLevel;
+Export.export();
+END_OF_INPUT
+
+image=`echo forlan-heap.[a-z][a-z0-9]*-[a-z][a-z0-9]*`
+ls -l $image

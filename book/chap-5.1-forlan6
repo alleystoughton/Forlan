@@ -1,0 +1,20 @@
+val pr = Prog.toClosed(Prog.input "");
+app(lam(x, calc(plus, pair(var(x), int(3)))),
+    int(4))
+.
+Prog.run(pr, 0);
+val Prog.Intermed pr' = it;
+Prog.output("", Prog.fromClosed pr');
+Prog.run(pr, 1);
+val Prog.Intermed pr' = it;
+Prog.output("", Prog.fromClosed pr');
+Prog.run(pr, 2);
+val Prog.Intermed pr' = it;
+Prog.output("", Prog.fromClosed pr');
+Prog.run(pr, 3);
+val Prog.Ans pr' = it;
+Prog.output("", Prog.fromClosed pr');
+val pr = Prog.toClosed(Prog.fromString "calc(plus, int(4))");
+Prog.run(pr, 1);
+val Prog.Fail pr' = it;
+Prog.output("", Prog.fromClosed pr');

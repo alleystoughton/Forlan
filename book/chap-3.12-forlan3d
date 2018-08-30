@@ -1,0 +1,2 @@
+val reg' = faToRegPerms (NONE, Reg.weaklySimplify) fa;
+Reg.output("", reg');

@@ -1,0 +1,281 @@
+\section{Simplification of Grammars}
+\label{SimplificationOfGrammars}
+
+In this section, we say what it means for a grammar to be simplified,
+give a simplification algorithm for grammars, and see how to use this
+algorithm in Forlan.
+
+\subsection{Definition and Algorithm}
+
+Suppose $G$ is the grammar
+\begin{align*}
+\Asf &\fun \mathsf{BB1}, \\
+\Bsf &\fun \zerosf\mid\Asf\mid\Csf\Dsf, \\
+\Csf &\fun \onesf\twosf , \\
+\Dsf &\fun \onesf\Dsf\twosf .
+\end{align*}
+This grammar is odd for two, related, reasons.  First
+$\Dsf$ doesn't generate anything, i.e., there is no parse
+tree $\pt$ such that $\pt$ is valid for $G$, the root label of
+$\pt$ is $\Dsf$, and the yield of $\pt$ is in $(\alphabet\,G)^* =
+\{\mathsf{0,1,2}\}^*$.
+Second, there is no valid parse tree that starts at $G$'s
+start variable, $\Asf$, has a yield that is in $\{\mathsf{0,1,2}\}^*$
+and makes use of $\Csf$.  But if we first removed $\Dsf$, and all productions
+involving it, then our objection to $\Csf$ could be simpler: there
+would be no parse tree $\pt$ such that $\pt$ is valid for $G$,
+the root label of $\pt$ is $\Asf$, and $\Csf$ appears in the yield
+of $\pt$.
+
+This example leads us to the following definitions.  Suppose $G$ is a
+grammar.  We say that a variable $q$ of $G$ is:
+\begin{itemize}
+\item \emph{reachable in} $G$ iff there is a $w\in\Str$ such that
+  $w$ is parsable from $s_G$ using $G$, and $a\in\alphabet\,w$;
+
+\item \emph{generating in} $G$ iff there is a $w\in\Str$ such that $q$
+  generates $w$ using $G$, i.e., $w$ is parsable from $q$ using $G$,
+  and $w\in(\alphabet\,G)^*$;
+
+\item \emph{useful in} $G$ iff $q$ is both reachable and
+  generating in $G$.
+\end{itemize}
+The reader should compare these definitions with the definitions given
+in Section~\ref{SimplificationOfFiniteAutomata} of reachable, live and
+useful states.
+
+Also note that the standard definition of being useful is stronger
+than our definition: there is a parse tree $\pt$ such that $\pt$ is
+valid for $G$, $\rootLabel\,\pt=s_G$, $\yield\,\pt\in
+(\alphabet\,G)^*$, and $q$ appears in $\pt$.  For example, the
+variable $\Csf$ of our example grammar $G$ is useful in our sense, but
+not useful in the standard sense.  But as we observed above, $\Csf$
+will no longer be reachable (and thus useful) if all productions
+involving $\Dsf$ are removed.  In general, we have that, if all
+variables of a grammar are useful in our sense, that all variable of
+the grammar are useful in the standard sense.
+
+Now, suppose $H$ is the grammar
+\begin{align*}
+\Asf &\fun \% \mid \zerosf \mid \mathsf{AA} \mid \mathsf{AAA} .
+\end{align*}
+Here, we have that the productions $\Asf\fun\mathsf{AA}$ and
+$\Asf\fun\mathsf{AAA}$ are redundant, although only one of them can be
+removed:
+\begin{center}
+  \input{chap-4.4-fig1.eepic}
+\end{center}
+Thus any use of $\Asf\fun\mathsf{AA}$ in a parse tree can be replaced
+by uses of $\Asf\fun\%$ and $\Asf\fun\mathsf{AAA}$, and any use of
+$\Asf\fun\mathsf{AAA}$ in a parse tree can be replaced by two uses
+of $\Asf\fun\mathsf{AA}$.
+
+This example leads us to the following definitions.  Given a grammar
+$G$ and a finite subset $U$ of $\setof{(q,x)}{q\in Q_G\eqtxt{and}
+  x\in\Str}$, we write $G/U$ for the grammar that is identical to $G$
+except that its set of productions is $U$.
+If $G$ is a grammar and $(q,x)\in P_G$, we say that:
+\begin{itemize}
+\item $(q,x)$ \emph{is redundant in} $G$ iff $x$ is parsable from $q$
+ using $H$, where $H=G/(P_G - \{(q,x)\})$; and
+
+\item $(q,x)$ \emph{is irredundant in} $G$ iff $(q,x)$ is not
+  redundant in $G$.
+\end{itemize}
+
+Now we are able to say when a grammar is simplified.  The reader
+should compare this definition with the definition in
+Section~\ref{SimplificationOfFiniteAutomata} of when a finite
+automaton is simplified.
+A grammar $G$ is \emph{simplified} iff either
+\begin{itemize}
+\item every variable of $G$ is useful, and every production of $G$
+  is irredundant; or
+
+\item $|Q_G|=1$ and $P_G = \emptyset$.
+\end{itemize}
+The second case is necessary, because otherwise there would be
+no simplified grammar generating $\emptyset$.
+
+\begin{proposition}
+If $G$ is a simplified grammar, then $\alphabet\,G = \alphabet(L(G))$.
+\end{proposition}
+
+\begin{proof}
+Suppose $a\in\alphabet\,G$.  We must show that $a\in\alphabet\,w$ for
+some $w\in L(G)$.  We have that every variable of $G$ is useful, and
+there are $q\in Q_G$ and $x\in\Str$ such that $(q,x)\in P_G$ and
+$a\in\alphabet\,x$.  Thus $x$ is parsable from $q$.  Since every
+variable occurring in $x$ is generating, we have that $q$ generates a
+string $x'$ containing $a$.  Since $q$ is reachable, there is a string
+$y$ such that $y$ is parsable from $s_G$, and $q\in\alphabet\,y$.
+Since every variable occurring in $y$ is generating, there is a string
+$y'$ such that $y'$ is parsable from $s_G$, and $q$ is the only
+variable of $\alphabet\,y'$.  Putting these facts together, we have
+that $s_G$ generates a string $w$ such that $a\in\alphabet\,w$, i.e.,
+$a\in\alphabet\,w$ for some $w\in L(G)$.
+\end{proof}
+
+Next, we give an algorithm for removing redundant productions.
+Given a grammar $G$, $q\in Q_G$ and $x\in\Str$, we say that
+$(q,x)$ \emph{is implicit in} $G$ iff $x$ is parsable from $q$ using
+$G$.
+
+Given a grammar $G$, we define a function
+$\remRedun_G\in\powset\,P_G\times\powset\,P_G\fun\powset\,P_G$ by
+well-founded recursion on the size of its second argument.
+For $U,V\sub P_G$, $\remRedun(U, V)$ proceeds as follows:
+\begin{itemize}
+\item If $V=\emptyset$, then it returns $U$.
+
+\item Otherwise, let $v$ be the greatest element of $\setof{(q,x)\in
+    V}{\eqtxtr{there are no} p\in\Sym \eqtxt{and} y\in\Str \eqtxt{such
+      that} (p,y)\in V \eqtxt{and} |y| > |x|}$, and $V' = V - \{v\}$.
+  If $v$ is implicit in $G/(U\cup V')$, then $\remRedun$ returns the
+  result of evaluating $\remRedun(U, V')$.  Otherwise, it returns the
+  result of evaluating $\remRedun(U \cup \{v\}, V')$.
+\end{itemize}
+
+In general, there are multiple---incompatible---ways of removing
+redundant productions from a grammar.  $\remRedun$ is defined so as to
+favor removing productions whose right-hand sides are longer; and
+among productions whose right-hand sides have equal length, to favor
+removing productions that are larger in our total ordering on
+productions.
+
+Our algorithm for removing redundant productions of a grammar $G$
+returns $G/(\remRedun_G(\emptyset,P_G))$.
+For example, if we run our algorithm for removing redundant productions
+on
+\begin{align*}
+\Asf &\fun \% \mid \zerosf \mid \mathsf{AA} \mid \mathsf{AAA} ,
+\end{align*}
+we obtain
+\begin{align*}
+\Asf &\fun \% \mid \zerosf \mid \mathsf{AA} .
+\end{align*}
+
+Our simplification algorithm for grammars proceeds as follows, given
+a grammar $G$.
+\begin{itemize}
+\item First, it determines which variables of $G$ are generating.
+If $s_G$ isn't one of these variables, then it returns the
+grammar with variable $s_G$ and no productions.
+
+\item Next, it turns $G$ into a grammar $G'$ by deleting all
+non-generating variables, and deleting all productions involving such
+variables.
+
+\item Then, it determines which variables of $G'$ are reachable.
+
+\item Next, it turns $G'$ into a grammar $G''$ by deleting all
+non-reachable variables, and deleting all productions involving such
+variables.
+
+\item Finally, it removes redundant productions from $G''$.
+\end{itemize}
+
+Suppose $G$, once again, is the grammar
+\begin{align*}
+\Asf &\fun \mathsf{BB1}, \\
+\Bsf &\fun \zerosf\mid\Asf\mid\Csf\Dsf, \\
+\Csf &\fun \onesf\twosf , \\
+\Dsf &\fun \onesf\Dsf\twosf .
+\end{align*}
+Here is what happens if we apply our simplification algorithm to $G$.
+\begin{itemize}
+\item First, we determine which variables are generating. Clearly
+    $\Bsf$ and $\Csf$ are.  And, since $\Bsf$ is, it follows that
+    $\Asf$ is, because of the production $\Asf\fun\mathsf{BB1}$.  (If
+    this production had been $\Asf\fun\mathsf{BD1}$, we wouldn't have
+    added $\Asf$ to our set.)
+
+\item Thus, we form $G'$ from $G$ by deleting the variable $\Dsf$, yielding
+  the grammar
+  \begin{align*}
+    \Asf &\fun \mathsf{BB1}, \\
+    \Bsf &\fun \zerosf\mid\Asf, \\
+    \Csf &\fun \onesf\twosf .
+  \end{align*}
+
+\item Next, we determine which variables of $G'$ are reachable.
+  Clearly $\Asf$ is, and thus $\Bsf$ is, because of the production
+  $\Asf\fun\mathsf{BB1}$.
+
+  Note that, if we carried out the two stages of our simplification
+  algorithm in the other order, then $\Csf$ and its production would
+  never be deleted.
+
+\item Next, we form $G''$ from $G'$ by deleting the variable $\Csf$,
+  yielding the grammar
+  \begin{align*}
+    \Asf &\fun \mathsf{BB1}, \\
+    \Bsf &\fun \zerosf\mid\Asf .
+  \end{align*}
+
+\item Finally, we would remove redundant productions from $G''$.
+  But $G''$ has no redundant productions, and so we are done.
+\end{itemize}
+
+We define a function $\simplify\in\Gram\fun\Gram$ by: for all
+$G\in\Gram$, $\simplify\,G$ is the result of running the above
+algorithm on $G$.
+
+\begin{theorem}
+For all $G\in\Gram$:
+\begin{enumerate}[\quad(1)]
+\item $\simplify\,G$ is simplified;
+
+\item $\simplify\,G\approx G$; and
+
+\item $\alphabet(\simplify\,G) = \alphabet(L(G)) \sub\alphabet\,G$.
+\end{enumerate}
+\end{theorem}
+
+Our simplification function/algorithm $\simplify$ gives us an
+algorithm for testing whether a grammar is simplified: we apply
+$\simplify$ to it, and check that the resulting grammar is equal to
+the original one.
+
+\subsection{Simplification in Forlan}
+
+The Forlan module \texttt{Gram} defines the functions
+\begin{verbatim}
+val simplify   : gram -> gram
+val simplified : gram -> bool
+\end{verbatim}
+The function \texttt{simplify} corresponds to $\simplify$, and
+\texttt{simplified} tests whether a grammar is simplified.
+
+Suppose \texttt{gram} of type \texttt{gram} is bound to the grammar
+\begin{align*}
+\Asf &\fun \mathsf{BB1}, \\
+\Bsf &\fun \zerosf\mid\Asf\mid\Csf\Dsf, \\
+\Csf &\fun \onesf\twosf , \\
+\Dsf &\fun \onesf\Dsf\twosf .
+\end{align*}
+We can simplify our grammar as follows:
+\input{chap-4.4-forlan1}
+And, Suppose \texttt{gram''} of type \texttt{gram} is bound to the grammar
+\begin{align*}
+\Asf \fun \% \mid \zerosf \mid \mathsf{AA} \mid \mathsf{AAA} \mid
+\mathsf{AAAA} .
+\end{align*}
+We can simplify our grammar as follows:
+\input{chap-4.4-forlan3}
+
+\subsection{Notes}
+
+As described above, our definition of useless variable is weaker than
+the standard one.  However, whenever every variable of a grammar is
+useful in our sense, it follows that every variable of the grammar is
+useful in the standard sense.  Furthermore, our algorithm for removing
+useless variables is the standard one.  Requiring that simplified
+grammars have no redundant productions is natural, although
+non-standard, and our algorithm for removing redundant productions is
+straightforward.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

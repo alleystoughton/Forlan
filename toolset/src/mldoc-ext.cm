@@ -1,0 +1,19 @@
+(******************************* mldoc-ext.cm ********************************)
+
+(* Copyright (C) 2001-2007 Alley Stoughton
+
+   The file is part of the Forlan toolset for experimenting with
+   formal languages.  See the file COPYING.txt for copying and
+   usage restrictions. *)
+
+(* tell CM to process .mldoc files with the script mldoc-tool,
+   producing .sig files *)
+
+Library
+
+  structure MLDOCTool
+
+is
+
+  $smlnj/cm/tools.cm
+  mldoc-tool.sml

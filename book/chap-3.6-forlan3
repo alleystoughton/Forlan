@@ -1,0 +1,6 @@
+val bs = SymSet.input "";
+A, B, C
+.
+val x = Str.input "";
+11
+.

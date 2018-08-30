@@ -1,0 +1,864 @@
+<!-- prog.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Prog Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Prog/ Module</HEAD>
+
+<PP>The module defines the abstract type of programs.</PP>
+
+<STRUCTURE STRID="Prog">
+<OPAQUE>
+<SIGBODY SIGID="PROG" FILE=PROG>
+
+<SPEC>
+<DATATYPE><ID>const</ID>
+<CONS>True</CONS>
+<CONS>False</CONS>
+<CONS>Nil</CONS>
+</DATATYPE>
+<COMMENT>
+<PP>The datatype of program constants.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<DATATYPE><ID>oper</ID>
+<CONS>IsNil</CONS>
+<CONS>IsInt</CONS>
+<CONS>IsNeg</CONS>
+<CONS>IsZero</CONS>
+<CONS>IsPos</CONS>
+<CONS>IsSym</CONS>
+<CONS>IsStr</CONS>
+<CONS>IsPair</CONS>
+<CONS>IsLam</CONS>
+<CONS>Plus</CONS>
+<CONS>Minus</CONS>
+<CONS>Compare</CONS>
+<CONS>Fst</CONS>
+<CONS>Snd</CONS>
+<CONS>ConsSym</CONS>
+<CONS>DeconsSym</CONS>
+<CONS>SymListToStr</CONS>
+<CONS>StrToSymList</CONS>
+</DATATYPE>
+<COMMENT>
+<PP>The datatype of program operators.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<DATATYPE><ID>concr</ID>
+<CONS>Var     <TY>Var.var</TY></CONS>
+<CONS>Const   <TY>const</TY></CONS>
+<CONS>Int     <TY>IntInf.int</TY></CONS>
+<CONS>Sym     <TY>Sym.sym</TY></CONS>
+<CONS>Str     <TY>Str.str</TY></CONS>
+<CONS>Pair    <TY>concr * concr</TY></CONS>
+<CONS>Calc    <TY>oper * concr</TY></CONS>
+<CONS>Cond    <TY>concr * concr * concr</TY></CONS>
+<CONS>App     <TY>concr * concr</TY></CONS>
+<CONS>Lam     <TY>Var.var * concr</TY></CONS>
+<CONS>LetSimp <TY>Var.var * concr * concr</TY></CONS>
+<CONS>LetRec  <TY>Var.var * Var.var * concr * concr</TY></CONS>
+</DATATYPE>
+<COMMENT>
+<PP>The concrete datatype of programs:
+<ITEMIZE>
+<ITEM>For all program variables <CD><ARG/v/</CD>, <CD>Var <ARG/v/</CD>
+is the one-node tree labeled by <CD>var(<ARG/v/)</CD>.
+</ITEM>
+
+<ITEM>For all program constants <CD><ARG/con/</CD>, <CD>Const <ARG/con/</CD>
+is the one-node tree labeled by <CD>const(<ARG/con/)</CD>.
+</ITEM>
+
+<ITEM>For all integers <CD><ARG/n/</CD>, <CD>Int <ARG/n/</CD>
+is the one-node tree labeled by <CD>int(<ARG/n/)</CD>.
+</ITEM>
+
+<ITEM>For all symbols <CD><ARG/a/</CD>, <CD>Sym <ARG/a/</CD>
+is the one-node tree labeled by <CD>sym(<ARG/a/)</CD>.
+</ITEM>
+
+<ITEM>For all strings <CD><ARG/x/</CD>, <CD>Str <ARG/x/</CD>
+is the one-node tree labeled by <CD>str(<ARG/x/)</CD>.
+</ITEM>
+
+<ITEM>For all programs <CD><ARG/pr1/</CD> and <CD><ARG/pr2/</CD>,
+<CD>Pair(<ARG/pr1/, <ARG/pr2/)</CD> is the tree whose root
+node is labeled by <CD>pair</CD>, with two children, a left
+child <CD><ARG/pr1/</CD>, and a right child <CD><ARG/pr2/</CD>.
+</ITEM>
+
+<ITEM>For all program operators <CD><ARG/oper/</CD> and
+programs <CD><ARG/pr/</CD>,
+<CD>Calc(<ARG/oper/, <ARG/pr/)</CD> is the tree whose root node is
+labeled by <CD>calc(<ARG/oper/)</CD>, with one
+child <CD><ARG/pr/</CD>.
+</ITEM>
+
+<ITEM>For all programs <CD><ARG/pr1/</CD>, <CD><ARG/pr2/</CD> and
+<CD><ARG/pr3/</CD>, <CD>Cond(<ARG/pr1/, <ARG/pr2/, <ARG/pr3/)</CD> is
+the tree whose root node is labeled by <CD>cond</CD>, with three
+children, a left child <CD><ARG/pr1/</CD>, a middle child <CD><ARG/pr2/</CD>,
+and a right child <CD><ARG/pr3/</CD>.
+</ITEM>
+
+<ITEM>For all programs <CD><ARG/pr1/</CD> and <CD><ARG/pr2/</CD>,
+<CD>App(<ARG/pr1/, <ARG/pr2/)</CD> is the tree whose root
+node is labeled by <CD>app</CD>, with two children, a left
+child <CD><ARG/pr1/</CD>, and a right child <CD><ARG/pr2/</CD>.
+</ITEM>
+
+<ITEM>For all program variables <CD><ARG/v/</CD> and
+programs <CD><ARG/pr/</CD>,
+<CD>Lam(<ARG/v/, <ARG/pr/)</CD> is the tree whose root node is
+labeled <CD>lam(<ARG/v/)</CD>, with one child <CD><ARG/pr/</CD>.
+</ITEM>
+
+<ITEM>For all program variables <CD><ARG/v/</CD> and
+programs <CD><ARG/pr1/</CD>
+and <CD><ARG/pr2/</CD>, <CD>LetSimp(<ARG/v/, <ARG/pr1/,
+<ARG/pr2/)</CD> is the tree whose root node is labeled
+<CD>letSimp(<ARG/v/)</CD>, with two children, a left child
+<CD><ARG/pr1/</CD>, and a right child <CD><ARG/pr2/</CD>.
+</ITEM>
+
+<ITEM>For all program variables <CD><ARG/v1/</CD> and <CD><ARG/v2/</CD>,
+and programs <CD><ARG/pr1/</CD> and <CD><ARG/pr2/</CD>,
+<CD>LetRec(<ARG/v1/, <ARG/v2/, <ARG/pr1/, <ARG/pr2/)</CD>
+is the tree whose root node is labeled <CD>letRec(<ARG/v1/, <ARG/v2/)</CD>,
+with two children, a left child <CD><ARG/pr1/</CD>, and a right
+child <CD><ARG/pr2/</CD>.
+</ITEM>
+</ITEMIZE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<TYPE><ID>prog</ID></TYPE>
+<COMMENT>
+<PP>The abstract type of programs, consisting of the values
+of type <CD>concr</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromConcr<TY>concr -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+fromConcr <ARG/concr/
+</PROTOTY>
+<PP>returns <CD><ARG/concr/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toConcr<TY>prog -> concr</TY></VAL
+<COMMENT>
+<PROTOTY>
+toConcr <ARG/pr/
+</PROTOTY>
+<PP>returns <CD><ARG/pr/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>var<TY>Var.var -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+var <ARG/v/
+</PROTOTY>
+<PP>returns <CD>Var <ARG/v/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>const<TY>const -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+const <ARG/con/
+</PROTOTY>
+<PP>returns <CD>Const <ARG/con/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>int<TY>IntInf.int -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+int <ARG/n/
+</PROTOTY>
+<PP>returns <CD>Int <ARG/n/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>sym<TY>Sym.sym -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+sym <ARG/a/
+</PROTOTY>
+<PP>returns <CD>Sym <ARG/a/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>str<TY>Str.str -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+str <ARG/x/
+</PROTOTY>
+<PP>returns <CD>Str <ARG/x/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>pair<TY>prog * prog -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+pair(<ARG/pr1/, <ARG/pr2/)
+</PROTOTY>
+<PP>returns <CD>Pair(<ARG/pr1/, <ARG/pr2/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>calc<TY>oper * prog -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+calc(<ARG/oper/, <ARG/pr/)
+</PROTOTY>
+<PP>returns <CD>Calc(<ARG/oper/, <ARG/pr/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>cond<TY>prog * prog * prog -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+cond(<ARG/pr1/, <ARG/pr2/, <ARG/pr3/)
+</PROTOTY>
+<PP>returns <CD>Cond(<ARG/pr1/, <ARG/pr2/, <ARG/pr2/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>app<TY>prog * prog -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+App(<ARG/pr1/, <ARG/pr2/)
+</PROTOTY>
+<PP>returns <CD>app(<ARG/pr1/, <ARG/pr2/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>lam<TY>Var.var * prog -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+lam(<ARG/v/, <ARG/pr/)
+</PROTOTY>
+<PP>returns <CD>Lam(<ARG/v/, <ARG/pr/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>letSimp<TY>Var.var * prog * prog -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+letSimp(<ARG/v/, <ARG/pr1/, <ARG/pr2/)
+</PROTOTY>
+<PP>returns <CD>LetSimp(<ARG/v/, <ARG/pr1/, <ARG/pr2/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>letRec<TY>Var.var * Var.var * prog * prog -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+letRec(<ARG/v1/, <ARG/v2/, <ARG/pr1/, <ARG/pr2/)
+</PROTOTY>
+<PP>returns <CD>LetRec(<ARG/v1/, <ARG/v2/, <ARG/pr1/, <ARG/pr2/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs a program from <CD><ARG/s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs a program from the file named <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>prog -> PP.pp</TY></VAL
+<COMMENT>
+<PROTOTY>
+toPP <ARG/pr/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/pr/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>prog -> string</TY></VAL
+<COMMENT>
+<PROTOTY>
+toString <ARG/pr/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/pr/</CD> to a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>string * prog -> unit</TY></VAL
+<COMMENT>
+<PROTOTY>
+output(<ARG/fil/, <ARG/pr/)
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/pr/</CD> to the file named by
+<CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>prog Sort.total_ordering</TY></VAL
+<COMMENT>
+<PROTOTY>
+compare(<ARG/pr1/, <ARG/pr2/)
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  local
+    fun constKind Nil   = 1
+      | constKind True  = 2
+      | constKind False = 3
+
+    fun compareConst(con, con') = Int.compare(constKind con, constKind con')
+
+    fun operKind IsNil        = 1
+      | operKind IsInt        = 2
+      | operKind IsNeg        = 3
+      | operKind IsZero       = 4
+      | operKind IsPos        = 5
+      | operKind IsSym        = 6
+      | operKind IsStr        = 7
+      | operKind IsPair       = 8
+      | operKind IsLam        = 9
+      | operKind Plus         = 10
+      | operKind Minus        = 11
+      | operKind Compare      = 12
+      | operKind Fst          = 13
+      | operKind Snd          = 14
+      | operKind ConsSym      = 15
+      | operKind DeconsSym    = 16
+      | operKind SymListToStr = 17
+      | operKind StrToSymList = 18
+
+    fun compareOperat(oper, oper') = Int.compare(operKind oper, operKind oper')
+
+    fun kind(Var _)     = 1
+      | kind(Const _)   = 2
+      | kind(Int _)     = 3
+      | kind(Sym _)     = 4
+      | kind(Str _)     = 5
+      | kind(Pair _)    = 6
+      | kind(Calc _)    = 7
+      | kind(Cond _)    = 9
+      | kind(App _)     = 8
+      | kind(Lam _)     = 10
+      | kind(LetSimp _) = 11
+      | kind(LetRec _)  = 12
+  in
+    fun compare(pr, pr') =
+          case Int.compare(kind pr, kind pr') of
+               LESS    => LESS
+             | EQUAL   =>
+                 (case (pr, pr') of
+                       (Var v,                    Var v')                       =>
+                         Var.compare(v, v')
+                     | (Const con,                Const con')                   =>
+                         compareConst(con, con')
+                     | (Int n,                    Int n')                       =>
+                         IntInf.compare(n, n')
+                     | (Sym a,                    Sym a')                       =>
+                         Sym.compare(a, a')
+                     | (Str x,                    Str x')                       =>
+                         Str.compare(x, x')
+                     | (Pair(pr1, pr2),           Pair(pr1', pr2'))             =>
+                         (case compare(pr1, pr1') of
+                               LESS    => LESS
+                             | EQUAL   => compare(pr2, pr2')
+                             | GREATER => GREATER)
+                     | (Calc(oper, pr),           Calc(oper', pr'))             =>
+                         (case compareOperat(oper, oper') of
+                               LESS    => LESS
+                             | EQUAL   => compare(pr, pr')
+                             | GREATER => GREATER)
+                     | (Cond(pr1, pr2, pr3),      Cond(pr1', pr2', pr3'))       =>
+                         (case compare(pr1, pr1') of
+                               LESS    => LESS
+                             | EQUAL   =>
+                                 (case compare(pr2, pr2') of
+                                       LESS    => LESS
+                                     | EQUAL   => compare(pr3, pr3')
+                                     | GREATER => GREATER)
+                             | GREATER => GREATER)
+                     | (App(pr1, pr2),            App(pr1', pr2'))              =>
+                         (case compare(pr1, pr1') of
+                               LESS    => LESS
+                             | EQUAL   => compare(pr2, pr2')
+                             | GREATER => GREATER)
+                     | (Lam(v, pr),               Lam(v', pr'))                 =>
+                         (case Var.compare(v, v') of
+                               LESS    => LESS
+                             | EQUAL   => compare(pr, pr')
+                             | GREATER => GREATER)
+                     | (LetSimp(v, pr1, pr2),     LetSimp(v', pr1', pr2'))      =>
+                         (case Var.compare(v, v') of
+                               LESS    => LESS
+                             | EQUAL   =>
+                                 (case compare(pr1, pr1') of
+                                       LESS    => LESS
+                                     | EQUAL   => compare(pr2, pr2')
+                                     | GREATER => GREATER)
+                             | GREATER => GREATER)
+                     | (LetRec(v1, v2, pr1, pr2), LetRec(v1', v2', pr1', pr2')) =>
+                         (case Var.compare(v1, v1') of
+                               LESS    => LESS
+                             | EQUAL   =>
+                                 (case Var.compare(v2, v2') of
+                                       LESS    => LESS
+                                     | EQUAL   =>
+                                         (case compare(pr1, pr1') of
+                                               LESS    => LESS
+                                             | EQUAL   => compare(pr2, pr2')
+                                             | GREATER => GREATER)
+                                     | GREATER => GREATER)
+                             | GREATER => GREATER)
+                     | _                                                        =>
+                         M.cannotHappen())
+             | GREATER => GREATER
+  end
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>prog * prog -> bool</TY></VAL
+<COMMENT>
+<PROTOTY>
+equal(<ARG/pr1/, <ARG/pr2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/pr1/</CD> and <CD><ARG/pr2/</CD> are
+equal.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toStr<TY>prog -> Str.str</TY></VAL
+<COMMENT>
+<PROTOTY>
+toStr <ARG/pr/
+</PROTOTY>
+<PP>returns the encoding of <CD><ARG/pr/</CD> as a Forlan string, over
+the alphabet consisting of the symbols
+<CD>&LT;comma&GT;</CD>,
+<CD>&LT;perc&GT;</CD>,
+<CD>&LT;tilde&GT;</CD>,
+<CD>&LT;openPar&GT;</CD>,
+<CD>&LT;closPar&GT;</CD>,
+<CD>&LT;less&GT;</CD> and
+<CD>&LT;great&GT;</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromStr<TY>Str.str -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+fromStr <ARG/x/
+</PROTOTY>
+<PP>returns the unique program that <CD><ARG/x/</CD> encodes.
+Issues an error message if <CD><ARG/x/</CD> isn't the code of
+a program.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>validPath<TY>prog * int list -> bool</TY></VAL
+<COMMENT>
+<PROTOTY>
+validPath(<ARG/pr/, <ARG/ns/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/ns/</CD> is a valid path for <CD><ARG/pr/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>height<TY>prog -> int</TY></VAL
+<COMMENT>
+<PROTOTY>
+height <ARG/pr/
+</PROTOTY>
+<PP>returns the height of <CD><ARG/pr/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>size<TY>prog -> int</TY></VAL
+<COMMENT>
+<PROTOTY>
+size <ARG/pr/
+</PROTOTY>
+<PP>returns the size of <CD><ARG/pr/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>numLeaves<TY>prog -> int</TY></VAL
+<COMMENT>
+<PROTOTY>
+numLeaves <ARG/pr/
+</PROTOTY>
+<PP>returns the number of leaves of <CD><ARG/pr/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>select<TY>prog * int list -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+select(<ARG/pr/, <ARG/ns/)
+</PROTOTY>
+<PP>returns the subtree of <CD><ARG/pr/</CD> pointed to by <CD><ARG/ns/</CD>.
+Issues an error message if <CD><ARG/ns/</CD> isn't a valid path for
+<CD><ARG/pr/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>update<TY>prog * int list * prog -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+update(<ARG/pr/, <ARG/ns/, <ARG/pr'/)
+</PROTOTY>
+<PP>replaces the subtree of <CD><ARG/pr/</CD>
+pointed to by <CD><ARG/ns/</CD> with <CD><ARG/pr'/</CD>.  Issues an
+error message if <CD><ARG/ns/</CD> isn't valid for <CD><ARG/pr/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>maximumLengthPath<TY>prog -> int list</TY></VAL
+<COMMENT>
+<PROTOTY>
+maximumLengthPath <ARG/pr/
+</PROTOTY>
+<PP>returns a leftmost, maximum length path for <CD><ARG/pr/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>validLeafPath<TY>prog * int list -> bool</TY></VAL
+<COMMENT>
+<PROTOTY>
+validLeafPath(<ARG/pr/, <ARG/ns/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/ns/</CD> is a valid path for <CD><ARG/pr/</CD>
+that points to a leaf of <CD><ARG/pr/</CD>, i.e., to a subtree with
+no children.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>free<TY>prog -> Var.var Set.set</TY></VAL
+<COMMENT>
+<PROTOTY>
+free <ARG/pr/
+</PROTOTY>
+<PP>returns the set of free program variables of <CD><ARG/pr/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<TYPE><ID>cp</ID></TYPE>
+<COMMENT>
+<PP>The abstract type of closed programs.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toClosed<TY>prog -> cp</TY></VAL
+<COMMENT>
+<PROTOTY>
+toClosed <ARG/pr/
+</PROTOTY>
+<PP>returns <CD><ARG/pr/</CD>.  Issues an error message if
+<CD><ARG/pr/</CD> is not closed.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromClosed<TY>cp -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+fromClosed <ARG/pr/
+</PROTOTY>
+<PP>returns <CD><ARG/pr/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>subst<TY>cp * Var.var * prog -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+subst(<ARG/pr/, <ARG/v/, <ARG/pr'/)
+</PROTOTY>
+<PP>substitutes <CD><ARG/pr/</CD> for all the free occurrences of
+<CD><ARG/v/</CD> in <CD><ARG/pr'/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isValue<TY>cp -> bool</TY></VAL
+<COMMENT>
+<PROTOTY>
+isValue <ARG/pr/
+</PROTOTY>
+<PP>tests whether <CD><ARG/pr/</CD> is a value.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<DATATYPE><ID>step</ID>
+<CONS>Value</CONS>
+<CONS>Error</CONS>
+<CONS>Next<TY>cp</TY></CONS>
+</DATATYPE>
+<COMMENT>
+<PP>Datatype used by the function <CD>step</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>step<TY>cp -> step</TY></VAL
+<COMMENT>
+<PROTOTY>
+step <ARG/pr/
+</PROTOTY>
+<PP>The next step function, for trying to run a closed
+program <CD><ARG/pr/</CD> one step.  (See the textbook for its
+specification.)  If the result is <CD>Value</CD>, this means
+that <CD><ARG/pr/</CD> is a value.  If the result is <CD>Error</CD>,
+this means that pr is an error.  And, if the result is <CD>Next
+<ARG/pr'/</CD>, this means that running <CD><ARG/pr/</CD> one step
+resulted in <CD><ARG/pr'/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<DATATYPE><ID>run</ID>
+<CONS>Ans<TY>cp</TY></CONS>
+<CONS>Fail<TY>cp</TY></CONS>
+<CONS>Intermed<TY>cp</TY></CONS>
+</DATATYPE>
+<COMMENT>
+<PP>Datatype used by the function <CD>run</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>run<TY>cp * int -> run</TY></VAL
+<COMMENT>
+<PROTOTY>
+run(<ARG/pr/, <ARG/n/)
+</PROTOTY>
+<PP>Tries to run <CD><ARG/pr/</CD> <CD><ARG/n/</CD> steps.  A result
+of <CD>Ans <ARG/pr'/</CD> means that
+<CD><ARG/pr/</CD> terminated with a value <CD><ARG/pr'/</CD>.  A
+result of <CD>Fail <ARG/pr'/</CD> means that <CD><ARG/pr/</CD>
+terminated with an error <CD><ARG/pr'/</CD>.  And a result
+of <CD>Intermed <ARG/pr'/</CD> means that an intermediate
+result <CD><ARG/pr'/</CD> was produced.  Issues an error message
+if <CD><ARG/n/</CD> is negative.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>evaluate<TY>prog * int -> unit</TY></VAL
+<COMMENT>
+<PROTOTY>
+evaluate(<ARG/pr/, <ARG/n/)
+</PROTOTY>
+<PP>explains the significance of the value of type <CD>run</CD>
+produced by evaluating <CD>run(<ARG/pr/, <ARG/n/)</CD>.  Issues an
+error message if <CD><ARG/pr/</CD> is not closed, or
+if <CD><ARG/n/</CD> is negative.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<DATATYPE><ID>accept</ID>
+<CONS>Accept</CONS>
+<CONS>RejectWithFalse</CONS>
+<CONS>RejectOtherwise</CONS>
+<CONS>Unknown<TY>cp</TY></CONS>
+</DATATYPE>
+<COMMENT>
+<PP>Datatype used by the <CD>accept</CD> function.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>accept<TY>cp -> Str.str * int -> accept</TY></VAL
+<COMMENT>
+<PROTOTY>
+accept <ARG/pr/ (<ARG/x/, <ARG/n/)
+</PROTOTY>
+<PP>gives a partial answer to the question of
+whether <CD><ARG/pr/</CD> accepts <CD><ARG/x/</CD>, based on
+running <CD>App(<ARG/pr/, Str <ARG/x/)</CD> for
+<CD><ARG/n/</CD> steps (or less, if fewer steps suffice to give a
+definitive answer).  A result of <CD>Accept</CD> means
+that <CD><ARG/pr/</CD> accepted <CD><ARG/x/</CD> by terminating
+with <CD>Const True</CD>.  A result of <CD>RejectWithFalse</CD> means
+that <CD><ARG/pr/</CD> rejected <CD><ARG/x/</CD> by yielding <CD>Const
+False</CD>.  A result of <CD>RejectOtherwise</CD> means
+that <CD><ARG/pr/</CD> rejected <CD><ARG/x/</CD> by terminating with a
+value other than <CD>Const True</CD> or <CD>Const False</CD>, or with an
+error.  And a result of <CD>Unknown <ARG/cp/</CD> means that
+<CD><ARG/n/</CD> steps of evaluation produced an intermediate
+program <CD><ARG/pr'/</CD> that is neither a value nor an
+error.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>accepted<TY>prog -> Str.str * int -> unit</TY></VAL
+<COMMENT>
+<PROTOTY>
+accepted <ARG/pr/
+</PROTOTY>
+<PP>issues an error message if <CD><ARG/pr/</CD> isn't closed.
+Otherwise, returns a function <CD><ARG/f/</CD> that behaves
+as follows, when called with argument <CD>(<ARG/x/, <ARG/n/)</CD>.
+If <CD><ARG/n/</CD> is negative, then an error message is
+issued.  Otherwise, it explains the significance of the value of type
+<CD>accept</CD> produced by evaluating
+<CD>accept <ARG/pr/ (<ARG/x/, <ARG/n/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toRep<TY>prog -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+toRep <ARG/pr/
+</PROTOTY>
+<PP>returns the program representation representing <CD><ARG/pr/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromRep<TY>prog -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+toRep <ARG/pr/
+</PROTOTY>
+<PP>If <CD><ARG/pr/</CD> is a program representation, then <CD>toRep</CD>
+returns the program represented by <CD><ARG/pr/</CD>; otherwise, it issues an
+error message.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isRep<TY>prog -> bool</TY></VAL
+<COMMENT>
+<PROTOTY>
+isRep <ARG/pr/
+</PROTOTY>
+<PP>tests whether <CD><ARG/pr/</CD> is a program representation.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanNew<TY>unit -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+jforlanNew()
+</PROTOTY>
+<PP>invokes JForlan, and returns the program that the user creates
+and commits.  Issues an error message if the user aborts, instead.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanEdit<TY>prog -> prog</TY></VAL
+<COMMENT>
+<PROTOTY>
+jforlanEdit <ARG/prog/
+</PROTOTY>
+<PP>invokes JForlan, letting the user edit <CD><ARG/prog/</CD>, and
+returning the resulting program that the user commits.  Issues an
+error message if the user aborts, instead.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanValidate<TY>string -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanValidate
+</PROTOTY>
+<PP>is a low-level function used by JForlan.  See the code for
+more information.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanPretty<TY>string -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanPretty
+</PROTOTY>
+<PP>is a low-level function used by JForlan.  See the code for
+more information.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

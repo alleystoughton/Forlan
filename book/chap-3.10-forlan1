@@ -1,0 +1,3 @@
+SymSet.output("", FA.emptyClose fa (SymSet.input ""));
+A
+.

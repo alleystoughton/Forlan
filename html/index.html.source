@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<link type="text/css" rel="stylesheet" href="style.css"/>
+<meta name="viewport" content="initial-scale=1"/>
+<title>The Forlan Project (Version #VERSION#)</title>
+</head>
+
+<body>
+<h1>The Forlan Project (Version #VERSION#)</h1>
+
+<hr/>
+
+<h2>Introduction</h2>
+
+<p>The Forlan Project consists of a toolset (called Forlan) for
+experimenting with formal languages, a graphical editor for Forlan
+automata and trees called JForlan, and a draft textbook entitled
+<em>Formal Language Theory: Integrating Experimentation and
+Proof</em>.  The toolset, graphical editor and book are released under
+free software/documentation licenses.</p>
+
+<p>The Forlan toolset is a library on top of the Standard ML of New
+Jersey (SML/NJ) implementation of Standard ML (SML).  It's used
+interactively, and users are able to extend Forlan by defining SML
+functions.</p>
+
+<h2>Announcements Mailing List; Feedback Request</h2>
+
+<p>
+<a href="https://groups.google.com/forum/#!forum/forlan-announce">Forlan-Announce</a>
+is a low-volume announcements mailing list for the Forlan Project.</p>
+
+<p>Feedback concerning the Forlan Project is very welcome.
+Email: <a href="mailto:alley.stoughton@icloud.com">alley.stoughton@icloud.com</a>.</p>
+
+<h2>What's New?</h2>
+
+<dl>
+<dt>Version 4.7</dt>
+<dd>
+Added functions to <kbd>StrSet</kbd> for prefix, suffix and substring
+closure. Minor documentation changes. Starting revision of book.
+</dd>
+
+<dt>Version 4.6</dt>
+<dd>
+Bringing Forlan up-to-date with most recent SML/NJ compiler (110.82).
+</dd>
+
+<dt>Version 4.5</dt>
+<dd>
+This release includes Version 2.1 of JForlan, which fixes a minor bug
+relating to regular expression tree error checking and includes the
+changes needed to make JForlan build using Apache Ant.</dd>
+
+<dt>Version 4.4</dt>
+<dd>
+This release features a new draft (September 2012) of the textbook, as
+well as some minor changes and additions to the Forlan toolset and
+manual. The <kbd>RFA</kbd> module of the toolset now exports functions
+for standardizing an RFA and for converting an RFA to a regular
+expression.
+</dd>
+
+<dt>Version 4.3</dt>
+<dd>
+This release features a new draft (August 2012) of the textbook, as
+well as some relatively minor changes and additions to the Forlan
+toolset and manual.  Most significantly, the textbook now includes a
+draft of Chapter 5, which uses a functional programming language to
+study the recursive and recursively enumerable languages.  I believe
+that the toolset is now in close to final form.  The textbook should
+be usable, but still needs substantial work.
+</dd>
+
+<dt>Version 4.2</dt>
+<dd>
+This release features changes to Forlan, JForlan, the Forlan manual,
+and the draft textbook.  Major changes have been made to Forlan's
+simplification algorithms for regular expressions, small changes have
+been made to the simplification algorithms for finite automata and
+grammars, and the parsing algorithm for context-free grammars has been
+improved.  The new release (Version 2.0) of JForlan contains numerous
+bug fixes and changes of functionality.  Error checking is now always
+turned on, and if there are no errors, the Forlan syntax of the
+current project's automaton or tree is displayed.  Projects now have a
+committable boolean attribute, which is true exactly when the project
+originated from Forlan.  Only committable projects may be committed
+back to Forlan. There is now a full draft of the Forlan manual.
+The draft textbook is now consistent with the toolset, and
+contains all the material that was only in the lecture slides in
+Version 4.1.  Those lecture slides are no longer part of the Forlan
+release.</dd>
+
+<dt>Version 4.1</dt>
+<dd>This release features small changes to the Forlan toolset's
+lexical analyzer.</dd>
+
+<dt>Version 4.0</dt>
+<dd>This release features a completely redesigned and redeveloped
+version of JForlan (Version 1.0), the graphical editor for Forlan
+automata and trees.</dd>
+</dl>
+
+<h2>Papers on Forlan</h2>
+
+<ul>
+<li><a href="http://doi.acm.org/10.1145/1411260.1411267">Experimenting with Formal Languages Using Forlan</a></li>
+</ul>
+
+<h2>Textbook</h2>
+
+<p>The Forlan toolset has been developed together with an introductory
+textbook entitled <em>Formal Language Theory: Integrating
+Experimentation and Proof</em>.  An attempt has been made to keep the
+conceptual and notational distance between the textbook and toolset as
+small as possible.  The book treats most concepts and algorithms both
+theoretically, especially using proof, and through experimentation,
+using Forlan.  In contrast to some books on formal language theory,
+the book emphasizes the concrete over the abstract, providing
+numerous, fully worked-out examples of how regular expressions, finite
+automata, grammars and programs (its substitute for Turing machines)
+can be designed and proved correct.</p>
+
+<p>The textbook is still a work-in-progress, but drafts are
+available. The most recent
+<a href="book2012.pdf">full draft is from September 2012</a>.  But
+a <a href="book.pdf">revision is being made during the fall of
+2018</a>, in a series of steps.  The LaTeX source for the draft is
+part of Forlan's distribution.  It is released under the GNU Free
+Documentation License.</p>
+
+<h2>Standard ML</h2>
+
+<p>Very little knowledge of Standard ML is required in order to use
+Forlan in simple ways.  But users who are more familiar with ML will
+be able to use Forlan in more sophisticated ways.  The book assumes no
+previous knowledge of Standard ML.  In order to understand and extend
+the implementation of Forlan, though, one must have a good working
+knowledge of Standard ML.</p>
+
+<p>More information about SML can be obtained from
+Robert Harper's draft book
+<a href="harper.pdf"><em>Programming in Standard ML</em></a>.
+Alternatively, one can read one of the following books:</p>
+
+<ul>
+<li>L. C. Paulson, <em>ML for the Working Programmer</em>,
+second edition, Cambridge University Press, 1996.</li>
+
+<li>J. D. Ullman, <em>Elements of ML Programming</em>, 
+ML97 edition, Prentice Hall, 1998.</li>
+</ul>
+
+<p>People who are already familiar with Objective Caml (OCaml),
+can consult a
+<a href="http://www.mpi-sws.mpg.de/~rossberg/sml-vs-ocaml.html">comparison
+of Objective Caml and Standard ML</a>.</p>
+
+<p>Before installing Forlan, one must first install the Standard ML of
+New Jersey (SML/NJ) compiler, which can be obtained from
+<a href="http://www.smlnj.org/"><kbd>www.smlnj.org</kbd></a>.  Install
+the most recent version.  There are installers for macOS and Windows,
+and you can build a Linux version from source.</p>
+
+<p>The <a href="http://www.standardml.org/Basis/"> Standard ML Basis
+Library</a> is included as part of the SML/NJ distribution and
+contains many useful functions.</p>
+
+<p>The best way to run ML is as a sub-process of the <a
+href="http://www.gnu.org/software/emacs/emacs.html">Emacs</a> text
+editor, using the <a href="../sml/sml-emacs.html">SML mode</a> for
+Emacs.</p>
+
+<h2>Forlan Manual</h2>
+
+<p>A <a href="manual">manual</a> for Version #VERSION# of
+Forlan is available.  The manual is also available as a
+<a href="forlan-manual-#VERSION#.tgz">compressed tarball</a>, and
+as a <a href="forlan-manual-#VERSION#.zip">zip archive</a>.
+The root HTML file is <kbd>index.html</kbd></p>
+
+<h2>Installing Forlan on Linux, macOS and Windows</h2>
+
+<p>Here are instructions for downloading and installing Forlan Version
+#VERSION# on a machine running Linux, macOS or Windows.</p>
+
+<p>The instructions that follow assume that SML/NJ has been installed
+in the directory/folder:</p>
+
+<table class="std_indent">
+<tr>
+<td class="std">
+Linux/macOS</td>
+<td class="std">
+<kbd>/usr/local/smlnj</kbd>
+</td>
+</tr>
+<tr>
+<td class="std">
+Windows
+</td>
+<td class="std">
+<kbd>C:\Program Files\SMLNJ</kbd>
+</td>
+</tr>
+</table>
+
+<p>If you install SML/NJ somewhere else, you'll have to modify the
+instructions accordingly.  But you'll also have to make appropriate
+edits to the script <kbd>forlan</kbd> (under Linux/macOS) or
+<kbd>forlan.bat</kbd> (under Windows).</p>
+
+<h3>Installing Forlan under Linux and macOS</h3>
+    
+<p>Transfer the compressed tarball <a
+href="forlan-min-src-#VERSION#.tgz"><kbd>forlan-min-src-#VERSION#.tgz</kbd></a>
+to a temporary directory.  (This tarball contains the minimum source needed
+to compile Forlan.  If you plan to make changes to Forlan, you should
+get the full source.  See below.)  Then, run the following commands,
+after changing directory to the temporary directory:</p>
+
+<pre>
+  gunzip forlan-min-src-#VERSION#.tgz
+  tar xf forlan-min-src-#VERSION#.tar
+  cd forlan-min-src-#VERSION#
+  ./build-heap-image
+</pre>
+
+<p>This will cause an SML/NJ heap image for Forlan to be written
+to the file <kbd>forlan-heap.x86-linux</kbd> (Linux) or
+<kbd>forlan-heap.x86-darwin</kbd> (macOS Intel).</p>
+
+<p>Then move the bash shell script <kbd>forlan</kbd> to
+<kbd>/usr/local/bin</kbd>, and move the heap image
+to <kbd>/usr/local/smlnj/bin/.heap</kbd>.</p>
+
+<h3>Installing Forlan under Windows</h3>
+
+<p>Transfer the zip
+archive <a href="forlan-min-src-#VERSION#.zip"><kbd>forlan-min-src-#VERSION#.zip</kbd></a>
+to a temporary directory (folder).  (This zip archive contains the
+minimum source needed to compile Forlan.  If you plan to make changes
+to Forlan, you should get the full source.  See below.)  Extract the
+directory <kbd>forlan-min-src-#VERSION#</kbd> from this archive.
+</p>
+
+<p>Then, run the following commands, after changing directory
+to the temporary directory:</p>
+
+<pre>
+  cd forlan-min-src-#VERSION#
+  sml
+  Control.trackExn := false;
+  CM.make "forlan.cm";
+  open TopLevel;
+  Export.export();
+</pre>
+
+<p>This will cause an SML/NJ heap image for Forlan to be written
+to the file <kbd>forlan-heap.x86-win32</kbd>.</p>
+
+<p>Then move the shell script <kbd>forlan.bat</kbd> to the directory
+<kbd>C:\Program Files\SMLNJ\bin</kbd>, and move the heap image to the
+directory <kbd>C:\Program Files\SMLNJ\bin\.heap</kbd>.</p>
+
+<p>Create a desktop and/or startup menu shortcut to the command</p>
+
+<pre>
+  C:\Program Files\SMLNJ\bin\forlan.bat
+</pre>
+
+<p>Set the working directory for the shortcut
+to the one where your personal SML and Forlan files will reside.</p>
+
+<h2>JForlan &#8212; a Java Graphical Editor for Forlan Finite Automata and Trees</h2>
+
+<p><a href="jforlan">JForlan</a> is a Java program for
+creating and editing Forlan automata and trees: finite automata,
+regular expression finite automata, parse trees, regular expression
+trees, and program trees.  JForlan automatically maintains the
+connections between the components of automata and trees, as those
+components are repositioned using the mouse.  And it handles the
+conversion of diagrams from and to Forlan's concrete syntax.  JForlan
+can be invoked directly (as a standalone applications) or from
+Forlan.</p>
+
+<h2>Forlan Project Distribution</h2>
+
+<p>Version #VERSION# of the Forlan Project distribution is available as a
+<a href="forlan-#VERSION#.tgz">compressed tarball</a>.
+The distribution contains:</p>
+
+<ul>
+<li>The Standard ML source for the Forlan toolset, including
+the <a href="http://people.cs.uchicago.edu/~jhr/tools/ml-doc.html">ML-Doc</a>
+documentation for the toolset's modules.</li>
+
+<li>The distribution of <a href="jforlan">JForlan</a>.</li>
+
+<li>The LaTeX source for a draft textbook entitled <em>Formal Language
+Theory: Integrating Experimentation and Proof</em>.
+</li>
+</ul>
+
+<p>The Forlan toolset and JForlan are released under the GNU General
+Public License, and the textbook is released under the GNU Free
+Documentation License.</p>
+
+<h2>Contributors</h2>
+
+<p>Alley Stoughton created the Forlan project, designed, implemented
+and documented its modules, and wrote the textbook.</p>
+
+<p>Leonard Lee and Jessica Sherrill designed and implemented graphical
+editors for Forlan finite automata (JFA), and regular expression and
+parse trees (JTR), respectively.  Their work was unified and enhanced
+(of particular note was the addition of support for program trees) by
+Srinivasa Aditya Uppu, resulting in an initial version of JForlan.
+Subsequently, Kenton Born carried out a major redevelopment of
+JForlan, resulting in JForlan Version 1.0. Further revisions, by
+Alley Stoughton, led to JForlan Versions 2.0 and 2.1.</p>
+
+<hr class="after"/>
+
+<address>
+<a href="..">Alley Stoughton</a>
+(<a href="mailto:alley.stoughton@icloud.com">alley.stoughton@icloud.com</a>)
+</address>
+</body>
+</html>

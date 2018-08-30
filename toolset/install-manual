@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# build Forlan manual and install in HTML directory
+
+# requires that ML-Doc is installed
+
+html=$(cat ../html-directory.txt)
+version=$(cat ../version.txt)
+
+echo Installing Manual for Forlan Version $version in $html
+
+cd manual
+change-version $version
+make
+rm -rf $html/manual
+cp -r HTML $html/manual

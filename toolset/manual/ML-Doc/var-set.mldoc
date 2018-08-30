@@ -1,0 +1,238 @@
+<!-- var-set.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The VarSet Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/VarSet/ Module</HEAD>
+
+<PP>This module provides operations on finite sets of variables,
+i.e., values of type
+<CD><STRREF/Var/.<TYREF STRID="Var"/var/
+<STRREF/Set/.<TYREF STRID="Set"/set/</CD> that are <EM>standard</EM>
+in the sense that they are compatible with
+<STRREF/Var/.<VALREF STRID="Var"/compare/. All values of type
+<CD>Var.var Set.set</CD> will implicitly be assumed/required to be
+standard.</PP>
+
+<STRUCTURE STRID="VarSet">
+<OPAQUE>
+<SIGBODY SIGID="VAR_SET" FILE=VAR-SET>
+
+<SPEC>
+<VAL>memb<TY>Var.var * Var.var Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+memb(<ARG/var/, <ARG/vars/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/var/</CD> is a member of <CD><ARG/vars/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromList<TY>Var.var list -> Var.var Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromList <ARG/vars/
+</PROTOTY>
+<PP>returns the set whose elements are the elements
+of <CD><ARG/vars/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>Var.var Set.set Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compare
+</PROTOTY>
+<PP>is
+<CD><STRREF TOPID/Set/.<VALREF STRID="Set"/compare/
+<STRREF TOPID/Var/.<VALREF STRID="Var"/compare/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>subset<TY>Var.var Set.set * Var.var Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+subset(<ARG/var1s/, <ARG/var2s/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/var1s/</CD> is a subset of <CD><ARG/var2s/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>Var.var Set.set * Var.var Set.set -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal(<ARG/var1s/, <ARG/var2s/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/var1s/</CD> is equal to <CD><ARG/var2s/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>map<TY>('a -> Var.var) -> 'a Set.set -> Var.var Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+map <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>If <CD><ARG/xs/</CD> is compatible with a value <CD><ARG/cmp/</CD>
+of type <CD><ARG/'a/ Sort.total_ordering</CD>, then <CD>map</CD>
+returns the set of all variables <CD><ARG/f/ <ARG/x/</CD> such
+that <CD><ARG/x/</CD> is a member of <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>mapFromList<TY>('a -> Var.var) -> 'a list -> Var.var Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+mapFromList <ARG/f/ <ARG/xs/
+</PROTOTY>
+<PP>returns the set of all variables <CD><ARG/f/ <ARG/x/</CD> such
+that <CD><ARG/x/</CD> is a member of <CD><ARG/xs/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>union<TY>Var.var Set.set * Var.var Set.set -> Var.var Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+union(<ARG/var1s/, <ARG/var2s/)
+</PROTOTY>
+<PP>returns the union of <CD><ARG/var1s/</CD> and <CD><ARG/var2s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genUnion<TY>Var.var Set.set list -> Var.var Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genUnion <ARG/varss/
+</PROTOTY>
+<PP>returns the generalized union of <CD><ARG/varss/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inter<TY>Var.var Set.set * Var.var Set.set -> Var.var Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+inter(<ARG/var1s/, <ARG/var2s/)
+</PROTOTY>
+<PP>returns the intersection of <CD><ARG/var1s/</CD> and <CD><ARG/var2s/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genInter<TY>Var.var Set.set list -> Var.var Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genInter <ARG/varss/
+</PROTOTY>
+<PP>returns the generalized intersection of <CD><ARG/varss/</CD>.  Issues
+an error message if <CD><ARG/varss/</CD> is empty.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>minus<TY>Var.var Set.set * Var.var Set.set -> Var.var Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+minus(<ARG/var1s/, <ARG/var2s/)
+</PROTOTY>
+<PP>returns the difference of <CD><ARG/var1s/</CD> and <CD><ARG/var2s/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inputFromLabToks
+<TY>(int * Lex.tok)list -> Var.var Set.set * (int * Lex.tok)list</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+inputFromLabToks <ARG/lts/
+</PROTOTY>
+<PP>tries to input a set of variables from <CD><ARG/lts/</CD>,
+consuming as much of <CD><ARG/lts/</CD> as possible, and returning the
+pair of the set of variables and the rest of <CD><ARG/lts/</CD>.
+Issues an error message if it fails. Will only return the empty set
+if <CD><ARG/lts/</CD> doesn't begin with a variable. If, after reading a
+variable, the next element of the labeled token list is <CD>","</CD>
+(<CD><STRREF TOPID/Lex/.<CONREF STRID="Lex"/Comma/</CD>),
+then <CD>inputFromLabToks</CD> insists on reading another variable, even
+if this results in failure.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> Var.var Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs a set of variables from <CD><ARG/s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> Var.var Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs a set of variables from the file <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>Var.var Set.set -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toPP <ARG/vars/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/vars/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>Var.var Set.set -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/vars/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/vars/</CD> to a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>string * Var.var Set.set -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+output(<ARG/fil/, <ARG/vars/)
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/vars/</CD> to file <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

@@ -1,0 +1,2 @@
+val (x, y, z) = (3 + 1, 4 = 4, "a" ^ "b");
+val SOME n = SOME(4 * 25);

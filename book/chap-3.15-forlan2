@@ -1,0 +1,6 @@
+val efa = EFA.union(injDFAToEFA dfa1, injDFAToEFA dfa2);
+val dfa' = nfaToDFA(efaToNFA efa);
+DFA.numStates dfa';
+val dfa = DFA.renameStatesCanonically(DFA.minimize dfa');
+DFA.numStates dfa;
+DFA.output("", dfa);

@@ -1,0 +1,210 @@
+<!-- sort.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Sort Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Sort/ Module</HEAD>
+
+<PP>This module defines functions for testing orderedness of lists,
+inserting elements into ordered lists, merging ordered lists, and
+sorting lists, as well as the total ordering type on which they are
+based.</PP>
+
+<PP>In the following specifications, if <CD><ARG/xs/</CD>
+and <CD><ARG/yz/</CD> are lists, then:
+<ITEMIZE>
+<ITEM><CD><ARG/xs/</CD> is a <EM>permuation</EM> of <CD><ARG/ys/</CD>
+iff <CD><ARG/xs/</CD> can be formed by reordering the elements
+of <CD><ARG/ys/</CD>;
+
+<ITEM><CD><ARG/xs/</CD> is a <EM>sub-permutation</EM> of <CD><ARG/ys/</CD> iff
+<CD><ARG/xs/</CD> can be formed from <CD><ARG/ys/</CD> by first
+removing some (possibly none) of the elements of <CD><ARG/ys/</CD>,
+and then reordering the remaining elements.
+</ITEMIZE>
+For example, <CD>[2, 1, 3, 1]</CD> is a permutation of
+<CD>[1, 3, 2, 1]</CD>, and <CD>[6, 5, 4, 1]</CD> is a sub-permutation of
+<CD>[1, 4, 5, 2, 6, 4]</CD>.
+</PP>
+
+<STRUCTURE STRID="Sort">
+<OPAQUE>
+<SIGBODY SIGID="SORT" FILE=SORT>
+
+<SPEC>
+<TYPE>
+<TYPARAM>'a</TYPARAM><ID>total_ordering</ID>
+<TY>'a * 'a -> order</TY>
+</TYPE>
+<COMMENT>
+<PP>The type of total orderings.  A value <CD><ARG/cmp/</CD> (for
+"compare") of type <CD><ARG/'a/ total_ordering</CD> must satisfy the
+following formulas, for all values <CD><ARG/x/</CD>, <CD><ARG/y/</CD>
+and <CD><ARG/z/</CD> of type <CD><ARG/'a/</CD>:
+<ITEMIZE>
+<ITEM>
+<CD><ARG/cmp/(<ARG/x/, <ARG/y/) = EQUAL</CD> iff <CD><ARG/x/</CD> and
+<CD><ARG/y/</CD> are indistinguishable;
+</ITEM>
+
+<ITEM>
+<CD><ARG/cmp/(<ARG/x/, <ARG/y/) = LESS</CD> iff
+<CD><ARG/cmp/(<ARG/y/, <ARG/x/) = GREATER</CD>;
+</ITEM>
+
+<ITEM>
+if <CD><ARG/cmp/(<ARG/x/, <ARG/y/) = LESS</CD> and
+<CD><ARG/cmp/(<ARG/y/, <ARG/z/) = LESS</CD>, then
+<CD><ARG/cmp/(<ARG/x/, <ARG/z/) = LESS</CD>.
+</ITEM>
+</ITEMIZE>
+Note that the first formula implies these five formulas:
+<ITEMIZE>
+<ITEM><CD><ARG/cmp/(<ARG/x/, <ARG/x/)</CD>;</ITEM>
+
+<ITEM>
+<CD><ARG/cmp/(<ARG/x/, <ARG/y/) = EQUAL</CD> iff
+<CD><ARG/cmp/(<ARG/y/, <ARG/x/) = EQUAL</CD>;
+</ITEM>
+
+<ITEM>
+if <CD><ARG/cmp/(<ARG/x/, <ARG/y/) = EQUAL</CD> and
+<CD><ARG/cmp/(<ARG/y/, <ARG/z/) = EQUAL</CD>, then
+<CD><ARG/cmp/(<ARG/x/, <ARG/z/) = EQUAL</CD>;
+</ITEM>
+
+<ITEM>
+if <CD><ARG/cmp/(<ARG/x/, <ARG/y/) = EQUAL</CD> and
+<CD><ARG/cmp/(<ARG/y/, <ARG/z/) = LESS</CD>, then
+<CD><ARG/cmp/(<ARG/x/, <ARG/z/) = LESS</CD>;
+</ITEM>
+
+<ITEM>
+if <CD><ARG/cmp/(<ARG/x/, <ARG/y/) = LESS</CD> and
+<CD><ARG/cmp/(<ARG/y/, <ARG/z/) = EQUAL</CD>, then
+<CD><ARG/cmp/(<ARG/x/, <ARG/z/) = LESS</CD>.
+</ITEM>
+</ITEMIZE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>'a total_ordering -> 'a * 'a -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>equal <ARG/cmp/ (<ARG/x/, <ARG/y/)</PROTOTY>
+<PP>tests whether <CD><ARG/cmp/(x, y) = EQUAL</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>less<TY>'a total_ordering -> 'a * 'a -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>less <ARG/cmp/ (<ARG/x/, <ARG/y/)</PROTOTY>
+<PP>tests whether <CD><ARG/cmp/(x, y) = LESS</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>lessEqual<TY>'a total_ordering -> 'a * 'a -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>lessEqual <ARG/cmp/ (<ARG/x/, <ARG/y/)</PROTOTY>
+<PP>tests whether <CD><ARG/cmp/(x, y)</CD> returns <CD>LESS</CD> or
+<CD>EQUAL</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>sorted<TY>bool * 'a total_ordering -> 'a list -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>sorted (true, <ARG/cmp/) <ARG/xs/</PROTOTY>
+<PP>tests whether
+<CD>lessEqual <ARG/cmp/ (ListAux.sub(<ARG/xs/, <ARG/i/),
+ListAux.sub(<ARG/xs/, <ARG/i/ + 1))</CD>, for all
+<CD>1 <= <ARG/i/ <= length <ARG/xs/ - 1</CD>.
+
+<PROTOTY>sorted (false, <ARG/cmp/) <ARG/xs/</PROTOTY>
+<PP>tests whether
+<CD>less <ARG/cmp/ (ListAux.sub(<ARG/xs/, <ARG/i/),
+ListAux.sub(<ARG/xs/, <ARG/i/ + 1))</CD>, for all
+<CD>1 <= <ARG/i/ <= length <ARG/xs/ - 1</CD>.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>insert<TY>bool * 'a total_ordering -> 'a * 'a list -> 'a list</TY></VAL>
+<COMMENT>
+<PROTOTY>insert (true, <ARG/cmp/) (<ARG/x/, <ARG/ys/)</PROTOTY>
+<PP>If <CD>sorted (true, cmp) <ARG/ys/</CD>, then <CD>insert</CD>
+returns a permutation <CD><ARG/zs/</CD> of <CD><ARG/x/ :: <ARG/ys/</CD> such
+that <CD>sorted (true, <ARG/cmp/) <ARG/zs/</CD>.
+</PP>
+
+<PROTOTY>insert (false, <ARG/cmp/) (<ARG/x/, <ARG/ys/)</PROTOTY>
+<PP>If <CD>sorted (false, cmp) <ARG/ys/</CD>, then <CD>insert</CD>
+returns a sub-permutation <CD><ARG/zs/</CD> off <CD><ARG/x/ :: <ARG/ys/</CD>
+such that <CD>sorted (false, <ARG/cmp/) <ARG/zs/</CD> and,
+for all elements <CD><ARG/w/</CD> of <CD><ARG/x/ :: <ARG/ys/</CD>,
+there is an element <CD><ARG/z/</CD> of <CD><ARG/zs/</CD> such that
+<CD>equal <ARG/cmp/ (<ARG/w/, <ARG/z/)</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>merge
+<TY>bool * 'a total_ordering -> 'a list * 'a list -> 'a list</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>merge (true, <ARG/cmp/) (<ARG/xs/, <ARG/ys/)</PROTOTY>
+<PP>If <CD>sorted (true, cmp) <ARG/xs/</CD> and
+<CD>sorted (true, cmp) <ARG/ys/</CD>, then <CD>merge</CD> returns a
+permuation <CD><ARG/zs/</CD> of <CD><ARG/xs/ @ <ARG/ys/</CD> such that
+<CD>sorted (true, <ARG/cmp/) <ARG/zs/</CD>.
+
+<PROTOTY>merge (false, <ARG/cmp/) (<ARG/xs/, <ARG/ys/)</PROTOTY>
+<PP>If <CD>sorted (false, cmp) <ARG/xs/</CD> and
+<CD>sorted (false, cmp) <ARG/ys/</CD>, then <CD>merge</CD> returns
+a sub-permutation <CD><ARG/zs/</CD> of <CD><ARG/xs/ @ <ARG/ys/</CD> such that
+<CD>sorted (false, <ARG/cmp/) <ARG/zs/</CD> and, for all elements
+<CD><ARG/w/</CD> of <CD><ARG/xs/ @ <ARG/ys/</CD>, there is an element
+<CD><ARG/z/</CD> of <CD><ARG/zs/</CD> such that <CD>equal
+<ARG/cmp/ (w, z)</CD>.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>sort<TY>bool * 'a total_ordering -> 'a list -> 'a list</TY></VAL>
+<COMMENT>
+<PROTOTY>sort (true, <ARG/cmp/) <ARG/xs/</PROTOTY>
+<PP>returns a permutation <CD><ARG/ys/</CD> of <CD><ARG/xs/</CD> such that
+<CD>sorted (true, <ARG/cmp/) <ARG/ys/</CD>.
+</PP>
+
+<PROTOTY>sort (false, <ARG/cmp/) <ARG/xs/</PROTOTY>
+<PP>returns a sub-permutation <CD><ARG/ys/</CD> of <CD><ARG/xs/</CD>
+such that <CD>sorted (false, <ARG/cmp/) <ARG/ys/</CD> and, for all elements
+<CD><ARG/x/</CD> of <CD><ARG/xs/</CD>, there is an element <CD><ARG/y/</CD> of
+<CD><ARG/ys/</CD> such that <CD>equal <ARG/cmp/ (<ARG/x/, <ARG/y/)</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+</SIGBODY>
+</STRUCTURE>
+
+<PP><CD>sort (<ARG/dups/, <ARG/cmp/) <ARG/xs/</CD> begins by checking whether
+<CD>sorted (<ARG/dups/, <ARG/cmp/) <ARG/xs/</CD>, in a computation taking
+at most <CD>length <ARG/xs/ - 1</CD> calls to <CD><ARG/cmp/</CD>.  If
+<CD>sorted</CD> returns <CD>true</CD>, then <CD><ARG/xs/</CD> is
+returned.  Otherwise, <CD><ARG/xs/</CD> is sorted using merge sort.</PP>
+</INTERFACE>

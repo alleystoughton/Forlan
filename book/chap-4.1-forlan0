@@ -1,0 +1,9 @@
+setPrintingLineLength 66;
+val gram = Gram.input "";
+{variables}
+E
+{start variable}
+E
+{productions}
+E -> E<plus>E | E<times>E | <openPar>E<closPar> | <id>
+.

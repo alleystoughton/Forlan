@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# put a compressed tarball of the Forlan distribution in HTML
+# directory
+
+html=~/public_html/forlan
+version=$(cat version.txt)
+
+echo Building compressed tarball for Forlan Version $version and installing in $html
+
+rm -rf /tmp/{forlan-$version,forlan-$version.tar,forlan-$version.tar.gz,forlan-$version.tgz}
+cd ..
+cp -R forlan /tmp/forlan-$version
+cd /tmp/forlan-$version
+
+# get rid of temporary files
+
+find . \( \
+-name '#*#' -o \
+-name '*~'  -o \
+-name '.*~' -o \
+-name '*.bak' \
+\) -exec /bin/rm -f '{}' \;
+
+# cleanup sub-directories
+
+cd book
+cleanup
+cd ..
+
+cd toolset
+cleanup
+cd ..
+
+# build and install the tarball
+
+cd ..
+tar cf /tmp/forlan-$version.tar forlan-$version
+gzip forlan-$version.tar
+mv forlan-$version.tar.gz forlan-$version.tgz
+mv forlan-$version.tgz $html
+rm -rf forlan-$version

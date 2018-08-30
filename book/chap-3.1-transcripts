@@ -1,0 +1,8 @@
+#!/bin/bash
+
+smlnjtrans forlan "@" \
+chap-3.1-forlan0 \
+chap-3.1-forlan1 \
+chap-3.1-forlan2 \
+chap-3.1-forlan3 \
+chap-3.1-forlan4

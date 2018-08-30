@@ -1,0 +1,24 @@
+@FILES
+  ["sym-set"; "The SymSet Module";]
+@SIGNATURE SYM_SET "sym-set" [
+  @VALS 
+    input
+    memb
+    toPP
+    genUnion
+    equal
+    fromString
+    map
+    fromList
+    output
+    inter
+    inputFromLabToks
+    subset
+    compare
+    union
+    toString
+    minus
+    genInter
+    mapFromList
+]
+@STRUCTURE SymSet "sym-set" SYM_SET

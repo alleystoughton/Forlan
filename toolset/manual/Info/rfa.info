@@ -1,0 +1,43 @@
+@FILES
+  ["rfa"; "The RFA Module";]
+@SIGNATURE RFA "rfa" [
+  @TYPES 
+    @TYPE concr
+    @TYPE rfa
+  @VALS 
+    jforlanEdit
+    toPP
+    jforlanPretty
+    renameStatesCanonically
+    fromString
+    faToRegPermsTrace
+    startState
+    faToRegPerms
+    output
+    standard
+    toReg
+    states
+    numStates
+    fromConcr
+    sub
+    validLP
+    valid
+    input
+    alphabet
+    jforlanValidate
+    toConcr
+    equal
+    standardize
+    checkLP
+    renameStates
+    transitions
+    numTransitions
+    acceptingStates
+    jforlanNew
+    compare
+    faToReg
+    eliminateState
+    toString
+    fromFA
+]
+@STRUCTURE RFA "rfa" RFA

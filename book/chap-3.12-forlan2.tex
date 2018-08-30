@@ -1,0 +1,43 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ rfa\ =\ RFA.input\ "";
+\item[]\textsl{@\ }\symbol{'173}states\symbol{'175}\ A,\ B\ \symbol{'173}start\ state\symbol{'175}\ A\ \symbol{'173}accepting\ states\symbol{'175}\ B
+\item[]\textsl{@\ }\symbol{'173}transitions\symbol{'175}\ A,\ 2\ ->\ A;\ A,\ 00\symbol{'052}\ ->\ B;\ B,\ 3\ ->\ B;\ B,\ 11\symbol{'052}\ ->\ A
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ rfa\ =\ -\ :\ rfa}
+\item[]\textsl{-\ }fun\ memb(x,\ reg)\ =\ FA.accepted\ (regToFA\ reg)\ x;
+\item[]\textsl{val\ memb\ =\ fn\ :\ str\ \symbol{'052}\ reg\ ->\ bool}
+\item[]\textsl{-\ }val\ lp\ =\ LP.input\ "";
+\item[]\textsl{@\ }A,\ 000\ =>\ B,\ 3\ =>\ B
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ lp\ =\ -\ :\ lp}
+\item[]\textsl{-\ }RFA.validLP\ (memb,\ rfa)\ lp;
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }val\ lp'\ =\ LP.input\ "";
+\item[]\textsl{@\ }A,\ 0\ =>\ B,\ 0\ =>\ A
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ lp'\ =\ -\ :\ lp}
+\item[]\textsl{-\ }RFA.checkLP\ (memb,\ rfa)\ lp';
+\item[]\textsl{transition\ from\ "B"\ to\ "A"\ has\ regular\ expression\ that\ doesn't}
+\item[]\textsl{generate\ "0"}
+\item[]
+\item[]\textsl{uncaught\ exception\ Error}
+\end{list}

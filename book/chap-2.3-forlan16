@@ -1,0 +1,25 @@
+val rel = SymRel.input "";
+(1, 2), (2, 3), (3, 4)
+.
+SymRel.output("", rel);
+SymSet.output("", SymRel.domain rel);
+SymSet.output("", SymRel.range rel);
+SymRel.function rel;
+SymRel.functionFromTo
+(rel, SymSet.fromString "1, 2, 3", SymSet.fromString "2, 3, 4");
+SymRel.injection rel;
+SymRel.bijectionFromTo
+(rel, SymSet.fromString "1, 2, 3", SymSet.fromString "2, 3, 4");
+val f = SymRel.applyFunction rel;
+Sym.output("", f(Sym.fromString "1"));
+Sym.output("", f(Sym.fromString "2"));
+Sym.output("", f(Sym.fromString "3"));
+Sym.output("", f(Sym.fromString "4"));
+val rel' = SymRel.input "";
+(4, 3), (3, 2), (2, 1)
+.
+val rel'' = SymRel.compose(rel', rel);
+SymRel.functionFromTo
+(rel'', SymSet.fromString "1, 2, 3",
+ SymSet.fromString "1, 2, 3");
+SymRel.output("", rel'');

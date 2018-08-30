@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# make-book makes the PDF version of the book, and installs it in the
+# HTML directory
+
+base=book
+
+htmldir=$(cat ../html-directory.txt)
+
+echo Building PDF for book and installing in $htmldir
+
+# needs latexmk on path
+
+# usage:
+#   make-book
+
+# deal with bug in latexmk
+if [ -r $base.ps ];
+then grep -q '^%DVIPSCommandLine: dvips -P download35' $base.ps;
+     if [ $? -ne 0 ];
+     then rm -f $base.ps;
+     fi;
+fi
+# end of bug fix
+latexmk -pdfps $base
+
+read -p 'Do you have permission to upload new version? [yes/no] ' perm
+if [ $perm == yes ];
+then echo transferring to pubic_html;
+     cp -p $base.pdf $htmldir/book.pdf;
+else echo aborted;
+fi

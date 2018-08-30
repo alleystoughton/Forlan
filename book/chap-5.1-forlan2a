@@ -1,0 +1,4 @@
+val pr'' = Prog.input "";
+calc(plus, calc(compare, pair(int(3), int(4))))
+.
+Prog.evaluate(pr'', 10);

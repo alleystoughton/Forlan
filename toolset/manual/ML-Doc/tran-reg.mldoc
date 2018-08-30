@@ -1,0 +1,58 @@
+<!-- tran-reg.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The TranReg Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/TranReg/ Module</HEAD>
+
+<PP>This module defines the concrete type of regular expression finite
+automata transitions.</PP>
+
+<STRUCTURE STRID="TranReg">
+<OPAQUE>
+<SIGBODY SIGID="TRAN_REG" FILE=TRAN-REG>
+
+<SPEC>
+<TYPE><ID>tran_reg<TY>Sym.sym * Reg.reg * Sym.sym
+<COMMENT>
+<PP>The type of regular expression transitions.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>tran_reg Sort.total_ordering
+<COMMENT>
+<PROTOTY>
+compare
+</PROTOTY>
+<PP>is 
+<CD><STRREF TOPID/Set/.<VALREF STRID="Set"/compareTriple/(<STRREF TOPID/Sym/.<VALREF STRID="Sym"/compare/,
+<STRREF TOPID/Reg/.<VALREF STRID="Reg"/compare/,
+<STRREF TOPID/Sym/.<VALREF STRID="Sym"/compare/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>tran_reg * tran_reg -> bool
+<COMMENT>
+<PROTOTY>
+equal(<ARG/tran1/, <ARG/tran2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/tran1/</CD> and <CD><ARG/tran2/</CD> are
+equal.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

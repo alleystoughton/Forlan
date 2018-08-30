@@ -1,0 +1,8 @@
+val pr1 = Prog.input "";
+pair(int(4), pair(lam(x, var(x)), const(true)))
+.
+Prog.isValue(Prog.toClosed pr1);
+val pr2 = Prog.input "";
+app(lam(x, var(x)), lam(x, var(x)))
+.
+Prog.isValue(Prog.toClosed pr2);

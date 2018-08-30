@@ -1,0 +1,17 @@
+val gram = Gram.input "";
+{variables}
+A, B
+{start variable}
+A
+{productions}
+A -> BAB | %;
+B -> 0
+.
+val gram' = Gram.input "";
+{variables}
+E
+{start variable}
+E
+{productions}
+E -> E<plus>E | E<times>E | <openPar>E<closPar> | <id>
+.

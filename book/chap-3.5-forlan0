@@ -1,0 +1,25 @@
+Params.setPrintingLineLength 66;
+val fa1 = FA.input "";
+{states}
+A, B, C
+{start state}
+A
+{accepting states}
+A, B, C
+{transitions}
+A, 0 -> A | B;
+A, 1 -> C;
+C, 1 -> B
+.
+val fa2 = FA.input "";
+{states}
+A, B, C
+{start state}
+A
+{accepting states}
+A, B, C
+{transitions}
+A, 0 -> A | C;
+A, 1 -> B;
+B, 1 -> C
+.

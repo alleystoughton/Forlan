@@ -1,0 +1,9 @@
+val a = Sym.input "";
+<i
+d>
+.
+val b = Sym.fromString "<num>";
+Sym.output("", a);
+Sym.compare(a, b);
+Sym.equal(a, b);
+Sym.equal(a, Sym.fromString "<id>");

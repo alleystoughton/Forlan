@@ -1,0 +1,14 @@
+val bs = SymSet.input "";
+a, <id>, 0, <num>
+.
+SymSet.output("", bs);
+val cs = SymSet.input ""; 
+a, <char> 
+.
+SymSet.subset(cs, bs);
+SymSet.output("", SymSet.union(bs, cs));
+SymSet.output("", SymSet.inter(bs, cs));
+SymSet.output("", SymSet.minus(bs, cs));
+val ds = SymSet.fromString "<char>, <>";
+SymSet.output("", SymSet.genUnion[bs, cs, ds]);
+SymSet.output("", SymSet.genInter[bs, cs, ds]);

@@ -1,0 +1,39 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(5033,1720)(0,-10)
+\put(2325,874){\ellipse{474}{474}}
+\put(2925.000,5824.000){\arc{11100.000}{1.2405}{1.9011}}
+\blacken\path(4620.454,507.892)(4725.000,574.000)(4601.644,564.867)(4620.454,507.892)
+\put(1125,874){\ellipse{618}{618}}
+\put(4725,784){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\langle\Csf\rangle$}}}
+\put(4125,949){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\mathsf{32}$}}}
+\put(3525,1549){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\mathsf{54}$}}}
+\put(1725,949){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\%$}}}
+\put(2925,49){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\%$}}}
+\put(3525,777){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\langle\Bsf\rangle$}}}
+\put(3525.000,-1076.000){\arc{5100.000}{4.2224}{5.2023}}
+\blacken\path(4604.316,1201.116)(4725.000,1174.000)(4631.274,1254.719)(4604.316,1201.116)
+\blacken\path(2745.000,904.000)(2625.000,874.000)(2745.000,844.000)(2745.000,904.000)
+\path(2625,874)(3225,874)
+\blacken\path(3945.000,904.000)(3825.000,874.000)(3945.000,844.000)(3945.000,904.000)
+\path(3825,874)(4425,874)
+\path(1425,874)(2025,874)
+\blacken\path(1905.000,844.000)(2025.000,874.000)(1905.000,904.000)(1905.000,844.000)
+\put(1125,799){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\Asf$}}}
+\put(2925,949){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\mathsf{10}$}}}
+\put(2325,874){\ellipse{600}{600}}
+\put(3525,874){\ellipse{600}{600}}
+\put(4725,874){\ellipse{600}{600}}
+\path(525,874)(825,874)
+\blacken\path(705.000,844.000)(825.000,874.000)(705.000,904.000)(705.000,844.000)
+\put(2317,776){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\langle\Asf\rangle$}}}
+\put(0,799){\makebox(0,0)[lb]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}Start}}}
+\end{picture}
+}

@@ -1,0 +1,769 @@
+\section{Deterministic Finite Automata}
+\label{DeterministicFiniteAutomata}
+
+In this section, we study the third of our more restricted kinds of
+finite automata: deterministic finite automata.
+
+\subsection{Definition of DFAs}
+
+A \emph{deterministic finite automaton} (DFA) $M$ is a finite
+automaton such that:
+\begin{itemize}
+\item $T_M\sub\setof{q,x\fun r}{q,r\in\Sym\eqtxt{and}x\in\Str\eqtxt{and}|x|=1}$;
+  and
+
+\item for all $q\in Q_M$ and $a\in\alphabet\,M$, there is a unique $r\in Q_M$
+such that $q,a\fun r\in T_M$.
+\end{itemize}
+In other words, an FA is a DFA iff it is an NFA and, for every state
+$q$ of the automaton and every symbol $a$ of the automaton's alphabet,
+there is exactly one state that can be entered from state $q$ by
+reading $a$ from the automaton's input.  We write $\DFA$ for the set
+of all deterministic finite automata.  Thus
+$\DFA\subsetneq\NFA\subsetneq\EFA\subsetneq\FA$.
+
+Let $M$ be the finite automaton
+\begin{center}
+\input{chap-3.11-fig1.eepic}
+\end{center}
+It turns out that $L(M)=
+\setof{w\in\{\mathsf{0,1}\}^*}{\mathsf{000}\eqtxt{is not a substring
+    of}w}$.  Although $M$ is an NFA, it's not a DFA, since
+$\zerosf\in\alphabet\,M$ but there is no transition of the form
+$\Csf,\zerosf\fun r$.  However, we can make $M$ into a DFA by adding a dead
+state $\Dsf$:
+\begin{center}
+\input{chap-3.11-fig2.eepic}
+\end{center}
+We will never need more than one dead state in a DFA.
+
+The following proposition obviously holds.
+
+\begin{proposition}
+Suppose $M$ is a DFA.
+\begin{itemize}
+\item For all $N\in\FA$, if $M\iso N$, then $N$ is a DFA.
+
+\item For all bijections $f$ from $Q_M$ to some set of symbols,
+$\renameStates(M, f)$ is a DFA.
+
+\item $\renameStatesCanonically\,M$ is a DFA.
+\end{itemize}
+\end{proposition}
+
+Now, we prove a proposition that doesn't hold for arbitary NFAs.
+
+\begin{proposition}
+\label{DetermProp1}
+
+Suppose $M$ is a DFA.  For all $q\in Q_M$ and $w\in(\alphabet\,M)^*$,
+$|\Delta_M(\{q\},w)|=1${.}
+\end{proposition}
+
+\begin{proof}
+An easy left string induction on $w$.
+\end{proof}
+
+Suppose $M$ is a DFA.  Because of Proposition~\ref{DetermProp1}, we
+can define \emph{the transition function} $\delta_M$ \emph{for} $M$,
+$\delta_M\in Q_M\times(\alphabet\,M)^*\fun Q_M$, by:
+\begin{gather*}
+\delta_M(q,w) = \eqtxtr{the unique} r\in Q_M\eqtxt{such that}
+r\in\Delta_M(\{q\},w) .
+\end{gather*}
+In other words, $\delta_M(q,w)$ is the unique state $r$ of $M$ that
+is the end of a valid labeled path for $M$ that starts at $q$ and
+is labeled by $w$.
+Thus, for all $q,r\in Q_M$ and $w\in(\alphabet\,M)^*$,
+\begin{gather*}
+\delta_M(q,w)=r\quad\myiff\quad r\in\Delta_M(\{q\},w) .
+\end{gather*}
+We sometimes abbreviate $\delta_M(q,w)$ to $\delta(q,w)$.
+
+For example, if $M$ is the DFA
+\begin{center}
+\input{chap-3.11-fig2.eepic}
+\end{center}
+then $\delta(\Asf, \%)={\Asf}$, $\delta(\Asf, \mathsf{0100})={\Csf}$
+and $\delta(\Bsf, \mathsf{000100})={\Dsf}$.
+
+Having defined the $\delta$ function, we can study its properties.
+
+\begin{proposition}
+\label{DetermProp2}
+Suppose $M$ is a DFA.
+\begin{enumerate}[\quad(1)]
+\item For all $q\in Q_M$, $\delta_M(q,\%)={q}$.
+
+\item For all $q\in Q_M$ and $a\in\alphabet\,M$,
+$\delta_M(q,a)=\eqtxtr{the unique}r\in Q_M\eqtxt{such that}
+{q,a\fun r\in T_M}$.
+
+\item For all $q\in Q_M$ and $x,y\in(\alphabet\,M)^*$,
+$\delta_M(q,xy)={\delta_M(\delta_M(q,x),y)}$.
+\end{enumerate}
+\end{proposition}
+
+Suppose $M$ is a DFA.  By part~(2) of the proposition, we have that,
+for all $q,r\in Q_M$ and $a\in\alphabet\,M$,
+\begin{gather*}
+\delta_M(q,a)=r\quad\myiff\quad q,a\fun r\in T_M .
+\end{gather*}
+
+Now we can use the $\delta$ function to explain when a string is
+accepted by an FA.
+
+\begin{proposition}
+\label{DetermProp3}
+Suppose $M$ is a DFA.
+$L(M)=\setof{w\in(\alphabet\,M)^*}{\delta_M(s_M,w)\in A_M}$.
+\end{proposition}
+\begin{proof}
+To see that the left-hand side is a subset of the right-hand side,
+suppose $w\in L(M)$.  Then $w\in(\alphabet\,M)^*$ and there is a $q\in A_M$
+such that $q\in\Delta_M(\{s_M\},w)$.  Thus $\delta_M(s_M,w)=q\in A_M$.
+
+To see that the right-hand side is a subset of the left-hand side,
+suppose $w\in(\alphabet\,M)^*$ and $\delta_M(s_M,w)\in A_M$.  Then
+$\delta_M(s_M,w)\in\Delta_M(\{s_M\},w)$, and thus $w\in L(M)$.
+\end{proof}
+
+The preceding propositions give us an efficient algorithm for checking
+whether a string is accepted by a DFA.  For example, suppose
+$M$ is the DFA
+\begin{center}
+\input{chap-3.11-fig2.eepic}
+\end{center}
+To check whether $\mathsf{0100}$ is accepted by $M$, we need
+to determine whether $\delta(\Asf,\mathsf{0100})\in\{\Asf,\Bsf,\Csf\}$.
+
+For instance, we have that:
+\begin{align*}
+\delta(\Asf,\mathsf{0100})
+&= \delta(\delta(\Asf, \zerosf),\mathsf{100}) \\
+&= \delta(\Bsf,\mathsf{100}) \\
+&= \delta(\delta(\Bsf,\onesf),\mathsf{00}) \\
+&= \delta(\Asf,\mathsf{00}) \\
+&= \delta(\delta(\Asf,\zerosf),\zerosf) \\
+&= \delta(\Bsf,\zerosf) \\
+&= \Csf \\
+&\in \{\Asf,\Bsf,\Csf\}.
+\end{align*}
+Thus $\mathsf{0100}$ is accepted by $M$.
+
+\subsection{Proving the Correctness of DFAs}
+
+Since every DFA is an FA, we could prove the correctness of DFAs
+using the techniques that we have already studied.
+But it turns out that giving a separate proof that enough is accepted
+by a DFA is unnecessary---it will follow from the proof that
+everything accepted is wanted.
+
+\begin{proposition}
+Suppose $M$ is a DFA.  Then, for all $w\in(\alphabet\,M)^*$ and $q\in Q_M$,
+\begin{gather*}
+w\in\Lambda_{M,q} \quad\myiff\quad \delta_M(s_M,w) = q .
+\end{gather*}
+\end{proposition}
+
+\begin{proof}
+Suppose $w\in(\alphabet\,M)^*$ and $q\in Q_M$.
+\begin{description}
+\item[\quad(only if)] Suppose $w\in\Lambda_q$.  Then
+  $q\in\Delta(\{s\},w)$.  Thus $\delta(s,w) = q$.
+
+\item[\quad(if)] Suppose $\delta(s,w) = q$.  Then
+  $q\in\Delta(\{s\},w)$, so that $w\in\Lambda_q$.
+\end{description}
+\end{proof}
+
+We already know that, if $M$ is an FA, then
+$L(M)=\bigcup\setof{\Lambda_q}{q\in A_M}$.
+
+\begin{proposition}
+Suppose $M$ is a DFA.
+\begin{enumerate}[\quad(1)]
+\item $(\alphabet\,M)^* = \bigcup\setof{\Lambda_q}{q\in Q_M}$.
+
+\item For all $q,r\in Q_M$, if $q\neq r$, then
+  $\Lambda_q\cap\Lambda_r=\emptyset$.
+\end{enumerate}
+\end{proposition}
+
+Suppose $M$ is the DFA
+\begin{center}
+\input{chap-3.11-fig2.eepic}
+\end{center}
+and let $X=\setof{w\in\{\mathsf{0,1}\}^*}{\mathsf{000}\eqtxt{is not a
+    substring of}w}$.  We will show that $L(M)=X$.  Note that, for all
+$w\in\{\mathsf{0,1}\}^*$:
+\begin{itemize}
+\item $w\in X$ iff $\mathsf{000}$ is not a substring of $w$.
+
+\item $w\not\in X$ iff $\mathsf{000}$ is a substring of $w$.
+\end{itemize}
+
+First, we use induction on $\Lambda$, to prove that:
+\begin{enumerate}[\quad(A)]
+\item for all $w\in\Lambda_\Asf$, $w\in X$ and $\zerosf$ is not a
+  suffix of $w$;
+
+\item for all $w\in\Lambda_\Bsf$, $w\in X$ and $\zerosf$, but not
+  $\zerosf\zerosf$, is a suffix of $w$;
+
+\item for all $w\in\Lambda_\Csf$, $w\in X$ and $\zerosf\zerosf$ is a
+  suffix of $w$; and
+
+\item for all $w\in\Lambda_\Dsf$, $w\not\in X$.
+\end{enumerate}
+
+There are nine steps (1 + the number of transitions) to show.
+\begin{description}
+\item[\quad(empty string)] We must show that  $\%\in X$ and
+  $\zerosf$ is not a suffix of $\%$.  This follows since $\%$ has
+  no $\zerosf$'s.
+
+\item[\quad($\Asf, \zerosf\fun\Bsf$)] Suppose $w\in\Lambda_\Asf$, and
+  assume the inductive hypothesis: $w\in X$ and $\zerosf$ is not a
+  suffix of $w$.  We must show that $w\zerosf\in X$ and
+  $\zerosf$, but not $\zerosf\zerosf$, is a suffix of
+  $w\zerosf$. Because $w\in X$ and $\zerosf$ is not a suffix of $w$,
+  we have that $w\zerosf\in X$.  Clearly, $\zerosf$ is a suffix of
+  $w\zerosf$.  And, since $\zerosf$ is not a suffix of $w$, we have
+  that $\zerosf\zerosf$ is not a suffix of $w\zerosf$.
+
+\item[\quad($\Asf, \onesf\fun\Asf$)] Suppose $w\in\Lambda_\Asf$, and
+  assume the inductive hypothesis: $w\in X$ and $\zerosf$ is not a
+  suffix of $w$.  We must show that $w\onesf\in X$ and $\zerosf$ is
+  not a suffix of $w\onesf$.  Since $w\in X$, we have that $w\onesf\in
+  X$.  And, $\zerosf$ is not a suffix of $w\onesf$.
+
+\item[\quad($\Bsf, \zerosf\fun\Csf$)] Suppose $w\in\Lambda_\Bsf$, and
+  assume the inductive hypothesis: $w\in X$ and $\zerosf$, but not
+  $\zerosf\zerosf$, is a suffix of $w$.  We must show that
+  $w\zerosf\in X$ and $\zerosf\zerosf$ is a suffix of $w\zerosf$.
+  Because $w\in X$ and $\zerosf\zerosf$ is not suffix of $w$, we have
+  that $w\zerosf\in X$.  And since $\zerosf$ is a suffix of $w$, it
+  follows that $\zerosf\zerosf$ is a suffix of $w\zerosf$.
+
+\item[\quad($\Bsf, \onesf\fun\Asf$)] Suppose $w\in\Lambda_\Bsf$, and
+  assume the inductive hypothesis: $w\in X$ and $\zerosf$, but not
+  $\zerosf\zerosf$, is a suffix of $w$.  We must show that $w\onesf\in
+  X$ and $\zerosf$ is not a suffix of $w\onesf$.  Because $w\in X$, we
+  have that $w\onesf\in X$.  And, $\zerosf$ is not a suffix of
+  $w\onesf$.
+
+\item[\quad($\Csf, \zerosf\fun\Dsf$)] Suppose $w\in\Lambda_\Csf$, and
+  assume the inductive hypothesis: $w\in X$ and $\zerosf\zerosf$ is a
+  suffix of $w$.  We must show that $w\zerosf\not\in X$.  Because
+  $\zerosf\zerosf$ is a suffix of $w$, we have that $\mathsf{000}$ is
+  a suffix of $w\zerosf$.  Thus $w\zerosf\not\in X$.
+
+\item[\quad($\Csf, \onesf\fun\Asf$)] Suppose $w\in\Lambda_\Csf$, and
+  assume the inductive hypothesis: $w\in X$ and $\zerosf\zerosf$ is a
+  suffix of $w$.  We must show that $w\onesf\in X$ and $\zerosf$ is
+  not a suffix of $w\onesf$.  Because $w\in X$, we have that
+  $w\onesf\in X$.  And, $\zerosf$ is not a suffix of $w\onesf$.
+
+\item[\quad($\Dsf, \zerosf\fun\Dsf$)] Suppose $w\in\Lambda_\Dsf$, and
+  assume the inductive hypothesis: $w\not\in X$.  We must show that
+  $w\zerosf\not\in X$.  Because $w\not\in X$, we have that
+  $w\zerosf\not\in X$.
+
+\item[\quad($\Dsf, \onesf\fun\Dsf$)] Suppose $w\in\Lambda_\Dsf$, and
+  assume the inductive hypothesis: $w\not\in X$.  We must show that
+  $w\onesf\not\in X$.   Because $w\not\in X$, we have that
+  $w\onesf\not\in X$.
+\end{description}
+
+Now, we use the result of our induction on $\Lambda$ to show that
+$L(M)=X$.
+
+\begin{description}
+\item[\quad($L(M)\sub X$)] Suppose $w\in L(M)$.  Because
+  $A_M=\{\Asf,\Bsf,\Csf\}$, we have that $w\in L(M) = \Lambda_\Asf
+  \cup \Lambda_\Bsf \cup \Lambda_\Csf$.  Thus, by parts~(A)--(C), we
+  have that $w\in X$.
+
+\item[\quad($X\sub L(M)$)] Suppose $w\in X$.  Since
+  $X\sub\{\zerosf,\onesf\}^*$, we have that
+  $w\in\{\zerosf,\onesf\}^*$.  Suppose, toward a contradiction, that
+  $w\not\in L(M)$.  Because $w\not\in L(M) = \Lambda_\Asf \cup
+  \Lambda_\Bsf \cup \Lambda_\Csf$ and $w\in\{\zerosf,\onesf\}^* =
+  (\alphabet\,M)^* = \Lambda_\Asf \cup \Lambda_\Bsf \cup \Lambda_\Csf
+  \cup \Lambda_\Dsf$, we must have that $w\in\Lambda_\Dsf$.  But then
+  part~(D) tells us that $w\not\in X$---contradiction.  Thus $w\in
+  L(M)$.
+\end{description}
+
+For the above approach to work, when proving $L(M)=X$ for a DFA $M$
+and language $X$, we simply need that:
+\begin{itemize}
+\item the property associated with each accepting state implies
+  being in $X$; and
+
+\item the property associated with each non-accepting state implies
+  not being in $X$.
+\end{itemize}
+
+\subsection{Simplification of DFAs}
+
+Let $M$ be our example DFA
+\begin{center}
+\input{chap-3.11-fig2.eepic}
+\end{center}
+Then $M$ is not simplified, since the state $\Dsf$ is dead.  But if we
+get rid of $\Dsf$, then we won't have a DFA anymore.  Thus, we will
+need:
+\begin{itemize}
+\item a notion of when a DFA is simplified that is more liberal than
+  our standard notion; and
+
+\item a corresponding simplification procedure for DFAs.
+\end{itemize}
+We say that a DFA $M$ is \emph{deterministically simplified} iff
+\begin{itemize}
+\item every element of $Q_M$ is reachable; and
+
+\item at most one element of $Q_M$ is dead.
+\end{itemize}
+For example, both of the following DFAs, which accept $\emptyset$,
+are deterministically simplified:
+\begin{center}
+\input{chap-3.11-fig3.eepic}
+\end{center}
+
+We define a simplification algorithm for DFAs that takes in
+\begin{itemize}
+\item a DFA $M$ and
+\item an alphabet $\Sigma$
+\end{itemize}
+and returns a DFA $N$ such that
+\begin{itemize}
+\item $N$ is deterministically simplified,
+
+\item $N\approx M$, and
+
+\item $\alphabet\,N = \alphabet(L(M))\cup\Sigma$.
+\end{itemize}
+Thus, the alphabet of $N$ will consist of all symbols that
+either appear in strings that are accepted by $M$ or are in $\Sigma$.
+
+The algorithm begins by letting the FA $M'$ be $\simplify\,M$, i.e.,
+the result of running our simplification algorithm for FAs on $M$.
+$M'$ will have the following properties.
+\begin{itemize}
+\item $M'$ is simplified.
+
+\item $M'\approx M$.
+
+\item $\alphabet\,M'=\alphabet(L(M'))=\alphabet(L(M))$.
+
+\item For all $q\in Q_{M'}$ and $a\in\alphabet\,M'$, there is at most
+  one $r\in Q_{M'}$ such that $q,a\fun r\in T_{M'}$.  This property
+  holds since $M$ is a DFA and $M'$ was formed by removing states and
+  transitions from $M$.
+\end{itemize}
+
+Let $\Sigma'=\alphabet\,M'\cup\Sigma=\alphabet(L(M))\cup\Sigma$.  If
+$M'$ is a DFA and $\alphabet\,M'=\Sigma'$, then the algorithm returns
+$M'$.  Otherwise, it must turn $M'$ into a DFA whose alphabet is
+$\Sigma'$.  We have that
+\begin{itemize}
+\item $\alphabet\,M'\sub\Sigma'$; and
+
+\item for all $q\in Q_{M'}$ and $a\in\Sigma'$, there is at most one
+  $r\in Q_{M'}$ such that $q,a\fun r\in T_{M'}$.
+\end{itemize}
+
+Since $M'$ is simplified, there are two cases to consider.  If $M'$
+has no accepting states, then $s_{M'}$ is the only state of $M'$ and
+$M'$ has no transitions.  Thus the algorithm can return the DFA $N$
+defined by:
+\begin{itemize}
+\item $Q_N=Q_{M'}=\{s_{M'}\}$;
+
+\item $s_N=s_{M'}$;
+
+\item $A_N=A_{M'}=\emptyset$; and
+
+\item $T_N=\setof{s_{M'},a\fun s_{M'}}{a\in\Sigma'}$.
+\end{itemize}
+
+Alternatively, $M'$ has at least one accepting state.  Thus, $M'$ has
+no dead states.  So it can return the DFA $N$ defined by:
+\begin{itemize}
+\item $Q_N = Q_{M'}\cup\{\dead\}$ (we put enough brackets around
+$\dead$ so that it's not in $Q_{M'}$);
+
+\item $s_N=s_{M'}$;
+
+\item $A_N=A_{M'}$; and
+
+\item $T_N=T_{M'}\cup T'$, where $T'$ is the set of all transitions
+  $q,a\fun\dead$ such that either
+\begin{itemize}
+\item $q\in Q_{M'}$ and $a\in\Sigma'$, but there is no $r\in Q_{M'}$
+  such that $q,a\fun r\in T_{M'}$; or
+
+\item $q=\dead$ and $a\in\Sigma'$.
+\end{itemize}
+\end{itemize}
+
+We define a function $\determSimplify\in\DFA\times\Alp\fun\DFA$
+by: $\determSimplify(M,\Sigma)$ is the result of
+running the above algorithm on $M$ and $\Sigma$.
+
+\begin{theorem}
+For all $M\in\DFA$ and $\Sigma\in\Alp$:
+\begin{itemize}
+\item $\determSimplify(M,\Sigma)$ is deterministically simplified;
+
+\item $\determSimplify(M,\Sigma)\approx M$; and
+
+\item $\alphabet(\determSimplify(M,\Sigma)) = \alphabet(L(M))\cup\Sigma$.
+\end{itemize}
+\end{theorem}
+
+For example, suppose $M$ is the DFA
+\begin{center}
+\input{chap-3.11-fig4.eepic}
+\end{center}
+Then $\determSimplify(M,\{\twosf\})$ is the DFA
+\begin{center}
+\input{chap-3.11-fig5.eepic}
+\end{center}
+
+\subsection{Converting NFAs to DFAs}
+
+Suppose $M$ is the NFA
+\begin{center}
+\input{chap-3.11-fig6.eepic}
+\end{center}
+Our algorithm for converting NFAs to DFAs will convert $M$ into a DFA
+$N$ whose states represent the elements of the set
+\begin{gather*}
+\setof{\Delta_M(\{\Asf\},w)}{w\in\{\zerosf,\onesf\}^*} .
+\end{gather*}
+For example, one the states of $N$ will be $\langle\Asf,\Bsf\rangle$,
+which represents $\{\Asf,\Bsf\}=\Delta_M(\{\Asf\},\mathsf{1})$.
+This is the state that our DFA will be in after processing $\onesf$
+from the start state.
+
+Before describing our conversion algorithm, we first state a
+proposition concerning the $\Delta$ function for NFAs, and say how we
+will represent finite sets of symbols as symbols.
+
+\begin{proposition}
+\label{NFADeltaProp}
+Suppose $M$ is an NFA.
+\begin{enumerate}[\quad(1)]
+\item For all $P\sub Q_M$, $\Delta_M(P,\%)=P$.
+
+\item For all $P\sub Q_M$ and $a\in\alphabet\,M$,
+  \begin{displaymath}
+    \Delta_M(P,a)=\setof{r\in Q_M}{p,a\fun r\in T_M,\eqtxt{for some}p\in P}.
+  \end{displaymath}
+
+\item For all $P\sub Q_M$ and $x,y\in(\alphabet\,M)^*$,
+  \begin{displaymath}
+    \Delta_M(P, xy)=\Delta_M(\Delta_M(P,x),y) .
+  \end{displaymath}
+\end{enumerate}
+\end{proposition}
+
+Given a finite set of symbols $P$, we write $\overline{P}$ for
+the symbol
+\begin{gather*}
+\langle a_1,\,\ldots,a_n\rangle,
+\end{gather*}
+where $a_1,\,\ldots,a_n$ are all of the elements of $P$, in order
+according to our total ordering on $\Sym$, and without repetition.  For
+example, $\overline{\{\Bsf,\Asf\}}=\langle\Asf,\Bsf\rangle$ and
+$\overline{\emptyset}=\langle\rangle$.
+It is easy to see that, if $P$ and $R$ are finite sets of symbols, then
+$\overline{P}=\overline{R}$ iff $P=R$.
+
+We convert an NFA $M$ into a DFA $N$ as follows.  First,
+we generate the least subset $X$ of $\powset\,Q_M$ such that:
+\begin{itemize}
+\item $\{s_M\}\in X$; and
+
+\item for all $P\in X$ and $a\in\alphabet\,M$,
+$\Delta_M(P,a)\in X$.
+\end{itemize}
+Thus $|X|\leq 2^{|Q_M|}$.  Then we define the DFA $N$ as follows:
+\begin{itemize}
+\item $Q_N=\setof{\overline{P}}{P\in X}$;
+
+\item $s_N=\overline{\{s_M\}}=\langle s_M\rangle$;
+
+\item $A_N=\setof{\overline{P}}{P\in X\eqtxt{and}P\cap A_M\neq\emptyset}$;
+  and
+
+\item $T_N=\setof{(\overline{P},a,
+\overline{\Delta_M(P,a)})}{P\in X\eqtxt{and}a\in\alphabet\,M}$.
+\end{itemize}
+Then $N$ is a DFA with alphabet $\alphabet\,M$ and, for all $P\in X$ and
+$a\in\alphabet\,M$, $\delta_N(\overline{P},a)=\overline{\Delta_M(P,a)}$.
+
+Suppose $M$ is the NFA
+\begin{center}
+\input{chap-3.11-fig6.eepic}
+\end{center}
+Let's work out what the DFA $N$ is.
+\begin{itemize}
+\item To begin with, $\{\Asf\}\in X$, so that $\langle\Asf\rangle\in
+  Q_N$.  And $\langle\Asf\rangle$ is the start state of $N$.  It is
+  not an accepting state, since $\Asf\not\in A_M$.
+
+\item Since $\{\Asf\}\in X$, and $\Delta(\{\Asf\},\zerosf)=\emptyset$,
+  we add $\emptyset$ to $X$, $\langle\rangle$ to $Q_N$ and
+  $\langle\Asf\rangle,\zerosf\fun\langle\rangle$ to $T_N$.
+
+  Since $\{\Asf\}\in X$, and $\Delta(\{\Asf\},\onesf)=\{\Asf,\Bsf\}$,
+  we add $\{\Asf,\Bsf\}$ to $X$, $\langle\Asf,\Bsf\rangle$ to $Q_N$
+  and $\langle\Asf\rangle,\onesf\fun\langle\Asf,\Bsf\rangle$ to $T_N$.
+
+\item Since $\emptyset\in X$, $\Delta(\emptyset,\zerosf)=\emptyset$
+  and $\emptyset\in X$, we don't have to add anything to $X$ or $Q_N$,
+  but we add $\langle\rangle,\zerosf\fun\langle\rangle$ to $T_N$.
+
+  Since $\emptyset\in X$, $\Delta(\emptyset,\onesf)=\emptyset$ and
+  $\emptyset\in X$, we don't have to add anything to $X$ or $Q_N$, but
+  we add $\langle\rangle,\onesf\fun\langle\rangle$ to $T_N$.
+
+\item Since $\{\Asf,\Bsf\}\in X$,
+  $\Delta(\{\Asf,\Bsf\},\zerosf)=\emptyset$ and $\emptyset\in X$, we
+  don't have to add anything to $X$ or $Q_N$, but we add
+  $\langle\Asf,\Bsf\rangle,\zerosf\fun\langle\rangle$ to $T_N$.
+
+  Since $\{\Asf,\Bsf\}\in X$,
+  $\Delta(\{\Asf,\Bsf\},\onesf)=\{\Asf,\Bsf\}\cup\{\Csf\}=
+  \{\Asf,\Bsf,\Csf\}$, we add $\{\Asf,\Bsf,\Csf\}$ to $X$,
+  $\langle\Asf,\Bsf,\Csf\rangle$ to $Q_N$, and
+  $\langle\Asf,\Bsf\rangle,\onesf\fun\langle\Asf,\Bsf,\Csf\rangle$ to
+  $T_N$.  Since $\{\Asf,\Bsf,\Csf\}$ contains (the only) one of $M$'s
+  accepting states, we add $\langle\Asf,\Bsf,\Csf\rangle$ to $A_N$.
+
+\item Since $\{\Asf,\Bsf,\Csf\}\in X$ and
+  $\Delta(\{\Asf,\Bsf,\Csf\},\zerosf)=\emptyset\cup\emptyset\cup\{\Csf\}=
+  \{\Csf\}$, we add $\{\Csf\}$ to $X$, $\langle\Csf\rangle$ to $Q_N$
+  and $\langle\Asf,\Bsf,\Csf\rangle,\zerosf\fun\langle\Csf\rangle$ to
+  $T_N$.  Since $\{\Csf\}$ contains one of $M$'s accepting states, we
+  add $\langle\Csf\rangle$ to $A_N$.
+
+  Since $\{\Asf,\Bsf,\Csf\}\in X$,
+  $\Delta(\{\Asf,\Bsf,\Csf\},\onesf)=\{\Asf,\Bsf\}\cup\{\Csf\}\cup\emptyset=
+  \{\Asf,\Bsf,\Csf\}$ and $\{\Asf,\Bsf,\Csf\}\in X$, we don't have to
+  add anything to $X$ or $Q_N$, but we add
+  $\langle\Asf,\Bsf,\Csf\rangle,\onesf\fun\langle\Asf,\Bsf,\Csf\rangle$
+  to $T_N$.
+
+\item Since $\{\Csf\}\in X$, $\Delta(\{\Csf\},\zerosf)=\{\Csf\}$ and
+  $\{\Csf\}\in X$, we don't have to add anything to $X$ or $Q_N$, but
+  we add $\langle\Csf\rangle,\zerosf\fun\langle\Csf\rangle$ to $T_N$.
+
+  Since $\{\Csf\}\in X$, $\Delta(\{\Csf\},\onesf)=\emptyset$ and
+  $\emptyset\in X$, we don't have to add anything to $X$ or $Q_N$, but
+  we add $\langle\Csf\rangle,\onesf\fun\langle\rangle$ to $T_N$.
+\end{itemize}
+Since there are no more elements to add to $X$, we are done.
+Thus, the DFA $N$ is
+\begin{center}
+\input{chap-3.11-fig7.eepic}
+\end{center}
+
+The following two lemmas show why our conversion process is correct.
+
+\begin{lemma}
+\label{NFAToDFAConvLemma}
+For all $w\in(\alphabet\,M)^*$:
+\begin{itemize}
+\item $\Delta_M(\{s_M\},w)\in X$; and
+\item $\delta_N(s_N,w)=\overline{\Delta_M(\{s_M\},w)}$.
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+By left string induction.
+\begin{description}
+\item[\quad(Basis Step)] We have that $\Delta_M(\{s_M\},\%) = \{s_M\}\in X$
+and $\delta_N(s_N,\%)= {s_N}= {\overline{\{s_M\}}}=
+{\overline{\Delta_M(\{s_M\},\%)}}$.
+
+\item[\quad(Inductive Step)] Suppose $a\in\alphabet\,M$ and
+  $w\in(\alphabet\,M)^*$.  Assume the inductive hypothesis:
+  $\Delta_M(\{s_M\},w)\in X$ and
+  $\delta_N(s_N,w)=\overline{\Delta_M(\{s_M\},w)}$.  Since
+  $\Delta_M(\{s_M\},w)\in X$ and $a\in\alphabet\,M$, we have that
+  $\Delta_M(\{s_M\},wa) = \Delta_M(\Delta_M(\{s_M\},w),a)\in X$.  Thus
+  \begin{alignat*}{2}
+    \delta_N(s_N,wa) &= \delta_N(\delta_N(s_N,w),a) \\
+    &= \delta_N(\overline{\Delta_M(\{s_M\},w)},a) &&
+    \by{ind.\ hyp.} \\
+    &= \overline{\Delta_M(\Delta_M(\{s_M\},w),a)} \\
+    &= \overline{\Delta_M(\{s_M\},wa)} .
+  \end{alignat*}
+\end{description}
+\end{proof}
+
+\begin{lemma}
+$L(N)=L(M)$.
+\end{lemma}
+
+\begin{proof}
+\begin{description}
+\item[\quad($L(M)\sub L(N)$)] Suppose $w\in L(M)$, so that
+  $w\in(\alphabet\,M)^*=(\alphabet\,N)^*$ and $\Delta_M(\{s_M\},w)\cap
+  A_M\neq\emptyset$.  By Lemma~\ref{NFAToDFAConvLemma}, we have that
+  $\Delta_M(\{s_M\},w)\in X$ and
+  $\delta_N(s_N,w)=\overline{\Delta_M(\{s_M\},w)}$.  Since
+  $\Delta_M(\{s_M\},w)\in X$ and $\Delta_M(\{s_M\},w)\cap
+  A_M\neq\emptyset$, it follows that
+  $\delta_N(s_N,w)=\overline{\Delta_M(\{s_M\},w)} \in A_N$.  Thus
+  $w\in L(N)$.
+
+\item[\quad($L(N)\sub L(M)$)] Suppose $w\in L(N)$, so that
+  $w\in(\alphabet\,N)^*=(\alphabet\,M)^*$ and $\delta_N(s_N,w)\in
+  A_N$.  By Lemma~\ref{NFAToDFAConvLemma}, we have that
+  $\delta_N(s_N,w)= \overline{\Delta_M(\{s_M\},w)}$.  Thus
+  $\overline{\Delta_M(\{s_M\},w)}\in A_N$, so that
+  $\Delta_M(\{s_M\},w)\cap A_M\neq\emptyset$.  Thus $w\in L(M)$.
+\end{description}
+\end{proof}
+
+We define a function $\nfaToDFA\in\NFA\fun\DFA$ by: $\nfaToDFA\,M$ is
+the result of running the preceding algorithm with input $M$.
+
+\begin{theorem}
+\label{NFAToDFATheorem}
+For all $M\in\NFA$:
+\begin{itemize}
+\item $\nfaToDFA\,M\approx M$; and
+
+\item $\alphabet(\nfaToDFA\,M)=\alphabet\,M$.
+\end{itemize}
+\end{theorem}
+
+\subsection{Processing DFAs in Forlan}
+
+The Forlan module \texttt{DFA} defines an abstract type \texttt{dfa}
+(in the top-level environment) of deterministic finite automata,
+along with various functions for processing DFAs.
+Values of type \texttt{dfa} are implemented as values of type \texttt{fa}, and
+the module DFA provides the following injection and projection functions
+\begin{verbatim}
+val injToFA     : dfa -> fa
+val injToEFA    : dfa -> efa
+val injToNFA    : dfa -> nfa
+val projFromFA  : fa -> dfa
+val projFromEFA : efa -> dfa
+val projFromNFA : nfa -> dfa
+\end{verbatim}
+These functions are available in the top-level environment with the
+names \texttt{injDFAToFA}, \texttt{injDFAToEFA}, \texttt{injDFAToNFA},
+\texttt{projFAToDFA}, \texttt{projEFAToDFA} and \texttt{projNFAToDFA}.
+
+The module \texttt{DFA} also defines the functions:
+\begin{verbatim}
+val input            : string -> dfa
+val determProcStr    : dfa -> sym * str -> sym
+val determAccepted   : dfa -> str -> bool
+val determSimplified : dfa -> bool
+val determSimplify   : dfa * sym set -> dfa
+val fromNFA          : nfa -> dfa
+\end{verbatim}
+The function \texttt{input} is used to input a DFA.  The function
+\texttt{determProcStr} is used to compute $\delta_M(q,w)$ for a DFA
+$M$, using the properties of $\delta_M$.  The function
+\texttt{determAccepted} uses \texttt{determProcStr} to check whether a
+string is accepted by a DFA.  The function \texttt{determSimplified}
+tests whether a DFA is deterministically simplified, and
+the function \texttt{determSimplify}
+corresponds to $\determSimplify$.  The function \texttt{fromNFA}
+corresponds to our conversion function $\nfaToDFA$, and is available
+in the top-level environment with that name:
+\begin{verbatim}
+val nfaToDFA : nfa -> dfa
+\end{verbatim}
+
+Most of the functions for processing FAs that were introduced
+in previous sections are inherited by \texttt{DFA}:
+\begin{verbatim}
+val output                  : string * dfa -> unit 
+val numStates               : dfa -> int
+val numTransitions          : dfa -> int
+val alphabet                : dfa -> sym set
+val equal                   : dfa * dfa -> bool
+val checkLP                 : dfa -> lp -> unit
+val validLP                 : dfa -> lp -> bool
+val isomorphism             : dfa * dfa * sym_rel -> bool
+val findIsomorphism         : dfa * dfa -> sym_rel
+val isomorphic              : dfa * dfa -> bool
+val renameStates            : dfa * sym_rel -> dfa
+val renameStatesCanonically : dfa -> dfa
+val processStr              : dfa -> sym set * str -> sym set
+val accepted                : dfa -> str -> bool
+val findLP                  : dfa -> sym set * str * sym set -> lp
+val findAcceptingLP         : dfa -> str -> lp
+\end{verbatim}
+
+Suppose \texttt{dfa} is the DFA
+\begin{center}
+\input{chap-3.11-fig2.eepic}
+\end{center}
+We can turn \texttt{dfa} into an equivalent deterministically simplified
+DFA whose alphabet is the union of the alphabet of the language
+of \texttt{dfa} and $\{\twosf\}$, i.e., whose alphabet is
+$\{\zerosf,\onesf,\twosf\}$, as follows:
+\input{chap-3.11-forlan1}
+Thus \texttt{dfa'} is
+\begin{center}
+\input{chap-3.11-fig8.eepic}
+\end{center}
+
+Suppose that \texttt{nfa} is the NFA
+\begin{center}
+\input{chap-3.11-fig6.eepic}
+\end{center}
+We can convert \texttt{nfa} to a DFA as follows:
+\input{chap-3.11-forlan3}
+Thus \texttt{dfa} is
+\begin{center}
+\input{chap-3.11-fig7.eepic}
+\end{center}
+And we can see why \texttt{nfa} and \texttt{dfa} accept
+$\mathsf{111100}$, as follows:
+\input{chap-3.11-forlan4}
+
+Finally, we see an example in which an NFA with $4$ states
+is converted to a DFA with $16$ states; there is a state of the
+DFA corresponding to every element of the power set of
+the set of states of the NFA.  Suppose \texttt{nfa'} is
+the NFA
+\begin{center}
+\input{chap-3.11-fig9.eepic}
+\end{center}
+Then we can convert \texttt{nfa'} into a DFA, as follows:
+\input{chap-3.11-forlan6}
+In Section~\ref{EquivalenceTestingAndMinimizationOfDFAs},
+we will use Forlan to show that there is no
+DFA with fewer than $16$ states that accepts the language accepted
+\index{deterministic finite automaton!exponential blowup}%
+by \texttt{nfa'} and \texttt{dfa'}.
+
+\subsection{Notes}
+
+In contrast to the standard approach, the transition function $\delta$
+for a DFA $M$ is not part of the definition of $M$, but is derived from
+the definition.  Our approach to proving the correctness of DFAs,
+using induction on $\Lambda$ plus proof by contradiction, is novel,
+simple and elegant.  The material on deterministic simplification is
+original, but straightforward.  And the algorithm for converting NFAs
+to DFAs is standard.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

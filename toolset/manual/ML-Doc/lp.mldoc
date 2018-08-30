@@ -1,0 +1,370 @@
+<!-- lp.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The LP Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/LP/ Module</HEAD>
+
+<PP>This module defines the abstract type of labeled paths.</PP>
+
+<STRUCTURE STRID="LP">
+<OPAQUE>
+<SIGBODY SIGID="LP" FILE=LP>
+
+<SPEC>
+<DATATYPE><ID>concr</ID>
+<CONS>Sym<TY>Sym.sym</TY></CONS>
+<CONS>Cons<TY>Sym.sym * Str.str * concr</TY></CONS>
+</DATATYPE>
+<COMMENT>
+<PP>The concrete datatype of labeled paths.  If <CD><ARG/q/</CD> is a
+symbol, then <CD>Sym <ARG/q/</CD> is the labeled path with no
+transitions, and whose start and end states are <CD><ARG/q/</CD>.  And
+if <CD><ARG/q/</CD> is a symbol, <CD><ARG/x/</CD> is a string,
+and <CD><ARG/lp/</CD> is a labeled path, then
+<CD>Cons(<ARG/q/, <ARG/x/, <ARG/lp/)</CD> is
+the labeled path whose start state is <CD><ARG/q/</CD>, whose first
+transition is from <CD><ARG/q/</CD> to the start state
+of <CD><ARG/lp/</CD>, labeled by <CD><ARG/x/</CD>, and whose remaining
+transitions and end state are as in <CD><ARG/lp/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<TYPE><ID>lp</ID></TYPE>
+<COMMENT>
+<PP>The abstract type of labeled paths, consisting of the values
+of type <CD>concr</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromConcr<TY>concr -> lp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromConcr <ARG/concr/
+</PROTOTY>
+<PP>returns <CD><ARG/concr/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toConcr<TY>lp -> concr</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toConcr <ARG/lp/
+</PROTOTY>
+<PP>returns <CD><ARG/lp/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> lp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs a labled path from <CD><ARG/s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> lp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs a labeled path from the file named by <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>lp -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toPP <ARG/lp/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/lp/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>lp -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/lp/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/lp/</CD> to a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>string * lp -> unit
+<COMMENT>
+<PROTOTY>
+output(<ARG/fil/, <ARG/lp/)
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/lp/</CD> to the file named by <CD><ARG/fil/</CD>.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>lp Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compare
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  fun compare(Sym a1,            Sym a2)            = Sym.compare(a1, a2)
+    | compare(Sym _,             _)                 = LESS
+    | compare(_,                 Sym _)             = GREATER
+    | compare(Cons(a1, x1, lp1), Cons(a2, x2, lp2)) =
+        case Sym.compare(a1, a2) of
+             LESS    => LESS
+           | EQUAL   =>
+               (case Str.compare(x1, x2) of
+                     LESS    => LESS
+                   | EQUAL   => compare(lp1, lp2)
+                   | GREATER => GREATER)
+           | GREATER => GREATER
+</CODE>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>lp * lp -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal(<ARG/lp1/, <ARG/lp2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/lp1/</CD> and <CD><ARG/lp2/</CD> are equal.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>sym<TY>Sym.sym -> lp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+sym <ARG/q/
+</PROTOTY>
+<PP>returns <CD>Sym <ARG/q/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>cons<TY>Sym.sym * Str.str * lp -> lp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+cons(<ARG/q/, <ARG/x/, <ARG/lp/)
+</PROTOTY>
+<PP>returns <CD>Cons(<ARG/q/, <ARG/x/, <ARG/lp/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>startState<TY>lp -> Sym.sym</TY></VAL>
+<COMMENT>
+<PROTOTY>
+startState <ARG/lp/
+</PROTOTY>
+<PP>returns the start state of <CD><ARG/lp/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>endState<TY>lp -> Sym.sym</TY></VAL>
+<COMMENT>
+<PROTOTY>
+endState <ARG/lp/
+</PROTOTY>
+<PP>returns the end state of <CD><ARG/lp/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>label<TY>lp -> Str.str</TY></VAL>
+<COMMENT>
+<PROTOTY>
+label <ARG/lp/
+</PROTOTY>
+<PP>returns the label of <CD><ARG/lp/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>length<TY>lp -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+length <ARG/lp/
+</PROTOTY>
+<PP>returns the length of <CD><ARG/lp/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>join<TY>lp * lp -> lp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+join(<ARG/lp1/, <ARG/lp2/)
+</PROTOTY>
+<PP>returns the join of <CD><ARG/lp1/</CD> and <CD><ARG/lp2/</CD>.
+Issues an error message if the end state of <CD><ARG/lp1/</CD> is
+not equal to the start state of <CD><ARG/lp2/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>splitAt<TY>lp * int -> lp * lp</VAL>
+<COMMENT>
+<PROTOTY>
+splitAt(<ARG/lp/, <ARG/n/)
+</PROTOTY>
+<PP>returns the pair <CD>(<ARG/lp1/, <ARG/lp2/)</CD> such that
+the length of <CD><ARG/lp1/</CD> is <CD><ARG/n/</CD> and <CD><ARG/lp/</CD>
+is the join of <CD><ARG/lp1/</CD> and <CD><ARG/lp2/</CD>.
+Issues an error message if <CD><ARG/n/</CD> is negative or is
+is greater than the length of <CD><ARG/lp/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<TYPE><ID>pumping_division</ID><TY>lp * lp * lp</TY></TYPE>
+<COMMENT>
+<PP>The following functions on pumping divisions can be used to
+experiment with the pumping lemma for regular languages.</PP>
+
+<PP>A pumping division
+<CD>(<ARG/lp1/, <ARG/lp2/, <ARG/lp3/)</CD> is <EM>valid</EM> iff:
+<ITEMIZE>
+<ITEM>the end state of <CD><ARG/lp1/</CD> is equal to the start state
+of <CD><ARG/lp2/</CD>;</ITEM>
+
+<ITEM>the start state and end states of <CD><ARG/lp2/</CD> are
+equal;</ITEM>
+
+<ITEM>the end state of <CD><ARG/lp2/</CD> is equal to the start state
+of <CD><ARG/lp3/</CD>;</ITEM>
+
+<ITEM>the label of <CD><ARG/lp2/</CD> is nonempty.</ITEM>
+</ITEMIZE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>checkPumpingDivision<TY>pumping_division -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+checkPumpingDivision <ARG/pd/
+</PROTOTY>
+<PP>checks whether <CD><ARG/pd/</CD> is valid, silently returning <CD>()</CD>,
+if it is, and issuing an error message explaining why it's not, if it's not.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>validPumpingDivision<TY>pumping_division -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+validPumpingDivision <ARG/pd/
+</PROTOTY>
+<PP>tests whether <CD><ARG/pd/</CD> is valid.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>strsOfValidPumpingDivision
+<TY>pumping_division -> Str.str * Str.str * Str.str</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+strsOfValidPumpingDivision <ARG/pd/
+</PROTOTY>
+<PP>returns the triple consisting of the labels of the three components
+of <CD><ARG/pd/</CD>, in order.  Issues an error message if <CD><ARG/pd/</CD>
+is not a valid pumping division.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>pumpValidPumpingDivision<TY>pumping_division * int -> lp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+pumpValidPumpingDivision(<ARG/pd/, <ARG/n/)
+</PROTOTY>
+<PP>returns the labeled path consisting of the join of <CD>#1 <ARG/pd/</CD>,
+<CD><ARG/lp/</CD> and <CD>#3 <ARG/pd/</CD>, where
+<CD><ARG/lp/</CD> is the result of joining <CD>#2 <ARG/pd/</CD> with
+itself <CD><ARG/n/</CD> times. (Joining a labeled
+path <CD><ARG/lp/</CD> with itself <CD>0</CD> times results
+in <CD>Sym(startState <ARG/lp/)</CD>.  Joining <CD><ARG/lp/</CD> with
+itself <CD>1</CD> time results in <CD><ARG/lp/</CD>.) Issues an
+error message if
+<CD><ARG/pd/</CD> isn't valid or <CD><ARG/n/</CD> is negative.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findValidPumpingDivision<TY>lp -> pumping_division</TY></VAL>
+<COMMENT>
+<PROTOTY>
+findValidPumpingDivision <ARG/lp/
+</PROTOTY>
+<PP>tries to find a pumping division <CD>(<ARG/lp1/, <ARG/lp2/, <ARG/lp3/)</CD>
+such that:
+<ITEMIZE>
+<ITEM><CD>(<ARG/lp1/, <ARG/lp2/, <ARG/lp3/)</CD> is valid;</ITEM>
+
+<ITEM><CD>pumpValidPumpingDivision((<ARG/lp1/, <ARG/lp2/, <ARG/lp3/), 1)</CD>
+is <CD><ARG/lp/</CD>; and</ITEM>
+
+<ITEM>there is no repetition of states in the result of joining
+<CD><ARG/lp1/</CD> and <CD>splitAt(<ARG/lp2/, length <ARG/lp2/ - 1)</CD>.
+</ITEM>
+</ITEMIZE>
+Issues an error message if <CD><ARG/lp/</CD> lacks a repetition of
+states, so that such a pumping division doesn't exist.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findValidPumpingDivisionOpt<TY>lp -> pumping_division option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+findValidPumpingDivisionOpt <ARG/lp/
+</PROTOTY>
+<PP>If <CD><ARG/lp/</CD> has a repetition of states, then
+<CD>findValidPumpingDivisionOpt</CD> returns <CD>SOME</CD> of a
+pumping division <CD>(<ARG/lp1/, <ARG/lp2/, <ARG/lp3/)</CD> such that:
+<ITEMIZE>
+<ITEM><CD>(<ARG/lp1/, <ARG/lp2/, <ARG/lp3/)</CD> is valid;</ITEM>
+
+<ITEM><CD>pumpValidPumpingDivision((<ARG/lp1/, <ARG/lp2/, <ARG/lp3/), 1)</CD>
+is <CD><ARG/lp/</CD>; and</ITEM>
+
+<ITEM>there is no repetition of states in the result of joining
+<CD><ARG/lp1/</CD> and <CD>splitAt(<ARG/lp2/, length <ARG/lp2/ - 1)</CD>.
+</ITEM>
+</ITEMIZE>
+Otherwise, <CD>findValidPumpingDivisionOpt</CD> returns <CD>NONE</CD>
+</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

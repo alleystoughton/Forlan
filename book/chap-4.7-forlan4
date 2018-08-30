@@ -1,0 +1,5 @@
+val gram'' = Gram.rev gram';
+Gram.output("", gram'');
+val rel = SymRel.fromString "(0, A), (1, B)";
+val gram''' = Gram.renameAlphabet(gram'', rel);
+Gram.output("", gram''');

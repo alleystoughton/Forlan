@@ -1,0 +1,38 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ nfa\ =\ NFA.input\ "";
+\item[]\textsl{@\ }\symbol{'173}states\symbol{'175}
+\item[]\textsl{@\ }A,\ B,\ C,\ D
+\item[]\textsl{@\ }\symbol{'173}start\ state\symbol{'175}
+\item[]\textsl{@\ }A
+\item[]\textsl{@\ }\symbol{'173}accepting\ states\symbol{'175}
+\item[]\textsl{@\ }A
+\item[]\textsl{@\ }\symbol{'173}transitions\symbol{'175}
+\item[]\textsl{@\ }A,\ 0\ ->\ B;\ B,\ 0\ ->\ C;\ C,\ 1\ ->\ A;\ C,\ 0\ ->\ D
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ nfa\ =\ -\ :\ nfa}
+\item[]\textsl{-\ }val\ nfa'\ =\ NFA.prefix\ nfa;
+\item[]\textsl{val\ nfa'\ =\ -\ :\ nfa}
+\item[]\textsl{-\ }NFA.output("",\ nfa');
+\item[]\textsl{\symbol{'173}states\symbol{'175}\ A,\ B,\ C\ \symbol{'173}start\ state\symbol{'175}\ A\ \symbol{'173}accepting\ states\symbol{'175}\ A,\ B,\ C}
+\item[]\textsl{\symbol{'173}transitions\symbol{'175}\ A,\ 0\ ->\ B;\ B,\ 0\ ->\ C;\ C,\ 1\ ->\ A}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

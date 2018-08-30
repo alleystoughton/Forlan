@@ -1,0 +1,19 @@
+@FILES
+  ["list-aux"; "The ListAux Module";]
+@SIGNATURE LIST_AUX "list-aux" [
+  @VALS 
+    repeat
+    update
+    sum
+    splitAt
+    adjacentElts
+    min
+    position
+    prod
+    max
+    fromTo
+    allButLast
+    allSplittings
+    sub
+]
+@STRUCTURE ListAux "list-aux" LIST_AUX

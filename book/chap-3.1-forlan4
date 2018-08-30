@@ -1,0 +1,9 @@
+Reg.output("", Reg.allSym(SymSet.fromString ""));
+Reg.output("", Reg.allSym(SymSet.fromString "0"));
+Reg.output("", Reg.allSym(SymSet.fromString "0, 1, 2"));
+Reg.output("", Reg.allStr(SymSet.fromString ""));
+Reg.output("", Reg.allStr(SymSet.fromString "0"));
+Reg.output("", Reg.allStr(SymSet.fromString "2, 1, 0"));
+Reg.output
+("",
+ Reg.fromStrSet(StrSet.fromString "one, two, three, four"));

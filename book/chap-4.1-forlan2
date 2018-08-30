@@ -1,0 +1,17 @@
+val pt = PT.input "";
+A(B, A(%), B(0))
+.
+Sym.output("", PT.rootLabel pt);
+Str.output("", PT.yield pt);
+Gram.validPT gram pt;
+val pt' = PT.input "";
+E(E(E(<id>), <times>, E(<id>)), <plus>, E(<id>))
+.
+Sym.output("", PT.rootLabel pt');
+Str.output("", PT.yield pt');
+Gram.validPT gram' pt';
+Gram.checkPT gram pt';
+Gram.checkPT gram' pt;
+PT.input "";
+A(B,%,B)
+.

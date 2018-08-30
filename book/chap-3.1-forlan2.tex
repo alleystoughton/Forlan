@@ -1,0 +1,72 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ reg\ =\ Reg.input\ "";
+\item[]\textsl{@\ }0\symbol{'052}10\symbol{'052}\ +\ %
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ reg\ =\ -\ :\ reg}
+\item[]\textsl{-\ }Reg.size\ reg;
+\item[]\textsl{val\ it\ =\ 9\ :\ int}
+\item[]\textsl{-\ }Reg.numLeaves\ reg;
+\item[]\textsl{val\ it\ =\ 4\ :\ int}
+\item[]\textsl{-\ }val\ reg'\ =\ Reg.fromStr(Str.power(Str.input\ "",\ 3));
+\item[]\textsl{@\ }01
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ reg'\ =\ -\ :\ reg}
+\item[]\textsl{-\ }Reg.output("",\ reg');
+\item[]\textsl{010101}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Reg.size\ reg';
+\item[]\textsl{val\ it\ =\ 11\ :\ int}
+\item[]\textsl{-\ }Reg.numLeaves\ reg';
+\item[]\textsl{val\ it\ =\ 6\ :\ int}
+\item[]\textsl{-\ }Reg.compare(reg,\ reg');
+\item[]\textsl{val\ it\ =\ GREATER\ :\ order}
+\item[]\textsl{-\ }val\ reg''\ =\ Reg.concat(Reg.closure\ reg,\ reg');
+\item[]\textsl{val\ reg''\ =\ -\ :\ reg}
+\item[]\textsl{-\ }Reg.output("",\ reg'');
+\item[]\textsl{(0\symbol{'052}10\symbol{'052}\ +\ %)\symbol{'052}010101}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }SymSet.output("",\ Reg.alphabet\ reg'');
+\item[]\textsl{0,\ 1}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ reg'''\ =\ Reg.power(reg,\ 3);
+\item[]\textsl{val\ reg'''\ =\ -\ :\ reg}
+\item[]\textsl{-\ }Reg.output("",\ reg''');
+\item[]\textsl{(0\symbol{'052}10\symbol{'052}\ +\ %)(0\symbol{'052}10\symbol{'052}\ +\ %)(0\symbol{'052}10\symbol{'052}\ +\ %)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Reg.size\ reg''';
+\item[]\textsl{val\ it\ =\ 29\ :\ int}
+\item[]\textsl{-\ }Reg.numLeaves\ reg''';
+\item[]\textsl{val\ it\ =\ 12\ :\ int}
+\item[]\textsl{-\ }Reg.output("",\ Reg.fromString\ "(0\symbol{'052}(1(0\symbol{'052})))\ +\ %");
+\item[]\textsl{0\symbol{'052}10\symbol{'052}\ +\ %}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Reg.output("",\ Reg.fromString\ "(0\symbol{'052}1)0\symbol{'052}\ +\ %");
+\item[]\textsl{(0\symbol{'052}1)0\symbol{'052}\ +\ %}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Reg.output("",\ Reg.fromString\ "0\symbol{'052}1(0\symbol{'052}\ +\ %)");
+\item[]\textsl{0\symbol{'052}1(0\symbol{'052}\ +\ %)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Reg.equal
+\item[]\textsl{=\ }(Reg.fromString\ "0\symbol{'052}10\symbol{'052}\ +\ %",
+\item[]\textsl{=\ }\ Reg.fromString\ "0\symbol{'052}1(0\symbol{'052}\ +\ %)");
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\end{list}

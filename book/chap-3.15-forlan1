@@ -1,0 +1,22 @@
+val dfa1 = DFA.input "";
+{states}
+A, B
+{start state}
+A
+{accepting states}
+A
+{transitions}
+A, 0 -> B; A, 1 -> A;
+B, 0 -> A; B, 1 -> B
+.
+val dfa2 = DFA.input "";
+{states}
+A, B
+{start state}
+A
+{accepting states}
+B
+{transitions}
+A, 0 -> A; A, 1 -> B;
+B, 0 -> B; B, 1 -> A
+.

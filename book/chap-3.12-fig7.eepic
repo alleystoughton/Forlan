@@ -1,0 +1,38 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(3833,1171)(0,-10)
+\put(3525,1024){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\onesf$}}}
+\put(3525.000,694.000){\arc{510.000}{2.6516}{6.7731}}
+\blacken\path(3241.413,682.939)(3300.000,574.000)(3299.571,697.692)(3241.413,682.939)
+\put(1725,424){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\mathsf{11}$}}}
+\put(1125,1024){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\zerosf$}}}
+\put(2925,499){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\zerosf$}}}
+\put(2925,49){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\zerosf$}}}
+\put(3525,274){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Csf$}}}
+\put(1125.000,694.000){\arc{510.000}{2.6516}{6.7731}}
+\blacken\path(841.413,682.939)(900.000,574.000)(899.571,697.692)(841.413,682.939)
+\put(1125,349){\ellipse{450}{450}}
+\put(2325,349){\ellipse{450}{450}}
+\path(1425,349)(2025,349)
+\blacken\path(1905.000,319.000)(2025.000,349.000)(1905.000,379.000)(1905.000,319.000)
+\blacken\path(2745.000,304.000)(2625.000,274.000)(2745.000,244.000)(2745.000,304.000)
+\path(2625,274)(3225,274)
+\blacken\path(3105.000,394.000)(3225.000,424.000)(3105.000,454.000)(3105.000,394.000)
+\path(3225,424)(2625,424)
+\put(2325,274){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Bsf$}}}
+\put(1125,349){\ellipse{600}{600}}
+\put(2325,349){\ellipse{600}{600}}
+\put(1117,274){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Asf$}}}
+\put(0,274){\makebox(0,0)[lb]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}Start}}}
+\put(3525,349){\ellipse{600}{600}}
+\path(525,349)(825,349)
+\blacken\path(705.000,319.000)(825.000,349.000)(705.000,379.000)(705.000,319.000)
+\end{picture}
+}

@@ -1,0 +1,30 @@
+val pr1 = Prog.input "";
+calc(consSym, int(12))
+.
+Prog.evaluate(pr1, 2);
+val pr2 = Prog.input "";
+calc(consSym,
+     pair(sym(9),
+          pair(const(nil),
+               pair(sym(<hi>), const(nil)))))
+.
+Prog.evaluate(pr2, 2);
+val pr3 = Prog.input "";
+calc(deconsSym, sym(c))
+.
+Prog.evaluate(pr3, 2);
+val pr4 = Prog.input "";
+calc(deconsSym, sym(<on,,to>))
+.
+Prog.evaluate(pr4, 2);
+val pr5 = Prog.input "";
+calc(symListToStr,
+     pair(sym(9),
+          pair(sym(<hi>),
+               const(nil))))
+.
+Prog.evaluate(pr5, 2);
+val pr6 = Prog.input "";
+calc(strToSymList, str(ab<hi><>))
+.
+Prog.evaluate(pr6, 2);

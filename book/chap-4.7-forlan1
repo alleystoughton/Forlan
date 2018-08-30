@@ -1,0 +1,10 @@
+val gram1 = strToGram(Str.fromString "01");
+val gram2 = strToGram(Str.fromString "10");
+val gram3 = strToGram(Str.fromString "11");
+val gram =
+Gram.union(gram1,
+           Gram.concat(gram2,
+                       Gram.closure gram3));
+Gram.output("", gram);
+val gram' = Gram.renameVariablesCanonically gram;
+Gram.output("", gram');

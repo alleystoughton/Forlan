@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<link type="text/css" rel="stylesheet" href="style.css"/>
+<meta name="viewport" content="initial-scale=1"/>
+<title>JForlan - Java Graphical Editor for Forlan Automata and Trees - Version 2.1</title>
+</head>
+
+<body>
+<h1>JForlan &#8212; Java Graphical Editor for Forlan Automata and Trees &#8212; Version 2.1</h1>
+
+<p>
+<img src="JForlan-128x128.png" alt="JForlan's Icon"/>
+</p>
+
+<hr class="after"/>
+
+<h2>Introduction</h2>
+
+<p>JForlan is a Java program for creating and
+editing <a href="..">Forlan</a> automata and trees: finite automata,
+regular expression finite automata, parse trees, regular expression
+trees, and program trees.  JForlan automatically maintains the
+connections between the components of automata and trees, as those
+components are repositioned using the mouse.  And it handles the
+conversion of diagrams from and to Forlan's concrete syntax.  JForlan
+can be invoked directly (as a standalone application) or from
+Forlan.</p>
+
+<h2>What's New?</h2>
+
+<ul>
+<li>Version 2.1 includes the fix to a minor bug relating to regular
+expression tree error checking and the changes needed to make JForlan
+build using Apache Ant.</li>
+
+<li>Version 2.0 includes numerous bug fixes and changes of
+functionality.  Error checking is now always turned on, and if there
+are no errors, the Forlan syntax of the current project's automaton or
+tree is displayed.  Projects now have a committable boolean attribute,
+which is true exactly when the project originated from Forlan.  Only
+committable projects may be committed back to Forlan.</li>
+
+<li>Version 1.1 includes fixes to several regular expression finite
+automata (RFA) editing bugs.</li>
+</ul>
+
+<h2>Installing JForlan</h2>
+
+<p>JForlan requires JRE (Java Runtime Environment) to be installed,
+which can be downloaded for free
+from <a href="http://www.java.com">www.java.com</a>. Version 1.8 or
+later of JRE is required.  Forlan itself must be installed
+separately.</p>
+
+<h3>Installation on Mac OS X</h3>
+
+<p>Download the compressed tarball
+<a href="mac/jforlan.tgz"><kbd>jforlan.tgz</kbd></a>.  Uncompress and
+untar it, letting Archive Utility do it, or running the commands</p>
+
+<pre>
+  gunzip jforlan.tgz
+  tar xf jforlan.tar
+</pre>
+
+<p>Change directory to the resulting directory, <kbd>jforlan</kbd>.
+Move <kbd>JForlan.app</kbd> to <kbd>/Applications</kbd>.
+Move <kbd>jforlan</kbd> to <kbd>/usr/local/bin</kbd>, or some
+other directory that's on the shell's search path.</p>
+
+<p>(If, for some reason, <kbd>forlan</kbd> isn't installed
+in <kbd>/usr/local/bin</kbd>, there's a workaround.  If it doesn't already
+exist, create a subdirectory <kbd>.MacOSX</kbd> of your home directory.
+Use
+/Developer/Applications/Utilities/Property List Editor.app to
+either edit or create the file <kbd>environment.plist</kbd> in
+this directory.  Add a new child of the root node named
+<kbd>FORLAN</kbd>, and make the value of this child be the string
+consisting of the fully qualified pathname of forlan.)
+</p>
+
+<h3>Installation on Linux</h3>
+
+<p>Download the compressed tarball
+<a href="linux/jforlan.tgz"><kbd>jforlan.tgz</kbd></a>.  Uncompress and
+untar it by running the commands</p>
+
+<pre>
+  gunzip jforlan.tgz
+  tar xf jforlan.tar
+</pre>
+
+<p>Change directory to the resulting directory, <kbd>jforlan</kbd>.
+Move <kbd>JForlan.jar</kbd> to some permanent directory
+(e.g., <kbd>/usr/local/bin/.jar</kbd>, which you'll first have to
+create), and edit <kbd>jforlan</kbd> so that the
+variable <kbd>jardir</kbd> is set to the directory
+where <kbd>JForlan.jar</kbd> is located.  Move
+<kbd>jforlan</kbd> to a directory that's on the shell's search path,
+e.g., <kbd>/usr/local/bin</kbd>.  If you are using KDE or GNOME, you may
+want to add JForlan to the application menu, using the
+icon <kbd>JForlan-48x48.png</kbd>.
+</p>
+
+<h3>Installation on Windows</h3>
+
+<p>Download the zip archive
+<a href="windows/jforlan.zip"><kbd>jforlan.zip</kbd></a>.  Unzip this
+archive, and change directory (folder) to the resulting
+directory, <kbd>jforlan</kbd>.  Move <kbd>JForlan.jar</kbd> to some
+permanent directory, and edit <kbd>jforlan.bat</kbd> so that the
+variable <kbd>jardir</kbd> is set to the directory
+where <kbd>JForlan.jar</kbd> is located.  Move
+<kbd>jforlan.bat</kbd> to a directory that's on the shell's search path,
+e.g., to the directory where <kbd>sml.bat</kbd> was installed.  Create a
+shortcut to <kbd>jforlan.bat</kbd>.  Finally, set the shortcut's icon
+to <kbd>JForlan-48x48.ico</kbd>.</p>
+
+<h2>File Formats</h2>
+
+<h3>Automata File Formats</h3>
+
+<p>JForlan supports three file formats for automata:</p>
+
+<dl>
+<dt>JForlan File (*<kbd>.jfa</kbd>)</dt>
+<dd>This is JForlan's internal, binary format, which stores the
+absolute positions of an automaton's states and transitions.</dd>
+
+<dt>Forlan Syntax (*<kbd>.txt</kbd>)</dt>
+<dd>This is a text file, in Forlan's concrete syntax.</dd>
+
+<dt>PNG (*<kbd>.png</kbd>)</dt>
+<dd>Portable Network Graphics is an output format only.</dd>
+</dl>
+
+<h3>Tree File Formats</h3>
+
+<p>JForlan supports three file formats for trees:</p>
+
+<dl>
+<dt>JForlan File (*<kbd>.jft</kbd>)</dt>
+<dd>This is JForlan's internal, binary format, which stores the
+absolute positions of a tree's nodes.</dd>
+
+<dt>Forlan Syntax (*<kbd>.txt</kbd>)</dt>
+<dd>This is a text file, in Forlan's concrete syntax.</dd>
+
+<dt>PNG (*<kbd>.png</kbd>)</dt>
+<dd>Portable Network Graphics is an output format only.</dd>
+</dl>
+
+<h2>Invoking JForlan</h2>
+
+<h3>Direct Invocation</h3>
+
+<p>On Mac OS X, JForlan can be invoked by double-clicking on its icon
+in the Applications directory/folder, or by running <kbd>jforlan</kbd>
+from the shell (with no arguments).  On Linux, JForlan can be invoked
+via the KDE/GNOME menu, or by running <kbd>jforlan</kbd> from
+the shell (with no arguments). On Windows, JForlan can be invoked by
+(double-)clicking on its shortcut, or by running <kbd>jforlan</kbd> from
+the shell (with no arguments).</p>
+
+<h3>Invocation from Forlan</h3>
+
+<h4>Creating New Automata and Trees</h4>
+
+<p>To create a new finite automaton (FA) using JForlan, use the function</p>
+
+<pre>
+  jforlanNew : unit -> fa
+</pre>
+
+<p>of the FA module, e.g., by typing</p>
+
+<pre>
+  val fa = FA.jforlanNew();
+</pre>
+
+<p>Forlan will launch a new instance of JForlan, with a blank drawing
+area. After creating your automaton, you must commit it, in order
+for JForlan to return the automaton to Forlan.</p>
+
+<p>To create a new regular expression finite automaton (RFA) using
+JForlan, use the function</p>
+
+<pre>
+  jforlanNew : unit -> rfa
+</pre>
+
+<p>of the RFA module, e.g., by typing</p>
+
+<pre>
+  val rfa = RFA.jforlanNew();
+</pre>
+
+<p>Forlan will launch a new instance of JForlan, with a blank drawing
+area. After creating your automaton, you must commit it, in order
+for JForlan to return the automaton to Forlan.</p>
+
+<p>To create a new regular expression tree using JForlan, use the
+function</p>
+
+<pre>
+  jforlanNew : unit -> reg
+</pre>
+
+<p>of the Reg module, e.g., by typing</p>
+
+<pre>
+  val reg = Reg.jorlanNew();
+</pre>
+
+<p>Forlan will launch a new instance of JForlan, with a blank drawing
+area. After creating your tree, you must commit it, in order
+for JForlan to return the tree to Forlan.</p>
+
+<p>To create a new parse tree using JForlan, use the function</p>
+
+<pre>
+ jforlanNew : unit -> pt
+</pre>
+
+<p>of the PT module, e.g., by typing</p>
+
+<pre>
+ val pt = PT.jforlanNew();
+</pre>
+
+<p>Forlan will launch a new instance of JForlan, with a blank drawing
+area. After creating your tree, you must commit it, in order
+for JForlan to return the tree to Forlan.</p>
+
+<p>To create a new program tree using JForlan, use the function</p>
+
+<pre>
+ jforlanNew : unit -> prog
+</pre>
+
+<p>of the Prog module, e.g., by typing</p>
+
+<pre>
+ val prog = Prog.jforlanNew();
+</pre>
+
+<p>Forlan will launch a new instance of JForlan, with a blank drawing
+area. After creating your tree, you must commit it, in order
+for JForlan to return the tree to Forlan.</p>
+
+<h4>Editing Existing Automata and Trees</h4>
+
+<p>To edit an existing finite automaton (FA) using JForlan, use the
+function</p>
+
+<pre>
+  jforlanEdit : fa -> fa
+</pre>
+
+<p>of the FA module, e.g., by typing</p>
+
+<pre>
+  val fa' = FA.jforlanEdit fa;
+</pre>
+
+<p>Forlan will launch a new instance of JForlan, which will let you
+edit the supplied automaton, and commit it back to Forlan.</p>
+
+<p>To edit an existing regular expression finite automaton (RFA) using
+JForlan, use the function</p>
+
+<pre>
+  jforlanEdit : rfa -> rfa
+</pre>
+
+<p>of the RFA module, e.g., by typing</p>
+
+<pre>
+  val rfa' = RFA.jforlanEdit rfa;
+</pre>
+
+<p>Forlan will launch a new instance of JForlan, which will let you
+edit the supplied automaton, and commit it back to Forlan.</p>
+
+<p>To edit an existing regular expression tree using JForlan, use the
+function</p>
+
+<pre>
+  jforlanEdit : reg -> reg
+</pre>
+
+<p>of the Reg module, e.g., by typing</p>
+
+<pre>
+  val reg' = Reg.jforlanEdit reg;
+</pre>
+
+<p>Forlan will launch a new instance of JForlan, which will let you
+edit the supplied tree, and commit it back to Forlan.</p>
+
+<p>To edit an existing parse tree using JForlan, use the
+function</p>
+
+<pre>
+  jforlanEdit : pt -> pt
+</pre>
+
+<p>of the PT module, e.g., by typing</p>
+
+<pre>
+  val pt' = PT.jforlanEdit pt;
+</pre>
+
+<p>Forlan will launch a new instance of JForlan, which will let you
+edit the supplied tree, and commit it back to Forlan.</p>
+
+<p>To edit an existing program tree using JForlan, use the
+function</p>
+
+<pre>
+  jforlanEdit : prog -> prog
+</pre>
+
+<p>of the Prog module, e.g., by typing</p>
+
+<pre>
+  val prog' = Prog.jforlanEdit prog;
+</pre>
+
+<p>Forlan will launch a new instance of JForlan, which will let you
+edit the supplied tree, and commit it back to Forlan.</p>
+
+<h2>Using JForlan</h2>
+
+<p>Users can work on multiple automata and trees simultaneously, each
+in its own project tab.</p>
+
+<p>When JForlan is invoked from Forlan, it will have a single
+project that is <em>committable</em>.  Only that project may be
+committed back to Forlan, but other projects may be manipulated,
+as usual.</p>
+
+<p>Automata and trees are automatically checked for errors.  When there
+are no errors, the Forlan syntax of the current project's automaton or
+tree is displayed.</p>
+
+<p>The contents of an automaton or tree project is <em>not</em>
+required to be a valid (having no errors) Forlan automaton/tree except
+when the project's contents is being saved in Forlan's concrete syntax
+or committed back to Forlan.  E.g.:</p>
+
+<ul>
+<li>during the editing process, the labels of the states and transitions
+of automata, and the nodes of trees, are allowed to be arbitrary
+sequences of printable characters (whitespace characters are
+suppressed, though);</li>
+
+<li>a regular expression tree labeled <kbd>+</kbd> need not
+have exactly two children, a program tree labeled <kbd>lam(x)</kbd>
+need not have exactly one child, etc.
+</li>
+</ul>
+
+<h3>JForlan's Menu</h3>
+
+<h4>Menu When Invoked Directly</h4>
+
+<p>When invoked directly, JForlan's menu contains:</p>
+
+<dl>
+<dt>New</dt>
+<dd>Creates a new automaton or tree project.</dd>
+<dt>Open</dt>
+<dd>Opens an existing file, initializing a new project with the
+automaton/tree that's the file's contents.</dd>
+<dt>Save</dt>
+<dd>Saves the contents of an automaton/tree project into a file.  Saving
+in Forlan's concrete syntax will only succeed if the
+project's contents has no errors.
+</dd>
+<dt>Rename</dt>
+<dd>Renames a project.</dd>
+<dt>Close</dt>
+<dd>Closes a project.</dd>
+<dt>Exit</dt>
+<dd>Exits from JForlan.</dd>
+</dl>
+
+<h4>Menu When Invoked from Forlan</h4>
+
+<p>When invoked from Forlan, JForlan's menu is as above,
+with the following additions:</p>
+
+<dl>
+<dt>Commit</dt>
+<dd>Returns the contents of an automaton/tree project back to Forlan.
+This operation will only succeed if the project's contents has no
+errors.</dd>
+<dt>Abort</dt>
+<dd>Returns to Forlan, signaling that the user aborted the
+creation or editing of the automaton/tree.
+</dd>
+</dl>
+
+<p>Close is only enabled when a project is not committable (didn't
+originate from Forlan), whereas Commit is only enabled when a project
+is committable (did originate from Forlan).</p>
+
+<h3>JForlan's Toolbar</h3>
+
+<p>The JForlan toolbar consists of three categories of buttons: the
+<strong>project</strong> buttons, the <strong>automaton</strong>
+buttons and the <strong>tree</strong> buttons.
+</p>
+
+<p>The <strong>project</strong> buttons are:</p>
+
+<p><img src="images/new.png" alt="new button" class="button"/> The
+"new" button creates a new automaton or tree project.</p>
+
+<p><img src="images/open.png" alt="open button" class="button"/> The
+"open" button opens an existing file, initializing a new project with
+the automaton/tree that's the file's contents.</p>
+
+<p><img src="images/save.png" alt="save button" class="button"/> The
+"save" button saves an automaton/tree into a file.  Saving in Forlan's
+concrete syntax will only succeed if the automaton/tree has no
+errors.</p>
+
+<p><img src="images/close.png" alt="close button" class="button"/> The
+"close" button closes a project.  It is only enabled for projects that
+are not committable.</p>
+
+<p><img src="images/commit.png" alt="commit button" class="button"/> The
+"commit" button is present when JForlan is invoked from Forlan, and is
+only enabled for committable projects.  It is used to return (commit)
+the contents of the automaton/tree project back to Forlan, and will
+only succeed if the project's contents has no errors.</p>
+
+<h3>Drawing Automata</h3>
+
+<p>Each transition has a dot somewhere on its arc, and the
+transition's label is displayed near this dot.  A transition is
+either <em>standardized</em> or <em>customized</em>.</p>
+
+<p>Upon creation, transitions are standardized.  A standardized
+transition from one state to another is straight, and its dot is
+positioned at its midpoint.  A standardized transition from a state to
+itself is curved, and its dot is positioned at its midpoint.  When the
+source or target of a standardized transition is moved using the mouse
+(in the case of a transition from a state to itself, both the source and
+target are being moved), the transition remains standardized, and the
+transition's dot (and label) is automatically moved.</p>
+
+<p>When a transition's dot is moved using the mouse, this doesn't move
+the transition's source state or target state, and the transition
+becomes customized.  In can only be returned to being standardized by
+means of a standardization operation.  When the source or target
+state of a customized transition is moved using the mouse, the
+transition's dot (or label) does not move.</p>
+
+<p>There are two <strong>automaton</strong> buttons:</p>
+
+<p><img src="images/statemode.png" alt="state mode button"
+class="button"/> The "state" button puts JForlan in <em>state
+mode</em>. Clicking on an empty spot in the drawing area will create a
+new state. An existing state can be dragged to a new position with the
+mouse.  Right-clicking on a state will bring up a pop-up menu that
+will allow you to change the state's label, remove the state, change
+whether it's accepting or not, and make it the automaton's start
+state.  (On Mac OS X, control-clicking is used instead of
+right-clicking.)  Right-clicking on a transition's dot will allow you
+to edit the label of the transition, reverse or remove the transition,
+make the transition standardized, or in the case of a regular
+expression finite automaton, view the transition's label as a tree in
+a new project.</p>
+
+<p><img src="images/transmode.png" alt="transition mode button"
+class="button"/> The "transition" button puts JForlan
+in <em>transition mode</em>.  You can create new transitions by
+dragging the mouse pointer from the source state to the target state.
+This includes the special case of clicking on a node to create a
+transition from the node to itself.  A transition's label can be
+edited by dragging the mouse pointer from its source state to its
+target state.  A transition's dot can be moved using the mouse, making
+the transition customized, if it wasn't already.  Right-clicking on a
+transition's dot will allow you to edit the label of the transition,
+reverse or remove the transition, make the transition standardized, or
+in the case of a regular expression finite automaton, view the
+transition's label as a tree in a new project.</p>
+
+<h3>Drawing Trees</h3>
+
+<p>The contents of a tree project may be a forest (i.e., may have multiple
+roots), up until the point when it needs to be saved in Forlan syntax
+or committed back to Forlan.  The relative vertical positions of nodes
+are irrelevant.  But the relative horizontal positions of nodes are
+used to determine the order of children (and roots).</p>
+
+<p>Clicking on an empty spot in the drawing area will create a new
+node.  Nodes can be moved using the mouse.</p>
+
+<p>Right-clicking on a node will bring up a pop-up menu that will
+allow you to change the node's label, remove the subtree starting
+with the node, or change the node's parent (clicking anywhere other
+than on a node will make the node a root).</p>
+
+<p>There is only one <strong>tree</strong> button:</p>
+
+<p>
+<img src="images/layout.png" alt="layout button" class="button"/> The
+"layout" button formats a tree in a regular way.</p>
+
+<h2 class="before">Distribution</h2>
+
+<p>JForlan is open source software, released under the GNU General
+Public License.  Its source is included as part of
+the <a href="..">Forlan</a> distribution.</p>
+
+<h2>Contributors</h2>
+
+<p>Leonard Lee and Jessica Sherrill designed and implemented graphical
+editors for Forlan finite automata (JFA), and regular expression and
+parse trees (JTR), respectively.  Their work was unified and enhanced
+(of particular note was the addition of support for program trees) by
+Srinivasa Aditya Uppu, resulting in an initial version of JForlan.
+Subsequently, Kenton Born carried out a major redevelopment of
+JForlan, resulting in JForlan Version 1.0. Further revisions, by
+Alley Stoughton, led to JForlan Versions 2.0 and 2.1.</p>
+
+<hr class="after"/>
+
+<address>
+<a href="../..">Alley Stoughton</a>
+(<a href="mailto:Alley.Stoughton@gmail.com">Alley.Stoughton@gmail.com</a>)
+</address>
+</body>
+</html>

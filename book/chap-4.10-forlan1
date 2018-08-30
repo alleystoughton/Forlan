@@ -1,0 +1,15 @@
+val pt = Gram.parseAlphabet gram (Str.input "");
+1110010010
+.
+PT.output("", pt);
+val pd = PT.findValidPumpingDivision pt; 
+val ((pt1, pat1), (pt2, pat2), pt3) = pd;
+PT.output("", pt1);
+PT.output("", pt2);
+PT.output("", pt3);
+val (u, v, w, x, y) = PT.strsOfValidPumpingDivision pd;
+(Str.toString u, Str.toString v, Str.toString w,
+ Str.toString x, Str.toString y);
+val pt' = PT.pumpValidPumpingDivision(pd, 2);
+PT.output("", pt');
+Str.output("", PT.yield pt');

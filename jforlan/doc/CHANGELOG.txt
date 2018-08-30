@@ -1,0 +1,58 @@
+JForlan Change Log
+
+Version 2.0 (Alley Stoughton, April 2011)
+
+Another major revision, with numerous bug fixes, changes of
+functionality, and code rewriting for clarity.
+
+Error checking is now always done, and the result always displayed;
+if there are no errors, the Forlan syntax of the current
+project's automaton or tree is displayed instead.
+
+Projects now have a committable boolean field, which is true iff
+the project originated from Forlan.  Only committable projects
+may be committed back to Forlan.  But now, when invoked from
+Forlan, projects may be created and opened.
+
+Version 1.1 (Alley Stoughton, March 2011)
+
+Minor bug fixes
+
+Version 1.0 (Kenton Born, December 2009)
+
+- Modified FA/RFA states to expand based on the width of the label
+
+- Rewrote FA/RFA transition drawing to allow for more flexible line placement
+and to allow the transition dot to be moved back and forth across the line.
+
+- Added a label placement algorithm that finds the nearest open
+position to the transition dot based on an archimedean spiral.
+
+- Added real-time error checking to FA/RFA diagrams
+
+- Improved the error checking for FA/RFA and trees.
+
+- Regular expression labels and nodes are now simplified when possible
+
+- Files saved to Forlan syntax are now formatted cleanly and minimally.
+
+- Drawing canvases for finite automata and trees were reworked to share
+a common look and feel.
+
+- Added new layout algorithm to tree diagrams.
+
+- Buttons on the primary window were reformatted and modified. New icon
+pictures were created for several buttons.
+
+- Added "About" Dialog
+
+- Added MAC look and feel when the program is invoked from a MAC
+
+- Added "snap to grid" functionality for all drawing canvases.
+
+- Created new open/create dialogs, and added "automatic naming" process.
+
+- Modified Forlan syntax files to work off of the ".txt" extension
+
+- Modified "save project as image" functionality to account for portions of 
+the diagram outside the visible window.

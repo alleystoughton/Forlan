@@ -1,0 +1,620 @@
+<!-- HTML/gram.html -->
+
+<!-- COPYRIGHT (c) 2012 Alley Stoughton. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The Gram Module</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY><A NAME="top"></A>
+<H1 align=CENTER>Forlan Manual</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>Gram</CODE> Module</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="GRAM:SIG:SPEC"></A><CODE>GRAM</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Gram:STR:SPEC"></A><CODE>Gram</CODE><B> :> </B>GRAM<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+This module defines the abstract type of grammars.
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>type</B>&nbsp;<A NAME="STR:Gram.concr:TY:SPEC" HREF="#STR:Gram.concr:TY">concr</A>&nbsp;=&nbsp;{vars&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set,&nbsp;start&nbsp;<B>:</B>&nbsp;Sym.sym,&nbsp;prods&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set}<BR>
+<B>type</B>&nbsp;<A NAME="STR:Gram.gram:TY:SPEC" HREF="#STR:Gram.gram:TY">gram</A><BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.valid:VAL:SPEC" HREF="#STR:Gram.valid:VAL">valid</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.fromConcr:VAL:SPEC" HREF="#STR:Gram.fromConcr:VAL">fromConcr</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.toConcr:VAL:SPEC" HREF="#STR:Gram.toConcr:VAL">toConcr</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;concr<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.fromString:VAL:SPEC" HREF="#STR:Gram.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.input:VAL:SPEC" HREF="#STR:Gram.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.toPP:VAL:SPEC" HREF="#STR:Gram.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.toString:VAL:SPEC" HREF="#STR:Gram.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.output:VAL:SPEC" HREF="#STR:Gram.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.variables:VAL:SPEC" HREF="#STR:Gram.variables:VAL">variables</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.startVariable:VAL:SPEC" HREF="#STR:Gram.startVariable:VAL">startVariable</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Sym.sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.productions:VAL:SPEC" HREF="#STR:Gram.productions:VAL">productions</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Prod.prod&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.compare:VAL:SPEC" HREF="#STR:Gram.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;Sort.total_ordering<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.equal:VAL:SPEC" HREF="#STR:Gram.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.numVariables:VAL:SPEC" HREF="#STR:Gram.numVariables:VAL">numVariables</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.numProductions:VAL:SPEC" HREF="#STR:Gram.numProductions:VAL">numProductions</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.alphabet:VAL:SPEC" HREF="#STR:Gram.alphabet:VAL">alphabet</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.sub:VAL:SPEC" HREF="#STR:Gram.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.checkPT:VAL:SPEC" HREF="#STR:Gram.checkPT:VAL">checkPT</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;PT.pt&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.validPT:VAL:SPEC" HREF="#STR:Gram.validPT:VAL">validPT</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;PT.pt&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.renameVariables:VAL:SPEC" HREF="#STR:Gram.renameVariables:VAL">renameVariables</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.renameVariablesCanonically:VAL:SPEC" HREF="#STR:Gram.renameVariablesCanonically:VAL">renameVariablesCanonically</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.isomorphism:VAL:SPEC" HREF="#STR:Gram.isomorphism:VAL">isomorphism</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.findIsomorphismOpt:VAL:SPEC" HREF="#STR:Gram.findIsomorphismOpt:VAL">findIsomorphismOpt</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;SymRel.sym_rel&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.findIsomorphism:VAL:SPEC" HREF="#STR:Gram.findIsomorphism:VAL">findIsomorphism</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;SymRel.sym_rel<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.isomorphic:VAL:SPEC" HREF="#STR:Gram.isomorphic:VAL">isomorphic</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.renameAlphabet:VAL:SPEC" HREF="#STR:Gram.renameAlphabet:VAL">renameAlphabet</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.parsable:VAL:SPEC" HREF="#STR:Gram.parsable:VAL">parsable</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.generatedFromVariable:VAL:SPEC" HREF="#STR:Gram.generatedFromVariable:VAL">generatedFromVariable</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.generated:VAL:SPEC" HREF="#STR:Gram.generated:VAL">generated</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.parseOpt:VAL:SPEC" HREF="#STR:Gram.parseOpt:VAL">parseOpt</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;PT.pt&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.parse:VAL:SPEC" HREF="#STR:Gram.parse:VAL">parse</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;PT.pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.parseAlphabetFromVariableOpt:VAL:SPEC" HREF="#STR:Gram.parseAlphabetFromVariableOpt:VAL">parseAlphabetFromVariableOpt</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;PT.pt&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.parseAlphabetFromVariable:VAL:SPEC" HREF="#STR:Gram.parseAlphabetFromVariable:VAL">parseAlphabetFromVariable</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;PT.pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.parseAlphabetOpt:VAL:SPEC" HREF="#STR:Gram.parseAlphabetOpt:VAL">parseAlphabetOpt</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;PT.pt&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.parseAlphabet:VAL:SPEC" HREF="#STR:Gram.parseAlphabet:VAL">parseAlphabet</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;PT.pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.reachableFrom:VAL:SPEC" HREF="#STR:Gram.reachableFrom:VAL">reachableFrom</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.reachableFromBackwards:VAL:SPEC" HREF="#STR:Gram.reachableFromBackwards:VAL">reachableFromBackwards</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.reachify:VAL:SPEC" HREF="#STR:Gram.reachify:VAL">reachify</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.reachified:VAL:SPEC" HREF="#STR:Gram.reachified:VAL">reachified</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.simplify:VAL:SPEC" HREF="#STR:Gram.simplify:VAL">simplify</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.simplified:VAL:SPEC" HREF="#STR:Gram.simplified:VAL">simplified</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.nullableVariables:VAL:SPEC" HREF="#STR:Gram.nullableVariables:VAL">nullableVariables</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.hasNoEmptyProductions:VAL:SPEC" HREF="#STR:Gram.hasNoEmptyProductions:VAL">hasNoEmptyProductions</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.eliminateEmptyProductions:VAL:SPEC" HREF="#STR:Gram.eliminateEmptyProductions:VAL">eliminateEmptyProductions</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.hasNoEmptyOrUnitProductions:VAL:SPEC" HREF="#STR:Gram.hasNoEmptyOrUnitProductions:VAL">hasNoEmptyOrUnitProductions</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.eliminateEmptyAndUnitProductions:VAL:SPEC" HREF="#STR:Gram.eliminateEmptyAndUnitProductions:VAL">eliminateEmptyAndUnitProductions</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.inChomskyNormalForm:VAL:SPEC" HREF="#STR:Gram.inChomskyNormalForm:VAL">inChomskyNormalForm</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.chomskyNormalForm:VAL:SPEC" HREF="#STR:Gram.chomskyNormalForm:VAL">chomskyNormalForm</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.toStrSetOpt:VAL:SPEC" HREF="#STR:Gram.toStrSetOpt:VAL">toStrSetOpt</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.toStrSet:VAL:SPEC" HREF="#STR:Gram.toStrSet:VAL">toStrSet</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.emptyStr:VAL:SPEC" HREF="#STR:Gram.emptyStr:VAL">emptyStr</A>&nbsp;<B>:</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.emptySet:VAL:SPEC" HREF="#STR:Gram.emptySet:VAL">emptySet</A>&nbsp;<B>:</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.fromStr:VAL:SPEC" HREF="#STR:Gram.fromStr:VAL">fromStr</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.fromSym:VAL:SPEC" HREF="#STR:Gram.fromSym:VAL">fromSym</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.fromStrSet:VAL:SPEC" HREF="#STR:Gram.fromStrSet:VAL">fromStrSet</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.union:VAL:SPEC" HREF="#STR:Gram.union:VAL">union</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.concat:VAL:SPEC" HREF="#STR:Gram.concat:VAL">concat</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.closure:VAL:SPEC" HREF="#STR:Gram.closure:VAL">closure</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.genUnion:VAL:SPEC" HREF="#STR:Gram.genUnion:VAL">genUnion</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.genConcat:VAL:SPEC" HREF="#STR:Gram.genConcat:VAL">genConcat</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.fromFA:VAL:SPEC" HREF="#STR:Gram.fromFA:VAL">fromFA</A>&nbsp;<B>:</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.fromReg:VAL:SPEC" HREF="#STR:Gram.fromReg:VAL">fromReg</A>&nbsp;<B>:</B>&nbsp;Reg.reg&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.rev:VAL:SPEC" HREF="#STR:Gram.rev:VAL">rev</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.prefix:VAL:SPEC" HREF="#STR:Gram.prefix:VAL">prefix</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.inter:VAL:SPEC" HREF="#STR:Gram.inter:VAL">inter</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;EFA.efa&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.minus:VAL:SPEC" HREF="#STR:Gram.minus:VAL">minus</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;DFA.dfa&nbsp;<B>-&gt;</B>&nbsp;gram</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="STR:Gram.concr:TY"></A><CODE><B>type</B>&nbsp;concr&nbsp;=&nbsp;{vars&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set,&nbsp;start&nbsp;<B>:</B>&nbsp;Sym.sym,&nbsp;prods&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set}</CODE>
+<DD>
+The concrete type of <EM>pre-grammars</EM>, records consisting of a finite set <CODE>vars</CODE> (&quot;variables&quot;) of symbols, a symbol <CODE>start</CODE> (&quot;start variable&quot;), and a finite set <CODE>prods</CODE> (&quot;productions&quot;) of productions.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.gram:TY"></A><CODE><B>type</B>&nbsp;gram</CODE>
+<DD>
+The abstract type of grammars, consisting of those pre-grammars <CODE><VAR>concr</VAR></CODE> of type <CODE>concr</CODE> such that: 
+<UL>
+<LI>
+<CODE>#start <VAR>concr</VAR></CODE> is an element of <CODE>#vars <VAR>concr</VAR></CODE>; and
+<LI>
+for all elements <CODE>(<VAR>q</VAR>, <VAR>bs</VAR>)</CODE> of <CODE>#prods
+<VAR>concr</VAR></CODE>, <CODE><VAR>q</VAR></CODE> is an element of <CODE>#vars <VAR>concr</VAR></CODE>.
+</UL>
+ We say that <CODE><VAR>concr</VAR></CODE> is <EM>valid</EM> iff <CODE><VAR>concr</VAR></CODE> satisfies the above conditions.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.valid:VAL"></A>
+<DT> <CODE>valid <VAR>concr</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>conr</VAR></CODE> is valid.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.fromConcr:VAL"></A>
+<DT> <CODE>fromConcr <VAR>concr</VAR></CODE>
+<DD>
+returns <CODE><VAR>concr</VAR></CODE>.  Issues an error message if <CODE><VAR>concr</VAR></CODE> is not valid.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.toConcr:VAL"></A>
+<DT> <CODE>toConcr <VAR>gram</VAR></CODE>
+<DD>
+returns <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.fromString:VAL"></A>
+<DT> <CODE>fromString <VAR>s</VAR></CODE>
+<DD>
+inputs a grammar from <CODE><VAR>s</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.input:VAL"></A>
+<DT> <CODE>input <VAR>fil</VAR></CODE>
+<DD>
+inputs a grammar from the file named <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.toPP:VAL"></A>
+<DT> <CODE>toPP <VAR>gram</VAR></CODE>
+<DD>
+returns a pretty-printing expression for <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.toString:VAL"></A>
+<DT> <CODE>toString <VAR>gram</VAR></CODE>
+<DD>
+pretty-prints <CODE><VAR>gram</VAR></CODE> to a string.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.output:VAL"></A>
+<DT> <CODE>output(<VAR>fil</VAR>, <VAR>gram</VAR>)</CODE>
+<DD>
+pretty-prints <CODE><VAR>gram</VAR></CODE> to the file <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.variables:VAL"></A>
+<DT> <CODE>variables <VAR>gram</VAR></CODE>
+<DD>
+returns the variables of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.startVariable:VAL"></A>
+<DT> <CODE>startVariable <VAR>gram</VAR></CODE>
+<DD>
+returns the start variable of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.productions:VAL"></A>
+<DT> <CODE>productions <VAR>gram</VAR></CODE>
+<DD>
+returns the productions of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.compare:VAL"></A>
+<DT> <CODE>compare(<VAR>gram1</VAR>, <VAR>gram2</VAR>)</CODE>
+<DD>
+returns 
+<PRE>
+  case SymSet.compare(variables <VAR>gram1</VAR>, variables <VAR>gram2</VAR>) of
+       LESS    =&gt; LESS
+     | EQUAL   =&gt;
+         (case Sym.compare(startVariable <VAR>gram1</VAR>, startVariable <VAR>gram2</VAR>) of
+               LESS    =&gt; LESS
+             | EQUAL   =&gt;
+                 ProdSet.compare(productions <VAR>gram1</VAR>, productions <VAR>gram2</VAR>)
+             | GREATER =&gt; GREATER)
+     | GREATER =&gt; GREATER
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.equal:VAL"></A>
+<DT> <CODE>equal(<VAR>gram1</VAR>, <VAR>gram2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>gram1</VAR></CODE> and <CODE><VAR>gram2</VAR></CODE> are equal.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.numVariables:VAL"></A>
+<DT> <CODE>numVariables <VAR>gram</VAR></CODE>
+<DD>
+returns the number of variables of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.numProductions:VAL"></A>
+<DT> <CODE>numProductions <VAR>gram</VAR></CODE>
+<DD>
+returns the number of productions of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.alphabet:VAL"></A>
+<DT> <CODE>alphabet <VAR>gram</VAR></CODE>
+<DD>
+returns the alphabet of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.sub:VAL"></A>
+<DT> <CODE>sub(<VAR>gram1</VAR>, <VAR>gram2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>gram1</VAR></CODE> is a sub-grammar of <CODE><VAR>gram2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.checkPT:VAL"></A>
+<DT> <CODE>checkPT <VAR>gram</VAR> <VAR>pt</VAR></CODE>
+<DD>
+checks whether <CODE><VAR>pt</VAR></CODE> is valid for <CODE><VAR>gram</VAR></CODE>, silently returning <CODE>()</CODE>, if it is, and explaining why it isn't, if it's not.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.validPT:VAL"></A>
+<DT> <CODE>validPT <VAR>gram</VAR> <VAR>pt</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>pt</VAR></CODE> is valid for <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.renameVariables:VAL"></A>
+<DT> <CODE>renameVariables(<VAR>gram</VAR>, <VAR>rel</VAR>)</CODE>
+<DD>
+renames the variables of <CODE><VAR>gram</VAR></CODE> using the bijection <CODE><VAR>rel</VAR></CODE>.  Issues an error message if <CODE><VAR>rel</VAR></CODE> isn't a bijection from the variables of <CODE><VAR>gram</VAR></CODE> to a set that's disjoint from the alphabet of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.renameVariablesCanonically:VAL"></A>
+<DT> <CODE>renameVariablesCanonically <VAR>gram</VAR></CODE>
+<DD>
+canonically renames the variables of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.isomorphism:VAL"></A>
+<DT> <CODE>isomorphism(<VAR>gram1</VAR>, <VAR>gram2</VAR>, <VAR>rel</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>rel</VAR></CODE> is an isomorphism from <CODE><VAR>gram1</VAR></CODE> to <CODE><VAR>gram2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.findIsomorphismOpt:VAL"></A>
+<DT> <CODE>findIsomorphismOpt(<VAR>gram1</VAR>, <VAR>gram2</VAR>)</CODE>
+<DD>
+returns <CODE>SOME</CODE> of an isomorhism from <CODE><VAR>gram1</VAR></CODE> to <CODE><VAR>gram2</VAR></CODE>, if <CODE><VAR>gram1</VAR></CODE> and <CODE><VAR>gram2</VAR></CODE> are isomorphic, and <CODE>NONE</CODE>, if <CODE><VAR>gram1</VAR></CODE> and <CODE><VAR>gram2</VAR></CODE> are not isomorphic.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.findIsomorphism:VAL"></A>
+<DT> <CODE>findIsomorphism(<VAR>gram1</VAR>, <VAR>gram2</VAR>)</CODE>
+<DD>
+tries to find an isomorphism from <CODE><VAR>gram1</VAR></CODE> to <CODE><VAR>gram2</VAR></CODE>.  Issues an error message if such an isomorphism doesn't exist.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.isomorphic:VAL"></A>
+<DT> <CODE>isomorphic(<VAR>gram1</VAR>, <VAR>gram2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>gram1</VAR></CODE> and <CODE><VAR>gram2</VAR></CODE> are isomorphic.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.renameAlphabet:VAL"></A>
+<DT> <CODE>renameAlphabet(<VAR>gram</VAR>, <VAR>rel</VAR>)</CODE>
+<DD>
+renames the alphabet of <CODE><VAR>gram</VAR></CODE> using the bijection <CODE><VAR>rel</VAR></CODE>.  Issues an error message if <CODE><VAR>rel</VAR></CODE> is not a bijection from a superset of the alphabet of <CODE><VAR>gram</VAR></CODE> to some set.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.parsable:VAL"></A>
+<DT> <CODE>parsableFrom <VAR>gram</VAR> (<VAR>a</VAR>, <VAR>w</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>w</VAR></CODE> is parsable from <CODE><VAR>a</VAR></CODE> using <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.generatedFromVariable:VAL"></A>
+<DT> <CODE>generatedFromVariable <VAR>gram</VAR> (<VAR>q</VAR>, <VAR>w</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>w</VAR></CODE> is generated from the variable <CODE><VAR>q</VAR></CODE> using <CODE><VAR>gram</VAR></CODE>.  Issues an error message if <CODE><VAR>q</VAR></CODE> is not a variable of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.generated:VAL"></A>
+<DT> <CODE>generated <VAR>gram</VAR> <VAR>w</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>w</VAR></CODE> is generated by <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.parseOpt:VAL"></A>
+<DT> <CODE>parseOpt <VAR>gram</VAR> (<VAR>a</VAR>, <VAR>w</VAR>)</CODE>
+<DD>
+If <CODE><VAR>w</VAR></CODE> is a string over the union of the variables of <CODE><VAR>gram</VAR></CODE> and the alphabet of <CODE><VAR>gram</VAR></CODE>, and <CODE><VAR>a</VAR></CODE> is a variable of <CODE><VAR>gram</VAR></CODE> or a symbol of <CODE><VAR>w</VAR></CODE>, then <CODE>parseOpt</CODE> returns <CODE>SOME</CODE> of a minimal parse of <CODE><VAR>w</VAR></CODE> from <CODE><VAR>a</VAR></CODE> using <CODE><VAR>gram</VAR></CODE>, if such a parse exists, and <CODE>NONE</CODE>, if such a parse does not exist.  Issues an error message if <CODE><VAR>w</VAR></CODE> has a symbol that is neither a variable of <CODE><VAR>gram</VAR></CODE> nor an element of the alphabet of <CODE><VAR>gram</VAR></CODE>, or if <CODE><VAR>a</VAR></CODE> is neither a variable of <CODE><VAR>gram</VAR></CODE> nor a symbol of <CODE><VAR>w</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.parse:VAL"></A>
+<DT> <CODE>parse <VAR>gram</VAR> (<VAR>a</VAR>, <VAR>w</VAR>)</CODE>
+<DD>
+If <CODE><VAR>w</VAR></CODE> is a string over the union of the variables of <CODE><VAR>gram</VAR></CODE> and the alphabet of <CODE><VAR>gram</VAR></CODE>, and <CODE><VAR>a</VAR></CODE> is a variable of <CODE><VAR>gram</VAR></CODE> or a symbol of <CODE><VAR>w</VAR></CODE>, then <CODE>parse</CODE> tries to find a minimal parse of <CODE><VAR>w</VAR></CODE> from <CODE><VAR>a</VAR></CODE> using <CODE><VAR>gram</VAR></CODE>. Issues an error message if <CODE><VAR>w</VAR></CODE> has a symbol that is neither a variable of <CODE><VAR>gram</VAR></CODE> nor an element of the alphabet of <CODE><VAR>gram</VAR></CODE>, or if <CODE><VAR>a</VAR></CODE> is neither a variable of <CODE><VAR>gram</VAR></CODE> nor a symbol of <CODE><VAR>w</VAR></CODE>, or if such a parse doesn't exist.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.parseAlphabetFromVariableOpt:VAL"></A>
+<DT> <CODE>parseAlphabetFromVariableOpt <VAR>gram</VAR> (<VAR>q</VAR>, <VAR>w</VAR>)</CODE>
+<DD>
+If <CODE><VAR>q</VAR></CODE> is a variable of <CODE><VAR>gram</VAR></CODE> and <CODE><VAR>w</VAR></CODE> is a string over the alphabet of <CODE><VAR>gram</VAR></CODE>, then <CODE>parseAlphabetFromVariableOpt</CODE> returns <CODE>SOME</CODE> of a minimal parse of <CODE><VAR>w</VAR></CODE> from <CODE><VAR>q</VAR></CODE> using <CODE><VAR>gram</VAR></CODE>, if such a parse exists, and <CODE>NONE</CODE>, if such a parse does not exist.  Issues an error message if <CODE><VAR>q</VAR></CODE> is not a variable of <CODE><VAR>gram</VAR></CODE>, or <CODE><VAR>w</VAR></CODE> contains a symbol that isn't in the alphabet of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.parseAlphabetFromVariable:VAL"></A>
+<DT> <CODE>parseAlphabetFromVariable <VAR>gram</VAR> (<VAR>q</VAR>, <VAR>w</VAR>)</CODE>
+<DD>
+If <CODE><VAR>q</VAR></CODE> is a variable of <CODE><VAR>gram</VAR></CODE> and <CODE><VAR>w</VAR></CODE> is a string over the alphabet of <CODE><VAR>gram</VAR></CODE>, then <CODE>parseAlphabetFromVariable</CODE> tries to find a minimal parse of <CODE><VAR>w</VAR></CODE> from <CODE><VAR>q</VAR></CODE> using <CODE><VAR>gram</VAR></CODE>. Issues an error message if <CODE><VAR>q</VAR></CODE> is not a variable of <CODE><VAR>gram</VAR></CODE>, or <CODE><VAR>w</VAR></CODE> contains a symbol that isn't in the alphabet of <CODE><VAR>gram</VAR></CODE>, or such a parse doesn't exist.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.parseAlphabetOpt:VAL"></A>
+<DT> <CODE>parseAlphabetOpt <VAR>gram</VAR> <VAR>w</VAR></CODE>
+<DD>
+If <CODE><VAR>w</VAR></CODE> is a string over the alphabet of <CODE><VAR>gram</VAR></CODE>, then <CODE>parseAlphabetOpt</CODE> returns <CODE>SOME</CODE> of a minimal parse of <CODE><VAR>w</VAR></CODE> from the start variable of <CODE><VAR>gram</VAR></CODE> using <CODE><VAR>gram</VAR></CODE>, if such a parse exists, and <CODE>NONE</CODE>, if such a parse does not exist.  Issues an error message if <CODE><VAR>w</VAR></CODE> contains a symbol that isn't in the alphabet of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.parseAlphabet:VAL"></A>
+<DT> <CODE>parseAlphabet <VAR>gram</VAR> <VAR>w</VAR></CODE>
+<DD>
+If <CODE><VAR>w</VAR></CODE> is a string over the alphabet of <CODE><VAR>gram</VAR></CODE>, then <CODE>parseAlphabet</CODE> tries to find a minimal parse of <CODE><VAR>w</VAR></CODE> from the start variable of <CODE><VAR>gram</VAR></CODE> using <CODE><VAR>gram</VAR></CODE>.  Issues an error message if <CODE><VAR>w</VAR></CODE> contains a symbol that isn't in the alphabet of <CODE><VAR>gram</VAR></CODE>, or such a parse doesn't exist.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.reachableFrom:VAL"></A>
+<DT> <CODE>reachableFrom <VAR>gram</VAR> <VAR>qs</VAR></CODE>
+<DD>
+returns the set of variables of <CODE><VAR>gram</VAR></CODE> that are reachable from the variables <CODE><VAR>qs</VAR></CODE>. Issues an error message if <CODE><VAR>qs</VAR></CODE> contains a symbol that isn't a variable of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.reachableFromBackwards:VAL"></A>
+<DT> <CODE>reachableFromBackwards <VAR>gram</VAR> <VAR>qs</VAR></CODE>
+<DD>
+returns the set of variables of <CODE><VAR>gram</VAR></CODE> that are backwards-reachable from the variables <CODE><VAR>qs</VAR></CODE>. Issues an error message if <CODE><VAR>qs</VAR></CODE> contains a symbol that isn't a variable of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.reachify:VAL"></A>
+<DT> <CODE>reachify <VAR>gram</VAR></CODE>
+<DD>
+reachifies <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.reachified:VAL"></A>
+<DT> <CODE>reachified <VAR>gram</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>gram</VAR></CODE> is reachified.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.simplify:VAL"></A>
+<DT> <CODE>simplify <VAR>gram</VAR></CODE>
+<DD>
+simplifies <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.simplified:VAL"></A>
+<DT> <CODE>simplified <VAR>gram</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>gram</VAR></CODE> is simplified.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.nullableVariables:VAL"></A>
+<DT> <CODE>nullableVariables <VAR>gram</VAR></CODE>
+<DD>
+returns the set of nullable variables of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.hasNoEmptyProductions:VAL"></A>
+<DT> <CODE>hasNoEmptyProductions <VAR>gram</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>gram</VAR></CODE> has no empty productions.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.eliminateEmptyProductions:VAL"></A>
+<DT> <CODE>eliminateEmptyProductions <VAR>gram</VAR></CODE>
+<DD>
+convert <CODE><VAR>gram</VAR></CODE> to a grammar with no empty productions. (The new grammar will be equivalent to <CODE><VAR>gram</VAR></CODE>, except that it won't generate <CODE>%</CODE>, even if <CODE><VAR>gram</VAR></CODE> does.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.hasNoEmptyOrUnitProductions:VAL"></A>
+<DT> <CODE>hasNoEmptyOrUnitProductions <VAR>gram</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>gram</VAR></CODE> has no empty or unit productions.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.eliminateEmptyAndUnitProductions:VAL"></A>
+<DT> <CODE>eliminateEmptyAndUnitProductions <VAR>gr</VAR></CODE>
+<DD>
+convert <CODE><VAR>gram</VAR></CODE> to a grammar with no empty or unit productions.  (The new grammar will be equivalent to <CODE><VAR>gram</VAR></CODE>, except that it won't generate <CODE>%</CODE>, even if <CODE><VAR>gram</VAR></CODE> does.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.inChomskyNormalForm:VAL"></A>
+<DT> <CODE>inChomskyNormalForm <VAR>gram</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>gram</VAR></CODE> is in Chomsky Normal Form.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.chomskyNormalForm:VAL"></A>
+<DT> <CODE>chomskyNormalForm <VAR>gram</VAR></CODE>
+<DD>
+puts <CODE><VAR>gram</VAR></CODE> into Chomsky Normal Form. (The new grammar will be equivalent to <CODE><VAR>gram</VAR></CODE>, except that it won't generate <CODE>%</CODE>, even if <CODE><VAR>gram</VAR></CODE> does.)
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.toStrSetOpt:VAL"></A>
+<DT> <CODE>toStrSetOpt <VAR>gram</VAR></CODE>
+<DD>
+returns <CODE>SOME</CODE> of the language denoted by <CODE><VAR>gram</VAR></CODE>, if this language is finite, and <CODE>NONE</CODE>, if this language is infinite.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.toStrSet:VAL"></A>
+<DT> <CODE>toStrSet <VAR>gram</VAR></CODE>
+<DD>
+returns the language denoted by <CODE><VAR>gram</VAR></CODE>. Issues an error message if the language denoted by <CODE><VAR>gram</VAR></CODE> is infinite.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.emptyStr:VAL"></A>
+<DT> <CODE>emptyStr</CODE>
+<DD>
+is the canonical empty string grammar.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.emptySet:VAL"></A>
+<DT> <CODE>emptySet</CODE>
+<DD>
+is the canonical empty set grammar.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.fromStr:VAL"></A>
+<DT> <CODE>fromStr <VAR>x</VAR></CODE>
+<DD>
+returns the canonical grammar for <CODE><VAR>x</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.fromSym:VAL"></A>
+<DT> <CODE>fromSym <VAR>a</VAR></CODE>
+<DD>
+returns the canonical grammar for <CODE><VAR>a</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.fromStrSet:VAL"></A>
+<DT> <CODE>fromStrSet <VAR>xs</VAR></CODE>
+<DD>
+returns the canonical grammar for <CODE><VAR>xs</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.union:VAL"></A>
+<DT> <CODE>union(<VAR>gram1</VAR>, <VAR>gram2</VAR>)</CODE>
+<DD>
+returns the union of <CODE><VAR>gram1</VAR></CODE> and <CODE><VAR>gram2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.concat:VAL"></A>
+<DT> <CODE>concat(<VAR>gram1</VAR>, <VAR>gram2</VAR>)</CODE>
+<DD>
+returns the concatentation of <CODE><VAR>gram1</VAR></CODE> and <CODE><VAR>gram2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.closure:VAL"></A>
+<DT> <CODE>closure <VAR>gram</VAR></CODE>
+<DD>
+returns the closure of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.genUnion:VAL"></A>
+<DT> <CODE>genUnion</CODE>
+<DD>
+is defined by: 
+<PRE>
+  fun genUnion nil             = emptySet
+    | genUnion [gram]          = gram
+    | genUnion (gram :: grams) = union(gram, genUnion grams)
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.genConcat:VAL"></A>
+<DT> <CODE>genConcat</CODE>
+<DD>
+is defined by: 
+<PRE>
+  fun genConcat nil             = emptyStr
+    | genConcat [gram]          = gram
+    | genConcat (gram :: grams) = concat(gram, genConcat grams)
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.fromFA:VAL"></A>
+<DT> <CODE>fromFA <VAR>fa</VAR></CODE>
+<DD>
+converts <CODE><VAR>fa</VAR></CODE> to a grammar.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.fromReg:VAL"></A>
+<DT> <CODE>fromReg <VAR>reg</VAR></CODE>
+<DD>
+converts <CODE><VAR>reg</VAR></CODE> to a grammar.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.rev:VAL"></A>
+<DT> <CODE>rev <VAR>gram</VAR></CODE>
+<DD>
+returns the reversal of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.prefix:VAL"></A>
+<DT> <CODE>prefix <VAR>gram</VAR></CODE>
+<DD>
+returns the prefix-closure of <CODE><VAR>gram</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.inter:VAL"></A>
+<DT> <CODE>inter(<VAR>gram</VAR>, <VAR>efa</VAR>)</CODE>
+<DD>
+returns the intersection of <CODE><VAR>gram</VAR></CODE> and <CODE><VAR>efa</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.minus:VAL"></A>
+<DT> <CODE>minus(<VAR>gram</VAR>, <VAR>dfa</VAR>)</CODE>
+<DD>
+returns the difference of <CODE><VAR>gram</VAR></CODE> and <CODE><VAR>dfa</VAR></CODE>.
+<BR>
+<BR>
+
+</DL>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="gram-subsect.html">Parent</A>
+   | <A HREF="index.html">Root</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Forlan Version 4.7</I><BR>
+<I>Copyright &copy; 2018 Alley Stoughton</I><BR>
+
+<HR>
+</BODY></HTML>

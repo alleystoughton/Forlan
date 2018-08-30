@@ -1,0 +1,172 @@
+          Forlan Assistance for Parsing and Pretty Printing
+
+The following Forlan functions can be used by JForlan to assist with
+parsing/validation and pretty printing.
+
+They mean that JForlan doesn't have to know about:
+
+  the syntax of Forlan symbols and strings, expect that they are
+  sequences of printable ASCII characters;
+
+  precedence and associativity rules for regular expressions.
+
+Below are the functions and their specifications.  But first a few
+examples of how they can be used.
+
+------------------------------------------------------------------------------
+
+- Reg.jforlanValidate "<first>++<second>";
+error
+line 1 : "+" unexpected
+val it = () : unit
+- 
+
+- Reg.jforlanValidate "(01)2*(3(4(56))+78)*";
+valid
+@(@(0,1),@(*(2),*(+(@(3,@(4,@(5,6))),@(7,8)))))
+val it = () : unit
+-
+
+(the preceding examples mean that JForlan only has to parse this
+prefix form of regular expressions, and gets to assume validity when
+doing so)
+
+- Reg.jforlanPretty "((((01)(23))*)+(3+(4*)))";
+((01)23)* + 3 + 4*
+val it = () : unit
+- 
+
+(the preceding example means that when JForlan needs to build a
+regular expression, it may do so in a fully parenthesized way, and
+then use Forlan to pretty print it in fully abbreviated way)
+
+- FA.jforlanValidate "{states} A, B {start state} {accepting}";
+error
+line 1 : "{accepting}" unexpected
+val it = () : unit
+- 
+
+- FA.jforlanValidate "{states} A, B\n{start state} A\n{accepting states} B\n{transitions} A, 0 -> A; A, 1 -> B; B, 2 -> A";
+valid
+{states}A,B{startstate}A{acceptingstates}B{transitions}A,0->A;A,1->B;B,2->A
+val it = () : unit
+- 
+
+(note that there is no whitespace in the output, so even "{accepting states}"
+gets turned into "{acceptingstates}")
+
+------------------------------------------------------------------------------
+
+Sym.jforlanValidate : string -> unit
+
+(* if called with a string that isn't legal Forlan syntax for a
+   symbol, prints "error" on a line, followed by one or more lines of
+   parsing errors
+
+   if called with a string that is legal Forlan syntax for a symbol,
+   prints "valid" on a line, followed by a single line consisting of
+   the symbol, with no whitespace *)
+
+Sym.jforlanPretty : string -> unit
+
+(* when called with a symbol in Forlan syntax, pretty prints on the
+   standard output that symbol *)
+
+Str.jforlanValidate : string -> unit
+
+(* if called with a string that isn't legal Forlan syntax for a
+   string, prints "error" on a line, followed by one or more lines of
+   parsing errors
+
+   if called with a string that is legal Forlan syntax for a string,
+   prints "valid" on a line, followed by a single line consisting of
+   the string, with no whitespace *)
+
+Str.jforlanPretty : string -> unit
+
+(* when called with a string in Forlan syntax, pretty prints on the
+   standard output that Forlan string *)
+
+FA.jforlanValidate : string -> unit
+
+(* if called with a string that isn't legal Forlan syntax for an FA,
+   prints "error" on a line, followed by one or more lines of parsing
+   errors
+
+   if called with a string that is legal Forlan syntax for an FA,
+   prints "valid" on a line, followed by a single line consisting of
+   the FA in fully abbreviated form, but with no whitespace *)
+
+FA.jforlanPretty : string -> unit
+
+(* when called with an FA in Forlan syntax, pretty prints on the
+   standard output that FA in fully abbreviated form *)
+
+RFA.jforlanValidate : string -> unit
+
+(* if called with a string that isn't legal Forlan syntax for an RFA,
+   prints "error" on a line, followed by one or more lines of parsing
+   errors
+
+   if called with a string that is legal Forlan syntax for an RFA,
+   prints "valid" on a line, followed by a single line consisting of
+   the RFA in fully abbreviated form, but with no whitespace *)
+
+RFA.jforlanPretty : string -> unit
+
+(* when called with an RFA in Forlan syntax, pretty prints on the
+   standard output that RFA in fully abbreviated form *)
+
+PT.jforlanValidate : string -> unit
+
+(* if called with a string that isn't legal Forlan syntax for a parse
+   tree, prints "error" on a line, followed by one or more lines
+   of parsing errors
+
+   if called with a string that is legal Forlan syntax for a parse
+   tree, prints "valid" on a line, followed by a single line
+   consisting of the parse tree, with no whitespace *)
+
+PT.jforlanPretty : string -> unit
+
+(* when called with a parse tree in Forlan syntax, pretty
+   prints on the standard output that parse tree *)
+
+Reg.jforlanValidate : string -> unit
+
+(* if called with a string that isn't legal Forlan syntax for a regular
+   expression, prints "error" on a line, followed by one or more lines
+   of parsing errors
+
+   if called with a string that is legal Forlan syntax for a regular
+   expression, prints "valid" on a line, followed by a single line
+   consisting of the translation of the regular expression into the
+   following fully parenthesized syntax, with no whitespace:
+
+       %             empty string
+       $             empty set
+       sym           symbol
+       *(reg)        closure
+       @(reg,reg)    concatenation
+       +(reg,reg)    union *)
+
+Reg.jforlanPretty : string -> unit
+
+(* when called with a regular expression in Forlan syntax, pretty
+   prints on the standard output the result of fully abbreviating that
+   regular expression *)
+
+Prog.jforlanValidate : string -> unit
+
+(* if called with a string that isn't legal Forlan syntax for a
+   program tree, prints "error" on a line, followed by one or more
+   lines of parsing errors
+
+   if called with a string that is legal Forlan syntax for a program
+   tree, prints "valid" on a line, followed by a single line
+   consisting of the program tree, with no whitespace *)
+
+Prog.jforlanPretty : string -> unit
+
+(* when called with a program tree in Forlan syntax, pretty
+   prints on the standard output that program tree *)

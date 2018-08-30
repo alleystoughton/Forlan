@@ -1,0 +1,7 @@
+fun generated reg =
+      let val fa = FA.renameStatesCanonically(regToFA reg)
+      in FA.accepted fa end;
+val generated = generated reg;
+generated(Str.fromString "000011");
+generated(Str.fromString "001111");
+generated(Str.fromString "000111");

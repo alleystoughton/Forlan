@@ -1,0 +1,288 @@
+\section{Simplification of Finite Automata}
+\label{SimplificationOfFiniteAutomata}
+
+\index{simplification!finite automaton|(}%
+\index{finite automaton!simplification|(}%
+In this section, we: say what it means for a finite automaton to be
+simplified; study an algorithm for simplifying finite automata; and
+see how finite automata can be simplified in Forlan.
+
+Suppose $M$ is the finite automaton
+\begin{center}
+\input{chap-3.7-fig1.eepic}
+\end{center}
+$M$ is odd for two distinct reasons.  First, there are no valid
+labeled paths from the start state to $\Dsf$ and $\Esf$, and so these
+states are redundant.  Second, there are no valid labeled paths from
+$\Csf$ to an accepting state, and so it is also redundant.  We will
+say that $\Csf$ is not ``live'' ($\Csf$ is ``dead''), and that $\Dsf$
+and $\Esf$ are not ``reachable''.
+
+Suppose $M$ is a finite automaton.  We say that a state $q\in Q_M$ is:
+\begin{itemize}
+\item \emph{reachable in} $M$ iff there is a labeled path $\lp$ such that
+\index{reachable state}%
+\index{finite automaton!reachable state}%
+$\lp$ is valid for $M$, the start state of $\lp$ is $s_M$, and
+the end state of $\lp$ is $q$;
+
+\item \emph{live in} $M$ iff there is a labeled path $\lp$ such that
+\index{live state}%
+\index{finite automaton!live state}%
+$\lp$ is valid for $M$, the start state of $\lp$ is $q$, and
+the end state of $\lp$ is in $A_M$;
+
+\item \emph{dead in} $M$ iff $q$ is not live in $M$; and
+\index{dead state}%
+\index{finite automaton!dead state}%
+
+\item \emph{useful in} $M$ iff $q$ is both reachable and live in $M$.
+\index{useful state}%
+\index{finite automaton!useful state}%
+\end{itemize}
+
+Let $M$ be our example finite automaton.
+The reachable states of $M$ are: $\Asf$, $\Bsf$ and $\Csf$.
+The live states of $M$ are: $\Asf$, $\Bsf$, $\Dsf$ and $\Esf$.
+And, the useful states of $M$ are: $\Asf$ and $\Bsf$.
+
+There is a simple algorithm for generating the set of reachable states
+of a finite automaton $M$.  We generate the least subset $X$ of $Q_M$
+such that:
+\begin{itemize}
+\item $s_M\in X$; and
+
+\item for all $q,r\in Q_M$ and $x\in\Str$, if $q\in X$ and
+$(q,x,r)\in T_M$, then $r\in X$.
+\end{itemize}
+The start state of $M$ is added to $X$, since $s_M$ is always
+reachable, by the zero-length labeled path $s_M$.  Then, if $q$ is
+reachable, and $(q,x,r)$ is a transition of $M$, then $r$ is clearly
+reachable.  Thus all of the elements of $X$ are indeed reachable.
+And, it's not hard to show that every reachable state will be added to
+$X$.
+
+Similarly, there is a simple algorithm for generating the
+set of live states of a finite automaton $M$.  We generate the least
+subset $Y$ of $Q_M$ such that:
+\begin{itemize}
+\item $A_M\sub Y$; and
+
+\item for all $q,r\in Q_M$ and $x\in\Str$, if $r\in Y$ and
+$(q,x,r)\in T_M$, then $q\in Y$.
+\end{itemize}
+This time it's the accepting states of $M$ that initially added
+to our set, since each accepting state is trivially live.
+Then, if $r$ is live, and $(q,x,r)$ is a transition
+of $M$, then $q$ is clearly live.
+
+Thus, we can generate the set of useful states of an FA by generating
+the set of reachable states, generating the set of live states, and
+intersecting those sets of states.
+
+Now, suppose $N$ is the FA
+\begin{center}
+  \input{chap-3.7-fig5.eepic}
+\end{center}
+Here, the transitions $(\Asf,\zerosf,\Bsf)$ and $(\Asf,\onesf,\Bsf)$
+are redundant, in the sense that if $N'$ is the result of removing these
+transitions from $N$, we still have that $\Bsf\in\Delta_{N'}(\{\Asf\},\zerosf)$
+and $\Bsf\in\Delta_{N'}(\{\Asf\},\onesf)$.
+
+Given an FA $M$ and a finite subset $U$ of $\setof{(q,x,r)}{q,r\in
+  Q_M\eqtxt{and} x\in\Str}$, we write $M/U$ for the FA that is
+identical to $M$ except that its set of transitions is $U$.  If $M$ is
+an FA and $(p,x,q)\in T_M$, we say that:
+\begin{itemize}
+\item $(p,x,q)$ \emph{is redundant in} $M$ iff
+  $q\in\Delta_{N}(\{p\},x)$, where $N=M/(T_M-\{(p,x,q)\})$; and
+
+\item $(p,x,q)$ \emph{is irredundant in} $M$ iff $(p,x,q)$ is not
+  redundant in $M$.
+\end{itemize}
+
+We say that a finite automaton $M$ is \emph{simplified} iff either
+\index{finite automaton!simplified}%
+\index{simplified!finite automaton}%
+\index{simplification!finite automaton!simplified}%
+\begin{itemize}
+\item every state of $M$ is useful, and every transition of $M$
+  is irredundant; or
+
+\item $|Q_M|=1$ and $A_M = T_M = \emptyset$.
+\end{itemize}
+Thus the FA
+\begin{center}
+\input{chap-3.7-fig2.eepic}
+\end{center}
+is simplified, even though its start state is not live, and is
+thus not useful.
+
+\begin{proposition}
+\label{AlphabetSimplifiedFA}
+If $M$ is a simplified finite automaton, then
+$\alphabet\,M=\alphabet(L(M))$.
+\end{proposition}
+
+We always have that $\alphabet(L(M))\sub\alphabet\,M$.  But, when $M$
+is simplified, we also have that $\alphabet\,M\sub\alphabet(L(M))$,
+i.e., that every symbol appearing in a string of one of $M$'s
+transitions also appears in one of the strings accepted by $M$.
+
+To give our simplification algorithm for finite automta, we need an
+auxiliary function for removing redundant transitions from an FA.
+Given an FA $M$, $p,q\in Q_M$ and $x\in\Str$, we say that $(p,x,q)$
+\emph{is implicit in} $M$ iff $q\in\Delta_M(\{p\},x)$.
+
+Given an FA $M$, we define a function
+$\remRedun_M\in\powset\,T_M\times\powset\,T_M\fun\powset\,T_M$ (we
+often drop the $M$ when it's clear from the context) by well-founded
+recursion on the size of its second argument.  For $U,V\sub T_M$,
+$\remRedun(U, V)$ proceeds as follows:
+\begin{itemize}
+\item If $V=\emptyset$, then it returns $U$.
+
+\item Otherwise, let $v$ be the greatest element of $V$, and $V' = V -
+  \{v\}$.  If $v$ is implicit in $M/(U\cup V')$, then $\remRedun$
+  returns the result of evaluating $\remRedun(U, V')$.  Otherwise, it
+  returns the result of evaluating $\remRedun(U \cup \{v\}, V')$.
+\end{itemize}
+
+In general, there are multiple---incompatible---ways of removing
+redundant transitions from an FA.  $\remRedun$ is defined so as to
+favor removing transitions that are larger in our total ordering on
+transitions.
+
+\begin{proposition}
+\label{RemRedunFA}
+Suppose $M$ is a finite automaton.  For all $U,V\sub T_M$, if all the
+elements of $U$ are irredundant in $M/(U\cup V)$, and, for all $p,q\in Q_M$
+and $x\in\Str$, $(p,x,q)$ is implicit in $M$ iff $(p,x,q)$ is implicit
+in $M/(U\cup V)$, then all the elements of $\remRedun(U,V)$ are
+irredundant in $M/\remRedun(U,V)$, and, for all $p,q\in Q_M$ and
+$x\in\Str$, $(p,x,q)$ is implicit in $M$ iff $(p,x,q)$ is implicit in
+$M/\remRedun(U,V)$.
+\end{proposition}
+
+\begin{proof}
+By well-founded induction on the size of the second argument to
+$\remRedun$.
+\end{proof}
+
+Now we can give an algorithm for simplifying finite automata.
+\index{simplification!finite automaton!algorithm}%
+\index{finite automaton!simplification algorithm}%
+We define a function $\simplify\in\FA\fun\FA$ by: $\simplify\,M$ is
+\index{simplify@$\simplify$}%
+\index{finite automaton!simplify@$\simplify$}%
+\index{simplification!finite automaton!simplify@$\simplify$}%
+the finite automaton $N$ produced by the following process.
+\begin{itemize}
+\item First, the useful states are $M$ are determined.
+
+\item If $s_M$ is not useful in $M$, the $N$ is defined by:
+\begin{itemize}
+\item $Q_N=\{s_M\}$;
+
+\item $s_N = s_M$;
+
+\item $A_N=\emptyset$; and
+
+\item $T_N=\emptyset$.
+\end{itemize}
+
+\item And, if $s_M$ is useful in $M$, then $N$ is defined by:
+\begin{itemize}
+\item $Q_N=\setof{q\in Q_M}{q\eqtxtl{is useful in $M$}}$;
+
+\item $s_N = s_M$;
+
+\item $A_N=A_M\cap Q_N=\setof{q\in A_M}{q\in Q_N}$; and
+
+\item $T_N=\remRedun(\emptyset, \setof{(q, x, r)\in T_M}{q,r\in Q_N})$.
+\end{itemize}
+\end{itemize}
+
+\begin{proposition}
+Suppose $M$ is a finite automaton.
+Then:
+\begin{enumerate}[\quad(1)]
+\item $\simplify\,M$ is simplified;
+
+\item $\simplify\,M\approx M$; and
+
+\item $\alphabet(\simplify\,M) = \alphabet(L(M)) \sub\alphabet\,M$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Follows easily using Propositions~\ref{AlphabetSimplifiedFA} and
+\ref{RemRedunFA}.
+\end{proof}
+
+If $M$ is the finite automaton
+\begin{center}
+\input{chap-3.7-fig1.eepic}
+\end{center}
+then $\simplify\,M$ is the finite automaton
+\begin{center}
+\input{chap-3.7-fig4.eepic}
+\end{center}
+And if $N$ is the finite automaton
+\begin{center}
+\input{chap-3.7-fig5.eepic}
+\end{center}
+then $\simplify\,N$ is the finite automaton
+\begin{center}
+\input{chap-3.7-fig7.eepic}
+\end{center}
+
+The Forlan module \texttt{FA}
+\index{FA@\texttt{FA}}%
+includes the following functions relating to the simplification of
+finite automata:
+\begin{verbatim}
+val simplify   : fa -> fa
+val simplified : fa -> bool
+\end{verbatim}
+\index{FA@\texttt{FA}!simplified@\texttt{simplified}}%
+\index{FA@\texttt{FA}!simplify@\texttt{simplify}}%
+The function \texttt{simplify} corresponds to $\simplify$, and
+\texttt{simplified} tests whether an FA is simplified.
+
+In the following, suppose \texttt{fa1} is the finite automaton
+\begin{center}
+\input{chap-3.7-fig1.eepic}
+\end{center}
+\texttt{fa2} is the finite automaton
+\begin{center}
+\input{chap-3.7-fig5.eepic}
+\end{center}
+and \texttt{fa3} is the finita automaton
+\begin{center}
+\input{chap-3.7-fig6.eepic}
+\end{center}
+Here are some example uses of \texttt{simplify} and \texttt{simplified}:
+\input{chap-3.7-forlan2}
+Thus the simplification of \texttt{fa3} resulted in the removal of
+the $\%$-transitions between $\Bsf$ and $\Csf$.
+
+\begin{exercise}
+In the simplification of \texttt{fa3}, if transitions had been
+considered for removal due to being redundant in other orders,
+what FAs could have resulted.
+\end{exercise}
+
+\index{simplification!finite automaton|)}%
+\index{finite automaton!simplification|)}%
+
+\subsection{Notes}
+
+The removal of useless states is analogous to the standard approach to
+ridding grammars of useless variables.  The idea of removing redundant
+transitions, though, seems to be novel.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

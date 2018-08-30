@@ -1,0 +1,3 @@
+Gram.generated gram (Str.fromString "0010");
+Gram.generated gram (Str.fromString "0100");
+Gram.generated gram (Str.fromString "0101");

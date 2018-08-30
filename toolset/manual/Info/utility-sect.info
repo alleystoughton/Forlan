@@ -1,0 +1,12 @@
+@FILES
+  ["utility-sect"; "Utilities";
+    @SECTION "Utilities" [
+       @FILE "version"
+       @FILE "params"
+       @FILE "pp"
+       @FILE "messages"
+       @FILE "use"
+       @FILE "debug"
+       @FILE "system"
+    ]
+  ]

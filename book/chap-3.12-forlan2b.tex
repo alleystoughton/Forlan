@@ -1,0 +1,33 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }RFA.standard\ rfa;
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\item[]\textsl{-\ }val\ rfa'\ =\ RFA.standardize\ rfa;
+\item[]\textsl{val\ rfa'\ =\ -\ :\ rfa}
+\item[]\textsl{-\ }RFA.output("",\ rfa');
+\item[]\textsl{\symbol{'173}states\symbol{'175}\ A,\ B,\ <A>,\ <B>\ \symbol{'173}start\ state\symbol{'175}\ A\ \symbol{'173}accepting\ states\symbol{'175}\ B}
+\item[]\textsl{\symbol{'173}transitions\symbol{'175}}
+\item[]\textsl{A,\ %\ ->\ <A>;\ <A>,\ 0\ ->\ <A>;\ <A>,\ 1\ +\ 2\ ->\ <B>;\ <B>,\ %\ ->\ B;}
+\item[]\textsl{<B>,\ 3(%\ +\ 4)\ ->\ <B>}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }RFA.standard\ rfa';
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\end{list}

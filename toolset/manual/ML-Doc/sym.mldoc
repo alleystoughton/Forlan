@@ -1,0 +1,267 @@
+<!-- sym.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Sym Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Sym/ Module</HEAD>
+
+<PP>This module provides the abstract type of Forlan
+symbols.  (This abstract type is actually defined by the lexical
+analysis module, <STRREF/Lex/, but most Forlan users will never have
+to directly use <STRREF/Lex/.)</PP>
+
+<STRUCTURE STRID="Sym">
+<OPAQUE>
+<SIGBODY SIGID="SYM" FILE=SYM>
+
+<SPEC>
+<TYPE><ID>basic</ID><TY>Lex.basic</TY></TYPE>
+<COMMENT>
+<PP>The abstract type consisting of the subset of characters that
+are digits, lowercase letters or uppercase letters.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>charToBasic<TY>char -> basic</TY></VAL>
+<COMMENT
+<PROTOTY>
+charToBasic <ARG/c/
+</PROTOTY>
+<PP>If <CD><ARG/c/</CD> is a digit, lowercase letter or uppercase letter,
+then <CD>charToBasic</CD> returns <CD><ARG/c/</CD>.
+Otherwise, issues an error message.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>basicToChar<TY>basic -> char</TY></VAL>
+<COMMENT
+<PROTOTY>
+basicToChar <ARG/c/
+</PROTOTY>
+<PP>returns <CD><ARG/c/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<TYPE><ID>sym<TY>Lex.sym
+<COMMENT>
+<PP>The abstract type of Forlan symbols, consisting of the least set
+of lists of digits, lowercase and uppercase letters, commas (<CD>,</CD>)
+and angle brackets (<CD>&LT;</CD> and <CD>&GT;</CD>) such that:
+<ITEMIZE>
+<ITEM>for all digits and letters <CD><ARG/c/</CD>, <CD>[<ARG/c/]</CD>
+is a symbol;
+</ITEM>
+
+<ITEM>for all natural numbers <CD><ARG/n/</CD>, and all
+<CD><ARG/x1/</CD> ... <CD><ARG/xn/</CD> that are symbols or <CD>[,]</CD>,
+<CODE>[<] @ <ARG/x1/ @ ... @ <ARG/xn/ @ [>]</CODE>
+is a symbol.</ITEM>
+</ITEMIZE>
+</PP>
+
+<PP>The concrete syntax for a symbol <CD>[<ARG/c1/, ..., <ARG/cn/]</CD>
+is <CD><ARG/c1/ ... <ARG/cn/</CD>.  E.g., <CD>[&LT;, i, d, &GT;]</CD>
+is written as <CD>&LT;id&GT;</CD>.</PP>
+
+<PP>The type could be implemented using lists, but is actually
+implemented in a way that makes the construction and destruction of
+symbols more efficient.  See <VALREF/fromTop/ and <VALREF/toTop/.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<DATATYPE><ID>top
+<CONS>Basic<TY>basic
+<CONS>Compound<TY>sym option list
+</DATATYPE>
+<COMMENT>
+<PP>A datatype describing the top-level structure of a symbol.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromTop<TY>top -> sym</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromTop <ARG/top/
+</PROTOTY>
+<PP>returns the symbol whose top-level structure is described by
+<CD><ARG/top/</CD>.  If <CD><ARG/top/</CD> is
+<CD>BasicSymTop <ARG/b/</CD>, then <CD>fromTop</CD> returns
+<CD>[<ARG/b/]</CD>.  Otherwise, <CD><ARG/top/</CD> looks
+like <CD>CompoundSymTop <ARG/xs/</CD>, in which case the symbol
+returned by <CD>fromTop</CD> consists of the result of appending
+an initial <CD>[<]</CD>, followed
+by the lists corresponding to <CD><ARG/xs/</CD>, followed by a
+closing <CD>[>]</CD>.  Each occurrence of <CD>NONE</CD> in
+<CD><ARG/xs/</CD> is turned into <CD>[,]</CD>.  And each occurrence of
+the form <CD>SOME <ARG/a/</CD> is turned into <CD><ARG/a/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toTop<TY>sym -> top</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toTop <ARG/a/
+</PROTOTY>
+<PP>returns the value of type <CD>sym_top</CD> describing the
+top-level structure of <CD><ARG/a/</CD>.  If the only element of
+<CD><ARG/a/</CD> is a digit or letter, then <CD>toTop</CD>
+returns <CD>BasicSymTop <ARG/b/</CD>, where <CD><ARG/b/</CD> is that
+digit or letter.  Otherwise <CD><ARG/a/</CD> is the result of
+appending the elements of a list of lists <CD><ARG/xs/</CD>, where the
+first and last elements of <CD><ARG/xs/</CD> are <CD>[<]</CD>
+and <CD>[>]</CD>, respectively, and each of the remaining elements are
+either <CD>[,]</CD> or are single symbols.  In this
+case, <CD>toTop</CD> returns
+<CD>CompoundSymTop <ARG/ys/</CD>, where <CD><ARG/ys/</CD> is the value
+of type <CD>sym option list</CD> corresponding to all but the first
+and last elements (<CD>[<]</CD> and <CD>[>]</CD>)
+of <CD><ARG/xs/</CD>, in the following way.  <CD>[,]</CD> is turned
+into <CD>NONE</CD>.  And a symbol <CD><ARG/x/</CD> is turned into
+<CD>SOME <ARG/x/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inputFromLabToks
+<TY>(int * Lex.tok)list -> sym * (int * Lex.tok)list</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+inputFromLabToks <ARG/lts/
+</PROTOTY>
+<PP>tries to read a symbol from <CD><ARG/lts/</CD>, returning the pair
+of that symbol with the rest of <CD><ARG/lts/</CD>.  Issues an error
+message if <CD><ARG/lts/</CD> doesn't begin with a symbol.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> sym</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs a symbol from <CD><ARG/s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> sym</TY></VAL>
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs a symbol from the file named by <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>sym -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toPP <ARG/a/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/a/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>sym -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/a/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/a/</CD> to a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>string * sym -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+output(<ARG/fil/, <ARG/a/)
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/a/</CD> to the file <CD><ARG/fil/</CD>.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>sym Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compare(<ARG/a/, <ARG/b/)
+</PROTOTY>
+<PP>compares <CD><ARG/a/</CD> and <CD><ARG/b/</CD>, first
+according to length, and then lexicographically, using the ordering in
+which the comma (<CD>,</CD>) comes first, followed by the digits (in
+ascending order), followed by the lowercase letters (in ascending
+order), followed by the uppercase letters (in ascending order),
+followed the open angle bracket (<CD>&LT;</CD>), followed by the close
+angle bracket (<CD>&GT;</CD>).</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>sym * sym -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal(<ARG/a/, <ARG/b/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/a/</CD> and <CD><ARG/b/</CD> are
+equal.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>size<TY>sym -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+sizeSym <ARG/a/
+</PROTOTY>
+<PP>returns the length of <CD><ARG/a/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanValidate<TY>string -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanValidate
+</PROTOTY>
+<PP>is a low-level function used by JForlan.  See the code for
+more information.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanPretty<TY>string -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanPretty
+</PROTOTY>
+<PP>is a low-level function used by JForlan.  See the code for
+more information.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

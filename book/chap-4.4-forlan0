@@ -1,0 +1,12 @@
+setPrintingLineLength 66;
+val gram = Gram.input "";
+{variables}
+A, B, C, D
+{start variable}
+A
+{productions}
+A -> BB1;
+B -> 0 | A | CD;
+C -> 12;
+D -> 1D2
+.

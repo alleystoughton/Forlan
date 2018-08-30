@@ -1,0 +1,49 @@
+<!-- use.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Use Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Use/ Module</HEAD>
+
+<PP>This module defines a function for loading SML source files into
+Forlan.</PP>
+
+<STRUCTURE STRID="Use">
+<OPAQUE>
+<SIGBODY SIGID="USE" FILE=USE>
+
+<SPEC>
+<VAL>use<TY>string -> unit
+
+<COMMENT>
+<PROTOTY>
+use ""
+</PROTOTY>
+<PP>loads the contents of the most recently loaded file into Forlan;
+an error message is issued if no file was previously loaded.</PP>
+
+<PROTOTY>
+use <ARG/fil/
+</PROTOTY>
+<PP>(where <CD><ARG/fil/</CD> is nonempty) loads the contents of
+<CD><ARG/fil/</CD> into Forlan; it first looks for <CD><ARG/fil/</CD>
+in the current working directory; if it doesn't find it there, it
+works through the search path
+(see <CD><STRREF TOPID/Params/.<VALREF STRID="Params"/getSearchPath/</CD>),
+looking for the first occurrence of <CD><ARG/fil/</CD>; it issues an
+error message if <CD><ARG/fil/</CD> can't be found, or can't be
+loaded.</PP>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

@@ -1,0 +1,128 @@
+The subdirectory jforlan contains the following subdirectories...
+
+---automata---
+
+Arrow - This class is used for storing all of the information to
+properly draw arrows for each of the transitions. Arrows are always
+drawn facing right, then rotated appropriately.
+
+FA - This class holds all of the state and transition information for
+FA/RFAs.
+
+FABuilder - This class is responsible for building FA/RFAs from Forlan
+syntax. It also gives the elements an initial placement on the canvas.
+
+State - This class represents an FA/RFA state, and holds information
+about the state's label, position, and whether or not it is
+accepting. It also includes a function for calculating the necessary
+ellipse for drawing the state.
+
+Transition - This class stores information for FA/RFA transitions. It
+knows the source state, destination state, transition labels, whether
+or not the transition has been dragged, and what the current position
+of the transition dot is.
+
+TransitionDot - This class represents a transition dot, storing its
+location and what transition it belongs to.
+
+---dialogs---
+
+AboutDialog - Shown when the user clicks on the "About" menu item
+
+EditLabelsDialog - Shown when FA transition labels are edited
+
+NewProjectDialog - Shown when the user clicks the "new" button.
+
+OpenProjectDialog - Shown when the user clicks the "open" button.
+
+---error---
+
+Error - Represents an error that has been found in an FA/Tree. It
+stores the object that contained the error, and the string that should
+be displayed.
+
+ErrorCollection - A collection of error objects for a particular FA/Tree
+
+---filefilters---
+
+ForlanFileFilter - A file filter for Forlan files (.txt extension)
+
+JFAFileFilter - A file filter for FA/RFA files (.jfa extension)
+
+PNGFileFilter - A file filter for images (.png extension)
+
+TreeFileFilter - A file filter for trees (.jft extension)
+
+---forlan---
+
+ForlanInterface- This class is an interface to Forlan, handling error
+checking and syntax cleaning. It executes Forlan on startup and
+maintains the connection until the program is closed.
+
+ValidityCheck - This structure is used by the ForlanInterface to store
+information that is returned from Forlan about the validity of the
+syntax it is passed.
+
+---main---
+
+Controller - This class handles the majority of the logic of the
+application. Everything that occurs in the MainFrame will pass through
+the controller (i.e. loading, saving, etc.)
+
+CoverPanel - This class is used as a way to disable the GUI when the
+application has been moved to the background. It is a transparent
+cover over the application that "consumes" the first click that
+re-enables the application.
+
+JForlan - This is the class that contains the "main" method and
+creates and Main Window
+
+MainFrame - This is the primary window of the application, containing
+all of the buttons, the message area, and the drawing canvases.
+
+---panels---
+
+FAProject - This class represents an FA/RFA project, and is the
+drawing canvas displayed in the tabbed pane in the primary window.
+
+TreeProject - This class represents a Tree project, and is the drawing
+canvas displayed in the tabbed pane in the primary window.
+
+Project - This class is the superclass to both FAProject and
+TreeProject, setting up an interface and commonality between the two
+types of projects.
+
+---resources---
+
+This directory holds all of the images used for various buttons on the
+primary window
+
+---trees---
+
+JTRTree - This class is a superclass to three specific types of tree:
+ParseTree, Reg,Tree, and ParseTree. It sets up the interface and
+common elements between the three classes.
+
+Node - This class represents a node in the tree. A node contains
+references to its parent, its children, its position, and its label.
+
+ParseTree - A subclass of JTRTree that has tailored methods for things
+such as error checking.
+
+RegTree - A subclass of JTRTree that has tailored methods for things
+such as error checking.
+
+ProgTree - A subclass of JTRTree that has tailored methods for things
+such as error checking.
+
+TreeBuilder - This class is responsible for building ParseTree,
+ProgTree, and RegTree objects from Forlan syntax.
+
+---utils---
+
+ShapeUtil - This class provides various methods to aid in drawing such
+as calculating the bezier curve through a third point, or finding the
+angle of a curve at a specific point/distance.
+
+Util - This class holds miscellaneous methods that did not fit well in
+other locations.

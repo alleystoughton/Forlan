@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# build Forlan SML/NJ heap image and put in /tmp
+
+# ML-Doc doesn't have to be installed if the src/BASE.sig files are
+# newer than the BASE.mldoc files
+
+version=$(cat ../version.txt)
+
+echo Building Heap Image for Forlan Version $version
+
+cd src
+change-version $version
+cleanup
+
+sml <<'END_OF_INPUT'
+Control.trackExn := false;
+CM.make "forlan.cm";
+open TopLevel;
+Export.export();
+END_OF_INPUT
+
+image=`echo forlan-heap.[a-z][a-z0-9]*-[a-z][a-z0-9]*`
+mv $image /tmp
+ls -l /tmp/$image

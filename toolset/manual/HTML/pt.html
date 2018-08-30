@@ -1,0 +1,421 @@
+<!-- HTML/pt.html -->
+
+<!-- COPYRIGHT (c) 2012 Alley Stoughton. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The PT Module</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY><A NAME="top"></A>
+<H1 align=CENTER>Forlan Manual</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>PT</CODE> Module</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="PT:SIG:SPEC"></A><CODE>PT</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="PT:STR:SPEC"></A><CODE>PT</CODE><B> :> </B>PT<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+This module defines the abstract type of parse trees.
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>datatype</B>&nbsp;<A NAME="STR:PT.concr:TY:SPEC" HREF="#STR:PT.concr:TY">concr</A>&nbsp;=&nbsp;<A NAME="STR:PT.Node:TY:SPEC" HREF="#STR:PT.Node:TY">Node</A>&nbsp;<B>of</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;concr&nbsp;list&nbsp;option<BR>
+<B>type</B>&nbsp;<A NAME="STR:PT.pt:TY:SPEC" HREF="#STR:PT.pt:TY">pt</A><BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.fromConcr:VAL:SPEC" HREF="#STR:PT.fromConcr:VAL">fromConcr</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.toConcr:VAL:SPEC" HREF="#STR:PT.toConcr:VAL">toConcr</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;concr<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.fromString:VAL:SPEC" HREF="#STR:PT.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.input:VAL:SPEC" HREF="#STR:PT.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.toPP:VAL:SPEC" HREF="#STR:PT.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.toString:VAL:SPEC" HREF="#STR:PT.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.output:VAL:SPEC" HREF="#STR:PT.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.validPath:VAL:SPEC" HREF="#STR:PT.validPath:VAL">validPath</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.height:VAL:SPEC" HREF="#STR:PT.height:VAL">height</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.size:VAL:SPEC" HREF="#STR:PT.size:VAL">size</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.numLeaves:VAL:SPEC" HREF="#STR:PT.numLeaves:VAL">numLeaves</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.selectPT:VAL:SPEC" HREF="#STR:PT.selectPT:VAL">selectPT</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;pt&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.update:VAL:SPEC" HREF="#STR:PT.update:VAL">update</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>*</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.maximumLengthPath:VAL:SPEC" HREF="#STR:PT.maximumLengthPath:VAL">maximumLengthPath</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.validLeafPath:VAL:SPEC" HREF="#STR:PT.validLeafPath:VAL">validLeafPath</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.compare:VAL:SPEC" HREF="#STR:PT.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;Sort.total_ordering<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.equal:VAL:SPEC" HREF="#STR:PT.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.cons:VAL:SPEC" HREF="#STR:PT.cons:VAL">cons</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;pt&nbsp;list&nbsp;option&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.leaf:VAL:SPEC" HREF="#STR:PT.leaf:VAL">leaf</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.decons:VAL:SPEC" HREF="#STR:PT.decons:VAL">decons</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;pt&nbsp;list&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.rootLabel:VAL:SPEC" HREF="#STR:PT.rootLabel:VAL">rootLabel</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;Sym.sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.yield:VAL:SPEC" HREF="#STR:PT.yield:VAL">yield</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;Str.str<BR>
+<B>type</B>&nbsp;<A NAME="STR:PT.pumping_division:TY:SPEC" HREF="#STR:PT.pumping_division:TY">pumping_division</A>&nbsp;=&nbsp;(pt&nbsp;<B>*</B>&nbsp;int&nbsp;list)&nbsp;<B>*</B>&nbsp;(pt&nbsp;<B>*</B>&nbsp;int&nbsp;list)&nbsp;<B>*</B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.checkPumpingDivision:VAL:SPEC" HREF="#STR:PT.checkPumpingDivision:VAL">checkPumpingDivision</A>&nbsp;<B>:</B>&nbsp;pumping_division&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.validPumpingDivision:VAL:SPEC" HREF="#STR:PT.validPumpingDivision:VAL">validPumpingDivision</A>&nbsp;<B>:</B>&nbsp;pumping_division&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.strsOfValidPumpingDivision:VAL:SPEC" HREF="#STR:PT.strsOfValidPumpingDivision:VAL">strsOfValidPumpingDivision</A>&nbsp;<B>:</B>&nbsp;pumping_division<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.pumpValidPumpingDivision:VAL:SPEC" HREF="#STR:PT.pumpValidPumpingDivision:VAL">pumpValidPumpingDivision</A>&nbsp;<B>:</B>&nbsp;pumping_division&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.findValidPumpingDivision:VAL:SPEC" HREF="#STR:PT.findValidPumpingDivision:VAL">findValidPumpingDivision</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;pumping_division<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.findValidPumpingDivisionOpt:VAL:SPEC" HREF="#STR:PT.findValidPumpingDivisionOpt:VAL">findValidPumpingDivisionOpt</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;pumping_division&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.jforlanNew:VAL:SPEC" HREF="#STR:PT.jforlanNew:VAL">jforlanNew</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.jforlanEdit:VAL:SPEC" HREF="#STR:PT.jforlanEdit:VAL">jforlanEdit</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.jforlanValidate:VAL:SPEC" HREF="#STR:PT.jforlanValidate:VAL">jforlanValidate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.jforlanPretty:VAL:SPEC" HREF="#STR:PT.jforlanPretty:VAL">jforlanPretty</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="STR:PT.concr:TY"></A><CODE><B>datatype</B>&nbsp;concr&nbsp;=&nbsp;Node&nbsp;<B>of</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;concr&nbsp;list&nbsp;option</CODE>
+<DD>
+The concrete datatype of parse trees.  If <CODE><VAR>a</VAR></CODE> is a symbol, then <CODE>Node(<VAR>a</VAR>, NONE)</CODE> is the parse tree whose root node is labeled by <CODE><VAR>a</VAR></CODE>, and which has a single child, labeled by <CODE>%</CODE>, with no children. And, if <CODE><VAR>a</VAR></CODE> is a symbol and <CODE><VAR>pts</VAR></CODE> is a list of parse trees, then <CODE>Node(<VAR>a</VAR>, SOME <VAR>pts</VAR>)</CODE> is the parse tree whose root node is labeled by <CODE><VAR>a</VAR></CODE> and whose children are the elements of <CODE><VAR>pts</VAR></CODE>, if any.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.pt:TY"></A><CODE><B>type</B>&nbsp;pt</CODE>
+<DD>
+The abstract type of parse trees, consisting of the values of type <CODE>concr</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.fromConcr:VAL"></A>
+<DT> <CODE>fromConcr <VAR>concr</VAR></CODE>
+<DD>
+returns <CODE><VAR>concr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.toConcr:VAL"></A>
+<DT> <CODE>toConcr <VAR>pt</VAR></CODE>
+<DD>
+returns <CODE><VAR>pt</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.fromString:VAL"></A>
+<DT> <CODE>fromString <VAR>s</VAR></CODE>
+<DD>
+inputs a parse tree from <CODE><VAR>s</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.input:VAL"></A>
+<DT> <CODE>input <VAR>fil</VAR></CODE>
+<DD>
+inputs a parse tree from the file named by <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.toPP:VAL"></A>
+<DT> <CODE>toPP <VAR>pt</VAR></CODE>
+<DD>
+returns a pretty-printing expression for <CODE><VAR>pt</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.toString:VAL"></A>
+<DT> <CODE>toString <VAR>pt</VAR></CODE>
+<DD>
+pretty-prints <CODE><VAR>pt</VAR></CODE> to a string.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.output:VAL"></A>
+<DT> <CODE>output(<VAR>fil</VAR>, <VAR>pt</VAR>)</CODE>
+<DD>
+pretty-prints <CODE><VAR>pt</VAR></CODE> to the file named by <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.validPath:VAL"></A>
+<DT> <CODE>validPath(<VAR>pt</VAR>, <VAR>ns</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>ns</VAR></CODE> is a valid path for <CODE><VAR>pt</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.height:VAL"></A>
+<DT> <CODE>height <VAR>pt</VAR></CODE>
+<DD>
+returns the height of <CODE><VAR>pt</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.size:VAL"></A>
+<DT> <CODE>size <VAR>pt</VAR></CODE>
+<DD>
+returns the size of <CODE><VAR>pt</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.numLeaves:VAL"></A>
+<DT> <CODE>numLeaves <VAR>pt</VAR></CODE>
+<DD>
+returns the number of leaves of <CODE><VAR>pt</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.selectPT:VAL"></A>
+<DT> <CODE>selectPT(<VAR>pt</VAR>, <VAR>ns</VAR>)</CODE>
+<DD>
+Suppose <CODE><VAR>tr</VAR></CODE> is the subtree of <CODE><VAR>pt</VAR></CODE> pointed to by <CODE><VAR>ns</VAR></CODE>.  If <CODE><VAR>tr</VAR></CODE> is <CODE>%</CODE> (i.e., has a single node, labeled by <CODE>%</CODE>), then <CODE>selectPT</CODE> returns <CODE>NONE</CODE>.  Otherwise, <CODE>selectPT</CODE> returns <CODE>SOME <VAR>tr</VAR></CODE>.  Issues an error message if <CODE><VAR>ns</VAR></CODE> isn't a valid path for <CODE><VAR>pt</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.update:VAL"></A>
+<DT> <CODE>update(<VAR>pt</VAR>, <VAR>ns</VAR>, <VAR>pt'</VAR>)</CODE>
+<DD>
+returns the result of replacing the subtree of <CODE><VAR>pt</VAR></CODE> pointed to by <CODE><VAR>ns</VAR></CODE> with <CODE><VAR>pt'</VAR></CODE>.  Issues an error message if <CODE><VAR>ns</VAR></CODE> isn't valid for <CODE><VAR>pt</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.maximumLengthPath:VAL"></A>
+<DT> <CODE>maximumLengthPath <VAR>pt</VAR></CODE>
+<DD>
+returns a leftmost, maximum length path for <CODE><VAR>pt</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.validLeafPath:VAL"></A>
+<DT> <CODE>validLeafPath(<VAR>pt</VAR>, <VAR>ns</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>ns</VAR></CODE> is a valid path for <CODE><VAR>pt</VAR></CODE> that points to a leaf of <CODE><VAR>pt</VAR></CODE>, i.e., to a subtree with no children.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.compare:VAL"></A>
+<DT> <CODE>comare</CODE>
+<DD>
+is defined by: 
+<PRE>
+  fun compare(Node(a1, SOME pt1s), Node(a2, SOME pt2s)) =
+        (case Sym.compare(a1, a2) of
+              LESS    =&gt; LESS
+            | EQUAL   =&gt; Set.compareList compare (pt1s, pt2s)
+            | GREATER =&gt; GREATER)
+    | compare(Node(a1, NONE),      Node(a2, NONE))      = Sym.compare(a1, a2)
+    | compare(Node(_, SOME _),     Node(_, NONE))       = LESS
+    | compare(Node(_, NONE),       Node(_, SOME _))     = GREATER
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.equal:VAL"></A>
+<DT> <CODE>equal(<VAR>pt1</VAR>, <VAR>pt2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>pt1</VAR></CODE> and <CODE><VAR>pt2</VAR></CODE> are equal.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.cons:VAL"></A>
+<DT> <CODE>cons(<VAR>a</VAR>, <VAR>ptsOpt</VAR>)</CODE>
+<DD>
+returns <CODE>Cons(<VAR>a</VAR>, <VAR>ptsOpt</VAR>)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.leaf:VAL"></A>
+<DT> <CODE>leaf <VAR>a</VAR></CODE>
+<DD>
+returns the tree with a single node labeled <CODE><VAR>a</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.decons:VAL"></A>
+<DT> <CODE>decons <VAR>pt</VAR></CODE>
+<DD>
+returns <CODE>(<VAR>a</VAR>, <VAR>ptsOpt</VAR>)</CODE>, where <CODE><VAR>a</VAR></CODE> and <CODE><VAR>ptsOpt</VAR></CODE> are unique such that <CODE><VAR>pt</VAR></CODE> is equal to <CODE>Cons(<VAR>a</VAR>, <VAR>ptsOpt</VAR>)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.rootLabel:VAL"></A>
+<DT> <CODE>rootLabel <VAR>pt</VAR></CODE>
+<DD>
+returns the root label of <CODE><VAR>pt</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.yield:VAL"></A>
+<DT> <CODE>yield <VAR>pt</VAR></CODE>
+<DD>
+returns the yield of <CODE><VAR>pt</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.pumping_division:TY"></A><CODE><B>type</B>&nbsp;pumping_division&nbsp;=&nbsp;(pt&nbsp;<B>*</B>&nbsp;int&nbsp;list)&nbsp;<B>*</B>&nbsp;(pt&nbsp;<B>*</B>&nbsp;int&nbsp;list)&nbsp;<B>*</B>&nbsp;pt</CODE>
+<DD>
+The following functions on pumping divisions can be used to experiment with the pumping lemma for context-free languages.
+<P>
+A pumping division <CODE>((<VAR>pt1</VAR>, <VAR>path1</VAR>), (<VAR>pt2</VAR>, <VAR>path2</VAR>), <VAR>path3</VAR>)</CODE> is <EM>valid</EM> iff: 
+<UL>
+<LI>
+<CODE><VAR>path1</VAR></CODE> is a valid path for <CODE><VAR>pt1</VAR></CODE>, pointing to a leaf whose label isn't <CODE>%</CODE>;
+<LI>
+<CODE><VAR>path2</VAR></CODE> is a valid path for <CODE><VAR>pt2</VAR></CODE>, pointing to a leaf whose label isn't <CODE>%</CODE>;
+<LI>
+the label of the leaf of <CODE><VAR>pt1</VAR></CODE> pointed to by <CODE><VAR>path1</VAR></CODE> is equal to the root label of <CODE><VAR>pt2</VAR></CODE>;
+<LI>
+the label of the leaf of <CODE><VAR>pt2</VAR></CODE> pointed to by <CODE><VAR>path2</VAR></CODE> is equal to the root label of  <CODE><VAR>pt2</VAR></CODE>;
+<LI>
+the root label of <CODE><VAR>pt3</VAR></CODE> is equal to the root label of <CODE><VAR>pt2</VAR></CODE>;
+<LI>
+the yield of <CODE><VAR>pt2</VAR></CODE> has at least two symbols;
+<LI>
+the yield of <CODE><VAR>pt1</VAR></CODE> has only one occurrence of the root label of <CODE><VAR>pt2</VAR></CODE>;
+<LI>
+the yield of <CODE><VAR>pt2</VAR></CODE> has only one occurrence of the root label of <CODE><VAR>pt2</VAR></CODE>; and
+<LI>
+the yield of <CODE><VAR>pt3</VAR></CODE> does not contain the root label of <CODE><VAR>pt2</VAR></CODE>.
+</UL>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.checkPumpingDivision:VAL"></A>
+<DT> <CODE>checkPumpingDivision <VAR>pd</VAR></CODE>
+<DD>
+checks whether <CODE><VAR>pd</VAR></CODE> is valid, silently returning <CODE>()</CODE>, if it is, and issuing an error message explaining why it's not, if it's not.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.validPumpingDivision:VAL"></A>
+<DT> <CODE>validPumpingDivision <VAR>pd</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>pd</VAR></CODE> is valid.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.strsOfValidPumpingDivision:VAL"></A>
+<DT> <CODE>strsOfValidPumpingDivision((<VAR>pt1</VAR>, <VAR>path1</VAR>), (<VAR>pt2</VAR>, <VAR>path2</VAR>), <VAR>pt3</VAR>)</CODE>
+<DD>
+returns <CODE>(<VAR>u</VAR>, <VAR>v</VAR>, <VAR>w</VAR>, <VAR>x</VAR>, <VAR>y</VAR>)</CODE>, where: 
+<UL>
+<LI>
+<CODE><VAR>u</VAR></CODE> is the prefix of <CODE>yield <VAR>pt1</VAR></CODE> that precedes the unique occurrence of the root label of <CODE><VAR>pt2</VAR></CODE>;
+<LI>
+<CODE><VAR>v</VAR></CODE> is the prefix of <CODE>yield <VAR>pt2</VAR></CODE> that precedes the unique occurrence of the root label of <CODE><VAR>pt2</VAR></CODE>;
+<LI>
+<CODE><VAR>w</VAR></CODE> is the yield of <CODE><VAR>pt3</VAR></CODE>;
+<LI>
+<CODE><VAR>x</VAR></CODE> is the suffix of <CODE>yield <VAR>pt2</VAR></CODE> that follows the unique occurrence of the root label of <CODE><VAR>pt2</VAR></CODE>; and 
+<LI>
+<CODE><VAR>y</VAR></CODE> is the suffix of <CODE>yield <VAR>pt1</VAR></CODE> that follows the unique occurrence of the root label of <CODE><VAR>pt2</VAR></CODE>.
+</UL>
+ Issues an error message if the pumping division isn't valid.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.pumpValidPumpingDivision:VAL"></A>
+<DT> <CODE>pumpValidPumpingDivision(((<VAR>pt1</VAR>, <VAR>path1</VAR>), (<VAR>pt2</VAR>, <VAR>path2</VAR>), <VAR>pt3</VAR>), <VAR>n</VAR>)</CODE>
+<DD>
+returns 
+<PRE>
+  let fun pow 0 = <VAR>pt3</VAR>
+        | pow n = update(<VAR>pt2</VAR>, <VAR>path2</VAR>, pow(n - 1))
+  in update(<VAR>pt1</VAR>, <VAR>path1</VAR>, pow <VAR>n</VAR>) end
+</PRE>
+ Issues an error message if the pumping division isn't valid, or if <CODE><VAR>n</VAR></CODE> is negative.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.findValidPumpingDivision:VAL"></A>
+<DT> <CODE>findValidPumpingDivision <VAR>pt</VAR></CODE>
+<DD>
+tries to find a valid pumping division <CODE><VAR>pd</VAR></CODE> such that <CODE>pumpValidPumpingDivision(<VAR>pd</VAR>, 1)</CODE> is <CODE><VAR>pt</VAR></CODE>. It works as follows.  First, the leftmost, maximum length path <CODE><VAR>path</VAR></CODE> through <CODE><VAR>pt</VAR></CODE> is found.  If this path points to <CODE>%</CODE>, then an error message is issued.  Otherwise, <CODE>findValidPumpingDivision</CODE> generates the following list of variables paired with prefixes of <CODE><VAR>path</VAR></CODE>: 
+<UL>
+<LI>
+the root label of the subtree pointed to by the path consisting of all but the last element of <CODE><VAR>path</VAR></CODE>, paired with that path;
+<LI>
+the root label of the subtree pointed to by the path consisting of all but the last two elements of <CODE><VAR>path</VAR></CODE>, paired with that path;
+<LI>
+...;
+<LI>
+the root label of the subtree pointed to by the path consisting of the first element of <CODE><VAR>path</VAR></CODE>, paired with that path; and
+<LI>
+the root label of the subtree pointed to by <CODE>[]</CODE>, paired with <CODE>[]</CODE>.
+</UL>
+ (Of course, the left-hand side of the last of these pairs is the root label of <CODE><VAR>pt</VAR></CODE>.)  As it works through these pairs, it looks for the first repetition of variables.  If there is no such repetition, it issues an error message.  Otherwise, suppose that: 
+<UL>
+<LI>
+<CODE><VAR>q</VAR></CODE> was the first repeated variable;
+<LI>
+<CODE><VAR>path1</VAR></CODE> was the path paired with <CODE><VAR>q</VAR></CODE> at the point of the first repetition; and
+<LI>
+<CODE><VAR>path'</VAR></CODE> was the path paired with <CODE><VAR>q</VAR></CODE> when it was first seen.
+</UL>
+ Now, it lets: 
+<UL>
+<LI>
+<CODE><VAR>path2</VAR></CODE> be the result of dropping <CODE><VAR>path1</VAR></CODE> from the beginning of <CODE><VAR>path'</VAR></CODE>;
+<LI>
+<CODE><VAR>pt1</VAR></CODE> be <CODE>update(<VAR>pt</VAR>, <VAR>path1</VAR>, Leaf <VAR>q</VAR>)</CODE>;
+<LI>
+<CODE><VAR>pt'</VAR></CODE> be the subtree of <CODE><VAR>pt</VAR></CODE> pointed to by <CODE><VAR>path1</VAR></CODE>;
+<LI>
+<CODE><VAR>pt2</VAR></CODE> be  <CODE>update(<VAR>pt'</VAR>, <VAR>path2</VAR>, Leaf <VAR>q</VAR>)</CODE>;
+<LI>
+<CODE><VAR>pt3</VAR></CODE> be the subtree of <CODE><VAR>pt'</VAR></CODE> pointed to by <CODE><VAR>path2</VAR></CODE>; and
+<LI>
+<CODE><VAR>pd</VAR></CODE> be <CODE>((<VAR>pt1</VAR>, <VAR>path1</VAR>), (<VAR>pt2</VAR>, <VAR>path2</VAR>), <VAR>pt3</VAR>)</CODE>.
+</UL>
+ If <CODE><VAR>pd</VAR></CODE> is a valid pumping division (only the last four conditions of the definition of validity remain to be checked), it is returned by <CODE>findValidPumpingDivision</CODE>.  Otherwise, an error message is issued.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.findValidPumpingDivisionOpt:VAL"></A>
+<DT> <CODE>findValidPumpingDivisionOpt <VAR>pt</VAR></CODE>
+<DD>
+behaves like <CODE>findValidPumpingDivision <VAR>pt</VAR></CODE>, except that: 
+<UL>
+<LI>
+if <CODE>findValidPumpingDivision <VAR>pt</VAR></CODE> returns normally, then <CODE>findValidPumpingDivisionOpt</CODE> returns <CODE>SOME</CODE> of what it returns; and
+<LI>
+if <CODE>findValidPumpingDivision <VAR>pt</VAR></CODE> issues an error message, then <CODE>findValidPumpingDivisionOpt</CODE> silently returns <CODE>NONE</CODE>.
+</UL>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.jforlanNew:VAL"></A>
+<DT> <CODE>jforlanNew()</CODE>
+<DD>
+invokes JForlan, and returns the parse tree that the user creates and commits.  Issues an error message if the user aborts, instead.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.jforlanEdit:VAL"></A>
+<DT> <CODE>jforlanEdit <VAR>pt</VAR></CODE>
+<DD>
+invokes JForlan, letting the user edit <CODE><VAR>pt</VAR></CODE>, and returning the resulting parse tree that the user commits.  Issues an error message if the user aborts, instead.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.jforlanValidate:VAL"></A>
+<DT> <CODE>jforlanValidate</CODE>
+<DD>
+is a low-level function used by JForlan.  See the code for more information.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:PT.jforlanPretty:VAL"></A>
+<DT> <CODE>jforlanPretty</CODE>
+<DD>
+is a low-level function used by JForlan.  See the code for more information.
+<BR>
+<BR>
+
+</DL>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="gram-subsect.html">Parent</A>
+   | <A HREF="index.html">Root</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Forlan Version 4.7</I><BR>
+<I>Copyright &copy; 2018 Alley Stoughton</I><BR>
+
+<HR>
+</BODY></HTML>

@@ -1,0 +1,18 @@
+val pr1 = Prog.input "";
+lam(x, letSimp(y, var(x), app(var(z), var(w))))
+.
+VarSet.output("", Prog.free pr1);
+val pr2 = Prog.input "";
+letRec
+(x, y,
+ app(var(x), app(var(y), var(z))),
+ app(var(x), var(w)))
+.
+VarSet.output("", Prog.free pr2);
+Prog.toClosed pr2;
+val pr' = Prog.input "";
+lam(x, letSimp(y, var(x), app(var(x), var(y))))
+.
+val cp = Prog.toClosed pr';
+val pr'' = Prog.fromClosed cp;
+Prog.equal(pr'', pr');

@@ -1,0 +1,691 @@
+<!-- HTML/top-level-subsect.html -->
+
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>Top-level Environment</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY><A NAME="top"></A>
+<H1 align=CENTER>Forlan Manual</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>Top-level Environment</H2>
+<P>
+This subsection lists the types and values that are available in Forlan's top-level environment, as well as the modules that they come from.
+<H3><A NAME="section:1"></A>Version</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> getVersion : unit -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="version.html#Version:STR:SPEC">Version</A></CODE>.<CODE><A HREF="version.html#SIG:VERSION.getVersion:VAL:SPEC">getVersion</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<H3><A NAME="section:2"></A>Parameters</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> getSearchPath : unit -&gt; string list</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.getSearchPath:VAL:SPEC">getSearchPath</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> setSearchPath : string list -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.setSearchPath:VAL:SPEC">setSearchPath</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> getWorkingDirectory : unit -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.getWorkingDirectory:VAL:SPEC">getWorkingDirectory</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> setWorkingDirectory : string -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.setWorkingDirectory:VAL:SPEC">setWorkingDirectory</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> getPrintingListLength : unit -&gt; int</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.getPrintingListLength:VAL:SPEC">getPrintingListLength</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> setPrintingListLength : int -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.setPrintingListLength:VAL:SPEC">setPrintingListLength</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> getPrintingStringSize : unit -&gt; int</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.getPrintingStringSize:VAL:SPEC">getPrintingStringSize</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> setPrintingStringSize : int -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.setPrintingStringSize:VAL:SPEC">setPrintingStringSize</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> getPrintingDataStructureDepth : unit -&gt; int</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.getPrintingDataStructureDepth:VAL:SPEC">getPrintingDataStructureDepth</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> setPrintingDataStructureDepth : int -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.setPrintingDataStructureDepth:VAL:SPEC">setPrintingDataStructureDepth</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> getPrintingLineLength : unit -&gt; int</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.getPrintingLineLength:VAL:SPEC">getPrintingLineLength</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> setPrintingLineLength : int -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.setPrintingLineLength:VAL:SPEC">setPrintingLineLength</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> setPrintingOfGarbageCollectionMessages : bool -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.setPrintingOfGarbageCollectionMessages:VAL:SPEC">setPrintingOfGarbageCollectionMessages</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> getTrackExceptions : unit -&gt; bool</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.getTrackExceptions:VAL:SPEC">getTrackExceptions</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> setTrackExceptions : bool -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.setTrackExceptions:VAL:SPEC">setTrackExceptions</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> getCompilationManagerVerbosity : unit -&gt; bool</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.getCompilationManagerVerbosity:VAL:SPEC">getCompilationManagerVerbosity</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> setCompilationManagerVerbosity : bool -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="params.html#Params:STR:SPEC">Params</A></CODE>.<CODE><A HREF="params.html#SIG:PARAMS.setCompilationManagerVerbosity:VAL:SPEC">setCompilationManagerVerbosity</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<H3><A NAME="section:3"></A>Debugging</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> debug : (<VAR>'a</VAR> -&gt; PP.pp) -&gt; PP.pp * <VAR>'a</VAR> -&gt;
+<VAR>'a</VAR></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="debug.html#Debug:STR:SPEC">Debug</A></CODE>.<CODE><A HREF="debug.html#SIG:DEBUG.debug:VAL:SPEC">debug</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<H3><A NAME="section:4"></A>Using Files</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> use : string -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="use.html#Use:STR:SPEC">Use</A></CODE>.<CODE><A HREF="use.html#SIG:USE.use:VAL:SPEC">use</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<H3><A NAME="section:5"></A>Basic Types</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> <VAR>'a</VAR> set</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><VAR>'a</VAR> <CODE><A HREF="set.html#Set:STR:SPEC">Set</A></CODE>.<CODE><A HREF="set.html#SIG:SET.set:TY:SPEC">set</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> sym</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="sym.html#Sym:STR:SPEC">Sym</A></CODE>.<CODE><A HREF="sym.html#SIG:SYM.sym:TY:SPEC">sym</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> str</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="str.html#Str:STR:SPEC">Str</A></CODE>.<CODE><A HREF="str.html#SIG:STR.str:TY:SPEC">str</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> (<VAR>'a</VAR>, <VAR>'b</VAR>)rel</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>(<VAR>'a</VAR>, <VAR>'b</VAR>)<CODE><A HREF="rel.html#Rel:STR:SPEC">Rel</A></CODE>.<CODE><A HREF="rel.html#SIG:REL.rel:TY:SPEC">rel</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> sym_rel</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="sym-rel.html#SymRel:STR:SPEC">SymRel</A></CODE>.<CODE><A HREF="sym-rel.html#SIG:SYM_REL.sym_rel:TY:SPEC">sym_rel</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ Note that: 
+<UL>
+<LI>
+<CODE>sym</CODE> and <CODE>Sym.sym</CODE> are equal to <CODE><CODE><A HREF="lex.html#Lex:STR:SPEC">Lex</A></CODE>.<CODE><A HREF="lex.html#SIG:LEX.sym:TY:SPEC">sym</A></CODE></CODE>;
+<LI>
+<CODE>str</CODE> and <CODE>Str.str</CODE> are equal to <CODE>sym
+list</CODE>;
+<LI>
+<CODE>(<VAR>'a</VAR>, <VAR>'b</VAR>)rel</CODE> and <CODE>(<VAR>'a</VAR>, <VAR>'b</VAR>)Rel.rel</CODE> are equal to <CODE>(<VAR>'a</VAR> *
+<VAR>'b</VAR>)set</CODE>;
+<LI>
+<CODE>sym_rel</CODE> and <CODE>SymRel.sym_rel</CODE> are equal to <CODE>(sym, sym)rel</CODE>, which is equal to <CODE>(sym * sym)set</CODE>.
+</UL>
+ 
+<H3><A NAME="section:6"></A>Conversions Between Basic Types and Strings</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> stringToSym : string -&gt; sym</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="sym.html#Sym:STR:SPEC">Sym</A></CODE>.<CODE><A HREF="sym.html#SIG:SYM.fromString:VAL:SPEC">fromString</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> symToString : sym -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="sym.html#Sym:STR:SPEC">Sym</A></CODE>.<CODE><A HREF="sym.html#SIG:SYM.toString:VAL:SPEC">toString</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> stringToStr : string -&gt; str</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="str.html#Str:STR:SPEC">Str</A></CODE>.<CODE><A HREF="str.html#SIG:STR.fromString:VAL:SPEC">fromString</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> strToString : str -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="str.html#Str:STR:SPEC">Str</A></CODE>.<CODE><A HREF="str.html#SIG:STR.toString:VAL:SPEC">toString</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> stringToSymSet : string -&gt; sym set</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="sym-set.html#SymSet:STR:SPEC">SymSet</A></CODE>.<CODE><A HREF="sym-set.html#SIG:SYM_SET.fromString:VAL:SPEC">fromString</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> symSetToString : sym set -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="sym-set.html#SymSet:STR:SPEC">SymSet</A></CODE>.<CODE><A HREF="sym-set.html#SIG:SYM_SET.toString:VAL:SPEC">toString</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> stringToStrSet : string -&gt; str set</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="str-set.html#StrSet:STR:SPEC">StrSet</A></CODE>.<CODE><A HREF="str-set.html#SIG:STR_SET.fromString:VAL:SPEC">fromString</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> strSetToString : str set -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="str-set.html#StrSet:STR:SPEC">StrSet</A></CODE>.<CODE><A HREF="str-set.html#SIG:STR_SET.toString:VAL:SPEC">toString</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> stringToSymRel : string -&gt; sym_rel</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="sym-rel.html#SymRel:STR:SPEC">SymRel</A></CODE>.<CODE><A HREF="sym-rel.html#SIG:SYM_REL.fromString:VAL:SPEC">fromString</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> symRelToString : sym_rel -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="sym-rel.html#SymRel:STR:SPEC">SymRel</A></CODE>.<CODE><A HREF="sym-rel.html#SIG:SYM_REL.toString:VAL:SPEC">toString</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<H3><A NAME="section:7"></A>Regular Expressions</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> reg</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="reg.html#Reg:STR:SPEC">Reg</A></CODE>.<CODE><A HREF="reg.html#SIG:REG.reg:TY:SPEC">reg</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> stringToReg : string -&gt; reg</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="reg.html#Reg:STR:SPEC">Reg</A></CODE>.<CODE><A HREF="reg.html#SIG:REG.fromString:VAL:SPEC">fromString</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> regToString : reg -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="reg.html#Reg:STR:SPEC">Reg</A></CODE>.<CODE><A HREF="reg.html#SIG:REG.toString:VAL:SPEC">toString</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> symToReg : sym -&gt; reg</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="reg.html#Reg:STR:SPEC">Reg</A></CODE>.<CODE><A HREF="reg.html#SIG:REG.fromSym:VAL:SPEC">fromSym</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> strToReg : str -&gt; reg</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="reg.html#Reg:STR:SPEC">Reg</A></CODE>.<CODE><A HREF="reg.html#SIG:REG.fromStr:VAL:SPEC">fromStr</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<H3><A NAME="section:8"></A>Labeled Paths</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> lp</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="lp.html#LP:STR:SPEC">LP</A></CODE>.<CODE><A HREF="lp.html#SIG:LP.lp:TY:SPEC">lp</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> stringToLP : string -&gt; lp</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="lp.html#LP:STR:SPEC">LP</A></CODE>.<CODE><A HREF="lp.html#SIG:LP.fromString:VAL:SPEC">fromString</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> lpToString : lp -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="lp.html#LP:STR:SPEC">LP</A></CODE>.<CODE><A HREF="lp.html#SIG:LP.toString:VAL:SPEC">toString</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<H3><A NAME="section:9"></A>Finite Automata</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> tran</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="tran.html#Tran:STR:SPEC">Tran</A></CODE>.<CODE><A HREF="tran.html#SIG:TRAN.tran:TY:SPEC">tran</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> fa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE>.<CODE><A HREF="fa.html#SIG:FA.fa:TY:SPEC">fa</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> efa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="efa.html#EFA:STR:SPEC">EFA</A></CODE>.<CODE><A HREF="efa.html#SIG:EFA.efa:TY:SPEC">efa</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> nfa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="nfa.html#NFA:STR:SPEC">NFA</A></CODE>.<CODE><A HREF="nfa.html#SIG:NFA.nfa:TY:SPEC">nfa</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> dfa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="dfa.html#DFA:STR:SPEC">DFA</A></CODE>.<CODE><A HREF="dfa.html#SIG:DFA.dfa:TY:SPEC">dfa</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> symToNFA : sym -&gt; nfa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="nfa.html#NFA:STR:SPEC">NFA</A></CODE>.<CODE><A HREF="nfa.html#SIG:NFA.fromSym:VAL:SPEC">fromSym</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> symToEFA : sym -&gt; efa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="efa.html#EFA:STR:SPEC">EFA</A></CODE>.<CODE><A HREF="efa.html#SIG:EFA.fromSym:VAL:SPEC">fromSym</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> symToFA : sym -&gt; fa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE>.<CODE><A HREF="fa.html#SIG:FA.fromSym:VAL:SPEC">fromSym</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> strToFA : str -&gt; fa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE>.<CODE><A HREF="fa.html#SIG:FA.fromStr:VAL:SPEC">fromStr</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<H3><A NAME="section:10"></A>Injections and Projections Between Finite Automata</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> injDFAToNFA : dfa -&gt; nfa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="dfa.html#DFA:STR:SPEC">DFA</A></CODE>.<CODE><A HREF="dfa.html#SIG:DFA.injToNFA:VAL:SPEC">injToNFA</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> injDFAToEFA : dfa -&gt; efa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="dfa.html#DFA:STR:SPEC">DFA</A></CODE>.<CODE><A HREF="dfa.html#SIG:DFA.injToEFA:VAL:SPEC">injToEFA</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> injDFAToFA : dfa -&gt; fa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="dfa.html#DFA:STR:SPEC">DFA</A></CODE>.<CODE><A HREF="dfa.html#SIG:DFA.injToFA:VAL:SPEC">injToFA</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> injNFAToEFA : nfa -&gt; efa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="nfa.html#NFA:STR:SPEC">NFA</A></CODE>.<CODE><A HREF="nfa.html#SIG:NFA.injToEFA:VAL:SPEC">injToEFA</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> injNFAToFA : nfa -&gt; fa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="nfa.html#NFA:STR:SPEC">NFA</A></CODE>.<CODE><A HREF="nfa.html#SIG:NFA.injToFA:VAL:SPEC">injToFA</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> injEFAToFA : efa -&gt; fa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="efa.html#EFA:STR:SPEC">EFA</A></CODE>.<CODE><A HREF="efa.html#SIG:EFA.injToFA:VAL:SPEC">injToFA</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> projNFAToDFA : nfa -&gt; dfa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="dfa.html#DFA:STR:SPEC">DFA</A></CODE>.<CODE><A HREF="dfa.html#SIG:DFA.projFromNFA:VAL:SPEC">projFromNFA</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> projEFAToDFA : efa -&gt; dfa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="dfa.html#DFA:STR:SPEC">DFA</A></CODE>.<CODE><A HREF="dfa.html#SIG:DFA.projFromEFA:VAL:SPEC">projFromEFA</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> projFAToDFA : fa -&gt; dfa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="dfa.html#DFA:STR:SPEC">DFA</A></CODE>.<CODE><A HREF="dfa.html#SIG:DFA.projFromFA:VAL:SPEC">projFromFA</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> projEFAToNFA : efa -&gt; nfa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="nfa.html#NFA:STR:SPEC">NFA</A></CODE>.<CODE><A HREF="nfa.html#SIG:NFA.projFromEFA:VAL:SPEC">projFromEFA</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> projFAToNFA : fa -&gt; nfa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="nfa.html#NFA:STR:SPEC">NFA</A></CODE>.<CODE><A HREF="nfa.html#SIG:NFA.projFromFA:VAL:SPEC">projFromFA</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> projFAToEFA : fa -&gt; efa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="efa.html#EFA:STR:SPEC">EFA</A></CODE>.<CODE><A HREF="efa.html#SIG:EFA.projFromFA:VAL:SPEC">projFromFA</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<H3><A NAME="section:11"></A>Conversions Between Finite Automata</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> nfaToDFA : nfa -&gt; dfa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="dfa.html#DFA:STR:SPEC">DFA</A></CODE>.<CODE><A HREF="dfa.html#SIG:DFA.fromNFA:VAL:SPEC">fromNFA</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> efaToNFA : efa -&gt; nfa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="nfa.html#NFA:STR:SPEC">NFA</A></CODE>.<CODE><A HREF="nfa.html#SIG:NFA.fromEFA:VAL:SPEC">fromEFA</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> faToEFA : fa -&gt; efa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="efa.html#EFA:STR:SPEC">EFA</A></CODE>.<CODE><A HREF="efa.html#SIG:EFA.fromFA:VAL:SPEC">fromFA</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<H3><A NAME="section:12"></A>Conversions Between Finite Automata and Regular Expressions</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> regToFA : reg -&gt; fa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="fa.html#FA:STR:SPEC">FA</A></CODE>.<CODE><A HREF="fa.html#SIG:FA.fromReg:VAL:SPEC">fromReg</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> faToReg : (reg -&gt; reg) -&gt; fa -&gt; reg</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="rfa.html#RFA:STR:SPEC">RFA</A></CODE>.<CODE><A HREF="rfa.html#SIG:RFA.faToReg:VAL:SPEC">faToReg</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> faToRegPerms : int option * (reg -&gt; reg) -&gt; fa -&gt; reg</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="rfa.html#RFA:STR:SPEC">RFA</A></CODE>.<CODE><A HREF="rfa.html#SIG:RFA.faToRegPerms:VAL:SPEC">faToRegPerms</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> faToRegPermsTrace : int option * (reg -&gt; reg) -&gt; fa -&gt;
+reg</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="rfa.html#RFA:STR:SPEC">RFA</A></CODE>.<CODE><A HREF="rfa.html#SIG:RFA.faToRegPermsTrace:VAL:SPEC">faToRegPermsTrace</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<H3><A NAME="section:13"></A>Regular Expression Finite Automata</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> tran_reg</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="tran-reg.html#TranReg:STR:SPEC">TranReg</A></CODE>.<CODE><A HREF="tran-reg.html#SIG:TRAN_REG.tran_reg:TY:SPEC">tran_reg</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> rfa</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="rfa.html#RFA:STR:SPEC">RFA</A></CODE>.<CODE><A HREF="rfa.html#SIG:RFA.rfa:TY:SPEC">rfa</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<H3><A NAME="section:14"></A>Parse Trees</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> pt</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="pt.html#PT:STR:SPEC">PT</A></CODE>.<CODE><A HREF="pt.html#SIG:PT.pt:TY:SPEC">pt</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> stringToPT : string -&gt; pt</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="pt.html#PT:STR:SPEC">PT</A></CODE>.<CODE><A HREF="pt.html#SIG:PT.fromString:VAL:SPEC">fromString</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> ptToString : pt -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="pt.html#PT:STR:SPEC">PT</A></CODE>.<CODE><A HREF="pt.html#SIG:PT.toString:VAL:SPEC">toString</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<H3><A NAME="section:15"></A>Grammars</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> prod</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="prod.html#Prod:STR:SPEC">Prod</A></CODE>.<CODE><A HREF="prod.html#SIG:PROD.prod:TY:SPEC">prod</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> gram</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="gram.html#Gram:STR:SPEC">Gram</A></CODE>.<CODE><A HREF="gram.html#SIG:GRAM.gram:TY:SPEC">gram</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> symToGram : sym -&gt; gram</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="gram.html#Gram:STR:SPEC">Gram</A></CODE>.<CODE><A HREF="gram.html#SIG:GRAM.fromSym:VAL:SPEC">fromSym</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> strToGram : str -&gt; gram</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="gram.html#Gram:STR:SPEC">Gram</A></CODE>.<CODE><A HREF="gram.html#SIG:GRAM.fromStr:VAL:SPEC">fromStr</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> faToGram : fa -&gt; gram</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="gram.html#Gram:STR:SPEC">Gram</A></CODE>.<CODE><A HREF="gram.html#SIG:GRAM.fromFA:VAL:SPEC">fromFA</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> regToGram : reg -&gt; gram</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="gram.html#Gram:STR:SPEC">Gram</A></CODE>.<CODE><A HREF="gram.html#SIG:GRAM.fromReg:VAL:SPEC">fromReg</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+<H3><A NAME="section:16"></A>Programs</H3>
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Identifier
+<TH ALIGN=LEFT VALIGN=TOP>
+Value
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> var</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="var.html#Var:STR:SPEC">Var</A></CODE>.<CODE><A HREF="var.html#SIG:VAR.var:TY:SPEC">var</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> prog</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="prog.html#Prog:STR:SPEC">Prog</A></CODE>.<CODE><A HREF="prog.html#SIG:PROG.prog:TY:SPEC">prog</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>type</B></CODE> cp</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="prog.html#Prog:STR:SPEC">Prog</A></CODE>.<CODE><A HREF="prog.html#SIG:PROG.cp:TY:SPEC">cp</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> progToClosedProg : prog -&gt; cp</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="prog.html#Prog:STR:SPEC">Prog</A></CODE>.<CODE><A HREF="prog.html#SIG:PROG.toClosed:VAL:SPEC">toClosed</A></CODE></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><B>val</B></CODE> closedProgToProg : cp -&gt; closed</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="prog.html#Prog:STR:SPEC">Prog</A></CODE>.<CODE><A HREF="prog.html#SIG:PROG.fromClosed:VAL:SPEC">fromClosed</A></CODE></CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="index.html">Parent</A>
+   | <A HREF="index.html">Root</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Forlan Version 4.7</I><BR>
+<I>Copyright &copy; 2018 Alley Stoughton</I><BR>
+
+<HR>
+</BODY></HTML>

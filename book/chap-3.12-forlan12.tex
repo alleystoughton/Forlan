@@ -1,0 +1,31 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ reg\ =\ Reg.fromString\ "(012)\symbol{'052}(21)";
+\item[]\textsl{val\ reg\ =\ -\ :\ reg}
+\item[]\textsl{-\ }val\ rel\ =\ SymRel.fromString\ "(0,\ 1),\ (1,\ 2),\ (2,\ 3)";
+\item[]\textsl{val\ rel\ =\ -\ :\ sym_rel}
+\item[]\textsl{-\ }Reg.output("",\ Reg.rev\ reg);
+\item[]\textsl{(12)((21)0)\symbol{'052}}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Reg.output("",\ Reg.renameAlphabet(reg,\ rel));
+\item[]\textsl{(123)\symbol{'052}32}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

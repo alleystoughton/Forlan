@@ -1,0 +1,20 @@
+val equal = Prog.input "equal-prog";
+val succ = Prog.input "succ-prog";
+val count =
+      Prog.app
+      (Prog.app(Prog.input "count-prog", equal),
+       succ);
+val zerosOnesTwos =
+      Prog.app
+      (Prog.app(Prog.input "zeros-ones-twos-prog", equal),
+       count);
+val accepted = Prog.accepted zerosOnesTwos;
+accepted(Str.fromString "%", 10);
+accepted(Str.fromString "%", 100);
+accepted(Str.fromString "012", 100);
+accepted(Str.fromString "000111222", 1000);
+accepted(Str.fromString "00011122", 1000);
+accepted(Str.fromString "00111222", 1000);
+accepted(Str.fromString "00011222", 1000);
+accepted(Str.fromString "021", 100);
+accepted(Str.fromString "112200", 1000);

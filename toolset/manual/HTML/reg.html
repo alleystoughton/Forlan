@@ -1,0 +1,806 @@
+<!-- HTML/reg.html -->
+
+<!-- COPYRIGHT (c) 2012 Alley Stoughton. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The Reg Module</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY><A NAME="top"></A>
+<H1 align=CENTER>Forlan Manual</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>Reg</CODE> Module</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="REG:SIG:SPEC"></A><CODE>REG</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Reg:STR:SPEC"></A><CODE>Reg</CODE><B> :> </B>REG<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+This module defines the abstract type of regular expressions.
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>datatype</B>&nbsp;<A NAME="STR:Reg.concr:TY:SPEC" HREF="#STR:Reg.concr:TY">concr</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="STR:Reg.EmptyStr:TY:SPEC" HREF="#STR:Reg.EmptyStr:TY">EmptyStr</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Reg.EmptySet:TY:SPEC" HREF="#STR:Reg.EmptySet:TY">EmptySet</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Reg.Sym:TY:SPEC" HREF="#STR:Reg.Sym:TY">Sym</A>&nbsp;<B>of</B>&nbsp;Sym.sym<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Reg.Closure:TY:SPEC" HREF="#STR:Reg.Closure:TY">Closure</A>&nbsp;<B>of</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Reg.Concat:TY:SPEC" HREF="#STR:Reg.Concat:TY">Concat</A>&nbsp;<B>of</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Reg.Union:TY:SPEC" HREF="#STR:Reg.Union:TY">Union</A>&nbsp;<B>of</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr<BR>
+<B>type</B>&nbsp;<A NAME="STR:Reg.reg:TY:SPEC" HREF="#STR:Reg.reg:TY">reg</A><BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.fromConcr:VAL:SPEC" HREF="#STR:Reg.fromConcr:VAL">fromConcr</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.toConcr:VAL:SPEC" HREF="#STR:Reg.toConcr:VAL">toConcr</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;concr<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.inputFromLabToks:VAL:SPEC" HREF="#STR:Reg.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.fromString:VAL:SPEC" HREF="#STR:Reg.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.input:VAL:SPEC" HREF="#STR:Reg.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.toPP:VAL:SPEC" HREF="#STR:Reg.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.toString:VAL:SPEC" HREF="#STR:Reg.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.output:VAL:SPEC" HREF="#STR:Reg.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.validPath:VAL:SPEC" HREF="#STR:Reg.validPath:VAL">validPath</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.height:VAL:SPEC" HREF="#STR:Reg.height:VAL">height</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.size:VAL:SPEC" HREF="#STR:Reg.size:VAL">size</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.numLeaves:VAL:SPEC" HREF="#STR:Reg.numLeaves:VAL">numLeaves</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.select:VAL:SPEC" HREF="#STR:Reg.select:VAL">select</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.update:VAL:SPEC" HREF="#STR:Reg.update:VAL">update</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.maximumLengthPath:VAL:SPEC" HREF="#STR:Reg.maximumLengthPath:VAL">maximumLengthPath</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.validLeafPath:VAL:SPEC" HREF="#STR:Reg.validLeafPath:VAL">validLeafPath</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.emptyStr:VAL:SPEC" HREF="#STR:Reg.emptyStr:VAL">emptyStr</A>&nbsp;<B>:</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.emptySet:VAL:SPEC" HREF="#STR:Reg.emptySet:VAL">emptySet</A>&nbsp;<B>:</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.fromSym:VAL:SPEC" HREF="#STR:Reg.fromSym:VAL">fromSym</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.closure:VAL:SPEC" HREF="#STR:Reg.closure:VAL">closure</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.concat:VAL:SPEC" HREF="#STR:Reg.concat:VAL">concat</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.union:VAL:SPEC" HREF="#STR:Reg.union:VAL">union</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.isEmptyStr:VAL:SPEC" HREF="#STR:Reg.isEmptyStr:VAL">isEmptyStr</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.isEmptySet:VAL:SPEC" HREF="#STR:Reg.isEmptySet:VAL">isEmptySet</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.isSym:VAL:SPEC" HREF="#STR:Reg.isSym:VAL">isSym</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.isClosure:VAL:SPEC" HREF="#STR:Reg.isClosure:VAL">isClosure</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.isConcat:VAL:SPEC" HREF="#STR:Reg.isConcat:VAL">isConcat</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.isUnion:VAL:SPEC" HREF="#STR:Reg.isUnion:VAL">isUnion</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.compare:VAL:SPEC" HREF="#STR:Reg.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;Sort.total_ordering<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.equal:VAL:SPEC" HREF="#STR:Reg.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.fromStr:VAL:SPEC" HREF="#STR:Reg.fromStr:VAL">fromStr</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.power:VAL:SPEC" HREF="#STR:Reg.power:VAL">power</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.alphabet:VAL:SPEC" HREF="#STR:Reg.alphabet:VAL">alphabet</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.split:VAL:SPEC" HREF="#STR:Reg.split:VAL">split</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;reg&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.genConcat:VAL:SPEC" HREF="#STR:Reg.genConcat:VAL">genConcat</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.genUnion:VAL:SPEC" HREF="#STR:Reg.genUnion:VAL">genUnion</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.rightConcat:VAL:SPEC" HREF="#STR:Reg.rightConcat:VAL">rightConcat</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.rightUnion:VAL:SPEC" HREF="#STR:Reg.rightUnion:VAL">rightUnion</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.concatsToList:VAL:SPEC" HREF="#STR:Reg.concatsToList:VAL">concatsToList</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;reg&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.unionsToList:VAL:SPEC" HREF="#STR:Reg.unionsToList:VAL">unionsToList</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;reg&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.sortUnions:VAL:SPEC" HREF="#STR:Reg.sortUnions:VAL">sortUnions</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.allSym:VAL:SPEC" HREF="#STR:Reg.allSym:VAL">allSym</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.allStr:VAL:SPEC" HREF="#STR:Reg.allStr:VAL">allStr</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.fromStrSet:VAL:SPEC" HREF="#STR:Reg.fromStrSet:VAL">fromStrSet</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>type</B>&nbsp;<A NAME="STR:Reg.cc:TY:SPEC" HREF="#STR:Reg.cc:TY">cc</A><BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.ccToList:VAL:SPEC" HREF="#STR:Reg.ccToList:VAL">ccToList</A>&nbsp;<B>:</B>&nbsp;cc&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.singCC:VAL:SPEC" HREF="#STR:Reg.singCC:VAL">singCC</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;cc<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.unionCC:VAL:SPEC" HREF="#STR:Reg.unionCC:VAL">unionCC</A>&nbsp;<B>:</B>&nbsp;cc&nbsp;<B>*</B>&nbsp;cc&nbsp;<B>-&gt;</B>&nbsp;cc<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.succCC:VAL:SPEC" HREF="#STR:Reg.succCC:VAL">succCC</A>&nbsp;<B>:</B>&nbsp;cc&nbsp;<B>-&gt;</B>&nbsp;cc<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.cc:VAL:SPEC" HREF="#STR:Reg.cc:VAL">cc</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;cc<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.compareCC:VAL:SPEC" HREF="#STR:Reg.compareCC:VAL">compareCC</A>&nbsp;<B>:</B>&nbsp;cc&nbsp;Sort.total_ordering<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.numConcats:VAL:SPEC" HREF="#STR:Reg.numConcats:VAL">numConcats</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.numSyms:VAL:SPEC" HREF="#STR:Reg.numSyms:VAL">numSyms</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.standardized:VAL:SPEC" HREF="#STR:Reg.standardized:VAL">standardized</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.compareComplexity:VAL:SPEC" HREF="#STR:Reg.compareComplexity:VAL">compareComplexity</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;order<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.compareComplexityTotal:VAL:SPEC" HREF="#STR:Reg.compareComplexityTotal:VAL">compareComplexityTotal</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;Sort.total_ordering<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.weaklySimplified:VAL:SPEC" HREF="#STR:Reg.weaklySimplified:VAL">weaklySimplified</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.weaklySimplify:VAL:SPEC" HREF="#STR:Reg.weaklySimplify:VAL">weaklySimplify</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.toStrSetOpt:VAL:SPEC" HREF="#STR:Reg.toStrSetOpt:VAL">toStrSetOpt</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.toStrSet:VAL:SPEC" HREF="#STR:Reg.toStrSet:VAL">toStrSet</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.hasEmp:VAL:SPEC" HREF="#STR:Reg.hasEmp:VAL">hasEmp</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.hasSym:VAL:SPEC" HREF="#STR:Reg.hasSym:VAL">hasSym</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.obviousSubset:VAL:SPEC" HREF="#STR:Reg.obviousSubset:VAL">obviousSubset</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.localSimplificationRelations:VAL:SPEC" HREF="#STR:Reg.localSimplificationRelations:VAL">localSimplificationRelations</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;order<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.locallySimplified:VAL:SPEC" HREF="#STR:Reg.locallySimplified:VAL">locallySimplified</A>&nbsp;<B>:</B>&nbsp;(reg&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.locallySimplifyTrace:VAL:SPEC" HREF="#STR:Reg.locallySimplifyTrace:VAL">locallySimplifyTrace</A>&nbsp;<B>:</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;(reg&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.locallySimplify:VAL:SPEC" HREF="#STR:Reg.locallySimplify:VAL">locallySimplify</A>&nbsp;<B>:</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;(reg&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.globallySimplified:VAL:SPEC" HREF="#STR:Reg.globallySimplified:VAL">globallySimplified</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;(reg&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.globallySimplifyTrace:VAL:SPEC" HREF="#STR:Reg.globallySimplifyTrace:VAL">globallySimplifyTrace</A>&nbsp;<B>:</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;(reg&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.globallySimplify:VAL:SPEC" HREF="#STR:Reg.globallySimplify:VAL">globallySimplify</A>&nbsp;<B>:</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;(reg&nbsp;<B>*</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.renameAlphabet:VAL:SPEC" HREF="#STR:Reg.renameAlphabet:VAL">renameAlphabet</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.rev:VAL:SPEC" HREF="#STR:Reg.rev:VAL">rev</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.prefix:VAL:SPEC" HREF="#STR:Reg.prefix:VAL">prefix</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.jforlanNew:VAL:SPEC" HREF="#STR:Reg.jforlanNew:VAL">jforlanNew</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.jforlanEdit:VAL:SPEC" HREF="#STR:Reg.jforlanEdit:VAL">jforlanEdit</A>&nbsp;<B>:</B>&nbsp;reg&nbsp;<B>-&gt;</B>&nbsp;reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.jforlanValidate:VAL:SPEC" HREF="#STR:Reg.jforlanValidate:VAL">jforlanValidate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Reg.jforlanPretty:VAL:SPEC" HREF="#STR:Reg.jforlanPretty:VAL">jforlanPretty</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="STR:Reg.concr:TY"></A><CODE><B>datatype</B>&nbsp;concr<BR>
+&nbsp;&nbsp;=&nbsp;EmptyStr<BR>
+&nbsp;&nbsp;|&nbsp;EmptySet<BR>
+&nbsp;&nbsp;|&nbsp;Sym&nbsp;<B>of</B>&nbsp;Sym.sym<BR>
+&nbsp;&nbsp;|&nbsp;Closure&nbsp;<B>of</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;Concat&nbsp;<B>of</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;Union&nbsp;<B>of</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr</CODE>
+<DD>
+The concrete datatype of regular expressions.  <CODE>EmptyStr</CODE> is <CODE>%</CODE>, <CODE>EmptySet</CODE> is <CODE>$</CODE>, and, for all symbols <CODE><VAR>a</VAR></CODE>, <CODE>Sym <VAR>a</VAR></CODE> is the one node tree whose label is <CODE><VAR>a</VAR></CODE>.  For all regular expressions <CODE><VAR>reg</VAR></CODE>, <CODE>Closure <VAR>reg</VAR></CODE> is the tree whose root node is labeled by <CODE>&quot;*&quot;</CODE> and whose only child is <CODE><VAR>reg</VAR></CODE>.  And, for all regular expressions <CODE><VAR>reg1</VAR></CODE> and <CODE><VAR>reg2</VAR></CODE>: <CODE>Concat(<VAR>reg1</VAR>, <VAR>reg2</VAR>)</CODE> is the tree whose root node is labeled by <CODE>&quot;@&quot;</CODE>, with left child <CODE><VAR>reg1</VAR></CODE> and right child <CODE><VAR>reg2</VAR></CODE>; and  <CODE>Union(<VAR>reg1</VAR>, <VAR>reg2</VAR>)</CODE> is the tree whose root node is labeled by <CODE>&quot;+&quot;</CODE>, with left child <CODE><VAR>reg1</VAR></CODE> and right child <CODE><VAR>reg2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.reg:TY"></A><CODE><B>type</B>&nbsp;reg</CODE>
+<DD>
+The abstract type of regular expressions, consisting of the values of type <CODE>concr</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.fromConcr:VAL"></A>
+<DT> <CODE>fromConcr <VAR>concr</VAR></CODE>
+<DD>
+returns <CODE><VAR>concr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.toConcr:VAL"></A>
+<DT> <CODE>toConcr <VAR>reg</VAR></CODE>
+<DD>
+returns <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.inputFromLabToks:VAL"></A>
+<DT> <CODE>inputFromLabToks <VAR>lts</VAR></CODE>
+<DD>
+tries to input a regular expression from <CODE><VAR>lts</VAR></CODE>, consuming as much of <CODE><VAR>lts</VAR></CODE> as possible, and returning the pair of that regular expression and the rest of <CODE><VAR>lts</VAR></CODE>.  Issues an error message if this can't be done.  The labeled token list that is returned will never begin with <CODE>&quot;+&quot;</CODE> (<CODE><CODE><A HREF="lex.html#Lex:STR:SPEC">Lex</A></CODE>.<CODE><A HREF="lex.html#SIG:LEX.tok:TY:SPEC">Plus</A></CODE></CODE>) or <CODE>&quot;(&quot;</CODE> (<CODE><CODE><A HREF="lex.html#Lex:STR:SPEC">Lex</A></CODE>.<CODE><A HREF="lex.html#SIG:LEX.tok:TY:SPEC">OpenPar</A></CODE></CODE>). Either such a token will be consumed in the process of parsing a bigger regular expression, or an error will occur during the attempt to do so.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.fromString:VAL"></A>
+<DT> <CODE>fromString <VAR>s</VAR></CODE>
+<DD>
+inputs a regular expression from <CODE><VAR>s</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.input:VAL"></A>
+<DT> <CODE>input <VAR>fil</VAR></CODE>
+<DD>
+inputs a regular expression from the file named by <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.toPP:VAL"></A>
+<DT> <CODE>toPP <VAR>reg</VAR></CODE>
+<DD>
+returns a pretty-printing expression for <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.toString:VAL"></A>
+<DT> <CODE>toString <VAR>reg</VAR></CODE>
+<DD>
+pretty-prints <CODE><VAR>reg</VAR></CODE> to a string.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.output:VAL"></A>
+<DT> <CODE>output <VAR>reg</VAR></CODE>
+<DD>
+pretty-prints <CODE><VAR>reg</VAR></CODE> to the file named by <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.validPath:VAL"></A>
+<DT> <CODE>validPath(<VAR>reg</VAR>, <VAR>ns</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>ns</VAR></CODE> is a valid path for <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.height:VAL"></A>
+<DT> <CODE>height <VAR>reg</VAR></CODE>
+<DD>
+returns the height of <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.size:VAL"></A>
+<DT> <CODE>size <VAR>reg</VAR></CODE>
+<DD>
+returns the size of <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.numLeaves:VAL"></A>
+<DT> <CODE>numLeaves <VAR>reg</VAR></CODE>
+<DD>
+returns the number of leaves of <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.select:VAL"></A>
+<DT> <CODE>select(<VAR>reg</VAR>, <VAR>ns</VAR>)</CODE>
+<DD>
+returns the subtree of <CODE><VAR>reg</VAR></CODE> pointed to by <CODE><VAR>ns</VAR></CODE>. Issues an error message if <CODE><VAR>ns</VAR></CODE> isn't a valid path for <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.update:VAL"></A>
+<DT> <CODE>update(<VAR>reg</VAR>, <VAR>ns</VAR>, <VAR>reg'</VAR>)</CODE>
+<DD>
+replaces the subtree of <CODE><VAR>reg</VAR></CODE> pointed to by <CODE><VAR>ns</VAR></CODE> with <CODE><VAR>reg'</VAR></CODE>.  Issues an error message if <CODE><VAR>ns</VAR></CODE> isn't valid for <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.maximumLengthPath:VAL"></A>
+<DT> <CODE>maximumLengthPath <VAR>reg</VAR></CODE>
+<DD>
+returns a leftmost, maximum length path for <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.validLeafPath:VAL"></A>
+<DT> <CODE>validLeafPath(<VAR>reg</VAR>, <VAR>ns</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>ns</VAR></CODE> is a valid path for <CODE><VAR>reg</VAR></CODE> that points to a leaf of <CODE><VAR>reg</VAR></CODE>, i.e., to a subtree with no children.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.emptyStr:VAL"></A>
+<DT> <CODE>emptyStr</CODE>
+<DD>
+is <CODE>EmptyStr</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.emptySet:VAL"></A>
+<DT> <CODE>emptySet</CODE>
+<DD>
+is <CODE>EmptySet</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.fromSym:VAL"></A>
+<DT> <CODE>fromSym <VAR>a</VAR></CODE>
+<DD>
+returns <CODE>Sym <VAR>a</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.closure:VAL"></A>
+<DT> <CODE>closure <VAR>reg</VAR></CODE>
+<DD>
+returns <CODE>Closure <VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.concat:VAL"></A>
+<DT> <CODE>concat(<VAR>reg1</VAR>, <VAR>reg2</VAR>)</CODE>
+<DD>
+returns <CODE>Concat(<VAR>reg1</VAR>, <VAR>reg2</VAR>)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.union:VAL"></A>
+<DT> <CODE>union(<VAR>reg1</VAR>, <VAR>reg2</VAR>)</CODE>
+<DD>
+returns <CODE>Union(<VAR>reg1</VAR>, <VAR>reg2</VAR>)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.isEmptyStr:VAL"></A>
+<DT> <CODE>isEmptyStr <VAR>reg</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>reg</VAR></CODE> is <CODE>EmptyStr</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.isEmptySet:VAL"></A>
+<DT> <CODE>isEmptySet <VAR>reg</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>reg</VAR></CODE> is <CODE>EmptySet</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.isSym:VAL"></A>
+<DT> <CODE>isSym <VAR>reg</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>reg</VAR></CODE> is a symbol.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.isClosure:VAL"></A>
+<DT> <CODE>isClosure <VAR>reg</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>reg</VAR></CODE> is a closure.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.isConcat:VAL"></A>
+<DT> <CODE>isConcat <VAR>reg</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>reg</VAR></CODE> is a concatenation.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.isUnion:VAL"></A>
+<DT> <CODE>isUnion <VAR>reg</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>reg</VAR></CODE> is a union.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.compare:VAL"></A>
+<DT> <CODE>compare(<VAR>reg1</VAR>, <VAR>reg2</VAR>)</CODE>
+<DD>
+is defined by: 
+<PRE>
+  local
+    fun kind EmptyStr    = 0
+      | kind EmptySet    = 1
+      | kind (Sym _)     = 2
+      | kind (Closure _) = 3
+      | kind (Concat _)  = 4
+      | kind (Union _)   = 5
+  in
+    fun compare(reg, reg') =
+          case Int.compare(kind reg, kind reg') of
+               LESS    =&gt; LESS
+             | EQUAL   =&gt;
+                 (case (reg, reg') of
+                       (Sym a,              Sym a')               =&gt;
+                         Sym.compare(a, a')
+                     | (Closure reg,        Closure reg')         =&gt;
+                         compare(reg, reg')
+                     | (Concat(reg1, reg2), Concat(reg1', reg2')) =&gt;
+                         (case compare(reg1, reg1') of
+                               LESS    =&gt; LESS
+                             | EQUAL   =&gt; compare(reg2, reg2')
+                             | GREATER =&gt; GREATER)
+                     | (Union(reg1, reg2),  Union(reg1', reg2'))  =&gt;
+                         (case compare(reg1, reg1') of
+                               LESS    =&gt; LESS
+                             | EQUAL   =&gt; compare(reg2, reg2')
+                             | GREATER =&gt; GREATER)
+                     | _                                          =&gt; EQUAL)
+             | GREATER =&gt; GREATER
+  end
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.equal:VAL"></A>
+<DT> <CODE>equal(<VAR>reg1</VAR>, <VAR>reg2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>reg1</VAR></CODE> and <CODE><VAR>reg2</VAR></CODE> are equal.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.fromStr:VAL"></A>
+<DT> <CODE>fromStr <VAR>x</VAR></CODE>
+<DD>
+returns the regular expression that looks, in unabbreviated form, just like <CODE><VAR>x</VAR></CODE>.  It's implemented by: 
+<PRE>
+  fun fromStr nil       = EmptyStr
+    | fromStr [b]       = Sym b
+    | fromStr (b :: bs) = Concat(Sym b, fromStr bs)
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.power:VAL"></A>
+<DT> <CODE>power(<VAR>reg</VAR>, <VAR>n</VAR>)</CODE>
+<DD>
+raises <CODE><VAR>reg</VAR></CODE> to the power <CODE><VAR>n</VAR></CODE>. Issues an error message if <CODE><VAR>n</VAR></CODE> is negative.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.alphabet:VAL"></A>
+<DT> <CODE>alphabet <VAR>reg</VAR></CODE>
+<DD>
+returns the alphabet of <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.split:VAL"></A>
+<DT> <CODE>split</CODE>
+<DD>
+is defined by: 
+<PRE>
+  local
+    fun splt (Sym a)              = ([a], NONE)
+      | splt (Concat(Sym a, reg)) =
+          let val (bs, regOpt) = splt reg
+          in (a :: bs, regOpt) end
+      | splt reg                  = (nil, SOME reg)
+  in
+    fun split EmptyStr = (nil, NONE)
+      | split reg      = splt reg
+  end
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.genConcat:VAL"></A>
+<DT> <CODE>genConcat</CODE>
+<DD>
+is defined by: 
+<PRE>
+  fun genConcat nil           = EmptyStr
+    | genConcat [reg]         = reg
+    | genConcat (reg :: regs) = Concat(reg, genConcat regs)
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.genUnion:VAL"></A>
+<DT> <CODE>genUnion</CODE>
+<DD>
+is defined by: 
+<PRE>
+  fun genUnion nil           = EmptySet
+    | genUnion [reg]         = reg
+    | genUnion (reg :: regs) = Union(reg, genUnion regs)
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.rightConcat:VAL"></A>
+<DT> <CODE>rightConcat</CODE>
+<DD>
+is defined by: 
+<PRE>
+  fun rightConcat(Concat(reg1, reg2), reg3) =
+        Concat(reg1, rightConcat(reg2, reg3))
+    | rightConcat(reg1, reg2)               = Concat(reg1, reg2)
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.rightUnion:VAL"></A>
+<DT> <CODE>rightUnion</CODE>
+<DD>
+is defined by: 
+<PRE>
+  fun rightUnion(Union(reg1, reg2), reg3) =
+        Union(reg1, rightUnion(reg2, reg3))
+    | rightUnion(reg1, reg2)              = Union(reg1, reg2)
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.concatsToList:VAL"></A>
+<DT> <CODE>concatsToList</CODE>
+<DD>
+is defined by: 
+<PRE>
+  fun concatsToList (Concat(reg1, reg2)) = reg1 :: concatsToList reg2
+    | concatsToList reg                  = [reg]
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.unionsToList:VAL"></A>
+<DT> <CODE>unionsToList</CODE>
+<DD>
+is defined by: 
+<PRE>
+  fun unionsToList (Union(reg1, reg2)) = reg1 :: unionsToList reg2
+    | unionsToList reg                 = [reg]
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.sortUnions:VAL"></A>
+<DT> <CODE>sortUnions <VAR>reg</VAR></CODE>
+<DD>
+returns <CODE>genUnion <VAR>regs</VAR></CODE>, where <CODE><VAR>regs</VAR></CODE> is the result of sorting (using <CODE>compare</CODE>) <CODE>unionsToList
+<VAR>reg</VAR></CODE> into strictly ascending order (no duplicates).
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.allSym:VAL"></A>
+<DT> <CODE>allSym <VAR>bs</VAR></CODE>
+<DD>
+returns the all symbols regular expression for <CODE><VAR>bs</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.allStr:VAL"></A>
+<DT> <CODE>allStr <VAR>bs</VAR></CODE>
+<DD>
+returns the all strings regular expression for <CODE><VAR>bs</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.fromStrSet:VAL"></A>
+<DT> <CODE>fromStrSet <VAR>xs</VAR></CODE>
+<DD>
+returns 
+<PRE>
+  genUnion(map fromStr (Set.toList xs))
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.cc:TY"></A><CODE><B>type</B>&nbsp;cc</CODE>
+<DD>
+The abstract type of closure complexities, consisting of nonempty lists of natural numbers sorted in (not necessarily strictly) descending order.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.ccToList:VAL"></A>
+<DT> <CODE>ccToList <VAR>cc</VAR></CODE>
+<DD>
+returns <CODE><VAR>cc</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.singCC:VAL"></A>
+<DT> <CODE>singCC <VAR>n</VAR></CODE>
+<DD>
+returns <CODE>[<VAR>n</VAR>]</CODE>, if <CODE><VAR>n</VAR></CODE> is non-negative. Issues an error message, if <CODE><VAR>n</VAR></CODE> is negative.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.unionCC:VAL"></A>
+<DT> <CODE>unionCC(<VAR>cc1</VAR>, <VAR>cc2</VAR>)</CODE>
+<DD>
+returns the union of <CODE><VAR>cc1</VAR></CODE> and <CODE><VAR>cc2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.succCC:VAL"></A>
+<DT> <CODE>succCC <VAR>cc</VAR></CODE>
+<DD>
+returns the successor of <CODE><VAR>cc</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.cc:VAL"></A>
+<DT> <CODE>cc <VAR>reg</VAR></CODE>
+<DD>
+returns the closure complexity of <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.compareCC:VAL"></A>
+<DT> <CODE>compareCC(<VAR>cc1</VAR>, <VAR>cc2</VAR>)</CODE>
+<DD>
+compares <CODE><VAR>cc1</VAR></CODE> and <CODE><VAR>cc2</VAR></CODE> in the total ordering on closure complexities.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.numConcats:VAL"></A>
+<DT> <CODE>numConcats <VAR>reg</VAR></CODE>
+<DD>
+returns the number of concatenations in <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.numSyms:VAL"></A>
+<DT> <CODE>numSyms <VAR>reg</VAR></CODE>
+<DD>
+returns the number of symbols in <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.standardized:VAL"></A>
+<DT> <CODE>standardized <VAR>reg</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>reg</VAR></CODE> is standardized.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.compareComplexity:VAL"></A>
+<DT> <CODE>compareComplexity(<VAR>reg1</VAR>, <VAR>reg2</VAR>)</CODE>
+<DD>
+compares the complexities of <CODE><VAR>reg1</VAR></CODE> and <CODE><VAR>reg2</VAR></CODE>: <CODE>LESS</CODE> means <CODE><VAR>reg1</VAR></CODE> is strictly simpler (less complex) than <CODE><VAR>reg2</VAR></CODE>; <CODE>EQUAL</CODE> means <CODE><VAR>reg1</VAR></CODE> and <CODE><VAR>reg2</VAR></CODE> are equally simple/complex; and <CODE>GREATER</CODE> means <CODE><VAR>reg1</VAR></CODE> is more complex (less simple) than <CODE><VAR>reg2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.compareComplexityTotal:VAL"></A>
+<DT> <CODE>compareComplexityTotal(<VAR>reg1</VAR>, <VAR>reg2</VAR>)</CODE>
+<DD>
+returns 
+<PRE>
+  case compareComplexity(<VAR>reg1</VAR>, <VAR>reg2</VAR>) of
+       LESS    =&gt; LESS
+     | EQUAL   =&gt; compare(<VAR>reg1</VAR>, <VAR>reg2</VAR>)
+     | GREATER =&gt; GREATER
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.weaklySimplified:VAL"></A>
+<DT> <CODE>weaklySimplified <VAR>reg</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>reg</VAR></CODE> is weakly simplified.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.weaklySimplify:VAL"></A>
+<DT> <CODE>weaklySimplify <VAR>reg</VAR></CODE>
+<DD>
+returns the weak simplification of <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.toStrSetOpt:VAL"></A>
+<DT> <CODE>toStrSet</CODE>
+<DD>
+returns <CODE>SOME</CODE> of the language generated by <CODE><VAR>reg</VAR></CODE>, if this language is finite, and <CODE>NONE</CODE>, if this language is infinite.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.toStrSet:VAL"></A>
+<DT> <CODE>toStrSet</CODE>
+<DD>
+returns the language generated by <CODE><VAR>reg</VAR></CODE>.  Issues an error message if the language generated by <CODE><VAR>reg</VAR></CODE> is infinite.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.hasEmp:VAL"></A>
+<DT> <CODE>hasEmp <VAR>reg</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>reg</VAR></CODE> generates the empty string.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.hasSym:VAL"></A>
+<DT> <CODE>hasSym(<VAR>a</VAR>, <VAR>reg</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>reg</VAR></CODE> generates <CODE>[<VAR>a</VAR>]</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.obviousSubset:VAL"></A>
+<DT> <CODE>obviousSubset(<VAR>reg1</VAR>, <VAR>reg2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>reg1</VAR></CODE> is obviously a subset of <CODE><VAR>reg2</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.localSimplificationRelations:VAL"></A>
+<DT> <CODE>localSimplificationRelations(<VAR>reg1</VAR>, <VAR>reg2</VAR>)</CODE>
+<DD>
+returns: 
+<UL>
+<LI>
+<CODE>LESS</CODE> if <CODE><VAR>reg1</VAR></CODE> is related to <CODE><VAR>reg2</VAR></CODE> in the local simplification well-ordering; 
+<LI>
+<CODE>EQUAL</CODE> if <CODE><VAR>reg1</VAR></CODE> is related to <CODE><VAR>reg2</VAR></CODE> in the local simplification equivalence relation; and 
+<LI>
+<CODE>GREATER</CODE> if <CODE><VAR>reg2</VAR></CODE> is related to <CODE><VAR>reg1</VAR></CODE> in the local simplification well-ordering.
+</UL>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.locallySimplified:VAL"></A>
+<DT> <CODE>locallySimplified <VAR>sub</VAR> <VAR>reg</VAR></CODE>
+<DD>
+If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>locallySimplified</CODE> tests whether <CODE><VAR>reg</VAR></CODE> is locallySimplified with respect to <CODE><VAR>sub</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.locallySimplifyTrace:VAL"></A>
+<DT> <CODE>locallySimplifyTrace (NONE, <VAR>sub</VAR>) <VAR>reg</VAR></CODE>
+<DD>
+If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>locallySimplifyTrace</CODE> returns the local simplification of <CODE><VAR>reg</VAR></CODE> with respect to <CODE><VAR>sub</VAR></CODE>.  <CODE>locallySimplifyTrace</CODE> issues a series of tracing messages, explaining its operation.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.locallySimplifyTrace:VAL"></A>
+<DT> <CODE>locallySimplifyTrace (SOME <VAR>n</VAR>, <VAR>sub</VAR>) <VAR>reg</VAR></CODE>
+<DD>
+If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>locallySimplifyTrace</CODE> returns the local simplification of <CODE><VAR>reg</VAR></CODE> with respect to <CODE><VAR>sub</VAR></CODE>, except that&#8212;at each recursive call of its principal function&#8212;it considers at most <CODE><VAR>n</VAR></CODE> structural reorganizations of its argument. <CODE>locallySimplifyTrace</CODE> issues a series of tracing messages, explaining its operation.  Issues an error message if <CODE><VAR>n</VAR></CODE> isn't at least <CODE>1</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.locallySimplify:VAL"></A>
+<DT> <CODE>locallySimplify</CODE>
+<DD>
+is like <CODE>locallySimplifyTrace</CODE>, except that no tracing messages are issued.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.globallySimplified:VAL"></A>
+<DT> <CODE>globallySimplified (<VAR>true</VAR>, <VAR>sub</VAR>) <VAR>reg</VAR></CODE>
+<DD>
+If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>globallySimplified</CODE> tests whether <CODE><VAR>reg</VAR></CODE> is distributively, globally simplified with respect to <CODE><VAR>sub</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.globallySimplified:VAL"></A>
+<DT> <CODE>globallySimplified (<VAR>false</VAR>, <VAR>sub</VAR>) <VAR>reg</VAR></CODE>
+<DD>
+If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>globallySimplified</CODE> tests whether <CODE><VAR>reg</VAR></CODE> is non-distributively, globally simplified with respect to <CODE><VAR>sub</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.globallySimplifyTrace:VAL"></A>
+<DT> <CODE>globallySimplifyTrace (NONE, <VAR>b</VAR>, <VAR>sub</VAR>) <VAR>reg</VAR></CODE>
+<DD>
+If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>globallySimplifyTrace</CODE> returns the global simplification of <CODE><VAR>reg</VAR></CODE> with respect to <CODE><VAR>b</VAR></CODE> and <CODE><VAR>sub</VAR></CODE>. <CODE>globallySimplifyTrace</CODE> issues a series of tracing messages, explaining its operation.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.globallySimplifyTrace:VAL"></A>
+<DT> <CODE>globallySimplifyTrace (SOME <VAR>n</VAR>, <VAR>b</VAR>, <VAR>sub</VAR>) <VAR>reg</VAR></CODE>
+<DD>
+If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>globallySimplifyTrace</CODE> returns the global simplification of <CODE><VAR>reg</VAR></CODE> with respect to <CODE><VAR>b</VAR></CODE> and <CODE><VAR>sub</VAR></CODE>, except it curtails its search after considering <CODE><VAR>n</VAR></CODE> candidates.  <CODE>globallySimplifyTrace</CODE> issues a series of tracing messages, explaining its operation.  Issues an error message if <CODE><VAR>n</VAR></CODE> isn't at least <CODE>1</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.globallySimplify:VAL"></A>
+<DT> <CODE>globallySimplify</CODE>
+<DD>
+is like <CODE>globallySimplifyTrace</CODE> except that no tracing messages are issued.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.renameAlphabet:VAL"></A>
+<DT> <CODE>renameAlphabet(<VAR>reg</VAR>, <VAR>rel</VAR>)</CODE>
+<DD>
+renames the alphabet of <CODE><VAR>reg</VAR></CODE> using the bijection <CODE><VAR>rel</VAR></CODE>.  Issues an error message if <CODE><VAR>rel</VAR></CODE> is not a bijection from a superset of the alphabet of <CODE><VAR>reg</VAR></CODE> to some set.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.rev:VAL"></A>
+<DT> <CODE>rev <VAR>reg</VAR></CODE>
+<DD>
+returns the reversal of <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.prefix:VAL"></A>
+<DT> <CODE>prefix <VAR>reg</VAR></CODE>
+<DD>
+returns the prefix-closure of <CODE><VAR>reg</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.jforlanNew:VAL"></A>
+<DT> <CODE>jforlanNew()</CODE>
+<DD>
+invokes JForlan, and returns the regular expression that the user creates and commits.  Issues an error message if the user aborts, instead.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.jforlanEdit:VAL"></A>
+<DT> <CODE>jforlanEdit <VAR>reg</VAR></CODE>
+<DD>
+invokes JForlan, letting the user edit <CODE><VAR>reg</VAR></CODE>, and returning the resulting regular expression that the user commits.  Issues an error message if the user aborts, instead.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.jforlanValidate:VAL"></A>
+<DT> <CODE>jforlanValidate</CODE>
+<DD>
+is a low-level function used by JForlan.  See the code for more information.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Reg.jforlanPretty:VAL"></A>
+<DT> <CODE>jforlanPretty</CODE>
+<DD>
+is a low-level function used by JForlan.  See the code for more information.
+<BR>
+<BR>
+
+</DL>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="reg-fa-subsect.html">Parent</A>
+   | <A HREF="index.html">Root</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Forlan Version 4.7</I><BR>
+<I>Copyright &copy; 2018 Alley Stoughton</I><BR>
+
+<HR>
+</BODY></HTML>

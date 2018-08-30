@@ -1,0 +1,51 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }use\ "stutter.sml";
+\item[]\textsl{\symbol{'133}opening\ stutter.sml\symbol{'135}}
+\item[]\textsl{val\ regToEFA\ =\ fn\ :\ reg\ ->\ efa}
+\item[]\textsl{val\ efaToDFA\ =\ fn\ :\ efa\ ->\ dfa}
+\item[]\textsl{val\ regToDFA\ =\ fn\ :\ reg\ ->\ dfa}
+\item[]\textsl{val\ minAndRen\ =\ fn\ :\ dfa\ ->\ dfa}
+\item[]\textsl{val\ allStrReg\ =\ -\ :\ reg}
+\item[]\textsl{val\ allStrDFA\ =\ -\ :\ dfa}
+\item[]\textsl{val\ allStrEFA\ =\ -\ :\ efa}
+\item[]\textsl{val\ longReg\ =\ -\ :\ reg}
+\item[]\textsl{val\ longDFA\ =\ -\ :\ dfa}
+\item[]\textsl{val\ stutterReg\ =\ -\ :\ reg}
+\item[]\textsl{val\ stutterDFA\ =\ -\ :\ dfa}
+\item[]\textsl{val\ notStutterDFA\ =\ -\ :\ dfa}
+\item[]\textsl{val\ longAndNotStutterDFA\ =\ -\ :\ dfa}
+\item[]\textsl{val\ longAndNotStutterEFA\ =\ -\ :\ efa}
+\item[]\textsl{val\ someLongNotStutterEFA'\ =\ -\ :\ efa}
+\item[]\textsl{val\ someLongNotStutterEFA\ =\ -\ :\ efa}
+\item[]\textsl{val\ someLongNotStutterDFA\ =\ -\ :\ dfa}
+\item[]\textsl{val\ allLongStutterDFA\ =\ -\ :\ dfa}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }DFA.output("",\ allLongStutterDFA);
+\item[]\textsl{\symbol{'173}states\symbol{'175}\ A,\ B,\ C,\ D,\ E,\ F,\ G,\ H,\ I,\ J\ \symbol{'173}start\ state\symbol{'175}\ A}
+\item[]\textsl{\symbol{'173}accepting\ states\symbol{'175}\ A,\ B,\ C,\ D,\ E,\ F,\ G,\ H,\ I}
+\item[]\textsl{\symbol{'173}transitions\symbol{'175}}
+\item[]\textsl{A,\ 0\ ->\ B;\ A,\ 1\ ->\ C;\ B,\ 0\ ->\ B;\ B,\ 1\ ->\ E;\ C,\ 0\ ->\ D;\ C,\ 1\ ->\ C;}
+\item[]\textsl{D,\ 0\ ->\ B;\ D,\ 1\ ->\ G;\ E,\ 0\ ->\ F;\ E,\ 1\ ->\ C;\ F,\ 0\ ->\ B;\ F,\ 1\ ->\ I;}
+\item[]\textsl{G,\ 0\ ->\ H;\ G,\ 1\ ->\ C;\ H,\ 0\ ->\ B;\ H,\ 1\ ->\ J;\ I,\ 0\ ->\ J;\ I,\ 1\ ->\ C;}
+\item[]\textsl{J,\ 0\ ->\ J;\ J,\ 1\ ->\ J}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

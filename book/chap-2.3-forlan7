@@ -1,0 +1,2 @@
+use "fact.sml";
+fact 4;

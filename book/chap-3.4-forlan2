@@ -1,0 +1,22 @@
+val lp = LP.input "";
+A, 1 => A, 0 => B, 11 => B, 2 => C, 111 => C
+.
+Sym.output("", LP.startState lp);
+Sym.output("", LP.endState lp);
+LP.length lp;
+Str.output("", LP.label lp);
+val checkLP = FA.checkLP fa;
+checkLP lp;
+val lp' = LP.fromString "A";
+LP.length lp';
+Str.output("", LP.label lp');
+checkLP lp';
+val lp'' = LP.input "";
+A, % => A, 1 => B
+.
+checkLP lp'';
+val lp''' = LP.input "";
+B, 2 => C, 34 => D
+.
+LP.output("", LP.join(lp'', lp'''));
+LP.output("", LP.join(lp''', lp''));

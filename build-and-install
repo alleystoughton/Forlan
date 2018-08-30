@@ -1,0 +1,21 @@
+#!/bin/bash
+
+read -p 'Do you want to upload new version? [yes/no] ' perm
+if [ $perm == yes ];
+then build-and-install-tarball;
+
+     cd html
+     install
+     cd ..
+
+     cd toolset
+     install-manual
+     build-and-install-manual-archives
+     build-and-install-min-src-archives
+     cd ..
+
+     cd jforlan
+     build-and-install
+     cd ..
+else echo aborted;
+fi

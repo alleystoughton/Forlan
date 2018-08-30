@@ -1,0 +1,20 @@
+Reg.hasEmp(Reg.fromString "0*1*");
+Reg.hasEmp(Reg.fromString "01*");
+Reg.hasSym(Sym.fromString "0", Reg.fromString "0*1*");
+Reg.hasSym(Sym.fromString "1", Reg.fromString "0*1*");
+Reg.hasSym(Sym.fromString "0", Reg.fromString "0*$");
+Reg.obviousSubset
+(Reg.fromString "(0 + 1)*",
+ Reg.fromString "0*(0 + 1)*1*");
+Reg.obviousSubset
+(Reg.fromString "0*(0 + 1)*1*",
+ Reg.fromString "(0 + 1)*");
+Reg.obviousSubset
+(Reg.fromString "0*011*1",
+ Reg.fromString "0*1*");
+Reg.obviousSubset
+(Reg.fromString "(01 + 011)1*",
+ Reg.fromString "01*");
+Reg.obviousSubset
+(Reg.fromString "(01)*",
+ Reg.fromString "(% + 0)(10)*(% + 1)");

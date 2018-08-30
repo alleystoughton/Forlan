@@ -1,0 +1,6 @@
+@FILES
+  ["lexical-sect"; "Lexical Analysis";
+    @SECTION "Lexical Analysis" [
+       @FILE "lex"
+    ]
+  ]

@@ -1,0 +1,3 @@
+Int.compare(3, 4);
+Int.compare(4, 4);
+Int.compare(4, 3);

@@ -1,0 +1,15 @@
+@FILES
+  ["messages"; "The Messages Module";]
+@SIGNATURE MESSAGES "messages" [
+  @EXCEPTIONS 
+    Error
+    CannotHappen
+  @VALS 
+    messageString
+    errorString
+    messagePP
+    quiet
+    errorPP
+    cannotHappen
+]
+@STRUCTURE Messages "messages" MESSAGES

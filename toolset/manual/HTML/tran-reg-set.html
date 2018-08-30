@@ -1,0 +1,199 @@
+<!-- HTML/tran-reg-set.html -->
+
+<!-- COPYRIGHT (c) 2012 Alley Stoughton. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The TranRegSet Module</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY><A NAME="top"></A>
+<H1 align=CENTER>Forlan Manual</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>TranRegSet</CODE> Module</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="TRAN_REG_SET:SIG:SPEC"></A><CODE>TRAN_REG_SET</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="TranRegSet:STR:SPEC"></A><CODE>TranRegSet</CODE><B> :> </B>TRAN_REG_SET<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+This module provides operations on finite sets of regular expression transitions, i.e., values of type <CODE><CODE><A HREF="tran-reg.html#TranReg:STR:SPEC">TranReg</A></CODE>.<CODE><A HREF="tran-reg.html#SIG:TRAN_REG.tran_reg:TY:SPEC">tran_reg</A></CODE>
+<CODE><A HREF="set.html#Set:STR:SPEC">Set</A></CODE>.<CODE><A HREF="set.html#SIG:SET.set:TY:SPEC">set</A></CODE></CODE> that are <EM>standard</EM> in the sense that they are compatible with <CODE><A HREF="tran-reg.html#TranReg:STR:SPEC">TranReg</A></CODE>.<CODE><A HREF="tran-reg.html#SIG:TRAN_REG.compare:VAL:SPEC">compare</A></CODE>. All values of type <CODE>TranReg.tran_reg Set.set</CODE> will implicitly be assumed/required to be standard.
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>val</B>&nbsp;<A NAME="STR:TranRegSet.memb:VAL:SPEC" HREF="#STR:TranRegSet.memb:VAL">memb</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.fromList:VAL:SPEC" HREF="#STR:TranRegSet.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.compare:VAL:SPEC" HREF="#STR:TranRegSet.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;Sort.total_ordering<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.subset:VAL:SPEC" HREF="#STR:TranRegSet.subset:VAL">subset</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.equal:VAL:SPEC" HREF="#STR:TranRegSet.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.map:VAL:SPEC" HREF="#STR:TranRegSet.map:VAL">map</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.mapFromList:VAL:SPEC" HREF="#STR:TranRegSet.mapFromList:VAL">mapFromList</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.union:VAL:SPEC" HREF="#STR:TranRegSet.union:VAL">union</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.genUnion:VAL:SPEC" HREF="#STR:TranRegSet.genUnion:VAL">genUnion</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.inter:VAL:SPEC" HREF="#STR:TranRegSet.inter:VAL">inter</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.genInter:VAL:SPEC" HREF="#STR:TranRegSet.genInter:VAL">genInter</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.minus:VAL:SPEC" HREF="#STR:TranRegSet.minus:VAL">minus</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.inputFromLabToks:VAL:SPEC" HREF="#STR:TranRegSet.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.fromString:VAL:SPEC" HREF="#STR:TranRegSet.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.input:VAL:SPEC" HREF="#STR:TranRegSet.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.toPP:VAL:SPEC" HREF="#STR:TranRegSet.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.toString:VAL:SPEC" HREF="#STR:TranRegSet.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.output:VAL:SPEC" HREF="#STR:TranRegSet.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="STR:TranRegSet.memb:VAL"></A>
+<DT> <CODE>memb(<VAR>tran</VAR>, <VAR>trans</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>tran</VAR></CODE> is a member of <CODE><VAR>trans</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.fromList:VAL"></A>
+<DT> <CODE>fromList <VAR>trans</VAR></CODE>
+<DD>
+returns the set whose elements are the elements of <CODE><VAR>trans</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.compare:VAL"></A>
+<DT> <CODE>compare</CODE>
+<DD>
+is <CODE><CODE><A HREF="set.html#Set:STR:SPEC">Set</A></CODE>.<CODE><A HREF="set.html#SIG:SET.compare:VAL:SPEC">compare</A></CODE>
+<CODE><A HREF="tran-reg.html#TranReg:STR:SPEC">TranReg</A></CODE>.<CODE><A HREF="tran-reg.html#SIG:TRAN_REG.compare:VAL:SPEC">compare</A></CODE></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.subset:VAL"></A>
+<DT> <CODE>subset(<VAR>tran1s</VAR>, <VAR>tran2s</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>tran1s</VAR></CODE> is a subset of <CODE><VAR>tran2s</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.equal:VAL"></A>
+<DT> <CODE>equal(<VAR>tran1s</VAR>, <VAR>tran2s</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>tran1s</VAR></CODE> is equal to <CODE><VAR>tran2s</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.map:VAL"></A>
+<DT> <CODE>map <VAR>f</VAR> <VAR>xs</VAR></CODE>
+<DD>
+If <CODE><VAR>xs</VAR></CODE> is compatible with a value <CODE><VAR>cmp</VAR></CODE> of type <CODE><VAR>'a</VAR> Sort.total_ordering</CODE>, then <CODE>map</CODE> returns the set of all regular expression transitions <CODE><VAR>f</VAR> <VAR>x</VAR></CODE> such that <CODE><VAR>x</VAR></CODE> is a member of <CODE><VAR>xs</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.mapFromList:VAL"></A>
+<DT> <CODE>mapFromList <VAR>f</VAR> <VAR>xs</VAR></CODE>
+<DD>
+returns the set of all regular expression transitions <CODE><VAR>f</VAR> <VAR>x</VAR></CODE> such that <CODE><VAR>x</VAR></CODE> is a member of <CODE><VAR>xs</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.union:VAL"></A>
+<DT> <CODE>union(<VAR>tran1s</VAR>, <VAR>tran2s</VAR>)</CODE>
+<DD>
+returns the union of <CODE><VAR>tran1s</VAR></CODE> and <CODE><VAR>tran2s</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.genUnion:VAL"></A>
+<DT> <CODE>genUnion <VAR>transs</VAR></CODE>
+<DD>
+returns the generalized union of <CODE><VAR>transs</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.inter:VAL"></A>
+<DT> <CODE>inter(<VAR>tran1s</VAR>, <VAR>tran2s</VAR>)</CODE>
+<DD>
+returns the intersection of <CODE><VAR>tran1s</VAR></CODE> and <CODE><VAR>tran2s</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.genInter:VAL"></A>
+<DT> <CODE>genInter <VAR>transs</VAR></CODE>
+<DD>
+returns the generalized intersection of <CODE><VAR>transs</VAR></CODE>.  Issues an error message if <CODE><VAR>transs</VAR></CODE> is empty.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.minus:VAL"></A>
+<DT> <CODE>minus(<VAR>tran1s</VAR>, <VAR>tran2s</VAR>)</CODE>
+<DD>
+returns the difference of <CODE><VAR>tran1s</VAR></CODE> and <CODE><VAR>tran2s</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.inputFromLabToks:VAL"></A>
+<DT> <CODE>inputFromLabToks <VAR>lts</VAR></CODE>
+<DD>
+tries to input a set of regular expression transitions from <CODE><VAR>lts</VAR></CODE>, consuming as much of <CODE><VAR>lts</VAR></CODE> as possible, and returning the pair of the set of regular expression transitions and the rest of <CODE><VAR>lts</VAR></CODE>.  Issues an error message if it fails. Will only return the empty set if <CODE><VAR>lts</VAR></CODE> doesn't begin with a symbol. If, after reading a transition, the next element of the labeled token list is <CODE>&quot;,&quot;</CODE> (<CODE><CODE><A HREF="lex.html#Lex:STR:SPEC">Lex</A></CODE>.<CODE><A HREF="lex.html#SIG:LEX.tok:TY:SPEC">Comma</A></CODE></CODE>), then <CODE>inputFromLabToks</CODE> insists on reading another transition, even if this results in failure.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.fromString:VAL"></A>
+<DT> <CODE>fromString <VAR>s</VAR></CODE>
+<DD>
+inputs a set of regular expression transitions from <CODE><VAR>s</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.input:VAL"></A>
+<DT> <CODE>input <VAR>fil</VAR></CODE>
+<DD>
+inputs a set of regular expression transitions from the file <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.toPP:VAL"></A>
+<DT> <CODE>toPP <VAR>trans</VAR></CODE>
+<DD>
+returns a pretty-printing expression for <CODE><VAR>trans</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.toString:VAL"></A>
+<DT> <CODE>toString <VAR>trans</VAR></CODE>
+<DD>
+pretty-prints <CODE><VAR>trans</VAR></CODE> to a string.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:TranRegSet.output:VAL"></A>
+<DT> <CODE>output(<VAR>fil</VAR>, <VAR>trans</VAR>)</CODE>
+<DD>
+pretty-prints <CODE><VAR>trans</VAR></CODE> to file <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+</DL>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="reg-fa-subsect.html">Parent</A>
+   | <A HREF="index.html">Root</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Forlan Version 4.7</I><BR>
+<I>Copyright &copy; 2018 Alley Stoughton</I><BR>
+
+<HR>
+</BODY></HTML>

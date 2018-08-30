@@ -1,0 +1,2 @@
+Skeleton 5
+d2f5Cd"FA"d"LP"d"OS"d"PP"d"Int"Cd"Reg"d"Set"d"Str"d"Sym"d"List"Cd"Sort"d"String"d"SymRel"d"SymSet"d"System"Cd"TextIO"d"TranReg"‰¢Messages"d"TranRegSet"d"StringAux"Nad¢RFA"jh2ad"M"gp1ˇÅ?ad"L"gp1d"Lex"gp1cˇÇ&

@@ -1,0 +1,61 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }Reg.output("",\ Reg.genConcat\ nil);
+\item[]\textsl{%}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Reg.output("",\ Reg.genUnion\ nil);
+\item[]\textsl{$}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ regs\ =
+\item[]\textsl{=\ }\ \ \ \ \ \ \symbol{'133}Reg.fromString\ "01",\ Reg.fromString\ "01\ +\ 12",
+\item[]\textsl{=\ }\ \ \ \ \ \ \ Reg.fromString\ "(1\ +\ 2)\symbol{'052}",\ Reg.fromString\ "3\ +\ 4"\symbol{'135};
+\item[]\textsl{val\ regs\ =\ \symbol{'133}-,-,-,-\symbol{'135}\ :\ reg\ list}
+\item[]\textsl{-\ }Reg.output("",\ Reg.genConcat\ regs);
+\item[]\textsl{(01)(01\ +\ 12)(1\ +\ 2)\symbol{'052}(3\ +\ 4)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Reg.output("",\ Reg.genUnion\ regs);
+\item[]\textsl{01\ +\ (01\ +\ 12)\ +\ (1\ +\ 2)\symbol{'052}\ +\ 3\ +\ 4}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Reg.output
+\item[]\textsl{=\ }("",
+\item[]\textsl{=\ }\ Reg.rightConcat
+\item[]\textsl{=\ }\ (Reg.fromString\ "0123",\ Reg.fromString\ "4567"));
+\item[]\textsl{01234567}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Reg.output
+\item[]\textsl{=\ }("",
+\item[]\textsl{=\ }\ Reg.rightUnion
+\item[]\textsl{=\ }\ (Reg.fromString\ "0\ +\ 1\ +\ 2",\ Reg.fromString\ "1\ +\ 2\ +\ 3"));
+\item[]\textsl{0\ +\ 1\ +\ 2\ +\ 1\ +\ 2\ +\ 3}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }map
+\item[]\textsl{=\ }Reg.toString
+\item[]\textsl{=\ }(Reg.concatsToList(Reg.fromString\ "0(12)34"));
+\item[]\textsl{val\ it\ =\ \symbol{'133}"0","12","3","4"\symbol{'135}\ :\ string\ list}
+\item[]\textsl{-\ }map
+\item[]\textsl{=\ }Reg.toString
+\item[]\textsl{=\ }(Reg.unionsToList(Reg.fromString\ "0\ +\ (1\ +\ 2)\ +\ 3\ +\ 0"));
+\item[]\textsl{val\ it\ =\ \symbol{'133}"0","1\ +\ 2","3","0"\symbol{'135}\ :\ string\ list}
+\item[]\textsl{-\ }Reg.output
+\item[]\textsl{=\ }("",\ Reg.sortUnions(Reg.fromString\ "12\ +\ 0\ +\ 3\ +\ 0"));
+\item[]\textsl{0\ +\ 3\ +\ 12}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

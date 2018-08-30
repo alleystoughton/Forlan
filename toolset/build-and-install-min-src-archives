@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# build .zip and .tgz archives with just the source needed to build
+# Forlan, along with the shell scripts needed to build an SML/NJ
+# heap image for Forlan from this source, and to run it
+
+# installs archives in html directory
+
+# ML-Doc doesn't have to be installed if the src/BASE.sig files are
+# newer than the BASE.mldoc files
+
+html=$(cat ../html-directory.txt)
+version=$(cat ../version.txt)
+
+echo Building minimum source archives for Forlan Version $version and installing in $html
+
+cd src
+change-version $version
+sml <<'END_OF_INPUT'
+CM.make "forlan.cm";
+END_OF_INPUT
+
+cd ..
+tmpdir=$$-tmp-$$
+mkdir $tmpdir
+cd $tmpdir
+mkdir forlan-min-src-$version
+cd forlan-min-src-$version
+cp ../../src/{*.sig,*.sml} .
+rm mldoc-tool.sml
+
+cat > forlan.cm <<'END_OF_INPUT'
+(* forlan.cm *)
+
+Library
+
+source(-)
+
+is
+
+$/basis.cm
+$smlnj/cm.cm
+$smlnj/compiler.cm
+$smlnj/compiler/compiler.cm
+END_OF_INPUT
+
+ls *.sml *.sig >> forlan.cm
+
+cp ../../scripts/* .
+cd ..
+
+tar cf forlan-min-src-$version.tar forlan-min-src-$version
+gzip forlan-min-src-$version.tar
+mv -f forlan-min-src-$version.tar.gz /tmp/forlan-min-src-$version.tgz
+
+zip -r forlan-min-src-$version.zip forlan-min-src-$version
+mv -f forlan-min-src-$version.zip /tmp
+
+cd ..
+rm -rf $tmpdir
+
+mv /tmp/forlan-min-src-$version.tgz $html
+mv /tmp/forlan-min-src-$version.zip $html

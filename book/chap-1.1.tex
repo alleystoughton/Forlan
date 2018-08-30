@@ -1,0 +1,1217 @@
+\section{Basic Set Theory}
+\label{BasisSetTheory}
+
+\index{set|(}%
+In this section, we will cover the material on sets, relations,
+functions and data structures that will be needed in what follows.
+Much of this material should be at least partly familiar.
+
+\subsection{Describing Sets by Listing Their Elements}
+
+We write $\emptyset$
+\index{empty set}%
+\index{set!empty}%
+\index{ empty@$\emptyset$}%
+\index{set! empty@$\emptyset$}%
+for the \emph{empty set}---the set with no elements.  Finite sets can
+be described by listing their elements inside set braces: $\{x_1,
+\ldots, x_n\}$.
+\index{ set@$\{\ldots\}$}%
+\index{set! set@$\{\ldots\}$}%
+E.g., $\{3\}$ is the \emph{singleton set}
+\index{singleton set}%
+\index{set!singleton}%
+whose only element is $3$, and $\{1, 3, 5, 7\}$ is the set consisting
+of the first four odd numbers.
+
+\subsection{Sets of Numbers}
+
+We write:
+\begin{itemize}
+\item $\nats$
+\index{n@$\nats$}%
+for the set $\{0, 1, \ldots\}$ of all natural numbers;
+\index{natural number}%
+
+\item $\ints$
+\index{z@$\ints$}%
+for the set $\{\ldots, -1, 0, 1, \ldots\}$ of all integers;
+\index{integer}%
+
+\item $\reals$
+\index{r@$\reals$}%
+for the set of all real numbers.
+\index{real number}%
+\end{itemize}
+Note that, for us, $0$ \emph{is} a natural number.  This has many
+pleasant consequences, e.g., that the size of a finite set or
+the length of a list will always be a natural number.
+
+\subsection{Relationships between Sets}
+
+As usual, we write $x\in Y$
+\index{element of}%
+\index{set!element of}%
+\index{ element of@$\in$}%
+\index{set! element of@$\in$}%
+to mean that $x$ is one of the elements (members) of the set $Y$.
+Sets $A$ and $B$ are equal ($A=B$)
+\index{equal!set}%
+\index{set!equal}%
+\index{ equal@$=$}%
+\index{set! equal@$=$}%
+iff (if and only if) they have the same elements, i.e., for all $x$,
+\index{iff}%
+$x\in A$ iff $x\in B$.
+
+Suppose $A$ and $B$ are sets.  We say that:
+\begin{itemize}
+\item $A$ is a \emph{subset}
+\index{subset}%
+\index{set!subset}%
+of $B$ ($A\sub B$)
+\index{ subset@$\sub$}%
+\index{set! subset@$\sub$}%
+iff, for all $x\in A$, $x\in B$;
+
+\item $A$ is a
+\emph{proper subset}
+\index{proper!subset}%
+\index{subset!proper}%
+\index{set!subset!proper}%
+of $B$ ($A\subsetneq B$)
+\index{ proper subset@$\subsetneq$}%
+\index{set! proper subset@$\subsetneq$}%
+iff $A\sub B$ but $A\neq B$.
+\end{itemize}
+In other words: $A$ is a subset of $B$ iff every everything in $A$ is
+also in $B$, and $A$ is a proper subset of $B$ iff everything in $A$
+is in $B$, but there is at least one element of $B$ that is not in
+$A$.
+
+For example, $\emptyset\subsetneq\nats$, $\nats\sub\nats$ and
+$\nats\subsetneq\ints$.  The definition of $\sub$ gives us the most
+common way of showing that $A\sub B$: we suppose that $x\in A$, and
+show (with no additional assumptions about $x$) that $x\in B$.
+Similarly, if we want to show that $A=B$, it will suffice to show that
+$A\sub B$ and $B\sub A$, i.e., that everything in $A$ is in $B$, and
+everything in $B$ is in $A$.  Of course, we can also use the
+usual properties of equality to show set equalities.  E.g.,
+if $A=B$ and $B=C$, we have that $A=C$.
+
+Note that, for all sets $A$, $B$ and $C$:
+\begin{itemize}
+\item if $A\sub B\sub C$, then $A\sub C$;
+
+\item if $A\sub B\subsetneq C$, then $A\subsetneq C$;
+
+\item if $A\subsetneq B\sub C$, then $A\subsetneq C$;
+
+\item if $A\subsetneq B\subsetneq C$, then $A\subsetneq C$.
+\end{itemize}
+
+Given sets $A$ and $B$, we say that:
+\begin{itemize}
+\item $A$ is a \emph{superset}
+\index{superset}%
+\index{set!superset}%
+of $B$ ($A\supseteq B$)
+\index{ superset@$\supseteq$}%
+\index{set! superset@$\supseteq$}%
+iff, for all $x\in B$, $x\in A$;
+
+\item $A$ is a
+\emph{proper superset}
+\index{proper!superset}%
+\index{superset!proper}%
+\index{set!superset!proper}%
+of $B$ ($A\supsetneq B$)
+\index{ proper superset@$\supsetneq$}%
+\index{set! proper superset@$\supsetneq$}%
+iff $A\supseteq B$ but $A\neq B$.
+\end{itemize}
+Of course, for all sets $A$ and $B$, we have that:
+$A=B$ iff $A\supseteq B\supseteq A$; and $A\sub B$ iff $B\supseteq A$.
+Furthermore, for all sets $A$, $B$ and $C$:
+\begin{itemize}
+\item if $A\supseteq B\supseteq C$, then $A\supseteq C$;
+
+\item if $A\supseteq B\supsetneq C$, then $A\supsetneq C$;
+
+\item if $A\supsetneq B\supseteq C$, then $A\supsetneq C$;
+
+\item if $A\supsetneq B\supsetneq C$, then $A\supsetneq C$.
+\end{itemize}
+
+\subsection{Set Formation}
+
+We will make extensive use of the $\setof{\cdots}{\cdots}$ notation
+for forming sets.
+\index{forming sets|(}%
+\index{set!formation|(}%
+\index{ set of all@$\setof{\cdots}{\cdots}$}%
+\index{set! set of all@$\setof{\cdots}{\cdots}$}%
+Let's consider two representative examples of its use.
+
+For the first example, let
+\begin{gather*}
+A=\setof{n}{n\in\nats\eqtxt{and}n^2\geq 20}
+ =\setof{n\in\nats}{n^2\geq 20}.
+\end{gather*}
+(where the third of these expressions abbreviates the second one).
+Here, $n$ is a bound variable
+\index{bound variable}%
+and is universally quantified%
+\index{universally quantified}%
+\index{quantification!universal}%
+---changing it uniformly to $m$, for instance, wouldn't change the
+meaning of $A$.  By the definition of $A$, we have that, for all $n$,
+\begin{gather*}
+n\in A\myiff n\in\nats\eqtxt{and}n^2\geq 20
+\end{gather*}
+Thus, e.g.,
+\begin{gather*}
+5\in A\myiff 5\in\nats\eqtxt{and}5^2\geq 20 .
+\end{gather*}
+Since $5\in\nats$ and $5^2=25\geq 20$, it follows that $5\in A$.  On
+the other hand, $5.5\not\in A$, since $5.5\not\in\nats$, and $4\not\in A$,
+since $4^2\not\geq 20$.
+
+For the second example, let
+\begin{gather*}
+B=\setof{n^3+m^2}{n,m\in\nats\eqtxt{and}n,m\geq 1} .
+\end{gather*}
+Note that $n^3+m^2$ is a term (expression), rather than a variable.
+The variables $n$ and $m$ are existentially quantified,
+\index{existentially quantified}%
+\index{quantification!existential}%
+rather than universally quantified, so that, for all $l$,
+\begin{align*}
+l\in B&\myiff l = n^3 + m^2, \eqtxt{for some}
+         n, m\eqtxt{such that}n,m\in\nats\eqtxt{and}n,m\geq 1 \\
+      &\myiff l = n^3 + m^2, \eqtxt{for some}
+         n, m\in\nats\eqtxt{such that}n,m\geq 1.
+\end{align*}
+Thus, to show that $9\in B$, we would have to show that
+\begin{gather*}
+9 = n^3 + m^2\eqtxt{and}n,m\in\nats\eqtxt{and}n,m\geq 1 ,
+\end{gather*}
+for some values of $n,m$.  And, this holds, since $9 = 2^3 +
+1^2\eqtxt{and}2,1\in\nats\eqtxt{and}2,1\geq 1$.
+
+We use set formation in the following definition.
+Given $n,m\in\ints$, we write $[n:m]$ for $\setof{l\in\ints}{l\geq
+  n\eqtxt{and}l\leq m}$.
+\index{integers!interval}%
+\index{integers! interval@$[\cdot:\cdot]$}%
+\index{natural numbers!interval}%
+\index{natural numbers! interval@$[\cdot:\cdot]$}%
+\index{ interval@$[\cdot:\cdot]$}%
+Thus $[n:m]$ is all of the integers that are at least $n$ and no
+more than $m$.  For example, $[-2:1]$ is $\{-2,-1,0,1\}$ and
+$[3:2]$ is $\emptyset$.
+\index{forming sets|)}%
+\index{set!formation|)}%
+
+\subsection{Operations on Sets}
+
+Next, we consider some standard operations
+on sets.  Recall the following operations on sets $A$ and $B$:
+\begin{alignat*}{2}
+A\cup B&=\setof{x}{x\in A\eqtxt{or}x\in B}
+&&\by{union}\\
+\index{ union@$\cup$}%
+\index{set! union@$\cup$}%
+\index{union!set}%
+\index{set!union|see{union, set}}%
+A\cap B&=\setof{x}{x\in A\eqtxt{and}x\in B}
+&&\by{intersection} \\
+\index{ intersection@$\cap$}%
+\index{set! intersection@$\cap$}%
+\index{intersection!set}%
+\index{set!intersection|see{intersection, set}}%
+A-B&=\setof{x\in A}{x\not\in B}
+&&\by{difference} \\
+\index{ difference@$-$}%
+\index{set! difference@$-$}%
+\index{difference!set}%
+\index{set!difference}%
+A\times B&=\setof{(x,y)}{x\in A\eqtxt{and}y\in B}
+&&\by{product} \\
+\index{ product@$\times$}%
+\index{set! product@$\times$}%
+\index{product}%
+\index{set!product}%
+\powset\,A&=\setof{X}{X\sub A}
+&&\by{power set}.
+\index{powerset@$\powset$}%
+\index{set!powerset@$\powset$}%
+\index{powerset}%
+\index{set!powerset}%
+\end{alignat*}
+
+Of course, union and intersection are both commutative
+\index{commutative!union}%
+\index{commutative!intersection}%
+\index{union!set!commutative}%
+\index{intersection!set!commutative}%
+and associative
+\index{associative!union}%
+\index{associative!intersection}%
+\index{union!set!associative}%
+\index{intersection!set!associative}%
+($A\cup B=B\cup A$, $(A\cup B)\cup C=A\cup
+(B\cup C)$, $A\cap B=B\cap A$ and $(A\cap B)\cap C=A\cap (B\cap C)$,
+for all sets $A, B, C$).
+Furthermore, we have that union is idempotent
+\index{idempotent!union}%
+\index{union!set!idempotent}%
+($A\cup A=A$, for all
+sets $A$), and that $\emptyset$ is the identity
+\index{identity!union}%
+\index{union!set!identity}%
+for union ($\emptyset\cup A=A=A\cup\emptyset$, for all sets $A$).
+Also, intersection is idempotent
+\index{idempotent!intersection}%
+\index{intersection!set!idempotent}%
+($A\cap A=A$, for all sets $A$), and
+$\emptyset$ is the zero
+\index{zero!intersection}%
+\index{intersection!set!zero}%
+for intersection ($\emptyset\cap
+A=\emptyset=A\cap\emptyset$, for all sets $A$).  $A-B$ is formed by
+removing the elements of $B$ from $A$, if necessary.  For example,
+$\{0,1,2\}-\{1,4\}=\{0,2\}$.
+
+$A\times B$ consists of all ordered pairs $(x,y)$,
+\index{ordered pair}%
+\index{ ordered pair@$(\cdot,\cdot)$}%
+where $x$ comes from $A$ and $y$ comes from $B$.  For example,
+$\{0,1\}\times\{1,2\}=\{(0,1),(0,2),(1,1),(1,2)\}$.  Remember that an
+ordered pair $(x,y)$ is different from $\{x,y\}$, the set containing
+just $x$ and $y$.  In particular, we have that, for all
+$x$, $x'$, $y$, $y'$, $(x,y)=(x',y')$ iff
+$x=x'$ and $y=y'$, whereas $\{1,2\}=\{2,1\}$.
+If $A$ and $B$ have $n$ and $m$ elements, respectively, for
+$n,m\in\nats$, then $A\times B$ will have $nm$ elements.  Finally,
+$\powset\,A$ consists of all of the subsets of $A$.  For example,
+$\powset\,\{0,1\}=\{\emptyset,\{0\},\{1\},\{0,1\}\}$.  If $A$ has $n$
+elements, for $n\in\nats$, then $\powset\,A$ will have $2^n$ elements.
+
+We let $\times$ associate to the right, so that, e.g.,
+\index{ product@$\times$}%
+\index{set! product@$\times$}%
+$A\times B\times C = A\times(B\times C)$.  And, we abbreviate
+$(x_1,(x_2,\cdots(x_{n-1},x_n)\cdots))$ to
+$(x_1,x_2,\ldots,x_{n-1},x_n)$, thinking of it as an \emph{ordered}
+$n$-\emph{tuple}.
+\index{ordered tuple@ordered $n$-tuple}%
+For example
+$(x,(y,z))$ is abbreviated to $(x,y,z)$, and we think of it
+as an \emph{ordered triple}.
+\index{ordered triple}%
+\index{ ordered triple@$(\cdot,\cdot,\cdot)$}%
+
+As an example of a proof involving sets, let's prove
+the following simple proposition, which says that intersections
+may be distributed over unions:
+\index{distributivity}%
+
+\begin{proposition}
+\label{InterOverUnionProp}
+Suppose $A$, $B$ and $C$ are sets.
+
+\begin{enumerate}[\quad(1)]
+\item $A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$.
+
+\item $(A\cup B)\cap C=(A\cap C)\cup(B\cap C)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+We show (1), the proof of (2) being similar.
+We must show that $A\cap(B\cup C)\sub(A\cap B)\cup(A\cap C)\sub
+A\cap(B\cup C)$.
+
+\begin{description}
+\item[\quad($A\cap(B\cup C)\sub(A\cap B)\cup(A\cap C)$)] Suppose
+$x\in A\cap(B\cup C)$.  We must show that
+$x\in (A\cap B)\cup(A\cap C)$.
+By our assumption, we have that  $x\in A$ and $x\in B\cup C$.
+Since $x\in B\cup C$, there are two cases to consider.
+\begin{itemize}
+\item Suppose $x\in B$.  Then $x\in A\cap B\sub (A\cap B)\cup(A\cap C)$,
+so that $x\in(A\cap B)\cup(A\cap C)$.
+
+\item Suppose $x\in C$.  Then $x\in A\cap C\sub (A\cap B)\cup(A\cap C)$,
+so that $x\in(A\cap B)\cup(A\cap C)$.
+\end{itemize}
+
+\item[\quad($(A\cap B)\cup(A\cap C)\sub A\cap(B\cup C)$)] Suppose
+$x\in (A\cap B)\cup(A\cap C)$.  We must show that
+$x\in A\cap(B\cup C)$.
+There are two cases to consider.
+\begin{itemize}
+\item Suppose $x\in A\cap B$.  Then $x\in A$ and $x\in B\sub B\cup C$,
+so that $x\in A\cap(B\cup C)$.
+
+\item Suppose $x\in A\cap C$.  Then $x\in A$ and $x\in C\sub B\cup C$,
+so that $x\in A\cap(B\cup C)$.
+\end{itemize}
+\end{description}
+\end{proof}
+
+\begin{exercise}
+Suppose $A$, $B$ and $C$ are sets.  Prove that union distributes over
+intersection, i.e., for all sets $A$, $B$ and $C$:
+\begin{enumerate}[\quad(1)]
+\item $A\cup(B\cap C)=(A\cup B)\cap(A\cup C)$.
+
+\item $(A\cap B)\cup C=(A\cup C)\cap(B\cup C)$.
+\end{enumerate}
+\end{exercise}
+
+Next, we consider generalized versions of union and intersection that
+work on sets of sets.  If $X$ is a set of sets, then the
+\emph{generalized union}
+\index{generalized union}%
+\index{union!set!generalized}%
+of $X$ $(\bigcup X)$
+\index{ generalized union@$\bigcup$}%
+\index{set! generalized union@$\bigcup$}%
+is
+\begin{gather*}
+\setof{a}{a\in A,\eqtxtr{for some}A\in X} .
+\end{gather*}
+Thus, to show that $a\in\bigcup X$, we must show that $a$ is in at
+least one element $A$ of $X$.  For example
+\begin{align*}
+\bigcup\{\{0,1\},\{1,2\},\{2,3\}\} &=
+\{0,1,2,3\}=\{0,1\}\cup\{1,2\}\cup\{2,3\}, \\
+\bigcup\emptyset &= \emptyset.
+\end{align*}
+
+If $X$ is a \emph{nonempty} set of sets, then the \emph{generalized
+intersection}
+\index{generalized intersection}%
+\index{intersection!set!generalized}%
+of $X$ $(\bigcap X)$
+\index{ generalized intersection@$\bigcap$}%
+\index{set! generalized intersection@$\bigcap$}%
+is
+\begin{gather*}
+\setof{a}{a\in A,\eqtxtr{for all}A\in X} .
+\end{gather*}
+Thus, to show that $a\in\bigcap X$, we must show that
+$a$ is in every element $A$ of $X$.
+For example
+\begin{gather*}
+\bigcap\{\{0,1\},\{1,2\},\{2,3\}\} =
+\emptyset=\{0,1\}\cap\{1,2\}\cap\{2,3\} .
+\end{gather*}
+
+If we allowed $\bigcap\emptyset$, then it would contain
+all elements $a$ of our universe that are in all of the nonexistent
+elements of $\emptyset$, i.e., it would contain all elements of
+our universe.  It turns out, however, that there is no such
+set, which is why we may only take generalized intersections
+of non-empty sets.
+
+\subsection{Relations and Functions}
+
+Next, we consider relations and functions.  A \emph{relation}
+\index{relation}%
+$R$ is a set of ordered pairs.  The \emph{domain}
+\index{domain}%
+\index{relation!domain}%
+of a relation $R$ ($\domain\,R$)
+\index{domain@$\domain$}%
+\index{relation!domain@$\domain$}%
+is $\setof{x}{(x,y)\in R, \eqtxtr{for
+some}y}$, and the \emph{range}
+\index{range}%
+\index{relation!range}%
+of $R$ ($\range\,R$)
+\index{range@$\range$}%
+\index{relation!range@$\range$}%
+is $\setof{y}{(x,y)\in R,
+\eqtxtr{for some}x}$.  We say that $R$ is a \emph{relation from} a
+\index{relation from set to set}%
+set $X$ \emph{to} a set $Y$ iff $\domain\,R\sub X$ and $\range\,R\sub Y$,
+and that $R$ is a \emph{relation on} a set $A$ iff
+$\domain\,R\cup\range\,R\sub A$.  We often write $x\mathrel{R}y$ for
+$(x, y)\in R$.
+
+Consider the relation
+\begin{gather*}
+R=\{(0,1),(1,2),(0,2)\} .
+\end{gather*}
+Then, $\domain\,R=\{0,1\}$, $\range\,R=\{1,2\}$, $R$ is a relation from
+$\{0,1\}$ to $\{1,2\}$, and $R$ is a relation on $\{0,1,2\}$.
+Of course, $R$ is also, e.g., a relation between $\nats$ and $\reals$,
+as well as relation on $\reals$.
+
+We often form relations using set formation.
+\index{forming sets}%
+\index{set!formation}%
+\index{ set of all@$\setof{\cdots}{\cdots}$}%
+\index{set! set of all@$\setof{\cdots}{\cdots}$}%
+For example, suppose
+$\phi(x,y)$ is a formula involving variables $x$ and $y$.  Then we can
+let $R=\setof{(x,y)}{\phi(x,y)}$, and it is easy to show that, for all
+$x, y$, $(x,y)\in R$ iff $\phi(x,y)$.
+
+Given a set $A$, the \emph{identity relation}
+\index{identity relation}%
+\index{relation!identity}%
+on $A$ ($\id_A$)
+\index{id@$\id$}%
+\index{relation!id@$\id$}%
+is $\setof{(x,x)}{x\in A}$.  For example, $\id_{\{1,3,5\}}$ is
+$\{(1,1),(3,3),(5,5)\}$.
+Given relations $R$ and $S$, the
+\emph{composition of}
+\index{relation!composition}%
+\index{composition!relation|see{relation, composition}}%
+\index{associative!relation composition}%
+$S$ and $R$ ($S\circ R$)
+\index{ composition@$\circ$}%
+\index{relation! composition@$\circ$}%
+is $\setof{(x,z)}{(x,y)\in R\eqtxt{and} (y,z)\in S,\eqtxt{for some} y}$.
+Intuitively, it's the relation formed by starting with a pair
+$(x,y)\in R$, following it with a pair $(y,z)\in S$ (one that begins
+where the pair from $R$ left off), and supressing the intermediate
+value $y$, leaving us with $(x,z)$.  For example, if $R=\{(1, 1), (1,
+2), (2, 3)\}$ and $S=\{(2, 3), (2, 4), (3, 4)\}$, then from
+$(1,2)\in R$ and $(2,3)\in S$, we can conclude $(1,3)\in S\circ R$.
+There are two more pairs in $S\circ R$, giving us
+$S\circ R=\{(1, 3), (1, 4), (2, 4)\}$.  For all sets $A$, $B$ and $C$,
+and relations $R$ and $S$, if $R$ is a relation from $A$ to $B$,
+and $S$ is a relation from $B$ to $C$, then $S\circ R$ is a relation
+from $A$ to $C$.
+
+It is easy to show that $\circ$ is associative
+\index{associative!relation composition}%
+\index{relation!composition!associative}%
+\index{identity!relation composition}%
+\index{relation!composition!identity}%
+and has the identity relations as its identities:
+\begin{enumerate}[\quad(1)]
+\item For all sets $A$ and $B$, and relations $R$ from $A$ to $B$,
+$\id_B\circ R = R = R\circ\id_A$.
+
+\item For all sets $A$, $B$, $C$ and $D$, and relations
+$R$ from $A$ to $B$, $S$ from $B$ to $C$, and $T$ from $C$ to $D$,
+$(T\circ S)\circ R = T\circ (S\circ R)$.
+\end{enumerate}
+Because of (2), we can write $T\circ S\circ R$, without worrying about
+how it is parenthesized.
+
+The \emph{inverse}
+\index{relation!inverse}%
+of a relation $R$ ($R^{-1}$) is the relation $\setof{(y,
+x)}{(x, y)\in R}$, i.e., it is the relation obtained by reversing each
+of the pairs in $R$.  For example, if $R=\{(0, 1), (1, 2), (1, 3)\}$,
+then the inverse of $R$ is $\{(1, 0), (2, 1), (3, 1)\}$.
+So for all sets $A$ and $B$, and relations $R$, if $R$ is
+a relation from $A$ to $B$, then $R^{-1}$ is a relation from
+$B$ to $A$.
+
+A relation $R$ is:
+\begin{itemize}
+\item \emph{reflexive on}
+\index{reflexive on set}%
+\index{relation!reflexive on set}%
+a set $A$ iff, for all $x\in A$, $(x,x)\in R$;
+
+\item \emph{transitive}
+\index{transitive}%
+\index{relation!transitive}%
+iff, for all $x,y,z$, if $(x,y)\in R$ and
+$(y,z)\in R$, then $(x, z)\in R$;
+
+\item \emph{symmetric}
+\index{symmetric}%
+\index{relation!symmetric}%
+iff, for all $x,y$, if $(x,y)\in R$, then $(y, x)\in R$;
+
+\item \emph{antisymmetric}
+\index{antisymmetric}%
+\index{relation!antisymmetric}%
+iff, for all $x,y$, if $(x,y)\in R$ and $(y,x)\in R$, then $x=y$;
+
+\item \emph{total on}
+\index{total}%
+\index{relation!total}%
+a set $A$ iff, for all $x,y\in A$, either $(x,y)\in R$ or $(y,x)\in R$;
+
+\item a \emph{function}
+\index{function}%
+\index{relation!function|see{function}}%
+iff, for all $x,y,z$, if $(x,y)\in R$ and $(x, z)\in R$, then $y=z$.
+\end{itemize}
+Note that being antisymmetric is \emph{not} the same as not being symmetric.
+
+Suppose, e.g., that $R=\{(0,1),(1,2),(0,2)\}$.
+Then:
+\begin{itemize}
+\item $R$ is not reflexive on $\{0,1,2\}$, since $(0,0)\not\in R$.
+
+\item $R$ is transitive, since whenever $(x,y)$ and $(y,z)$
+are in $R$, it follows that $(x,z)\in R$.  Since
+$(0,1)$ and $(1,2)$ are in $R$, we must have that $(0,2)$ is in $R$,
+which is indeed true.
+
+\item $R$ is not symmetric, since $(0,1)\in R$, but $(1,0)\not\in R$.
+
+\item $R$ is antisymmetric, since there are no $x,y$ such
+  that $(x,y)$ and $(y,x)$ are both in $R$.  (If we added
+  $(1,0)$ to $R$, then $R$ would not be antisymmetric, since
+  then $R$ would contain $(0,1)$ and $(1,0)$, but $0\neq 1$.)
+
+\item $R$ is not total on $\{0,1,2\}$, since $(0,0)\not\in R$.
+
+\item $R$ is not a function, since $(0,1)\in R$ and $(0,2)\in R$.
+Intuitively, given an input of $0$, it's not clear whether
+$R$'s output is $1$ or $2$.
+\end{itemize}
+
+We say that $R$ is a \emph{total ordering on} a set $A$ iff
+\index{total ordering}%
+$R$ is a transitive, antisymmetric and total relation on $A$.
+It is easy to see that such an $R$ will also be reflexive on $A$.
+Futhermore, if $R$ is a total ordering on $A$, then $R^{-1}$ is also a
+total ordering on $A$.
+
+We often use a symbol like $\leq$ to stand for a total ordering on a
+set $A$, which lets us use its mirror image, $\geq$, for its inverse,
+as well as to write $<$ for the relation on $A$ defined by: for all
+$x,y\in A$, $x<y$ iff $x\leq y$ but $x\neq y$. $<$ is a \emph{strict
+  total ordering on} $A$, i.e., a transitive relation on $A$ such
+that, for all $x,y\in A$, exactly one of $x<y$, $x=y$ and $y<x$
+holds. We write $>$ for the inverse of $<$.  We can also start with
+a strict total ordering $<$ on $A$, and then define a total ordering
+$\leq$ on $A$ by: $x\leq y$ iff $x<y$ or $x=y$.
+The relations $\leq$ and $<$ on the natural numbers are
+examples of such relations.
+
+The relation
+\begin{gather*}
+f=\{(0,1),(1,2),(2,0)\}
+\end{gather*}
+is a function.  We think of it as sending the input $0$ to the
+output $1$, the input $1$ to the output $2$, and the
+input $2$ to the output $0$.
+
+If $f$ is a function and $x\in\domain\,f$, we write $f\,x$ for the
+\emph{application}
+\index{application|see{function, application}}%
+\index{function!application}%
+\index{ function application@$\cdot\,\cdot$}%
+\index{function! application@$\cdot\,\cdot$}%
+\emph{of} $f$ \emph{to} $x$, i.e., the unique $y$ such that $(x,y)\in f$.
+We say that $f$ is a \emph{function from}
+\index{function!from set to set}%
+a set $X$ \emph{to} a set $Y$ iff $f$ is a function, $\domain\,f=X$
+and $\range\,f\sub Y$.  We write $X\fun Y$
+\index{ set of all functions@$\fun$}%
+\index{set! set of all functions@$\fun$}%
+for the set of all functions from $X$ to $Y$.
+If $A$ has $n$ elements and $B$ has $m$ elements, for $n,m\in\nats$,
+then $A\fun B$ will have $m^n$ elements.
+
+For the $f$ defined above, we have that $f\,0=1$, $f\,1=2$,
+$f\,2=0$, $f$ is a function from $\{0,1,2\}$ to $\{0,1,2\}$,
+and $f\in\{0,1,2\}\fun\{0,1,2\}$.  Of course, $f$ is
+also in $\{0,1,2\}\fun\nats$, but it is not in
+$\nats\fun\{0,1,2\}$.
+
+We let $\fun$ associate to the right and have lower precedence than
+$\times$, so that, e.g., $A\times B\fun C\times D\fun E\times F$ means
+$(A\times B)\fun((C\times D)\fun(E\times F))$.  An element of this set
+takes in a pair $(a,b)$ in $A\times B$, and returns a function
+that takes in a pair $(c,d)$ in $C\times D$, and returns an
+element of $E\times F$.
+
+Suppose $f,g\in A\fun B$.  It is easy to show that $f=g$ iff, for all
+$x\in A$, $f\,x=g\,x$.  This is the most common way of showing
+the equality of functions.
+\index{function!equality}%
+
+Given a set $A$, it is easy to see that $\id_A$, the identity
+relation on $A$, is a function from $A$ to $A$, and we call it
+the \emph{identity function}
+\index{identity relation}%
+\index{relation!identity}%
+\index{identity function}%
+\index{function!identity}%
+\index{id@$\id$}%
+\index{function!id@$\id$}%
+on $A$.  It is the function that returns its input.
+Given sets $A$, $B$ and $C$, if $f$ is a function from $A$ to $B$, and
+$g$ is a function from $B$ to $C$, then the composition $g\circ f$
+\index{relation!composition}%
+\index{function!composition}%
+\index{composition!function|see{function, composition}}%
+\index{ composition@$\circ$}%
+\index{relation! composition@$\circ$}%
+\index{function! composition@$\circ$}%
+of (the relations) $g$ and $f$ is the function $h$ from $A$ to $C$ such
+that $h\,x=g(f\,x)$, for all $x\in A$.  In other words, $g\circ f$ is
+the function that runs $f$ and then $g$, in sequence.  Because
+of how composition of relations works, we
+have that $\circ$ is associative
+\index{associative!function composition}%
+\index{function!composition!associative}%
+\index{identity!function composition}%
+\index{function!composition!identity}%
+and has the identity functions as its identities:
+\begin{enumerate}[\quad(1)]
+\item For all sets $A$ and $B$, and functions $f$ from $A$ to $B$,
+$\id_B\circ f = f = f\circ\id_A$.
+
+\item For all sets $A$, $B$, $C$ and $D$, and functions
+$f$ from $A$ to $B$, $g$ from $B$ to $C$, and $h$ from $C$ to $D$,
+$(h\circ g)\circ f = h\circ (g\circ f)$.
+\end{enumerate}
+Because of (2), we can write $h\circ g\circ f$, without worrying about
+how it is parenthesized.  It is the function that runs $f$, then
+$g$, then $h$, in sequence.
+
+Given $f\in X\fun Y$ and a subset $A$ of $X$, we write
+$f(A)$ for the \emph{image of} $A$ \emph{under} $f$,
+\index{image under!function|see{function, image under}}%
+\index{function!image under}%
+\index{function! image under@$\cdot(\cdot)$}%
+\index{ image under@$\cdot(\cdot)$}%
+$\setof{f\,x}{x\in A}$.  And given $f\in X\fun Y$ and a subset
+$B$ of $Y$, we write $f^{-1}(B)$ for the \emph{inverse image of}
+\index{inverse image under!function|see{function, inverse image under}}%
+\index{function!inverse image under}%
+\index{function! inverse image under@$\cdot^{-1}(\cdot)$}%
+\index{ inverse image under@$\cdot^{-1}(\cdot)$}%
+$B$ \emph{under} $f$, $\setof{x\in X}{f\,x\in B}$.
+For example, if $f\in\nats\fun\nats$ is the function that
+doubles its argument, then $f(\{3, 5, 7\})=\{6, 10, 14\}$ and
+$f^{-1}(\{1, 2, 3, 4\}) = \{1,2\}$.
+
+Given a function $f$ and a set $X\sub\domain\,f$, we write
+$f\restr X$ for the \emph{restriction of} $f$ \emph{to} $X$,
+\index{restriction!function|see{function, restriction}}%
+\index{function!restriction}%
+\index{function! restriction@$\cdot\restr\cdot$}%
+\index{ restriction@$\cdot\restr \cdot$}%
+$\setof{(x,y)\in f}{x\in X}$. Hence $\domain(f\restr X)=X$.  For example,
+if $f$ is the function over $\ints$ that increases its
+argument by $2$, then $f\restr \nats$ is the function over $\nats$ that
+increases its argument by $2$.
+Given a function $f$ and elements $x,y$ of our universe,
+we write $f[x\mapsto y]$ for the \emph{updating of} $f$
+\index{updating!function|see{function, updating}}%
+\index{function!updating}%
+\index{function! updating@$\cdot[\cdot\mapsto\cdot]$}%
+\index{ updating@$\cdot[\cdot\mapsto\cdot]$}%
+\emph{to send} $x$ \emph{to} $y$,
+$(f\restr(\domain\,f-\{x\}))\cup\{(x,y)\}$.  This function is
+the same as $f$, except that it sends $x$ to $y$.
+For example, if $f=\{(0, 1), (1, 2)\}$, then
+$f[1\mapsto 0]=\{(0,1), (1, 0)\}$, and $f[2\mapsto 3]=
+\{(0, 1), (1, 2), (2,3)\}$.
+
+We often define a function by saying how an element of its domain
+is transformed into an element of its range.  E.g.,
+we might say that $f\in\nats\fun\ints$ is the unique function such that,
+for all $n\in\nats$,
+\begin{displaymath}
+f\,n =
+\casesdef{-(n/2),}{\eqtxtr{if}n\eqtxtl{is even},}%
+         {(n + 1)/2,}{\eqtxtr{if}n\eqtxtl{is odd}.}
+\end{displaymath}
+This is shorthand for saying that $f$ is the set of all
+$(n, m)$ such that
+\begin{itemize}
+\item $n\in\nats$,
+
+\item if $n$ is even, then $m=-(n/2)$, and
+
+\item if $n$ is odd, then $m=(n + 1)/2$.
+\end{itemize}
+Then $f\,0 = 0$, $f\,1 = 1$, $f\,2 = -1$, $f\, 3 = 2$,
+$f\,4 = -2$, etc.
+
+\begin{exercise}
+There are three things wrong with the following ``definition''---what
+are they?
+Let $f\in\nats\fun\nats$ be the unique function such that,
+for all $n\in\nats$,
+\begin{displaymath}
+f\,n =
+\casesdef{n-2,}{\eqtxtr{if}n\geq 1\eqtxt{and}n\leq 10,}%
+         {n+2,}{\eqtxtr{if}n\geq 10.}
+\end{displaymath}
+\end{exercise}
+
+If the domain of $f$ is a product $X_1\times\cdots\times X_n$,
+for $n\geq 1$ and
+\index{product}%
+sets $X_1,\ldots,X_n$, we often abbreviate $f((x_1,\ldots,x_n))$ to
+$f(x_1,\ldots,x_n)$.  We write $\hash{i}_{X_1,\ldots,X_n}$ (or just
+\index{ hash@$\hash{\cdot}$}%
+$\hash{i}$, if $n$ and the $X_i$ are clear from the context) for the
+$i$-th \emph{projection} function, which selects the $i$-th component
+\index{projection}%
+\index{tuple!projection}%
+of a tuple, i.e., transforms an input $(x_1,\ldots,x_n)$ to $x_i$.
+
+\subsection{Set Cardinality}
+
+\index{set!cardinality|(}%
+\index{set!size|(}%
+\index{size!set|(}%
+\index{cardinality|(}%
+Next, we see how we can use functions to compare the sizes
+(or cardinalities) of sets.
+A \emph{bijection}
+\index{bijection from set to set}%
+\index{function!bijection from set to set}%
+$f$ \emph{from} a set $X$ \emph{to} a set $Y$ is
+a function from $X$ to $Y$ such that, for all $y\in Y$, there is a
+unique $x\in X$ such that $(x,y)\in f$.
+For example,
+\begin{gather*}
+f=\{(0,5.1),(1,2.6),(2,0.5)\}
+\end{gather*}
+is a bijection from $\{0,1,2\}$ to $\{0.5,2.6,5.1\}$.
+We can visualize $f$ as a one-to-one correspondence
+\index{one-to-one correspondence}%
+between these sets:
+\begin{center}
+\input{chap-1.1-fig1.eepic}
+\end{center}
+
+A function $f$ is an \emph{injection} (or is \emph{injective})
+\index{injection}%
+\index{injective}%
+\index{function!injection}%
+\index{function!injective}%
+iff, for all $x$, $y$ and $z$, if $(x,z)\in f$ and $(y,z)\in f$, then
+$x=y$, i.e., for all $x,y\in\domain\,f$, if $f\,x=f\,y$, then $x=y$.
+In other words, a function is injective iff it never sends two
+different elements of its domain to the same element of its range.
+For example, the function
+\begin{gather*}
+\{(0, 1), (1, 2), (2, 3), (3, 0)\}
+\end{gather*}
+is injective, but the function
+\begin{gather*}
+\{(0, 1), (1, 2), (2, 1)\}
+\end{gather*}
+is not injective (both $0$ and $2$ are sent to $1$).
+
+It is easy to see that:
+\begin{itemize}
+\item For all sets $A$, $\id_A$ is injective.
+
+\item For all sets $A$, $B$ and $C$, functions $f$ from $A$ to $B$,
+and functions $g$ from $B$ to $C$, if $f$ and $g$ are injective,
+then so is $g\circ f$.
+\end{itemize}
+
+\begin{exercise}
+\label{BijectionEx1}
+Suppose $A$ and $B$ are sets.  Show that for all $f$,
+$f$ is a bijection from $A$ to $B$ iff
+\begin{itemize}
+\item $f$ is a function from $A$ to $B$;
+
+\item $\range\,f = B$; and
+
+\item $f$ is injective.
+\end{itemize}
+\end{exercise}
+
+Consequently, if $f$ is an injection from $A$ to $B$, then $f$ is
+a bijection from $A$ to $\range\,f\sub B$.
+
+\begin{exercise}
+\label{BijectionEx2}
+Show that:
+\begin{enumerate}[\quad(1)]
+\item For all sets $A$, $\id_A$ is a bijection from $A$ to $A$.
+
+\item For all sets $A$, $B$ and $C$, bijections $f$ from $A$ to $B$,
+and bijections $g$ from $B$ to $C$, $g\circ f$ is a bijection from $A$ to $C$.
+
+\item For all sets $A$ and $B$, and bijections $f$ from $A$ to $B$,
+$f^{-1}$ is a bijection from $B$ to $A$.
+\end{enumerate}
+\end{exercise}
+
+We say that a set $X$ has the \emph{same size} as a set $Y$
+\index{same size}%
+\index{set!same size}%
+($X\cong Y$)
+\index{ same size@$\cong$}%
+\index{set! same size@$\cong$}%
+iff there is a bijection from $X$ to $Y$.  By Exercise~\ref{BijectionEx2},
+we have that, for all sets $A,B,C$:
+\begin{enumerate}[\quad (1)]
+\item $A\cong A$;
+
+\item If $A\cong B\cong C$, then $A\cong C$; and
+
+\item If $A\cong B$, then $B\cong A$.
+\end{enumerate}
+
+We say that a set $X$ is:
+\begin{itemize}
+\item \emph{finite} iff $X\cong[1:n]$, for some $n\in\nats$;
+\index{finite}%
+\index{set!finite}%
+
+\item \emph{infinite} iff it is not finite;
+\index{infinite}%
+\index{set!infinite}%
+
+\item \emph{countably infinite} iff $X\cong\,\nats$;
+\index{countably infinite}%
+\index{infinite!countably|see{countably infinite}}%
+\index{set!infinite!countably|see{countably infinite}}%
+
+\item \emph{countable} iff $X$ is either finite or countably infinite; and
+\index{countable}%
+\index{set!countable}%
+
+\item \emph{uncountable} iff $X$ is not countable.
+\index{uncountable}%
+\index{set!uncountable|see{uncountable}}%
+\end{itemize}
+
+Every set $X$ has a \emph{size} or \emph{cardinality} ($|X|$)
+\index{ size of@$\sizedot$}%
+\index{set! size of@$\sizedot$}%
+and we have that, for all sets $X$ and $Y$, $|X|=|Y|$ iff
+$X\cong Y$.  The sizes of finite sets are natural numbers.
+
+We have that:
+\begin{itemize}
+\item The sets $\emptyset$ and $\{0.5,2.6,5.1\}$ are finite, and are thus
+also countable;
+
+\item The sets $\nats$, $\ints$, $\reals$ and $\powset\,\nats$ are infinite;
+
+\item The set $\nats$ is countably infinite, and is thus countable; and
+
+\item The set $\ints$ is countably infinite, and is thus countable,
+because of the existence of the following bijection:
+\begin{center}
+\input{chap-1.1-fig2.eepic}
+\end{center}
+
+\item The sets $\reals$ and $\powset\,\nats$ are uncountable.
+\end{itemize}
+
+To prove that $\reals$ and $\powset\,\nats$ are uncountable, we can
+use an important technique called ``diagonalization'',
+\index{diagonalization!cardinality}%
+which we will see again in
+Chapter~\ref{RecursiveAndRecursivelyEnumerableLanguages}.  Let's consider
+the proof that $\powset\,\nats$ is uncountable.
+
+We proceed using proof by contradiction.
+\index{proof by contradiction}%
+\index{contradiction!proof by}%
+Suppose $\powset\,\nats$ is countable.  If we can obtain a
+contradiction, it will follow that $\powset\,\nats$ is uncountable.
+Since $\powset\,\nats$ is not finite, it follows that there is a
+bijection $f$ from $\nats$ to $\powset\,\nats$.  Our plan is to define
+a subset $X$ of $\nats$ such that $X\not\in\range\,f$, thus obtaining
+a contradiction, since this will show that $f$ is not a bijection from
+$\nats$ to $\powset\,\nats$.
+
+Consider the infinite table in which both the rows and the columns are
+indexed by the elements of $\nats$, listed in ascending order, and
+where a cell $(m, n)$ ($m$ is the row, $n$ is the column) contains
+$1$ iff $m\in f\,n$, and contains $0$ iff $m\not\in f\,n$.  Thus the
+$n$th column of this table represents the set $f\,n$ of natural
+numbers.
+
+Figure~\ref{DiagCard} shows how part of this table might look, where
+$i$, $j$ and $k$ are sample elements of $\nats$.
+\begin{figure}
+\begin{center}
+\input{chap-1.1-fig3.eepic}
+\end{center}
+\caption{Example Diagonalization Table for Cardinality Proof}
+\label{DiagCard}
+\end{figure}
+Because of the table's data, we have, e.g., that $i\in f\,i$
+and $j\not\in f\,i$.
+
+To define our $X\sub\nats$, we work our way down the diagonal of the
+table, putting $n$ into our set just when cell $(n,n)$ of the
+table is $0$, i.e., when $n\not\in f\,n$.  This will ensure that, for
+all $n\in\nats$, $f\,n\neq X$.
+With our example table:
+\begin{itemize}
+\item since $i\in f\,i$, but $i\not\in X$, we have that $f\,i\neq X$;
+
+\item since $j\not\in f\,j$, but $j\in X$, we have that $f\,j\neq X$; and
+
+\item since $k\in f\,k$, but $k\not\in X$, we have that $f\,k\neq X$.
+\end{itemize}
+
+Next, we turn the above ideas into a shorter, but more opaque, proof
+that:
+
+\index{uncountable}%
+\begin{proposition}
+\label{PowsetNatsUncountableProp}
+$\powset\,\nats$ is uncountable.
+\end{proposition}
+
+\begin{proof}
+Suppose, toward a contradiction, that $\powset\,\nats$ is countable.
+Thus, there is a bijection $f$ from $\nats$ to 
+$\powset\,\nats$.  Define $X\in\setof{n\in\nats}{n\not\in f\,n}$,
+so that $X\in\powset\,\nats$.  By the definition of $f$, it
+follows that $X=f\,n$, for some $n\in\nats$.  There are two
+cases to consider.
+\begin{itemize}
+\item Suppose $n\in X$.  By the definition of $X$, it follows that
+  $n\not\in f\,n=X$---contradiction.
+
+\item Suppose $n\not\in X$.  Because $X=f\,n$, we have that $n\not\in
+  f\,n$.  Thus, since $n\in\nats$ and $n\not\in f\,n$, it follows
+  that $n\in X$---contradiction.
+\end{itemize}
+Since we obtained a contradiction in both cases, we have
+an overall contradiction. Thus $\powset\,\nats$ is uncountable.
+\end{proof}
+
+We have seen how bijections may be used to determine whether sets have
+the same size.  But how can we compare the relative sizes of sets,
+i.e., say whether one set is smaller or larger than another?  The
+answer is to make use of injective functions.
+\index{no bigger}%
+\index{set!no bigger}%
+We say that a set $X$ is \emph{no bigger} than a set $Y$ ($X\preceq Y$)
+\index{ no bigger than@$\preceq$}%
+\index{set! no bigger than@$\preceq$}%
+iff there is an injection from $X$ to $Y$, i.e., an
+injective function whose domain is $X$ and whose range
+is a subset of $Y$.  For example, the injection $\id_\nats$ shows that
+$\nats\preceq\reals$.  This definition makes sense, because $X$ is
+no bigger than $Y$ iff $X$ has the same size as a subset of $Y$.
+\index{strictly smaller}%
+\index{set!strictly smaller}%
+We say that $X$ is \emph{strictly smaller} than $Y$ iff
+$X\preceq Y$ and $X\not\cong Y$.
+
+Using our observations about injections, we have that,
+for all sets $A$, $B$ and $C$:
+\begin{enumerate}[\quad (1)]
+\item $A\preceq A$;
+
+\item If $A\preceq B\preceq C$, then $A\preceq C$.
+\end{enumerate}
+Clearly, for all sets $A$ and $B$,
+if $A\cong B$, then $A\preceq B\preceq A$.  And, a famous result
+of set theory, the Schr\"oder-Bernstein Theorem,
+\index{Schr\"oder-Bernstein Theorem}%
+says that the converse holds, i.e.,
+for all sets $A$ and $B$, if $A\preceq B\preceq A$, then
+$A\cong B$. This give us a powerful method for proving that two
+sets have the same size.
+
+\begin{exercise}
+Use the Schr\"oder-Bernstein Theorem to show that
+$\nats\cong\nats\times\nats$.  Hint: use the following consequence of
+the Fundamental Theorem of Arithmetic: if two finite, ascending (each
+element is $\leq$ the next) sequences of prime numbers (natural
+numbers that are at least $2$ and have no divisors other than $1$ and
+themselves) have the same product (the product of the empty sequence is
+$1$), then they are equal.
+\end{exercise}
+
+One of the forms of the Axiom of Choice
+\index{Axiom of Choice}%
+says that, for all sets $A$ and $B$, either $A\preceq B$ or $B\preceq
+A$, i.e., either $A$ is no bigger than $B$, or $B$ is no bigger than
+$A$. Furthermore, the sizes of sets are ordered in such a way
+that, for all sets $A$ and $B$, $|A|\leq|B|$ iff $A\preceq B$,
+which tells us that, given sets $A$ and $B$, either $|A|\leq|B|$ or
+$|B|\leq|A|$.
+Given the above machinery, one can strengthen
+Proposition~\ref{PowsetNatsUncountableProp} into: for
+all sets $X$, $X$ is strictly smaller than $\powset\,X$, i.e.,
+$|X|<|\powset\,X|$.
+\index{set!cardinality|)}%
+\index{set!size|)}%
+\index{size!set|)}%
+\index{cardinality|)}%
+
+\subsection{Data Structures}
+
+\index{data structure|(}%
+\index{boolean|(}%
+We conclude this section by introducing some data structures that
+are built out of sets.
+We write $\Bool$ for the set of booleans, $\{\true,\false\}$.
+\index{true@$\true$}%
+\index{false@$\false$}%
+\index{Bool@$\Bool$}%
+\index{boolean!true@$\true$}%
+\index{boolean!false@$\false$}%
+\index{boolean!Bool@$\Bool$}%
+(We can actually let $\true=1$ and $\false=0$, although we'll
+never make use of these equalities.)  We define the negation
+function $\mynot\in\Bool\fun\Bool$ by:
+\begin{gather*}
+\mynot\,\true = \false , \qquad
+\mynot\,\false = \true .
+\end{gather*}
+\index{not@$\mynot$}%
+\index{boolean!not@$\mynot$}%
+\index{boolean!negation}%
+And the conjunction and disjunction operations on the booleans are
+defined by:
+\begin{align*}
+\true\myand\true &= \true , \\
+\true\myand\false &= \false\myand\true = \false\myand\false = \false ,
+\end{align*}
+\index{and@$\myand$}%
+\index{boolean!and@$\myand$}%
+\index{boolean!conjunction}%
+and
+\index{or@$\myor$}%
+\index{boolean!or@$\myor$}%
+\index{boolean!disjunction}%
+\index{boolean|)}%
+\begin{align*}
+\true\myor\true &= \true\myor\false = \false\myor\true = \true , \\
+\false\myor\false &= \false .
+\end{align*}
+
+Given a set $X$, we write $\Option\,X$ for
+\index{option}%
+\index{none@$\none$}%
+\index{some@$\some\,\cdot$}%
+\index{Option@$\Option$}%
+\index{option!none@$\none$}%
+\index{option!some@$\some\,\cdot$}%
+\index{option!Option@$\Option$}%
+$\{\none\}\cup\setof{\some\,x}{x\in X}$, where we define $\none=(0,0)$
+and $\some\,x=(1,x)$, which guarantees that $\none=\some\,x$ can't
+hold, and that $\some\,x=\some\,y$ only holds when $x=y$.
+(We won't make use of the particular way we've defined $\none$ and
+$\some\,x$.)
+For example, $\Option\,\Bool=\{\none,\some\,\true,\some\,\false\}$.
+
+The idea is that an element of $\Option\,X$ is an optional element
+of $X$.  E.g., when a function needs to either return an element of $X$
+or indicate that an error has occurred, it could return an
+element of $\Option\,X$, using $\none$ to indicate an error,
+and returning $\some\,x$ to indicate success with value $x$.
+
+\index{list|(}%
+Finally, we consider lists.  A \emph{list} is a function with domain
+$[1:n]$, for some $n\in\nats$.  (Recall that $[1:n]$ is all of the
+natural numbers that are at least 1 and no more than $n$.)
+For example $\emptyset$ is a list, as
+it is a function with domain $\emptyset=[1:0]$.  And $\{(1, 3), (2,
+5), (3, 7)\}$ is a list, as it is a function with domain $[1:3]$.
+Note that, if $x$ is a list, then $|x|$, the size of the set $x$,
+doubles as the \emph{length} of $x$.
+
+We abbreviate a list $\{(1,x_1),(2,x_2),\ldots,(n,x_n)\}$ to
+$[x_1,x_2,\ldots,x_n]$.
+\index{ list@$[\cdot,\cdots,\cdot]$}%
+\index{lists! list@$[\cdot,\cdots,\cdot]$}%
+Thus $\emptyset$ and $\{(1, 3), (2, 5), (3,
+7)\}$ are abbreviated to $[\,]$ and $[3,5,7]$, respectively.
+If $[x_1,x_2,\ldots,x_n]=[y_1,y_2,\ldots,y_m]$, it is easy to
+see that $n=m$ and $x_i=y_i$, for all $i\in[1:n]$.
+
+Given lists $f$ and $g$, the \emph{concatenation} of $f$ and $g$
+($f\myconcat g$)
+\index{list!concatenation}%
+\index{concatenation!list}%
+\index{ at@$\myconcat$}%
+\index{list! at@$\myconcat$}%
+is the list
+\begin{displaymath}
+f\cup\setof{(m+|f|,y)}{(m,y)\in g} .  
+\end{displaymath}
+For example,
+\begin{align*}
+[2, 3]\myconcat[4,5,6] &=
+\{(1, 2), (2, 3)\}\myconcat\{(1, 4), (2, 5), (3, 6)\} \\
+&= \{(1, 2), (2, 3)\} \cup
+\setof{(m+2,y)}{(m,y)\in\{(1, 4), (2, 5), (3, 6)\}} \\
+&= \{(1, 2), (2, 3)\} \cup
+\{(1 + 2, 4), (2 + 2, 5), (3 + 2, 6)\} \\
+&= \{(1, 2), (2, 3), (3, 4), (4, 5), (5, 6)\} \\
+&= [2,3,4,5,6] .
+\end{align*}
+
+Given lists $f$ and $g$, it is easy to see that $|f\myconcat g| =
+|f| + |g|$.  And, given $n\in[1:|f\myconcat g|]$,
+we have that
+\begin{displaymath}
+(f\myconcat g)\,n =
+\casesdef{f\,n,}{\eqtxtr{if}n\in[1:|f|],}%
+         {g(n-|f|),}{\eqtxtr{if}n>|f| .}
+\end{displaymath}
+Using this fact, it is easy to prove that:
+\begin{itemize}
+\item $[\,]$ is the identity for concatenation: for all lists $f$,
+\index{identity!list concatenation}%
+\index{concatenation!list!identity}%
+\index{list!concatenation!identity}%
+  \begin{displaymath}
+    [\,]\myconcat f = f = f\myconcat [\,] .
+  \end{displaymath}
+
+\item Concatenation is associative: for all lists $f$, $g$, $h$,
+\index{associative!list concatenation}%
+\index{concatenation!list!associative}%
+\index{list!concatenation!associative}%
+  \begin{displaymath}
+    (f\myconcat g)\myconcat h = f\myconcat(g\myconcat h) .
+  \end{displaymath}
+\end{itemize}
+Because concatenation is associative, we can write
+$f\myconcat g\myconcat h$ without worrying where the parentheses go.
+
+Given a set $X$, we write $\List\,X$ for the set of all
+$X$-\emph{lists}, i.e., lists whose
+\index{List@$\List\,\cdot$}%
+\index{list!List@$\List\,\cdot$}%
+\index{list!list@$\cdot$-list}%
+\index{list@$\cdot$-list}%
+ranges are subsets of $X$, i.e., all of whose elements come
+from $X$.  E.g., $[\,]$ and $[3,5,7]$ are elements of $\List\,\nats$,
+the set of all lists of natural numbers.  It is easy to see that
+$[\,]\in\List\,X$, for all sets $X$, and that, for all sets $X$ and
+$f,g\in\List\,X$, $f\myconcat g\in\List\,X$.
+\index{list|)}%
+\index{data structure|)}%
+
+\subsection{Notes}
+
+In a traditional treatment of set theory, e.g., \cite{Enderton77}, the
+natural numbers, integers, real numbers and ordered pairs
+$(x,y)$ are encoded as sets.  But for our purposes, it is clearer to
+supress this detail.
+
+Furthermore, in the traditional approach, $\nats$ is not a subset of
+$\ints$, and $\ints$ is not a subset of $\reals$.  On the other hand,
+there are proper subsets of $\reals$ corresponding to $\nats$ and
+$\ints$, and these are what we take $\nats$ and $\ints$ to be, so that
+$\nats\subsetneq\ints\subsetneq\reals$.  \index{set|)}%
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

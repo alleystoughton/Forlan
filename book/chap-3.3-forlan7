@@ -1,0 +1,9 @@
+globSimp (NONE, false) (Reg.fromString "% + 0*(0 + 1)");
+Reg.output("", #2 it);
+Reg.globallySimplifyTrace
+(NONE, true, Reg.obviousSubset)
+(Reg.fromString "% + 0*(0 + 1)");
+globSimp (NONE, false) (Reg.fromString "(0(0(0 + 1))*)*");
+Reg.output("", #2 it);
+globSimp (NONE, true) (Reg.fromString "(0(0(0 + 1))*)*");
+Reg.output("", #2 it);

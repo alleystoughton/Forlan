@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# start JForlan
+
+# edit the following line to set jardir to the directory where
+# JForlan.jar is located
+
+jardir=/usr/local/bin/.jar
+
+exec java -jar $jardir/JForlan.jar $*

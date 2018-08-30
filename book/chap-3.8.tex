@@ -1,0 +1,414 @@
+\section{Proving the Correctness of Finite Automata}
+\label{ProvingTheCorrectnessOfFiniteAutomata}
+
+In this section, we consider techniques for proving the correctness
+of finite automata, i.e., for proving that finite automata accept
+the languages we want them to.
+
+We begin by defining an indexed family of languages, $\Lambda$.
+
+\subsection{Definition of $\Lambda$}
+
+\begin{proposition}
+\label{DeltaProp1}
+Suppose $M$ is a finite automaton.
+\begin{enumerate}[\quad(1)]
+\item For all $q\in Q_M$, ${q}\in\Delta_M(\{q\},\%)$.
+
+\item For all $q,r\in Q_M$ and $w\in\Str$, if $q,w\fun r\in T_M$,
+then ${r}\in\Delta_M(\{q\},w)$.
+
+\item For all $p,q,r\in Q_M$ and $x,y\in\Str$, if $q\in\Delta_M(\{p\},x)$
+and $r\in\Delta_M(\{q\},y)$, then
+${r}\in\Delta_M(\{p\},xy)$.
+\end{enumerate}
+\end{proposition}
+
+Suppose $M$ is a finite automaton and $q\in Q_M$.
+Then we define
+\begin{displaymath}
+\Lambda_{M,q} = \setof{w\in\Str}{q\in\Delta_M(\{s_M\},w)}.
+\end{displaymath}
+In other words, $\Lambda_{M,q}$ is the labels of all of the valid
+labeled paths for $M$ that start at state $s_M$ and end at $q$, i.e.,
+it's all strings that can take us to state $q$ when processed by $M$.
+Clearly, $\Lambda_{M,q}\sub(\alphabet\,M)^*$, for all FAs $M$ and
+$q\in Q_M$.  If it's clear which FA we are talking about, we sometimes
+abbreviate $\Lambda_{M,q}$ to $\Lambda_q$.
+
+Let our example FA, $M$, be
+\begin{center}
+\input{chap-3.8-fig1.eepic}
+\end{center}
+Then:
+\begin{itemize}
+\item $\mathsf{01101}\in\Lambda_\Asf$, because of the labeled path
+  \begin{gather*}
+    \mathsf{A\lparr{0}B\lparr{1}B\lparr{1}B\lparr{0}A\lparr{1}A} ,
+  \end{gather*}
+
+\item $\mathsf{01100}\in\Lambda_\Bsf$, because of the labeled path
+  \begin{gather*}
+    \mathsf{A\lparr{0}B\lparr{1}B\lparr{1}B\lparr{0}A\lparr{0}B} .
+  \end{gather*}
+\end{itemize}
+
+\begin{proposition}
+\label{LambdaProp1}
+Suppose $M$ is an FA.  Then $L(M) = \bigcup\setof{\Lambda_{M,q}}{q\in
+  A_M}$, i.e., for all $w$, $w\in L(M)$ iff $w\in\Lambda_{M,q}$ for
+some $q\in A_M$.
+\end{proposition}
+
+\begin{proof}
+\begin{description}
+\item[\quad(only if)] Suppose $w\in L(M)$.  By Proposition~3.5.3,
+we have that $\Delta_M({s_M},w)\cap A_M\neq\emptyset$, so that there
+is a $q\in A_M$ such that $q\in\Delta_M({s_M},w)$.  Thus
+$w\in\Lambda_{M,q}$.
+
+\item[\quad(if)] Suppose $w\in\Lambda_{M,q}$ for some $q\in A_M$.
+Thus $q\in\Delta_M({s_M},w)$ and $q\in A_M$, so that
+$\Delta_M({s_M},w)\cap A_M\neq\emptyset$.  Hence $w\in L(M)$, by
+Proposition~3.5.3.
+\end{description}
+\end{proof}
+
+\begin{proposition}
+\label{LambdaProp2}
+Suppose $M$ is a finite automaton.
+\begin{enumerate}[\quad(1)]
+\item $\%\in\Lambda_{M,s_M}$.
+
+\item For all $q,r\in Q_M$ and $w,x\in\Str$.  If $w\in\Lambda_{M,q}$
+  and ${q,x\fun r}\in T_M$, then $wx\in\Lambda_{M,r}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}[(1)]
+\item By Proposition~\ref{DeltaProp1}(1), we have
+  that $s_M\in\Delta(\{s_M\},\%)$, so that $\%\in\Lambda_{M,s_M}$.
+
+\item Suppose $q,r\in Q_M$, $w,x\in\Str$, $w\in\Lambda_{M,q}$ and
+  $q,x\fun r\in T_M$.  Thus $q\in\Delta(\{s_M\},w)$.  Because
+  ${q,x\fun r}\in T_M$, Proposition~\ref{DeltaProp1}(2) tells us that
+  $r\in\Delta(\{q\},x)$.  Hence by Proposition~\ref{DeltaProp1}(3), we
+  have that ${r}\in\Delta(\{s_M\},wx)$, so that
+  ${wx}\in\Lambda_{M,{r}}$.
+\end{enumerate}
+\end{proof}
+
+Our main example will be the FA, $M$:
+\begin{center}
+\input{chap-3.8-fig1.eepic}
+\end{center}
+Let
+\begin{align*}
+X &= \setof{w\in\{\mathsf{0,1}\}^*}{w\eqtxt{has an even number of}
+\zerosf\eqtxtn{'s}} , \eqtxt{and} \\
+Y &= \setof{w\in\{\mathsf{0,1}\}^*}{w\eqtxt{has an odd number of}
+\zerosf\eqtxtn{'s}} .
+\end{align*}
+
+We want to prove that $L(M) = X$.  Because $A_M=\{\Asf\}$,
+Proposition~\ref{LambdaProp1} tells us that $L(M)=\Lambda_{M,\Asf}$.
+Thus it will suffice to show that $\Lambda_{M,\Asf} = X$.  But our
+approach will also involve showing $\Lambda_{M,\Bsf} = Y$.  We would
+cope with more states analogously, having one language per state.
+
+\subsection{Proving that Enough is Accepted}
+
+First, we study techniques for showing that everything we want an
+automaton to accept is really accepted.
+
+Since $X,Y\sub\{\mathsf{0,1}\}^*$, to prove that
+$X\sub\Lambda_{M,\Asf}$ and $Y\sub\Lambda_{M,\Bsf}$, it will suffice
+to use strong string induction to show that, for all
+$w\in\mathsf{\{0,1\}^*}$:
+\begin{enumerate}[\quad(A)]
+\item if $w\in X$, then $w\in\Lambda_{M,\Asf}$; and
+
+\item if $w\in Y$, then $w\in\Lambda_{M,\Bsf}$.
+\end{enumerate}
+
+We proceed by strong string induction.  Suppose
+$w\in\{\mathsf{0,1}\}^*$, and assume the inductive hypothesis:
+for all $x\in\{\mathsf{0,1}\}^*$, if $x$ is a proper substring of
+$w$, then:
+\begin{enumerate}[\quad(A)]
+\item if $x\in X$, then $x\in\Lambda_\Asf$; and
+
+\item if $x\in Y$, then $x\in\Lambda_\Bsf$.
+\end{enumerate}
+We must prove that:
+\begin{enumerate}[\quad(A)]
+\item if $w\in X$, then $w\in\Lambda_\Asf$; and
+
+\item if $w\in Y$, then $w\in\Lambda_\Bsf$.
+\end{enumerate}
+There are two parts to show.
+\begin{enumerate}[\quad(A)]
+\item Suppose $w\in X$, so that $w$ has an even number of $\zerosf$'s.
+  We must show that
+  $w\in\Lambda_\Asf$.  There are three cases to consider.
+  \begin{itemize}
+  \item Suppose $w=\%$.  By Proposition~\ref{LambdaProp2}(1), we have
+    that $w=\%\in\Lambda_\Asf$.
+  
+  \item Suppose $w=x\zerosf$, for some $x\in\{\mathsf{0,1}\}^*$.  Thus
+    $x$ has an odd number of $\zerosf$'s, so that $x\in Y$.
+    Because $x$ is a proper substring of $w$,  part~(B) of
+    the inductive hypothesis tells us that $x\in\Lambda_\Bsf$.
+    Furthermore, $\Bsf,\zerosf\fun\Asf\in T$, so that
+    ${w=x\zerosf}\in\Lambda_\Asf$, by
+    Proposition~\ref{LambdaProp2}(2).
+  
+  \item Suppose $w=x\onesf$, for some $x\in\{\mathsf{0,1}\}^*$.  Thus
+    $x$ has an even number of $\zerosf$'s, so that $x\in X$.
+    Because $x$ is a proper
+    substring of $w$, part~(A) of the inductive hypothesis tells us
+    that $x\in\Lambda_\Asf$.  Furthermore, $\Asf,\onesf\fun\Asf\in
+    T$, so that $w=x\onesf\in\Lambda_\Asf$, by
+    Proposition~\ref{LambdaProp2}(2).
+  \end{itemize}
+
+\item Suppose $w\in Y$, so that $w$ has an odd number of $\zerosf$'s.
+  We must show that
+  $w\in\Lambda_\Bsf$.  There are three cases to consider.
+  \begin{itemize}
+  \item Suppose $w=\%$.  But the number of $\zerosf$'s in
+    $\%$ is $0$, which is even---contradiction.  Thus
+    $w\in\Lambda_\Bsf$.
+  
+  \item Suppose $w=x\zerosf$, for some $x\in\{\mathsf{0,1}\}^*$.  Thus
+    $x$ has an even number of $\zerosf$'s, so that $x\in X$.
+    Because $x$ is a proper
+    substring of $w$, part (A) of the inductive hypothesis tells us
+    that $x\in\Lambda_\Asf$.  Furthermore, $\Asf,\zerosf\fun\Bsf\in
+    T$, so that $w=x\zerosf\in\Lambda_\Bsf$, by
+    Proposition~\ref{LambdaProp2}(2).
+  
+  \item Suppose $w=x\onesf$, for some $x\in\{\mathsf{0,1}\}^*$.  Thus
+    $x$ has an odd number of $\zerosf$'s, so that $x\in Y$.
+    Because $x$ is a proper
+    substring of $w$, part (B) of the inductive hypothesis tells us
+    that $x\in\Lambda_\Bsf$.  Furthermore, $\Bsf,\onesf\fun\Bsf\in
+    T$, so that $w=x\onesf\in\Lambda_\Bsf$, by
+    Proposition~\ref{LambdaProp2}(2).
+  \end{itemize}
+\end{enumerate}
+
+Let $N$ be the finite automaton
+\begin{center}
+\input{chap-3.8-fig2.eepic}
+\end{center}
+Here we hope that $\Lambda_{N,\Asf} = {\{\zerosf\}^*}$ and $L(N) =
+\Lambda_{N,\Bsf} = \{\zerosf\}^*\{\onesf\onesf\}^*$, but if we try to
+prove that
+\begin{align*}
+  \{\zerosf\}^*&\sub\Lambda_{N,\Asf} , \eqtxt{and}\\
+  \{\zerosf\}^*\{\onesf\onesf\}^*&\sub\Lambda_{N,\Bsf}
+\end{align*}
+using our standard technique, there is a complication related to the
+$\%$-transition.
+
+We use strong string induction to show that, for all
+$w\in\{\mathsf{0,1}\}^*$:
+\begin{enumerate}[\quad(A)]
+\item if $w\in\{\zerosf\}^*$, then $w\in\Lambda_\Asf$; \eqtxt{and}
+
+\item if $w\in\{\zerosf\}^*\{\onesf\onesf\}^*$, then
+  $w\in\Lambda_\Bsf$.
+\end{enumerate}
+
+In part~(B), we assume that $w\in\{\zerosf\}^*\{\onesf\onesf\}^*$, so
+that $w=\zerosf^n(\onesf\onesf)^m$ for some $n,m\in\nats$.  We must show that
+$w\in\Lambda_\Bsf$.  We consider two cases: $m=0$ and $m\geq 1$.
+The second of these is straightforward, so let's focus on the first.
+Then $w=\zerosf^n\in\{\zerosf\}^*$.  We want to use part~(A) of
+the inductive hypothesis to conclude that $\zerosf^n\in\Lambda_\Asf$,
+but there is a problem: $\zerosf^n$ is not a proper substring of
+$\zerosf^n=w$.
+
+So, we must consider two subcases, when $n=0$ and $n\geq 1$.
+In the first subcase, because $\%\in\Lambda_\Asf$ and $\Asf,\%\fun\Bsf\in T$,
+we have that $w=\%=\%\%\in\Lambda_\Bsf$.
+
+In the second subcase, we have that $w=\zerosf^{n-1}\zerosf$.  By
+part~(A) of the inductive hypothesis, we have that
+$\zerosf^{n-1}\in\Lambda_\Asf$.  Thus, because
+$\Asf,\zerosf\fun\Asf\in T$ and $\Asf,\%\fun\Bsf\in T$, we can conclude
+$w=\zerosf^n=\zerosf^{n-1}\zerosf\%\in\Lambda_\Bsf$.
+
+Because there are no transitions from $\Bsf$ back to $\Asf$, we
+could first prove that, for all $w\in\{\mathsf{0,1}\}^*$,
+\begin{enumerate}[\quad(A)]
+\item if $w\in\{\zerosf\}^*$, then $w\in\Lambda_\Asf$,
+\end{enumerate}
+and then use (A) to prove that for all $w\in\{\mathsf{0,1}\}^*$,
+\begin{enumerate}[\quad(A)]
+\setcounter{enumi}{1}
+\item if $w\in\{\zerosf\}^*\{\onesf\onesf\}^*$, then
+$w\in\Lambda_\Bsf$.
+\end{enumerate}
+
+This works whenever one part of a machine has transitions to
+another part, but there are no transitions from that second part
+back to the first part, i.e., when the two parts are not mutually
+recursive.
+
+In the case of $N$, we could use mathematical induction instead of
+strong string induction:
+\begin{enumerate}[\quad(A)]
+\item for all $n\in\nats$, $\zerosf^n\in\Lambda_\Asf$, and
+
+\item for all $n,m\in\nats$, $\zerosf^n(\onesf\onesf)^m\in\Lambda_\Bsf$
+(do induction on $m$, fixing $n$).
+\end{enumerate}
+
+\subsection{Proving that Everything Accepted is Wanted}
+
+It's tempting to try to prove that everything accepted by a finite
+automaton is wanted using string string induction, with implications
+like
+\begin{enumerate}[\quad(A)]
+\item if $w\in\Lambda_\Asf$, then $w\in X$.
+\end{enumerate}
+Unfortunately, this doesn't work when a finite automaton contains
+$\%$-transitions.  Instead, we do such proofs using a new induction
+principle that we call induction on $\Lambda$.
+
+\begin{theorem}[Principle of Induction on $\Lambda$]
+Suppose $M$ is a finite automaton, and $P_q(w)$ is a property
+of a $w\in\Lambda_{M,q}$, for all $q\in Q_M$.
+If
+\begin{itemize}
+\item $P_{s_M}(\%)$ and
+
+\item for all $q,r\in Q_M$, $x\in\Str$ and $w\in\Lambda_{M,q}$,\\
+if $q, x\fun r\in T_M$ and (\dag) $P_q(w)$, then  $P_r(wx)$,
+\end{itemize}
+then
+\begin{gather*}
+\eqtxtr{for all}q\in Q_M,\eqtxt{for all}w\in\Lambda_{M,q}, P_q(w) .
+\end{gather*}
+\end{theorem}
+
+We refer to (\dag) as the inductive hypothesis.
+
+\begin{proof}
+It suffices to show that, for all $\lp\in\LP$, for all $q\in Q_M$,
+if $\lp$ is valid for $M$, $\startState\,\lp = s_M$ and
+$\myendState\,\lp = q$, then $P_q(\mylabel\,\lp)$.  We prove this by
+well-founded induction on the length of $\lp$.
+\end{proof}
+
+In the case of our example FA, $M$, we can let $P_\Asf(w)$ and $P_\Bsf(w)$ be
+$w\in X$ and $w\in Y$, respectively, where, as before,
+\begin{align*}
+X &= \setof{w\in\{\mathsf{0,1}\}^*}{w\eqtxt{has an even number of}
+\zerosf\eqtxtn{'s}} , \eqtxt{and}\\
+Y &= \setof{w\in\{\mathsf{0,1}\}^*}{w\eqtxt{has an odd number of}
+\zerosf\eqtxtn{'s}} .
+\end{align*}
+
+Then the principle of induction on $\Lambda$ tells us that
+\begin{enumerate}[\quad(A)]
+\item for all $w\in\Lambda_\Asf$, $w\in X$, and
+
+\item for all $w\in\Lambda_\Bsf$, $w\in Y$,
+\end{enumerate}
+follows from showing
+\begin{description}
+\item[\quad(empty string)] $\%\in X$,
+
+\item[\quad($\Asf, \zerosf\fun\Bsf$)] for all $w\in\Lambda_\Asf$, if
+  (\dag) $w\in X$, then $w\zerosf\in Y$,
+
+\item[\quad($\Asf, \onesf\fun\Asf$)] for all $w\in\Lambda_\Asf$, if
+  (\dag) $w\in X$, then $w\onesf\in X$,
+
+\item[\quad($\Bsf, \zerosf\fun\Asf$)] for all $w\in\Lambda_\Bsf$, if
+  (\dag) $w\in Y$, then $w\zerosf\in X$, and
+
+\item[\quad($\Bsf, \onesf\fun\Bsf$)] for all $w\in\Lambda_\Bsf$, if
+  (\dag) $w\in Y$, then $w\onesf\in Y$.
+\end{description}
+We refer to (\dag) as the inductive hypothesis.
+
+In fact, when setting this proof up, instead of explicitly mentioning
+$P_\Asf$ and $P_\Bsf$, we can simply say that we are proving
+\begin{enumerate}[\quad(A)]
+\item for all $w\in\Lambda_\Asf$, $w\in X$, and
+
+\item for all $w\in\Lambda_\Bsf$, $w\in Y$,
+\end{enumerate}
+by induction on $\Lambda$.
+
+There are five steps to show.
+\begin{description}
+\item[\quad(empty string)] Because $\%\in\{\mathsf{0,1}\}^*$ and $\%$
+has no $\zerosf$'s, we have that $\%\in X$.
+
+\item[\quad($\Asf, \zerosf\fun\Bsf$)] Suppose $w\in\Lambda_\Asf$, and
+  assume the inductive hypothesis: $w\in X$.  Hence
+  $w\in\{\mathsf{0,1}\}^*$ and $w$ has an even number of $\zerosf$'s.
+  Thus $w\zerosf\in\{\mathsf{0,1}\}^*$ and $w\zerosf$ has an odd
+  number of $\zerosf$'s, so that $w\zerosf\in Y$.
+\end{description}
+
+\begin{description}
+\item[\quad($\Asf, \onesf\fun\Asf$)] Suppose $w\in\Lambda_\Asf$, and
+  assume the inductive hypothesis: $w\in X$.  Then $w\onesf\in X$.
+
+\item[\quad($\Bsf, \zerosf\fun\Asf$)] Suppose $w\in\Lambda_\Bsf$, and
+  assume the inductive hypothesis: $w\in Y$.  Then $w\zerosf\in X$.
+
+\item[\quad($\Bsf, \onesf\fun\Bsf$)] Suppose $w\in\Lambda_\Bsf$, and
+  assume the inductive hypothesis: $w\in Y$.  Then $w\onesf\in Y$.
+\end{description}
+
+Because of
+\begin{enumerate}[\quad(A)]
+\item for all $w\in\Lambda_\Asf$, $w\in X$, and
+
+\item for all $w\in\Lambda_\Bsf$, $w\in Y$,
+\end{enumerate}
+we have that
+$\Lambda_\Asf \sub X$ and $\Lambda_\Bsf \sub Y$.
+
+Because $X \sub \Lambda_\Asf$ and $Y \sub \Lambda_\Bsf$, we can
+conclude that $L(M) = \Lambda_\Asf = X$ and $\Lambda_\Bsf = Y$.
+
+Consider our second example, $N$, again:
+\begin{center}
+\input{chap-3.8-fig2.eepic}
+\end{center}
+
+We can use induction on $\Lambda$ to prove that
+\begin{enumerate}[\quad(A)]
+\item for all $w\in\Lambda_\Asf$, $w\in\{\zerosf\}^*$, and
+
+\item for all $w\in\Lambda_\Bsf$, $w\in\{\zerosf\}^*\{\mathsf{11}\}^*$.
+\end{enumerate}
+Thus $\Lambda_\Asf\sub\{\zerosf\}^*$ and
+$\Lambda_\Bsf\sub\{\zerosf\}^*\{\mathsf{11}\}^*$.  Because
+$\{\zerosf\}^*\sub\Lambda_\Asf$ and
+$\{\zerosf\}^*\{\mathsf{11}\}^*\sub\Lambda_\Bsf$, we can conclude that
+$\Lambda_\Asf=\{\zerosf\}^*$ and
+$L(N)=\Lambda_\Bsf=\{\zerosf\}^*\{\mathsf{11}\}^*$.
+
+\subsection{Notes}
+
+Books on formal language theory typically give short shrift to the
+proof of correctness of finite automata, carrying out one or two
+correctness proofs using induction on the length of strings.  In
+contrast, we have introduced and applied elegant techniques for
+proving the correctness of FAs.  Of particular note is our principle
+of induction on $\Lambda$.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

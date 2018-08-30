@@ -1,0 +1,7 @@
+@FILES
+  ["string-aux"; "The StringAux Module";]
+@SIGNATURE STRING_AUX "string-aux" [
+  @VALS 
+    removeWhiteSpace
+]
+@STRUCTURE StringAux "string-aux" STRING_AUX

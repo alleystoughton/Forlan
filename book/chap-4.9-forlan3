@@ -1,0 +1,2 @@
+StrSet.output("", Gram.toStrSet gram);
+StrSet.output("", Gram.toStrSet gram');

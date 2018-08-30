@@ -1,0 +1,156 @@
+<!-- index.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>Forlan Manual</TITLE>
+
+<SECTION>
+<HEAD>Introduction</HEAD>
+
+<PP>The Forlan toolset is a collection of tools for experimenting with
+formal languages.  Forlan is implemented in the functional programming
+language Standard ML (SML), a language whose notation and concepts are
+similar to those of mathematics.  Forlan is used interactively, in
+conjunction with the Standard ML of New Jersey (SML/NJ) implementation
+of SML.  In fact, a Forlan session is simply an SML/NJ session in
+which the Forlan modules are pre-loaded.  Users are able to extend
+Forlan by defining SML functions.</PP>
+
+<PP>In Forlan, the usual objects of formal language theory&DASH;finite
+automata, regular expressions, grammars, labeled paths, parse trees,
+etc.&DASH;are defined as abstract types, and have concrete syntax.
+Instead of Turing machines, Forlan implements a simple functional
+programming language of equivalent power, but which has the advantage
+of being much easier to program in than Turing machines.  Programs are
+also abstract types, and have concrete syntax.  Although mainly
+<EM>not</EM> graphical in nature, Forlan includes the Java program
+JForlan, a graphical editor for finite automata and regular
+expression, parse and program trees.  It can be invoked directly, or
+via Forlan.</PP>
+
+<PP>Numerous algorithms of formal language theory are implemented in
+Forlan, including conversions between regular expressions and
+different kinds of automata, the usual operations (e.g., union) on
+regular expressions, automata and grammars, equivalence testing and
+minimization of deterministic finite automata, and a general parser
+for grammars.  Forlan provides support for regular expression
+simplification, although the algorithms used are works in progress.
+It also implements the functional programming language used as a
+substitute for Turing machines.</PP>
+
+<PP>This manual must be read in conjunction with the Forlan textbook,
+<EM>Formal Language Theory: Integrating Experimentation and
+Proof</EM>, by Alley Stoughton.  The primary reference for
+mathematical definitions&DASH;including algorithms&DASH;is the
+textbook; the primary reference for the module specifications is the
+manual. Typically it will be necessary to consult the book to
+understand not only the input/output behavior of a function, but
+also how the function transforms its input to its output, i.e.,
+the algorithm it is following.</PP>
+
+</SECTION>
+
+<SECTION>
+<HEAD>Loading SML Files, and Forlan Input/Output</HEAD>
+
+<PP>The function <CD><VALREF STRID="Use"/use/</CD>, for loading SML
+source files, the <CD>input</CD> functions provided by various modules
+for loading Forlan objects from files, and the lexical analysis function
+<CD><STRREF/Lex/.<VALREF STRID="Lex"/lexFile/</CD>
+first look for a file in the current working directory
+(see <CD><VALREF STRID="Params"/getWorkingDirectory/</CD>), and then
+look for it in the directories of the search path
+(see <CD><VALREF STRID="Params"/getSearchPath/</CD>).
+The <CD>use</CD> function re-loads the most recently loaded file, if
+called with the empty string, <CD>""</CD>.</PP>
+
+<PP>The <CD>input</CD> functions and <CD>Lex.lexFile</CD> read from
+the standard input, when called with the empty string, <CD>""</CD>,
+instead of a filename.  When reading from the standard input, Forlan
+prompts with its input prompt, <CD>"@"</CD>, and the user signals
+end-of-file by entering a line consisting of a single period
+(<CD>"."</CD>).  The function <CD>Lex.lexFile</CD> first strips the
+contents of a file (or the standard input) of all whitespace
+characters and comments, where a <EM>comment</EM> consists of
+a <CD>"#"</CD>, plus the rest of the line on which it occurs.  And
+the <CD>input</CD> functions work similarly, before beginning the
+process of parsing a Forlan object from its expression in Forlan's
+concrete syntax.  Consequently, whitespace and comments may be
+arbitrarily inserted into files describing Forlan objects, without
+changing how the files will be lexically analyzed and
+parsed. An <CD>input</CD> function issues an error message if a file's
+contents doesn't describe the right kind of Forlan object, or if not
+all of the file's contents is consumed in the process of parsing such
+an object.  The various <CD>fromString</CD> functions work similarly
+to the <CD>input</CD> functions, except that they operate on the
+contents of strings.</PP>
+
+<PP>The <CD>output</CD> functions provided by various modules for
+pretty-printing Forlan objects to files create their files in the
+current working directory.  When given a pre-existing file, they
+overwrite the contents of the file.  They output to the standard
+output, when called with <CD>""</CD> instead of a filename. The
+various <CD>toString</CD> functions work similarly to
+the <CD>output</CD> functions, except that they produce strings.</PP>
+</SECTION>
+
+<SECTION>
+<HEAD>Modules</HEAD>
+
+<PP>This section contains specifications of Forlan's modules.
+
+The <BF>Auxiliary Functions</BF> subsection describes modules
+providing auxiliary functions for some SML types.
+
+The <BF>Utilities</BF> subsection describes modules for querying and
+setting various Forlan parameters (e.g., the search path
+used by input functions, and the line length used by the pretty-printer),
+doing pretty-printing, issuing informational and error messages,
+loading SML files, and doing debugging.
+
+The <BF>Sorting, Sets, Relations and Tables</BF> subsection describes
+modules implementing sorting, the abstract type of finite sets,
+operations on finite relations, and the abstract type of finite tables.
+
+The <BF>Lexical Analysis</BF> subsection describes Forlan's lexical
+analysis module.
+
+The <BF>Symbols and Strings</BF> subsection describes modules relating
+to Forlan symbols and strings.
+
+The <BF>Regular Expressions and Finite Automata</BF> subsection describes
+modules relating to regular expressions and finite automata.
+
+The <BF>Grammars</BF> subsection describes modules relating to
+context-free grammars.
+
+And, the <BF>Programs</BF> subsection describes modules relating to
+programs&DASH;Forlan's alternative to Turing machines.
+</PP>
+
+<INCLFILE FILE="auxiliary-subsect">
+<INCLFILE FILE="utility-subsect">
+<INCLFILE FILE="sort-set-rel-tab-subsect">
+<INCLFILE FILE="lex-subsect">
+<INCLFILE FILE="sym-str-subsect">
+<INCLFILE FILE="reg-fa-subsect">
+<INCLFILE FILE="gram-subsect">
+<INCLFILE FILE="prog-subsect">
+</SECTION>
+
+<SECTION>
+<HEAD>Top-level Environment</HEAD>
+
+<PP>For convenience, some types and values are made available in
+Forlan's top-level environment. The
+<BF>Top-level Environment</BF> subsection lists those types and values
+as well as the modules that they come from.</PP>
+
+<INCLFILE FILE="top-level-subsect">
+</SECTION>

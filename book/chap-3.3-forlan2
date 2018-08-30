@@ -1,0 +1,13 @@
+val reg = Reg.input "";
+(% + $0)(% + 00*0 + 0**)*
+.
+Reg.output("", Reg.weaklySimplify reg);
+Reg.toStrSet reg;
+val reg' = Reg.input "";
+(1 + %)(2 + $)(3 + %*)(4 + $*)
+.
+StrSet.output("", Reg.toStrSet reg');
+Reg.output("", Reg.weaklySimplify reg');
+Reg.output
+("",
+ Reg.weaklySimplify(Reg.fromString "(00*11*)*"));

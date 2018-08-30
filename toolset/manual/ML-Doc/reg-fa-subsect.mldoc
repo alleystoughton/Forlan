@@ -1,0 +1,52 @@
+<!-- reg-fa-subsect.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>Regular Expressions and Finite Automata</TITLE>
+
+<SECTION>
+<HEAD>Regular Expressions and Finite Automata</HEAD>
+
+<PP>This subsection describes modules relating to regular expressions and
+finite automata.
+
+The <BF>Reg</BF> module defines the abstract type of regular expressions.
+
+The <BF>LP</BF> module defines the abstract type of labeled paths.
+
+The <BF>Tran</BF> module defines the concrete type of finite automata
+transitions, and the <BF>TranSet</BF> module provides operations on
+sets of transitions.
+
+The <BF>FA</BF> module defines the abstract type of finite automata,
+and the <BF>EFA</BF>, <BF>NFA</BF> and <BF>DFA</BF> modules define the
+abstract types of a series of increasingly more restrictive kinds of
+automata, the empty-string finite automata, nondeterministic finite
+automata, and deterministic finite automata, respectively.
+
+The <BF>TranReg</BF> module defines the concrete type of regular
+expression finite automata transitions, and the <BF>TranSet</BF>
+module provides operations on sets of regular expression finite
+automata transitions.
+
+Finally, the <BF>RFA</BF> module defines the abstract type of regular
+expression finite automata.</PP>
+
+<INCLFILE FILE="reg">
+<INCLFILE FILE="lp">
+<INCLFILE FILE="tran">
+<INCLFILE FILE="tran-set">
+<INCLFILE FILE="fa">
+<INCLFILE FILE="efa">
+<INCLFILE FILE="nfa">
+<INCLFILE FILE="dfa">
+<INCLFILE FILE="tran-reg">
+<INCLFILE FILE="tran-reg-set">
+<INCLFILE FILE="rfa">
+</SECTION>

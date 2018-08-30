@@ -1,0 +1,8 @@
+#!/bin/bash
+
+rm -f jforlan/JForlan.jar
+cp ../JForlan.jar jforlan
+zip -r jforlan.zip jforlan
+rm -f jforlan/JForlan.jar
+rm -rf ../html/windows/jforlan.zip
+mv jforlan.zip ../html/windows

@@ -1,0 +1,490 @@
+\section{Symbols, Strings, Alphabets and (Formal) Languages}
+\label{SymbolsStringsAlphabetsAndFormalLanguages}
+
+In this section, we define the basic notions of the subject: symbols,
+strings, alphabets and (formal) languages.
+In most presentations of formal language theory, the ``symbols'' that
+make up strings are allowed to be arbitrary elements of the
+mathematical universe.  This is convenient in some ways, but it means
+that, e.g., the collection of all strings is too ``big'' to be a set.
+Furthermore, if we were to adopt this convention, we wouldn't be
+able to have notation in Forlan for all strings and symbols.  These
+considerations lead us to the following definition.
+
+\subsection{Symbols}
+
+\index{symbol|(}%
+The set $\Char$ of \emph{symbol characters} consists of the
+following $65$ elements:
+\begin{itemize}
+\item the comma (``$,$'');
+
+\item the \emph{digits} $\mathsf{0}$--$\mathsf{9}$;
+
+\item the \emph{letters} $\mathsf{a}$--$\mathsf{z}$ and
+  $\mathsf{A}$--$\mathsf{Z}$; and
+
+\item the angle brackets (``$\langle$'' and ``$\rangle$'').
+\end{itemize}
+We order $\Char$ as follows:
+\begin{displaymath}
+  {,} <
+  \mathsf{0} < \cdots < \mathsf{9} <
+  \mathsf{a} < \cdots \mathsf{z} < 
+  \mathsf{A} < \cdots \mathsf{Z} <
+  {\langle} < {\rangle} .
+\end{displaymath}
+
+The set $\Sym$ of \emph{symbols} is the least subset of
+\index{Sym@$\Sym$}%
+\index{symbol!Sym@$\Sym$}%
+$\List\,\Char$ such that:
+\begin{itemize}
+\item for all digits and letters $c$, $[c]\in\Sym$; and
+
+\item for all $n\in\nats$ and $x_1,\ldots,x_n\in\{[\,,]\}\cup\Sym$,
+  \begin{displaymath}
+   [\,\langle\,] @ x_1 @ \cdots @ x_n @ [\,\rangle\,]\in\Sym . 
+  \end{displaymath}
+\end{itemize}
+For example, $[\mathsf{9}]$, $[\,\langle,\,\rangle]$,
+$\mathsf{[\,\langle, \,i, \,d, \,\rangle]}$ and
+$\mathsf{[\,\langle, \,\langle, \,a, \,,, \,\rangle, \,b, \,\rangle]}$
+are symbols.  On the other hand, $[\,\langle,\,\rangle,\,\rangle]$ is
+not a symbol.
+
+It is easy to see that, for $x,y\in\List\,\Char$,
+if $x\myconcat y\in\Sym$, then exactly one of $x$
+and $y$ is $[\,]$.  In other words, a symbol never starts
+or ends with another symbol.
+
+We normally abbreviate a symbol $[c_1,\ldots,c_n]$ to $c_1\cdots c_n$,
+so that $\mathsf{9}$, $\langle\,\rangle$, $\langle\mathsf{id}\rangle$
+and $\mathsf{\langle\langle a,\rangle b\rangle}$ are symbols.  And if
+$x$ and $y$ are elements of $\List\,\Char$, we
+typically abbreviate $x\myconcat y$ to
+$xy$.
+
+Whenever possible, we will use the mathematical variables $a$, $b$ and
+$c$ to name symbols.
+\index{a, b, c@$a,b,c$}%
+\index{symbol!a, b, c@$a,b,c$}%
+We order $\Sym$ first by length, and then lexicographically (in
+dictionary order).  So, we have that
+\begin{gather*}
+\mathsf{0} < \cdots < \mathsf{9} < \mathsf{A} < \cdots < \mathsf{Z}
+< \mathsf{a} < \cdots < \mathsf{z} ,
+\end{gather*}
+and, e.g.,
+\begin{gather*}
+\mathsf{z} < \mathsf{\langle be\rangle} < \mathsf{\langle by\rangle} <
+\mathsf{\langle on\rangle} < \mathsf{\langle can\rangle} <
+\mathsf{\langle con\rangle} .
+\end{gather*}
+\index{symbol!ordering}%
+Obviously, $\Sym$ is infinite, but is it countably infinite?
+\index{countably infinite}%
+The answer is ``yes'', because we can enumerate the symbols in order.
+\index{symbol|)}%
+
+\subsection{Strings}
+
+\index{string|(}%
+A \emph{string}
+\index{list}%
+is a list of symbols.
+Whenever possible, we will use the mathematical variables $u$,
+\index{u, v, w, x, y, z, w@$u, v, w, x, y, z$}%
+\index{string!u, v, w, x, y, z, w@$u, v, w, x, y, z$}%
+$v$, $w$, $x$, $y$ and $z$ to name strings.
+
+We typically abbreviate the empty string $[\,]$ to $\%$, and
+\index{ percent@$\%$}%
+\index{string!empty}%
+\index{string! percent@$\%$}%
+abbreviate $[a_1,\ldots,a_n]$ to $a_1\cdots a_n$, when $n\geq 1$.
+For example
+$[\zerosf,\langle\zerosf\rangle,\onesf,
+\langle\langle,\rangle\rangle]$ is abbreviated to $\mathsf{0\langle
+  0\rangle1\langle\langle,\rangle\rangle}$.
+We name the empty string by $\%$, instead of following convention and
+using $\epsilon$, since this symbol can also be used in Forlan.
+
+We write $\Str$ for $\List\,\Sym$, the set of all strings.
+\index{Str@$\Str$}%
+\index{string!Str@$\Str$}%
+We order
+\index{string!ordering}%
+$\Str$ first by length and then lexicographically, using our order on
+$\Sym$.  Thus, e.g.,
+\begin{gather*}
+\% < \mathsf{ab} < \mathsf{a\langle be\rangle} < \mathsf{a\langle by\rangle} <
+\mathsf{\langle can\rangle\langle be\rangle} < \mathsf{abc} .
+\end{gather*}
+Since every string can be written as a finite sequence of ASCII
+characters, it follows that $\Str$ is countably infinite.
+\index{countably infinite}%
+
+Because strings are lists, we have that $|x|$ is the \emph{length}
+\index{length!string}%
+\index{string!length}%
+\index{ size of@$\sizedot$}%
+\index{string! size of@$\sizedot$}%
+of a string $x$, and that $x\myconcat y$ is the \emph{concatenation}
+\index{string!concatenation}%
+\index{concatenation!string}%
+of strings $x$ and $y$.
+We typically abbreviate $x\myconcat y$ to $xy$.
+For example:
+\begin{itemize}
+\item $|\%| = |[\,]| = 0$;
+
+\item $|\mathsf{0\langle 0\rangle1\langle\langle\,,\rangle\rangle}| =
+|[\zerosf,\langle\zerosf\rangle,\onesf, \langle\langle\,,\rangle\rangle]| = 4$;
+and
+
+\item $(\mathsf{01})(\mathsf{00}) =
+\mathsf{[0,1]}\myconcat\mathsf{[0,0]} =
+\mathsf{[0,1,0,0]} = \mathsf{0100}$.
+\end{itemize}
+
+From our study of lists, we know that:
+\begin{itemize}
+\item Concatenation is associative: for all $x,y,z\in\Str$,
+\index{associative!string concatenation}%
+\index{concatenation!string!associative}%
+\index{string!concatenation!associative}%
+\begin{gather*}
+(xy)z = x(yz) .
+\end{gather*}
+
+\item $\%$ is the identify for concatenation: for all $x\in\Str$,
+\index{identity!string concatenation}%
+\index{concatenation!string!identity}%
+\index{string!concatenation!identity}%
+\begin{gather*}
+\%x=x=x\% .
+\end{gather*}
+\end{itemize}
+
+It is easy to see that, for all $x,y,x',y'\in\Str$:
+\begin{itemize}
+\item $xy=xy'$ iff $y=y'$; and
+
+\item $xy=x'y$ iff $x=x'$.
+\end{itemize}
+
+We define the string $x^n$ \emph{formed by raising}
+a string $x$ \emph{to the power}
+\index{string!power}%
+\index{concatenation!string!power}%
+\index{string!concatenation!power}%
+\index{ power@$\cdot^\cdot$}%
+\index{string! power@$\cdot^\cdot$}%
+$n\in\nats$ by recursion
+\index{recursion!natural numbers}%
+on $n$:
+\begin{align*}
+x^0       &= \%,\eqtxt{for all}x\in\Str ; \eqtxtl{and} \\
+x^{n + 1} &= xx^n,\eqtxt{for all}x\in\Str\eqtxt{and}n\in\nats .
+\end{align*}
+We assign this operation higher precedence than concatenation, so that
+$xx^n$ means $x(x^n)$ in the above definition.
+For example, we have that
+\begin{gather*}
+(\mathsf{ab})^2 = 
+(\mathsf{ab})(\mathsf{ab})^1 =
+(\mathsf{ab})(\mathsf{ab})(\mathsf{ab})^0 =
+(\mathsf{ab})(\mathsf{ab})\% =
+\mathsf{abab} .
+\end{gather*}
+
+\begin{proposition}
+\label{StrPowerProp}
+For all $x\in\Str$ and $n,m\in\nats$, $x^{n+m}=x^nx^m$.
+\end{proposition}
+\index{string!power}%
+\index{concatenation!string!power}%
+\index{string!concatenation!power}%
+
+\begin{proof}
+Suppose $x\in\Str$ and $m\in\nats$.  We use mathematical induction
+\index{mathematical induction}%
+to show that, for all $n\in\nats$, $x^{n+m} = x^nx^m$.
+\begin{description}
+\item[\quad(Basis Step)] We have that $x^{0+m}=x^m=\%x^m=x^0x^m$.
+
+\item[\quad(Inductive Step)] Suppose $n\in\nats$, and assume the
+inductive hypothesis: $x^{n+m} = x^nx^m$.  We must show
+that $x^{(n+1)+m} = x^{n+1}x^m$.  We have that
+\begin{alignat*}{2}
+x^{(n+1)+m} &= x^{(n+m)+1} \\
+            &= xx^{n+m} && \by{definition of $x^{(n+m)+1}$} \\
+            &= x(x^nx^m) && \by{inductive hypothesis} \\
+            &= (xx^n)x^m \\
+            &= x^{n+1}x^m && \by{definition of $x^{n+1}$} .
+\end{alignat*}
+\end{description}
+\end{proof}
+
+Thus, if $x\in\Str$ and $n\in\nats$, then
+\begin{alignat*}{2}
+x^{n+1} &= xx^n && \by{definition}, \\
+\intertext{and}
+x^{n+1} &= x^nx^1 = x^nx && \by{Proposition~\ref{StrPowerProp}} .
+%\by{Proposition~\ref{StrPowerProp}} .
+\end{alignat*}
+
+Next, we consider the prefix, suffix and substring relations on
+strings.  Suppose $x$ and $y$ are strings.  We say that:
+\begin{itemize}
+\item $x$ is a \emph{prefix} of $y$ iff $y=xv$ for some $v\in\Str$;
+\index{prefix}%
+\index{string!prefix}%
+
+\item $x$ is a \emph{suffix} of $y$ iff $y=ux$ for some $u\in\Str$; and
+\index{suffix}%
+\index{string!suffix}%
+
+\item $x$ is a \emph{substring} of $y$ iff $y=uxv$ for some $u,v\in\Str$.
+\index{substring}%
+\index{string!substring}%
+\end{itemize}
+In other words, $x$ is a prefix of $y$ iff $x$ is an initial part of
+$y$, $x$ is a suffix of $y$ iff $x$ is a trailing part of $y$, and $x$
+is a substring of $y$ iff $x$ appears in the middle of $y$.  But note
+that the strings $u$ and $v$ can be empty in these definitions.  Thus,
+e.g., a string $x$ is always a prefix of itself, since $x=x\%$.  A
+prefix, suffix or substring of a string other than the string itself
+is called \emph{proper}.
+\index{proper!prefix}%
+\index{proper!suffix}%
+\index{proper!substring}%
+\index{string!prefix!proper}%
+\index{string!suffix!proper}%
+\index{string!substring!proper}%
+\index{prefix!proper}%
+\index{suffix!proper}%
+\index{substring!proper}%
+
+For example:
+\begin{itemize}
+\item $\%$ is a proper prefix, suffix and substring of
+$\mathsf{ab}$;
+
+\item $\mathsf{a}$ is a proper prefix and substring of
+$\mathsf{ab}$;
+
+\item $\mathsf{b}$ is a proper suffix and substring of
+$\mathsf{ab}$; and
+
+\item $\mathsf{ab}$ is a (non-proper) prefix, suffix and
+substring of $\mathsf{ab}$.
+\end{itemize}
+
+\begin{proposition}
+For all $x,y,x',y'\in\Str$, $xy=x'y'$ iff either
+\begin{itemize}
+\item $xu=x'$ and $y=uy'$, for some $u\in\Str$, or
+
+\item $x'u=x$ and $y'=uy$, for some $u\in\Str$.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+Straightforward.
+\end{proof}
+
+As a consequence of this proposition, we have that:
+\begin{itemize}
+\item For all $x,x',y'\in\Str$, $x$ is a prefix of $x'y'$ iff
+either
+\begin{itemize}
+\item $x$ is a prefix of $x'$, or
+
+\item $x=x'u$, for some prefix $u$ of $y'$.
+\end{itemize}
+
+\item For all $x,x',y'\in\Str$, $x$ is a suffix of $x'y'$ iff
+either
+\begin{itemize}
+\item $x$ is a suffix of $y'$, or
+
+\item $x=uy'$, for some suffix $u$ of $x'$.
+\end{itemize}
+
+\item For all $x,x',y'\in\Str$, $x$ is a substring of $x'y'$ iff
+either
+\begin{itemize}
+\item $x$ is a substring of $x'$, or
+
+\item $x=uv$, for some $u,v\in\Str$ such that
+  $u$ is a suffix of $x'$ and $v$ is a prefix of $y'$, or
+
+\item $x$ is a substring of $y'$.
+\end{itemize}
+\end{itemize}
+\index{string|)}%
+
+\subsection{Alphabets}
+
+\index{alphabet|(}%
+Having said what symbols and strings are, we now come to alphabets.
+An \emph{alphabet}
+\index{alphabet}%
+is a finite subset of $\Sym$.  We use $\Sigma$
+\index{Sigma@$\Sigma$}%
+\index{alphabet!Sigma@$\Sigma$}%
+(upper case Greek letter sigma) to name alphabets.  For example,
+$\emptyset$, $\mathsf{\{0\}}$ and $\mathsf{\{0,1\}}$ are alphabets.
+We write $\Alp$ for the set of all alphabets.  $\Alp$ is countably
+infinite.
+\index{countably infinite}%
+
+We define $\alphabet\in\Str\fun\Alp$
+\index{alphabet@$\alphabet$}%
+\index{string!alphabet}%
+\index{string!alphabet@$\alphabet$}%
+by recursion
+\index{recursion!string}%
+\index{recursion!string!right}%
+\index{recursion!string!left}%
+on (the length of) strings:
+\begin{align*}
+\alphabet\,\% &= \emptyset , \\
+\alphabet(ax) &= \{a\} \cup \alphabet\,x,
+\eqtxt{for all}a\in\Sym\eqtxt{and}x\in\Str .
+\end{align*}
+I.e., $\alphabet\,w$ consists of all of the symbols occurring in the
+string $w$.  E.g., $\alphabet(\mathsf{01101})=\{\zerosf,\onesf\}$.
+Because the string $x$ appears on the right side of $ax$ in the rule
+$\alphabet(ax) = \{a\} \cup \alphabet\,x$, we call this \emph{right}
+recursion.  (Since $\cup$ is associative and commutative, it would
+have been equivalent to use \emph{left} recursion, $\alphabet(xa) =
+\{a\} \cup \alphabet\,x$.)  We say that $\alphabet\,x$ is the
+\emph{alphabet of} $x$.
+
+If $\Sigma$ is an alphabet, then we write $\Sigma^*$
+\index{ star@$\cdot^*$}%
+\index{alphabet! star@$\cdot^*$}%
+for $\List\,\Sigma$.
+I.e., $\Sigma^*$ consists of all of the strings that can be built
+using the symbols of $\Sigma$.
+For example, the elements of $\mathsf{\{0,1\}^*} = \List\,\mathsf{\{0,1\}}$ are:
+\begin{gather*}
+\%, \mathsf{0}, \mathsf{1}, \mathsf{00}, \mathsf{01}, \mathsf{10},
+\mathsf{11},\mathsf{000},\, \ldots
+\end{gather*}
+\index{alphabet|)}%
+
+\subsection{Languages}
+
+\index{language|(}%
+We say that $L$ is a \emph{formal language}
+\index{formal language|see{language}}%
+(or just \emph{language}) iff $L\sub\Sigma^*$, for some
+$\Sigma\in\Alp$.  In other words, a language is a set of strings over
+some alphabet.
+If $\Sigma\in\Alp$, then we say that $L$ is a
+$\Sigma$-\emph{language}
+\index{Sigma-language@$\Sigma$-language}%
+\index{language!Sigma-language@$\Sigma$-language}%
+iff $L\sub\Sigma^*$.
+
+Here are some example languages (all are $\mathsf{\{0,1\}}$-languages):
+\begin{itemize}
+\item $\emptyset$;
+
+\item $\mathsf{\{0,1\}^*}$;
+
+\item $\mathsf{\{010,1001,1101\}}$;
+
+\item $\setof{\mathsf{0}^n\mathsf{1}^n}{n\in\nats} =
+\{\zerosf^0\onesf^0, \zerosf^1\onesf^1, \zerosf^2\onesf^2, \ldots\} =
+\mathsf{\{\%, 01, 0011, \ldots\}}$; and
+
+\item $\setof{w\in\mathsf{\{0,1\}^*}}{w\eqtxtl{is a palindrome}}$.
+\end{itemize}
+(A \emph{palindrome}
+\index{palindrome}%
+\index{string!palindrome}%
+is a string that reads the same backwards and forwards,
+i.e., that is equal to its own reversal.)
+On the other hand, the set of strings
+$X=\mathsf{\{\langle\rangle, \langle 0\rangle, \langle 00\rangle}, \ldots\}$,
+is not a language, since it involves infinitely many symbols, i.e.,
+since there is no alphabet $\Sigma$ such that $X\sub\Sigma^*$.
+
+Since $\Str$ is countably infinite and every language is a subset
+of $\Str$, it follows that every language is countable.
+\index{countable}%
+Furthermore, $\Sigma^*$ is countably infinite,
+\index{countably infinite}%
+as long as the alphabet
+$\Sigma$ is nonempty ($\emptyset^*=\{\%\}$).
+
+We write $\Lan$
+\index{Lan@$\Lan$}%
+\index{language!Lan@$\Lan$}%
+for the set of all languages.  It turns out that $\Lan$ is
+uncountable.
+\index{uncountable}%
+In fact even
+$\powset(\mathsf{\{0\}}^*)$, the set of all
+$\mathsf{\{0\}}$-languages, has the same size as $\powset(\nats)$,
+and is thus uncountable.
+
+\begin{exercise}
+Show that $\powset(\nats)$ has the same size as  $\powset(\mathsf{\{0\}}^*)$.
+\end{exercise}
+
+Given a language $L$, we write $\alphabet\,L$
+\index{alphabet@$\alphabet$}%
+\index{language!alphabet@$\alphabet$}%
+for the \emph{alphabet}
+\index{alphabet!language}%
+\index{language!alphabet}%
+\begin{gather*}
+\bigcup\setof{\alphabet\,w}{w\in L} .
+\end{gather*}
+\emph{of} $L$.
+I.e., $\alphabet\,L$ consists of all of the symbols occurring in the
+strings of $L$.
+For example,
+\begin{align*}
+\alphabet\,\mathsf{\{011,112\}} &=
+\bigcup\{\alphabet(\mathsf{011}),\alphabet(\mathsf{112})\} \\
+&= \bigcup\{\{\zerosf,\onesf\},\{\onesf,\twosf\}\}
+= \{\zerosf,\onesf,\twosf\} .
+\end{align*}
+Note that, for all languages $L$, $L\sub(\alphabet\,L)^*$.
+
+If $A$ is an infinite subset of $\Sym$ (and so is not an alphabet), we
+allow ourselves to write $A^*$
+\index{ star@$\cdot^*$}%
+for $\List\,A$.
+I.e., $A^*$ consists of all of the strings that can be built using the
+symbols of $A$.  For example, $\Sym^* = \Str$.
+\index{Str@$\Str$}%
+\index{Sym@$\Sym$}%
+\index{language|)}%
+
+\subsection{Notes}
+
+In a traditional approach to the subject, symbols may be anything,
+real numbers, sets, etc.  But such a choice would mean that not all
+symbols could be expressed in Forlan's syntax, and would needlessly
+complicate the set theoretic foundations of the subject.  By working
+with a fixed, countably infinite set of symbols, all symbols can be
+expressed in Forlan, and we have that that strings, regular
+expressions, etc., are sets, not set-indexed families of sets.
+
+Representing strings as lists of symbols, which in turn are
+represented as functions, is nontraditional, but should seem a natural
+approach to those with a background in set theory or functional
+programming.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

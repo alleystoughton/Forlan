@@ -1,0 +1,42 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(5633,1711)(0,-10)
+\put(3900,799){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\langle\twosf,\Asf\rangle$}}}
+\put(1237.201,1196.260){\arc{560.438}{2.8734}{6.6376}}
+\blacken\path(931.135,1240.379)(967.000,1122.000)(991.062,1243.330)(931.135,1240.379)
+\put(5244.494,1140.250){\arc{667.592}{2.9050}{6.5663}}
+\blacken\path(4884.134,1180.379)(4920.000,1062.000)(4944.061,1183.330)(4884.134,1180.379)
+\put(1200,874){\ellipse{750}{600}}
+\put(2532,874){\ellipse{750}{600}}
+\put(3900,868){\ellipse{750}{600}}
+\put(5250,868){\ellipse{750}{600}}
+\put(5234,867){\ellipse{586}{436}}
+\put(4567,972){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\mathsf{11}$}}}
+\put(2550.000,3461.500){\arc{6375.000}{1.1335}{2.0081}}
+\blacken\path(3802.649,497.693)(3900.000,574.000)(3778.193,552.483)(3802.649,497.693)
+\path(2925,874)(3525,874)
+\blacken\path(3405.000,844.000)(3525.000,874.000)(3405.000,904.000)(3405.000,844.000)
+\path(1590,874)(2137,874)
+\blacken\path(2017.000,844.000)(2137.000,874.000)(2017.000,904.000)(2017.000,844.000)
+\path(4275,874)(4875,874)
+\blacken\path(4755.000,844.000)(4875.000,874.000)(4755.000,904.000)(4755.000,844.000)
+\put(3225,949){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\%$}}}
+\put(2550,49){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\%$}}}
+\put(1230,1564){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\zerosf$}}}
+\put(1867,972){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\mathsf{11}$}}}
+\put(1200,799){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\langle\onesf,\Asf\rangle$}}}
+\put(2550,799){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\langle\onesf,\Bsf\rangle$}}}
+\put(5250,799){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\langle\twosf,\Bsf\rangle$}}}
+\put(5250,1549){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\zerosf$}}}
+\path(525,874)(825,874)
+\blacken\path(705.000,844.000)(825.000,874.000)(705.000,904.000)(705.000,844.000)
+\put(0,799){\makebox(0,0)[lb]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}Start}}}
+\end{picture}
+}

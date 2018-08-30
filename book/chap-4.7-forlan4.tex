@@ -1,0 +1,38 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ gram''\ =\ Gram.rev\ gram';
+\item[]\textsl{val\ gram''\ =\ -\ :\ gram}
+\item[]\textsl{-\ }Gram.output("",\ gram'');
+\item[]\textsl{\symbol{'173}variables\symbol{'175}\ A,\ B,\ C,\ D,\ E,\ F\ \symbol{'173}start\ variable\symbol{'175}\ A}
+\item[]\textsl{\symbol{'173}productions\symbol{'175}}
+\item[]\textsl{A\ ->\ B\ |\ C;\ B\ ->\ 10;\ C\ ->\ ED;\ D\ ->\ 01;\ E\ ->\ %\ |\ EF;\ F\ ->\ 11}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ rel\ =\ SymRel.fromString\ "(0,\ A),\ (1,\ B)";
+\item[]\textsl{val\ rel\ =\ -\ :\ sym_rel}
+\item[]\textsl{-\ }val\ gram'''\ =\ Gram.renameAlphabet(gram'',\ rel);
+\item[]\textsl{val\ gram'''\ =\ -\ :\ gram}
+\item[]\textsl{-\ }Gram.output("",\ gram''');
+\item[]\textsl{\symbol{'173}variables\symbol{'175}\ <A>,\ <B>,\ <C>,\ <D>,\ <E>,\ <F>\ \symbol{'173}start\ variable\symbol{'175}\ <A>}
+\item[]\textsl{\symbol{'173}productions\symbol{'175}}
+\item[]\textsl{<A>\ ->\ <B>\ |\ <C>;\ <B>\ ->\ BA;\ <C>\ ->\ <E><D>;\ <D>\ ->\ AB;}
+\item[]\textsl{<E>\ ->\ %\ |\ <E><F>;\ <F>\ ->\ BB}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

@@ -1,0 +1,63 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ pr\ =\ Prog.toClosed(Prog.input\ "");
+\item[]\textsl{@\ }app(lam(x,\ calc(plus,\ pair(var(x),\ int(3)))),
+\item[]\textsl{@\ }\ \ \ \ int(4))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pr\ =\ -\ :\ cp}
+\item[]\textsl{-\ }Prog.run(pr,\ 0);
+\item[]\textsl{val\ it\ =\ Intermed\ -\ :\ Prog.run}
+\item[]\textsl{-\ }val\ Prog.Intermed\ pr'\ =\ it;
+\item[]\textsl{val\ pr'\ =\ -\ :\ cp}
+\item[]\textsl{-\ }Prog.output("",\ Prog.fromClosed\ pr');
+\item[]\textsl{app(lam(x,\ calc(plus,\ pair(var(x),\ int(3)))),\ int(4))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Prog.run(pr,\ 1);
+\item[]\textsl{val\ it\ =\ Intermed\ -\ :\ Prog.run}
+\item[]\textsl{-\ }val\ Prog.Intermed\ pr'\ =\ it;
+\item[]\textsl{val\ pr'\ =\ -\ :\ cp}
+\item[]\textsl{-\ }Prog.output("",\ Prog.fromClosed\ pr');
+\item[]\textsl{calc(plus,\ pair(int(4),\ int(3)))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Prog.run(pr,\ 2);
+\item[]\textsl{val\ it\ =\ Intermed\ -\ :\ Prog.run}
+\item[]\textsl{-\ }val\ Prog.Intermed\ pr'\ =\ it;
+\item[]\textsl{val\ pr'\ =\ -\ :\ cp}
+\item[]\textsl{-\ }Prog.output("",\ Prog.fromClosed\ pr');
+\item[]\textsl{int(7)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Prog.run(pr,\ 3);
+\item[]\textsl{val\ it\ =\ Ans\ -\ :\ Prog.run}
+\item[]\textsl{-\ }val\ Prog.Ans\ pr'\ =\ it;
+\item[]\textsl{val\ pr'\ =\ -\ :\ cp}
+\item[]\textsl{-\ }Prog.output("",\ Prog.fromClosed\ pr');
+\item[]\textsl{int(7)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pr\ =\ Prog.toClosed(Prog.fromString\ "calc(plus,\ int(4))");
+\item[]\textsl{val\ pr\ =\ -\ :\ cp}
+\item[]\textsl{-\ }Prog.run(pr,\ 1);
+\item[]\textsl{val\ it\ =\ Fail\ -\ :\ Prog.run}
+\item[]\textsl{-\ }val\ Prog.Fail\ pr'\ =\ it;
+\item[]\textsl{val\ pr'\ =\ -\ :\ cp}
+\item[]\textsl{-\ }Prog.output("",\ Prog.fromClosed\ pr');
+\item[]\textsl{calc(plus,\ int(4))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

@@ -1,0 +1,30 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(4230,1443)(0,-10)
+\path(615,1194)(15,894)
+\path(615,1194)(1215,894)
+\path(615,1194)(615,894)
+\put(615,1269){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Asf$}}}}
+\put(15,669){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Asf$}}}}
+\put(615,669){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Asf$}}}}
+\put(1215,669){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Asf$}}}}
+\path(3765,594)(4215,294)
+\put(3765,669){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\Asf$}}}}
+\put(3315,69){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\Asf$}}}}
+\put(4215,69){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\Asf$}}}}
+\put(1215,69){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\%$}}}}
+\put(3315,1269){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\Asf$}}}}
+\put(2865,669){\makebox(0,0)[b]{\smash{{\SetFigFont{8}{9.6}{\rmdefault}{\mddefault}{\updefault}$\Asf$}}}}
+\path(3315,1194)(2865,894)
+\path(3315,1194)(3765,894)
+\path(3765,594)(3315,294)
+\path(1215,594)(1215,294)
+\end{picture}
+}

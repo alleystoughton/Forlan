@@ -1,0 +1,36 @@
+(TeX-add-style-hook "chap-2.2"
+ (lambda ()
+    (LaTeX-add-index-entries
+     "string induction!right|see {right string induction}"
+     "right string induction"
+     "string induction!left|see {left string induction}"
+     "left string induction"
+     "strong string induction"
+     "string induction!strong|see{strong string induction}"
+     "reversal!string"
+     "string!reversal"
+     " reversal@$\\cdot^R$"
+     "string! reversal@$\\cdot^R$"
+     "recursion!string"
+     "alphabet@$\\alphabet$"
+     "string!alphabet"
+     "string!alphabet@$\\alphabet$"
+     "inductive definition"
+     "palindrome"
+     "string!palindrome"
+     "inductive definition!induction principle"
+     "difference function"
+     "string!difference function"
+     "diff@$\\diff$"
+     "string!diff@$\\diff$")
+    (LaTeX-add-labels
+     "UsingInductionToProveLanguageEqualities"
+     "StrRevProp1"
+     "StrRevEx"
+     "SSIProp1Lem1"
+     "SSIProp1Lem2"
+     "SSIProp1"
+     "SSIProp2Lem1"
+     "SSIProp2Lem2"
+     "SSIProp2")))
+

@@ -1,0 +1,13 @@
+setPrintingLineLength 66;
+val dfa = DFA.input "";
+{states}
+A, B, C
+{start state}
+A
+{accepting states}
+A, C
+{transitions}
+A, 0 -> B; A, 1 -> C;
+B, 0 -> C; B, 1 -> B;
+C, 0 -> B; C, 1 -> A
+.

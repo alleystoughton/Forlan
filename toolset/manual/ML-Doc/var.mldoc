@@ -1,0 +1,140 @@
+<!-- var.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Var Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Var/ Module</HEAD>
+
+<PP>This module defines the abstract type of program variables.</PP>
+
+<STRUCTURE STRID="Var">
+<OPAQUE>
+<SIGBODY SIGID="VAR" FILE=VAR>
+
+<SPEC>
+<TYPE><ID>var</ID></TYPE>
+<COMMENT>
+<PP>The abstract type of program variables, consisting of all
+strings consisting of an initial letter, followed by a possibly
+empty sequence of letters or digits.</PP>
+</SPEC>
+
+<SPEC>
+<VAL>beginsWithVar<TY>(int * Lex.tok)list -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+beginsWithVar <ARG/lts/
+</PROTOTY>
+<PP>tests whether <CD><ARG/lts/</CD> begins with a variable.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>inputLabFromLabToks
+<TY>(int * Lex.tok)list -> (int * var * (int * Lex.tok)list)</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+inputLabFromLabToks <ARG/lts/
+</PROTOTY>
+<PP>tries to input a variable from <CD><ARG/lts/</CD>, consuming
+as much of <CD><ARG/lts/</CD> as possible, and returning the triple of
+the label in <CD><ARG/lts/</CD> of the first letter of the variable,
+the variable itself, and the rest of <CD><ARG/lts/</CD>.  Issues an error
+message if this can't be done.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> var</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs a variable from <CD><ARG/s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> var</TY></VAL>
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs a variable from the file named by <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>var -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toPP <ARG/v/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/v/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>var -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/v/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/v/</CD> to a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>string * var -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+output(<ARG/fil/, <ARG/v/)
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/v/</CD> to the file named by <CD><ARG/fil/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>var Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compare(<ARG/v1/, <ARG/v2/)
+</PROTOTY>
+<PP>returns
+<CODE>
+  case Int.compare(size <ARG/v1/, size <ARG/v2/) of
+       LESS    => LESS
+     | EQUAL   => String.compare(<ARG/v1/, <ARG/v2/)
+     | GREATER => GREATER
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>var * var -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal(<ARG/v1/, <ARG/v2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/v1/</CD> and <CD><ARG/v2/</CD> are
+equal.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

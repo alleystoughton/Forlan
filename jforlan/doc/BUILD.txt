@@ -1,0 +1,18 @@
+JForlan: Build Process
+
+JForlan is currently set up as an Eclipse project, and can most easily
+be compiled and built using this IDE.  To create a runnable JAR file,
+simply select the project, and go to File->Export...->Runnable Jar.
+
+Alternatively, the program may be compiled with the command line.
+
+To compile, run
+
+    javac -classpath .:AppleJavaExtensions.jar -d bin src/jforlan/automata/*.java src/jforlan/error/*.java src/jforlan/forlan/*.java src/jforlan/panels/*.java src/jforlan/trees/*.java src/jforlan/dialogs/*.java src/jforlan/filefilters/*.java src/jforlan/main/*.java src/jforlan/utils/*.java
+	
+from the source directory.
+
+To build the jar file, copy jforlan/resources into the bin folder, and
+run the following:
+
+    jar cfm JForlan_compiled.jar MANIFEST.txt src/jforlan/automata/*.class src/jforlan/error/*.class src/jforlan/forlan/*.class src/jforlan/panels/*.class src/jforlan/trees/*.class src/jforlan/dialogs/*.class src/jforlan/filefilters/*.class src/jforlan/main/*.class src/jforlan/resources src/jforlan/utils/*.class

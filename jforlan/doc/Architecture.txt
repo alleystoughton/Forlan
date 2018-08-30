@@ -1,0 +1,15 @@
+The architecture of the program revolves around the MainFrame (primary
+window) and the Controller. Any operations invoked through this window
+are handled by the controller. The controller maintains an interface
+to Forlan that handles much of the validity checking as well as the
+formatting when saving a diagram to Forlan snytax.
+
+There are two types of panels that are used for the drawing canvas,
+FAProjects and TreeProjects (depending on whether the user is
+currently working on an FA, RFA, parse tree, regular expression tree,
+or program tree). The creation and management of these panels is
+handled by the controller.
+
+A PNG image of the system architecture can be found under the name
+"class_diagram.png". This gives an overview of the structure of the
+system.

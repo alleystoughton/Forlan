@@ -1,0 +1,31 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(1951,2605)(0,-10)
+\put(1789,58){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\mathsf{0},$}}}
+\path(1339,2383)(1939,2083)
+\path(739,1783)(139,1483)
+\path(739,1783)(1339,1483)
+\path(139,1183)(139,1108)(139,1033)
+	(139,958)(139,883)
+\path(1339,1183)(889,883)
+\path(1339,1183)(1789,883)
+\path(1789,583)(1789,508)(1789,433)
+	(1789,358)(1789,283)
+\put(1339,2458){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$+$}}}
+\put(739,1858){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$@$}}}
+\put(1939,1858){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\%$}}}
+\put(139,1258){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$*$}}}
+\put(139,658){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\mathsf{0}$}}}
+\put(1339,1258){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$@$}}}
+\put(889,658){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\mathsf{1}$}}}
+\put(1789,658){\makebox(0,0)[b]{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$*$}}}
+\path(1339,2383)(739,2083)
+\end{picture}
+}

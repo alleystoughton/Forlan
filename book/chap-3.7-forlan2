@@ -1,0 +1,8 @@
+FA.simplified fa1;
+val fa1' = FA.simplify fa1;
+FA.output("", fa1');
+FA.simplified fa1';
+val fa2' = FA.simplify fa2;
+FA.output("", fa2');
+val fa3' = FA.simplify fa3;
+FA.output("", fa3');

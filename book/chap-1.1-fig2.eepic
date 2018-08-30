@@ -1,0 +1,42 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(3600,1096)(0,-10)
+\path(600,874)(600,799)(600,724)
+	(600,649)(600,574)(600,499)
+	(600,424)(600,349)(600,274)
+\blacken\path(570.000,394.000)(600.000,274.000)(630.000,394.000)(570.000,394.000)
+\path(1200,874)(1200,274)
+\blacken\path(1170.000,394.000)(1200.000,274.000)(1230.000,394.000)(1170.000,394.000)
+\path(1800,874)(1800,799)(1800,724)
+	(1800,649)(1800,574)(1800,499)
+	(1800,424)(1800,349)(1800,274)
+\blacken\path(1770.000,394.000)(1800.000,274.000)(1830.000,394.000)(1770.000,394.000)
+\path(2400,874)(2400,274)
+\blacken\path(2370.000,394.000)(2400.000,274.000)(2430.000,394.000)(2370.000,394.000)
+\path(3000,874)(3000,274)
+\blacken\path(2970.000,394.000)(3000.000,274.000)(3030.000,394.000)(2970.000,394.000)
+\put(0,49){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\cdots$}}}}}
+\put(3600,49){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\cdots$}}}}}
+\put(1800,49){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$0$}}}}}
+\put(1200,49){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$2$}}}}}
+\put(600,49){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$4$}}}}}
+\put(3000,49){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$3$}}}}}
+\put(0,949){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\cdots$}}}}}
+\put(3600,949){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\cdots$}}}}}
+\put(1800,949){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$0$}}}}}
+\put(2400,949){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$1$}}}}}
+\put(1200,949){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$-1$}}}}}
+\put(600,949){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$-2$}}}}}
+\put(3000,949){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$2$}}}}}
+\put(3600,499){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\cdots$}}}}}
+\put(0,499){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\cdots$}}}}}
+\put(2400,49){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$1$}}}}}
+\end{picture}
+}

@@ -1,0 +1,39 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ even\ =\ Prog.input\ "even-prog";
+\item[]\textsl{val\ even\ =\ -\ :\ prog}
+\item[]\textsl{-\ }fun\ test(n,\ m)\ =
+\item[]\textsl{=\ }\ \ \ \ \ \ let\ val\ pr\ =\ Prog.app(even,\ Prog.int\ n)
+\item[]\textsl{=\ }\ \ \ \ \ \ in\ Prog.evaluate(pr,\ m)\ end;
+\item[]\textsl{val\ test\ =\ fn\ :\ IntInf.int\ \symbol{'052}\ int\ ->\ unit}
+\item[]\textsl{-\ }test(3,\ 100);
+\item[]\textsl{terminated\ with\ value\ "const(false)"}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }test(4,\ 100);
+\item[]\textsl{terminated\ with\ value\ "const(true)"}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }test(5,\ 100);
+\item[]\textsl{terminated\ with\ value\ "const(false)"}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }test(6,\ 100);
+\item[]\textsl{terminated\ with\ value\ "const(true)"}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

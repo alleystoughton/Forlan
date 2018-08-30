@@ -1,0 +1,47 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ reg\ =\ Reg.input\ "";
+\item[]\textsl{@\ }(%\ +\ $0)(%\ +\ 00\symbol{'052}0\ +\ 0\symbol{'052}\symbol{'052})\symbol{'052}
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ reg\ =\ -\ :\ reg}
+\item[]\textsl{-\ }Reg.output("",\ Reg.weaklySimplify\ reg);
+\item[]\textsl{(%\ +\ 0\symbol{'052}\ +\ 000\symbol{'052})\symbol{'052}}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Reg.toStrSet\ reg;
+\item[]\textsl{language\ is\ infinite}
+\item[]
+\item[]\textsl{uncaught\ exception\ Error}
+\item[]\textsl{-\ }val\ reg'\ =\ Reg.input\ "";
+\item[]\textsl{@\ }(1\ +\ %)(2\ +\ $)(3\ +\ %\symbol{'052})(4\ +\ $\symbol{'052})
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ reg'\ =\ -\ :\ reg}
+\item[]\textsl{-\ }StrSet.output("",\ Reg.toStrSet\ reg');
+\item[]\textsl{2,\ 12,\ 23,\ 24,\ 123,\ 124,\ 234,\ 1234}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Reg.output("",\ Reg.weaklySimplify\ reg');
+\item[]\textsl{(%\ +\ 1)2(%\ +\ 3)(%\ +\ 4)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Reg.output
+\item[]\textsl{=\ }("",
+\item[]\textsl{=\ }\ Reg.weaklySimplify(Reg.fromString\ "(00\symbol{'052}11\symbol{'052})\symbol{'052}"));
+\item[]\textsl{(00\symbol{'052}11\symbol{'052})\symbol{'052}}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

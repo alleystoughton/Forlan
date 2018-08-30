@@ -1,0 +1,1407 @@
+\section{Programs and Recursive and RE Languages}
+\label{ProgramsAndRecursiveAndRELanguages}
+
+In this section, we introduce our functional programming language,
+and then use it to define the recursive and recursively enumerable
+languages.
+
+\subsection{Programs}
+
+Our programming language is statically scoped, i.e., nonlocal names
+used by functions are interpreted relative to the environments in
+which they are declared.  It is dynamically typed, in that all type
+checking happens at runtime.  It is deterministic, in the sense that
+every evaluation of a program has the same result.  It is functional,
+not imperative (assignment-oriented), i.e., there is no mutable state.
+And it is eager, not lazy, in the sense that a function's argument
+must be completely evaluated before the function is called.
+
+To say what programs are, we need some preliminary definitions:
+\begin{itemize}
+\item A \emph{variable} is a nonempty string of letters
+  ($\mathsf{a,b,\ldots,z,A,B,\ldots,Z}$) and digits
+  ($\mathsf{0,1,\ldots,9}$) that begins with a letter.  We write
+  $\ProgVar$ for the set of all variables, and we order variables
+  using the restriction of our total ordering on strings to
+  $\ProgVar$.
+
+\item A \emph{constant} is one of the strings $\progtrue$, $\progfalse$ and
+  $\prognil$, and we write $\ProgConst$ for the set of all constants.
+
+\item A \emph{program operator} is one of the strings
+  $\progisNil$, $\progisInt$, $\progisNeg$, $\progisZero$,
+  $\progisPos$, $\progisSym$, $\progisStr$, $\progisPair$,
+  $\progisLam$, $\progplus$, $\progminus$, $\progcompare$, $\progfst$,
+  $\progsnd$, $\progconsSym$, $\progdeconsSym$, $\progsymListToStr$ and
+  $\progstrToSymList$, and we write $\ProgOper$ for the set of
+  all operators.
+\end{itemize}
+
+Programs are trees (see Section~\ref{TreesAndInductiveDefinitions})
+whose labels come from the set $\ProgLab$ of \emph{program labels},
+which consists of the union of:
+\begin{description}
+\item[\quad(variable)] $\setof{\progvar(v)}{v\in\ProgVar}$;
+
+\item[\quad(constant)] $\setof{\progconst(\progcon)}{\progcon\in\ProgConst}$;
+
+\item[\quad(integer)] $\setof{\progint(n)}{n\in\ints}$;
+
+\item[\quad(symbol)] $\setof{\progsym(a)}{a\in\Sym}$;
+
+\item[\quad(string)] $\setof{\progstr(x)}{x\in\Str}$;
+
+\item[\quad(pair)] $\{\progpair\}$;
+
+\item[\quad(calculation)]
+  $\setof{\progcalc(\progoper)}{\progoper\in\ProgOper}$;
+
+\item[\quad(conditional)] $\{\progcond\}$;
+
+\item[\quad(function application)] $\{\progapp\}$;
+
+\item[\quad(anonymous function)] $\setof{\proglam(v)}{v\in\ProgVar}$
+  ($\proglam$ stands for ``lambda'', recalling the notation for
+  anonymous functions in the $\lambda$-calculus);
+
+\item[\quad(simple let)] $\setof{\progletSimp(v)}{v\in\ProgVar}$; and
+
+\item[\quad(recursive let)] $\setof{\progletRec(v_1,v_2)}{v_1,v_2\in\ProgVar}$.
+\end{description}
+
+Let the set $\Prog$ of \emph{programs} be the least subset
+of $\Tree\,\ProgLab$ such that:
+\begin{description}
+\item[\quad(variable)] for all $v\in\ProgVar$,
+  \begin{displaymath}
+    \progvar(v)\in\Prog
+  \end{displaymath}
+  (a leaf);
+
+\item[\quad(constant)] for all $\progcon\in\ProgConst$,
+  \begin{displaymath}
+   \progconst(\progcon)\in\Prog 
+  \end{displaymath}
+  (a leaf);
+
+\item[\quad(integer)] for all $n\in\ints$, 
+  \begin{displaymath}
+    \progint(n)\in\Prog
+  \end{displaymath}
+  (a leaf);
+
+\item[\quad(symbol)] for all $a\in\Sym$,
+  \begin{displaymath}
+    \progsym(a)\in\Prog
+  \end{displaymath}
+  (a leaf);
+
+\item[\quad(string)] for all $x\in\Str$,
+  \begin{displaymath}
+    \progstr(x)\in\Prog    
+  \end{displaymath}
+  (a leaf);
+
+\item[\quad(pair)] for all $\pr_1,\pr_2\in\Prog$,
+  \begin{displaymath}
+   \progpair(\pr_1,\pr_2)\in\Prog 
+  \end{displaymath}
+  (a node labeled $\progpair$ with two children);
+
+\item[\quad(calculation)] for all $\progoper\in\ProgOper$ and
+  $\pr\in\Prog$,
+  \begin{displaymath}
+    \progcalc(\progoper)(\pr)\in\Prog    
+  \end{displaymath}
+  (a node labeled $\progcalc(\progoper)$, with one child; we abbreviate it as
+  $\progcalc(\progoper,\pr)$);
+
+\item[\quad(conditional)] for all $\pr_1,\pr_2,\pr_3\in\Prog$,
+  \begin{displaymath}
+   \progcond(\pr_1,\pr_2,\pr_3)\in\Prog 
+  \end{displaymath}
+  (a node labeled $\progcond$, with three children);
+
+\item[\quad(function application)] for all $\pr_1,\pr_2\in\Prog$,
+  \begin{displaymath}
+    \progapp(\pr_1, \pr_2)\in\Prog    
+  \end{displaymath}
+(a node labeled $\progapp$, with two children);
+
+\item[\quad(anonymous function)] for all $v\in\ProgVar$ and
+  $\pr\in\Prog$,
+  \begin{displaymath}
+    \proglam(v)(\pr)\in\Prog    
+  \end{displaymath}
+  (a node labeled $\proglam(v)$, with one child; we abbreviate it as
+  $\proglam(v,\pr)$);
+
+\item[\quad(simple let)] for all $v\in\ProgVar$ and
+  $\pr_1,\pr_2\in\Prog$,
+  \begin{displaymath}
+    \progletSimp(v)(\pr_1,\pr_2)\in\Prog  
+  \end{displaymath}
+  (a node labeled $\progletSimp(v)$, with two children; we abbreviate
+  it as $\progletSimp(v, \pr_1, \pr_2)$); and
+
+\item[\quad(recursive let)] for all $v_1,v_2\in\ProgVar$ and
+  $\pr_1,\pr_2\in\Prog$,
+  \begin{displaymath}
+    \progletRec(v_1,v_2)(\pr_1,\pr_2)\in\Prog
+  \end{displaymath}
+  (a node labeled $\progletRec(v_1,v_2)$, with two children; we
+  abbreviate it as $\progletRec(v_1,v_2,\pr_1,\pr_2)$).
+\end{description}
+$\Prog$ is countably infinite.
+
+Informally:
+\begin{itemize}
+\item A pair $\progpair(\pr_1,\pr_2)$ is evaluated by evaluating
+  $\pr_1$ and then $\pr_2$.
+
+\item A calculation $\progcalc(\progoper,\pr)$ applies the operator
+  $\progoper$ to the result of evaluating $\pr$.
+
+\item A conditional $\progcond(\pr_1,\pr_2,\pr_3)$ first evaluates
+  $\pr_1$ to a boolean constant; if this constant is
+  $\progconst(\progtrue)$, it evaluates $\pr_2$; and if this constant
+  is $\progconst(\progfalse)$, it evaluates $\pr_3$.
+
+\item A function application $\progapp(\pr_1, \pr_2)$ evaluates
+  $\pr_1$ to an anonymous function, and then applies this function
+  to the result of evaluating $\pr_2$.
+
+\item If an anonymous function $\proglam(v,\pr)$ is applied to a fully
+  evaluated argument, then $\pr$ is evaluated in an environment in
+  which $v$ is bound to the argument.
+
+\item A simple let $\progletSimp(v, \pr_1, \pr_2)$ is evaluated by
+  evaluating $\pr_2$ in an environment in which $v$ is bound to the
+  result of evaluating $\pr_1$.
+
+\item A recursive let $\progletRec(v_1,v_2,\pr_1,\pr_2)$ is evaluated
+  by evaluating $\pr_2$ in an envionment in which $v_1$ has been
+  recursively declared by:
+  \begin{displaymath}
+    v_1 = \proglam(v_2, \pr_1) .
+  \end{displaymath}
+\end{itemize}
+
+Lists are represented by pairs:
+\begin{displaymath}
+  \progpair(\pr_1,\progpair(\pr_2,\,\ldots \progpair(\pr_n,
+  \progconst(\prognil))))
+\end{displaymath}
+represents the $n$-length list whose elements are $\pr_1$, $\pr_2$, \ldots,
+$\pr_n$ (so $\progconst(\prognil)$ represents the empty list).
+
+In the Forlan syntax for programs, the elements of $\Prog$ are
+written using our standard syntax for trees, except that:
+\begin{itemize}
+\item The integer arguments to $\progint$ are written as base-10 numerals,
+  preceded by \texttt{\tildesym} in the case of negative integers.  The
+  integer $0$ is written as \texttt{0}; extra zeros aren't used/allowed.
+  Positive integers are written without leading zeros. And negative
+  integers are written written as \texttt{\tildesym} followed by a nonempty
+  string of digits with no leading zeros.
+
+\item The symbol arguments to $\progsym$, and the string arguments to
+  $\progstr$ are written in abbreviated form, as usual.
+
+\item All nodes are abbreviated.  E.g.,
+  \begin{displaymath}
+    \progletSimp(\mathsf{x})(\progint(-12),\progvar(\mathsf{x}))
+  \end{displaymath}
+\end{itemize}
+is written as
+\begin{verbatim}
+letSimp(x, int(~12), var(x))
+\end{verbatim}
+
+Programs can also be described as strings over the
+alphabet consisting of the letters and digits, plus the elements of
+\begin{displaymath}
+\{\commasym, \percsym, \mytildesym, \openparsym,
+\closparsym, \lesssym, \greatsym\} .
+\end{displaymath}
+A program $\pr$ is described the string formed by writing $\pr$
+in Forlan's syntax, using no whitespace, and then performing
+the following substitutions:
+\begin{itemize}
+\item \texttt{,} is replaced by $\commasym$;
+
+\item \texttt{\%} is replaced by $\percsym$;
+
+\item \texttt{\tildesym} is replaced by $\mytildesym$;
+
+\item \texttt{(} is replaced by $\openparsym$;
+
+\item \texttt{)} is replaced by $\closparsym$;
+
+\item \texttt{<} is replaced by $\lesssym$; and
+
+\item \texttt{>} is replaced by $\greatsym$.
+\end{itemize}
+
+For example, the program
+\begin{gather*}
+\progcalc(\progplus,\progpair(\progint(4),\progint(-5)))
+\end{gather*}
+is described by the string
+\begin{gather*}
+\mathsf{calc\openparsym plus\commasym pair\openparsym int
+\openparsym 4\closparsym} \\
+\hspace{-1cm}
+\mathsf{\commasym int\openparsym\mytildesym 5\closparsym\closparsym\closparsym} .
+\end{gather*}
+Every program is described by a unique string, and every
+string describes at most one program.  (E.g., the string
+$\mathsf{\commasym\closparsym}$ doesn't describe a program.)
+
+The Forlan module \texttt{Var} defines the abstract type (in the top-level
+environment) \texttt{var} of variables, along with functions, including:
+\begin{verbatim}
+val input   : string -> var
+val output  : string * var -> unit
+val compare : var * var -> order
+val equal   : var * var -> bool
+\end{verbatim}
+The function \texttt{compare} implements our total ordering on
+variables, and \texttt{equal} tests whether two
+variables are equal.
+
+The module \texttt{VarSet}
+\index{VarSet@\texttt{VarSet}}%
+defines various functions for processing
+finite sets of variables (elements of type \texttt{var\;set}),
+\index{set@\texttt{\primesym a~set}}%
+\begin{verbatim}
+val input    : string -> var set
+val output   : string * var set -> unit
+val fromList : var list -> var set
+val memb     : var * var set -> bool
+val subset   : var set * var set -> bool
+val equal    : var set * var set -> bool
+val union    : var set * var set -> var set
+val inter    : var set * var set -> var set
+val minus    : var set * var set -> var set
+val genUnion : var set list -> var set
+val genInter : var set list -> var set
+\end{verbatim}
+\index{VarSet@\texttt{VarSet}!input@\texttt{input}}%
+\index{VarSet@\texttt{VarSet}!output@\texttt{output}}%
+\index{VarSet@\texttt{VarSet}!fromList@\texttt{fromList}}%
+\index{VarSet@\texttt{VarSet}!memb@\texttt{memb}}%
+\index{VarSet@\texttt{VarSet}!subset@\texttt{subset}}%
+\index{VarSet@\texttt{VarSet}!equal@\texttt{equal}}%
+\index{VarSet@\texttt{VarSet}!union@\texttt{union}}%
+\index{VarSet@\texttt{VarSet}!inter@\texttt{inter}}%
+\index{VarSet@\texttt{VarSet}!minus@\texttt{minus}}%
+\index{VarSet@\texttt{VarSet}!genUnion@\texttt{genUnion}}%
+\index{VarSet@\texttt{VarSet}!genInter@\texttt{genInter}}%
+The total ordering associated with sets of variables is our total
+ordering on variables.  Sets of variables are expressed in Forlan's syntax
+as sequences of variables, separated by commas.
+
+The function \texttt{fromList} returns a set with the same elements of
+the list of variables it is called with.  The function \texttt{memb}
+tests whether a variable is a member (element) of a set of variables,
+\texttt{subset} tests whether a first set of variables is a subset of a
+second one, and \texttt{equal} tests whether two sets of variables are
+equal.  The functions \texttt{union}, \texttt{inter} and
+\texttt{minus} compute the union, intersection and difference of two
+sets of variables.  The function \texttt{genUnion} computes the
+generalized intersection of a list of sets of variables $\xss$,
+returning the set of all variables appearing in at least one element of
+$\xss$.  And, the function \texttt{genInter} computes the generalized
+intersection of a nonempty list of sets of variables $\xss$, returning
+the set of all variables appearing in all elements of $\xss$.
+
+The Forlan module \texttt{Prog} defines the abstract type (in the top-level
+environment) \texttt{prog} of programs, along with a number of types and
+functions, including:
+\begin{verbatim}
+datatype const = True | False | Nil
+datatype oper = IsNil | IsInt | IsNeg | IsZero | IsPos | IsSym
+              | IsStr | IsPair | IsLam | Plus | Minus | Compare
+              | Fst | Snd | ConsSym | DeconsSym | SymListToStr
+              | StrToSymList
+val var     : Var.var -> prog
+val const   : const -> prog
+val int     : IntInf.int -> prog
+val sym     : sym -> prog
+val str     : str -> prog
+val pair    : prog * prog -> prog
+val calc    : oper * prog -> prog
+val cond    : prog * prog * prog -> prog
+val app     : prog * prog -> prog
+val lam     : var * prog -> prog
+val letSimp : var * prog * prog -> prog
+val letRec  : var * var * prog * prog -> prog
+val input   : string -> prog
+val output  : string * prog -> unit
+val equal   : prog * prog -> bool
+val height  : prog -> int
+val size    : prog -> int
+val fromStr : str -> prog
+val toStr   : prog -> str
+\end{verbatim}
+\texttt{const} and \texttt{oper} are the datatypes of program constants
+and operators.
+The function \texttt{var} takes in a program variable $v$, and
+returns the program $\progvar(v)$.
+The function \texttt{const} takes in a program constant $\progcon$,
+and returns the program $\progconst(\progcon)$.
+The function \texttt{int} takes in a (infinite precision) integer $n$,
+and returns the program $\progint(n)$.
+The function \texttt{sym} takes in a symbol $a$,
+and returns the program $\progsym(a)$.
+The function \texttt{str} takes in a string $x$,
+and returns the program $\progstr(x)$.
+The function \texttt{pair} takes in a pair $(\pr_1,\pr_2)$ of programs,
+and returns the program $\progpair(\pr_1,\pr_2)$.
+The function \texttt{calc} takes in a pair $(\progoper,\pr)$ of a
+program operator and a program, and returns the program
+$\progcalc(\progoper,\pr)$.
+The function \texttt{cond} takes in a triple $(\pr_1,\pr_2,\pr_3)$ of programs,
+and returns the program $\progcond(\pr_1,\pr_2,\pr_3)$.
+The function \texttt{app} takes in a pair $(\pr_1,\pr_2)$ of programs,
+and returns the program $\progapp(\pr_1,\pr_2)$.
+The function \texttt{lam} takes in a pair $(v,pr)$ of a variable $v$
+and a program $\pr$, and returns the program
+$\proglam(v,\pr)$.
+The function \texttt{letSimp} takes in a triple $(v,\pr_1,\pr_2)$ of a
+variable $v$ and programs $\pr_1$ and $\pr_2$, and returns the program
+$\progletSimp(v,\pr_1,\pr_2)$.
+The function \texttt{letRec} takes in a quadruple
+$(v_1,v_2,pr_1,\pr_2)$ of variables $v_1$ and $v_2$ and programs
+$\pr_1$ and $\pr_2$, and returns the program
+$\progletRec(v_1,v_2,\pr_1,\pr_2)$.
+The function \texttt{equal} tests two programs for equality.
+The functions \texttt{height} and and \texttt{size} return the height
+and size, respectively, of a program.
+The function \texttt{fromStr} issues an error message if its argument
+isn't a string over the alphabet (given above) for describing
+programs, or if it is a string over this alphabet, but doesn't
+describe a program; otherwise it returns the unique program described
+by its argument.  And the function \texttt{toStr} converts a program
+to the unique string describing it.
+
+For example, we can proceed as follows:
+\input{chap-5.1-forlan1}
+
+The Java program JForlan, can be used to view and edit program trees.
+It can be invoked directly, or run via Forlan.  See the Forlan website
+for more information.
+
+\subsection{Program Meaning}
+
+Variables are \emph{bound} (declared) in programs, as follows:
+\begin{itemize}
+\item $\proglam(v, \pr)$ binds $v$ in $\pr$;
+
+\item $\progletSimp(v, \pr_1, \pr_2)$ binds $v$ in $\pr_2$; and
+
+\item $\progletSimp(v_1, v_2, \pr_1, \pr_2)$ binds $v_1$ in $\pr_1$ and
+  $\pr_2$, and binds $v_2$ in $\pr_1$.
+\end{itemize}
+We say that an occurrence of a variable in a program is \emph{free} iff
+it isn't bound.
+
+Formally, we define a function $\free\in\Prog\fun
+\setof{X\sub\ProgVar}{X\eqtxtl{is finite}}$ by structural recursion:
+\begin{itemize}
+\item $\free(\progvar(v)) = \emptyset$, for all $v\in\ProgVar$;
+
+\item $\free(\progconst(\progcon)) = \emptyset$, for all
+  $\progcon\in\ProgConst$;
+
+\item $\free(\progint(n)) = \emptyset$, for all $n\in\ints$;
+
+\item $\free(\progsym(a)) = \emptyset$, for all $a\in\Sym$;
+
+\item $\free(\progstr(x)) = \emptyset$, for all $x\in\Str$;
+
+\item $\free(\progpair(\pr_1,\pr_2)) = \free\,\pr_1\cup\free\,\pr_2$,
+  for all $\pr_1,\pr_2\in\Prog$;
+
+\item $\free(\progcalc(\progoper,\pr)) = \free\,\pr$,
+  for all $\progoper\in\ProgOper$ and $\pr\in\Prog$;
+
+\item $\free(\progcond(\pr_1,\pr_2,\pr_3)) =
+\free\,\pr_1\cup\free\,\pr_2\cup\free\,\pr_3$,
+  for all $\pr_1,\pr_2,\pr_3\in\Prog$;
+
+\item $\free(\progapp(\pr_1,\pr_2)) = \free\,\pr_1\cup\free\,\pr_2$,
+  for all $\pr_1,\pr_2\in\Prog$;
+
+\item $\free(\proglam(v,\pr)) = \free\,\pr - \{v\}$,
+  for all $v\in\ProgVar$ and $\pr\in\Prog$;
+
+\item $\free(\progletSimp(v,\pr_1,\pr_2)) =
+  \free\,\pr_1\cup(\free\,\pr_2 - \{v\})$,
+  for all $v\in\ProgVar$ and $\pr_1,\pr_2\in\Prog$; and
+
+\item $\free(\progletRec(v_1,v_2,\pr_1,\pr_2)) =
+  (\free\,\pr_1 - \{v_1,v_2\})\cup (\free\,\pr_2 - \{v_1\})$,
+  for all $v_1,v_2\in\ProgVar$ and $\pr_1,\pr_2\in\Prog$.
+\end{itemize}
+If $v\in\ProgVar$ and $pr\in\Prog$, we say that $v$ \emph{is free in}
+$\pr$ iff $v\in\free\,pr$.
+
+A program $\pr$ is \emph{closed} iff it has no free variables, i.e.,
+$\free\,\pr = \emptyset$.  We write $\CP$ for the set of all closed
+programs.
+
+The module \texttt{Prog} also defines the following type and
+functions:
+\begin{verbatim}
+val free : prog -> var set
+type cp
+val toClosed   : prog -> cp
+val fromClosed : cp -> prog
+\end{verbatim}
+The function \texttt{free} returns the free variables of its argument.
+The type \texttt{cp} (in the top-level environment) is the type of
+closed programs.  The function \texttt{toClosed} issues an error message
+if its argument isn't closed; otherwise, it returns its argument.
+And the function \texttt{fromClosed} simply returns its argument.
+
+For example, we can proceed as follows:
+\input{chap-5.1-forlan2}
+
+Next, we define a function
+$\subst\in\CP\times\ProgVar\times\Prog\fun\Prog$ for substituting a
+closed program for all of the free occurrences of a variable in a
+program.  $\subst$ is defined by structural recursion on its third
+argument, as follows:
+\begin{itemize}
+\item for all $\pr'\in\Prog$, $v'\in\ProgVar$ and $v\in\ProgVar$,
+\begin{displaymath}
+\subst(\pr',v',\progvar(v)) =
+\casesdef{\pr',}{\eqtxtr{if} v'=v ,}%
+{\progvar(v),}{\eqtxtr{if} v'\neq v ;}
+\end{displaymath}
+
+\item for all $\pr'\in\CP$, $v'\in\ProgVar$ and $\progcon\in\ProgConst$,
+  \begin{displaymath}
+    \subst(\pr',v',\progconst(\progcon)) = \progconst(\progcon) ;
+  \end{displaymath}
+
+\item for all $\pr'\in\CP$, $v'\in\ProgVar$ and $n\in\ints$,
+  \begin{displaymath}
+    \subst(\pr',v',\progint(n)) = \progint(n) ;
+  \end{displaymath}
+
+\item for all $\pr'\in\CP$, $v'\in\ProgVar$ and $a\in\Sym$,
+  \begin{displaymath}
+    \subst(\pr',v',\progsym(a)) = \progsym(a) ;
+  \end{displaymath}
+
+\item for all $\pr'\in\CP$, $v'\in\ProgVar$ and $x\in\Str$,
+  \begin{displaymath}
+    \subst(\pr',v',\progstr(x)) = \progstr(x) ;
+  \end{displaymath}
+
+\item for all $\pr'\in\CP$, $v'\in\ProgVar$ and $\pr_1,\pr_2\in\Prog$,
+  \begin{multline*}
+    \subst(\pr',v',\progpair(\pr_1,\pr_2)) \\
+    = \progpair(\subst(\pr',v',\pr_1),\subst(\pr',v',\pr_2)) ;
+  \end{multline*}
+
+\item for all $\pr'\in\CP$, $v'\in\ProgVar$, $\progoper\in\ProgOper$ and
+  $\pr\in\Prog$,
+  \begin{displaymath}
+    \subst(\pr',v',\progcalc(\progoper, \pr)) =
+    \progcalc(\progoper,\subst(\pr',v',\pr)) ;
+  \end{displaymath}
+
+\item for all $\pr'\in\CP$, $v'\in\ProgVar$ and $\pr_1,\pr_2,\pr_3\in\Prog$,
+  \begin{multline*}
+    \subst(\pr',v',\progcond(\pr_1,\pr_2,\pr_3)) \\
+    = \progcond(\subst(\pr',v',\pr_1),\subst(\pr',v',\pr_2),
+      \subst(\pr',v',\pr_3)) ;
+  \end{multline*}
+
+\item for all $\pr'\in\CP$, $v'\in\ProgVar$ and $\pr_1,\pr_2\in\Prog$,
+  \begin{multline*}
+    \subst(\pr',v',\progapp(\pr_1,\pr_2)) \\
+    = \progapp(\subst(\pr',v',\pr_1),\subst(\pr',v',\pr_2)) ;
+  \end{multline*}
+
+\item for all $\pr'\in\CP$, $v'\in\ProgVar$, $v\in\ProgVar$ and
+  $\pr\in\Prog$,
+  \begin{displaymath}
+    \subst(\pr',v',\proglam(v,\pr)) =
+    \casesdef{\proglam(v,\pr),}{\eqtxtr{if} v'=v ,}%
+    {\proglam(v,\subst(\pr',v',\pr)),}{\eqtxtr{if} v'\neq v ;}
+  \end{displaymath}
+
+\item for all $\pr'\in\CP$, $v'\in\ProgVar$, $v\in\ProgVar$ and
+  $\pr_1,\pr_2\in\Prog$,
+  \begin{multline*}
+    \subst(\pr',v',\progletSimp(v,\pr_1,\pr_2)) \\
+    = \casesdef{\progletSimp(v,\subst(\pr',v',\pr_1),\pr_2),}%
+    {\eqtxtr{if} v'=v,}%
+    {\progletSimp(v,\subst(\pr',v',\pr_1),\subst(\pr',v',\pr_2)),}%
+    {\eqtxtr{if} v'\neq v;}%
+  \end{multline*}
+
+\item for all $\pr'\in\CP$, $v'\in\ProgVar$, $v_1,v_2\in\ProgVar$ and
+  $\pr_1,\pr_2\in\Prog$,
+  \begin{multline*}
+    \subst(\pr',v',\progletRec(v_1,v_2,\pr_1,\pr_2)) \\
+    = \left\{ \begin{array}{l}
+        \progletRec(v_1,v_2,\pr_1,\pr_2), \\
+        \hspace*{.5cm}\eqtxtr{if} v'=v_1, \\
+        \progletRec(v_1,v_2,\pr_1,\subst(\pr',v',\pr_2)), \\
+        \hspace*{.5cm}\eqtxtr{if} v'\neq v_1\eqtxt{and} v'=v_2 , \\
+        \progletRec(v_1,v_2,\subst(\pr',v',\pr_1),
+          \subst(\pr',v',\pr_2)), \\
+        \hspace*{.5cm}\eqtxtr{if} v'\neq v_1\eqtxt{and} v'\neq v_2 .
+      \end{array} \right.
+  \end{multline*}
+\end{itemize}
+
+The module \texttt{Prog} also defines the function
+\begin{verbatim}
+val subst : cp * var * prog -> prog
+\end{verbatim}
+corresponding to $\subst$.  Here are some examples of its use:
+\input{chap-5.1-forlan3}
+
+Next, we single out certain closed programs as completely evaluated,
+or values.  Let the set $\Val$ of \emph{values} be the least subset of
+$\CP$ such that:
+\begin{description}
+\item[\quad(constant)] for all $\progcon\in\ProgConst$,
+  $\progconst(\progcon)\in\Val$;
+
+\item[\quad(integer)] for all $n\in\ints$, $\progint(n)\in\Val$;
+
+\item[\quad(symbol)] for all $a\in\Sym$, $\progsym(a)\in\Val$;
+
+\item[\quad(string)] for all $x\in\Str$, $\progstr(x)\in\Val$;
+
+\item[\quad(pair)] for all $\pr_1,\pr_2\in\Val$,
+  $\progpair(\pr_1,\pr_2)\in\Val$; and
+
+\item[\quad(anonymous function)] for all $v\in\ProgVar$ and
+  $\pr\in\Prog$, if $\free\,\pr\sub\{v\}$, then
+  $\proglam(v,\pr)\in\Val$.
+\end{description}
+
+The module \texttt{Prog} also defines a function
+\begin{verbatim}
+val isValue : cp -> bool
+\end{verbatim}
+that tests whether a closed program is a value.  Here are some
+examples of its use:
+\input{chap-5.1-forlan4}
+
+To explain the meaning of program operators, we define a function
+$\calculate\in\ProgOper\times\Val\fun\Option\,\Val$, which returns
+$\none$ to indicate an error, and returns $\some\,\pr$ when the
+application of the operator produced the value $\pr$.  We proceed
+as follows, using a case analysis on the form of the argument
+value:
+\begin{itemize}
+\item ($(\progisNil, \progconst(\prognil))$)
+  Return $\some(\progconst(\progtrue))$.
+
+\item ($(\progisNil, \pr)$, where $\pr\not\in\{\progconst(\prognil)\}$)
+  Return $\some(\progconst(\progfalse))$.
+
+\item ($(\progisInt, \progint(n))$, where $n\in\ints$)
+  Return $\some(\progconst(\progtrue))$.
+
+\item ($(\progisInt, \pr)$, where $\pr\not\in\setof{\progint(n)}{n\in\ints}$)
+  Return $\some(\progconst(\progfalse))$.
+
+\item ($(\progisNeg, \progint(n))$, where $n\in\ints$)
+  Return: $\some(\progconst(\progtrue))$, if $n < 0$;
+  and $\some(\progconst(\progfalse))$, if $n\geq 0$.
+
+\item ($(\progisZero, \progint(n))$, where $n\in\ints$)
+  Return: $\some(\progconst(\progtrue))$, if $n = 0$;
+  and $\some(\progconst(\progfalse))$, if $n\neq 0$.
+
+\item ($(\progisPos, \progint(n))$, where $n\in\ints$)
+  Return: $\some(\progconst(\progtrue))$, if $n > 0$;
+  and $\some(\progconst(\progfalse))$, if $n\leq 0$.
+
+\item ($(\progisSym, \progsym(a))$, where $a\in\Sym$)
+  Return $\some(\progconst(\progtrue))$.
+
+\item ($(\progisSym, \pr)$, where $\pr\not\in\setof{\progsym(a)}{a\in\Sym}$)
+   Return $\some(\progconst(\progfalse))$.
+
+\item ($(\progisStr, \progstr(x))$, where $x\in\Str$)
+  Return $\some(\progconst(\progtrue))$.
+
+\item ($(\progisStr, \pr)$, where $\pr\not\in\setof{\progstr(x)}{x\in\Str}$)
+   Return $\some(\progconst(\progfalse))$.
+
+\item ($(\progisPair, \progpair(\pr_1,\pr_2))$, where
+  $\pr_1,\pr_2\in\Val$)
+  Return $\some(\progconst(\progtrue))$.
+
+\item ($(\progisPair, \pr)$, where $\pr\not\in
+  \setof{\progpair(\pr_1,\pr_2)}{\pr_1,\pr_2\in\Val}$)
+  Return $\some(\progconst(\progfalse))$.
+
+\item ($(\progisLam, \proglam(v,\pr))$, where
+  $v\in\ProgVar$, $\pr\in\Prog$ and $\free\,\pr\sub\{v\}$)
+  Return $\some(\progconst(\progtrue))$.
+
+\item ($(\progisLam, \pr)$, where $\pr\not\in
+  \setof{\proglam(v,\pr)}{v\in\ProgVar\eqtxt{and}\pr\in\Prog\eqtxt{and}
+    \free\,\pr\sub\{v\}}$)
+  Return $\some(\progconst(\progfalse))$.
+
+\item ($(\progplus, \progpair(\progint(m),\progint(n)))$, where
+  $m,n\in\ints$)
+  Return $\some(\progint(m + n))$.
+
+\item ($(\progminus, \progpair(\progint(m),\progint(n)))$, where
+  $m,n\in\ints$)
+  Return $\some(\progint(m - n))$.
+
+\item ($(\progcompare, \progpair(\progint(m),\progint(n)))$, where
+  $m,n\in\ints$)
+  Return: $\some\abr(\progint(-1))$, if $m < n$;
+  $\some(\progint(0))$, if $m = n$; and
+  $\some(\progint(1))$, if $m > n$.
+
+\item ($(\progcompare, \progpair(\progsym(a),\progsym(b)))$, where
+  $a,b\in\Sym$)
+  Return: $\some\abr(\progint(-1))$, if $a < b$;
+  $\some(\progint(0))$, if $a = b$; and
+  $\some(\progint(1))$, if $a > b$.
+
+\item ($(\progcompare, \progpair(\progstr(x),\progstr(y)))$, where
+  $x,y\in\Str$)
+  Return: $\some\abr(\progint(-1))$, if $x < y$;
+  $\some(\progint(0))$, if $x = y$; and
+  $\some(\progint(1))$, if $x > y$.
+
+\item ($(\progfst, \progpair(\pr_1,\pr_2))$, where
+  $\pr_1,\pr_2\in\Val$)
+  Return $\some\,\pr_1$.
+
+\item ($(\progsnd, \progpair(\pr_1,\pr_2))$, where
+  $\pr_1,\pr_2\in\Val$)
+  Return $\some\,\pr_2$.
+
+\item ($(\progconsSym, \progint(n))$, where $n\in[1:62]$) Return
+  $\some(\progsym(a))$, where $a$ is the $n$th (counting from $1$)
+  element of the following sequence of symbols: $\mathsf{0, \ldots, 9,
+  a, \ldots, z, A, \ldots, Z}$.
+
+\item ($(\progconsSym, \progpair(pr_1,\, \ldots\,
+  \progpair(\pr_n,\progconst(\prognil))\,\ldots\,))$, where $n\in\nats$
+  and $\pr_1,\ldots,\pr_n\in \{\progconst(\prognil)\} \cup
+  \setof{\progsym(a)}{a\in\Sym}$)
+  Return
+  \begin{displaymath}
+    \some(\progsym([\,\langle\,] \myconcat f\,pr_1 \myconcat \cdots
+    \myconcat f\,pr_n \myconcat [\,\rangle\,])) ,
+  \end{displaymath}
+  where $f$ is the function from $\{\progconst(\prognil)\} \cup
+  \setof{\progsym(a)}{a\in\Sym}$ to $\{[\,,]\} \cup \Sym$ defined by:
+  \begin{align*}
+    f(\progconst(\prognil)) &= [\,,] , \\
+    f(\progsym(a)) &= a , \eqtxt{for all} a\in \Sym .
+  \end{align*}
+  (Remember that symbols are lists; see
+  Section~\ref{SymbolsStringsAlphabetsAndFormalLanguages}.
+  If $n=0$, then $\some(\progsym(\langle\rangle))$ is returned.)
+
+\item ($(\progdeconsSym, \progsym(a))$, where
+  $a\in\{\mathsf{0,\ldots,9,a,\ldots,z,A,\ldots,Z}\}$)
+  Return $\some(\progint(n))$, where $n$ is the position (counting from $1$)
+  of $a$ in the following sequence of symbols:
+  $\mathsf{0, \ldots, 9, a,\ldots,z, A, \ldots, Z}$.
+
+\item ($(\progdeconsSym, \progsym([\,\langle\,] \myconcat x_1 \myconcat
+  \cdots \myconcat x_n \myconcat [\,\rangle\,]))$, where $n\in\nats$
+  and $x_1,\ldots,x_n\in \{[\,,]\} \cup \Sym$)
+  Return
+  \begin{displaymath}
+    \some(\progpair(f\,x_1, \,\ldots\, \progpair(f\,x_n,
+    \progconst(\prognil))\,\ldots\,)) ,
+  \end{displaymath}
+  where $f$ is the function from $\{[\,,]\} \cup \Sym$
+  to $\{\progconst(\prognil)\} \cup \setof{\progsym(a)}{a\in\Sym}$ defined by
+  \begin{align*}
+    f[\,,] &= \progconst(\prognil) , \\
+    f\,a &= \progsym(a) , \eqtxt{for all} a\in\Sym .
+  \end{align*}
+  (If $n = 0$, then $\some(\progconst(\prognil))$ is returned.)
+
+\item ($(\progsymListToStr, \progconst(\prognil))$)
+  Return $\some(\progstr(\%))$.
+
+\item ($(\progsymListToStr, \progpair(\progsym(a_1),\, \ldots\,
+  \progpair(\progsym(a_n),\progconst(\prognil))\,\ldots\,))$, where
+  $n\in\nats-\{0\}$ and $a_1,\ldots,a_n\in\Sym$)
+  Return $\some(\progstr(a_1\cdots a_n))$.
+
+\item ($(\progstrToSymList, \progstr(\%))$)
+  Return $\some(\progconst(\prognil))$.
+
+\item ($(\progstrToSymList, \progstr(a_1\cdots a_n))$,
+  where $n\in\nats-\{0\}$ and $a_1,\ldots,a_n\in\Sym$)
+  Return
+  \begin{displaymath}
+    \some(\progpair(\progsym(a_1),\, \ldots\, \progpair(\progsym(a_n),
+    \progconst(\prognil))\,\ldots\,)) .
+  \end{displaymath}
+
+\item (otherwise) Return $\none$.
+\end{itemize}
+
+Now we are able to say how closed programs evaluate.  Let
+\begin{displaymath}
+  \Step = \{\myvalue, \error\} \cup
+  \setof{\next\,\pr}{\pr\in\CP} .
+\end{displaymath}
+We define a function $\step\in\CP\fun\Step$ using a case analysis
+on the form of its argument, $\pr$.  It returns: $\myvalue$, if
+$\pr$ is a value; $\error$, if $\pr$ isn't a value, but can't be
+run a single step; and $\next\,\pr'$, for $\pr'\in\CP$, if
+$\pr'$ is the result of running $\pr$ for one step.
+We proceed as follows:
+\begin{itemize}
+\item ($\progconst(\progcon)$, where $\progcon\in\ProgConst$)\quad
+  Return $\myvalue$.
+
+\item ($\progint(n)$, where $n\in\ints$)\quad Return $\myvalue$.
+
+\item ($\progsym(a)$, where $a\in\Sym$)\quad Return $\myvalue$.
+
+\item ($\progstr(x)$, where $x\in\Str$)\quad Return $\myvalue$.
+
+\item ($\progpair(\pr_1,\pr_2)$, where $\pr_1,\pr_2\in\CP$)\quad
+  Use case analysis on the form of $\step\,pr_1$:
+  \begin{itemize}
+  \item ($\error$)\quad Return $\error$.
+
+  \item ($\myvalue$)\quad Use case analysis on the form of $\step\,\pr_2$:
+    \begin{itemize}
+    \item ($\error$)\quad Return $\error$.
+
+    \item ($\myvalue$)\quad Return $\myvalue$.
+
+    \item ($\next\,\pr'_2$, where $\pr'_2\in\CP$)\quad
+      Return $\progpair(pr_1,\pr'_2)$.
+    \end{itemize}
+
+  \item ($\next\,\pr'_1$, where $\pr'_1\in\CP$)\quad
+    Return $\next(\progpair(\pr'_1,\pr_2))$.
+  \end{itemize}
+
+\item ($\progcalc(\progoper,\pr)$, where $\progoper\in\ProgOper$ and
+  $\pr\in\CP$)\quad
+  Use case analysis on the form of $\step\,\pr$:
+  \begin{itemize}
+  \item ($\error$)\quad Return $\error$.
+
+  \item ($\myvalue)$\quad Use case analysis on the form of
+    $\calculate(\progoper, \pr)$:
+    \begin{itemize}
+    \item ($\none$)\quad Return $\error$.
+
+    \item ($\some\,\pr'$, where $\pr'\in\Val$)\quad
+      Return $\next\,\pr'$.
+    \end{itemize}
+
+  \item ($\next\,\pr'$, where $\pr'\in\CP$)\quad Return
+    $\next(\progcalc(\progoper,\pr'))$.
+  \end{itemize}
+
+\item ($\progcond(\pr_1,\pr_2,\pr_3)$, where
+  $\pr_1,\pr_2,\pr_3\in\CP$)\quad Use case analysis on the form
+  of $\step\,\pr_1$:
+  \begin{itemize}
+  \item ($\error$)\quad Return $\error$.
+
+  \item ($\myvalue$)\quad Use case analysis on the form of $\pr_1$ (which
+    is a value):
+    \begin{itemize}
+    \item ($\progconst(\progtrue)$)\quad Return $\next\,\pr_2$.
+
+    \item ($\progconst(\progfalse)$)\quad Return $\next\,\pr_3$.
+
+    \item (anything else)\quad Return $\error$.
+    \end{itemize}
+
+  \item ($\next\,\pr'_1$, where $\pr'_1\in\CP$)\quad Return
+    $\next(\progcond(\pr'_1, \pr_2, \pr_3))$.
+  \end{itemize}
+
+\item ($\proglam(v,\pr)$, where $v\in\ProgVar$,
+  $\pr\in\Prog$ and $\free\,\pr\sub\{v\}$)\quad Return $\myvalue$.
+
+\item ($\progletSimp(v, \pr_1, \pr2)$, where $v\in\ProgVar$,
+  $\pr_1\in\CP$ and $\free\,\pr_2\sub\{v\}$)\quad Use case analysis
+  on the form of $\step\,\pr_1$:
+  \begin{itemize}
+  \item ($\error$)\quad Return $\error$.
+
+  \item ($\myvalue$)\quad Return $\next(\subst(\pr_1,v,\pr_2))$.
+
+  \item ($\next\,\pr'_1$)\quad Return $\progletSimp(v,\pr'_1,\pr_2)$.
+  \end{itemize}
+
+\item ($\progletRec(v_1,v_2,\pr_1,\pr_2)$, where $v_1,v_2\in\ProgVar$,
+  $\pr_1,\pr_2\in\Prog$, $\free\,\pr_1\sub\{v_1,v_2\}$ and
+  $\free\,\pr_2\sub\{v_1\}$)\quad
+  Let $\pr\in\CP$ be
+  \begin{displaymath}
+    \subst
+    (\progletRec(v_1, v_2, \pr_1, \progvar(v_1)),
+     v_1,
+     \proglam(v_2, \pr_1)) .
+  \end{displaymath}
+  Return $\next(\subst(\pr,v_1,\pr_2))$.
+\end{itemize}
+
+The module \texttt{Prog} defines the following datatype and function,
+which correspond to the set $\Step$ and function $\step$:
+\begin{verbatim}
+datatype step = Value
+              | Error
+              | Next of cp
+val step : cp -> step
+\end{verbatim}
+For example, here is an example of how a nonterminating recursive
+function can be evaluated:
+\input{chap-5.1-forlan5}
+
+\begin{proposition}
+For all $\pr\in\CP$, $\step\,\pr = \myvalue$ iff $\pr\in\Val$.
+\end{proposition}
+
+Let
+\begin{align*}
+  \Run &= \setof{\ans\,\pr}{\pr\in\Val} \\
+  &\cup \;\setof{\fail\,\pr}{\pr\in\CP} \\
+  &\cup \;\setof{\intermed\,\pr}{\pr\in\CP} ,
+\end{align*}
+and define a function $\run\in\CP\times\nats\fun\Run$ by
+structural recursion on its second argument.  Given $\pr\in\CP$ and
+$n\in\nats$, $\run(\pr,n)$ is computed using a case analysis of
+the form of $n$:
+\begin{itemize}
+\item ($0$)\quad Return $\intermed\,\pr$.
+
+\item ($n + 1$, where $n\in\nats$)\quad We proceed by a case analysis
+  of the form of $\step\,\pr$:
+  \begin{itemize}
+  \item ($\error$)\quad Return $\fail\,\pr$.
+
+  \item ($\myvalue$)\quad Return $\ans\,\pr$.
+
+  \item ($\next\,\pr'$, where $\pr'\in\CP$)\quad
+    Return $\run(\pr', n)$.
+  \end{itemize}
+\end{itemize}
+
+The module \texttt{Prog} defines the following datatype and functions:
+\begin{verbatim}
+datatype run = Ans      of cp
+             | Fail     of cp
+             | Intermed of cp
+val run      : cp * int -> run
+val evaluate : prog * int -> unit
+\end{verbatim}
+The function \texttt{run} corresponds to $\run$, except that it issues
+an error message when its second argument is negative.  The function
+\texttt{evaluate} issues an error message if its first argument,
+$\pr$, isn't closed, or its second argument, $n$, is negative.
+Otherwise, \texttt{evaluate} explains what results from running
+\begin{displaymath}
+  \mathtt{run}(\mathtt{Prog.toClosed}~\pr,~n).
+\end{displaymath}
+
+Here are some examples of how \texttt{run} can be used:
+\input{chap-5.1-forlan6}
+Suppose that the file \texttt{even-prog} contains the following
+definition of a function for testing whether a natural number is even:
+\verbatiminput{even-prog}
+Here are some examples of how we can test this function using
+\texttt{evaluate}:
+\input{chap-5.1-forlan7}
+And here are some other uses of \texttt{evaluate}:
+\input{chap-5.1-forlan8}
+
+\begin{proposition}
+\begin{enumerate}
+\item For all $\pr\in\CP$, $n\in\nats$ and $\pr'\in\Val$, if
+  $\run(\pr,n) = \ans\,\pr'$, then, for all $m\in\nats$, if $m\geq n$,
+  then $\run(\pr,m) = \ans\,\pr'$.
+
+\item For all $\pr\in\CP$, $n\in\nats$ and $\pr'\in\CP$, if
+  $\run(\pr,n) = \fail\,\pr'$, then, for all $m\in\nats$, if $m\geq n$,
+  then $\run(\pr,m) = \fail\,\pr'$.
+\end{enumerate}
+\end{proposition}
+
+Now we can define the mathematical meaning of closed programs.
+Let
+\begin{displaymath}
+\Eval = \{\nonterm,\error\}\cup\setof{\norm\,\pr}{\pr\in\Val} .  
+\end{displaymath}
+We define a mathematical function---\emph{not} an
+algorithm---$\eval\in\CP\fun\Eval$, as follows.
+Suppose $\pr\in\CP$.  There are two main cases to consider:
+\begin{itemize}
+\item Suppose, for all $n\in\nats$, there is a $\pr'\in\CP$ such
+  that $\run(\pr,n) = \intermed\,\pr'$.  Then $\eval\,\pr = \nonterm$.
+
+\item Suppose there is an $n\in\nats$ such that there is no
+  $\pr'\in\CP$ such that $\run(\pr,n) = \intermed\,\pr'$.  Let $n$ be
+  the smallest natural number such that there is no $\pr'\in\CP$ such
+  that $\run(\pr,n) = \intermed\,\pr'$.  There are two subcases to
+  consider:
+  \begin{itemize}
+  \item Suppose $\run(\pr,n) = \ans\,\pr'$ for some $\pr'\in\Val$.
+    Then $\eval\,\pr = \norm\,\pr'$.
+
+  \item Suppose $\run(\pr,n) = \fail\,\pr'$ for some $\pr'\in\CP$.
+    Then $\eval\,\pr = \error$.
+  \end{itemize}
+\end{itemize}
+
+For example:
+\begin{itemize}
+\item Let $\pr$ be
+  \begin{displaymath}
+    \progletRec(\mathsf{x}, \mathsf{y},
+                \progapp(\progvar(\mathsf{x}), \progvar(\mathsf{y})),
+                \progapp(\progvar(\mathsf{x}), \progint(0))) .
+  \end{displaymath}
+  Then $\eval\,\pr = \nonterm$.
+
+\item $\eval(\progapp(\progint(0), \progint(1))) = \error$.
+
+\item $\eval(\progcalc(\progplus, \progpair(\progint(1),\progint(2)))) =
+  \norm(\progint(3))$.
+\end{itemize}
+
+\subsection{Programs as Data}
+
+In Section~\ref{DiagonalizationAndUndecidableProblems}, we will be
+concerned with programs that process programs.  Because programs
+are described by strings, these program processing programs could
+work on strings.  But that would be complicated and cumbersome.  It's
+far better to represent programs using pairs.
+
+The set $\Rep$ of \emph{program representations} is the least subset of
+$\Val$ such that:
+\begin{description}
+\item[\quad(variable)] for all $v\in\ProgVar$,
+  $\progpair(\progstr(\mathsf{var}), \progstr(v)) \in \Rep$;
+
+\item[\quad(constant)] for all $\progcon\in\ProgConst$,
+  $\progpair(\progstr(\mathsf{const}), \progconst(\progcon))\in\Rep$;
+
+\item[\quad(integer)] for all $n\in\ints$, 
+  $\progpair(\progstr(\mathsf{int}), \progint(n))\in\Rep$;
+
+\item[\quad(symbol)] for all $a\in\Sym$,
+  $\progpair(\progstr(\mathsf{sym}), \progsym(a))\in\Rep$;
+
+\item[\quad(string)] for all $x\in\Str$,
+  $\progpair(\progstr(\mathsf{str}),\progstr(x))\in\Rep$;
+
+\item[\quad(pair)] for all $\pr_1,\pr_2\in\Rep$,
+  \begin{displaymath}
+    \progpair(\progstr(\mathsf{pair}),
+    \progpair(\pr_1, \pr_2)) \in \Rep ;
+  \end{displaymath}
+
+\item[\quad(calculation)] for all $\progoper\in\ProgOper$ and
+  $\pr\in\Rep$,
+  \begin{displaymath}
+    \progpair(\progstr(\mathsf{calc}),
+    \progpair(\progstr(\progoper), \pr)) \in \Rep ;
+  \end{displaymath}
+
+\item[\quad(conditional)] for all $\pr_1,\pr_2,\pr_3\in\Rep$,
+  \begin{displaymath}
+    \progpair(\progstr(\mathsf{cond}),
+    \progpair(\pr_1, \progpair(\pr_2, \pr_3))) \in \Rep ;
+  \end{displaymath}
+
+\item[\quad(function application)] for all $\pr_1,\pr_2\in\Rep$,
+  \begin{displaymath}
+    \progpair(\progstr(\mathsf{app}),
+    \progpair(\pr_1, \pr_2)) \in \Rep ;
+  \end{displaymath}
+
+\item[\quad(anonymous function)] for all $v\in\ProgVar$ and
+  $\pr\in\Rep$,
+  \begin{displaymath}
+    \progpair(\progstr(\mathsf{lam}),
+    \progpair(\progstr(v), \pr)) \in \Rep ;
+  \end{displaymath}
+
+\item[\quad(simple let)] for all $v\in\ProgVar$ and
+  $\pr_1,\pr_2\in\Rep$,
+  \begin{displaymath}
+    \progpair(\progstr(\mathsf{letSimp}),
+    \progpair(\progstr(v),
+    \progpair(\pr_1, \pr_2))) \in \Rep ;
+  \end{displaymath}
+
+\item[\quad(recursive let)] for all $v_1,v_2\in\ProgVar$ and
+  $\pr_1,\pr_2\in\Rep$,
+  \begin{displaymath}
+    \progpair(\progstr(\mathsf{letRec}),
+    \progpair(\progstr(v_1),
+    \progpair(\progstr(v_2),
+    \progpair(\pr_1, \pr_2)))) \in \Rep .
+  \end{displaymath}
+\end{description}
+
+We define a function $\overline{\;\cdot\;}\in\Prog\fun\Rep$
+by structural recursion:
+\begin{itemize}
+\item for all $v\in\ProgVar$,
+  $\overline{\progvar(v)} =
+  \progpair(\progstr(\mathsf{var}), \progstr(v))$;
+
+\item for all $\progcon\in\ProgConst$,
+  $\overline{\progconst(\progcon)} =
+  \progpair(\progstr(\mathsf{const}), \progconst(\progcon))$;
+
+\item for all $n\in\ints$, $\overline{\progint(n)} =
+  \progpair(\progstr(\mathsf{int}), \progint(n))$;
+
+\item for all $a\in\Sym$, $\overline{\progsym(a)} =
+  \progpair(\progstr(\mathsf{sym}), \progsym(a))$;
+
+\item for all $x\in\Str$, $\overline{\progstr(x)} =
+  \progpair(\progstr(\mathsf{str}), \progstr(x))$;
+
+\item for all $\pr_1,\pr_2\in\Prog$,
+  \begin{displaymath}
+    \overline{\progpair(\pr_1,\pr_2)} =
+    \progpair(\progstr(\mathsf{pair}),
+    \progpair(\overline{\pr_1}, \overline{\pr_2})) ;
+  \end{displaymath}
+
+\item for all $\progoper\in\ProgOper$ and $\pr\in\Prog$,
+  \begin{displaymath}
+    \overline{\progcalc(\progoper,\pr)} =
+    \progpair(\progstr(\mathsf{calc}),
+    \progpair(\progstr(\progoper), \overline{\pr})) ;
+  \end{displaymath}
+
+\item for all $\pr_1,\pr_2,\pr_3\in\Prog$,
+  \begin{displaymath}
+    \overline{\progcond(\pr_1,\pr_2,\pr_3)} =
+    \progpair(\progstr(\mathsf{cond}),
+    \progpair(\overline{\pr_1},
+    \progpair(\overline{\pr_2}, \overline{\pr_3}))) ;
+  \end{displaymath}
+
+\item for all $\pr_1,\pr_2\in\Prog$,
+  \begin{displaymath}
+    \overline{\progapp(\pr_1,\pr_2)} =
+    \progpair(\progstr(\mathsf{app}),
+    \progpair(\overline{\pr_1}, \overline{\pr_2})) ;
+  \end{displaymath}
+
+\item for all $v\in\ProgVar$ and $\pr\in\Prog$,
+  \begin{displaymath}
+  \overline{\proglam(v,\pr)} =
+  \progpair(\progstr(\mathsf{lam}),
+  \progpair(\progstr(v), \overline{\pr})) ;
+  \end{displaymath}
+
+\item for all $v\in\ProgVar$ and $\pr_1,\pr_2\in\Prog$,
+  \begin{displaymath}
+    \overline{\progletSimp(v,\pr_1,\pr_2)} =
+    \progpair(\progstr(\mathsf{letSimp}),
+    \progpair(\progstr(v),
+    \progpair(\overline{\pr_1}, \overline{\pr_2}))) ;
+  \end{displaymath}
+
+\item for all $v_1,v_2\in\ProgVar$ and $\pr_1,\pr_2\in\Prog$,
+  \begin{multline*}
+  \overline{\progletRec(v_1,v_2,\pr_1,\pr_2)} \\
+  = \progpair(\progstr(\mathsf{letRec}),
+  \progpair(\progstr(v_1),
+  \progpair(\progstr(v_2),
+  \progpair(\overline{\pr_1}, \overline{\pr_2})))) .
+  \end{multline*}
+\end{itemize}
+If $\pr\in\Prog$, we say that $\overline{\pr}$ \emph{represents} $\pr$,
+and that $\pr$ \emph{is represented by} $\overline{\pr}$.
+
+Each program is represented by a unique program representation, and
+every program representation represents a unique program:
+
+\begin{proposition}
+$\overline{\;\cdot\;}$ is a bijection from $\Prog$ to $\Rep$.
+\end{proposition}
+
+The module \texttt{Prog} also defines the functions:
+\begin{verbatim}
+val toRep   : prog -> prog
+val fromRep : prog -> prog
+val isRep   : prog -> bool
+\end{verbatim}
+The function \texttt{toRep} converts a program to the program representation
+that represents it.  The function \texttt{fromRep} issues an error message
+if its argument isn't a program representation; otherwise it returns the
+program represented by its argument.  And the function \texttt{isRep} tests
+whether a program is a program representation.
+
+For example:
+\input{chap-5.1-forlan8a}
+
+It is easy to write a program that tests whether a program
+representation represents a closed program, as well to write a program
+that tests whether a program representation represents a value.
+
+It is possible to write a function in our programming language that
+acts as an interpreter:
+\begin{itemize}
+\item It takes in a value $\overline{\pr}$, representing a closed
+  program $\pr$.
+
+\item It begins evaluating $\pr$, using the representation
+  $\overline{\pr}$.
+
+\item If this evaluation results in an error, then the interpreter
+  returns $\progconst(\prognil)$.
+
+\item Otherwise, if it results in a value $\overline{\pr'}$
+  representing a value $\pr'$, then it returns $\overline{\pr'}$.
+
+\item Otherwise, it runs forever.
+\end{itemize}
+
+E.g.,
+  $\overline{\progcond(\progconst(\progtrue),\progconst(\progfalse),
+    \progconst(\prognil))}$ evaluates to $\overline{\progconst(\progfalse)}$.
+
+We can also write a function in our programming language that acts as
+an \emph{incremental} interpreter:
+\begin{itemize}
+\item At each stage of its evaluation of a closed program, it carries
+  out some fixed number of steps of the evaluation.
+
+\item If during the execution of those steps, an error is detected,
+  then it returns $\progconst(\prognil)$.
+
+\item Otherwise, if a value $\overline{\pr'}$ representing a value
+  $\pr'$ has been produced, then it returns this value.
+
+\item But otherwise, it returns an anonymous function that when called
+  will continue this process.
+\end{itemize}
+
+\subsection{Recursive and Recursively Enumerable Languages}
+
+A \emph{string predicate program} $\pr$ is a closed program such that, for
+all strings $w$, $\eval(\progapp(\pr,\progstr(w)))\in
+\{\norm(\progconst(\progtrue)),\norm(\progconst(\progfalse))\}$.
+
+A string $w$ is \emph{accepted by} a closed program $\pr$ iff
+$\eval(\progapp(\pr,\progstr(w))) = \norm(\progconst(\progtrue))$.
+We write $L(\pr)$ for the set of all strings accepted by a closed
+program $\pr$.  When this set is a language, then we refer to $L(\pr)$
+as the \emph{language accepted by} $\pr$.  (E.g., if
+$\pr=\proglam(\mathsf{x},\progconst(\progtrue))$, then $L(\pr) =
+\Str$, and so is not a language.)
+
+The \texttt{Prog} module also includes:
+\begin{verbatim}
+val accepted : prog -> str * int -> unit
+\end{verbatim}
+The function \texttt{accepted} takes in a program $\pr$, and issues
+and error message if $\pr$ is not closed.  Otherwise, it returns
+a function $f$ that behaves as follows, when called with a pair
+$(x, n)$.  If $n$ is negative, it issues an error message.  Otherwise,
+it proceeds by a case analysis of the result of running
+\begin{displaymath}
+  \pr' = \mathtt{Prog.run}(\mathtt{Prog.app}(\pr,~\mathtt{Prog.str}~x), n) :
+\end{displaymath}
+\begin{itemize}
+\item ($\ans(\progconst(\progtrue))$)\quad It explains that
+  $x$ was accepted by $\pr$.
+
+\item ($\ans(\progconst(\progfalse))$)\quad It explains that $x$ was
+  rejected by $\pr$, because the application of $\pr$ to $\progstr(x)$
+  resulted in $\progconst(\progfalse)$.
+
+\item ($\ans\,\pr''$, where $\pr''\not\in\{\progconst(\progtrue),
+  \progconst(\progfalse)\}$)\quad It explains that $x$ was rejected by
+  $\pr$, since the application of $\pr$ to $\progstr(x)$ resulted in
+  some value other than $\progconst(\progtrue)$ or
+  $\progconst(\progfalse)$.
+
+\item ($\fail\,\pr''$, where $\pr''\in\CP$)\quad It explains that $x$
+  was rejected by $\pr$, since the application of $\pr$ to
+  $\progstr(x)$ resulted in failure.
+
+\item ($\intermed\,\pr''$, where $\pr''\in\CP$)\quad It explains that
+  (based on running $\pr'$ for $n$ steps) it is unknown whether $x$ is
+  accepted by $\pr$.
+\end{itemize}
+
+Suppose the file \texttt{equal-prog} contains the text:
+\verbatiminput{equal-prog}
+Suppose the file \texttt{succ-prog} contains the text:
+\verbatiminput{equal-prog}
+Suppose the file \texttt{count-prog} contains the text:
+\verbatiminput{count-prog}
+And suppose the file \texttt{zeros-ones-twos-prog} contains the
+text:
+\verbatiminput{zeros-ones-twos-prog}
+We can construct---and experiment with---a program for testing whether
+a string is an element of
+$\setof{\zerosf^n\onesf^n\twosf^n}{n\in\nats}$, as follows:
+\input{chap-5.1-forlan9}
+
+We say that a language $L$ is:
+\begin{itemize}
+\item \emph{recursive} iff $L=L(\pr)$, for some string predicate program $\pr$;
+  and
+
+\item \emph{recursively enumerable} (\emph{r.e.}) iff $L=L(\pr)$, for
+  some closed program $\pr$.
+\end{itemize}
+
+We define
+\begin{align*}
+\RecLan &= \setof{L\in\Lan}{L\eqtxtl{is recursive}} , \eqtxtl{and} \\
+\RELan &= \setof{L\in\Lan}{L\eqtxtl{is recursively enumerable}} .
+\end{align*}
+Hence $\RecLan\sub\RELan$.  Because $\CP$ is countably infinite, we
+have that $\RecLan$ and $\RELan$ are countably infinite, so that
+$\RELan\subsetneq\Lan$.  Later we will see that
+$\RecLan\subsetneq\RELan$.
+
+\begin{proposition}
+\label{RecProp}
+For all $L\in\Lan$, $L$ is recursive iff there is a closed program $\pr$ such
+that, for all $w\in\Str$:
+\begin{itemize}
+\item if $w\in L$, then $\eval(\progapp(\pr,\progstr(w)))=
+\norm(\progconst(\progtrue))$; and
+
+\item if $w\not\in L$, then
+$\eval(\progapp(\pr,\progstr(w)))=\norm(\progconst(\progfalse))$.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+\begin{description}
+\item[\quad(``only if'']
+  Since $L$ is recursive, $L=L(\pr)$ for some
+  string predicate program $\pr$.  Suppose $w\in\Str$.  There are two
+  cases to show.
+  \begin{itemize}
+  \item Suppose $w\in L$.  Since $L=L(\pr)$, we have that
+    $\eval(\progapp(\pr,\progstr(w)))=\norm(\progconst(\progtrue))$.
+
+  \item Suppose $w\not\in L$.  Since $L=L(\pr)$, we have that
+    $\eval(\progapp(\pr,\progstr(w)))\neq\norm(\progconst(\progtrue))$.
+    But $\pr$ is a string predicate program, and thus
+
+    $\eval(\progapp(\pr,\progstr(w)))=\norm(\progconst(\progfalse))$.
+  \end{itemize}
+
+\item[\quad(``if'')] To see that $\pr$ is a string predicate program,
+  suppose $w\in\Str$.  Since $w\in L$ or $w\not\in L$, we have that
+  $\eval(\progapp(\pr,\progstr(w)))\in
+  \{\progconst(\progtrue),\progconst(\progfalse)\}$.  We will show that
+  $L=L(\pr)$.
+  \begin{itemize}
+  \item Suppose $w\in L$.  Then $\eval(\progapp(\pr,\progstr(w)))=
+    \norm(\progconst(\progtrue))$, so that $w\in L(\pr)$.
+
+  \item Suppose $w\in L(\pr)$, so that
+    $\eval(\progapp(\pr,\progstr(w)))= \norm\abr(\progconst(\progtrue))$.  If
+    $w\not\in L$, then $\eval(\progapp(\pr,\progstr(w)))=
+    \norm(\progconst(\progfalse))$---contradiction.  Thus $w\in L$.
+\end{itemize}
+\end{description}
+\end{proof}
+
+\begin{proposition}
+\label{REProp}
+For all $L\in\Lan$, $L$ is recursively enumerable iff there is a
+closed program $\pr$ such that, for all $w\in\Str$,
+\begin{gather*}
+w\in L\;\eqtxt{iff}\;\eval(\progapp(\pr,\progstr(w)))=
+\norm(\progconst(\progtrue)) .
+\end{gather*}
+\end{proposition}
+
+\begin{proof}
+\begin{description}
+\item[\quad(``only if'')] Since $L$ is recursively enumerable,
+  $L=L(\pr)$ for some closed program $\pr$.  Suppose $w\in\Str$.
+  \begin{itemize}
+  \item Suppose $w\in L$.  Since $L=L(\pr)$, we have that
+    $\eval(\progapp(\pr,\progstr(w)))=\norm(\progconst(\progtrue))$.
+
+  \item Suppose
+    $\eval(\progapp(\pr,\progstr(w)))=\norm(\progconst(\progtrue))$.
+    Thus $w\in L(\pr)=L$.
+  \end{itemize}
+
+\item[\quad(``if'')] It suffices to show that $L=L(\pr)$.
+  \begin{itemize}
+  \item Suppose $w\in L$.  Then
+    $\eval(\progapp(\pr,\progstr(w)))=\norm(\progconst(\progtrue))$,
+    so that $w\in L(\pr)$.
+
+  \item Suppose $w\in L(\pr)$.  Then
+    $\eval(\progapp(\pr,\progstr(w)))=\norm\abr(\progconst(\progtrue))$,
+    so that $w\in L$.
+  \end{itemize}
+\end{description}
+\end{proof}
+
+\begin{theorem}
+The context-free languages are a proper subset of the
+recursive languages: $\CFLan\subsetneq\RecLan$.
+\end{theorem}
+
+\begin{proof}
+To see that every context-free language is recursive, let $L$ be a
+context-free language.  Thus there is a grammar $G$ such that
+$L=L(G)$.  With some work, we can write and prove the correctness of a
+string predicate program $\pr$ that implements our algorithm (see
+Section~\ref{AParsingAlgorithm}) for checking whether a string is
+generated by a grammar.  Thus $L$ is recursive.
+
+To see that not every recursive language is context-free, let
+$L=\setof{\zerosf^n\onesf^n\twosf^n}{n\in\nats}$.  In
+Section~\ref{ThePumpingLemmaForContextFreeLanguages}, we
+learned that $L$ is not context-free.  And in the preceding
+subsection, we wrote a string predicate program $\pr$ that tests
+whether a string is in $L$.  Thus $L$ is recursive.
+\end{proof}
+
+\subsection{Notes}
+
+Neil Jones \cite{Jones97} pioneered the use of a programming language
+with structured data as an alternative to Turing machines for studying
+the limits of what is computable.  In contrast to Jones's approach,
+however, our programming language is functional, not imperative
+(assignment-oriented), and it has explicit support for the symbols and
+strings of formal language theory.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

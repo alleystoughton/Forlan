@@ -1,0 +1,435 @@
+<!-- lex.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Lex Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Lex/ Module</HEAD>
+
+<PP>This module implements Forlan's lexical analyzer. Most users of
+Forlan won't need to use it directly.</PP>
+
+<PP>The lexical analyzer first strips its input of all whitespace and
+comments, where a <EM>comment</EM> consists of a <CD>"#"</CD> plus the
+rest of the line on which it occurs.</PP>
+
+<STRUCTURE STRID="Lex">
+<OPAQUE>
+<SIGBODY SIGID="LEX" FILE=LEX>
+
+<SPEC>
+<TYPE><ID>basic</ID></TYPE>
+<COMMENT>
+<PP>The abstract type consisting of the subset of characters that
+are lowercase letters, uppercase letters or digits.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>charToBasic<TY>char -> basic</TY></VAL>
+<COMMENT
+<PROTOTY>
+charToBasic <ARG/c/
+</PROTOTY>
+<PP>If <CD><ARG/c/</CD> is a lowercase letter, an uppercase letter or
+a digit, then <CD>charToBasic</CD> returns <CD><ARG/c/</CD>.
+Otherwise, issues an error message.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>basicToChar<TY>basic -> char</TY></VAL>
+<COMMENT
+<PROTOTY>
+basicToChar <ARG/c/
+</PROTOTY>
+<PP>returns <CD><ARG/c/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<TYPE><ID>sym</ID></TYPE>
+<COMMENT>
+<PP>The abstract type of Forlan symbols, consisting of the least set
+of lists of digits, lowercase and uppercase letters, commas (<CD>,</CD>)
+and angle brackets (<CD>&LT;</CD> and <CD>&GT;</CD>) such that:
+<ITEMIZE>
+<ITEM>for all digits and letters <CD><ARG/c/</CD>, <CD>[<ARG/c/]</CD>
+is a symbol;
+</ITEM>
+
+<ITEM>for all natural numbers <CD><ARG/n/</CD>, and all
+<CD><ARG/x1/</CD> ... <CD><ARG/xn/</CD> that are symbols or <CD>[,]</CD>,
+<CODE>[<] @ <ARG/x1/ @ ... @ <ARG/xn/ @ [>]</CODE>
+is a symbol.</ITEM>
+</ITEMIZE>
+</PP>
+
+<PP>The concrete syntax for a symbol <CD>[<ARG/c1/, ..., <ARG/cn/]</CD>
+is <CD><ARG/c1/ ... <ARG/cn/</CD>.  E.g., <CD>[&LT;, i, d, &GT;]</CD>
+is written as <CD>&LT;id&GT;</CD>.</PP>
+
+<PP>The type could be implemented using lists, but is actually
+implemented in a way that makes the construction and destruction of
+symbols more efficient.  See <VALREF/symTopToSym/ and
+<VALREF/symToSymTop/.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>symToString<TY>sym -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+symToString <ARG/a/
+</PROTOTY>
+<PP>returns the string whose characters are the elements of
+<CD><ARG/a/</CD>, listed in order.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>sizeSym<TY>sym -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+sizeSym <ARG/a/
+</PROTOTY>
+<PP>returns the length of <CD><ARG/a/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compareSym<TY>sym Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compareSym(<ARG/a/, <ARG/b/)
+</PROTOTY>
+<PP>compares <CD><ARG/a/</CD> and <CD><ARG/b/</CD>, first
+according to length, and then lexicographically, using the ordering in
+which the comma (<CD>,</CD>) comes first, followed by the digits (in
+ascending order), followed by the lowercase letters (in ascending
+order), followed by the uppercase letters (in ascending order),
+followed the open angle bracket (<CD>&LT;</CD>), followed by the close
+angle bracket (<CD>&GT;</CD>).</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>symToPP<TY>sym -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+symToPP <ARG/a/
+</PROTOTY>
+<PP>returns a pretty-printing expression that, when pretty-printed,
+will produce the result of adding spaces, as necessary, to the string
+consisting of the elements of <CD><ARG/a/</CD>, so as to
+make the nesting of brackets in <CD><ARG/a/</CD> clear.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<DATATYPE><ID>sym_top</ID>
+<CONS>BasicSymTop<TY>basic</TY></CONS>
+<CONS>CompoundSymTop<TY>sym option list</TY></CONS>
+</DATATYPE>
+<COMMENT>
+<PP>A datatype describing the top-level structure of a symbol.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>symTopToSym<TY>sym_top -> sym</TY></VAL>
+<COMMENT>
+<PROTOTY>
+symTopToSym <ARG/top/
+</PROTOTY>
+<PP>returns the symbol whose top-level structure is described by
+<CD><ARG/top/</CD>.  If <CD><ARG/top/</CD> is
+<CD>BasicSymTop <ARG/b/</CD>, then <CD>symTopToSym</CD> returns
+<CD>[<ARG/b/]</CD>.  Otherwise, <CD><ARG/top/</CD> looks
+like <CD>CompoundSymTop <ARG/xs/</CD>, in which case the symbol
+returned by <CD>symTopToSym</CD> consists of the result of appending
+an initial <CD>[<]</CD>, followed
+by the lists corresponding to <CD><ARG/xs/</CD>, followed by a
+closing <CD>[>]</CD>.  Each occurrence of <CD>NONE</CD> in
+<CD><ARG/xs/</CD> is turned into <CD>[,]</CD>.  And each occurrence of
+the form <CD>SOME <ARG/a/</CD> is turned into <CD><ARG/a/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>symToSymTop<TY>sym -> sym_top</TY></VAL>
+<COMMENT>
+<PROTOTY>
+symToSymTop <ARG/a/
+</PROTOTY>
+<PP>returns the value of type <CD>sym_top</CD> describing the
+top-level structure of <CD><ARG/a/</CD>.  If the only element of
+<CD><ARG/a/</CD> is a digit or letter, then <CD>symToSymTop</CD>
+returns <CD>BasicSymTop <ARG/b/</CD>, where <CD><ARG/b/</CD> is that
+digit or letter.  Otherwise <CD><ARG/a/</CD> is the result of
+appending the elements of a list of lists <CD><ARG/xs/</CD>, where the
+first and last elements of <CD><ARG/xs/</CD> are <CD>[<]</CD>
+and <CD>[>]</CD>, respectively, and each of the remaining elements are
+either <CD>[,]</CD> or are single symbols.  In this
+case, <CD>symToSymTop</CD> returns
+<CD>CompoundSymTop <ARG/ys/</CD>, where <CD><ARG/ys/</CD> is the value
+of type <CD>sym option list</CD> corresponding to all but the first
+and last elements (<CD>[<]</CD> and <CD>[>]</CD>)
+of <CD><ARG/xs/</CD>, in the following way.  <CD>[,]</CD> is turned
+into <CD>NONE</CD>.  And a symbol <CD><ARG/x/</CD> is turned into
+<CD>SOME <ARG/x/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<DATATYPE><ID>tok</ID>
+<CONS>Bar</CONS>
+<CONS>Comma</CONS>
+<CONS>Dollar</CONS>
+<CONS>Perc</CONS>
+<CONS>Plus</CONS>
+<CONS>Semicolon</CONS>
+<CONS>Star</CONS>
+<CONS>Tilde</CONS>
+<CONS>OpenPar</CONS>
+<CONS>ClosPar</CONS>
+<CONS>SingArr</CONS>
+<CONS>DoubArr</CONS>
+<CONS>Sym<TY>sym</TY></CONS>
+<CONS>Heading<TY>string</TY></CONS>
+<CONS>EOF</CONS>
+</DATATYPE>
+<COMMENT>
+<PP>The datatype of tokens (lexical items).  The following translation
+table is used by the lexical analyzer:
+<TABLE>
+<COL ALIGN=LEFT><COL ALIGN=LEFT>
+<TR>
+<TH>String</TH>
+<TH>Token</TH>
+</TR>
+<TR>
+<TD><CD>"|"</CD></TD>
+<TD><CD>Bar</CD></TD>
+</TR>
+<TR>
+<TD><CD>","</CD></TD>
+<TD><CD>Comma</CD></TD>
+</TR>
+<TR>
+<TD><CD>"$"</CD></TD>
+<TD><CD>Dollar</CD></TD>
+</TR>
+<TR>
+<TD><CD>"%"</CD></TD>
+<TD><CD>Perc</CD></TD>
+</TR>
+<TR>
+<TD><CD>"+"</CD></TD>
+<TD><CD>Plus</CD></TD>
+</TR>
+<TR>
+<TD><CD>";"</CD></TD>
+<TD><CD>Semicolon</CD></TD>
+</TR>
+<TR>
+<TD><CD>"*"</CD></TD>
+<TD><CD>Star</CD></TD>
+</TR>
+<TR>
+<TD><CD>"~"</CD></TD>
+<TD><CD>Tilde</CD></TD>
+</TR>
+<TR>
+<TD><CD>"("</CD></TD>
+<TD><CD>OpenPar</CD></TD>
+</TR>
+<TR>
+<TD><CD>")"</CD></TD>
+<TD><CD>ClosPar</CD></TD>
+</TR>
+<TR>
+<TD><CD>"->"</CD></TD>
+<TD><CD>SingArr</CD></TD>
+</TR>
+<TR>
+<TD><CD>"=>"</CD></TD>
+<TD><CD>DoubArr</CD></TD>
+</TR>
+<TR>
+<TD><EM>symbol</EM> <CD><ARG/a/</CD></TD>
+<TD><CD>Sym <ARG/a/</CD></TD>
+</TR>
+<TR>
+<TD><EM>heading</EM> <CD><ARG/s/</CD></TD>
+<TD><CD>Heading <ARG/s/</CD></TD>
+</TR>
+<TR>
+<TD><EM>end of file (end of string)</EM></TD>
+<TD><CD>EOF</CD></TD>
+</TR>
+</TABLE>
+A <EM>heading</EM> consists of an initial "{", followed by
+a sequence of uppercase and lowercase letters, followed by a trailing
+"}".
+</PP>
+
+<PP>A <EM>labeled token</EM> consists of a token plus the line number
+at which it was found, and a <EM>labeled token list</EM> consists
+of a list of labeled tokens.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equalTok<TY>tok * tok -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equalTok(<ARG/tok1/, <ARG/tok2/)
+</PROTOTY>
+<PP>
+tests whether <CD><ARG/tok1/</CD> and <CD><ARG/tok2/</CD> are
+equal, meaning that they have the same constructor and
+the same argument, if any.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>errorNotEOFTerminated<TY>unit -> 'a</TY></VAL>
+<COMMENT>
+<PROTOTY>
+errorNotEOFTerminated()
+</PROTOTY>
+<PP>issues an error message saying that a labeled token list isn't
+EOF-terminated.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>expectedTok<TY>int * tok -> 'a</TY></VAL>
+<COMMENT>
+<PROTOTY>
+expectedTok(<ARG/n/, <ARG/tok/)
+</PROTOTY>
+<PP>issues an error message saying that, on line <CD><ARG/n/</CD>,
+an occurrence of (the string corresponding to) <CD><ARG/tok/</CD>
+was expected.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>expectedDigit<TY>int -> 'a</TY></VAL>
+<COMMENT>
+<PROTOTY>
+expectedDigit <ARG/n/
+</PROTOTY>
+<PP>issues an error message saying that, on line <CD><ARG/n/</CD>,
+a digit was expected.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>expectedLetter<TY>int -> 'a</TY></VAL>
+<COMMENT>
+<PROTOTY>
+expectedLetter <ARG/n/
+</PROTOTY>
+<PP>issues an error message saying that, on line <CD><ARG/n/</CD>,
+a letter was expected.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>expectedLetterOrDigit<TY>int -> 'a</TY></VAL>
+<COMMENT>
+<PROTOTY>
+expectedLetterOrDigit <ARG/n/
+</PROTOTY>
+<PP>issues an error message saying that, on line <CD><ARG/n/</CD>,
+a letter or digit was expected.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>unexpectedTok<TY>int * tok -> 'a</TY></VAL>
+<COMMENT>
+<PROTOTY>
+unexpectedTok(<ARG/n/, <ARG/tok/)
+</PROTOTY>
+<PP>issues an error message saying that, on line <CD><ARG/n/</CD>,
+an occurrence of <CD><ARG/tok/</CD> was unexpected.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>checkInLabToks<TY>tok * (int * tok)list -> (int * tok)list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+checkInLabToks(<ARG/tok/, <ARG/lts/)
+</PROTOTY>
+<PP>If <CD><ARG/lts/</CD> begins with <CD><ARG/tok/</CD>, labeled by
+a line number <CD><ARG/n/</CD>,
+then <CD>checkInLabToks</CD> returns all but this
+first element of <CD><ARG/lts/</CD>.  Otherwise, <CD>checkInLabToks</CD>
+issues an error message, either complaining that <CD><ARG/lts/</CD> wasn't
+EOF-terminated, or saying that <CD><ARG/tok/</CD> was expected on
+the line that's the label of the first element of <CD><ARG/lts/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>error<TY>int * int * PP.pp list -> 'a</TY></VAL>
+<COMMENT>
+<PROTOTY>
+error(<ARG/n/, <ARG/m/, <ARG/pps/)
+</PROTOTY>
+<PP>If <CD><ARG/n/ = <ARG/m/</CD>, then <CD>error</CD> issues the
+error message obtained by pretty-printing the result of annotating
+<ARG/pps/ to say the error occurred on line <CD><ARG/n/</CD>.
+If <CD><ARG/n/ &NEQ; <ARG/m/</CD>, then <CD>error</CD> issues the
+error message obtained by pretty-printing the result
+of annotating <ARG/pps/ to say the error occurred between
+line <CD><ARG/n/</CD> and line <CD><ARG/m/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>lexString<TY>string -> (int * tok)list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+lexString <ARG/s/
+</PROTOTY>
+<PP>lexically analyzes <CD><ARG/s/</CD>, returning a labeled token
+list, in which each token is labeled with the line number at which it
+was found.  Issues an error message if the lexical analysis
+fails.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>lexFile<TY>string -> (int * tok)list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+lexFile <ARG/fil/
+</PROTOTY>
+<PP>behaves like <CD>lexString</CD>, except that it works on the
+contents of the file named by <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

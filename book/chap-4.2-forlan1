@@ -1,0 +1,12 @@
+val rel = Gram.findIsomorphism(gram, gram');
+SymRel.output("", rel);
+Gram.isomorphism(gram, gram', rel);
+Gram.isomorphic(gram, gram'');
+Gram.isomorphic(gram', gram'');
+val gram = Gram.input "";
+{variables} B, C
+{start variable} B
+{productions} B -> AC; C -> <A>
+.
+SymSet.output("", Gram.alphabet gram);
+Gram.output("", Gram.renameVariablesCanonically gram);

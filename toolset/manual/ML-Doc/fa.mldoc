@@ -1,0 +1,710 @@
+<!-- fa.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The FA Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/FA/ Module</HEAD>
+
+<PP>This module defines the abstract type of finite automata (FAs).</PP>
+
+<STRUCTURE STRID="FA">
+<OPAQUE>
+<SIGBODY SIGID="FA" FILE=FA>
+
+<SPEC>
+<TYPE><ID>concr</ID>
+<TY>{stats : Sym.sym Set.set, start : Sym.sym, accepting : Sym.sym Set.set,
+trans : Tran.tran Set.set}</TY>
+</TYPE>
+<COMMENT>
+<PP>The concrete type of <EM>pre-finite
+automata</EM>, records consisting of a finite set <CD>stats</CD>
+("states") of symbols, a symbol <CD>start</CD> ("start state"),
+a finite set <CD>accepting</CD> ("accepting states") of symbols,
+and a finite set <CD>trans</CD> ("transitions") of transitions.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<TYPE><ID>fa</ID></TYPE>
+<COMMENT>
+<PP>The abstract type of finite automata, consisting of those
+pre-finite automata
+<CD><ARG/concr/</CD> of type <CD>concr</CD> such that:
+<ITEMIZE>
+<ITEM>
+<CD>#start <ARG/concr/</CD> is an element of <CD>#stats <ARG/concr/</CD>;
+</ITEM>
+
+<ITEM>
+<CD>#accepting <ARG/concr/</CD> is a subset of
+<CD>#stats <ARG/concr/</CD>; and
+</ITEM>
+
+<ITEM>for all elements <CD>(<ARG/q/, <ARG/x/, <ARG/r/)</CD> of <CD>#trans
+<ARG/concr/</CD>, <CD><ARG/q/</CD> and <CD><ARG/r/</CD> are
+elements of <CD>#stats <ARG/concr/</CD>.</ITEM>
+</ITEMIZE>
+We say that <CD><ARG/concr/</CD> is <EM>valid</EM> iff <CD><ARG/concr/</CD>
+satisfies the above conditions.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>valid<TY>concr -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+valid <ARG/concr/
+</PROTOTY>
+<PP>tests whether <CD><ARG/concr/</CD> is valid.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromConcr<TY>concr -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromConcr <ARG/concr/
+</PROTOTY>
+<PP>returns <CD><ARG/concr/</CD>.  Issues an error message if
+<CD><ARG/concr/</CD> isn't valid.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toConcr<TY>fa -> concr</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toConcr <ARG/fa/
+</PROTOTY>
+<PP>returns <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs an FA from <CD><ARG/s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs an FA from the file named <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>fa -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toPP <ARG/fa/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>fa -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/fa/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/fa/</CD> to a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>string * fa -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+output(<ARG/fil/, <ARG/fa/)
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/fa/</CD> to the file <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>states<TY>fa -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+states <ARG/fa/
+</PROTOTY>
+<PP>returns the states of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>startState<TY>fa -> Sym.sym</TY></VAL>
+<COMMENT>
+<PROTOTY>
+startState <ARG/fa/
+</PROTOTY>
+<PP>returns the start state of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>acceptingStates<TY>fa -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+acceptingStates <ARG/fa/
+</PROTOTY>
+<PP>returns the accepting states of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>transitions<TY>fa -> Tran.tran Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+transitions <ARG/fa/
+</PROTOTY>
+<PP>returns the transitions of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>fa Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+compare(<ARG/fa1/, <ARG/fa2/)
+</PROTOTY>
+<PP>returns
+<CODE>
+  case SymSet.compare(states <ARG/fa1/, states <ARG/fa2/) of
+       LESS    => LESS
+     | EQUAL   =>
+         (case Sym.compare(startState <ARG/fa1/, startState <ARG/fa2/) of
+               LESS    => LESS
+             | EQUAL   =>
+                 (case SymSet.compare(acceptingStates <ARG/fa1/, acceptingStates <ARG/fa2/) of
+                       LESS    => LESS
+                     | EQUAL   =>
+                         TranSet.compare(transitions <ARG/fa1/, transitions <ARG/fa2/)
+                     | GREATER => GREATER)
+             | GREATER => GREATER)
+     | GREATER => GREATER
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>fa * fa -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal(<ARG/fa1/, <ARG/fa2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/fa1/</CD> and <CD><ARG/fa2/</CD> are
+equal.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>numStates<TY>fa -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+numStates <ARG/fa/
+</PROTOTY>
+<PP>returns the number of states of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>numTransitions<TY>fa -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+numTransitions <ARG/fa/
+</PROTOTY>
+<PP>returns the number of transitions of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>alphabet<TY>fa -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+alphabet <ARG/fa/
+</PROTOTY>
+<PP>returns the alphabet of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>sub<TY>fa * fa -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+sub(<ARG/fa1/, <ARG/fa2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/fa1/</CD> is a sub-FA of <CD><ARG/fa2/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>transitionFun<TY>fa -> Sym.sym * Str.str -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+transitionFun <ARG/fa/ (<ARG/q/, <ARG/x/)
+</PROTOTY>
+<PP>returns the set of all states <CD><ARG/r/</CD> such that
+<CD>(<ARG/q/, <ARG/x/, <ARG/r/)</CD> is a transition of <CD><ARG/fa/</CD>.
+Issues an error message if <CD><ARG/q/</CD> is not a state of
+<CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>transitionFunBackwards
+<TY>fa -> Sym.sym * Str.str -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+transitionFunBackwards <ARG/fa/ (<ARG/r/, <ARG/x/)
+</PROTOTY>
+<PP>returns the set of all states <CD><ARG/q/</CD> such that
+<CD>(<ARG/q/, <ARG/x/, <ARG/r/)</CD> is a transition of <CD><ARG/fa/</CD>.
+Issues an error message if <CD><ARG/r/</CD> is not a state of
+<CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>processStr<TY>fa -> Sym.sym Set.set * Str.str -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+processStr <ARG/fa/ (<ARG/qs/, <ARG/x/)
+</PROTOTY>
+<PP>processes <CD><ARG/x/</CD> from <CD><ARG/qs/</CD> in <CD><ARG/fa/</CD>.
+Issues an error message if <CD><ARG/qs/</CD> has an element that's
+not a state of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>accepted<TY>fa -> Str.str -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+accepted <ARG/fa/ <ARG/x/
+</PROTOTY>
+<PP>tests whether <CD><ARG/x/</CD> is accepted by <CD><ARG/fa/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>emptyClose<TY>fa -> Sym.sym Set.set -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+emptyClose <ARG/fa/ <ARG/qs/
+</PROTOTY>
+<PP>returns the empty-closure of <CD><ARG/qs/</CD> for <CD><ARG/fa/</CD>.
+Issues an error message if <CD><ARG/qs/</CD> has an element that's
+not a state of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>emptyCloseBackwards<TY>fa -> Sym.sym Set.set -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+emptyCloseBackwards <ARG/fa/ <ARG/qs/
+</PROTOTY>
+<PP>returns the backwards empty-closure of <CD><ARG/qs/</CD>
+for <CD><ARG/fa/</CD>.  Issues an error message if <CD><ARG/qs/</CD>
+has an element that's not a state of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reachify<TY>fa -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+reachify <ARG/fa/
+</PROTOTY>
+<PP>reachifies <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reachified<TY>fa -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+reachified <ARG/fa/
+</PROTOTY>
+<PP>tests whether <CD><ARG/fa/</CD> is reachified.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>renameStates<TY>fa * SymRel.sym_rel -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+renameStates(<ARG/fa/, <ARG/rel/)
+</PROTOTY>
+<PP>renames the states of <CD><ARG/fa/</CD> using the
+bijection <CD><ARG/rel/</CD>.  Issues an error message if
+<CD><ARG/rel/</CD> is not a bijection from the states of <CD><ARG/fa/</CD>
+to some set.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>renameStatesCanonically<TY>fa -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+renameStatesCanonically <ARG/fa/
+</PROTOTY>
+<PP>canonically renames the states of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isomorphism<TY>(fa * fa * SymRel.sym_rel) -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isomorphism(<ARG/fa1/, <ARG/fa2/, <ARG/rel/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/rel/</CD> is an isomorphism from <CD><ARG/fa1/</CD>
+to <CD><ARG/fa2/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findIsomorphismOpt<TY>fa * fa -> SymRel.sym_rel option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+findIsomorphismOpt(<ARG/fa1/, <ARG/fa2/)
+</PROTOTY>
+<PP>returns <CD>SOME</CD> of an isomorphism from <CD><ARG/fa1/</CD>
+to <CD><ARG/fa2/</CD>, if <CD><ARG/fa1/</CD> and <CD><ARG/fa2/</CD> are
+isomorphic, and <CD>NONE</CD>, if <CD><ARG/fa1/</CD> and <CD><ARG/fa2/</CD>
+are not isomorphic.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findIsomorphism<TY>fa * fa -> SymRel.sym_rel</TY></VAL>
+<COMMENT>
+<PROTOTY>
+findIsomorphism(<ARG/fa1/, <ARG/fa2/)
+</PROTOTY>
+<PP>tries to find an isomorphism from <CD><ARG/fa1/</CD>
+to <CD><ARG/fa2/</CD>.  Issues an error message if such an
+isomorphism doesn't exist.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isomorphic<TY>fa * fa -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isomorphic(<ARG/fa1/, <ARG/fa2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/fa1/</CD> and <CD><ARG/fa2/</CD> are
+isomorphic.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>renameAlphabet<TY>fa * SymRel.sym_rel -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+renameAlphabet(<ARG/fa/, <ARG/rel/)
+</PROTOTY>
+<PP>renames the alphabet of <CD><ARG/fa/</CD> using the
+bijection <CD><ARG/rel/</CD>.  Issues an error message if
+<CD><ARG/rel/</CD> is not a bijection from a superset of the
+alphabet of <CD><ARG/fa/</CD> to some set.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>checkLP<TY>fa -> LP.lp -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+checkLP <ARG/fa/ <ARG/lp/
+</PROTOTY>
+<PP>checks whether <CD><ARG/lp/</CD> is valid for <CD><ARG/fa/</CD>,
+silently returning <CD>()</CD>, if it is, and explaining why it isn't,
+if it's not.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>validLP<TY>fa -> LP.lp -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+validLP <ARG/fa/ <ARG/lp/
+</PROTOTY>
+<PP>tests whether <CD><ARG/lp/</CD> is valid for <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findLPOpt
+<TY>fa -> Sym.sym Set.set * Str.str * Sym.sym Set.set -> LP.lp option</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+findLPOpt <ARG/fa/ (<ARG/qs/, <ARG/x/, <ARG/rs/)
+</PROTOTY>
+<PP>returns <CD>SOME</CD> of a minimal labeled path
+for <CD><ARG/fa/</CD>, taking <CD><ARG/qs/</CD> to <CD><ARG/rs/</CD>
+with label <CD><ARG/x/</CD>, if such a labeled path exists,
+and <CD>NONE</CD>, if such a labeled path does not exist.
+<PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findLP
+<TY>fa -> Sym.sym Set.set * Str.str * Sym.sym Set.set -> LP.lp</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+findLP <ARG/fa/ (<ARG/qs/, <ARG/x/, <ARG/rs/)
+</PROTOTY>
+<PP>tries to find a minimal labeled path for <CD><ARG/fa/</CD>,
+taking <CD><ARG/qs/</CD> to <CD><ARG/rs/</CD> with label <CD><ARG/x/</CD>.
+Issues an error message if there is an element of <CD><ARG/qs/</CD> or
+<CD><ARG/rs/</CD> that isn't a state of <CD><ARG/fa/</CD>, or
+such a labeled path doesn't exist.
+<PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findAcceptingLPOpt<TY>fa -> Str.str -> LP.lp option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+findAcceptingLPOpt <ARG/fa/ <ARG/x/
+</PROTOTY>
+<PP>returns <CD>SOME</CD> of a minimal, accepting labeled path
+for <CD><ARG/fa/</CD> and <CD><ARG/x/</CD>, if such a labeled path
+exists, and <CD>NONE</CD>, if such a labeled path doesn't exist.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findAcceptingLP<TY>fa -> Str.str -> LP.lp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+findAcceptingLP <ARG/fa/ <ARG/x/
+</PROTOTY>
+<PP>tries to find a minimal, accepting labeled path
+for <CD><ARG/fa/</CD> and <CD><ARG/x/</CD>.  Issues an error message
+if such a labeled path doesn't exist.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>emptyStr<TY>fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+emptyStr
+</PROTOTY>
+<PP>is the canonical FA for the empty string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>emptySet<TY>fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+emptySet
+</PROTOTY>
+<PP>is the canonical FA for the empty set.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromSym<TY>Sym.sym -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromSym <ARG/a/
+</PROTOTY>
+<PP>returns the canonical FA for <CD><ARG/a/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>simplify<TY>fa -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+simplify <ARG/fa/
+</PROTOTY>
+<PP>simplifies <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>simplified<TY>fa -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+simplified <ARG/fa/
+</PROTOTY>
+<PP>tests whether <CD><ARG/fa/</CD> is simplified.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>union<TY>fa * fa -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+union(<ARG/fa1/, <ARG/fa2/)
+</PROTOTY>
+<PP>returns the union of <CD><ARG/fa1/</CD> and <CD><ARG/fa2/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>concat<TY>fa * fa -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+concat(<ARG/fa1/, <ARG/fa2/)
+</PROTOTY>
+<PP>returns the concatentation of <CD><ARG/fa1/</CD> and <CD><ARG/fa2/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>closure<TY>fa -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+closure <ARG/fa/
+</PROTOTY>
+<PP>returns the closure of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genUnion<TY>fa list -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genUnion
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  fun genUnion nil         = emptySet
+    | genUnion [fa]        = fa
+    | genUnion (fa :: fas) = union(fa, genUnion fas)
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>genConcat<TY>fa list -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+genConcat
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  fun genConcat nil         = emptyStr
+    | genConcat [fa]        = fa
+    | genConcat (fa :: fas) = concat(fa, genConcat fas)
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>rev<TY>fa -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+rev <ARG/fa/
+</PROTOTY>
+<PP>returns the reversal of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromStr<TY>Str.str -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromStr <ARG/x/
+</PROTOTY>
+<PP>returns the canonical FA for <CD><ARG/x/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromReg<TY>Reg.reg -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromReg <ARG/reg/
+</PROTOTY>
+<PP>converts <CD><ARG/reg/</CD> to an FA.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanNew<TY>unit -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanNew()
+</PROTOTY>
+<PP>invokes JForlan, and returns the FA that the user creates
+and commits.  Issues an error message if the user aborts, instead.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanEdit<TY>fa -> fa</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanEdit <ARG/fa/
+</PROTOTY>
+<PP>invokes JForlan, letting the user edit <CD><ARG/fa/</CD>, and
+returning the resulting FA that the user commits.  Issues an
+error message if the user aborts, instead.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanValidate<TY>string -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanValidate
+</PROTOTY>
+<PP>is a low-level function used by JForlan.  See the code for
+more information.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanPretty<TY>string -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanPretty
+</PROTOTY>
+<PP>is a low-level function used by JForlan.  See the code for
+more information.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

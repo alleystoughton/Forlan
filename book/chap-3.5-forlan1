@@ -1,0 +1,17 @@
+val rel = FA.findIsomorphism(fa1, fa2);
+SymRel.output("", rel);
+FA.isomorphism(fa1, fa2, rel);
+FA.isomorphic(fa1, fa2);
+val rel' = FA.findIsomorphism(fa1, fa1);
+SymRel.output("", rel');
+FA.isomorphism(fa1, fa1, rel');
+FA.isomorphism(fa1, fa2, rel');
+val rel'' = SymRel.input "";
+(A, 2), (B, 1), (C, 0)
+.
+val fa3 = FA.renameStates(fa1, rel'');
+FA.output("", fa3);
+val fa4 = FA.renameStatesCanonically fa3;
+FA.output("", fa4);
+FA.equal(fa4, fa1);
+FA.isomorphic(fa4, fa1);

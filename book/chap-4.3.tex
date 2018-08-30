@@ -1,0 +1,252 @@
+\section{A Parsing Algorithm}
+\label{AParsingAlgorithm}
+
+In this section, we consider a simple, fairly inefficient parsing
+algorithm that works for all context-free grammars.  In
+Section~\ref{AmbiguityOfGrammars}, we consider an efficient parsing
+method that works for grammars for languages of operators of varying
+precedences and associativities.  Compilers courses cover efficient
+algorithms that work for various subsets of the context free grammars.
+
+\subsection{Algorithm}
+
+Suppose $G$ is a grammar, $w\in\Str$ and $a\in\Sym$.  We consider an
+algorithm for testing whether $w$ is parsable from $a$ using $G$.
+If $w\not\in(Q_G\cup\alphabet\,G)^*$ or $a\not\in Q_G\cup\alphabet\,w$,
+then the algorithm returns $\false$.
+Otherwise, it proceeds as follows.
+
+Let $A=Q_G\cup\alphabet\,w$ and $B=\setof{x\in\Str}{x\eqtxt{is a substring
+of}w}$.
+The algorithm generates the least subset $X$ of $A\times B$ such that:
+\begin{enumerate}[\quad(1)]
+\item For all $a\in\alphabet\,w$, $(a,a)\in X$;
+
+\item For all $q\in Q_G$, if $q\fun\%\in P_G$, then
+  $(q,\%)\in X$; and
+
+\item For all $q\in Q_G$, $n\in\nats-\{0\}$, $a_1,\ldots,a_n\in A$ and
+  $x_1,\ldots,x_n\in B$, if
+  \begin{itemize}
+  \item $q\fun a_1\cdots a_n\in P_G$,
+
+  \item for all $i\in[1:n]$, $(a_i,x_i)\in X$, and
+
+  \item $x_1\cdots x_n\in B$,
+  \end{itemize}
+then $(q,x_1\cdots x_n)\in X$.
+\end{enumerate}
+Since $A\times B$ is finite, this process terminates.
+
+For example, let $G$ be the grammar
+\begin{align*}
+\Asf &\fun \Bsf\Csf\mid \Csf\Dsf , \\
+\Bsf &\fun \zerosf\mid \Csf\Bsf , \\
+\Csf &\fun \onesf\mid \Dsf\Dsf , \\
+\Dsf &\fun \zerosf\mid \Bsf\Csf ,
+\end{align*}
+and let $w=\mathsf{0010}$ and $a=\Asf=s_G$.
+We have that:
+\begin{itemize}
+\item $(\zerosf,\zerosf)\in X$;
+
+\item $(\onesf, \onesf)\in X$;
+
+\item $(\Bsf,\zerosf)\in X$, since $\Bsf\fun\zerosf\in P_G$,
+$(\zerosf,\zerosf)\in X$ and $\zerosf\in B$;
+
+\item $(\Csf,\onesf)\in X$, since $\Csf\fun\onesf\in P_G$,
+$(\onesf,\onesf)\in X$ and $\onesf\in B$;
+
+\item $(\Dsf,\zerosf)\in X$, since $\Dsf\fun\zerosf\in P_G$,
+$(\zerosf,\zerosf)\in X$ and $\zerosf\in B$;
+
+\item $(\Asf,\mathsf{01})\in X$, since $\Asf\fun\mathsf{BC}\in P_G$,
+$(\Bsf,\zerosf)\in X$, $(\Csf,\onesf)\in X$ and
+$\mathsf{01}\in B$;
+
+\item $(\Asf,\mathsf{10})\in X$, since $\Asf\fun\mathsf{CD}\in P_G$,
+$(\Csf,\onesf)\in X$, $(\Dsf,\zerosf)\in X$ and $\mathsf{10}\in B$;
+
+\item $(\Bsf,\mathsf{10})\in X$, since $\Bsf\fun\mathsf{CB}\in P_G$,
+$(\Csf,\onesf)\in X$, $(\Bsf,\zerosf)\in X$ and $\mathsf{10}\in B$;
+
+\item $(\Csf,\mathsf{00})\in X$, since $\Csf\fun\mathsf{DD}\in P_G$,
+$(\Dsf,\zerosf)\in X$, $(\Dsf,\zerosf)\in X$ and $\mathsf{00}\in B$;
+
+\item $(\Dsf,\mathsf{01})\in X$, since $\Dsf\fun\mathsf{BC}\in P_G$,
+$(\Bsf,\zerosf)\in X$, $(\Csf,\onesf)\in X$ and $\mathsf{01}\in B$;
+
+\item $(\Csf,\mathsf{001})\in X$, since $\Csf\fun\mathsf{DD}\in P_G$,
+$(\Dsf,\mathsf{0})\in X$, $(\Dsf,\mathsf{01})\in X$ and
+$\mathsf{0(01)}\in B$;
+
+\item $(\Csf,\mathsf{010})\in X$, since $\Csf\fun\mathsf{DD}\in P_G$,
+$(\Dsf,\mathsf{01})\in X$, $(\Dsf,\mathsf{0})\in X$ and
+$\mathsf{(01)0}\in B$;
+
+\item $(\Asf,\mathsf{0010})\in X$, since $\Asf\fun\mathsf{BC}\in P_G$,
+$(\Bsf,\mathsf{0})\in X$, $(\Csf,\mathsf{010})\in X$ and
+$\mathsf{0(010)}\in B$;
+
+\item $(\Bsf,\mathsf{0010})\in X$, since $\Bsf\fun\mathsf{CB}\in P_G$,
+$(\Csf,\mathsf{00})\in X$, $(\Bsf,\mathsf{10})\in X$ and
+$\mathsf{(00)(10)}\in B$;
+
+\item $(\Dsf,\mathsf{0010})\in X$, since $\Dsf\fun\mathsf{BC}\in P_G$,
+$(\Bsf,\mathsf{0})\in X$, $(\Csf,\mathsf{010})\in X$ and
+$\mathsf{0(010)}\in B$;
+
+\item Nothing more can be added to $X$.  To verify this, one must
+check that nothing new can be added to $X$ using rule~(3).
+\end{itemize}
+
+Back in the general case, we have these lemmas:
+
+\begin{lemma}
+For all $(b,x)\in X$, there is a $\pt\in\PT$ such that
+\begin{itemize}
+\item $\pt$ is valid for $G$,
+
+\item $\rootLabel\,\pt=b$, and
+
+\item $\yield\,\pt=x$.
+\end{itemize}
+\end{lemma}
+
+\begin{lemma}
+For all $\pt\in\PT$, if
+\begin{itemize}
+\item $\pt$ is valid for $G$,
+
+\item $\rootLabel\,\pt\in A$, and
+
+\item $\yield\,\pt\in B$,
+\end{itemize}
+then $(\rootLabel\,\pt, \yield\,\pt)\in X$.
+\end{lemma}
+
+Because of our lemmas, to determine if $w$ is parsable from $a$, we
+just have to check whether $(a, w)\in X$.
+In the case of our example grammar, we have that $w=\mathsf{0010}$ is
+parsable from $a=\Asf$, since $(\Asf,\mathsf{0010})\in X$.
+Hence $\mathsf{0010}\in L(G)$.
+
+Note that any production whose right-hand side contains an element of
+$\alphabet\,G-\alphabet\,w$ won't affect the generation of $X$.  Thus
+our algorithm ignores such productions.
+
+Furthermore, our parsability algorithm actually generates $X$ as the
+union of a sequence of pairwise-disjoint, nonempty \emph{stages}
+$X_0$, $X_1$, \ldots, $X_m$:
+\begin{itemize}
+\item First, it lets $X_0$ be the union of
+  $\setof{(a,a)}{a\in\alphabet\,w}$ and $\setof{(q,\%)}{(q,\%)\in
+    P_G}$.  It then enters its loop.
+
+\item If stages $X_0$, \ldots, $X_l$ have been computed, then the
+  algorithm lets $Y=\bigcup\setof{X_j}{j\in[0:l]}$, and then lets
+  $Z$ be the set of all $(q,x_1\cdots x_n)$ such that $n\geq 1$ and
+  there are $a_1,\ldots,a_n\in A$ and $i\in[1:n]$
+  such that
+  \begin{itemize}
+  \item $q\fun a_1\cdots a_n\in P_G$,
+
+  \item $(a_i,x_i)\in X_l$,
+
+  \item for all $k\in[1:n]-\{i\}$, $(a_k,x_k)\in Y$,
+
+  \item $x_1\cdots x_n\in B$, and
+
+  \item $(q,x_1\cdots x_n)\not\in Y$.
+  \end{itemize}
+    If $Z\neq\emptyset$, then it sets $X_{l+1}$ to $Z$, and repeats.
+  Otherwise, $X_l$ is the final stage, and $X=Y$.
+\end{itemize}
+
+We say that a parse tree $\pt$ is \emph{a minimal parse} of a string
+$w$ \emph{from} a symbol $a$ \emph{using} a grammar $G$ iff $\pt$ is
+valid for $G$, $\rootLabel\,\pt = a$ and $\yield\,\pt = w$, and there
+is no strictly smaller $\pt'\in\PT$ such that $\pt'$ is valid for $G$,
+$\rootLabel\,\pt' = a$ and $\yield\,\pt' = w$.
+
+We can convert our parsability algorithm into a parsing algorithm as
+follows.  Given $w\in(Q_G\cup\alphabet\,G)^*$ and
+$a\in(Q_G\cup\alphabet\,w)$, we generate our set $X$ as before, but we
+annotate each element $(b,x)$ of $X$ with a parse tree $\pt$ such that
+\begin{itemize}
+\item $\pt$ is valid for $G$,
+
+\item $\rootLabel\,\pt=b$, and
+
+\item $\yield\,\pt=x$,
+\end{itemize}
+Thus we can return the parse tree labeling $(a, w)$, if this pair is
+in $X$, and indicate failure otherwise.
+
+With a little more work, we can arrange that the parse trees returned by
+our parsing algorithm are minimally-sized, and this is what the
+official version of our parsing algorithm guarantees.  This goal is a
+little tricky to achieve, since some pairs will first be labeled by
+parse trees that aren't minimally sized.
+
+\subsection{Parsing in Forlan}
+
+The Forlan module \texttt{Gram} defines the functions
+\begin{verbatim}
+val parsable              : gram -> sym * str -> bool
+val generatedFromVariable : gram -> sym * str -> bool
+val generated             : gram -> str -> bool
+\end{verbatim}
+The function \texttt{parsable} tests whether a string $w$ is parsable
+from a symbol $a$ using a grammar $G$.  The function
+\texttt{generatedFromVariable} tests whether a string $w$ is generated
+from a variable $q$ using a grammar $G$; it issues an error message if
+$q$ isn't a variable of $G$.  And the function \texttt{generated}
+tests whether a string $w$ is generated by a grammar $G$.
+
+\texttt{Gram} also includes:
+\begin{verbatim}
+val parse                     : gram -> sym * str -> pt
+val parseAlphabetFromVariable : gram -> sym * str -> pt
+val parseAlphabet             : gram -> str -> pt
+\end{verbatim}
+The function \texttt{parse} tries to find a minimal parse of a string
+$w$ from a symbol $a$ using a grammar $G$; it issues an error message
+if $w\not\in(Q_G\cup\alphabet\,G)^*$, or $a\not\in
+Q_G\cup\alphabet\,w$, or such a parse doesn't exist.  The function
+\texttt{parseAlphabetFromVariable} tries to find a minimal parse of a
+string $w\in(\alphabet\,G)^*$ from a variable $q$ using a grammar $G$;
+it issues an error message if $q\not\in Q_G$, or
+$w\not\in(\alphabet\,G)^*$, or such a parse doesn't exist.  And the
+function \texttt{parseAlphabet} tries to find a minimal parse of a
+string $w\in(\alphabet\,G)^*$ from $s_G$ using a grammar $G$; it
+issues an error message if $w\not\in(\alphabet\,G)^*$, or such a parse
+doesn't exist.
+
+Suppose that \texttt{gram} of type \texttt{gram} is bound to the grammar
+\begin{align*}
+\Asf &\fun \Bsf\Csf\mid \Csf\Dsf , \\
+\Bsf &\fun \zerosf\mid \Csf\Bsf , \\
+\Csf &\fun \onesf\mid \Dsf\Dsf , \\
+\Dsf &\fun \zerosf\mid \Bsf\Csf .
+\end{align*}
+We can attempt to check whether some strings are generated by this grammar
+as follows:
+\input{chap-4.3-forlan1}
+And we can try to find parses of some strings as follows:
+\input{chap-4.3-forlan2}
+But we can also check parsability of strings containing variables, as well
+as try to find parses of such strings:
+\input{chap-4.3-forlan3}
+
+\subsection{Notes}
+
+Our parsability and parsing algorithms are straightforward generalizations of
+the familiar algorithm for checking whether a grammar in Chomsky Normal Form
+generates a string.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

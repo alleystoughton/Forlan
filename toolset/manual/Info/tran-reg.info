@@ -1,0 +1,10 @@
+@FILES
+  ["tran-reg"; "The TranReg Module";]
+@SIGNATURE TRAN_REG "tran-reg" [
+  @TYPES 
+    @TYPE tran_reg
+  @VALS 
+    equal
+    compare
+]
+@STRUCTURE TranReg "tran-reg" TRAN_REG

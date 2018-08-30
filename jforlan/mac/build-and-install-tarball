@@ -1,0 +1,9 @@
+#!/bin/bash
+
+rm -rf jforlan/JForlan.app
+cp -R ../JForlan.app jforlan
+tar cf jforlan.tar jforlan
+gzip jforlan.tar
+rm -rf jforlan/JForlan.app
+rm -rf ../html/mac/jforlan.tgz
+mv jforlan.tar.gz ../html/mac/jforlan.tgz

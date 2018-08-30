@@ -1,0 +1,114 @@
+%%%%%%%%% New environments and commands %%%%%%%%%%%
+
+% proof environments
+
+\newenvironment{proof}%
+{\begin{trivlist}\item[]{\bf Proof.  }}%
+{  {\everymath{}$\Box$}\end{trivlist}}
+\newenvironment{proofof}[1]%
+{\begin{trivlist}\item[]{\bf Proof of #1.  }}%
+{  {\everymath{}$\Box$}\end{trivlist}}
+
+% math tabbing environment
+
+\newenvironment{mtabbing}
+{\begin{tabbing}\hspace*{\leftmargini}\=\+\kill$}%
+{$\end{tabbing}}
+\newcommand{\TS}{{}$\=\+${}}% for use with mtabbing environment
+\newcommand{\NL}{{}$\\${}}% for use with mtabbing environment
+\newcommand{\TSN}{{}$\=${}}% for use with mtabbing environment (no \+)
+\newcommand{\NT}{{}$\>${}}% for use with mtabbing environment
+
+% for centered mtabbing's, within displaymath's
+
+\newcommand{\mtab}[1]{\mbox{\kern-2.3ex\vbox{
+\topsep 0pt\begin{mtabbing}#1\end{mtabbing}\kern-1ex}}}
+
+% centered tabbing environment
+
+\newenvironment{ctabbing}
+{\begin{center}
+\begin{minipage}{10in}
+\begin{tabbing}}%
+{\end{tabbing}
+\end{minipage}
+\end{center}}
+
+% alltt environment in which text has size \small
+% manually indent each line with \hspace{\leftmargini}
+% (would be nice to automate this)
+
+\newenvironment{myalltt}%
+{\small\alltt}%
+{\endalltt}
+
+% theorem-like environments
+
+\theoremstyle{break}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{openproblem}[theorem]{Open Problem}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{counterexample}[theorem]{Counterexample}
+{\theorembodyfont{\normalfont}
+\newtheorem{exercise}[theorem]{Exercise}}
+{\theorembodyfont{\normalfont}
+\newtheorem{definition}[theorem]{Definition}}
+\newcommand{\theoremnumber}[1]{\setcounter{theorem}{#1-1}}
+
+\newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}\cleardoublepage}}
+
+\newcommand{\abr}{\allowbreak}
+\newcommand{\gbr}{\penalty1000 } % Allow break grudgingly
+\newcommand{\hquad}{\;\;} % Half quad in math mode
+
+\newcommand{\oper}[1]{\!\!\!& #1 &\!\!\!}% For use with eqnarray
+\newcommand{\moper}[1]{\!\!& #1 &\!\!}% Medium size operator
+\newcommand{\boper}[1]{\!& #1 &\!}% Big size operator
+
+% proof justification in display
+
+\newcommand{\by}[1]{\qquad{\textrm{(#1)}}}
+\newcommand{\bylemma}[1]{\by{Lemma \ref{#1}}}
+\newcommand{\bytheorem}[1]{\by{Theorem \ref{#1}}}
+\newcommand{\bycorollary}[1]{\by{Corollary \ref{#1}}}
+\newcommand{\byproposition}[1]{\by{Proposition \ref{#1}}}
+
+% functions and restriction
+
+\newcommand{\fun}{\mathbin{\to}}
+\newcommand{\restr}{\mathord{\mid}}
+
+% sets
+
+\newcommand{\setof}[2]{\{ \, #1 \mid #2 \, \}}
+\newcommand{\singset}[1]{\{ #1 \}}
+\newcommand{\powset}[1]{{\cal P} #1}
+\newcommand{\sub}{\subseteq}% Subset
+
+% spacing in math
+
+\newcommand{\eqtxt}[1]{\;\abr\mbox{#1}\abr\;}
+\newcommand{\eqtxtl}[1]{\;\abr\mbox{#1}\abr}
+\newcommand{\eqtxtr}[1]{\abr\mbox{#1}\abr\;}
+\newcommand{\eqtxtn}[1]{\abr\mbox{#1}\abr}
+
+% definition by cases
+
+\newcommand{\casesdef}[4]{
+\left\{ \begin{array}{ll}
+#1 & #2 \\
+#3 & #4
+\end{array} \right.}
+
+% macros for producing ascii symbols in typewriter font
+
+\newcommand{\tildesym}{\symbol{'176}}       % produces ~
+\newcommand{\underscoresym}{\symbol{'137}}  % produces _
+\newcommand{\primesym}{\symbol{'047}}       % produces '
+\newcommand{\quotesym}{\symbol{'042}}       % produces "
+\newcommand{\uparrowsym}{\symbol{'136}}     % produces ^

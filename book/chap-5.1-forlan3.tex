@@ -1,0 +1,75 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ cp\ =\ Prog.toClosed(Prog.fromString\ "const(true)");
+\item[]\textsl{val\ cp\ =\ -\ :\ cp}
+\item[]\textsl{-\ }val\ pr1\ =\ Prog.input\ "";
+\item[]\textsl{@\ }cond(var(x),\ var(y),\ int(4))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pr1\ =\ -\ :\ prog}
+\item[]\textsl{-\ }val\ pr1'\ =\ Prog.subst(cp,\ Var.fromString\ "y",\ pr1);
+\item[]\textsl{val\ pr1'\ =\ -\ :\ prog}
+\item[]\textsl{-\ }Prog.output("",\ pr1');
+\item[]\textsl{cond(var(x),\ const(true),\ int(4))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pr2\ =\ Prog.input\ "";
+\item[]\textsl{@\ }letSimp(x,\ var(x),\ pair(var(x),\ var(y)))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pr2\ =\ -\ :\ prog}
+\item[]\textsl{-\ }val\ pr2'\ =\ Prog.subst(cp,\ Var.fromString\ "x",\ pr2);
+\item[]\textsl{val\ pr2'\ =\ -\ :\ prog}
+\item[]\textsl{-\ }Prog.output("",\ pr2');
+\item[]\textsl{letSimp(x,\ const(true),\ pair(var(x),\ var(y)))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pr3\ =\ Prog.input\ "";
+\item[]\textsl{@\ }letSimp(x,\ var(y),\ pair(var(x),\ var(y)))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pr3\ =\ -\ :\ prog}
+\item[]\textsl{-\ }val\ pr3'\ =\ Prog.subst(cp,\ Var.fromString\ "y",\ pr3);
+\item[]\textsl{val\ pr3'\ =\ -\ :\ prog}
+\item[]\textsl{-\ }Prog.output("",\ pr3');
+\item[]\textsl{letSimp(x,\ const(true),\ pair(var(x),\ const(true)))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pr4\ =\ Prog.input\ "";
+\item[]\textsl{@\ }letRec
+\item[]\textsl{@\ }(x,\ y,
+\item[]\textsl{@\ }\ app(var(x),\ app(var(y),\ var(z))),
+\item[]\textsl{@\ }\ app(var(x),\ app(var(y),\ var(z))))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pr4\ =\ -\ :\ prog}
+\item[]\textsl{-\ }val\ pr4'\ =\ Prog.subst(cp,\ Var.fromString\ "x",\ pr4);
+\item[]\textsl{val\ pr4'\ =\ -\ :\ prog}
+\item[]\textsl{-\ }Prog.output("",\ pr4');
+\item[]\textsl{letRec(x,\ y,\ app(var(x),\ app(var(y),\ var(z))),}
+\item[]\textsl{\ \ \ \ \ \ \ app(var(x),\ app(var(y),\ var(z))))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pr4''\ =\ Prog.subst(cp,\ Var.fromString\ "y",\ pr4);
+\item[]\textsl{val\ pr4''\ =\ -\ :\ prog}
+\item[]\textsl{-\ }Prog.output("",\ pr4'');
+\item[]\textsl{letRec(x,\ y,\ app(var(x),\ app(var(y),\ var(z))),}
+\item[]\textsl{\ \ \ \ \ \ \ app(var(x),\ app(const(true),\ var(z))))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pr4'''\ =\ Prog.subst(cp,\ Var.fromString\ "z",\ pr4);
+\item[]\textsl{val\ pr4'''\ =\ -\ :\ prog}
+\item[]\textsl{-\ }Prog.output("",\ pr4''');
+\item[]\textsl{letRec(x,\ y,\ app(var(x),\ app(var(y),\ const(true))),}
+\item[]\textsl{\ \ \ \ \ \ \ app(var(x),\ app(var(y),\ const(true))))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

@@ -1,0 +1,96 @@
+------------------------------------------------------------------------
+error-checking-program-trees.txt
+------------------------------------------------------------------------
+
+                  Error Checking of Program Trees
+
+When a node's label is valid, but the node has the wrong number of
+children, issue error messages like:
+
+ lam(x): Needs 1 child.
+ calc(isNil): Needs 1 child.
+ letRec(x,y): Needs 2 children.
+
+When a node's value is invalid, don't issue any messages about how
+many children the node should have.
+
+So now the only question is what messages to issue when a node's
+label is invalid.  First some terminology.  Let's say that
+lam, var, calc, etc., are "tags", and that in lam(x), calc(isNil),
+letRec(x,y), that x, isNil, x, y are "arguments".
+
+The label parser should work like this, assuming that whitespace has
+already been removed:
+
+if there are no "("s in the string, the tag is the whole string; return
+it plus empty list of arguments.
+
+Otherwise, pull off longest prefix before first ")" - this is the tag.  If what
+remains doesn't end with ")", signal error.
+
+Otherwise, take what is inside the "(" and ")".  If there are any "(" or
+")" in this string, signal error.  This string is processed by
+following loop.
+
+In the loop, scan forward, counting +1 for each "<", and -1 for each
+">", and looking for the first point where either end of string is
+reached or where the count is <= 0 and we find a ","
+
+   if end of string is reached, even if the count is not <= 0,
+   the string found is the final argument (signal an error if it's
+   empty)
+
+   if the count is <= 0 and a "," is found, then we have the next
+   argument (signal error if it's empty); pull off the "," and repeat
+   
+This gives us a tag plus a nonempty list of nonempty arguments, which
+we return.
+      
+If the parser signals an error, report "Invalid node label",
+as in:   
+
+ *: Invalid node label.
+ lam(): Invalid node label.
+ lam(x)*: Invalid node label.
+ lam(: Invalid node label.
+ letRec(,): Invalid node label.
+ 
+Otherwise, if the tag is invalid, then simply say "Invalid node
+label", e.g.,
+
+ blah: Invalid node label.
+ blah(x,y): Invalid node label.
+
+Otherwise, if the tag has the wrong number of arguments, say
+what the arguments should be, e.g.,
+
+ lam: Needs 1 variable.
+ lam(x,y): Needs 1 variable.
+ calc: Needs 1 operator.
+ calc(isNil,x): Needs 1 operator.
+ int: Needs 1 numeral.
+ int(4,5): Needs 1 numeral.
+ var: Needs 1 variable.
+ var(x,y,z): Needs 1 variable.
+ letRec(9): Needs 2 variables.
+ letRec(<a<b,c>>): Needs 2 variables.
+ letRec(<<>,<kj): Needs 2 variables.
+ sym(blah,blah): Needs 1 symbol.
+ str(foo,goo,who): Needs 1 string.
+
+Otherwise, the tag is valid and has the right number of arguments.
+But perhaps the arguments are of the wrong type.  E.g.,
+
+ lam(9): 9 is not a variable.
+ letRec(9,x): 9 is not a variable.
+ letRec(x,9): 9 is not a variable.
+ letRec(<<a>>>,<hell<): <<a>>> is not a variable.
+ letRec(<<a>>>,<hell<): <hell< is not a variable.
+ int(x): x is not a numeral.
+ calc(blah): blah is not an operator.
+ const(x): x is not a constant.
+ var(9): 9 is not a variable.
+ sym(<blah): <blah is not a symbol.
+ sym(ab): ab is not a symbol.
+ str($): $ is not a string.
+ str(abc<a): abc<a is not a string.

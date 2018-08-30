@@ -1,0 +1,21 @@
+<!-- auxiliary-subsect.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>Auxiliary Functions</TITLE>
+
+<SECTION>
+<HEAD>Auxiliary Functions</HEAD>
+
+<PP>These modules provide auxiliary functions on Standard ML strings (the
+<BF>StringAux</BF> module) and lists (the <BF>ListAux</BF> module).</PP>
+
+<INCLFILE FILE="string-aux">
+<INCLFILE FILE="list-aux">
+</SECTION>

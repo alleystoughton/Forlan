@@ -1,0 +1,9 @@
+{states}
+A, B
+{start state}
+A
+{accepting states}
+A, B
+{transitions}
+A, <<>>+<a<a>>*+<a<a>> -> B;
+B, a**(bc)*+e -> A

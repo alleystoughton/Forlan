@@ -1,0 +1,45 @@
+<!-- Entities.sgml -->
+
+<!-- Entities for all of the SIGBODY FILE attributes -->
+
+<!ENTITY DEBUG SDATA "debug.sig">
+<!ENTITY DER SDATA "der.sig">
+<!ENTITY DFA SDATA "dfa.sig">
+<!ENTITY EFA SDATA "efa.sig">
+<!ENTITY EXPORT SDATA "export.sig">
+<!ENTITY FA SDATA "fa.sig">
+<!ENTITY GRAM SDATA "gram.sig">
+<!ENTITY LEX SDATA "lex.sig">
+<!ENTITY LIST-AUX SDATA "list-aux.sig">
+<!ENTITY LP SDATA "lp.sig">
+<!ENTITY MESSAGES SDATA "messages.sig">
+<!ENTITY NFA SDATA "nfa.sig">
+<!ENTITY PARAMS SDATA "params.sig">
+<!ENTITY PP SDATA "pp.sig">
+<!ENTITY PROD SDATA "prod.sig">
+<!ENTITY PROD-SET SDATA "prod-set.sig">
+<!ENTITY PROG SDATA "prog.sig">
+<!ENTITY PT-LIST SDATA "pt-list.sig">
+<!ENTITY PT SDATA "pt.sig">
+<!ENTITY REG SDATA "reg.sig">
+<!ENTITY REL SDATA "rel.sig">
+<!ENTITY RFA SDATA "rfa.sig">
+<!ENTITY SET SDATA "set.sig">
+<!ENTITY SORT SDATA "sort.sig">
+<!ENTITY STR-SET SDATA "str-set.sig">
+<!ENTITY STR SDATA "str.sig">
+<!ENTITY STRING-AUX SDATA "string-aux.sig">
+<!ENTITY SYM-REL SDATA "sym-rel.sig">
+<!ENTITY SYM-SET SDATA "sym-set.sig">
+<!ENTITY SYM SDATA "sym.sig">
+<!ENTITY SYSTEM SDATA "system.sig">
+<!ENTITY TAB SDATA "tab.sig">
+<!ENTITY TOP-LEVEL SDATA "top-level.sig">
+<!ENTITY TRAN SDATA "tran.sig">
+<!ENTITY TRAN-SET SDATA "tran-set.sig">
+<!ENTITY TRAN-REG SDATA "tran-reg.sig">
+<!ENTITY TRAN-REG-SET SDATA "tran-reg-set.sig">
+<!ENTITY USE SDATA "use.sig">
+<!ENTITY VAR SDATA "var.sig">
+<!ENTITY VAR-SET SDATA "var-set.sig">
+<!ENTITY VERSION SDATA "version.sig">

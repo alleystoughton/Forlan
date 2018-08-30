@@ -1,0 +1,4 @@
+val x = 3 + 4;
+val y = x + 1;
+val x = 5 * x;
+y;

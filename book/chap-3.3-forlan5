@@ -1,0 +1,11 @@
+val reg = Reg.input "";
+1 + (% + 0 + 2)(% + 0 + 2)*1 +
+(1 + (% + 0 + 2)(% + 0 + 2)*1)
+(% + 0 + 2 + 1(% + 0 + 2)*1)
+(% + 0 + 2 + 1(% + 0 + 2)*1)*
+.
+Reg.equal(Reg.weaklySimplify reg, reg);
+val (b', reg') = locSimp (SOME 10) reg;
+Reg.output("", reg');
+val (b'', reg'') = locSimp (SOME 1000) reg';
+Reg.output("", reg'');

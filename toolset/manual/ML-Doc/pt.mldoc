@@ -1,0 +1,552 @@
+<!-- pt.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The PT Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/PT/ Module</HEAD>
+
+<PP>This module defines the abstract type of parse trees.</PP>
+
+<STRUCTURE STRID="PT">
+<OPAQUE>
+<SIGBODY SIGID="PT" FILE=PT>
+
+<SPEC>
+<DATATYPE><ID>concr</ID>
+<CONS>Node<TY>Sym.sym * concr list option</TY></CONS>
+</DATATYPE>
+<COMMENT>
+<PP>The concrete datatype of parse trees.  If <CD><ARG/a/</CD> is a
+symbol, then <CD>Node(<ARG/a/, NONE)</CD> is the parse tree whose
+root node is labeled by <CD><ARG/a/</CD>, and which has a single
+child, labeled by <CD>%</CD>, with no children.
+And, if <CD><ARG/a/</CD> is a symbol and
+<CD><ARG/pts/</CD> is a list of parse trees, then
+<CD>Node(<ARG/a/, SOME <ARG/pts/)</CD> is the parse tree
+whose root node is labeled by <CD><ARG/a/</CD> and
+whose children are the elements of <CD><ARG/pts/</CD>, if any.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<TYPE><ID>pt</ID></TYPE>
+<COMMENT>
+<PP>The abstract type of parse trees, consisting of the values
+of type <CD>concr</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromConcr<TY>concr -> pt</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromConcr <ARG/concr/
+</PROTOTY>
+<PP>returns <CD><ARG/concr/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toConcr<TY>pt -> concr</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toConcr <ARG/pt/
+</PROTOTY>
+<PP>returns <CD><ARG/pt/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromString<TY>string -> pt</TY></VAL>
+<COMMENT>
+<PROTOTY>
+fromString <ARG/s/
+</PROTOTY>
+<PP>inputs a parse tree from <CD><ARG/s/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>input<TY>string -> pt</TY></VAL>
+<COMMENT>
+<PROTOTY>
+input <ARG/fil/
+</PROTOTY>
+<PP>inputs a parse tree from the file named by <CD><ARG/fil/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toPP<TY>pt -> PP.pp</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toPP <ARG/pt/
+</PROTOTY>
+<PP>returns a pretty-printing expression for <CD><ARG/pt/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toString<TY>pt -> string</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toString <ARG/pt/
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/pt/</CD> to a string.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>output<TY>string * pt -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+output(<ARG/fil/, <ARG/pt/)
+</PROTOTY>
+<PP>pretty-prints <CD><ARG/pt/</CD> to the file named by <CD><ARG/fil/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>validPath<TY>pt * int list -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+validPath(<ARG/pt/, <ARG/ns/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/ns/</CD> is a valid path for <CD><ARG/pt/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>height<TY>pt -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+height <ARG/pt/
+</PROTOTY>
+<PP>returns the height of <CD><ARG/pt/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>size<TY>pt -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+size <ARG/pt/
+</PROTOTY>
+<PP>returns the size of <CD><ARG/pt/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>numLeaves<TY>pt -> int</TY></VAL>
+<COMMENT>
+<PROTOTY>
+numLeaves <ARG/pt/
+</PROTOTY>
+<PP>returns the number of leaves of <CD><ARG/pt/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>selectPT<TY>pt * int list -> pt option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+selectPT(<ARG/pt/, <ARG/ns/)
+</PROTOTY>
+<PP>Suppose <CD><ARG/tr/</CD> is the subtree of <CD><ARG/pt/</CD> pointed
+to by <CD><ARG/ns/</CD>.  If <CD><ARG/tr/</CD> is
+<CD>%</CD> (i.e., has a single node, labeled by <CD>%</CD>),
+then <CD>selectPT</CD> returns <CD>NONE</CD>.  Otherwise,
+<CD>selectPT</CD> returns <CD>SOME <ARG/tr/</CD>.  Issues an error
+message if <CD><ARG/ns/</CD> isn't a valid path for <CD><ARG/pt/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>update<TY>pt * int list * pt -> pt</TY></VAL>
+<COMMENT>
+<PROTOTY>
+update(<ARG/pt/, <ARG/ns/, <ARG/pt'/)
+</PROTOTY>
+<PP>returns the result of replacing the subtree of <CD><ARG/pt/</CD>
+pointed to by <CD><ARG/ns/</CD> with <CD><ARG/pt'/</CD>.  Issues an
+error message if <CD><ARG/ns/</CD> isn't valid for <CD><ARG/pt/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>maximumLengthPath<TY>pt -> int list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+maximumLengthPath <ARG/pt/
+</PROTOTY>
+<PP>returns a leftmost, maximum length path for <CD><ARG/pt/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>validLeafPath<TY>pt * int list -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+validLeafPath(<ARG/pt/, <ARG/ns/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/ns/</CD> is a valid path for <CD><ARG/pt/</CD>
+that points to a leaf of <CD><ARG/pt/</CD>, i.e., to a subtree with
+no children.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>pt Sort.total_ordering</TY></VAL>
+<COMMENT>
+<PROTOTY>
+comare
+</PROTOTY>
+<PP>is defined by:
+<CODE>
+  fun compare(Node(a1, SOME pt1s), Node(a2, SOME pt2s)) =
+        (case Sym.compare(a1, a2) of
+              LESS    => LESS
+            | EQUAL   => Set.compareList compare (pt1s, pt2s)
+            | GREATER => GREATER)
+    | compare(Node(a1, NONE),      Node(a2, NONE))      = Sym.compare(a1, a2)
+    | compare(Node(_, SOME _),     Node(_, NONE))       = LESS
+    | compare(Node(_, NONE),       Node(_, SOME _))     = GREATER
+</CODE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>pt * pt -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+equal(<ARG/pt1/, <ARG/pt2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/pt1/</CD> and <CD><ARG/pt2/</CD> are
+equal.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>cons<TY>Sym.sym * pt list option -> pt</TY></VAL>
+<COMMENT>
+<PROTOTY>
+cons(<ARG/a/, <ARG/ptsOpt/)
+</PROTOTY>
+<PP>returns <CD>Cons(<ARG/a/, <ARG/ptsOpt/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>leaf<TY>Sym.sym -> pt</TY></VAL>
+<COMMENT>
+<PROTOTY>
+leaf <ARG/a/
+</PROTOTY>
+<PP>returns the tree with a single node labeled <CD><ARG/a/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>decons<TY>pt -> Sym.sym * pt list option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+decons <ARG/pt/
+</PROTOTY>
+<PP>returns <CD>(<ARG/a/, <ARG/ptsOpt/)</CD>, where <CD><ARG/a/</CD> and
+<CD><ARG/ptsOpt/</CD> are unique such that <CD><ARG/pt/</CD> is
+equal to <CD>Cons(<ARG/a/, <ARG/ptsOpt/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>rootLabel<TY>pt -> Sym.sym</TY></VAL>
+<COMMENT>
+<PROTOTY>
+rootLabel <ARG/pt/
+</PROTOTY>
+<PP>returns the root label of <CD><ARG/pt/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>yield<TY>pt -> Str.str</TY></VAL>
+<COMMENT>
+<PROTOTY>
+yield <ARG/pt/
+</PROTOTY>
+<PP>returns the yield of <CD><ARG/pt/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<TYPE><ID>pumping_division
+<TY>(pt * int list) * (pt * int list) * pt</TY>
+</TYPE>
+<COMMENT>
+<PP>The following functions on pumping divisions can be used to
+experiment with the pumping lemma for context-free languages.</PP>
+
+<PP>A pumping division
+<CD>((<ARG/pt1/, <ARG/path1/), (<ARG/pt2/, <ARG/path2/), <ARG/path3/)</CD>
+is <EM>valid</EM> iff:
+<ITEMIZE>
+<ITEM><CD><ARG/path1/</CD> is a valid path for <CD><ARG/pt1/</CD>,
+pointing to a leaf whose label isn't <CD>%</CD>;</ITEM>
+
+<ITEM><CD><ARG/path2/</CD> is a valid path for <CD><ARG/pt2/</CD>,
+pointing to a leaf whose label isn't <CD>%</CD>;</ITEM>
+
+<ITEM>the label of the leaf of <CD><ARG/pt1/</CD> pointed to
+by <CD><ARG/path1/</CD> is equal to the root label
+of <CD><ARG/pt2/</CD>;</ITEM>
+
+<ITEM>the label of the leaf of <CD><ARG/pt2/</CD> pointed to by
+<CD><ARG/path2/</CD> is equal to the root label of 
+<CD><ARG/pt2/</CD>;</ITEM>
+
+<ITEM>the root label of <CD><ARG/pt3/</CD> is equal to the root label
+of <CD><ARG/pt2/</CD>;</ITEM>
+
+<ITEM>the yield of <CD><ARG/pt2/</CD> has at least two symbols;</ITEM>
+
+<ITEM>the yield of <CD><ARG/pt1/</CD> has only one occurrence of
+the root label of <CD><ARG/pt2/</CD>;</ITEM>
+
+<ITEM>the yield of <CD><ARG/pt2/</CD> has only one occurrence of
+the root label of <CD><ARG/pt2/</CD>; and</ITEM>
+
+<ITEM>the yield of <CD><ARG/pt3/</CD> does not contain the
+root label of <CD><ARG/pt2/</CD>.</ITEM>
+</ITEMIZE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>checkPumpingDivision<TY>pumping_division -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+checkPumpingDivision <ARG/pd/
+</PROTOTY>
+<PP>checks whether <CD><ARG/pd/</CD> is valid, silently returning <CD>()</CD>,
+if it is, and issuing an error message explaining why it's not, if it's not.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>validPumpingDivision<TY>pumping_division -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+validPumpingDivision <ARG/pd/
+</PROTOTY>
+<PP>tests whether <CD><ARG/pd/</CD> is valid.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>strsOfValidPumpingDivision
+<TY>pumping_division -> Str.str * Str.str * Str.str * Str.str * Str.str</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+strsOfValidPumpingDivision((<ARG/pt1/, <ARG/path1/), (<ARG/pt2/, <ARG/path2/), <ARG/pt3/)
+</PROTOTY>
+<PP>returns <CD>(<ARG/u/, <ARG/v/, <ARG/w/, <ARG/x/, <ARG/y/)</CD>, where:
+<ITEMIZE>
+<ITEM><CD><ARG/u/</CD> is the prefix of <CD>yield <ARG/pt1/</CD> that
+precedes the unique occurrence of the root label of <CD><ARG/pt2/</CD>;</ITEM>
+
+<ITEM><CD><ARG/v/</CD> is the prefix of <CD>yield <ARG/pt2/</CD> that
+precedes the unique occurrence of the root label of <CD><ARG/pt2/</CD>;</ITEM>
+
+<ITEM><CD><ARG/w/</CD> is the yield of <CD><ARG/pt3/</CD>;</ITEM>
+
+<ITEM><CD><ARG/x/</CD> is the suffix of <CD>yield <ARG/pt2/</CD> that
+follows the unique occurrence of the root label of <CD><ARG/pt2/</CD>;
+and </ITEM>
+
+<ITEM><CD><ARG/y/</CD> is the suffix of <CD>yield <ARG/pt1/</CD> that
+follows the unique occurrence of the root label of <CD><ARG/pt2/</CD>.
+</ITEMIZE>
+Issues an error message if the pumping division isn't valid.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>pumpValidPumpingDivision<TY>pumping_division * int -> pt</TY></VAL>
+<COMMENT>
+<PROTOTY>
+pumpValidPumpingDivision(((<ARG/pt1/, <ARG/path1/), (<ARG/pt2/, <ARG/path2/), <ARG/pt3/), <ARG/n/)
+</PROTOTY>
+<PP>returns
+<CODE>
+  let fun pow 0 = <ARG/pt3/
+        | pow n = update(<ARG/pt2/, <ARG/path2/, pow(n - 1))
+  in update(<ARG/pt1/, <ARG/path1/, pow <ARG/n/) end
+</CODE>
+Issues an error message if the pumping division isn't valid, or if
+<CD><ARG/n/</CD> is negative.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findValidPumpingDivision<TY>pt -> pumping_division</TY></VAL>
+<COMMENT>
+<PROTOTY>
+findValidPumpingDivision <ARG/pt/
+</PROTOTY>
+<PP>tries to find a valid pumping division <CD><ARG/pd/</CD> such that
+<CD>pumpValidPumpingDivision(<ARG/pd/, 1)</CD> is <CD><ARG/pt/</CD>.
+It works as follows.  First, the leftmost, maximum length
+path <CD><ARG/path/</CD> through <CD><ARG/pt/</CD> is found.  If this path
+points to <CD>%</CD>, then an error message is issued.  Otherwise,
+<CD>findValidPumpingDivision</CD> generates the following list of
+variables paired with prefixes of <CD><ARG/path/</CD>:
+<ITEMIZE>
+<ITEM>the root label of the subtree pointed to by the path consisting
+of all but the last element of <CD><ARG/path/</CD>, paired with that
+path;
+</ITEM>
+
+<ITEM>the root label of the subtree pointed to by the path consisting
+of all but the last two elements of <CD><ARG/path/</CD>, paired with that
+path;
+</ITEM>
+
+<ITEM>...;</ITEM>
+
+<ITEM>the root label of the subtree pointed to by the path consisting
+of the first element of <CD><ARG/path/</CD>, paired with that path; and</ITEM>
+
+<ITEM>the root label of the subtree pointed to by <CD>[]</CD>, paired
+with <CD>[]</CD>.</ITEM>
+</ITEMIZE>
+(Of course, the left-hand side of the last of these pairs is the root label
+of <CD><ARG/pt/</CD>.)  As it works through these pairs, it looks for
+the first repetition of variables.  If there is no such repetition, it
+issues an error message.  Otherwise, suppose that:
+<ITEMIZE>
+<ITEM><CD><ARG/q/</CD> was the first repeated variable;</ITEM>
+
+<ITEM><CD><ARG/path1/</CD> was the path paired with <CD><ARG/q/</CD>
+at the point of the first repetition; and</ITEM>
+
+<ITEM><CD><ARG/path'/</CD> was the path paired with <CD><ARG/q/</CD>
+when it was first seen.</ITEM>
+</ITEMIZE>
+Now, it lets:
+<ITEMIZE>
+<ITEM><CD><ARG/path2/</CD> be the result of dropping <CD><ARG/path1/</CD>
+from the beginning of <CD><ARG/path'/</CD>;</ITEM>
+
+<ITEM><CD><ARG/pt1/</CD> be
+<CD>update(<ARG/pt/, <ARG/path1/, Leaf <ARG/q/)</CD>;</ITEM>
+
+<ITEM><CD><ARG/pt'/</CD> be the subtree of <CD><ARG/pt/</CD> pointed
+to by <CD><ARG/path1/</CD>;</ITEM>
+
+<ITEM><CD><ARG/pt2/</CD> be 
+<CD>update(<ARG/pt'/, <ARG/path2/, Leaf <ARG/q/)</CD>;</ITEM>
+
+<ITEM><CD><ARG/pt3/</CD> be the subtree of <CD><ARG/pt'/</CD> pointed
+to by <CD><ARG/path2/</CD>; and</ITEM>
+
+<ITEM><CD><ARG/pd/</CD> be
+<CD>((<ARG/pt1/, <ARG/path1/), (<ARG/pt2/, <ARG/path2/), <ARG/pt3/)</CD>.
+</ITEM>
+</ITEMIZE>
+If <CD><ARG/pd/</CD> is a valid pumping division (only the last four
+conditions of the definition of validity remain to be checked), it is
+returned by <CD>findValidPumpingDivision</CD>.  Otherwise, an error
+message is issued.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>findValidPumpingDivisionOpt<TY>pt -> pumping_division option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+findValidPumpingDivisionOpt <ARG/pt/
+</PROTOTY>
+<PP>behaves like <CD>findValidPumpingDivision <ARG/pt/</CD>,
+except that:
+<ITEMIZE>
+<ITEM>if <CD>findValidPumpingDivision <ARG/pt/</CD> returns normally,
+then <CD>findValidPumpingDivisionOpt</CD> returns <CD>SOME</CD> of what
+it returns; and</ITEM>
+
+<ITEM>if <CD>findValidPumpingDivision <ARG/pt/</CD> issues an error
+message, then <CD>findValidPumpingDivisionOpt</CD> silently returns
+<CD>NONE</CD>.</ITEM>
+</ITEMIZE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanNew<TY>unit -> pt</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanNew()
+</PROTOTY>
+<PP>invokes JForlan, and returns the parse tree that the user creates
+and commits.  Issues an error message if the user aborts, instead.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanEdit<TY>pt -> pt</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanEdit <ARG/pt/
+</PROTOTY>
+<PP>invokes JForlan, letting the user edit <CD><ARG/pt/</CD>, and
+returning the resulting parse tree that the user commits.  Issues an
+error message if the user aborts, instead.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanValidate<TY>string -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanValidate
+</PROTOTY>
+<PP>is a low-level function used by JForlan.  See the code for
+more information.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>jforlanPretty<TY>string -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+jforlanPretty
+</PROTOTY>
+<PP>is a low-level function used by JForlan.  See the code for
+more information.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

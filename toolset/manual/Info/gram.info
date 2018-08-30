@@ -1,0 +1,75 @@
+@FILES
+  ["gram"; "The Gram Module";]
+@SIGNATURE GRAM "gram" [
+  @TYPES 
+    @TYPE concr
+    @TYPE gram
+  @VALS 
+    renameVariables
+    inChomskyNormalForm
+    toPP
+    startVariable
+    toStrSet
+    fromString
+    closure
+    output
+    inter
+    fromConcr
+    union
+    sub
+    fromSym
+    input
+    valid
+    alphabet
+    reachified
+    parseAlphabetFromVariable
+    simplified
+    emptyStr
+    numVariables
+    parsable
+    numProductions
+    findIsomorphism
+    chomskyNormalForm
+    findIsomorphismOpt
+    compare
+    generatedFromVariable
+    renameAlphabet
+    toString
+    reachableFrom
+    emptySet
+    minus
+    renameVariablesCanonically
+    genConcat
+    fromReg
+    genUnion
+    parseAlphabetFromVariableOpt
+    isomorphism
+    parseAlphabetOpt
+    eliminateEmptyProductions
+    hasNoEmptyProductions
+    hasNoEmptyOrUnitProductions
+    nullableVariables
+    concat
+    fromStrSet
+    isomorphic
+    reachableFromBackwards
+    rev
+    validPT
+    equal
+    toConcr
+    variables
+    productions
+    parse
+    reachify
+    toStrSetOpt
+    parseAlphabet
+    simplify
+    parseOpt
+    prefix
+    checkPT
+    eliminateEmptyAndUnitProductions
+    fromFA
+    fromStr
+    generated
+]
+@STRUCTURE Gram "gram" GRAM

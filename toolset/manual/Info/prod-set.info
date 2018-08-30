@@ -1,0 +1,24 @@
+@FILES
+  ["prod-set"; "The ProdSet Module";]
+@SIGNATURE PROD_SET "prod-set" [
+  @VALS 
+    input
+    memb
+    toPP
+    genUnion
+    equal
+    fromString
+    map
+    fromList
+    output
+    inter
+    inputFromLabToks
+    subset
+    compare
+    union
+    toString
+    minus
+    genInter
+    mapFromList
+]
+@STRUCTURE ProdSet "prod-set" PROD_SET

@@ -1,0 +1,14 @@
+val rfa = RFA.input "";
+{states} A, B, C, D {start state} A {accepting states} D
+{transitions}
+A, 0 -> B; B, 1 -> C; C, 2 -> B; C, 3 -> C; C, 4 -> D
+.
+val eliminateState = RFA.eliminateState simp;
+val rfa' = eliminateState(rfa, Sym.fromString "B");
+RFA.output("", rfa');
+val rfa'' = eliminateState(rfa', Sym.fromString "C");
+RFA.output("", rfa'');
+val rfa''' = eliminateState(rfa, Sym.fromString "C");
+RFA.output("", rfa''');
+val rfa'''' = eliminateState(rfa''', Sym.fromString "B");
+RFA.output("", rfa'''');

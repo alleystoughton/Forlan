@@ -1,0 +1,347 @@
+\section{Closure Properties of Context-free Languages}
+\label{ClosurePropertiesOfContextFreeLanguages}
+
+\index{context-free language!closure properties|(}%
+In this section, we define union, concatenation, closure, reversal,
+alphabet-renaming and prefix-closure operations/algorithms on
+grammars.  As a result, we will have that the context-free languages
+are closed under union, concatenation, closure, reversal,
+alphabet-renaming and prefix-, suffix- and substring-closure.
+
+In Section~\ref{ThePumpingLemmaForContextFreeLanguages}, we
+will see that the context-free languages aren't closed under
+intersection, complementation and set difference.
+But we are able to define operations/algorithms for:
+\begin{itemize}
+\item intersecting a grammar and an empty-string finite automaton; and
+
+\item subtracting a deterministic finite automaton from a grammar.
+\end{itemize}
+Thus, if $L_1$ is a context-free language, and $L_2$ is a regular
+language, we will have that $L_1\cap L_2$ and $L_1-L_2$ are
+context-free.
+
+\subsection{Operations on Grammars}
+
+First, we consider some basic grammars and operations on grammars.
+The grammar with variable $\Asf$ and production $\Asf\fun\%$
+generates the language $\{\%\}$.
+The grammar with variable $\Asf$ and no productions generates 
+the language $\emptyset$.
+If $w$ is a string, then the grammar with variable $\Asf$ and
+production $\Asf\fun w$ generates the language $\{w\}$.
+Actually, we must be careful to chose a variable that doesn't occur
+in $w$.
+
+Suppose $G_1$ and $G_2$ are grammars.  We can define a grammar $H$
+such that $L(H)=L(G_1)\cup L(G_2)$ by unioning together the variables
+and productions of $G_1$ and $G_2$, and adding a new start variable
+$q$, along with productions
+\begin{gather*}
+  q\fun s_{G_1}\mid s_{G_2} .
+\end{gather*}
+For the above to be valid, we need to know that:
+\begin{itemize}
+\item $Q_{G_1}\cap Q_{G_2}=\emptyset$ and
+$q\not\in Q_{G_1}\cup Q_{G_2}$; and
+
+\item $\alphabet\,G_1\cap Q_{G_2}=\emptyset$,
+$\alphabet\,G_2\cap Q_{G_1}=\emptyset$ and
+$q\not\in\alphabet\,G_1\cup\alphabet\,G_2$.
+\end{itemize}
+Our official union operation for grammars renames the variables
+of $G_1$ and $G_2$, and chooses the start variable $q$,
+in a uniform way that makes the preceding properties hold.
+We do something similar when defining the other closure
+operations.  In what follows, though, we'll ignore this issue,
+so as to keep things simple.
+
+Suppose $G_1$ and $G_2$ are grammars.  We can define a grammar $H$
+such that $L(H)=L(G_1)L(G_2)$ by unioning together the variables and
+productions of $G_1$ and $G_2$, and adding a new start variable $q$,
+along with production
+\begin{gather*}
+  q\fun s_{G_1}s_{G_2} .
+\end{gather*}
+
+Suppose $G$ is a grammar.  We can define a grammar $H$ such that
+$L(H)=L(G)^*$ by adding to the variables and productions of $G$ a new
+start variable $q$, along with productions
+\begin{gather*}
+q\fun \%\mid s_Gq .
+\end{gather*}
+
+Next, we consider reversal and alphabet renaming operations on
+grammars.  Given a grammar $G$, we can define a grammar $H$ such that
+\index{grammar!reversal}%
+\index{reversal!grammar}%
+\index{language!reversal}%
+\index{reversal!language}%
+$L(H)=L(G)^R$ by simply reversing the right-sides of $G$'s
+productions.
+
+Given a grammar $G$ and a bijection $f$ from a set of symbols that is
+a superset of $\alphabet\,G$ to some set of symbols, we can define a
+grammar $H$ such that $L(H)=L(G)^f$ by renaming the elements of
+\index{grammar!alphabet renaming}%
+\index{alphabet renaming!grammar}%
+\index{language!alphabet renaming}%
+\index{alphabet renaming!language}%
+$\alphabet\,G$ in the right-sides of $G$'s productions using $f$.
+Actually, we may have to rename the variables of $G$ to avoid clashes
+with the elements of the renamed alphabet.
+
+From Section~\ref{ClosurePropertiesOfRegularLanguages},
+we know that if we can define a prefix-closure operation
+\index{language!prefix-closure}%
+\index{language!suffix-closure}%
+\index{language!substring-closure}%
+\index{prefix-closure!language}%
+\index{suffix-closure!language}%
+\index{substring-closure!language}%
+\index{grammar!prefix-closure}%
+\index{grammar!suffix-closure}%
+\index{grammar!substring-closure}%
+\index{prefix-closure!grammar}%
+\index{suffix-closure!grammar}%
+\index{substring-closure!grammar}%
+on grammmars, then we can obtain suffix-closure and substring-closure
+operations on grammars from the prefix-closure and grammar reversal
+operations.
+
+So how can we turn a grammar $G$ into a grammar $H$ such that
+$L(H)=L(G)^P$?
+We begin by simplifying $G$, producing grammar $G'$.
+Thus all of the variables of $G'$ will be useful, unless $G'$ has
+a single variable and no productions.  Now, we form the grammmar $H$
+from $G'$, as follows.
+We make a copy of $G'$, renaming each variable $q$ to
+$\langle\onesf,q\rangle$.  (Actually, we may have to rename variables
+to avoid clashes with alphabet symbols.)
+Next, for each alphabet symbol $a$, we introduce a new variable
+$\langle\twosf,a\rangle$, along with productions
+$\langle\twosf,a\rangle\fun\%\mid a$.
+Next, for each variable $q$ of $G'$, we add a new variable
+$\langle\twosf,q\rangle$ that generates all prefixes of what $q$
+generated in $G'$.  Suppose we are given a production $q\fun
+a_1a_2\cdots a_n$ of $G'$.  If $n=0$, then we replace it with the
+production $\langle\twosf,q\rangle\fun\%$.  Otherwise, we replace it
+with the productions
+\begin{gather*}
+\langle\twosf,q\rangle\fun
+\langle\twosf,a_1\rangle \mid
+f(a_1)\langle\twosf,a_2\rangle \mid \cdots \mid
+f(a_1)\,f(a_2)\cdots\langle\twosf,a_n\rangle ,
+\end{gather*}
+where $f(a) = a$, if $a\in\alphabet\,G'$, and
+$f(a)=\langle\onesf,a\rangle$, if $a\in Q_{G'}$.
+It's crucial that $G'$ is simplified; otherwise productions with
+useless symbols would be turned into productions that generated
+strings.
+Finally, the start variable of $H$ is $\langle\twosf,s_{G'}\rangle$.
+
+For example, the grammar
+\begin{gather*}
+\Asf\fun \% \mid \zerosf\Asf\onesf
+\end{gather*}
+is turned into the grammar
+\begin{align*}
+\langle \twosf,\Asf\rangle &\fun \% \mid
+  \langle\twosf,\zerosf\rangle \mid
+  \zerosf\langle\twosf,\Asf\rangle \mid
+  \zerosf\langle\onesf,A\rangle\langle\twosf,\onesf\rangle , \\
+\langle\onesf,A\rangle &\fun \% \mid
+  \zerosf\langle\onesf,\Asf\rangle\onesf , \\
+\langle\twosf,\zerosf\rangle &\fun \% \mid \zerosf , \\
+\langle\twosf,\onesf\rangle &\fun \% \mid \onesf .
+\end{align*}
+
+We now consider an algorithm for intersecting a grammar $G$ with an
+EFA $M$, resulting in $\simplify\,H$, where the grammar $H$ is defined
+as follows.
+For all $p\in Q_G$ and $q, r\in Q_M$, $H$ has a variable
+$\langle p,q,r\rangle$ that generates
+\begin{gather*}
+\setof{w\in(\alphabet\,G)^*}{w\in\Pi_{G,p} \eqtxt{and}
+ r\in\Delta(\{q\},w)} .
+\end{gather*}
+The remaining variable of $H$ is $\Asf$, which is its start variable.
+
+For each $r\in A_M$, $H$ has a production
+\begin{gather*}
+  \Asf \fun \langle s_G, s_M, r\rangle .
+\end{gather*}
+And for each $\%$-production $p\fun\%$ of $G$ and $q,r\in Q_M$, if
+$r\in \Delta(\{q\}, \%)$,
+then $H$ will have the production
+\begin{gather*}
+  \langle p,q,r\rangle \fun \% .
+\end{gather*}
+
+To say what the remaining productions of $H$ are, define
+a function
+\begin{gather*}
+f \in (\alphabet\,G \cup Q_G) \times Q_M \times Q_M\fun
+\alphabet\,G\cup Q_H
+\end{gather*}
+by: for all $a\in\alphabet\,G \cup Q_G$ and $q,r\in Q_M$,
+\begin{gather*}
+  f(a, q, r) =
+  \casesdef{a}{\eqtxtr{if} a\in\alphabet\,G , \eqtxtl{and}}%
+  {\langle a,q,r\rangle}{\eqtxtr{if} a\in Q_G .}
+\end{gather*}
+Then, for all $p\in Q_G$, $n\in\nats-\{0\}$,
+$a_1,\ldots,a_n\in\Sym$ and $q_1,\ldots,q_{n+1}\in Q_M$, if
+\begin{itemize}
+\item $p\fun a_1\cdots a_n\in P_G$, and
+
+\item for all $i\in[1:n]$, if $a_i\in\alphabet\,G$, then
+  $q_{i+1}\in\Delta(\{q_i\},a_i)$,
+\end{itemize}
+then
+\begin{gather*}
+  \langle p,q_1,q_{n+1}\rangle \fun 
+  f(a_1,q_1,q_2) \cdots f(a_n,q_n,q_{n+1})
+\end{gather*}
+is a production of $H$.
+
+For example, let $G$ be the grammar
+\begin{gather*}
+  \Asf \fun \% \mid \mathsf{0A1A} \mid \mathsf{1A0A} ,
+\end{gather*}
+and $M$ be the EFA
+\begin{center}
+  \input{chap-4.7-fig1.eepic}
+\end{center}
+so that $G$ generates all elements of $\{\mathsf{0,1}\}^*$
+with an equal number of $\zerosf$'s and $\onesf$'s, and $M$
+accepts $\{\zerosf\}^*\{\onesf\}^*$.
+Then $\simplify\,H$ is
+\begin{align*}
+\Asf &\fun \langle\Asf,\Asf,\Bsf\rangle , \\
+\langle\Asf,\Asf,\Asf\rangle &\fun \% , \\
+\langle\Asf,\Asf,\Bsf\rangle &\fun \% , \\
+\langle\Asf,\Asf,\Bsf\rangle &\fun
+\zerosf\langle\Asf,\Asf,\Asf\rangle\onesf\langle\Asf,\Bsf,\Bsf\rangle , \\
+\langle\Asf,\Asf,\Bsf\rangle &\fun
+\zerosf\langle\Asf,\Asf,\Bsf\rangle\onesf\langle\Asf,\Bsf,\Bsf\rangle , \\
+\langle\Asf,\Asf,\Bsf\rangle &\fun
+\zerosf\langle\Asf,\Bsf,\Bsf\rangle\onesf\langle\Asf,\Bsf,\Bsf\rangle , \\
+\langle\Asf,\Bsf,\Bsf\rangle &\fun \% .
+\end{align*}
+Note that simplification eliminated the variable
+$\langle\Asf,\Bsf,\Asf\rangle$.
+
+Finally, we consider a difference operation/algorithm.
+Given a grammar $G$ and a DFA $M$, we can define the difference of
+$G$ and $M$ to be
+\begin{gather*}
+\inter(G, \mycomplement(M, \alphabet\,G)) .
+\end{gather*}
+This is analogous to what we did when defining the difference of
+DFAs.
+
+The following theorem summarizes the closure properties for context-free
+languages.
+
+\begin{theorem}
+Suppose $L,L_1,L_2\in\CFLan$ and $L'\in\RegLan$.
+Then:
+\begin{enumerate}[\quad(1)]
+\item $L_1\cup L_2\in\CFLan$;
+
+\item $L_1L_2\in\CFLan$;
+
+\item $L^*\in\CFLan$;
+
+\item $L^R\in\CFLan$;
+
+\item $L^f\in\CFLan$, where $f$ is a bijection from a set of
+symbols that is a superset of $\alphabet\,L$ to some
+set of symbols;
+
+\item $L^P\in\CFLan$;
+
+\item $L^S\in\CFLan$;
+
+\item $L^\SSop\in\CFLan$;
+
+\item $L\cap L'\in\CFLan$; and
+
+\item $L-L'\in\CFLan$.
+\end{enumerate}
+\end{theorem}
+
+\subsection{Operations on Grammars in Forlan}
+
+The Forlan module \texttt{Gram} defines the following constants
+and operations on grammars:
+\begin{verbatim}
+val emptyStr       : gram
+val emptySet       : gram
+val fromStr        : str -> gram
+val fromSym        : sym -> gram
+val union          : gram * gram -> gram
+val concat         : gram * gram -> gram
+val closure        : gram -> gram
+val rev            : gram -> gram
+val renameAlphabet : gram * sym_rel -> gram
+val prefix         : gram -> gram
+val inter          : gram * efa -> gram
+val minus          : gram * dfa -> gram
+\end{verbatim}
+\index{Gram@\texttt{Gram}!emptyStr@\texttt{emptyStr}}%
+\index{Gram@\texttt{Gram}!emptySet@\texttt{emptySet}}%
+\index{Gram@\texttt{Gram}!fromStr@\texttt{fromStr}}%
+\index{Gram@\texttt{Gram}!fromSym@\texttt{fromSym}}%
+\index{Gram@\texttt{Gram}!union@\texttt{union}}%
+\index{Gram@\texttt{Gram}!concat@\texttt{concat}}%
+\index{Gram@\texttt{Gram}!closure@\texttt{closure}}%
+\index{Gram@\texttt{Gram}!rev@\texttt{rev}}%
+\index{Gram@\texttt{Gram}!renameAlphabet@\texttt{renameAlphabet}}%
+\index{Gram@\texttt{Gram}!prefix@\texttt{prefix}}%
+\index{Gram@\texttt{Gram}!inter@\texttt{inter}}%
+\index{Gram@\texttt{Gram}!minus@\texttt{minus}}%
+The functions \texttt{fromStr} and \texttt{fromSym}
+and are also available in the top-level environment with the names
+\begin{verbatim}
+val strToGram : str -> gram
+val symToGram : sym -> gram
+\end{verbatim}
+\index{strToGram@\texttt{strToGram}}%
+\index{symToGram@\texttt{symToGram}}%
+
+For example, we can construct a grammar $G$ such that
+$L(G)=\mathsf{\{01\}\cup\{10\}\{11\}^*}$, as follows.
+\input{chap-4.7-forlan1}
+Continuing our Forlan session, the grammar reversal and alphabet
+renaming operations can be used as follows:
+\input{chap-4.7-forlan4}
+And here is an example use of the prefix-closure operation:
+\input{chap-4.7-forlan6}
+
+Finally, to see how we can use \texttt{Gram.inter} and
+\texttt{Gram.minus}, let \texttt{gram} be the grammar
+\begin{gather*}
+  \Asf \fun \% \mid \mathsf{0A1A} \mid \mathsf{1A0A} ,
+\end{gather*}
+and \texttt{efa} be the EFA
+\begin{center}
+  \input{chap-4.7-fig1.eepic}
+\end{center}
+\input{chap-4.7-forlan8}
+
+\index{context-free language!closure properties|)}%
+
+\subsection{Notes}
+
+The algorithm for intersecting a grammar with an EFA would normally be given
+only indirectly, using push down automata (PDAs): one could convert a grammar
+to a PDF, do the intersection there, and convert back to a grammar.  Our direct
+algorithm is motivated by this process, but produces grammars that are more
+intelligible.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

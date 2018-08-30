@@ -1,0 +1,598 @@
+\section{Inductive Definitions and Recursion}
+\label{TreesAndInductiveDefinitions}
+
+In this section, we will introduce and study ordered trees of
+arbitrary (finite) arity, whose nodes are labeled by elements of some
+set.  In later chapters, we will define regular expressions (in
+Chapter~\ref{RegularLanguages}), parse trees (in
+Chapter~\ref{ContextFreeLanguages}) and programs (in
+Chapter~\ref{RecursiveAndRecursivelyEnumerableLanguages}) as
+restrictions of the trees we consider here.
+
+The definition of the set of all trees over a set of labels is our
+first example of an inductive definition---a definition in which we
+collect together all of the values that can be constructed using a set
+of rules.  We will see many examples of inductive definitions in the
+book.  In this section, we will also see how to define functions by
+recursion.
+
+\subsection{Inductive Definition of Trees}
+
+\index{tree|(}%
+
+Suppose $X$ is a set.  The set $\Tree\,X$ of $X$-\emph{trees} is the
+least set such that, for all $x\in X$ and $\trs\in\List(\Tree\,X)$,
+$(x,\trs)\in\Tree\,X$.  Recall that saying $\trs\in\List(\Tree\,X)$
+simply means that $\trs$ is a list all of whose elements come
+from $\Tree\,X$.
+
+Ignoring the adjective ``least'' for the moment, some example elements
+of $\Tree\,\nats$ (the case when the set $X$ of tree labels is $\nats$)
+are:
+\begin{itemize}
+\item Since $3\in \nats$ and $[\,]\in\List(\Tree\,\nats)$, we have
+  that $(3,[\,])\in\Tree\,\nats$.  For similar reasons, $(1,[\,])$,
+  $(6,[\,])$ and all pairs of the form $(n,[\,])$, for $n\in\nats$,
+  are in $\Tree\,\nats$.  
+
+\item Because $4\in \nats$, and $[(3,[\,]), (1,[\,]),
+  (6,[\,])]\in\List(\Tree\,\nats)$, we have that $(4,[(3,[\,]),
+  (1,[\,]), (6,[\,])])\in\Tree\,\nats$.
+
+\item And we can continue like this forever.
+\end{itemize}
+
+Trees are often easier to comprehend if they are drawn.
+We draw the $X$-tree $(x,[\tr_1,\ldots,\tr_n])$ as
+\begin{center}
+\input{chap-1.3-fig1.eepic}
+\end{center}
+For example,
+\begin{center}
+\input{chap-1.3-fig2.eepic}
+\end{center}
+is the drawing of the $\nats$-tree $(4,[(3,[\,]), (1,[\,]), (6,[\,])])$.
+And
+\begin{center}
+\input{chap-1.3-fig3.eepic}
+\end{center}
+is the $\nats$-tree $(2,[(4,[(3,[\,]), (1,[\,]), (6,[\,])]),(9,[\,])])$.
+Consider the tree
+\begin{center}
+\input{chap-1.3-fig1.eepic}
+\end{center}
+again.
+We say that the \emph{root label} of this tree is $x$, and $\tr_1$ is the tree's
+\emph{first child}, etc.
+We write $\rootLabel\,\tr$ for the root label of $\tr$.
+We often write a tree $(x,[\tr_1,\ldots,\tr_n])$ in a more
+compact, linear syntax:
+\begin{itemize}
+\item $x(\tr_1,\ldots,\tr_n)$, when $n\geq 1$, and
+
+\item $x$, when $n=0$.
+\end{itemize}
+Thus $(2,[(4,[(3,[\,]), (1,[\,]), (6,[\,])]),(9,[\,])])$
+can be written as $2(4(3,1,6),9)$.
+
+Consider the definition of $\Tree\,X$ again: the set $\Tree\,X$ of
+$X$-\emph{trees} is the least set such that, (\dag) for all $x\in X$ and
+$\trs\in\List(\Tree\,X)$, $(x,\trs)\in\Tree\,X$.
+Let's call a set $U$ $X$-\emph{closed} iff it satisfies property (\dag),
+where we have replaced $\Tree\,X$ by $U$:
+for all $x\in X$ and $\trs\in\List\,U$, $(x,\trs)\in U$.
+Thus the definition says that $\Tree\,X$ is the least $X$-closed set,
+where we've yet to say just what ``least'' means.
+
+First we address the concern that there might not be any $X$-closed sets.
+A easy result of set theory says that:
+
+\begin{lemma}
+\label{ClosureLem}
+For all sets $X$, there is a set $U$ such that
+$X\sub U$, $U\times U\sub U$ and $\List\,U\sub U$.
+\end{lemma}
+
+In other words, the lemma says that, given any set $X$, there
+exists a superset $U$ of $X$ such that every pair of elements of $U$
+is already an element of U, and every list of elements of $U$ is
+already an element of $U$.  Now, suppose $X$ is a set, and let $U$ be
+as in the lemma.  To see that $U$ is $X$-closed, suppose $x\in
+X$ and $\trs\in\List\,U$.  Thus $x\in U$ and $\trs\in U$, so that
+$(x,\trs)\in U$, as required.
+
+E.g., we know that there is an $\ints$-closed set $U$.  But
+$\nats\sub\ints$, and thus $U$ is also $\nats$-closed.  But if
+$\Tree\,\nats$ turned out to be $U$, it would have elements like
+$(-5,[\,])$, which are not wanted.
+
+To keep $\Tree\,X$ from having junk, we say that $\Tree\,X$ is
+the set $U$ such that:
+\begin{itemize}
+\item $U$ is $X$-closed, and
+
+\item for all $X$-closed sets $V$, $U\sub V$.
+\end{itemize}
+This is what we mean by saying that $\Tree\,X$ is the \emph{least}
+$X$-closed set.  It is our first example of an \emph{inductive
+  definition}, the least (relative to $\sub$) set satisfying
+a given set of rules saying that if some elements are already in
+the set, then some other elements are also in the set.
+
+To see that there is a unique least $X$-closed set, we first
+prove the following lemma.
+
+\begin{lemma}
+\label{ClosureIntersect}
+Suppose $X$ is a set and $\cal W$ is a nonempty set of $X$-closed sets.
+Then $\bigcap{\cal W}$ is an $X$-closed set.
+\end{lemma}
+
+\begin{proof}
+Suppose $X$ is a set and $\cal W$ is a nonempty set of $X$-closed
+sets.  Because $\cal W$ is nonempty, $\bigcap\cal W$ is well-defined.
+To see that $\bigcap{\cal W}$ is $X$-closed, suppose $x\in X$ and
+$\trs\in\List\,\bigcap{\cal W}$.  We must show that $(x,trs)\in
+\bigcap{\cal W}$, i.e., that $(x,trs)\in W$, for all $W\in\cal W$.
+Suppose $W\in\cal W$.  We must show that $(x,\trs)\in W$.  Because
+$W\in\cal W$, we have that $\bigcap{\cal W}\sub W$, so that
+$\List\,\bigcap{\cal W}\sub\List\,W$.  Thus, since
+$\trs\in\List\,\bigcap{\cal W}$, it follows that $\trs\in\List\,W$.
+But $W$ is $X$-closed, and thus $(x,\trs)\in W$, as required.
+\end{proof}
+
+As explained above, we have that there is an $X$-closed set, $V$.  Let
+$\cal W$ be the set of all subsets of $V$ that are $X$-closed.  Thus
+$\cal W$ is a nonempty set of $X$-closed sets, since $V\in\cal W$.
+Let $U=\bigcap{\cal W}$.  By Lemma~\ref{ClosureIntersect}, we have
+that $U$ is $X$-closed.  To see that $U\sub T$ for all $X$-closed sets
+$T$, suppose $T$ is $X$-closed.  By Lemma~\ref{ClosureIntersect}, we
+have that $V\cap T=\bigcap\{V,T\}$ is $X$-closed.  And $V\cap T\sub
+V$, so that $V\cap T\in\cal W$.  Hence $U=\bigcap{\cal W}\sub V\cap
+T\sub T$, as required.  Finally, suppose that $U'$ is also an
+$X$-closed set such that, for all $X$-closed sets $T$, $U'\sub T$.
+Then $U\sub U'\sub U$, showing that $U'=U$.  Thus $U$ is \emph{the} least
+$X$-closed set.
+
+Suppose $X$ is a set, $x,x'\in X$ and $\trs,\trs'\in\List\,(\Tree\,X)$.
+It is easy to see that $(x,\trs) = (x',\trs')$ iff $x=x'$, $|\trs|=|\trs'|$
+and, for all $i\in[1:|\trs|]$, $trs\,i = \trs'\,i$.
+
+Because trees are defined via an inductive definition, we
+get an induction principle for trees almost for free:
+
+\begin{theorem}[Principle of Induction on Trees]
+Suppose $X$ is a set and $P(\tr)$ is a property of an element $\tr\in\Tree\,X$.
+If
+\begin{ctabbing}
+for all $x\in X$ and $\trs\in\List(\Tree\,X)$, \\
+if {\rm(\dag)} for all $i\in[1:|\trs|]$, $P(\trs\,i)$, \\
+then $P((x,\trs))$,
+\end{ctabbing}
+then
+\begin{gather*}
+\eqtxtr{for all}\tr\in\Tree\,X,\,P(\tr) .
+\end{gather*}
+\end{theorem}
+
+We refer to (\dag) as the inductive hypothesis.
+
+\begin{proof}
+Suppose $X$ is a set, $P(\tr)$ is a property of an element $\tr\in\Tree\,X$,
+and
+\begin{ctabbing}
+(\ddag) \=\+ for all $x\in X$ and $\trs\in\List(\Tree\,X)$, \\
+if for all $i\in[1:|\trs|]$, $P(\trs\,i)$, \\
+then $P((x,\trs))$.
+\end{ctabbing}
+We must show that
+\begin{gather*}
+\eqtxtr{for all}\tr\in\Tree\,X,\,P(\tr) .
+\end{gather*}
+
+Let $U=\setof{\tr\in\Tree\,X}{P(\tr)}$.
+We will show that $U$ is $X$-closed.
+Suppose $x\in X$ and $\trs\in\List\,U$.  We must show
+that $(x,\trs)\in U$.
+It will suffice to show that $P((x,\trs))$.
+By (\ddag), it will suffice to show that, for all $i\in[1:|\trs|]$,
+$P(\trs\,i)$.
+Suppose $i\in[1:|\trs|]$.  We must show that
+$P(\trs\,i)$.
+Because $\trs\in\List\,U$, we have that
+$\trs\,i\in U$.
+Hence $P(\trs\,i)$, as required.
+
+Because $U$ is $X$-closed, we have that $\Tree\,X\sub U$, as
+$\Tree\,X$ is the least $X$-closed set.  Hence, for all
+$\tr\in\Tree\,X$, $\tr\in U$, so that, for all $\tr\in\Tree\,X$,
+$P(\tr)$.
+\end{proof}
+
+Using our induction principle, we can now prove that every $X$-tree
+can be ``destructed'' into an element of $X$ paired with a list of
+$X$-trees:
+
+\begin{proposition}
+\label{TreeDestruct}
+Suppose $X$ is a set.  For all $\tr\in\Tree\,X$, there are $x\in X$
+and $\trs\in\List(\Tree\,X)$ such that $\tr = (x, \trs)$.
+\end{proposition}
+
+\begin{proof}
+Suppose $X$ is a set.  We use induction on trees to prove that, for
+all $\tr\in\Tree\,X$, there are $x\in X$ and $\trs\in\List(\Tree\,X)$
+such that $\tr = (x, \trs)$.  Suppose $x\in X$,
+$\trs\in\List(\Tree\,X)$, and assume the inductive hypothesis: for all
+$i\in[1:|\trs|]$, there are $x'\in X$ and $\trs'\in\List(\Tree\,X)$
+such that $\trs\,i = (x', \trs')$. We must show that there are $x'\in
+X$ and $\trs'\in\List(\Tree\,X)$ such that $(x,\trs) =
+(x',\trs')$. And this holds, since $x\in X$, $\trs\in\List(\Tree\,X)$
+and $(x, \trs) = (x, \trs)$.
+\end{proof}
+
+Note that the preceding induction makes no use of its inductive
+hypothesis, and yet the induction is still necessary.
+
+Suppose $X$ is a set.  Let the predecessor relation $\pred_{\Tree\,X}$
+on $\Tree\,X$ be the set of all pairs of $X$-trees $(\tr,\tr')$ such
+that there are $x\in X$ and $\trs'\in\List(\Tree\,X)$ such that
+$\tr'=(x,\trs')$ and $\trs'\,i=\tr$ for some $i\in[1:|\trs'|]$,
+i.e., such that $\tr$ is one of the children of $\tr'$.
+Thus the predecessors of a tree
+$(x,[\tr_1,\ldots,\tr_n])$ are its children $\tr_1$, \ldots, $\tr_n$.
+
+\begin{proposition}
+If $X$ is a set, then $\pred_{\Tree\,X}$ is a well-founded relation
+on $\Tree\,X$.
+\end{proposition}
+
+\begin{proof}
+Suppose $X$ is a set and $Y$ is a nonempty subset of $\Tree\,X$.
+Mimicking Proposition~1.2.5, we can use the principle of induction
+on trees to prove that, for all $\tr\in\Tree\,X$, if $\tr\in Y$,
+then $Y$ has a $\pred_{\Tree\,X}$-minimal element.  Because $Y$
+is nonempty, we can conclude that $Y$ has a
+$\pred_{\Tree\,X}$-minimal element.
+\end{proof}
+
+\begin{exercise}
+Do the induction on trees used by the preceding proof.
+\end{exercise}
+
+\index{tree|)}%
+
+\subsection{Recursion}
+
+\index{recursion|(}%
+Suppose $R$ is a well-founded relation on a set $A$.  We can define a
+function $f$ from $A$ to a set $B$ by \emph{well-founded recursion on}
+$R$.  The idea is simple: when $f$ is called with an element $x\in A$,
+it may call itself recursively on any of the predecessors of $x$ in
+$R$.  Typically, such a definition will be concrete enough that we can
+regard it as defining an algorithm as well as a function.
+
+If $R$ is a well-founded relation on a set $A$, and $B$ is a set,
+then we write $\Rec_{A,R,B}$ for
+\begin{gather*}
+\setof{(x,f)}{x\in A\eqtxt{and}f\in\setof{y\in A}{y\mathrel{R}x}\fun B}
+\fun B .
+\end{gather*}
+An element $F$ of $\Rec_{A,R,B}$ may only be called with a pair
+$(x,f)$ such that $x\in A$ and $f$ is a function from the predecessors
+of $x$ in $R$ to $B$.  Intutively, $F$'s job is to transform $x$
+into an element of $B$, using $f$ to carry out recursive calls.
+
+\begin{theorem}[Well-Founded Recursion]
+\label{WellFoundedRecursion}
+Suppose $R$ is a well-founded relation on a set $A$, $B$ is
+a set, and $F\in\Rec_{A,R,B}$.  There is a unique $f\in A\fun B$
+such that, for all $x\in A$,
+\begin{gather*}
+f\,x = F(x, f\restr\setof{y\in A}{y\mathrel{R}x}) .
+\end{gather*}
+\end{theorem}
+ 
+The second argument to $F$ in the definition of $f$ is the restriction
+of $f$ to the predecessors of $x$ in $R$, i.e., it's the subset of
+$f$ whose domain is $\setof{y\in A}{y\mathrel{R}x}$.
+
+If we can understand $F$ as an algorithm, then we can understand the
+definition of $f$ as an algorithm.  If we call $f$ with an $x\in A$,
+then $F$ may return an element of $B$ without consulting its second
+argument.  Alternatively, it may call this second argument with a
+predecessor of $x$ in $R$.  This is a recursive call of $f$, which must
+complete before $F$ continues.  Once it does complete, $F$ may make
+more recursive calls, but must eventually return an element of $B$.
+
+\begin{proof}
+We start with an inductive definition:
+let $f$ be the least subset of $A\times B$ such that, for
+all $x\in A$ and $g\in\setof{y\in A}{y\mathrel{R}x}\fun B$,
+\begin{gather*}
+\eqtxtr{if} g\sub f, \eqtxt{then} (x, F(x, g))\in f .
+\end{gather*}
+We say that a subset $U$ of $A\times B$ is \emph{closed} iff, for
+all $x\in A$ and $g\in\setof{y\in A}{y\mathrel{R}x}\fun B$,
+\begin{gather*}
+\eqtxtr{if} g\sub U, \eqtxt{then} (x, F(x, g))\in U .
+\end{gather*}
+Thus, we are saying that $f$ is the least closed subset of
+$A\times B$.
+This definition is well-defined because $A\times B$ is closed,
+and if $\cal W$ is a nonempty set of closed subsets
+of $A\times B$, then $\bigcap\cal W$ is also closed.
+Thus we can let $f$ be the intersection of
+all closed subsets of $A\times B$.
+
+Thus $f$ is a relation from $A$ to $B$.  An easy well-founded
+induction on $R$ suffices to show that, for all $x\in A$,
+$x\in\domain\,f$.  Suppose $x\in A$, and assume the inductive
+hypothesis: for all $y\in A$, if $y\mathrel{R}x$, then $y\in\domain\,f$.
+We must show that $x\in\domain\,f$.  By the inductive hypothesis,
+we have that for all $y\in\setof{y\in A}{y\mathrel{R}x}$,
+there is a $z\in B$ such that $(y,z)\in f$.  Thus there
+is a subset $g$ of $f$ such that $g\in\setof{y\in A}{y\mathrel{R}x}\fun B$.
+(Since we don't know at this point that $f$ is a function, we
+are using the Axiom of Choice in this last step.)
+Hence $(x,F(x,g))\in f$, showing that $x\in\domain\,f$.
+Thus $\domain\,f=A$.
+
+Next we show that $f$ is a function.  Let $h$ be
+\begin{gather*}
+\setof{(x,y)\in f}{\eqtxtr{for all}y'\in B,\eqtxt{if}(x,y')\in f,
+\eqtxt{then} y = y'} .
+\end{gather*}
+If we can show that $h$ is closed, then we will have that $f\sub h$,
+because $f$ is the least closed set, and thus we'll be able to
+conclude that $f$ is a function.  To show that $h$ is closed, suppose
+$x\in A$, $g\in\setof{y\in A}{y\mathrel{R}x}\fun B$ and $g\sub h$.  We
+must show that $(x, F(x, g))\in h$.  It will suffice to show that, for
+all $y'\in B$, if $(x,y')\in f$, then $F(x, g) = y'$.  Suppose $y'\in
+B$ and $(x,y')\in f$.  We must show that $F(x, g) = y'$.  Because
+$(x,y')\in f$, and $f$ is the least closed subset of $A\times B$,
+there must be a $g'\in \setof{y\in
+  A}{y\mathrel{R}x}\fun B$ such that $g'\sub f$ and $y'=F(x, g')$.
+Thus it will suffice to show that $F(x,g) = F(x, g')$, which will follow
+from showing that $g=g'$, i.e., for all $z\in\setof{y\in
+  A}{y\mathrel{R}x}$, $g\,z=g'\,z$.  Suppose $z\in\setof{y\in
+  A}{y\mathrel{R}x}$.  We must show that $g\,z=g'\,z$.  Since
+$z\in\setof{y\in A}{y\mathrel{R}x}$, we have that $z\in A$ and
+$z\mathrel{R}x$.  Because $(z,g\,z)\in g\sub h$, we have that
+$(z,g\,z)\in h$.  Since $(z,g'\,z)\in g'\sub f$, we have that
+$(z,g'\,z)\in f$.  Hence, by the definition of $h$, we have that
+$g\,z=g'\,z$, as required.
+
+Summarizing, we know that $f\in A\fun B$.  Next, we must show that,
+for all $x\in A$,
+\begin{gather*}
+f\,x = F(x, f\restr\setof{y\in A}{y\mathrel{R}x}) .
+\end{gather*}
+Suppose $x\in A$.  Because $f\restr\setof{y\in A}{y\mathrel{R}x}\in
+\setof{y\in A}{y\mathrel{R}x}\fun B$, we have that
+$(x,F(x,f\restr\setof{y\in A}{y\mathrel{R}x}))\in f$, so that
+$f\,x = F(x, f\restr\setof{y\in A}{y\mathrel{R}x})$.
+
+Finally, suppose that $f'\in A\fun B$ and
+for all $x\in A$,
+\begin{gather*}
+f'\,x = F(x, f'\restr\setof{y\in A}{y\mathrel{R}x}) .
+\end{gather*}
+To see that $f=f'$, it will suffice to show that, for all
+$x\in A$, $f\,x=f'\,x$.  We proceed by well-founded induction
+on $R$.  Suppose $x\in A$ and assume the inductive hypothesis:
+for all $y\in A$, if $y\mathrel{R}x$, then $f\,y=f'\,y$.
+We must show that $f\,x=f'\,x$.  By the inductive hypothesis,
+we have that $f\restr\setof{y\in A}{y\mathrel{R}x} =
+f'\restr\setof{y\in A}{y\mathrel{R}x}$.  
+Thus
+\begin{align*}
+f\,x &= F(x, f\restr\setof{y\in A}{y\mathrel{R}x}) \\
+&= F(x, f'\restr\setof{y\in A}{y\mathrel{R}x}) \\
+&= f'\,x ,
+\end{align*}
+as required.
+\end{proof}
+
+Here are some examples of well-founded recursion:
+\begin{itemize}
+\item If we define $f\in\nats\fun B$ by well-founded recursion on
+$<$, then, when $f$ is called with $n\in\nats$, it may call itself
+recursively on any strictly smaller natural numbers.
+In the case $n=0$, it can't make any recursive calls.
+
+\item If we define $f\in\nats\fun B$ by well-founded recursion on
+the predecessor relation $\pred_\nats$, then when $f$ is called with
+$n\in\nats$, it may call itself recursively on $n-1$, in the
+case when $n\geq 1$, and may make no recursive calls, when $n=0$.
+
+Thus, such a definition can be split into two parts:
+\begin{itemize}
+\item $f\,0 = \cdots$;
+
+\item for all $n\in\nats$, $f(n + 1) = \cdots f\,n \cdots$.
+\end{itemize}
+
+\item If we define $f\in\Tree\,X\fun B$ by well-founded recursion
+on the predecessor relation $\pred_{\Tree\,X}$, then when $f$ is
+called on an $X$-tree $(x,[\tr_1,\ldots,\tr_n])$, it may call itself
+recursively on any of $\tr_1$, \ldots, $\tr_n$.  When $n=0$,
+it may make no recursive calls.
+We say that such a definition is by \emph{structural recursion}.
+
+\item
+We may define the \emph{size} of an $X$-tree
+$(x,[\tr_1,\ldots,\tr_n])$ by summing the recursively computed sizes
+of $\tr_1$, \ldots, $\tr_n$, and then adding $1$. (When $n=0$,
+the sum of no sizes is $0$, and so we get $1$.) Then, e.g.,
+the size of
+\begin{center}
+\input{chap-1.3-fig3.eepic}
+\end{center}
+is $6$. This defines a function ${\size}\in\Tree\,X\fun\nats$.
+
+\item
+We may define the \emph{number of leaves} of an $X$-tree
+$(x,[\tr_1,\ldots,\tr_n])$ as
+\begin{itemize}
+\item $1$, when $n=0$, and
+
+\item the sum of the recursively computed numbers of leaves of
+  $\tr_1$, \ldots, $\tr_n$, when $n\geq 1$.
+\end{itemize}
+Then, e.g., the number of leaves of
+\begin{center}
+\input{chap-1.3-fig3.eepic}
+\end{center}
+is $4$. This defines a function ${\numLeaves}\in\Tree\,X\fun\nats$.
+
+\item We may define the \emph{height} of an $X$-tree
+$(x,[\tr_1,\ldots,\tr_n])$ as
+\begin{itemize}
+\item $0$, when $n=0$, and
+
+\item $1$ plus the maximum of the recursively computed heights
+of $\tr_1$, \ldots, $\tr_n$, when $n\geq 1$.
+\end{itemize}
+E.g., the height of
+\begin{center}
+\input{chap-1.3-fig3.eepic}
+\end{center}
+is $2$. This defines a function ${\height}\in\Tree\,X\fun\nats$.
+
+\item Given a set $X$, we can define a well-founded relation
+$\size_{\Tree\,X}$ on $\Tree\,X$ by: for all $\tr,\tr'\in\Tree\,X$,
+$\tr\mathrel{\size_{\Tree\,X}}\tr'$ iff $\size\,\tr < {\size}\,\tr'$.
+(This is an application of Proposition~\ref{InverseImageWellFounded}.)
+
+If we define a function $f\in\Tree\,X\fun B$ by well-founded recursion
+on $\size_{\Tree\,X}$, when $f$ is called with an $X$-tree $\tr$,
+it may call itself recursively on any $X$-trees with strictly smaller sizes.
+
+\item Given a set $X$, we can define a well-founded relation
+$\height_{\Tree\,X}$ on $\Tree\,X$ by: for all $\tr,\tr'\in\Tree\,X$,
+$\tr\mathrel{\height_{\Tree\,X}}\tr'$ iff $\height\,\tr < {\height}\,\tr'$.
+
+If we define a function $f\in\Tree\,X\fun B$ by well-founded recursion
+on $\height_{\Tree\,X}$, when $f$ is called with an $X$-tree $\tr$,
+it may call itself recursively on any $X$-trees with strictly smaller heights.
+
+\item Given a set $X$, we can define a well-founded relation
+$\length_{\List\,X}$ on $\List\,X$ by: for all $\xs,\ys\in\List\,X$,
+$\xs\mathrel{\length_{\List\,X}}\ys$ iff $|\xs|<|\ys|$.
+
+If we define a function $f\in\List\,X\fun B$ by well-founded recursion
+on $\length_{\List\,X}$, when $f$ is called with an $X$-list $\xs$,
+it may call itself recursively on any $X$-lists with strictly smaller lengths.
+\end{itemize}
+\index{recursion|)}%
+
+\subsection{Paths in Trees}
+
+We can think of an $\nats-\{0\}$-list $[n_1, n_2, \ldots, n_m]$ as a
+\emph{path} through an $X$-tree $\tr$: one starts with $\tr$ itself,
+goes to the $n_1$-th child of $\tr$, selects the $n_2$-th child of
+that tree, etc., stopping when the list is exhausted.
+
+Consider the $\nats$-tree
+\begin{center}
+\input{chap-1.3-fig3.eepic}
+\end{center}
+Then:
+\begin{itemize}
+\item $[\,]$ takes us to the whole tree.
+
+\item $[1]$ takes us to the tree $4(3,1,6)$.
+
+\item $[1, 3]$ takes us to the tree $6$.
+
+\item $[1, 4]$ takes us to no tree.
+\end{itemize}
+
+We define the valid paths of an $X$-tree via a function definition.
+For a set $X$, we define $\validPaths_X\in\Tree\,X\fun\List(\nats-\{0\})$
+(we often drop the subscript $X$, when it's clear from the context)
+by: for all $x\in X$ and $\trs\in\List(\Tree\,X)$,
+$\validPaths(x, \trs)$ is
+\begin{gather*}
+\{[\,]\} \cup
+\setof{[i]\myconcat\xs}{i\in[1:|\trs|]\eqtxt{and}\xs\in\validPaths(\trs\,i)} .
+\end{gather*}
+We say that $\xs\in\List(\nats-\{0\})$ \emph{is a valid path for}
+an $X$-tree $\tr$ iff $\xs\in\validPaths\,\tr$.
+For example, $\validPaths(3(4,1(7),6)) = \{[\,], [1], [2], [2,1], [3]\}$.
+Thus, e.g.,  $[2,1]$ is a valid path for $3(4,1(7),6)$, whereas
+$[2,2]$ and $[4]$ are not valid paths for this tree.
+
+Now, we define a function $\select$ that takes in an $X$-tree $\tr$ and
+a valid path $\xs$ for $\tr$, and returns the subtree of
+$\tr$ pointed to by $\xs$.
+Let $Y_X$ be
+\begin{gather*}
+\setof{(\tr,\xs)\in\Tree\,X\times\List(\nats-\{0\})}%
+{\xs\eqtxt{is a valid path for}\tr} .
+\end{gather*}
+Let the relation
+$R$ on $Y_X$ be
+\begin{gather*}
+\setof{((\tr,\xs),(\tr',\xs'))\in Y_X\times Y_X}{|\xs|<|\xs'|} .
+\end{gather*}
+By Proposition~\ref{InverseImageWellFounded}, we have that $R$ is
+well-founded, and so we can use well-founded recursion on $R$ to
+define a function $\select_X$ (we often drop the subscript $X$) from
+$Y_X$ to $\Tree\,X$.  Suppose, we are given an input $((x,\trs),\xs)\in
+Y$.  If $\xs$ is $[\,]$, then we return $(x,\trs)$.  Otherwise,
+$\xs=[i]\myconcat\xs'$, for some $i\in\nats-\{0\}$ and
+$\xs'\in\List(\nats-\{0\})$.  Because $((x,\trs),\xs)\in Y$, it
+follows that $i\in[1:|\trs|]$ and $\xs'$ is a valid path for
+$\trs\,i$.  Thus $(\trs\,i, \xs')$ is in $Y$, and is a predecessor of
+$((x,\trs),\xs)$ in $R$, so that we can call ourselves recursively on
+$(\trs\,i, \xs')$ and return the resulting tree.  For example
+$\select(4(3(2,1(7)),6), [\,]) = 4(3(2,1(7)),6)$ and
+$\select(4(3(2,1(7)),6),[1,2]) = 1(7)$.
+
+We say that an $X$-tree $\tr'$ \emph{is a subtree of} an $X$-tree
+$\tr$ iff there is a valid path $\xs$ for $\tr$ such that
+$\tr'=\select(\tr,\xs)$.  And $\tr'$ \emph{is a leaf of} $\tr$
+iff $\tr'$ is a subtree of $\tr$ and $\tr'$ has no children.
+
+Finally, we can define a function that takes in a $X$-tree $\tr$,
+a valid path $\xs$ for $\tr$, and an $X$-tree $\tr'$, and
+returns the result of replacing the subtree of $\tr$ pointed
+to by $\xs$ with $\tr'$.
+Let $Y_X$ be
+\begin{gather*}
+\setof{(\tr,\xs,\tr')
+\in\Tree\,X\times\List(\nats-\{0\})\times\Tree\,X}%
+{\xs\eqtxt{is a valid path for}\tr} .
+\end{gather*}
+We use well-founded recursion on the size of the second components
+(the paths) of the elements of $Y_X$ to define a function $\update_X$
+(we often drop the subscript) from $Y_X$ to $\Tree\,X$.
+Suppose, we are given an input $((x,\trs),\xs,\tr')\in Y$.  If
+$\xs$ is $[\,]$, then we return $\tr'$.  Otherwise,
+$\xs=[i]\myconcat\xs'$, for some $i\in\nats-\{0\}$ and
+$\xs'\in\List(\nats-\{0\})$.  Because $((x,\trs),\xs,\tr')\in Y$,
+it follows that $i\in[1:|\trs|]$ and $\xs'$ is a valid path
+for $\trs\,i$.  Thus $(\trs\,i, \xs', \tr')$ is in $Y$, and
+$|\xs'|<|\xs|$.  Hence, we can let $\tr''$ be the result of
+calling ourselves recursively on $(\trs\,i, \xs', \tr')$.
+Finally, we can return $(x,\trs')$, where $\trs'=
+\trs[i\mapsto\tr'']$ (which is the same as $\trs$, excepts that
+its $i$th element is $\tr''$.
+For example $\update(4(3(2,1(7)),6), [\,], 3(7,8)) = 3(7,8)$ and
+$\update(4(3(2,1(7)),6), [1,2], 3(7,8)) =
+4(3(2,3(7,8)),6)$.
+
+\subsection{Notes}
+
+Our treatment of trees, inductive definition, and well-founded
+recursion is more formal than what one finds in typical books on
+formal language theory.  But those with a background in set theory
+will find nothing surprising in this section, and our foundational
+approach will serve the reader well in later chapters.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

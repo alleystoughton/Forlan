@@ -1,0 +1,7 @@
+val xs = StrSet.fromString "ab, cd";
+val ys = StrSet.fromString "uv, wx";
+StrSet.output("", StrSet.concat(xs, ys));
+StrSet.output("", StrSet.power(xs, 0));
+StrSet.output("", StrSet.power(xs, 1));
+StrSet.output("", StrSet.power(xs, 2));
+StrSet.output("", StrSet.power(xs, 3));

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+html=$(cat ../html-directory.txt)
+
+rm -rf JForlan.jar JForlan.app
+
+echo Building JForlan using Apache Ant
+
+ant
+
+echo Installing JForlan web pages to $html
+
+rm -rf $html/jforlan
+
+cd linux
+build-and-install-tarball
+cd ..
+
+cd mac
+build-and-install-tarball
+cd ..
+
+cd windows
+build-and-install-zip
+cd ..
+
+cp -R html $html/jforlan
+
+rm -rf JForlan.jar JForlan.app

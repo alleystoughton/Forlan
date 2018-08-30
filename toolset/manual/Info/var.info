@@ -1,0 +1,17 @@
+@FILES
+  ["var"; "The Var Module";]
+@SIGNATURE VAR "var" [
+  @TYPES 
+    @TYPE var
+  @VALS 
+    input
+    toPP
+    equal
+    fromString
+    beginsWithVar
+    output
+    inputLabFromLabToks
+    compare
+    toString
+]
+@STRUCTURE Var "var" VAR

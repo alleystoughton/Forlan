@@ -1,0 +1,19 @@
+@FILES
+  ["pp"; "The PP Module";]
+@SIGNATURE PP "pp" [
+  @TYPES 
+    @TYPE pp
+  @VALS 
+    newline
+    decorate
+    fromString
+    colon
+    fromStringSplitEscape
+    semicolon
+    toString
+    block
+    comma
+    quote
+    empty
+]
+@STRUCTURE PP "pp" PP

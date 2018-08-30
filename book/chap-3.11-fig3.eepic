@@ -1,0 +1,27 @@
+\setlength{\unitlength}{0.00058333in}
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+{\renewcommand{\dashlinestretch}{30}
+\begin{picture}(3736,1530)(0,-10)
+\put(675,0){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}($M_1$)}}}}}
+\put(2925,0){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}($M_2$)}}}}}
+\put(3375.000,1020.000){\arc{510.000}{2.6516}{6.7731}}
+\blacken\path(3091.413,1008.939)(3150.000,900.000)(3149.571,1023.692)(3091.413,1008.939)
+\put(3375,675){\ellipse{600}{600}}
+\put(1125,675){\ellipse{600}{600}}
+\path(2775,675)(3075,675)
+\blacken\path(2955.000,645.000)(3075.000,675.000)(2955.000,705.000)(2955.000,645.000)
+\path(525,675)(825,675)
+\blacken\path(705.000,645.000)(825.000,675.000)(705.000,705.000)(705.000,645.000)
+\put(2250,600){\makebox(0,0)[lb]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}Start}}}}}
+\put(3367,600){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Asf$}}}}}
+\put(3375,1350){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\zerosf$}}}}}
+\put(0,600){\makebox(0,0)[lb]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}Start}}}}}
+\put(1117,600){\makebox(0,0)[b]{\smash{{{\SetFigFont{8}{9.6}{\familydefault}{\mddefault}{\updefault}$\Asf$}}}}}
+\end{picture}
+}

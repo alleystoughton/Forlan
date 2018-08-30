@@ -1,0 +1,74 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ pr\ =\ Prog.input\ "";
+\item[]\textsl{@\ }letRec(x,\ y,
+\item[]\textsl{@\ }\ \ \ \ \ \ \ app(var(x),\ calc(plus,\ pair(var(y),\ int(1)))),
+\item[]\textsl{@\ }\ \ \ \ \ \ \ app(var(x),\ int(0)))
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ pr\ =\ -\ :\ prog}
+\item[]\textsl{-\ }val\ pr1\ =\ Prog.toClosed\ pr;
+\item[]\textsl{val\ pr1\ =\ -\ :\ cp}
+\item[]\textsl{-\ }Prog.step\ pr1;
+\item[]\textsl{val\ it\ =\ Next\ -\ :\ Prog.step}
+\item[]\textsl{-\ }val\ Prog.Next\ pr2\ =\ it;
+\item[]\textsl{val\ pr2\ =\ -\ :\ cp}
+\item[]\textsl{-\ }Prog.output("",\ Prog.fromClosed\ pr2);
+\item[]\textsl{app(lam(y,}
+\item[]\textsl{\ \ \ \ \ \ \ \ app(letRec(x,\ y,}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ app(var(x),\ calc(plus,\ pair(var(y),\ int(1)))),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ var(x)),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ calc(plus,\ pair(var(y),\ int(1))))),}
+\item[]\textsl{\ \ \ \ int(0))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Prog.step\ pr2;
+\item[]\textsl{val\ it\ =\ Next\ -\ :\ Prog.step}
+\item[]\textsl{-\ }val\ Prog.Next\ pr3\ =\ it;
+\item[]\textsl{val\ pr3\ =\ -\ :\ cp}
+\item[]\textsl{-\ }Prog.output("",\ Prog.fromClosed\ pr3);
+\item[]\textsl{app(letRec(x,\ y,\ app(var(x),\ calc(plus,\ pair(var(y),\ int(1)))),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ var(x)),}
+\item[]\textsl{\ \ \ \ calc(plus,\ pair(int(0),\ int(1))))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Prog.step\ pr3;
+\item[]\textsl{val\ it\ =\ Next\ -\ :\ Prog.step}
+\item[]\textsl{-\ }val\ Prog.Next\ pr4\ =\ it;
+\item[]\textsl{val\ pr4\ =\ -\ :\ cp}
+\item[]\textsl{-\ }Prog.output("",\ Prog.fromClosed\ pr4);
+\item[]\textsl{app(lam(y,}
+\item[]\textsl{\ \ \ \ \ \ \ \ app(letRec(x,\ y,}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ app(var(x),\ calc(plus,\ pair(var(y),\ int(1)))),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ var(x)),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ calc(plus,\ pair(var(y),\ int(1))))),}
+\item[]\textsl{\ \ \ \ calc(plus,\ pair(int(0),\ int(1))))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Prog.step\ pr4;
+\item[]\textsl{val\ it\ =\ Next\ -\ :\ Prog.step}
+\item[]\textsl{-\ }val\ Prog.Next\ pr5\ =\ it;
+\item[]\textsl{val\ pr5\ =\ -\ :\ cp}
+\item[]\textsl{-\ }Prog.output("",\ Prog.fromClosed\ pr5);
+\item[]\textsl{app(lam(y,}
+\item[]\textsl{\ \ \ \ \ \ \ \ app(letRec(x,\ y,}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ app(var(x),\ calc(plus,\ pair(var(y),\ int(1)))),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ var(x)),}
+\item[]\textsl{\ \ \ \ \ \ \ \ \ \ \ \ calc(plus,\ pair(var(y),\ int(1))))),}
+\item[]\textsl{\ \ \ \ int(1))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

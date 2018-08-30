@@ -1,0 +1,4 @@
+val dfa' = DFA.complement(dfa, SymSet.input "");
+2
+.
+DFA.output("", dfa');

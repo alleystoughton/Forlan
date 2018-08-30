@@ -1,0 +1,40 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ xs\ =\ StrSet.fromString\ "ab,\ cd";
+\item[]\textsl{val\ xs\ =\ -\ :\ str\ set}
+\item[]\textsl{-\ }val\ ys\ =\ StrSet.fromString\ "uv,\ wx";
+\item[]\textsl{val\ ys\ =\ -\ :\ str\ set}
+\item[]\textsl{-\ }StrSet.output("",\ StrSet.concat(xs,\ ys));
+\item[]\textsl{abuv,\ abwx,\ cduv,\ cdwx}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }StrSet.output("",\ StrSet.power(xs,\ 0));
+\item[]\textsl{%}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }StrSet.output("",\ StrSet.power(xs,\ 1));
+\item[]\textsl{ab,\ cd}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }StrSet.output("",\ StrSet.power(xs,\ 2));
+\item[]\textsl{abab,\ abcd,\ cdab,\ cdcd}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }StrSet.output("",\ StrSet.power(xs,\ 3));
+\item[]\textsl{ababab,\ ababcd,\ abcdab,\ abcdcd,\ cdabab,\ cdabcd,\ cdcdab,\ cdcdcd}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

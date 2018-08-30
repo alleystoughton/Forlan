@@ -1,0 +1,2 @@
+val efa = EFA.inter(efa1, efa2);
+EFA.output("", efa);

@@ -1,0 +1,20 @@
+@FILES
+  ["tree"; "The Tree Module";]
+@SIGNATURE TREE "tree" [
+  @TYPES 
+    @DATATYPE tree [ Cons]
+  @VALS 
+    select
+    update
+    equal
+    validInternalPath
+    validPath
+    validExternalPath
+    compare
+    internalSize
+    height
+    size
+    maximumLengthPath
+    externalSize
+]
+@STRUCTURE Tree "tree" TREE

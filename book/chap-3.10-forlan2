@@ -1,0 +1,9 @@
+projEFAToNFA efa;
+val nfa = efaToNFA efa;
+NFA.output("", nfa);
+LP.output("", EFA.findAcceptingLP efa (Str.input ""));
+012
+.
+LP.output("", NFA.findAcceptingLP nfa (Str.input ""));
+012
+.

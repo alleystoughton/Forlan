@@ -1,0 +1,4 @@
+fun regToDFA reg =
+      nfaToDFA(efaToNFA(faToEFA(regToFA reg)));
+fun relationshipReg(reg1, reg2) =
+      DFA.relationship(regToDFA reg1, regToDFA reg2);

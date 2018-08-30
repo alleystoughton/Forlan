@@ -1,0 +1,62 @@
+@FILES
+  ["efa"; "The EFA Module";]
+@SIGNATURE EFA "efa" [
+  @TYPES 
+    @TYPE efa
+  @VALS 
+    genConcat
+    genUnion
+    toPP
+    emptyCloseBackwards
+    renameStatesCanonically
+    isomorphism
+    fromString
+    closure
+    startState
+    output
+    inter
+    states
+    numStates
+    concat
+    union
+    accepted
+    sub
+    findAcceptingLP
+    validLP
+    rev
+    fromSym
+    findLP
+    isomorphic
+    findAcceptingLPOpt
+    findLPOpt
+    valid
+    input
+    alphabet
+    transitionFun
+    reachified
+    emptyClose
+    simplified
+    transitionFunBackwards
+    emptyStr
+    equal
+    checkLP
+    reachify
+    findIsomorphism
+    renameStates
+    simplify
+    prefix
+    transitions
+    numTransitions
+    findIsomorphismOpt
+    acceptingStates
+    projFromFA
+    compare
+    processStr
+    renameAlphabet
+    toString
+    fromFA
+    emptySet
+    injToFA
+    genInter
+]
+@STRUCTURE EFA "efa" EFA

@@ -1,0 +1,1508 @@
+\section{Simplification of Regular Expressions}
+\label{SimplificationOfRegularExpressions}
+
+\index{regular expression!simplification|(}%
+\index{simplification!regular expression|(}%
+In this section, we give three algorithms---of increasing power, but
+decreasing efficiency---for regular expression simplification.  The
+first algorithm---weak simplification---is defined via a
+straightforward structural recursion, and is sufficient for many
+purposes.  The remaining two algorithms---local simplification and
+global simplification---are based on a set of simplification rules
+that is still incomplete and evolving.
+
+\subsection{Regular Expression Complexity}
+
+To begin with, let's consider how we might measure the
+complexity/simplicity of regular expressions.  The most obvious
+criterion is size (remember that regular expressions are trees).
+But consider this pair of equivalent regular expressions:
+\begin{align*}
+\alpha &= \mathsf{(00^*11^*)^*} , \eqtxt{and} \\
+\beta &= \mathsf{\% + 0(0 + 11^*0)^*11^*} .
+\end{align*}
+Although the size of $\beta$ ($18$) is strictly greater than the
+size of $\alpha$ ($10$), $\beta$ has only one closure inside another
+closure, whereas $\alpha$ has two closures inside its outer closure,
+and thus there is a sense in which $\beta$ is easier to understand
+than $\alpha$.
+
+The standard measure of the closure-related complexity
+of a regular expression is its \emph{star-height}: the maximum number
+$n\in\nats$ such that there is a path from the root of the regular expression
+to one of its leaves that passes through $n$ closures.  But $\alpha$ and
+$\beta$ both have star-heights of $2$.  Furthermore, star-height
+isn't respected by the ways of forming regular expressions.  E.g.,
+if $\gamma_1$ has strictly smaller star-height than $\gamma_2$,
+we can't conclude that $\gamma_1\gamma'$ has strictly smaller star-height
+than $\gamma_2\gamma'$, as the star height of $\gamma'$ may be
+greater than the star-height of $\gamma_2$.
+
+So, we need a better measure of the closure-related complexity of
+regular expressions than star-height.  Toward that end, let's define a
+\emph{closure complexity} to be a nonempty list $\ns$ of natural
+numbers that is (not-necessarily strictly) descending: for all
+$i\in[1:|\ns|-1]$, $\ns\,i\geq \ns(i+1)$.  This is a way of
+representing nonempty multisets of natural numbers that makes it easy
+to define the usual ordering on multisets. We write $\CC$ for the set
+of all closure complexities.  For all $n\in\nats$, $[n]$ is a
+\emph{singleton} closure complexity.  The \emph{union} of closure
+complexities $\ns$ and $\ms$ ($\ns\cup\ms$) is the closure complexity
+that results from putting $\ns\myconcat\ms$ in descending order,
+keeping any duplicate elements.  (Here we are overloading the term
+union and the operation $\cup$, but the set-theoretic union isn't an
+operation on closure complexities, and so no confusion should result.)
+E.g., $[3,2,2,1]\cup[4,2,1,0] = [4,3,2,2,2,1,1,0]$.  The
+\emph{successor} $\overline{\ns}$ of a closure complexity $\ns$ is the
+closure complexity formed by adding one to each element of $\ns$,
+maintaining the order of the elements.  E.g., $\overline{[3,2,2,1]} =
+[4,3,3,2]$.
+
+It is easy to see that $\cup$ is commutative and associative on $\CC$,
+and that the successor operation on $\CC$ preserves union:
+
+\begin{proposition}
+\begin{enumerate}[\quad(1)]
+\item For all $\ns,\ms\in\CC$, $\ns\cup\ms = \ms\cup\ns$.
+
+\item For all $\ns,\ms,\ls\in\CC$, $(\ns\cup\ms)\cup\ls = \ns\cup(\ms\cup\ls)$.
+
+\item For all $\ns,\ms\in\CC$, $\overline{\ns\cup\ms} =
+  \overline{\ns}\cup\overline{\ms}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+\begin{enumerate}[\quad(1)]
+\label{CCEquivContext}
+\item For all $\ns,\ms\in\CC$, $\overline{\ns} = \overline{\ms}$ iff
+  $\ns=\ms$.
+
+\item For all $\ns,\ms,\ls\in\CC$, $\ns\cup\ls = \ms\cup\ls$ iff
+  $\ns = \ms$.
+\end{enumerate}
+\end{proposition}
+
+We define a relation $\ltcc$ on $\CC$ by: for all $\ns,\ms\in\CC$,
+$\ns\ltcc\ms$ either:
+\begin{itemize}
+\item $|ns| < |ms|$ and, for all $i\in[1:|\ns|]$,
+  $\ns\,i = \ms\,i$; or
+
+\item there is an $i\in\nats$ such that
+  \begin{itemize}
+  \item $i\leq|\ns|$ and $i\leq|\ms|$,
+
+  \item for all $j\in[1:i-1]$, $\ns\,j = \ms\,j$, and
+
+  \item $\ns\,i < \ms\,i$.
+  \end{itemize}
+\end{itemize}
+In other words, $ns\ltcc\ms$ iff either $\ms$ consists of the
+result of appending a nonempty list at the end of $\ns$, or
+$\ns$ and $\ms$ agree up to some point, at which $\ns$'s value
+is strictly smaller than $\ms$'s value.  E.g.,
+$[2, 2]\leqcc[2, 2, 1]$ and $[2,1,1,0,0]\ltcc[2, 2, 1]$.
+
+\begin{proposition}
+$\ltcc$ is a strict total ordering on $\CC$.
+\end{proposition}
+
+\begin{proposition}
+\label{CCLTContext}
+\begin{enumerate}[\quad(1)]
+\item For all $\ns,\ms\in\CC$, $\overline{\ns} \ltcc \overline{\ms}$ iff
+  $\ns\ltcc\ms$.
+
+\item For all $\ns,\ms,\ls\in\CC$, $\ns\cup\ls \ltcc \ms\cup\ls$ iff
+  $\ns \ltcc \ms$.
+
+\item For all $\ns,\ms\in\CC$, $\ns\ltcc\ns\cup\ms$.
+
+\end{enumerate}
+\end{proposition}
+
+Now we can define the closure complexity of a regular expression.
+Define the function $\cc\in\Reg\fun\CC$ by structural recursion:
+\begin{align*}
+\cc\,\% &= [0]; \\
+\cc\,\$ &= [0]; \\
+\cc\,a &= [0], \eqtxt{for all}a\in\Sym; \\
+\cc({*}(\alpha)) &= \overline{\cc\,\alpha}, \eqtxt{for all}\alpha\in\Reg;\\
+\cc(@(\alpha,\beta)) &= \cc\,\alpha\cup\cc\,\beta ,
+\eqtxt{for all}\alpha,\beta\in\Reg; \eqtxt{and} \\
+\cc({+}(\alpha,\beta)) &= \cc\,\alpha\cup\cc\,\beta,
+\eqtxt{for all}\alpha,\beta\in\Reg .
+\end{align*}
+We say that $\cc\,\alpha$ is \emph{the closure complexity of} $\alpha$.
+E.g.,
+\begin{align*}
+  \cc(\mathsf{(12^*)^*})
+  &= \overline{\cc(\mathsf{12^*})} =
+  \overline{\cc\,\mathsf{1} \cup \cc(\mathsf{2^*})} =
+  \overline{[0] \cup \overline{\cc\,\twosf}} \\
+  &= \overline{[0] \cup \overline{[0]}} =
+  \overline{[0] \cup [1]} =
+  \overline{[1, 0]} =
+  [2, 1] .
+\end{align*}
+In other words, the $\cc\,\alpha$ can be computed by first collecting
+together all the paths through $\alpha$ that terminate in leafs, then
+counting the numbers of closures visited when following each of these
+paths, and finally putting those sums in descending order.
+
+\begin{proposition}
+For all $\alpha\in\Reg$, $|\cc\,\alpha| = \numLeaves\,\alpha$.
+\end{proposition}
+
+\begin{proof}
+An easy induction on regular expressions.
+\end{proof}
+
+\begin{exercise}
+Find regular expressions $\alpha$ and $\beta$ such that
+$\cc\,\alpha = \cc\,\beta$ but $\mysize\,\alpha\neq\mysize\,\beta$.
+\end{exercise}
+
+In contrast to star-height, closure complexity is compatible with the
+ways of forming regular expressions.  In fact, we can prove even
+stronger results.
+
+\begin{proposition}
+\begin{enumerate}[\quad(1)]
+\item For all $\alpha\in\Reg$, $\cc\,\alpha = \cc\,\beta$
+  iff $\cc(\alpha^*) = \cc(\beta^*)$.
+
+\item For all $\alpha,\beta,\gamma\in\Reg$, $\cc\,\alpha = \cc\,\beta$
+  iff $\cc(\alpha\gamma) = \cc(\beta\gamma)$.
+
+\item For all $\alpha,\beta,\gamma\in\Reg$, $\cc\,\alpha = \cc\,\beta$
+  iff $\cc(\gamma\alpha) = \cc(\gamma\beta)$.
+
+\item For all $\alpha,\beta,\gamma\in\Reg$, $\cc\,\alpha = \cc\,\beta$
+  iff $\cc(\alpha + \gamma) = \cc(\beta + \gamma)$.
+
+\item For all $\alpha,\beta,\gamma\in\Reg$, $\cc\,\alpha = \cc\,\beta$
+  iff $\cc(\gamma + \alpha) = \cc(\gamma + \beta)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Follows by Proposition~\ref{CCEquivContext}.
+\end{proof}
+
+\begin{proposition}
+\begin{enumerate}[\quad(1)]
+\item For all $\alpha\in\Reg$, $\cc\,\alpha\ltcc\cc\,\beta$
+  iff $\cc(\alpha^*)\ltcc\cc(\beta^*)$.
+
+\item For all $\alpha,\beta,\gamma\in\Reg$, $\cc\,\alpha\ltcc\cc\,\beta$
+  iff $\cc(\alpha\gamma)\ltcc\cc(\beta\gamma)$.
+
+\item For all $\alpha,\beta,\gamma\in\Reg$, $\cc\,\alpha\ltcc\cc\,\beta$
+  iff $\cc(\gamma\alpha)\ltcc\cc(\gamma\beta)$.
+
+\item For all $\alpha,\beta,\gamma\in\Reg$, $\cc\,\alpha\ltcc\cc\,\beta$
+  iff $\cc(\alpha + \gamma)\ltcc\cc(\beta + \gamma)$.
+
+\item For all $\alpha,\beta,\gamma\in\Reg$, $\cc\,\alpha\ltcc\cc\,\beta$
+  iff $\cc(\gamma + \alpha)\ltcc\cc(\gamma + \beta)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Follows by Proposition~\ref{CCLTContext}.
+\end{proof}
+
+Returning to our initial examples, we have that
+$\cc(\mathsf{(00^*11^*)^*}) = [2,2,1,1]$ and $\cc(\% + \mathsf{0(0 +
+  11^*0)^*11^*}) = [2,1,1,1,1,0,0,0]$.  Since
+$[2,1,1,1,1,0,0,0]\ltcc[2,2,1,1]$, the closure
+complexity of $\% + \mathsf{0(0 + 11^*0)^*11^*}$ is strictly smaller
+than the closure complexity of $\mathsf{(00^*11^*)^*}$.
+
+When judging the relative complexity of regular expressions $\alpha$
+and $\beta$, we will first look at how their closure complexities are
+related.  And, when their closure complexities are equal, we will
+look at how their sizes are related.  To finish explaining how
+we will judge the relative complexity of regular expressions, we
+need three definitions.
+
+The function
+\index{numConcats@$\numConcats$}%
+\index{regular expression!numConcats@$\numConcats$}%
+\index{regular expression!number of concatenations}%
+\begin{gather*}
+\numConcats\in\Reg\fun\nats
+\end{gather*}
+is defined by recursion:
+\begin{align*}
+\numConcats\,\% &= 0 ; \\
+\numConcats\,\$ &= 0 ; \\
+\numConcats\,a &= 0, \eqtxt{for all}a\in\Sym ; \\
+\numConcats(\alpha^*) &= \numConcats\,\alpha , \eqtxt{for all} \alpha\in\Reg ; \\
+\numConcats(\alpha\beta) &= 1 + \numConcats\,\alpha + \numConcats\,\beta ;
+\eqtxt{and}\\
+\numConcats(\alpha + \beta) &= \numConcats\,\alpha + \numConcats\,\beta .
+\end{align*}
+Thus $\numConcats\,\alpha$ is the number of concatenations in $\alpha$,
+i.e., the number of subtrees of $\alpha$ that are concatenations,
+where a given subtree may occur (and will be counted) multiple times.
+E.g., $\numConcats(\mathsf{((01)^*(01))^*}) = 3$.
+The function
+\index{numSyms@$\numSyms$}%
+\index{regular expression!numSyms@$\numSyms$}%
+\index{regular expression!number of symbols}%
+\begin{gather*}
+\numSyms\in\Reg\fun\nats
+\end{gather*}
+is defined by structural recursion:
+\begin{align*}
+\numSyms\,\% &= 0 ; \\
+\numSyms\,\$ &= 0 ; \\
+\numSyms\,a &= 1, \eqtxt{for all}a\in\Sym ; \\
+\numSyms(\alpha^*) &= \numSyms\,\alpha , \eqtxt{for all} \alpha\in\Reg ; \\
+\numSyms(\alpha\beta) &= \numSyms\,\alpha + \numSyms\,\beta ; \eqtxt{and}\\
+\numSyms(\alpha + \beta) &= \numSyms\,\alpha + \numSyms\,\beta .
+\end{align*}
+Thus $\numSyms\,\alpha$ is the number of occurrences of symbols in $\alpha$,
+where a given symbol may occur (and will be counted) more than once.
+E.g., $\numSyms(\mathsf{(0^*1)+0}) = 3$.
+
+Finally, we say that a regular expression $\alpha$ is \emph{standardized}
+\index{standardized}%
+\index{regular expression!standardized}%
+iff none of $\alpha$'s subtrees have any of the following forms:
+\begin{itemize}
+\item $(\beta_1+\beta_2)+\beta_3$ (we can avoid needing parentheses,
+  and make a regular expression easier to understand/process from
+  left-to-right, by grouping unions to the right);
+
+\item $\beta_1+\beta_2$, where $\beta_1>\beta_2$, or
+  $\beta_1+(\beta_2+\beta_3)$, where $\beta_1>\beta_2$ (it's pleasing
+  if the regular expressions appear in order (recall that unions
+  are greater than all other kinds of regular expressions));
+
+\item $(\beta_1\beta_2)\beta_3$ (we can avoid needing parentheses, and
+  make a regular expression easier to understand/process from
+  left-to-right, by grouping concatenations to the right); and
+
+\item $\beta^*\beta$, $\beta^*(\beta\gamma)$,
+  $(\beta_1\beta_2)^*\beta_1$ or $(\beta_1\beta_2)^*\beta_1\gamma$
+  (moving closures to the right makes a regular expression easier to
+  understand/process from left-to-right).
+\end{itemize}
+Thus every subtree of a standardized regular expression will be standardized.
+
+Returning to our assessment of regular expression complexity, suppose
+that $\alpha$ and $\beta$ are regular expressions generating $\%$.
+Then $(\alpha\beta)^*$ and $(\alpha+\beta)^*$ are equivalent, but will
+will prefer the latter over the former, because unions are generally
+more amenable to understanding and processing than concatenations.
+Consequently, when two regular expression have the same closure
+complexity and size, we will judge their relative complexity
+according to their numbers of concatenations.
+
+Next, consider the regular expressions $\mathsf{0 + 01}$ and
+$\mathsf{0(\% + 1)}$.  These regular expressions have the same closure
+complexity $[0,0,0]$, size ($5$) and number of concatenations ($1$).
+We would like to consider the latter to be simpler than the former,
+since in general we would like to prefer $\alpha(\%+\beta)$ over
+$\alpha + \alpha\beta$.  And we can base this preference on the fact
+that the number of symbols of $\mathsf{0(\% + 1)}$ ($2$) is one less
+than the number of symbols of $\mathsf{0 + 01}$.  When regular
+expressions have the same closure complexity, size and number of
+concatenations, the one with fewer symbols is likely to be easier to
+understand and process.  Thus, when regular expressions have
+identical closure complexity, size and number of concatenations, we
+will use their relative numbers of symbols to judge their relative
+complexity.
+
+Finally, when regular expressions have the same closure complexity,
+size, number of concatenations, and number of symbols, we will judge
+their relative complexity according to whether they are standardized,
+thinking that a standardized regular expression is simpler than one
+that is not standardized.
+
+To summarize, we say that a regular expression $\alpha$ \emph{is
+simpler (less complex) than} $\beta$ iff:
+\begin{itemize}
+\item $\cc\,\alpha \ltcc \cc\,\beta$; or
+
+\item $\cc\,\alpha = \cc\,\beta$ but $\mysize\,\alpha < \mysize\,\beta$; or
+
+\item $\cc\,\alpha = \cc\,\beta$ and $\mysize\,\alpha = \mysize\,\beta$,
+  but $\numConcats\,\alpha < \numConcats\,\beta$; or
+
+\item $\cc\,\alpha = \cc\,\beta$, $\mysize\,\alpha = \mysize\,\beta$
+  and $\numConcats\,\alpha = \numConcats\,\beta$, but
+  $\numSyms\,\alpha < \numSyms\,\beta$; or
+
+\item $\cc\,\alpha = \cc\,\beta$, $\mysize\,\alpha = \mysize\,\beta$,
+  $\numConcats\,\alpha = \numConcats\,\beta$ and $\numSyms\,\alpha =
+  \numSyms\,\beta$, but $\alpha$ is standardized and $\beta$ is
+  not standardized.
+\end{itemize}
+We define relations $\leqsimp$ and $\equivsimp$ on $\Reg$ by: for all
+$\alpha,\beta\in\Reg$, $\alpha\leqsimp\beta$ iff $\alpha$ is simpler
+than $\beta$, and $\alpha\equivsimp\beta$ iff
+$\alpha\leqsimp\beta\leqsimp\alpha$.  We say that $\alpha$ \emph{has the
+same complexity as} $\beta$ iff $\alpha\equivsimp\beta$.
+
+For example, the following regular expressions are equivalent and have
+the same complexity:
+\begin{displaymath}
+\mathsf{1(01 + 10) + (\% + 01)1} \quad\eqtxt{and}\quad
+\mathsf{011 + 1(\% + 01 + 10)} .  
+\end{displaymath}
+
+\begin{proposition}
+\begin{enumerate}[\quad(1)]
+\item $\leqsimp$ is a reflexive, transitive and total relation on
+  $\Reg$.
+
+\item $\equivsimp$ is a reflexive, transitive and symmetric relation on
+  $\Reg$.
+\end{enumerate}
+\end{proposition}
+
+The Forlan module \texttt{Reg} defines the abstract type \texttt{cc}
+of closure complexities, along with these functions:
+\begin{verbatim}
+val ccToList  : cc -> int list
+val singCC    : int -> cc
+val unionCC   : cc * cc -> cc
+val succCC    : cc -> cc
+val cc        : reg -> cc
+val compareCC : cc * cc -> order
+\end{verbatim}
+The function \texttt{ccToList} is the identity function on closure
+complexities: all that changes is the type.  $\mathtt{singCC\,n}$
+returns the singleton closure complexity $[n]$, if $n$ is nonnegative;
+otherwise it issues an error message.  The functions \texttt{unionCC}
+and \texttt{succCC} implement the union and successor operations on
+closure complexities.  The function \texttt{cc} corresponds to $\cc$, and
+\texttt{compareCC} implements $\ltcc$.
+
+Here are some examples of how these functions can be used:
+\input{chap-3.3-forlan1}
+
+The module \texttt{Reg} also includes these functions:
+\begin{verbatim}
+val numConcats             : reg -> int
+val numSyms                : reg -> int
+val standardized           : reg -> bool
+val compareComplexity      : reg * reg -> order
+val compareComplexityTotal : reg * reg -> order
+\end{verbatim}
+The first two functions implement the functions with the same names.
+The function \texttt{standardized} tests whether a regular expression
+is standardized, and the function \texttt{compareComplexity} implements
+$\leqsimp$.  Finally, \texttt{compareComplexityTotal} is like
+\texttt{compareComplexity}, but falls back on \texttt{Reg.compare}
+(our total ordering on regular expressions) to order regular expressions
+with the same complexity.  Thus \texttt{compareComplexityTotal} is
+a total ordering.
+
+Here are some examples of how these functions can be used:
+\input{chap-3.3-forlan1a}
+
+\subsection{Weak Simplification}
+
+In this subsection, we give our first simplification algorithm: weak
+simplification.  We say that a regular expression $\alpha$ is
+\emph{weakly simplified}
+\index{weakly simplified}%
+\index{regular expression!weakly simplified}%
+\index{simplification!regular expression!weakly simplified}%
+iff $\alpha$ is standardized and none of $\alpha$'s subtrees have
+any of the following forms:
+\begin{itemize}
+\item $\$+\beta$ or $\beta+\$$ (the $\$$ is redundant);
+
+\item $\beta+\beta$ or $\beta+(\beta\gamma)$ (the duplicate occurrence
+  of $\beta$ is redundant);
+
+\item $\%\beta$ or $\beta\%$ (the $\%$ is redundant);
+
+\item $\$\beta$ or $\beta\$$ (both are equivalent to $\$$); and
+
+\item $\%^*$ or $\$^*$ or $(\beta^*)^*$ (the first two can be replaced
+  by $\%$, and the extra closure can be omitted in the third case).
+\end{itemize}
+Thus, if a regular expression $\alpha$ is weakly simplified,
+then each of its subtrees will also be weakly simplified.
+
+Weakly simplified regular expressions have some pleasing properties.
+
+\begin{proposition}
+\label{WeakSimpProp3}
+\begin{enumerate}[\quad(1)]
+\item For all $\alpha\in\Reg$, if $\alpha$ is weakly simplified and
+  $L(\alpha)=\emptyset$, then $\alpha=\$$.
+
+\item For all $\alpha\in\Reg$, if $\alpha$ is weakly simplified and
+  $L(\alpha)=\{\%\}$, then $\alpha=\%$.
+
+\item For all $\alpha\in\Reg$, for all $a\in\Sym$, if $\alpha$ is
+  weakly simplified and $L(\alpha)=\{a\}$, then $\alpha=a$.
+\end{enumerate}
+\end{proposition}
+
+E.g., part~(2) of the proposition says that, if $\alpha$
+is weakly simplified and $L(\alpha)$ is the language whose only
+string is $\%$, then $\alpha$ is $\%$.
+
+\begin{proof}
+The three parts are proved in order, using induction on regular
+expressions.  We will show the concatenation case of part~(3).
+Suppose $\alpha,\beta\in\Reg$ and assume the inductive hypothesis: for
+all $a\in\Sym$, if $\alpha$ is weakly simplified and
+$L(\alpha)=\{a\}$, then $\alpha=a$, and for all $a\in\Sym$, if $\beta$
+is weakly simplified and $L(\beta)=\{a\}$, then $\beta=a$.  Suppose
+$a\in\Sym$, and assume that $\alpha\beta$ is weakly simplified and
+$L(\alpha\beta)=\{a\}$.  We must show that $\alpha\beta=a$.
+
+Since $L(\alpha)L(\beta)=L(\alpha\beta)=\{a\}$, there are two cases to
+consider.
+\begin{itemize}
+\item Suppose $L(\alpha)=\{a\}$ and $L(\beta)=\{\%\}$.  Since $\beta$
+  is weakly simplified and $L(\beta)=\{\%\}$, part~(2) tells us that
+  $\beta=\%$.  But this means that $\alpha\beta=\alpha\%$ is not
+  weakly simplified after all---contradiction.  Thus we can conclude
+  that $\alpha\beta=a$.
+
+\item Suppose $L(\alpha)=\{\%\}$ and $L(\beta)=\{a\}$.  The proof of
+  this case is similar to that of the other one.
+\end{itemize}
+\end{proof}
+
+\begin{proposition}
+\label{WeakSimpProp2}
+For all $\alpha\in\Reg$, if $\alpha$ is weakly simplified, then
+$\alphabet(L(\alpha)) = \alphabet\,\alpha$.
+\end{proposition}
+
+\begin{proof}
+By Proposition~\ref{AlphabetRegMeaning}, it suffices to show that,
+for all $\alpha\in\Reg$, if $\alpha$ is weakly simplified, then
+$\alphabet\,\alpha\sub\alphabet(L(\alpha))$.  And this
+follows by an easy induction on $\alpha$, using
+Proposition~\ref{WeakSimpProp3}(2).
+\end{proof}
+
+The next proposition says that $\$$ need only be used at the 
+top-level of a regular expression.
+
+\begin{proposition}
+\label{WeakSimpProp4}
+For all $\alpha\in\Reg$, if $\alpha$ is weakly simplified and $\alpha$ has
+one or more occurrences of $\$$, then $\alpha=\$$.
+\end{proposition}
+
+\begin{proof}
+An easy induction on regular expressions.
+\end{proof}
+
+Finally, we have that weakly simplified regular expressions with
+closures generate infinite languages:
+
+\begin{proposition}
+For all $\alpha\in\Reg$, if $\alpha$ is weakly simplified and
+$\alpha$ has one or more closures, then $L(\alpha)$ is
+infinite.
+\end{proposition}
+
+\begin{proof}
+An easy induction on regular expressions.
+\end{proof}
+
+Next, we see how we can test whether a regular expression is weakly
+simplified via a simple stuctural recursion.  Define
+$\weaklySimplified\in\Reg\fun\Bool$ by structural recursion, as
+follows.  Given a regular expression $\alpha$, it proceeds as follows:
+\begin{itemize}
+\item Suppose $\alpha$ is $\%$, $\$$ or a symbol.  Then it returns $\true$.
+
+\item Suppose $\alpha$ has the form $\beta^*$.  Then it checks that:
+  \begin{itemize}
+  \item $\beta$ is weakly simplified (this is done using recursion); and
+
+  \item $\beta$ is neither $\%$, nor $\$$, nor a closure.
+  \end{itemize}
+
+\item Suppose $\alpha$ has the form $\alpha_1\,\alpha_2$.  Then it
+  checks that:
+  \begin{itemize}
+  \item $\alpha_1$ and $\alpha_2$ are weakly simplified; and
+
+  \item $\alpha_1$ is neither $\%$ nor $\$$ nor a concatenation; and
+
+  \item $\alpha_2$ is neither $\%$ nor $\$$; and
+
+  \item $\alpha$ has none of the following forms: $\beta^*\beta$,
+    $\beta^*(\beta\gamma)$, $(\beta_1\beta_2)^*\beta_1$ or
+    $(\beta_1\beta_2)^*\beta_1\gamma$.
+  \end{itemize}
+  
+\item Suppose $\alpha$ has the form $\alpha_1 + \alpha_2$.  Then it
+  checks that:
+  \begin{itemize}
+  \item $\alpha_1$ and $\alpha_2$ are weakly simplified; and
+
+  \item $\alpha_1$ is neither $\$$ nor a union; and
+
+  \item $\alpha_2$ is not $\$$;
+
+  \item if $\alpha_2$ has the form $\beta_1 + \beta_2$, then
+    $\alpha_1<\beta_1$; and
+
+  \item if $\alpha_2$ is not a union, then $\alpha_1<\alpha_2$.
+  \end{itemize}
+\end{itemize}
+
+\begin{proposition}
+For all $\alpha\in\Reg$, $\alpha$ is weakly simplified iff
+$\weaklySimplified\,\alpha = \true$.
+\end{proposition}
+
+\begin{proof}
+By induction on regular expressions.
+\end{proof}
+
+In preparation for giving our weak simplification algorithm, we need
+to define some auxiliary functions.  We say that a regular expression
+$\alpha$ is \emph{almost weakly simplified} iff either:
+\begin{itemize}
+\item $w\in\{\%,\$\}$; or
+
+\item all elements of $\concatsToList\,\alpha$ are weakly simplified,
+  and are not $\%$, $\$$ or concatentations.
+\end{itemize}
+
+For example, $\mathsf{0^*0(1+2)^*(1+2)} =
+\mathsf{0^*(0((1+2)^*(1+2)))}$ is almost weakly simplified, even
+though it's not weakly simplified.  On the other hand:
+$\mathsf{(\$+1)1}$ isn't almost weakly simplified, because
+$\mathsf{\$+1}$ isn't weakly simplified; $\mathsf{1\%}$ isn't weakly
+simplified, because of the location of $\%$; and $\mathsf{(01)1}$
+isn't almost weakly simplified, because of the location of the
+concatenation $\mathsf{01}$.
+
+Let
+\begin{align*}
+  \WS &= \setof{\alpha\in\Reg}{\alpha\eqtxtl{is weakly simplified}},
+  \eqtxt{and} \\
+  \AWS &= \setof{\alpha\in\Reg}{\alpha\eqtxtl{is almost weakly simplified}} .
+\end{align*}
+
+We define a function $\shiftClosuresRight\in\AWS\fun\WS$ by recursion.
+Given $\alpha\in\AWS$, $\shiftClosuresRight$ proceeds as follows.  If
+$\alpha$ is not a concatentation, than it returns $\alpha$.
+Otherwise, $\alpha = \alpha_1\alpha_2$ for some $\alpha_1,\alpha_2\in\Reg$.
+Since $\alpha$ is almost weakly simplified, so is $\alpha_2$.  So it lets
+$\alpha'_2\in\WS$ be the result of calling $\shiftClosuresRight$ on
+$\alpha_2$.
+\begin{itemize}
+\item If $\alpha_1\alpha'_2$ has the form $\beta^*\beta$, for some
+  $\beta\in\Reg$, then $\shiftClosuresRight$ returns
+  \begin{displaymath}
+    \shiftClosuresRight(\rightConcat(\beta, \beta^*)) .
+  \end{displaymath}
+
+\item Otherwise, if $\alpha_1\alpha'_2$ has the form
+  $\beta^*\beta\gamma$, for some $\beta,\gamma\in\Reg$,
+  then $\shiftClosuresRight$ returns
+  \begin{displaymath}
+   \shiftClosuresRight(\beta\beta^*\gamma)) . 
+  \end{displaymath}
+
+\item Otherwise, if $\alpha_1\alpha'_2$ has the form
+  $(\beta_1\beta_2)^*\beta_1$, for some
+  $\beta_1,\beta_2\in\Reg$, then $\shiftClosuresRight$ returns
+  \begin{displaymath}
+   \shiftClosuresRight(\beta_1(\rightConcat(\beta_2,\beta_1))^*) . 
+  \end{displaymath}
+
+\item Otherwise, if $\alpha_1\alpha'_2$ has the form
+  $(\beta_1\beta_2)^*\beta_1\gamma$, for some
+  $\beta_1,\beta_2,\gamma\in\Reg$, then $\shiftClosuresRight$ returns
+  \begin{displaymath}
+   \shiftClosuresRight(\beta_1(\rightConcat(\beta_2,\beta_1))^*\gamma) . 
+  \end{displaymath}
+
+\item Otherwise, $\shiftClosuresRight$ returns $\alpha_1\alpha'_2$.
+\end{itemize}
+
+(The work needed to justify the kind of well-founded recursion used in
+$\shiftClosuresRight$'s definition will be added in a subsequent
+revision.)
+
+\begin{proposition}
+\label{ShiftClosuresRightLem}
+For all $\alpha\in\AWS$, $\shiftClosuresRight\,\alpha$ is equivalent to
+$\alpha$ and has the same closure complexity, size, number of
+concatenations and number of symbols as $\alpha$.
+\end{proposition}
+
+Define a function $\deepClosure\in\WS\fun\WS$ as follows.  For all
+$\alpha\in\WS$:
+\begin{align*}
+  \deepClosure\,\% &= \% , \\
+  \deepClosure\,\$ &= \% , \\
+  \deepClosure\,({*}(\alpha)) &= \alpha^* , \eqtxt{and} \\
+  \deepClosure\,\alpha &= \alpha^*, \eqtxt{if}
+  \alpha\not\in\{\%,\$\} \eqtxt{and} \alpha \eqtxtl{is not a closure.}
+\end{align*}
+
+\begin{lemma}
+\label{DeepClosureLem}
+For all $\alpha\in\WS$, $\deepClosure\,\alpha$ is equivalent to
+$\alpha^*$, has the same alphabet as $\alpha^*$, has a closure
+complexity that is no bigger than that of $\alpha^*$, has a size that
+is no bigger than that of $\alpha^*$, has the same number of
+concatenations as $\alpha^*$, and has the same number of symbols
+$\alpha^*$.
+\end{lemma}
+
+Define a function $\deepConcat\in\WS\times\WS\fun\WS$ as follows.  For all
+$\alpha,\beta\in\WS$:
+\begin{align*}
+  \deepConcat(\alpha, \$) &= \$ , \\
+  \deepConcat(\$, \alpha) &= \$ , \eqtxt{if} \alpha\neq\$ , \\
+  \deepConcat(\alpha, \%) &= \alpha, \eqtxt{if} \alpha\neq\$ , \\
+  \deepConcat(\%, \alpha) &= \alpha, \eqtxt{if} \alpha\not\in\{\$,\%\} ,
+  \eqtxt{and} \\
+  \deepConcat(\alpha,\beta) &=
+    \shiftClosuresRight(\rightConcat(\alpha, \beta)), \\
+    &{} \hspace*{1cm}\eqtxt{if}\alpha,\beta\not\in\{\$,\%\} .
+\end{align*}
+To see that the last clause of this definition is proper, suppose
+that $\alpha,\beta\in\WS-\{\%,\$\}$.  Thus all the elements of
+$\concatsToList\,\alpha$ and $\concatsToList\,\beta$ are weakly
+simplified, and are not $\%$, $\$$ or concatentations.  Hence
+\begin{displaymath}
+\concatsToList(\rightConcat(\alpha,\beta)) =  
+\concatsToList\,\alpha \myconcat \concatsToList\,\beta
+\end{displaymath}
+also has this property, showing that $\rightConcat(\alpha,\beta)$
+is almost weakly simplified, which is what $\shiftClosuresRight$
+needs to deliver a weakly simplified result.
+
+\begin{lemma}
+\label{DeepConcatLem}
+For all $\alpha,\beta\in\WS$, $\deepConcat(\alpha,\beta)$
+is equivalent to $\alpha\beta$, has an alphabet that is a
+subset of the alphabet of $\alpha\beta$, has a closure complexity that
+is no bigger than that of $\alpha\beta$, has a size that is no bigger
+than that of $\alpha\beta$, has no more concatenations than
+$\alpha\beta$, and has no more symbols than $\alpha\beta$.
+\end{lemma}
+
+Define a function $\deepUnion\in\WS\times\WS\fun\WS$ as follows.  For all
+$\alpha,\beta\in\WS$:
+\begin{align*}
+  \deepUnion(\alpha, \$) &= \alpha , \\
+  \deepUnion(\$, \alpha) &= \alpha , \eqtxt{if} \alpha\neq\$ , \eqtxt{and} \\
+  \deepUnion(\alpha, \beta) &=
+    \sortUnions(\rightUnion(\alpha, \beta)), \eqtxt{if} \alpha\neq\$
+    \eqtxt{and} \beta\neq\$ .
+\end{align*}
+To see that the last clause of this definition is proper, suppose
+$\alpha,\beta\in\WS-\{\$\}$.  Then all the elements of
+$\unionsToList(\rightUnion(\alpha,\beta))$ will be weakly simplified,
+and won't be $\$$ or unions.  Consequently, $\sortUnions$ will
+deliver a weakly simplified result.
+
+\begin{lemma}
+\label{DeepUnionLem}
+For all $\alpha,\beta\in\WS$, $\deepUnion(\alpha,\beta)$
+is equivalent to $\alpha+\beta$, has an alphabet that is a
+subset of the alphabet of $\alpha+\beta$, has a closure complexity
+that is no bigger than that of $\alpha+\beta$, has a size that is no
+bigger than that of $\alpha+\beta$, has no more concatenations than
+$\alpha+\beta$, and has no more symbols than $\alpha+\beta$.
+\end{lemma}
+
+Now, we can define our weak simplification function/algorithm.
+Define $\weaklySimplify\in\Reg\fun\WS$ by structural recursion:
+\begin{itemize}
+\item $\weaklySimplify\,\% = \%$;
+
+\item $\weaklySimplify\,\$ = \$$;
+
+\item $\weaklySimplify\,a = a$, for all $a\in\Sym$;
+
+\item $\weaklySimplify({*}(\alpha))$
+  \begin{displaymath}
+    {} = \deepClosure(\weaklySimplify\,\alpha) ,
+  \end{displaymath}
+  for all $\alpha\in\Reg$;
+
+\item $\weaklySimplify(@(\alpha,\beta))$
+  \begin{displaymath}
+    {} = \deepConcat(\weaklySimplify\,\alpha, \weaklySimplify\,\beta) ,
+  \end{displaymath}
+  for all $\alpha,\beta\in\Reg$; and
+
+\item $\weaklySimplify({+}(\alpha,\beta))$
+  \begin{displaymath}
+    {} = \deepUnion(\weaklySimplify\,\alpha, \weaklySimplify\,\beta) ,
+  \end{displaymath}
+  for all $\alpha,\beta\in\Reg$.
+\end{itemize}
+
+\begin{proposition}
+\label{WeakSimpProp1}
+For all $\alpha\in\Reg$:
+\begin{enumerate}[\quad(1)]
+\item $\weaklySimplify\,\alpha\approx\alpha$;
+
+\item $\alphabet(\weaklySimplify(\alpha))\sub\alphabet\,\alpha$;
+
+\item $\cc(\weaklySimplify\,\alpha)\leqcc\cc\,\alpha$;
+
+\item $\mysize(\weaklySimplify\,\alpha)\leq\mysize\,\alpha$;
+
+\item $\numSyms(\weaklySimplify\,\alpha)\leq\numSyms\,\alpha$; and
+
+\item $\numConcats(\weaklySimplify\,\alpha)\leq\numConcats\,\alpha$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+By induction on regular expressions.
+\end{proof}
+
+\begin{exercise}
+\label{WeakSimpExercise}
+Prove Proposition~\ref{WeakSimpProp1}.
+\end{exercise}
+
+\begin{proposition}
+For all $\alpha\in\Reg$, if $\alpha$ is weakly simplified, then
+$\weaklySimplify(\alpha) = \alpha$.
+\end{proposition}
+
+\begin{proof}
+By induction on regular expresssions.
+\end{proof}
+
+Using our weak simplification algorithm, we can define an algorithm
+for calculating the language generated by a regular expression, when
+this language is finite, and for announcing that this language is
+infinite, otherwise.  First, we weakly simplify our regular
+expression, $\alpha$, and call the resulting regular expression
+$\beta$.  If $\beta$ contains no closures, then we compute its meaning
+in the usual way.  But, if $\beta$ contains one or more closures, then
+its language will be infinite, and thus we can output a message saying
+that $L(\alpha)$ is infinite.
+
+The Forlan module \texttt{Reg} defines the following functions relating
+to weak simplification:
+\begin{verbatim}
+val weaklySimplified : reg -> bool
+val weaklySimplify   : reg -> reg
+val toStrSet         : reg -> str set
+\end{verbatim}
+The function \texttt{weaklySimplified} tests whether its argument is
+weakly simplified, and \texttt{weaklySimplify} implements
+$\weaklySimplify$.  Finally, the function \texttt{toStrSet} implements our
+algorithm for calculating the language generated by a regular expression,
+if that langauge is finite, and for announcing the this language is
+infinite, otherwise.
+
+Here are some examples of how these functions can be used:
+\input{chap-3.3-forlan2}
+
+\subsection{Local and Global Simplification}
+
+In preparation for the definition of our local and global simplification
+algorithms, we must define some auxiliary functions.
+First, we show how we can recursively test whether $\%\in L(\alpha)$, for
+a regular expression $\alpha$.  We define a function
+\index{hasEmp@$\hasEmp$}%
+\index{regular expression!hasEmp@$\hasEmp$}%
+\index{regular expression!testing for membership of empty string}%
+\begin{gather*}
+\hasEmp\in\Reg\fun\Bool
+\end{gather*}
+ by recursion:
+\begin{align*}
+\hasEmp\,\% &= \true ; \\
+\hasEmp\,\$ &= \false ; \\
+\hasEmp\,a &= \false, \eqtxt{for all}a\in\Sym ; \\
+\hasEmp(\alpha^*) &= \true , \eqtxt{for all} \alpha\in\Reg ; \\
+\hasEmp(\alpha\beta) &=
+\hasEmp\,\alpha\myand\hasEmp\,\beta , \eqtxt{for all} \alpha,\beta\in\Reg ;
+  \eqtxt{and} \\
+\hasEmp(\alpha+\beta) &=
+\hasEmp\,\alpha\myor\hasEmp\,\beta , \eqtxt{for all} \alpha,\beta\in\Reg .
+\end{align*}
+
+\begin{proposition}
+\label{HasEmpProp}
+For all $\alpha\in\Reg$, $\%\in L(\alpha)$ iff $\hasEmp\,\alpha =
+\true$.
+\end{proposition}
+
+\begin{proof}
+By induction on regular expressions.
+\end{proof}
+
+Next, we show how we can recursively test whether $a\in L(\alpha)$, for
+a symbol $a$ and a regular expression $\alpha$.  We define a function
+\index{hasSym@$\hasSym$}%
+\index{regular expression!hasSym@$\hasSym$}%
+\index{regular expression!testing for membership of symbol}%
+\begin{gather*}
+\hasSym\in\Sym\times\Reg\fun\Bool
+\end{gather*}
+ by recursion:
+\begin{align*}
+\hasSym(a, \%) &= \false , \eqtxt{for all} a\in\Sym; \\
+\hasSym(a, \$) &= \false , \eqtxt{for all} a\in\Sym; \\
+\hasSym(a, b) &= a = b , \eqtxt{for all} a,b\in\Sym; \\
+\hasSym(a, \alpha^*) &= \hasSym(a, \alpha) , \eqtxt{for all}
+a\in\Sym\eqtxt{and}\alpha\in\Reg ; \\
+\hasSym(a, \alpha\beta) &=
+(\hasSym(a, \alpha)\myand \hasEmp(\beta)) \myor {} \\
+&\quad\;\, (\hasEmp(\alpha)\myand \hasSym(a, \beta)) , \\
+&\quad\, \eqtxt{for all} a\in\Sym\eqtxt{and}\alpha,\beta\in\Reg ; \eqtxt{and} \\
+\hasSym(a, \alpha+\beta) &=
+\hasSym(a, \alpha)\myor\hasSym(a, \beta), \\
+&\quad\, \eqtxt{for all} a\in\Sym\eqtxt{and}\alpha,\beta\in\Reg .
+\end{align*}
+
+\begin{proposition}
+\label{HasSymProp}
+For all $a\in\Sym$ and $\alpha\in\Reg$,
+$a\in L(\alpha)$ iff $\hasSym(a,\alpha) = \true$.
+\end{proposition}
+
+\begin{proof}
+By induction on regular expressions, using Proposition~\ref{HasEmpProp}.
+\end{proof}
+
+Finally, we define a function/algorithm
+\index{obviousSubset@$\obviousSubset$}%
+\index{regular expression!obviousSubset@$\obviousSubset$}%
+\index{regular expression!conservative subset test}%
+\begin{displaymath}
+\obviousSubset\in\Reg\times\Reg\fun\{\true,\false\}
+\end{displaymath}
+meeting the following specification: for all $\alpha,\beta\in\Reg$,
+\begin{displaymath}
+\eqtxtr{if} \obviousSubset(\alpha,\beta)=\true,
+\eqtxt{then} L(\alpha)\sub L(\beta) .
+\end{displaymath}
+I.e., this function is a \emph{conservative approximation to subset testing}.
+\index{regular expression!conservative approximation to subset testing}%
+\index{conservative approximation to subset testing}%
+The function that always returns $\false$
+would meet this specification, but our function will do much better
+than this, and will be reasonably efficient. In
+Section~\ref{EquivalenceTestingAndMinimizationOfDFAs},
+we will learn of a less efficient algorithm that will provide a complete test
+for $L(\alpha)\sub L(\beta)$.
+
+Given $\alpha,\beta\in\Reg$, $\obviousSubset(\alpha,\beta)$ proceeds
+as follows.  First, it lets $\alpha'=\weaklySimplify\,\alpha$ and
+$\beta'=\weaklySimplify\,\beta$.  Then it returns
+$\obviSub(\alpha',\beta')$, where
+\begin{displaymath}
+\obviSub\in\WS\times\WS\fun\Bool
+\end{displaymath}
+is the function defined below.
+
+$\obviSub$ is defined by well-founded recursion on the sum of the
+sizes of its arguments.  If $\alpha=\beta$, then it returns $\true$;
+otherwise, it considers the possible forms of $\alpha$.
+\begin{itemize}
+\item Suppose $\alpha = \%$. It returns $\hasEmp\,\beta$.
+
+\item Suppose $\alpha = \$$. It returns $\true$.
+
+\item Suppose $\alpha = a$, for some $a\in\Sym$. It returns $\hasSym(a,
+  \beta)$.
+
+\item Suppose $\alpha = {\alpha_1}^*$, for some $\alpha_1\in\Reg$.
+Here it looks at the form of $\beta$.
+\begin{itemize}
+\item Suppose $\beta = \%$. It returns $\false$.  (Because
+$\alpha$ will be weakly simplified, and so $\alpha$ won't generate
+$\{\%\}$.)
+
+\item Suppose $\beta = \$$. It returns $\false$.
+
+\item Suppose $\beta = a$, for some $a\in\Sym$. It returns $\false$.
+
+\item Suppose $\beta$ is a closure.  It returns $\obviSub(\alpha_1, \beta)$.
+
+\item Suppose $\beta=\beta_1\beta_2$, for some $\beta_1,\beta_2\in\Reg$.
+If $\hasEmp\,\beta_1=\true$ and $\obviSub(\alpha,\beta_2)$,
+then it returns $\true$.
+Otherwise, if $\hasEmp\,\beta_2=\true$ and $\obviSub(\alpha,\beta_1)$,
+then it returns $\true$.
+Otherwise, it returns $\false$ (even though the answer sometimes
+should be $\true$).
+
+\item Suppose $\beta = \beta_1 + \beta_2$, for some $\beta_1,\beta_2\in\Reg$.
+It returns
+\begin{gather*}
+\obviSub(\alpha, \beta_1) \myor \obviSub(\alpha, \beta_2)
+\end{gather*}
+(even though this is $\false$ too often).
+\end{itemize}
+
+\item Suppose $\alpha = \alpha_1\alpha_2$, for some $\alpha_1,\alpha_2\in\Reg$.
+Here it looks at the form of $\beta$.
+\begin{itemize}
+\item Suppose $\beta = \%$.  It returns $\false$.  (Because $\alpha$
+  is weakly simplified, $\alpha$ won't generate $\{\%\}$.)
+
+\item Suppose $\beta = \$$. It returns $\false$.  (Because $\alpha$ is
+  weakly simplified, $\alpha$ won't generate $\emptyset$.)
+
+\item Suppose $\beta = a$, for some $a\in\Sym$. It returns $\false$.
+  (Because $\alpha$ is weakly simplified, $\alpha$ won't generate
+  $\{a\}$.)
+
+\item Suppose $\beta={\beta_1}^*$, for some $\beta_1\in\Reg$. It returns
+\begin{gather*}
+\obviSub(\alpha, \beta_1) \\
+\myor \\
+(\obviSub(\alpha_1, \beta) \myand \obviSub(\alpha_2, \beta))
+\end{gather*}
+(even though this returns $\false$ too often).
+
+\item Suppose $\beta = \beta_1\beta_2$, for some $\beta_1,\beta_2\in\Reg$.
+If $\obviSub(\alpha_1, \beta_1)=\true$ and $\obviSub(\alpha_2,
+\beta_2)=\true$, then it returns $\true$.
+Otherwise, if $\hasEmp\,\beta_1=\true$ and $\obviSub(\alpha,\beta_2)=\true$,
+then it returns $\true$.
+Otherwise, if $\hasEmp\,\beta_2=\true$ and $\obviSub(\alpha,\beta_1)=\true$,
+then it returns $\true$.
+Otherwise, if $\beta_1$ is a closure but $\beta_2$ is not a closure,
+then it returns
+\begin{gather*}
+\obviSub(\alpha_1, \beta_1) \myand \obviSub(\alpha_2, \beta)
+\end{gather*}
+(even though this returns $\false$ too often).
+Otherwise, if $\beta_2$ is a closure but $\beta_1$ is not a closure,
+then it returns
+\begin{gather*}
+\obviSub(\alpha_1, \beta) \myand \obviSub(\alpha_2, \beta_2)
+\end{gather*}
+(even though this returns $\false$ too often).
+Otherwise, if $\beta_1$ and $\beta_2$ are closures, then it
+returns
+\begin{gather*}
+(\obviSub(\alpha_1, \beta_1) \myand \obviSub(\alpha_2, \beta)) \\
+\myor \\
+(\obviSub(\alpha_1, \beta) \myand \obviSub(\alpha_2, \beta_2))
+\end{gather*}
+(even though this returns $\false$ too often).
+Otherwise, it returns $\false$, even though sometimes we would like
+the answer to be $\true$).
+
+\item Suppose $\beta = \beta_1 + \beta_2$, for some $\beta_1,\beta_2\in\Reg$.
+It returns
+\begin{gather*}
+\obviSub(\alpha, \beta_1) \myor \obviSub(\alpha, \beta_2)
+\end{gather*}
+(even though this is $\false$ too often).
+\end{itemize}
+
+\item Suppose $\alpha=\alpha_1+\alpha_2$. It returns
+\begin{gather*}
+\obviSub(\alpha_1, \beta) \myand \obviSub(\alpha_2, \beta) .
+\end{gather*}
+\end{itemize}
+
+We say that $\alpha$ is \emph{obviously a subset of} $\beta$ iff
+$\obviousSubset(\alpha,\beta)=\true$. On the positive side, we have
+that, e.g.,
+$\obviousSubset(\mathsf{0^*011^*1},\mathsf{0^*1^*})=\true$.  On the
+other hand, $\obviousSubset(\mathsf{(01)^*},\mathsf{(\% + 0)(10)^*(\%
+  + 1)})=\false$, even though $L(\mathsf{(01)^*})\sub L(\mathsf{(\% +
+  0)(10)^*(\% + 1)})$.
+
+\begin{proposition}
+\label{WeakSubProp}
+For all $\alpha,\beta\in\Reg$, if $\obviousSubset(\alpha,\beta)=\true$,
+then $L(\alpha)\sub L(\beta)$.
+\end{proposition}
+
+\begin{proof}
+First, we use induction on the sum of the sizes of $\alpha$ and
+$\beta$ to show that, for all $\alpha,\beta\in\Reg$, if
+$\obviSub(\alpha,\beta)=\true$, then $L(\alpha)\sub L(\beta)$.
+The result then follows by Proposition~\ref{WeakSimpProp1}.
+\end{proof}
+
+The Forlan module \texttt{Reg} provides the following functions
+corresponding to the auxiliary functions $\hasEmp$, $\hasSym$ and
+$\obviousSubset$:
+\begin{verbatim}
+val hasEmp        : reg -> bool
+val hasSym        : sym * reg -> bool
+val obviousSubset : reg * reg -> bool
+\end{verbatim}
+Here are some examples of how they can be used:
+\input{chap-3.3-forlan3}
+
+Our local and global simplification algorithms make use of
+simplification rules, which may be applied to arbitrary subtrees of
+regular expressions.  There are three kinds of rules: structural
+rules, distributive rules and reduction rules.
+
+There are nine \emph{structural rules},
+\index{structural rule}%
+\index{regular expression!structural rule}%
+\index{simplification!regular expression!structural rule}%
+which preserve the alphabet, closure complexity, size, number of
+concatenations and number of symbols of a regular expression:
+\begin{enumerate}[\quad(1)]
+\item $(\alpha + \beta) + \gamma \fun \alpha + (\beta + \gamma)$.
+
+\item $\alpha + (\beta + \gamma) \fun (\alpha + \beta) + \gamma$.
+
+\item $\alpha(\beta\gamma) \fun (\alpha\beta)\gamma$.
+
+\item $(\alpha\beta)\gamma \fun \alpha(\beta\gamma)$.
+
+\item $\alpha + \beta \fun \beta + \alpha$.
+
+\item $\alpha^*\alpha \fun \alpha\alpha^*$.
+
+\item $\alpha\alpha^* \fun \alpha^*\alpha$.
+
+\item $\alpha(\beta\alpha)^* \fun (\alpha\beta)^*\alpha$.
+
+\item $(\alpha\beta)^*\alpha \fun \alpha(\beta\alpha)^*$.
+\end{enumerate}
+
+There are two \emph{distributive rules}, which preserve the
+alphabet of a regular expression:
+\begin{enumerate}[\quad(1)]
+\item $\alpha(\beta_1 + \beta_2) \fun \alpha \beta_1 + \alpha \beta_2$.
+
+\item $(\alpha_1 + \alpha_2)\beta \fun \alpha_1 \beta + \alpha_2 \beta$.
+\end{enumerate}
+
+Finally, there are $26$ \emph{reduction rules}, some of which make use
+of a conservative approximation $\Sub$ to subset testing.  When
+$\alpha\fun\beta$ because of a reduction rule, we have that
+$\alphabet\,\beta\sub\alphabet\,\alpha$ and $\beta\simp\alpha$, where
+$\simp$ is the well-founded relation on $\Reg$ that is defined below.
+
+First, we see that our strict total ordering $\ltcc$ on the set $\CC$
+of closure complexities is well-founded:
+
+\begin{proposition}
+\label{LTCCWellFounded}
+$\ltcc$ is a well-founded relation on $\CC$.
+\end{proposition}
+
+Next, define the relation $\simp$ on $\Reg$ by: for all $\alpha,\beta\in
+\Reg$, $\alpha\simp\beta$ iff either:
+\begin{itemize}
+\item $\cc\,\alpha\ltcc\cc\,\beta$; or
+
+\item $\cc\,\alpha = \cc\,\beta$, but $\mysize\,\alpha < \mysize\,\beta$; or
+
+\item $\cc\,\alpha = \cc\,\beta$ and $\mysize\,\alpha = \mysize\,\beta$,
+  but $\numConcats\,\alpha < \numConcats\,\beta$; or
+
+\item $\cc\,\alpha = \cc\,\beta$ and $\mysize\,\alpha =
+  \mysize\,\beta$, and $\numConcats\,\alpha = \numConcats\,\beta$, but
+  $\numSyms\,\alpha < \numSyms\,\beta$.
+\end{itemize}
+
+\begin{proposition}
+$\simp$ is a well-founded relation on $\Reg$.
+\end{proposition}
+
+\begin{proof}
+Follows by Propositions~\ref{LTCCWellFounded}, \ref{LexWellFounded}
+and \ref{InverseImageWellFounded}, plus the fact that $<$ is
+well-founded on $\nats$.
+\end{proof}
+
+Our reduction rules follow.  In the rules, we abbreviate
+$\hasEmp\,\alpha=\true$ and $\Sub(\alpha,\beta)=\true$ to
+$\hasEmp\,\alpha$ and $\Sub(\alpha,\beta)$, respectively.  Most of
+the rules strictly decrease a regular expression's closure complexity
+and size.  The exceptions are labeled ``size'' (for when the closure
+complexity strictly decreases, but the size strictly increases),
+``concatenations'' (for when the closure complexity and size are
+preserved, but the number of concatentations strictly decreases) or
+``alphabet'' (for when the closure complexity and size normally strictly
+decrease, but occasionally they and the number of concatenations stay
+they same, but the number of symbols strictly decreases).
+
+\begin{enumerate}[\quad(1)]
+%1
+\item If $\Sub(\alpha,\beta)$, then $\alpha + \beta \fun \beta$.
+
+%2
+\item $\alpha\beta_1 + \alpha\beta_2 \fun \alpha(\beta_1+\beta_2)$.
+
+%3
+\item $\alpha_1\beta + \alpha_2\beta \fun (\alpha_1+\alpha_2)\beta$.
+
+%4
+\item If $\hasEmp\,\alpha$ and $\Sub(\alpha,\beta^*)$, then
+  $\alpha\beta^* \fun \beta^*$.
+
+%5
+\item If $\hasEmp\,\beta$ and $\Sub(\beta,\alpha^*)$, then
+  $\alpha^*\beta \fun \alpha^*$.
+
+%6
+\item If $\Sub(\alpha,\beta^*)$, then $(\alpha+\beta)^* \fun \beta^*$.
+
+%7
+\item $(\alpha^* + \beta)^* \fun (\alpha+\beta)^*$.
+
+%8
+\item (concatenations) If $\hasEmp\,\alpha$ and $\hasEmp\,\beta$, then
+  $(\alpha\beta)^* \fun (\alpha+\beta)^*$.
+
+%9
+\item (concatenations) If $\hasEmp\,\alpha$ and $\hasEmp\,\beta$, then
+  $(\alpha\beta + \gamma)^* \fun (\alpha+\beta+\gamma)^*$.
+ 
+%10
+\item If $\hasEmp\,\alpha$ and $\Sub(\alpha,\beta^*)$, then
+  $(\alpha\beta)^* \fun \beta^*$.
+
+%11
+\item If $\hasEmp\,\beta$ and $\Sub(\beta,\alpha^*)$, then
+  $(\alpha\beta)^* \fun \alpha^*$.
+
+%12
+\item If $\hasEmp\,\alpha$ and $\Sub(\alpha,(\beta + \gamma)^*)$, then
+  $(\alpha\beta + \gamma)^* \fun (\beta + \gamma)^*$.
+
+%13
+\item If $\hasEmp\,\beta$ and $\Sub(\beta,(\alpha + \gamma)^*)$, then
+  $(\alpha\beta + \gamma)^* \fun (\alpha + \gamma)^*$.
+
+%14
+\item (size) If $\mynot(\hasEmp\,\alpha)$ and $\cc\,\alpha \cup
+  \overline{\cc\,\beta} \ltcc \overline{\overline{\cc\,\beta}}$, then
+  $(\alpha\beta^*)^* \fun \% + \alpha(\alpha+\beta)^*$.
+
+%15
+\item (size) If $\mynot(\hasEmp\,\beta)$ and $\overline{\cc\,\alpha} \cup
+  \cc\,\beta \ltcc \overline{\overline{\cc\,\alpha}}$, then
+  $(\alpha^*\beta)^* \fun \% + (\alpha+\beta)^*\beta$.
+
+%16
+\item (size) If $\mynot(\hasEmp\,\alpha)$ or $\mynot(\hasEmp\,\gamma)$, and
+  $\cc\,\alpha \cup \overline{\cc\,\beta} \cup \cc\,\gamma \ltcc
+  \overline{\overline{\cc,\beta}}$, then $(\alpha\beta^*\gamma)^*
+  \fun \% + \alpha(\beta + \gamma\alpha)^*\gamma$.
+
+%17
+\item If $\Sub(\alpha\alpha^*,\beta)$, then $\alpha^*+\beta \fun \% +
+  \beta$.
+
+%18
+\item If $\hasEmp\,\beta$ and $\Sub(\alpha\alpha\alpha^*, \beta)$,
+  then $\alpha^* + \beta \fun \alpha + \beta$.
+
+%19
+\item (alphabet) If $\alpha\not\in\{\%,\$\}$ and $\Sub(\alpha^n, \beta)$, then
+  $\alpha^{n+1}\alpha^* + \beta \fun \alpha^n\alpha^* + \beta$.
+
+%20
+\item If $n\geq 2$, $l\geq 0$ and $2n - 1 < m_1 < \cdots < m_l$, then
+  $(\alpha^n + \alpha^{n+1} + \cdots + \alpha^{2n - 1} + \alpha^{m_1}
+  + \cdots + \alpha^{m_l})^* \fun \% + \alpha^n\alpha^*$.
+
+%21
+\item (alphabet) If $\alpha\not\in\{\%,\$\}$, then $\alpha+\alpha\beta
+  \fun \alpha(\%+\beta)$.
+
+%22
+\item (alphabet) If $\alpha\not\in\{\%,\$\}$, then $\alpha+\beta\alpha
+  \fun (\%+\beta)\alpha$.
+
+%23
+\item $\alpha^*(\% + \beta(\alpha+\beta)^*) \fun (\alpha+\beta)^*$.
+
+%24
+\item $(\% + (\alpha+\beta)^*\alpha)\beta^* \fun (\alpha+\beta)^*$.
+
+%25
+\item If $\Sub(\alpha, \beta^*)$ and $\Sub(\beta, \alpha)$, then
+   $\% + \alpha\beta^* \fun \beta^*$.
+
+%26
+\item If $\Sub(\beta, \alpha^*)$ and $\Sub(\alpha, \beta)$, then
+   $\% + \alpha^* \beta \fun \alpha^*$.
+\end{enumerate}
+
+In rules (14)-(16), the preconditions involving $\cc$ are necessary
+and sufficient conditions for the right-hand side to have strictly
+smaller closure complexity than the left-hand side.
+
+Consider, e.g., reduction rule (4).  Suppose $\hasEmp\,\alpha=\true$
+and $\Sub(\alpha,\beta^*)=\true$, so that that $\%\in L(\alpha)$ and
+$L(\alpha)\sub L(\beta^*)$.  We need that $\alpha\beta^* \approx
+\beta^*$, $\alphabet(\beta^*)\sub\alphabet(\alpha\beta^*)$ and
+$\beta^*\simp\alpha\beta^*$.  The alphabet of $\beta^*$ is clearly
+a subset of that of $\alpha\beta^*$.
+
+To obtain $\alpha\beta^* \approx \beta^*$, it will suffice to show
+that, for all $A,B\in\Lan$, if $\%\in A$ and $A\sub B^*$, then
+$AB^*=B^*$.  Suppose $A,B\in\Lan$, $\%\in A$ and $A\sub B^*$.
+We show that $AB^*\sub B^*\sub AB^*$.  Suppose $w\in AB^*$, so
+that $w=xy$, for some $x\in A$ and $y\in B^*$.  Since $A\sub B^*$,
+it follows that $w=xy\in B^*B^*=B^*$.  Suppose $w\in B^*$.
+Then $w=\%w\in AB^*$.
+
+And, to see that $\beta^*\ltcc\alpha\beta^*$, it will suffice to
+show that $\cc(\beta^*)\ltcc\cc(\alpha\beta^*)$.  And we
+have that
+\begin{displaymath}
+ \cc(\beta^*) = \overline{\cc\,\beta} \ltcc
+ \cc\,\alpha \cup \overline{\cc\,\beta} = \cc(\alpha\beta^*) .
+\end{displaymath}
+
+Because the structural rules preserve the size and alphabet of regular
+expressions, if we start with a regular expression $\alpha$, there are
+only finitely many regular expressions that we can transform $\alpha$
+into using structural rules (we can apply one of the rules to some
+subtree of $\alpha$, giving us $\beta_1$, apply a rule to one of the
+subtrees of $\beta_2$, giving us $\beta_2$, etc.).
+
+Suppose $\Sub$ is a conservative approximation to subset testing.
+We say that a regular expression $\alpha$ is \emph{locally simplified with
+respect to} $\Sub$:
+iff
+\begin{itemize}
+\item $\alpha$ is weakly simplified, and
+
+\item $\alpha$ can't be transformed by our structural rules into
+a regular expression to which one of our reduction rules
+applies.
+\end{itemize}
+
+The \emph{local simplification of} a regular expression $\alpha$
+\emph{with respect to} a conservative approximation to subset testing
+$\Sub$ proceeds as follows.  It calls its main function with the weak
+simplification, $\beta$ of $\alpha$.  The closure complexity, size,
+number of concatenations, and number of symbols of $\beta$ are no
+bigger than those of $\alpha$, and
+$\alphabet\,\beta\sub\alphabet\,\alpha$.
+
+The main function is defined by well-founded recursion $\simp$.  It
+works as follows, when called with a weakly simplified argument,
+$\alpha$.
+\begin{itemize}
+\item It generates the set $X$ of all regular expressions
+  $\weaklySimplify\,\gamma$, such that $\alpha$ can be reorganized
+  using the structural rules into a regular expression $\beta$,
+  which can be transformed by a single application of one of our
+  reduction rules into $\gamma$.
+
+\item If $X$ is empty, then it returns $\alpha$.
+
+\item Otherwise, it calls itself recursively on the simplest element,
+  $\gamma$ of $X$ (when $X$ doesn't have a unique simplest element,
+  the smallest of the simplest elements---in our total ordering on regular
+  expressions---is selected).  Because
+  \begin{itemize}
+  \item the structural rules preserve closure complexity, size, number
+    of concatenations, and number of symbols,
+
+  \item the reduction rules produce $\simp$-predecessors, and
+
+  \item and weak simplification doesn't increase closure complexity,
+    size, numbers of concatenations, or numbers of symbols,
+  \end{itemize}
+  we have that $\gamma\simp\alpha$, so that this recursive call
+  is legal.  Furthermore, weak simplification, and all of the rules,
+  either preserve or decrease (via $\sub$) the alphabet of
+  regular expressions.  Thus $\alphabet\,\gamma\sub\alphabet\,\alpha$.
+\end{itemize}
+
+The algorithm is referred to as ``local'', because at each recursive
+call of its main function, $\gamma$ is chosen using the best local
+knowledge.  This strategy is reasonably efficient, but there is no
+guarantee that another local choice wouldn't result in a simpler
+global answer.
+
+We define a function/algorithm
+\begin{displaymath}
+\locallySimplify\in(\Reg\times\Reg\fun\Bool)\fun\Reg\fun\Reg
+\end{displaymath}
+by: for all conservative approximations to subset testing $\Sub$, and
+$\alpha\in\Reg$, $\locallySimplify\,\Sub\,\alpha$ is the result of
+running our local simplification algorithm on $\alpha$, using $\Sub$
+as the conservative approximation to subset testing.
+
+\begin{theorem}
+For all conservative approximations to subset testing $\Sub$,
+and $\alpha\in\Reg$:
+\begin{itemize}
+\item $\locallySimplify\,\Sub\,\alpha$ is locally simplified with
+  respect to $\Sub$;
+
+\item $\locallySimplify\,\Sub\,\alpha$ is equivalent to $\alpha$;
+
+\item $\alphabet(\locallySimplify\,\Sub\,\alpha)\sub\alphabet\,\alpha$;
+  and
+
+\item $\locallySimplify\,\Sub\,\alpha\leqsimp\alpha$.
+\end{itemize}
+\end{theorem}
+
+The Forlan module \texttt{Reg} provides the following functions
+relating to local simplification:
+\begin{verbatim}
+val locallySimplified    :
+      (reg * reg -> bool) -> reg -> bool
+val locallySimplify      :
+      int option * (reg * reg -> bool) -> reg -> bool * reg
+val locallySimplifyTrace :
+      int option * (reg * reg -> bool) -> reg -> bool * reg
+\end{verbatim}
+The function \texttt{locallySimplify} takes in a conservative
+approximation to subset testing $\Sub$ and returns a function that
+tests whether a regular expression is $\Sub$-locally simplified.  The
+function \texttt{locallySimplifyTrace} implements $\locallySimplify$.
+It emits tracing messages explaining its operation, takes in an extra
+argument of type \texttt{int~option}, and produces an extra result of
+type \texttt{bool}.  If this extra argument is \texttt{NONE}, then it
+runs as does $\locallySimplify$, and its boolean result is always
+$\true$.  But if it is $\mathtt{SOME}\;n$, for $n\geq 1$, then at each
+recursive call of the algorithm's function, no more than $n$ ways of
+reorganizing the function's argument will be considered, and the
+boolean part of the result will be $\false$ iff, in the final
+recursive call, $n$ was not sufficient to explore all structural
+reorganizations, so that the regular expression returned may not be
+locally simplified with respect to $\Sub$.  The function
+\texttt{locallySimplify} works identically, except it doesn't issue
+tracing messages.
+
+Here are some examples of how these functions can be used.
+\input{chap-3.3-forlan4}
+For even fairly small regular expressions, running through all the
+structural reorganizations can take prohibitively long.  So, one
+often has to bound the number of such reorganizations, as in:
+\input{chap-3.3-forlan5}
+Note that, in this transcript, \texttt{reg'} turns out to be
+locally simplified, despite the fact that \texttt{b'} is \texttt{false}.
+
+Our global simplification algorithm comes in two variants, a
+non-distributive one, which doesn't use the distributive rules, and a
+distributive one, which does.  Given a boolean $b$, a conservative
+approximation to subset testing $\Sub$, and a regular expression
+$\alpha$, we say that $\alpha$ is \emph{globally simplified with
+  respect to} $b$ and $\Sub$ iff no strictly simpler regular
+expression can be found by an arbitrary number of applications of weak
+simplification, structural rules, reduction rules and---if
+$b=\true$---distributive rules.
+
+The \emph{global simplification of} a regular expression $\alpha$
+\emph{with respect to} a boolean $b$ and conservative approximation to
+subset testing $\Sub$ consists of generating the set $X$ of all
+regular expressions $\beta$ that can formed from $\alpha$ by an
+arbitrary number of applications of weak simplification, the
+structural rules, reduction rules, and---in the case of the
+distributive variant---the distributive ones.  The simplest element of
+$X$ is then selected (when there isn't a unique simplest element, the
+smallest of the simplest elements---in our total ordering on regular
+expressions---is selected).  (A proof that the generation of $X$
+terminates even in the distributive case will follow.)
+
+Of course, this algorithm is much less efficient than the local
+one, but by revisiting choices, it is capable of producing simpler
+answers.
+
+We define a function/algorithm
+\begin{displaymath}
+\globallySimplify\in\Bool\times(\Reg\times\Reg\fun\Bool)\fun\Reg\fun\Reg 
+\end{displaymath}
+by: for all $b\in\Bool$, conservative approximation to subset testing
+$\Sub$, and $\alpha\in\Reg$, $\globallySimplify\,(b,\Sub)\,\alpha$ is
+the result of running our global simplification algorithm on $\alpha$,
+including the distributive rules iff $b=\true$, and using $\Sub$ as
+our conservative approximation to subset testing.
+
+\begin{theorem}
+For all $b\in\Bool$, conservative approximations to subset testing $\Sub$, and
+$\alpha\in\Reg$:
+\begin{itemize}
+\item $\globallySimplify\,(b,\Sub)\,\alpha$ is globally simplified with
+  respect to $b$ and $\Sub$;
+
+\item $\globallySimplify\,(b,\Sub)\,\alpha$ is equivalent to $\alpha$;
+
+\item $\alphabet(\globallySimplify\,(b,\Sub)\,\alpha)\sub\alphabet\,\alpha$;
+  and
+
+\item $\globallySimplify\,(b,\Sub)\,\alpha\leqsimp\alpha$.
+\end{itemize}
+\end{theorem}
+
+The Forlan module \texttt{Reg} provides the following functions
+relating to global simplification:
+\begin{verbatim}
+val globallySimplified    :
+      bool * (reg * reg -> bool) -> reg -> bool
+val globallySimplifyTrace :
+      int option * bool * (reg * reg -> bool) -> reg -> bool * reg
+val globallySimplify      :
+      int option * bool * (reg * reg -> bool) -> reg -> bool * reg
+\end{verbatim}
+The function \texttt{globallySimplify} takes in a boolean $b$ and a
+conservative approximation to subset testing $\Sub$ and returns a
+function that tests whether a regular expression is globally
+simplified with respect to $b$ and $\Sub$.  The function
+\texttt{globallySimplifyTrace} implements $\globallySimplify$.  It
+emits tracing messages explaining its operation, and takes in an extra
+argument of type \texttt{int~option}, and produces an extra result of
+type \texttt{bool}.  If this argument is \texttt{NONE}, then it runs
+as does $\globallySimplify$, and the boolean result is always $\true$.
+But if it is $\mathtt{SOME}\;n$, for $n\geq 1$, then at most $n$
+elements of the set $X$ are generated, before picking the simplest
+one, and the boolean result is $\false$ if this $n$ isn't enough to
+generate all of $X$.  The function \texttt{globallySimplify} works
+identically, except it doesn't issue tracing messages.
+
+For even quite small regular expressions,
+\texttt{globallySimplified} will fail to run to completion in an
+acceptable time-frame, and one will have to bound the size of the set
+$X$ in order for \texttt{globallySimplify} and
+\texttt{globallySimplifyTrace} to run to completion in an
+acceptable time-frame.
+
+Here are some examples of how these functions can be used.
+\input{chap-3.3-forlan6}
+Finally, here are two examples showing how using the distributive
+rules can make a difference:
+\input{chap-3.3-forlan7}
+
+\subsection{Notes}
+
+Although books on formal language theory usually study various regular
+expression equivalences, we have gone much further, giving three at
+least partly novel algorithms for regular expression simplification.
+Although many of the simplification and structural rules used in the
+simplification algorithms are well-known, some were invented, as was
+the concept of closure complexity.
+
+\index{regular expression!simplification|)}%
+\index{simplification!regular expression|)}%
+\index{regular expression|)}%
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

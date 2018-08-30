@@ -1,0 +1,195 @@
+\section{Empty-string Finite Automata}
+\label{EmptyStringFiniteAutomata}
+
+In this and the following two sections, we will study three
+progressively more restricted kinds of finite automata:
+\begin{itemize}
+\item empty-string finite automata (EFAs);
+
+\item nondeterministic finite automata (NFAs); and
+
+\item deterministic finite automata (DFAs).
+\end{itemize}
+Every DFA will be an NFA; every NFA will be an EFA; and every EFA will
+be an FA.  Thus, $L(M)$ will be well-defined, if $M$ is a DFA, NFA or
+EFA.
+
+The more restricted kinds of automata will be easier to process on the
+computer than the more general kinds; they will also have nicer
+reasoning principles than the more general kinds.  We will give
+algorithms for converting the more general kinds of automata into the
+more restricted kinds.  Thus even the deterministic finite automata
+will accept the same set of languages as the finite automata.  On the
+other hand, it will sometimes be easier to find one of the more
+general kinds of automata that accepts a given language rather than
+one of the more restricted kinds accepting the language.  And, there
+are languages where the smallest DFA accepting the language is
+exponentially bigger than the smallest FA accepting the language.
+
+\subsection{Definition of EFAs}
+
+An \emph{empty-string finite automaton} (EFA) $M$ is
+a finite automaton such that
+\begin{gather*}
+T_M\sub\setof{q, x\fun r}{q,r\in\Sym\eqtxt{and}x\in\Str\eqtxt{and}|x|\leq 1}.
+\end{gather*}
+In other words, an FA is an EFA iff every string of every transition
+of the FA is either $\%$ or has a single symbol.
+
+For example, $\Asf,\%\fun\Bsf$ and $\Asf,\onesf\fun\Bsf$ are legal EFA
+transitions, but $\Asf,\onesf\onesf\fun\Bsf$ is not legal.  We write
+$\EFA$ for the set of all empty-string finite automata.  Thus
+$\EFA\subsetneq\FA$.
+
+The following proposition obviously holds.
+
+\begin{proposition}
+Suppose $M$ is an EFA.
+\begin{itemize}
+\item For all $N\in\FA$, if $M\iso N$, then $N$ is an EFA.
+
+\item For all bijections $f$ from $Q_M$ to some set of symbols,
+  $\renameStates(M, f)$ is an EFA.
+
+\item $\renameStatesCanonically\,M$ is an EFA.
+
+\item $\simplify\,M$ is an EFA.
+\end{itemize}
+\end{proposition}
+
+\subsection{Converting FAs to EFAs}
+
+If we want to convert an FA into an equivalent EFA, we can proceed as
+follows.  Every state of the FA will be a state of the EFA, the start
+and accepting states are unchanged, and every transition of the FA
+that is a legal EFA transition will be a transition
+of the EFA.  If our FA has a transition
+\begin{gather*}
+p, b_1b_2\cdots b_n\fun r,
+\end{gather*}
+where $n\geq 2$ and the $b_i$ are symbols, then we replace this
+transition with the $n$ transitions
+\begin{gather*}
+p\tranarr{b_1}q_1, q_1\tranarr{b_2}q_2,\,\ldots, q_{n-1}\tranarr{b_n}r,
+\end{gather*}
+where $q_1,\,\ldots,q_{n-1}$ are $n-1$ new, non-accepting, states.
+
+For example, we can convert the FA
+\begin{center}
+\input{chap-3.9-fig1.eepic}
+\end{center}
+into the EFA
+\begin{center}
+\input{chap-3.9-fig2.eepic}
+\end{center}
+
+We have to be careful how we choose our new states.  The
+symbols we choose can't be states of the original machine, and we
+can't choose the same symbol twice.  Instead of making a series of
+random choices, we will use structured symbols in such a way that
+one will be able to look at a resulting EFA and tell what the
+original FA was.
+
+First, the algorithm renames each old state $q$ to
+$\langle 1,q\rangle$.  Then it can replace a transition
+\begin{gather*}
+p\tranarr{b_1b_2\cdots b_n}r,
+\end{gather*}
+where $n\geq 2$ and the $b_i$ are symbols, with the transitions
+\begin{gather*}
+\langle 1,p\rangle\tranarr{b_1}
+\langle 2,\langle p,b_1,b_2\cdots b_n,r\rangle\rangle, \\
+\langle 2,\langle p,b_1,b_2\cdots b_n,r\rangle\rangle\tranarr{b_2}
+\langle 2,\langle p,b_1b_2,b_3\cdots b_n,r\rangle\rangle, \\
+\ldots,\\
+\langle 2,\langle p,b_1b_2\cdots b_{n-1},b_n,r\rangle\rangle\tranarr{b_n},
+\langle 1,r\rangle.
+\end{gather*}
+
+We define a function $\faToEFA\in\FA\fun\EFA$ that converts FAs into
+EFAs by saying that $\faToEFA\,M$ is the result of running the above
+algorithm on input $M$.
+
+\begin{theorem}
+For all $M\in\FA$:
+\begin{itemize}
+\item $\faToEFA\,M\approx M$; and
+
+\item $\alphabet(\faToEFA\,M) = \alphabet\,M$.
+\end{itemize}
+\end{theorem}
+
+\subsection{Processing EFAs in Forlan}
+
+The Forlan module \texttt{EFA} defines an abstract type \texttt{efa}
+(in the top-level environment) of empty-string finite automata,
+along with various functions for processing EFAs.
+Values of type \texttt{efa} are implemented as values of type \texttt{fa}, and
+the module EFA provides functions
+\begin{verbatim}
+val injToFA    : efa -> fa
+val projFromFA : fa -> efa
+\end{verbatim}
+for making a value of type \texttt{efa} have type \texttt{fa}, i.e.,
+``injecting'' an \texttt{efa} into type \texttt{fa}, and for
+making a value of type \texttt{fa} that is an EFA have type
+\texttt{efa}, i.e., ``projecting'' an \texttt{fa} that is an EFA to
+type \texttt{efa}.  If one tries to project an \texttt{fa} that is not
+an EFA to type \texttt{efa}, an error is signaled.  The functions
+\texttt{injToFA} and \texttt{projFromFA} are available in the top-level
+environment as \texttt{injEFAToFA} and \texttt{projFAToEFA}, respectively.
+
+The module \texttt{EFA} also defines the functions:
+\begin{verbatim}
+val input  : string -> efa
+val fromFA : fa -> efa
+\end{verbatim}
+The function \texttt{input} is used to input an EFA, i.e., to input a
+value of type \texttt{fa} using \texttt{FA.input}, and then attempt to
+project it to type \texttt{efa}.  The function \texttt{fromFA}
+corresponds to our conversion function $\faToEFA$, and is available in
+the top-level environment with that name:
+\begin{verbatim}
+val faToEFA : fa -> efa
+\end{verbatim}
+
+Finally, most of the functions for processing FAs that were introduced
+in previous sections are inherited by \texttt{EFA}:
+\begin{verbatim}
+val output                  : string * efa -> unit 
+val numStates               : efa -> int
+val numTransitions          : efa -> int
+val equal                   : efa * efa -> bool
+val alphabet                : efa -> sym set
+val checkLP                 : efa -> lp -> unit
+val validLP                 : efa -> lp -> bool
+val isomorphism             : efa * efa * sym_rel -> bool
+val findIsomorphism         : efa * efa -> sym_rel
+val isomorphic              : efa * efa -> bool
+val renameStates            : efa * sym_rel -> efa
+val renameStatesCanonically : efa -> efa
+val processStr              : efa -> sym set * str -> sym set
+val accepted                : efa -> str -> bool
+val findLP                  : efa -> sym set * str * sym set -> lp
+val findAcceptingLP         : efa -> str -> lp
+val simplified              : efa -> bool
+val simplify                : efa -> efa
+\end{verbatim}
+
+Suppose that \texttt{fa} is the finite automaton
+\begin{center}
+\input{chap-3.9-fig1.eepic}
+\end{center}
+Here are some example uses of a few of the above functions:
+\input{chap-3.9-forlan1}
+
+\subsection{Notes}
+
+The algorithm for converting FAs to EFAs is obvious, but our use of
+structured state names so as to make the resulting EFAs
+self-documenting is novel.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

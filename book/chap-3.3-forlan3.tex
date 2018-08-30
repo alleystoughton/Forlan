@@ -1,0 +1,51 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }Reg.hasEmp(Reg.fromString\ "0\symbol{'052}1\symbol{'052}");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }Reg.hasEmp(Reg.fromString\ "01\symbol{'052}");
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\item[]\textsl{-\ }Reg.hasSym(Sym.fromString\ "0",\ Reg.fromString\ "0\symbol{'052}1\symbol{'052}");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }Reg.hasSym(Sym.fromString\ "1",\ Reg.fromString\ "0\symbol{'052}1\symbol{'052}");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }Reg.hasSym(Sym.fromString\ "0",\ Reg.fromString\ "0\symbol{'052}$");
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\item[]\textsl{-\ }Reg.obviousSubset
+\item[]\textsl{=\ }(Reg.fromString\ "(0\ +\ 1)\symbol{'052}",
+\item[]\textsl{=\ }\ Reg.fromString\ "0\symbol{'052}(0\ +\ 1)\symbol{'052}1\symbol{'052}");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }Reg.obviousSubset
+\item[]\textsl{=\ }(Reg.fromString\ "0\symbol{'052}(0\ +\ 1)\symbol{'052}1\symbol{'052}",
+\item[]\textsl{=\ }\ Reg.fromString\ "(0\ +\ 1)\symbol{'052}");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }Reg.obviousSubset
+\item[]\textsl{=\ }(Reg.fromString\ "0\symbol{'052}011\symbol{'052}1",
+\item[]\textsl{=\ }\ Reg.fromString\ "0\symbol{'052}1\symbol{'052}");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }Reg.obviousSubset
+\item[]\textsl{=\ }(Reg.fromString\ "(01\ +\ 011)1\symbol{'052}",
+\item[]\textsl{=\ }\ Reg.fromString\ "01\symbol{'052}");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }Reg.obviousSubset
+\item[]\textsl{=\ }(Reg.fromString\ "(01)\symbol{'052}",
+\item[]\textsl{=\ }\ Reg.fromString\ "(%\ +\ 0)(10)\symbol{'052}(%\ +\ 1)");
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\end{list}

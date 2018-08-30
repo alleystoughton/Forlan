@@ -1,0 +1,132 @@
+<!-- messages.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Messages Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Messages/ Module</HEAD>
+
+<PP>This module contains functions for issuing informational and error
+messages.</PP>
+
+<STRUCTURE STRID="Messages">
+<OPAQUE>
+<SIGBODY SIGID="MESSAGES" FILE=MESSAGES>
+
+<SPEC>
+<VAL>messagePP<TY>(unit -> PP.pp list) -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+messagePP <ARG/f/
+</PROTOTY>
+<PP>applies <CD>PP.toString</CD> to each element of the result of
+evaluating <CD><ARG/f/()</CD>, and then prints the resulting strings
+in sequence on the standard output, followed by a newline.  Multiple
+strings are combined&DASH;separated by blanks&DASH;on single lines,
+when they fit.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>messageString<TY>(unit -> string list) -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+messageString <ARG/f/
+</PROTOTY>
+<PP>evaluates <CD><ARG/f/()</CD>, and then prints the resulting
+strings in sequence on the standard output, followed by a newline.
+Multiple strings are combined&DASH;separated by blanks&DASH;on single
+lines, when they fit.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<EXN>Error</EXN>
+<COMMENT>
+<PP>Exception raised when an error message is issued.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>errorPP<TY>(unit -> PP.pp list) -> 'a</TY></VAL>
+<COMMENT>
+<PROTOTY>
+errorPP <ARG/f/
+</PROTOTY>
+is the same as <CD>messagePP <ARG/f/</CD>, except that <CD>Error</CD> is
+raised after <CD>messagePP</CD> returns.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>errorString<TY>(unit -> string list) -> 'a</TY></VAL>
+<COMMENT>
+<PROTOTY>
+errorString <ARG/f/
+</PROTOTY>
+is the same as <CD>messageString <ARG/f/</CD>, except that <CD>Error</CD> is
+raised after <CD>messageString</CD> returns.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>quiet<TY>(unit -> 'a) -> 'a</TY></VAL>
+<COMMENT>
+<PROTOTY>
+quiet <ARG/f/
+</PROTOTY>
+<PP>evaluates <CD><ARG/f/()</CD> in such a way that any calls made by
+<CD><ARG/f/</CD> to <CD>messagePP</CD>, <CD>messageString</CD>,
+<CD>errorPP</CD> and <CD>errorString</CD> have no effect (and don't
+even result in the arguments to <CD>messagePP</CD>, <CD>messageString</CD>,
+<CD>errorPP</CD> and <CD>errorString</CD> being called). Whatever
+<CD><ARG/f/()</CD> returns is what <CD>quiet</CD> returns; or
+if <CD><ARG/f/()</CD> raises an exception, this exception is caught
+and re-raised by <CD>quiet</CD>.
+<CD><ARG/f/()</CD>must have no side effects except via calls to
+<CD>messagePP</CD>, <CD>messageString</CD>, <CD>errorPP</CD>
+and <CD>errorString</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<EXN>CannotHappen</EXN>
+<COMMENT>
+<PP>Exception raised by <CD>cannotHappen</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>cannotHappen<TY>unit -> 'a</TY></VAL>
+<COMMENT>
+<PROTOTY>
+cannotHappen()
+</PROTOTY>
+<PP>raises <CD>CannotHappen</CD>. Used when an expression of some type is
+needed, but the expression will never be evaluated</PP>
+
+<PP>
+<EXAMPLE>
+To avoid a nonexaustive match warning message, we could write
+<CODE>
+  fun f nil       = Messages.cannotHappen()
+    | f (x :: xs) = (x, xs)
+</CODE>
+if we knew that <CD>f</CD> would never be called with the empty list.
+</EXAMPLE>
+</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

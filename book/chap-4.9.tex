@@ -1,0 +1,247 @@
+\section{Chomsky Normal Form}
+\label{ChomskyNormalForm}
+
+In this section, we study a special form of grammars called Chomsky
+Normal Form (CNF), which was named after the linguist Noam Chomsky.
+Grammars in CNF have very nice formal properties.  In particular,
+valid parse trees for grammars in CNF are very close to being binary
+trees.
+
+Any grammar that doesn't generate $\%$ can be put in CNF.  And, if $G$
+is a grammar that does generate $\%$, it can be turned into a grammar
+in CNF that generates $L(G)-\{\%\}$.  In the next section, we will use
+this fact when proving the pumping lemma for context-free languages, a
+method for showing the certain languages are not context-free.
+
+We will begin by giving an algorithm for turning a grammar $G$ into a
+simplified grammar with no productions of the form $q\fun\%$ and
+$q\fun r$.  This will allow us to give an algorithm that, given
+a grammar $G$, returns $L(G)$, when it is finite, and reports that
+$L(G)$ is infinite, otherwise.
+
+\subsection{Removing $\%$-Productions}
+
+A $\%$-\emph{production} is a production of the form $q\fun\%$.  We
+will show by example how to turn a grammar $G$ into a simplified
+grammar with no $\%$-productions that generates $L(G)-\{\%\}$.
+
+Suppose $G$ is the grammar
+\begin{align*}
+\Asf &\fun \mathsf{0A1} \mid \mathsf{BB} , \\
+\Bsf &\fun \% \mid \mathsf{2B} .
+\end{align*}
+
+First, we determine which variables $q$ are \emph{nullable} in the
+sense that $\%\in\Pi_q$, i.e., that $\%$ is the yield of a valid parse
+tree for $G$ whose root label is $q$.
+\begin{itemize}
+\item Clearly, $\Bsf$ is nullable.
+
+\item Since $\Asf\fun\Bsf\Bsf\in P_G$, it follows that $\Asf$ is
+  nullable.
+\end{itemize}
+
+Now we use this information to compute the productions of
+our new grammar.
+\begin{itemize}
+\item Since $\Asf$ is nullable, we replace the production
+  $\Asf\fun\mathsf{0A1}$ with the productions $\Asf\fun\mathsf{0A1}$
+  and $\Asf\fun\mathsf{01}$.  The idea is that this second production
+  will make up for the fact that $\Asf$ won't be nullable in the new
+  grammar.
+
+\item Since $\Bsf$ is nullable, we replace the production
+  $\Asf\fun\mathsf{BB}$ with the productions $\Asf\fun\mathsf{BB}$ and
+  $\Asf\fun\mathsf{B}$ (the result of deleting either one of the
+  $\Bsf$'s).
+
+\item The production $\Bsf\fun\%$ is deleted.
+
+\item Since $\Bsf$ is nullable, we replace the production
+  $\Bsf\fun\mathsf{2B}$ with the productions $\Bsf\fun\mathsf{2B}$ and
+  $\Bsf\fun\mathsf{2}$.
+\end{itemize}
+This give us the grammar
+\begin{align*}
+\Asf &\fun \mathsf{0A1} \mid \mathsf{01} \mid \mathsf{BB} \mid \Bsf , \\
+\Bsf &\fun \mathsf{2B} \mid \twosf .
+\end{align*}
+In general, we finish by simplifying our new grammar.  The new grammar
+of our example is already simplified, however.
+
+\subsection{Removing Unit Productions}
+
+A \emph{unit production} for a grammar $G$ is a production of the
+form $q\fun r$, where $r$ is a variable (possibly equal to $q$).  We
+now show by example how to turn a grammar $G$ into a simplified
+grammar with no $\%$-productions or unit productions that generates
+$L(G)-\{\%\}$.
+
+Suppose $G$ is the grammar
+\begin{align*}
+\Asf &\fun \mathsf{0A1} \mid \mathsf{01} \mid \mathsf{BB} \mid \Bsf , \\
+\Bsf &\fun \mathsf{2B} \mid \twosf .
+\end{align*}
+We begin by applying our algorithm for removing $\%$-productions to
+our grammar; the algorithm has no effect in this case.
+
+Our new grammar will have the same variables and start variable as
+$G$.  Its set of productions is the set of all $q\fun w$ such that
+$q$ is a variable of $G$, $w\in\Str$ doesn't consist of a single variable
+of $G$, and there is a variable $r$ such that
+\begin{itemize}
+\item $r$ is parsable from $q$, and
+
+\item $r\fun w$ is a production of $G$.
+\end{itemize}
+(Determining whether $r$ is parsable from $q$ is easy, since we are
+working with a grammar with no $\%$-productions.)
+
+This process results in the grammar
+\begin{align*}
+\Asf &\fun \mathsf{0A1} \mid \mathsf{01} \mid \mathsf{BB} \mid
+\mathsf{2B} \mid \twosf , \\
+\Bsf &\fun \mathsf{2B} \mid \twosf .
+\end{align*}
+Finally, we simplify our grammar, which gets rid of the production
+$\Asf\fun\mathsf{2B}$, giving us the grammar
+\begin{align*}
+\Asf &\fun \mathsf{0A1} \mid \mathsf{01} \mid \mathsf{BB} \mid \twosf , \\
+\Bsf &\fun \mathsf{2B} \mid \twosf .
+\end{align*}
+
+\subsection*{Removing $\%$ and Unit Productions in Forlan}
+
+The Forlan module \texttt{Gram} defines the following functions:
+\begin{verbatim}
+val eliminateEmptyProductions        : gram -> gram
+val eliminateEmptyAndUnitProductions : gram -> gram
+\end{verbatim}
+For example, if \texttt{gram} is the grammar
+\begin{align*}
+\Asf &\fun \mathsf{0A1} \mid \mathsf{BB} , \\
+\Bsf &\fun \% \mid \mathsf{2B} .
+\end{align*}
+then we can proceed as follows.
+\input{chap-4.9-forlan1}
+
+\subsection*{Generating a Grammar's Language When Finite}
+
+We can now give an algorithm that takes in a grammar $G$ and generates
+$L(G)$, when it is finite, and reports that $L(G)$ is infinite,
+otherwise.  The algorithm begins by letting $G'$ be the simplified
+grammar that results from eliminating $\%$-productions and unit
+productions from $G$.  If $G'$ contains recursion---either direct, or
+mutual---then $L(G')$ is infinite.  Otherwise, we can calculate
+$L(G')$ from the bottom-up, and add $\%$ iff $G$ generates $\%$.
+
+The Forlan module \texttt{Gram} defines the following function:
+\begin{verbatim}
+val toStrSet : gram -> str set
+\end{verbatim}
+Suppose \texttt{gram} is the grammar
+\begin{align*}
+\Asf &\fun \mathsf{BB}, \\
+\Bsf &\fun \mathsf{CC}, \\
+\Csf &\fun \% \mid \zerosf \mid \onesf ,
+\end{align*}
+and
+\texttt{gram'} is the grammar
+\begin{align*}
+\Asf &\fun \mathsf{BB}, \\
+\Bsf &\fun \mathsf{CC}, \\
+\Csf &\fun \% \mid \zerosf \mid \onesf \mid \Asf .
+\end{align*}
+Then we can proceed as follows:
+\input{chap-4.9-forlan3}  
+
+Suppose we have a grammar $G$ and a natural number $n$, and we wish to
+generate all elements of $L(G)$ of length $n$.  We can start by
+creating an EFA $M$ accepting all strings over the alphabet of $G$
+with length $n$.  Then, we can intersect $G$ with $M$, and apply
+\texttt{Gram.toStrSet} to the resulting grammar.
+
+\subsection{Chomsky Normal Form}
+
+A grammar $G$ is in \emph{Chomsky Normal Form} (CNF) iff
+each of its productions has one of the following forms:
+\begin{itemize}
+\item $q\fun a$, where $a$ is not a variable; and
+
+\item $q\fun pr$, where $p$ and $r$ are variables.
+\end{itemize}
+
+We explain by example how a grammar $G$ can be turned into a
+simplified grammar in CNF that generates $L(G)-\{\%\}$.
+Suppose $G$ is the grammar
+\begin{align*}
+\Asf &\fun \mathsf{0A1} \mid \mathsf{01} \mid \mathsf{BB} \mid \twosf , \\
+\Bsf &\fun \mathsf{2B} \mid \twosf .
+\end{align*}
+\begin{itemize}
+\item We begin by applying our algorithm for removing $\%$-productions
+  and unit productions to this grammar.  In this case, it has no
+  effect.
+
+\item Since the productions $\Asf\fun\mathsf{BB}$, $\Asf\fun\twosf$
+  and $\Bsf\fun\twosf$ are legal CNF productions, we simply transfer
+  them to our new grammar.
+
+\item Next we add the variables $\Zero$, $\One$ and $\Two$ to our
+  grammar, along with the productions
+  \begin{gather*}
+    \Zero\fun\zerosf,\quad\One\fun\onesf,\quad\Two\fun\twosf .
+  \end{gather*}
+
+\item Now, we can replace the production $\Asf\fun\mathsf{01}$ with
+  $\Asf\fun\Zero\One$.  And, we can replace the production
+  $\Bsf\fun\mathsf{2B}$ with the production $\Bsf\fun\Two\Bsf$.
+
+\item Finally, we replace the production $\Asf\fun\mathsf{0A1}$ with
+  the productions
+  \begin{gather*}
+    \Asf\fun\Zero\Csf,\quad\Csf\fun\Asf\One ,
+  \end{gather*}
+  and add $\Csf$ to the set of variables of our new grammar.
+\end{itemize}
+Summarizing, our new grammar is
+\begin{align*}
+  \Asf &\fun \mathsf{BB} \mid \twosf \mid \Zero\One \mid
+  \Zero\Csf , \\
+  \Bsf &\fun \twosf \mid \Two\Bsf , \\
+  \Zero &\fun \zerosf , \\
+  \One &\fun \onesf , \\
+  \Two &\fun \twosf , \\
+  \Csf &\fun \Asf\One .
+\end{align*}
+
+The official version of our algorithm names variables in a different
+way.
+
+\subsection*{Converting to Chomsky Normal Form in Forlan}
+
+The Forlan module \texttt{Gram} defines the following function:
+\begin{verbatim}
+val chomskyNormalForm : gram -> gram
+\end{verbatim}
+Suppose \texttt{gram} of type \texttt{gram} is bound to the grammar with
+variables $\Asf$ and $\Bsf$, start variable $\Asf$, and productions
+\begin{align*}
+  \Asf &\fun \mathsf{0A1} \mid \mathsf{BB} , \\
+  \Bsf &\fun \% \mid \mathsf{2B} .
+\end{align*}
+Here is how Forlan can be used to turn this grammar into a CNF
+grammar that generates the nonempty strings that are generated by
+texttt{gram}:
+\input{chap-4.9-forlan5}
+
+\subsection{Notes}
+
+Our algorithm for producing $L(G)$, when it's finite, and reporting
+that $L(G)$ is infinite, otherwise, uses familiar techniques, but
+isn't usually included in a book on formal language theory.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

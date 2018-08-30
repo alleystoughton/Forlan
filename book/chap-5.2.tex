@@ -1,0 +1,174 @@
+\section{Closure Properties of Recursive and R.E.\ Languages}
+\label{ClosurePropertiesOfRecursiveAndRELanguages}
+
+In this section, we will see that the recursive and recursively
+enumerable languages are closed under union, concatenation, closure
+and intersection.  The recursive languages are also closed under set
+difference and complementation.  In the next section, we will see that
+the recursively enumerable languages are not closed under
+complementation or set difference.  On the other hand, we will see in
+this section that, if a language and its complement are both r.e.,
+then the language is recursive.
+
+\subsection{Closure Properties of Recursive Languages}
+
+\begin{theorem}
+\label{RecClose}
+
+If $L$, $L_1$ and $L_2$ are recursive languages, then so are
+$L_1\cup L_2$, $L_1L_2$, $L^*$, $L_1\cap L_2$ and $L_1-L_2$.
+\end{theorem}
+
+\begin{proof}
+Let's consider the concatenation case as an example.  Since $L_1$
+and $L_2$ are recursive languages, there are string predicate programs
+$\pr_1$ and $pr_2$ that test whether strings are in $L_1$ and $L_2$,
+respectively.
+We write a program $\pr$ with form
+\begin{gather*}
+\mtab{\proglam(\TS\mathsf{w},\NL
+\progletSimp(\TS\mathsf{f1},\NL
+\pr_1,\NL
+\progletSimp(\TS\mathsf{f2},\NL
+\pr_2,\NL
+\cdots)))},
+\end{gather*}
+which tests whether its input is an element of $L_1L_2$.  
+
+The elided part of $\pr$ generates all of the
+pairs of strings $(x_1,x_2)$ such that $x_1x_2$ is equal to the
+value of $\mathsf{w}$.  Then it works
+though these pairs, one by one.  Given such a pair $(x_1,x_2)$, $\pr$
+calls $\mathsf{f1}$ with $x_1$ to check whether $x_1\in L_1$.  If the
+answer is $\progconst(\progfalse)$, then it goes on to the next pair.
+Otherwise, it calls $\mathsf{f2}$ with $x_2$ to check whether $x_2\in
+L_2$.  If the answer is $\progconst(\progfalse)$, then it goes on to the
+next pair.  Otherwise, it returns $\progconst(\progtrue)$.  If $\pr$ runs
+out of pairs to check, then it returns $\progconst(\progfalse)$.
+
+We can check that $\pr$ is a string predicate program testing whether
+$w\in L_1L_2$.  Thus $L_1L_2$ is recursive.
+\end{proof}
+
+\begin{corollary}
+\label{RecComp}
+
+If $\Sigma$ is an alphabet and $L\sub\Sigma^*$ is recursive,
+then so is $\Sigma^*-L$.
+\end{corollary}
+
+\begin{proof}
+Follows from Theorem~\ref{RecClose}, since $\Sigma^*$ is recursive.
+\end{proof}
+\subsection{Closure Properties of Recursively Enumerable Languages}
+
+\begin{theorem}
+If $L$, $L_1$ and $L_2$ are recursively enumerable languages, then so
+are $L_1\cup L_2$, $L_1L_2$, $L^*$ and $L_1\cap L_2$.
+\end{theorem}
+
+\begin{proof}
+We consider the concatenation case as an example.  Since $L_1$ and
+$L_2$ are recursively enumerable, there are programs $\pr_1$ and
+$\pr_2$ such that, for all $w\in\Str$, $w\in L_1$ iff
+$\eval(\progapp(\pr_1,\progstr(w)))=\norm(\progconst(\progtrue))$, and
+for all $w\in\Str$, $w\in L_2$ iff
+$\eval(\progapp(\pr_2,\progstr(w)))=\norm(\progconst(\progtrue))$.
+(Remember that $\pr_1$ and $\pr_2$ may fail to terminate on some
+inputs.)
+
+To show that $L_1L_2$ is recursively enumerable, we will construct a
+program $\pr$ such that, for all $w\in\Str$, $w\in L_1L_2$ iff
+$\eval(\progapp(\pr,\progstr(w)))=\norm(\progconst(\progtrue))$.
+
+When $\pr$ is called with $\progstr(w)$, for some $w\in\Str$, it
+behaves as follows.  First, it generates all the pairs of strings
+$(x_1,x_2)$ such that $w=x_1x_2$.  Let these pairs be
+$(x_{1,1},x_{2,1}),\ldots,(x_{1,n},x_{2,n})$.  Now, $\pr$ uses our
+\emph{incremental} interpretation function to run a fixed number of
+steps of $\progapp(\pr_1,\progstr(x_{1,i}))$ and
+$\progapp(\pr_2,\progstr(x_{2,i}))$ (working with
+$\overline{\progapp(\pr_1,\progstr(x_{1,i}))}$ and
+$\overline{\progapp(\pr_2,\progstr(x_{2,i}))}$), for all $i\in[1:n]$,
+and then repeat this over and over again.
+
+\begin{itemize}
+\item If, at some stage, the incremental interpretation of
+  $\progapp(\pr_1,\progstr(x_{1,i}))$ returns
+  $\overline{\progconst(\progtrue)}$, then $x_{1,i}$ is marked as being in
+  $L_1$.
+
+\item If, at some stage, the incremental interpretation of
+  $\progapp(\pr_2,\progstr(x_{2,i}))$ returns
+  $\overline{\progconst(\progtrue)}$, then the $x_{2,i}$ is marked as
+  being in $L_2$.
+
+\item If, at some stage, the incremental interpretation of
+  $\progapp(\pr_1,\progstr(x_{1,i}))$ returns something other than
+  $\overline{\progconst(\progtrue)}$, then the $i$'th pair is marked as
+  discarded.
+
+\item If, at some stage, the incremental interpretation of
+  $\progapp(\pr_2,\progstr(x_{2,i}))$ returns something other than
+  $\overline{\progconst(\progtrue)}$, then the $i$'th pair is marked as
+  discarded.
+
+\item If, at some stage, $x_{1,i}$ is marked as in $L_1$ and $x_{2,i}$
+  is marked as in $L_2$, then $Q$ returns $\progconst(\progtrue)$.
+
+\item If, at some stage, there are no remaining pairs, then $\pr$
+  returns $\progconst(\progfalse)$.
+\end{itemize}
+\end{proof}
+
+\begin{theorem}
+If $\Sigma$ is an alphabet, $L\sub\Sigma^*$ is a recursively
+enumerable language, and $\Sigma^*-L$ is recursively enumerable, then
+$L$ is recursive.
+\end{theorem}
+
+\begin{proof}
+Since $L$ and $\Sigma^*-L$ are recursively enumerable languages,
+there are programs $\pr_1$ and $\pr_2$ such that, for all $w\in\Str$,
+$w\in L$ iff
+$\eval(\progapp(\pr_1,\progstr(w)))=\norm(\progconst(\progtrue))$, and
+for all $w\in\Str$, $w\in\Sigma^*-L$ iff
+$\eval(\progapp(\pr_2,\progstr(w)))=\norm(\progconst(\progtrue))$.
+
+We construct a string predicate program $\pr$ that tests whether its
+input is in $L$.  Given $\progstr(w)$, for $w\in\Str$, $\pr$ proceeds
+as follows.  If $w\not\in\Sigma^*$, then $\pr$ returns
+$\progconst(\progfalse)$.  Otherwise, $\pr$ alternates between
+incrementally interpreting $\progapp(\pr_1,\progstr(w))$ (working with
+$\overline{\progapp(\pr_1,\progstr(w))}$) and
+$\progapp(\pr_2,\progstr(w))$ (working with
+$\overline{\progapp(\pr_2,\progstr(w))}$).
+
+\begin{itemize}
+\item If, at some stage, the first incremental interpretation returns
+  $\overline{\progconst(\progtrue)}$, then $\pr$ returns
+  $\progconst(\progtrue)$.
+
+\item If, at some stage, the second incremental interpretation returns
+  $\overline{\progconst(\progtrue)}$, then $\pr$ returns
+  $\progconst(\progfalse)$.
+
+\item If, at some stage, the first incremental interpretation returns
+  anything other than $\overline{\progconst(\progtrue)}$, then $\pr$
+  returns $\progconst(\progfalse)$.
+
+\item If, at some stage, the second incremental interpretation returns
+  anything other than $\overline{\progconst(\progtrue)}$, then $\pr$
+  returns $\progconst(\progtrue)$.
+\end{itemize}
+\end{proof}
+
+\subsection{Notes}
+
+Our approach to this section is standard, except for our using
+programs instead of Turing machines.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

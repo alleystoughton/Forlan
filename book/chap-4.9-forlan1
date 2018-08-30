@@ -1,0 +1,4 @@
+val gram' = Gram.eliminateEmptyProductions gram;
+Gram.output("", gram');
+val gram'' = Gram.eliminateEmptyAndUnitProductions gram;
+Gram.output("", gram'');

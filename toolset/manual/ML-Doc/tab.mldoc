@@ -1,0 +1,195 @@
+<!-- tab.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Tab Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Tab/ Module</HEAD>
+
+<PP>This module defines an abstract type of finite tables (maps).</PP>
+
+<STRUCTURE STRID="Tab">
+<OPAQUE>
+<SIGBODY SIGID="TAB" FILE=TAB>
+
+<SPEC>
+<TYPE><TYPARAM>('a, 'b)</TYPARAM><ID>tab</ID></TYPE>
+<COMMENT>
+<PP>A finite table (map) sending inputs of type <CD><ARG/'a/</CD> to
+outputs of type <CD><ARG/'b/</CD>.  A table of type <CD>(<ARG/'a/,
+<ARG/'b/)tab</CD> can be understood as consisting of a finite set of
+<EM>bindings</EM> <CD>(<ARG/x/, <ARG/y/)</CD>, for a value <CD><ARG/x/</CD> of
+type <CD><ARG/'a/</CD> and a value <CD><ARG/y/</CD>
+of type <CD><ARG/'b/</CD>, where, for a given value <CD><ARG/x/</CD>,
+there is at most one binding with a left-hand side of <CD><ARG/x/</CD>.
+</PP>
+
+<PP>The module's values are specified with the help of the abstract
+proposition saying that a value <CD><ARG/tab/</CD> of type
+<CD>(<ARG/'a/, <ARG/'b/)tab</CD> <EM>is compatible with</EM> a value
+<CD><ARG/cmp/</CD> of type <CD><ARG/'a/ Sort.total_ordering</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>
+lookup<TY>'a Sort.total_ordering -> (('a, 'b)tab * 'a) -> 'b option</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+lookup <ARG/cmp/ (<ARG/tab/, <ARG/x/)
+</PROTOTY>
+<PP>Informally, if <CD><ARG/tab/</CD> is compatible with <CD><ARG/cmp/</CD>,
+then <CD>lookup</CD> returns <CD>NONE</CD>, if <CD><ARG/tab/</CD> doesn't
+contain a binding whose left-hand side is <CD><ARG/x/</CD>, and
+<CD>lookup</CD> returns <CD>SOME <ARG/y/</CD>, if <CD><ARG/tab/</CD>
+contains the binding <CD>(<ARG/x/, <ARG/y/)</CD>.  Formally, the
+meaning of <CD>lookup</CD> must be understood in relation to the
+specifications of the other values of the module.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>isEmpty<TY>('a, 'b)tab -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+isEmpty <ARG/tab/
+</PROTOTY>
+If <CD><ARG/tab/</CD> is compatible with a value <CD><ARG/cmp/</CD> of
+type <CD><ARG/'a/ Sort.total_ordering</CD>, then <CD>isEmpty</CD>
+tests whether <CD><ARG/tab/</CD> is the table with no bindings, i.e.,
+whether <CD>lookup <ARG/cmp/ (<ARG/tab/, <ARG/x/) = NONE</CD>, for all
+values <CD><ARG/x/</CD> of type <CD><ARG/'a/</CD>.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>empty<TY>('a, 'b)tab</TY>
+<COMMENT>
+<PROTOTY>
+empty
+</PROTOTY>
+<PP>If <CD><ARG/cmp/</CD> is a value of type 
+<CD><ARG/'a/ Sort.total_ordering</CD>, then <CD>empty</CD> is the
+table that is compatible with <CD><ARG/cmp/</CD> and has no bindings,
+i.e., the table <CD><ARG/tab/</CD> such that
+<CD>lookup <ARG/cmp/ (<ARG/tab/, <ARG/x/) = NONE</CD>, for all
+values <CD><ARG/x/</CD> of type <CD><ARG/'a/</CD>.
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>update
+<TY>
+'a Sort.total_ordering -> (('a, 'b)tab * ('a * 'b)list) -> ('a,'b)tab
+</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+update <ARG/cmp/ (<ARG/tab/, <ARG/xs/)
+</PROTOTY>
+<PP>If <CD><ARG/tab/</CD> is compatible with <CD><ARG/cmp/</CD>,
+then <CD>update</CD> returns a table that is compatible
+with <CD><ARG/cmp/</CD> and consists of the union of the bindings
+of <CD><ARG/tab/</CD> whose left-hand sides don't appear as left-hand
+sides in <CD><ARG/xs/</CD>, and the bindings of <CD><ARG/xs/</CD>
+whose left-hand sides don't appear as left-hand sides in subsequent
+bindings of <CD><ARG/xs/</CD>, i.e., the table
+<CD><ARG/tab'/</CD> that is compatible with <CD><ARG/cmp/</CD> and
+such that, for all values <CD><ARG/x/</CD> of type <CD><ARG/'a/</CD>:
+<ITEMIZE>
+<ITEM>
+if there is no <CD>1 <= <ARG/i/ <= length <ARG/xs/</CD> such that
+<CD>Sort.equal <ARG/cmp/ (#1(ListAux.sub(<ARG/xs/, i)), <ARG/x/)</CD>,
+then <CD>lookup <ARG/cmp/ (<ARG/tab'/, <ARG/x/) =
+lookup <ARG/cmp/ (<ARG/tab/, <ARG/x/)</CD>; and
+</ITEM>
+
+<ITEM>for all <CD>1 <= <ARG/i/ <= length <ARG/xs/</CD>, if
+<CD>Sort.equal <ARG/cmp/ (#1(ListAux.sub(<ARG/xs/, i)), <ARG/x/)</CD>,
+and there is no <CD><ARG/i/ < <ARG/j/ <= length <ARG/xs/</CD> such
+that <CD>Sort.equal <ARG/cmp/ (#1(ListAux.sub(<ARG/xs/, j)), <ARG/x/)</CD>,
+then
+<CD>lookup <ARG/cmp/ (<ARG/tab'/, <ARG/x/) =
+SOME(#2(ListAux.sub(<ARG/xs/, i)))</CD>.
+</ITEM>
+</ITEMIZE>
+</PP>
+</COMMENT>
+
+<SPEC>
+<VAL>domain<TY>'a Sort.total_ordering -> ('a, 'b)tab -> 'a Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+domain <ARG/cmp/ <ARG/tab/
+</PROTOTY>
+<PP>If <CD><ARG/tab/</CD> is compatible with <CD><ARG/cmp/</CD>,
+then <CD>domain</CD> returns the set that is compatible
+with <CD><ARG/cmp/</CD> and consists of the left-hand sides
+of the bindings of <CD><ARG/tab/</CD>, i.e., the set <CD><ARG/xs/</CD> such
+that, for all values <CD><ARG/x/</CD> of type <CD><ARG/'a/</CD>,
+<CD>Set.memb <ARG/cmp/ (<ARG/xs/, <ARG/x/)</CD> iff
+<CD>lookup <ARG/cmp/ (<ARG/tab/, <ARG/x/)</CD> is not <CD>NONE</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>toList<TY>('a, 'b)tab -> ('a * 'b)list</TY></VAL>
+<COMMENT>
+<PROTOTY>
+toList <ARG/tab/
+</PROTOTY>
+<PP>If <CD><ARG/tab/</CD> is compatible with a value
+<CD><ARG/cmp/</CD> of type <CD><ARG/'a/ Sort.total_ordering</CD>, then
+<CD>toList</CD> returns the list of bindings of <CD><ARG/tab/</CD>,
+ordered according to their left-hand sides using <CD><ARG/cmp/</CD>, i.e.,
+the list <CD><ARG/xs/</CD> such that:
+<ITEMIZE>
+<ITEM>for all <CD>1 <= <ARG/i/ <= length <ARG/xs/ - 1</CD>,
+<CD>Sort.less cmp (#1(ListAux.sub(<ARG/xs/, i)),
+#1(ListAux.sub(<ARG/xs/, i + 1)))</CD>;
+</ITEM>
+
+<ITEM>for all values <CD><ARG/y/</CD> of type <CD><ARG/'a/</CD>
+and <CD><ARG/z/</CD> of type <CD><ARG/'b/</CD>, if
+<CD>lookup <ARG/cmp/ (<ARG/tab/, <ARG/y/) = SOME <ARG/z/</CD>,
+then there is an <CD>1 <= <ARG/i/ <= length <ARG/xs/</CD> such that
+<CD>ListAux.sub(<ARG/xs/, i) = (<ARG/y/, <ARG/z/)</CD>; and
+</ITEM>
+
+<ITEM>for all <CD>1 <= <ARG/i/ <= length <ARG/xs/</CD>,
+<CD>lookup <ARG/cmp/ (#1(ListAux.sub(<ARG/xs/, <ARG/i/))) =
+SOME(#2(ListAux.sub(<ARG/xs/, <ARG/i/)))</CD>.
+</ITEM>
+</ITEMIZE>
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>fromList
+<TY>'a Sort.total_ordering -> ('a * 'b)list -> ('a, 'b)tab</TY>
+</VAL>
+<COMMENT>
+<PROTOTY>
+fromList <ARG/cmp/ <ARG/xs/
+</PROTOTY>
+<PP>returns <CD>update <ARG/cmp/ (<ARG/empty/, <ARG/xs/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

@@ -1,0 +1,56 @@
+@FILES
+  ["sym-rel"; "The SymRel Module";]
+@SIGNATURE SYM_REL "sym-rel" [
+  @TYPES 
+    @TYPE sym_rel
+  @VALS 
+    toPP
+    genUnion
+    function
+    mlFunctionToFunction
+    makeBijectionFromAvoiding
+    fromString
+    bijectionFromAvoiding
+    symmetric
+    map
+    fromList
+    reflexiveTransitiveClosure
+    output
+    inter
+    injection
+    relationFromTo
+    restrictFunction
+    domain
+    union
+    antisymmetric
+    symmetricClosure
+    applyFunction
+    functionFromTo
+    range
+    input
+    memb
+    comparePair
+    transitiveSymmetricClosure
+    compose
+    bijectionFromSupersetAvoiding
+    reflexiveClosure
+    equal
+    updateFunction
+    transitive
+    inverse
+    inputFromLabToks
+    total
+    subset
+    apply
+    transitiveClosure
+    compare
+    toString
+    reflexive
+    relationOn
+    genInter
+    minus
+    reflexiveTransitiveSymmetricClosure
+    bijectionFromTo
+    mapFromList
+]
+@STRUCTURE SymRel "sym-rel" SYM_REL

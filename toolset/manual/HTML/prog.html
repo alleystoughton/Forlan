@@ -1,0 +1,717 @@
+<!-- HTML/prog.html -->
+
+<!-- COPYRIGHT (c) 2012 Alley Stoughton. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The Prog Module</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY><A NAME="top"></A>
+<H1 align=CENTER>Forlan Manual</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>Prog</CODE> Module</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="PROG:SIG:SPEC"></A><CODE>PROG</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Prog:STR:SPEC"></A><CODE>Prog</CODE><B> :> </B>PROG<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The module defines the abstract type of programs.
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>datatype</B>&nbsp;<A NAME="STR:Prog.const:TY:SPEC" HREF="#STR:Prog.const:TY">const</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="STR:Prog.True:TY:SPEC" HREF="#STR:Prog.True:TY">True</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.False:TY:SPEC" HREF="#STR:Prog.False:TY">False</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Nil:TY:SPEC" HREF="#STR:Prog.Nil:TY">Nil</A><BR>
+<B>datatype</B>&nbsp;<A NAME="STR:Prog.oper:TY:SPEC" HREF="#STR:Prog.oper:TY">oper</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="STR:Prog.IsNil:TY:SPEC" HREF="#STR:Prog.IsNil:TY">IsNil</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.IsInt:TY:SPEC" HREF="#STR:Prog.IsInt:TY">IsInt</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.IsNeg:TY:SPEC" HREF="#STR:Prog.IsNeg:TY">IsNeg</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.IsZero:TY:SPEC" HREF="#STR:Prog.IsZero:TY">IsZero</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.IsPos:TY:SPEC" HREF="#STR:Prog.IsPos:TY">IsPos</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.IsSym:TY:SPEC" HREF="#STR:Prog.IsSym:TY">IsSym</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.IsStr:TY:SPEC" HREF="#STR:Prog.IsStr:TY">IsStr</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.IsPair:TY:SPEC" HREF="#STR:Prog.IsPair:TY">IsPair</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.IsLam:TY:SPEC" HREF="#STR:Prog.IsLam:TY">IsLam</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Plus:TY:SPEC" HREF="#STR:Prog.Plus:TY">Plus</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Minus:TY:SPEC" HREF="#STR:Prog.Minus:TY">Minus</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Compare:TY:SPEC" HREF="#STR:Prog.Compare:TY">Compare</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Fst:TY:SPEC" HREF="#STR:Prog.Fst:TY">Fst</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Snd:TY:SPEC" HREF="#STR:Prog.Snd:TY">Snd</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.ConsSym:TY:SPEC" HREF="#STR:Prog.ConsSym:TY">ConsSym</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.DeconsSym:TY:SPEC" HREF="#STR:Prog.DeconsSym:TY">DeconsSym</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.SymListToStr:TY:SPEC" HREF="#STR:Prog.SymListToStr:TY">SymListToStr</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.StrToSymList:TY:SPEC" HREF="#STR:Prog.StrToSymList:TY">StrToSymList</A><BR>
+<B>datatype</B>&nbsp;<A NAME="STR:Prog.concr:TY:SPEC" HREF="#STR:Prog.concr:TY">concr</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="STR:Prog.Var:TY:SPEC" HREF="#STR:Prog.Var:TY">Var</A>&nbsp;<B>of</B>&nbsp;Var.var<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Const:TY:SPEC" HREF="#STR:Prog.Const:TY">Const</A>&nbsp;<B>of</B>&nbsp;const<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Int:TY:SPEC" HREF="#STR:Prog.Int:TY">Int</A>&nbsp;<B>of</B>&nbsp;IntInf.int<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Sym:TY:SPEC" HREF="#STR:Prog.Sym:TY">Sym</A>&nbsp;<B>of</B>&nbsp;Sym.sym<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Str:TY:SPEC" HREF="#STR:Prog.Str:TY">Str</A>&nbsp;<B>of</B>&nbsp;Str.str<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Pair:TY:SPEC" HREF="#STR:Prog.Pair:TY">Pair</A>&nbsp;<B>of</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Calc:TY:SPEC" HREF="#STR:Prog.Calc:TY">Calc</A>&nbsp;<B>of</B>&nbsp;oper&nbsp;<B>*</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Cond:TY:SPEC" HREF="#STR:Prog.Cond:TY">Cond</A>&nbsp;<B>of</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.App:TY:SPEC" HREF="#STR:Prog.App:TY">App</A>&nbsp;<B>of</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Lam:TY:SPEC" HREF="#STR:Prog.Lam:TY">Lam</A>&nbsp;<B>of</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.LetSimp:TY:SPEC" HREF="#STR:Prog.LetSimp:TY">LetSimp</A>&nbsp;<B>of</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.LetRec:TY:SPEC" HREF="#STR:Prog.LetRec:TY">LetRec</A>&nbsp;<B>of</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr<BR>
+<B>type</B>&nbsp;<A NAME="STR:Prog.prog:TY:SPEC" HREF="#STR:Prog.prog:TY">prog</A><BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.fromConcr:VAL:SPEC" HREF="#STR:Prog.fromConcr:VAL">fromConcr</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.toConcr:VAL:SPEC" HREF="#STR:Prog.toConcr:VAL">toConcr</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;concr<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.var:VAL:SPEC" HREF="#STR:Prog.var:VAL">var</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.const:VAL:SPEC" HREF="#STR:Prog.const:VAL">const</A>&nbsp;<B>:</B>&nbsp;const&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.int:VAL:SPEC" HREF="#STR:Prog.int:VAL">int</A>&nbsp;<B>:</B>&nbsp;IntInf.int&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.sym:VAL:SPEC" HREF="#STR:Prog.sym:VAL">sym</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.str:VAL:SPEC" HREF="#STR:Prog.str:VAL">str</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.pair:VAL:SPEC" HREF="#STR:Prog.pair:VAL">pair</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>*</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.calc:VAL:SPEC" HREF="#STR:Prog.calc:VAL">calc</A>&nbsp;<B>:</B>&nbsp;oper&nbsp;<B>*</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.cond:VAL:SPEC" HREF="#STR:Prog.cond:VAL">cond</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>*</B>&nbsp;prog&nbsp;<B>*</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.app:VAL:SPEC" HREF="#STR:Prog.app:VAL">app</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>*</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.lam:VAL:SPEC" HREF="#STR:Prog.lam:VAL">lam</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.letSimp:VAL:SPEC" HREF="#STR:Prog.letSimp:VAL">letSimp</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;prog&nbsp;<B>*</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.letRec:VAL:SPEC" HREF="#STR:Prog.letRec:VAL">letRec</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;prog&nbsp;<B>*</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.fromString:VAL:SPEC" HREF="#STR:Prog.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.input:VAL:SPEC" HREF="#STR:Prog.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.toPP:VAL:SPEC" HREF="#STR:Prog.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.toString:VAL:SPEC" HREF="#STR:Prog.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.output:VAL:SPEC" HREF="#STR:Prog.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.compare:VAL:SPEC" HREF="#STR:Prog.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;Sort.total_ordering<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.equal:VAL:SPEC" HREF="#STR:Prog.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>*</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.toStr:VAL:SPEC" HREF="#STR:Prog.toStr:VAL">toStr</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;Str.str<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.fromStr:VAL:SPEC" HREF="#STR:Prog.fromStr:VAL">fromStr</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.validPath:VAL:SPEC" HREF="#STR:Prog.validPath:VAL">validPath</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.height:VAL:SPEC" HREF="#STR:Prog.height:VAL">height</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.size:VAL:SPEC" HREF="#STR:Prog.size:VAL">size</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.numLeaves:VAL:SPEC" HREF="#STR:Prog.numLeaves:VAL">numLeaves</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.select:VAL:SPEC" HREF="#STR:Prog.select:VAL">select</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.update:VAL:SPEC" HREF="#STR:Prog.update:VAL">update</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>*</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.maximumLengthPath:VAL:SPEC" HREF="#STR:Prog.maximumLengthPath:VAL">maximumLengthPath</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.validLeafPath:VAL:SPEC" HREF="#STR:Prog.validLeafPath:VAL">validLeafPath</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.free:VAL:SPEC" HREF="#STR:Prog.free:VAL">free</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;Var.var&nbsp;Set.set<BR>
+<B>type</B>&nbsp;<A NAME="STR:Prog.cp:TY:SPEC" HREF="#STR:Prog.cp:TY">cp</A><BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.toClosed:VAL:SPEC" HREF="#STR:Prog.toClosed:VAL">toClosed</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;cp<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.fromClosed:VAL:SPEC" HREF="#STR:Prog.fromClosed:VAL">fromClosed</A>&nbsp;<B>:</B>&nbsp;cp&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.subst:VAL:SPEC" HREF="#STR:Prog.subst:VAL">subst</A>&nbsp;<B>:</B>&nbsp;cp&nbsp;<B>*</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.isValue:VAL:SPEC" HREF="#STR:Prog.isValue:VAL">isValue</A>&nbsp;<B>:</B>&nbsp;cp&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>datatype</B>&nbsp;<A NAME="STR:Prog.step:TY:SPEC" HREF="#STR:Prog.step:TY">step</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="STR:Prog.Value:TY:SPEC" HREF="#STR:Prog.Value:TY">Value</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Error:TY:SPEC" HREF="#STR:Prog.Error:TY">Error</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Next:TY:SPEC" HREF="#STR:Prog.Next:TY">Next</A>&nbsp;<B>of</B>&nbsp;cp<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.step:VAL:SPEC" HREF="#STR:Prog.step:VAL">step</A>&nbsp;<B>:</B>&nbsp;cp&nbsp;<B>-&gt;</B>&nbsp;step<BR>
+<B>datatype</B>&nbsp;<A NAME="STR:Prog.run:TY:SPEC" HREF="#STR:Prog.run:TY">run</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="STR:Prog.Ans:TY:SPEC" HREF="#STR:Prog.Ans:TY">Ans</A>&nbsp;<B>of</B>&nbsp;cp<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Fail:TY:SPEC" HREF="#STR:Prog.Fail:TY">Fail</A>&nbsp;<B>of</B>&nbsp;cp<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Intermed:TY:SPEC" HREF="#STR:Prog.Intermed:TY">Intermed</A>&nbsp;<B>of</B>&nbsp;cp<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.run:VAL:SPEC" HREF="#STR:Prog.run:VAL">run</A>&nbsp;<B>:</B>&nbsp;cp&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;run<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.evaluate:VAL:SPEC" HREF="#STR:Prog.evaluate:VAL">evaluate</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>datatype</B>&nbsp;<A NAME="STR:Prog.accept:TY:SPEC" HREF="#STR:Prog.accept:TY">accept</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="STR:Prog.Accept:TY:SPEC" HREF="#STR:Prog.Accept:TY">Accept</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.RejectWithFalse:TY:SPEC" HREF="#STR:Prog.RejectWithFalse:TY">RejectWithFalse</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.RejectOtherwise:TY:SPEC" HREF="#STR:Prog.RejectOtherwise:TY">RejectOtherwise</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="STR:Prog.Unknown:TY:SPEC" HREF="#STR:Prog.Unknown:TY">Unknown</A>&nbsp;<B>of</B>&nbsp;cp<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.accept:VAL:SPEC" HREF="#STR:Prog.accept:VAL">accept</A>&nbsp;<B>:</B>&nbsp;cp&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;accept<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.accepted:VAL:SPEC" HREF="#STR:Prog.accepted:VAL">accepted</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.toRep:VAL:SPEC" HREF="#STR:Prog.toRep:VAL">toRep</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.fromRep:VAL:SPEC" HREF="#STR:Prog.fromRep:VAL">fromRep</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.isRep:VAL:SPEC" HREF="#STR:Prog.isRep:VAL">isRep</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.jforlanNew:VAL:SPEC" HREF="#STR:Prog.jforlanNew:VAL">jforlanNew</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.jforlanEdit:VAL:SPEC" HREF="#STR:Prog.jforlanEdit:VAL">jforlanEdit</A>&nbsp;<B>:</B>&nbsp;prog&nbsp;<B>-&gt;</B>&nbsp;prog<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.jforlanValidate:VAL:SPEC" HREF="#STR:Prog.jforlanValidate:VAL">jforlanValidate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Prog.jforlanPretty:VAL:SPEC" HREF="#STR:Prog.jforlanPretty:VAL">jforlanPretty</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="STR:Prog.const:TY"></A><CODE><B>datatype</B>&nbsp;const<BR>
+&nbsp;&nbsp;=&nbsp;True<BR>
+&nbsp;&nbsp;|&nbsp;False<BR>
+&nbsp;&nbsp;|&nbsp;Nil</CODE>
+<DD>
+The datatype of program constants.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.oper:TY"></A><CODE><B>datatype</B>&nbsp;oper<BR>
+&nbsp;&nbsp;=&nbsp;IsNil<BR>
+&nbsp;&nbsp;|&nbsp;IsInt<BR>
+&nbsp;&nbsp;|&nbsp;IsNeg<BR>
+&nbsp;&nbsp;|&nbsp;IsZero<BR>
+&nbsp;&nbsp;|&nbsp;IsPos<BR>
+&nbsp;&nbsp;|&nbsp;IsSym<BR>
+&nbsp;&nbsp;|&nbsp;IsStr<BR>
+&nbsp;&nbsp;|&nbsp;IsPair<BR>
+&nbsp;&nbsp;|&nbsp;IsLam<BR>
+&nbsp;&nbsp;|&nbsp;Plus<BR>
+&nbsp;&nbsp;|&nbsp;Minus<BR>
+&nbsp;&nbsp;|&nbsp;Compare<BR>
+&nbsp;&nbsp;|&nbsp;Fst<BR>
+&nbsp;&nbsp;|&nbsp;Snd<BR>
+&nbsp;&nbsp;|&nbsp;ConsSym<BR>
+&nbsp;&nbsp;|&nbsp;DeconsSym<BR>
+&nbsp;&nbsp;|&nbsp;SymListToStr<BR>
+&nbsp;&nbsp;|&nbsp;StrToSymList</CODE>
+<DD>
+The datatype of program operators.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.concr:TY"></A><CODE><B>datatype</B>&nbsp;concr<BR>
+&nbsp;&nbsp;=&nbsp;Var&nbsp;<B>of</B>&nbsp;Var.var<BR>
+&nbsp;&nbsp;|&nbsp;Const&nbsp;<B>of</B>&nbsp;const<BR>
+&nbsp;&nbsp;|&nbsp;Int&nbsp;<B>of</B>&nbsp;IntInf.int<BR>
+&nbsp;&nbsp;|&nbsp;Sym&nbsp;<B>of</B>&nbsp;Sym.sym<BR>
+&nbsp;&nbsp;|&nbsp;Str&nbsp;<B>of</B>&nbsp;Str.str<BR>
+&nbsp;&nbsp;|&nbsp;Pair&nbsp;<B>of</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;Calc&nbsp;<B>of</B>&nbsp;oper&nbsp;<B>*</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;Cond&nbsp;<B>of</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;App&nbsp;<B>of</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;Lam&nbsp;<B>of</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;LetSimp&nbsp;<B>of</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr<BR>
+&nbsp;&nbsp;|&nbsp;LetRec&nbsp;<B>of</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;concr&nbsp;<B>*</B>&nbsp;concr</CODE>
+<DD>
+The concrete datatype of programs: 
+<UL>
+<LI>
+For all program variables <CODE><VAR>v</VAR></CODE>, <CODE>Var <VAR>v</VAR></CODE> is the one-node tree labeled by <CODE>var(<VAR>v</VAR>)</CODE>.
+<LI>
+For all program constants <CODE><VAR>con</VAR></CODE>, <CODE>Const <VAR>con</VAR></CODE> is the one-node tree labeled by <CODE>const(<VAR>con</VAR>)</CODE>.
+<LI>
+For all integers <CODE><VAR>n</VAR></CODE>, <CODE>Int <VAR>n</VAR></CODE> is the one-node tree labeled by <CODE>int(<VAR>n</VAR>)</CODE>.
+<LI>
+For all symbols <CODE><VAR>a</VAR></CODE>, <CODE>Sym <VAR>a</VAR></CODE> is the one-node tree labeled by <CODE>sym(<VAR>a</VAR>)</CODE>.
+<LI>
+For all strings <CODE><VAR>x</VAR></CODE>, <CODE>Str <VAR>x</VAR></CODE> is the one-node tree labeled by <CODE>str(<VAR>x</VAR>)</CODE>.
+<LI>
+For all programs <CODE><VAR>pr1</VAR></CODE> and <CODE><VAR>pr2</VAR></CODE>, <CODE>Pair(<VAR>pr1</VAR>, <VAR>pr2</VAR>)</CODE> is the tree whose root node is labeled by <CODE>pair</CODE>, with two children, a left child <CODE><VAR>pr1</VAR></CODE>, and a right child <CODE><VAR>pr2</VAR></CODE>.
+<LI>
+For all program operators <CODE><VAR>oper</VAR></CODE> and programs <CODE><VAR>pr</VAR></CODE>, <CODE>Calc(<VAR>oper</VAR>, <VAR>pr</VAR>)</CODE> is the tree whose root node is labeled by <CODE>calc(<VAR>oper</VAR>)</CODE>, with one child <CODE><VAR>pr</VAR></CODE>.
+<LI>
+For all programs <CODE><VAR>pr1</VAR></CODE>, <CODE><VAR>pr2</VAR></CODE> and <CODE><VAR>pr3</VAR></CODE>, <CODE>Cond(<VAR>pr1</VAR>, <VAR>pr2</VAR>, <VAR>pr3</VAR>)</CODE> is the tree whose root node is labeled by <CODE>cond</CODE>, with three children, a left child <CODE><VAR>pr1</VAR></CODE>, a middle child <CODE><VAR>pr2</VAR></CODE>, and a right child <CODE><VAR>pr3</VAR></CODE>.
+<LI>
+For all programs <CODE><VAR>pr1</VAR></CODE> and <CODE><VAR>pr2</VAR></CODE>, <CODE>App(<VAR>pr1</VAR>, <VAR>pr2</VAR>)</CODE> is the tree whose root node is labeled by <CODE>app</CODE>, with two children, a left child <CODE><VAR>pr1</VAR></CODE>, and a right child <CODE><VAR>pr2</VAR></CODE>.
+<LI>
+For all program variables <CODE><VAR>v</VAR></CODE> and programs <CODE><VAR>pr</VAR></CODE>, <CODE>Lam(<VAR>v</VAR>, <VAR>pr</VAR>)</CODE> is the tree whose root node is labeled <CODE>lam(<VAR>v</VAR>)</CODE>, with one child <CODE><VAR>pr</VAR></CODE>.
+<LI>
+For all program variables <CODE><VAR>v</VAR></CODE> and programs <CODE><VAR>pr1</VAR></CODE> and <CODE><VAR>pr2</VAR></CODE>, <CODE>LetSimp(<VAR>v</VAR>, <VAR>pr1</VAR>,
+<VAR>pr2</VAR>)</CODE> is the tree whose root node is labeled <CODE>letSimp(<VAR>v</VAR>)</CODE>, with two children, a left child <CODE><VAR>pr1</VAR></CODE>, and a right child <CODE><VAR>pr2</VAR></CODE>.
+<LI>
+For all program variables <CODE><VAR>v1</VAR></CODE> and <CODE><VAR>v2</VAR></CODE>, and programs <CODE><VAR>pr1</VAR></CODE> and <CODE><VAR>pr2</VAR></CODE>, <CODE>LetRec(<VAR>v1</VAR>, <VAR>v2</VAR>, <VAR>pr1</VAR>, <VAR>pr2</VAR>)</CODE> is the tree whose root node is labeled <CODE>letRec(<VAR>v1</VAR>, <VAR>v2</VAR>)</CODE>, with two children, a left child <CODE><VAR>pr1</VAR></CODE>, and a right child <CODE><VAR>pr2</VAR></CODE>.
+</UL>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.prog:TY"></A><CODE><B>type</B>&nbsp;prog</CODE>
+<DD>
+The abstract type of programs, consisting of the values of type <CODE>concr</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.fromConcr:VAL"></A>
+<DT> <CODE>fromConcr <VAR>concr</VAR></CODE>
+<DD>
+returns <CODE><VAR>concr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.toConcr:VAL"></A>
+<DT> <CODE>toConcr <VAR>pr</VAR></CODE>
+<DD>
+returns <CODE><VAR>pr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.var:VAL"></A>
+<DT> <CODE>var <VAR>v</VAR></CODE>
+<DD>
+returns <CODE>Var <VAR>v</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.const:VAL"></A>
+<DT> <CODE>const <VAR>con</VAR></CODE>
+<DD>
+returns <CODE>Const <VAR>con</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.int:VAL"></A>
+<DT> <CODE>int <VAR>n</VAR></CODE>
+<DD>
+returns <CODE>Int <VAR>n</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.sym:VAL"></A>
+<DT> <CODE>sym <VAR>a</VAR></CODE>
+<DD>
+returns <CODE>Sym <VAR>a</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.str:VAL"></A>
+<DT> <CODE>str <VAR>x</VAR></CODE>
+<DD>
+returns <CODE>Str <VAR>x</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.pair:VAL"></A>
+<DT> <CODE>pair(<VAR>pr1</VAR>, <VAR>pr2</VAR>)</CODE>
+<DD>
+returns <CODE>Pair(<VAR>pr1</VAR>, <VAR>pr2</VAR>)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.calc:VAL"></A>
+<DT> <CODE>calc(<VAR>oper</VAR>, <VAR>pr</VAR>)</CODE>
+<DD>
+returns <CODE>Calc(<VAR>oper</VAR>, <VAR>pr</VAR>)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.cond:VAL"></A>
+<DT> <CODE>cond(<VAR>pr1</VAR>, <VAR>pr2</VAR>, <VAR>pr3</VAR>)</CODE>
+<DD>
+returns <CODE>Cond(<VAR>pr1</VAR>, <VAR>pr2</VAR>, <VAR>pr2</VAR>)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.app:VAL"></A>
+<DT> <CODE>App(<VAR>pr1</VAR>, <VAR>pr2</VAR>)</CODE>
+<DD>
+returns <CODE>app(<VAR>pr1</VAR>, <VAR>pr2</VAR>)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.lam:VAL"></A>
+<DT> <CODE>lam(<VAR>v</VAR>, <VAR>pr</VAR>)</CODE>
+<DD>
+returns <CODE>Lam(<VAR>v</VAR>, <VAR>pr</VAR>)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.letSimp:VAL"></A>
+<DT> <CODE>letSimp(<VAR>v</VAR>, <VAR>pr1</VAR>, <VAR>pr2</VAR>)</CODE>
+<DD>
+returns <CODE>LetSimp(<VAR>v</VAR>, <VAR>pr1</VAR>, <VAR>pr2</VAR>)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.letRec:VAL"></A>
+<DT> <CODE>letRec(<VAR>v1</VAR>, <VAR>v2</VAR>, <VAR>pr1</VAR>, <VAR>pr2</VAR>)</CODE>
+<DD>
+returns <CODE>LetRec(<VAR>v1</VAR>, <VAR>v2</VAR>, <VAR>pr1</VAR>, <VAR>pr2</VAR>)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.fromString:VAL"></A>
+<DT> <CODE>fromString <VAR>s</VAR></CODE>
+<DD>
+inputs a program from <CODE><VAR>s</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.input:VAL"></A>
+<DT> <CODE>input <VAR>fil</VAR></CODE>
+<DD>
+inputs a program from the file named <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.toPP:VAL"></A>
+<DT> <CODE>toPP <VAR>pr</VAR></CODE>
+<DD>
+returns a pretty-printing expression for <CODE><VAR>pr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.toString:VAL"></A>
+<DT> <CODE>toString <VAR>pr</VAR></CODE>
+<DD>
+pretty-prints <CODE><VAR>pr</VAR></CODE> to a string.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.output:VAL"></A>
+<DT> <CODE>output(<VAR>fil</VAR>, <VAR>pr</VAR>)</CODE>
+<DD>
+pretty-prints <CODE><VAR>pr</VAR></CODE> to the file named by <CODE><VAR>fil</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.compare:VAL"></A>
+<DT> <CODE>compare(<VAR>pr1</VAR>, <VAR>pr2</VAR>)</CODE>
+<DD>
+is defined by: 
+<PRE>
+  local
+    fun constKind Nil   = 1
+      | constKind True  = 2
+      | constKind False = 3
+
+    fun compareConst(con, con') = Int.compare(constKind con, constKind con')
+
+    fun operKind IsNil        = 1
+      | operKind IsInt        = 2
+      | operKind IsNeg        = 3
+      | operKind IsZero       = 4
+      | operKind IsPos        = 5
+      | operKind IsSym        = 6
+      | operKind IsStr        = 7
+      | operKind IsPair       = 8
+      | operKind IsLam        = 9
+      | operKind Plus         = 10
+      | operKind Minus        = 11
+      | operKind Compare      = 12
+      | operKind Fst          = 13
+      | operKind Snd          = 14
+      | operKind ConsSym      = 15
+      | operKind DeconsSym    = 16
+      | operKind SymListToStr = 17
+      | operKind StrToSymList = 18
+
+    fun compareOperat(oper, oper') = Int.compare(operKind oper, operKind oper')
+
+    fun kind(Var _)     = 1
+      | kind(Const _)   = 2
+      | kind(Int _)     = 3
+      | kind(Sym _)     = 4
+      | kind(Str _)     = 5
+      | kind(Pair _)    = 6
+      | kind(Calc _)    = 7
+      | kind(Cond _)    = 9
+      | kind(App _)     = 8
+      | kind(Lam _)     = 10
+      | kind(LetSimp _) = 11
+      | kind(LetRec _)  = 12
+  in
+    fun compare(pr, pr') =
+          case Int.compare(kind pr, kind pr') of
+               LESS    =&gt; LESS
+             | EQUAL   =&gt;
+                 (case (pr, pr') of
+                       (Var v,                    Var v')                       =&gt;
+                         Var.compare(v, v')
+                     | (Const con,                Const con')                   =&gt;
+                         compareConst(con, con')
+                     | (Int n,                    Int n')                       =&gt;
+                         IntInf.compare(n, n')
+                     | (Sym a,                    Sym a')                       =&gt;
+                         Sym.compare(a, a')
+                     | (Str x,                    Str x')                       =&gt;
+                         Str.compare(x, x')
+                     | (Pair(pr1, pr2),           Pair(pr1', pr2'))             =&gt;
+                         (case compare(pr1, pr1') of
+                               LESS    =&gt; LESS
+                             | EQUAL   =&gt; compare(pr2, pr2')
+                             | GREATER =&gt; GREATER)
+                     | (Calc(oper, pr),           Calc(oper', pr'))             =&gt;
+                         (case compareOperat(oper, oper') of
+                               LESS    =&gt; LESS
+                             | EQUAL   =&gt; compare(pr, pr')
+                             | GREATER =&gt; GREATER)
+                     | (Cond(pr1, pr2, pr3),      Cond(pr1', pr2', pr3'))       =&gt;
+                         (case compare(pr1, pr1') of
+                               LESS    =&gt; LESS
+                             | EQUAL   =&gt;
+                                 (case compare(pr2, pr2') of
+                                       LESS    =&gt; LESS
+                                     | EQUAL   =&gt; compare(pr3, pr3')
+                                     | GREATER =&gt; GREATER)
+                             | GREATER =&gt; GREATER)
+                     | (App(pr1, pr2),            App(pr1', pr2'))              =&gt;
+                         (case compare(pr1, pr1') of
+                               LESS    =&gt; LESS
+                             | EQUAL   =&gt; compare(pr2, pr2')
+                             | GREATER =&gt; GREATER)
+                     | (Lam(v, pr),               Lam(v', pr'))                 =&gt;
+                         (case Var.compare(v, v') of
+                               LESS    =&gt; LESS
+                             | EQUAL   =&gt; compare(pr, pr')
+                             | GREATER =&gt; GREATER)
+                     | (LetSimp(v, pr1, pr2),     LetSimp(v', pr1', pr2'))      =&gt;
+                         (case Var.compare(v, v') of
+                               LESS    =&gt; LESS
+                             | EQUAL   =&gt;
+                                 (case compare(pr1, pr1') of
+                                       LESS    =&gt; LESS
+                                     | EQUAL   =&gt; compare(pr2, pr2')
+                                     | GREATER =&gt; GREATER)
+                             | GREATER =&gt; GREATER)
+                     | (LetRec(v1, v2, pr1, pr2), LetRec(v1', v2', pr1', pr2')) =&gt;
+                         (case Var.compare(v1, v1') of
+                               LESS    =&gt; LESS
+                             | EQUAL   =&gt;
+                                 (case Var.compare(v2, v2') of
+                                       LESS    =&gt; LESS
+                                     | EQUAL   =&gt;
+                                         (case compare(pr1, pr1') of
+                                               LESS    =&gt; LESS
+                                             | EQUAL   =&gt; compare(pr2, pr2')
+                                             | GREATER =&gt; GREATER)
+                                     | GREATER =&gt; GREATER)
+                             | GREATER =&gt; GREATER)
+                     | _                                                        =&gt;
+                         M.cannotHappen())
+             | GREATER =&gt; GREATER
+  end
+</PRE>
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.equal:VAL"></A>
+<DT> <CODE>equal(<VAR>pr1</VAR>, <VAR>pr2</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>pr1</VAR></CODE> and <CODE><VAR>pr2</VAR></CODE> are equal.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.toStr:VAL"></A>
+<DT> <CODE>toStr <VAR>pr</VAR></CODE>
+<DD>
+returns the encoding of <CODE><VAR>pr</VAR></CODE> as a Forlan string, over the alphabet consisting of the symbols <CODE>&lt;comma&gt;</CODE>, <CODE>&lt;perc&gt;</CODE>, <CODE>&lt;tilde&gt;</CODE>, <CODE>&lt;openPar&gt;</CODE>, <CODE>&lt;closPar&gt;</CODE>, <CODE>&lt;less&gt;</CODE> and <CODE>&lt;great&gt;</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.fromStr:VAL"></A>
+<DT> <CODE>fromStr <VAR>x</VAR></CODE>
+<DD>
+returns the unique program that <CODE><VAR>x</VAR></CODE> encodes. Issues an error message if <CODE><VAR>x</VAR></CODE> isn't the code of a program.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.validPath:VAL"></A>
+<DT> <CODE>validPath(<VAR>pr</VAR>, <VAR>ns</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>ns</VAR></CODE> is a valid path for <CODE><VAR>pr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.height:VAL"></A>
+<DT> <CODE>height <VAR>pr</VAR></CODE>
+<DD>
+returns the height of <CODE><VAR>pr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.size:VAL"></A>
+<DT> <CODE>size <VAR>pr</VAR></CODE>
+<DD>
+returns the size of <CODE><VAR>pr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.numLeaves:VAL"></A>
+<DT> <CODE>numLeaves <VAR>pr</VAR></CODE>
+<DD>
+returns the number of leaves of <CODE><VAR>pr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.select:VAL"></A>
+<DT> <CODE>select(<VAR>pr</VAR>, <VAR>ns</VAR>)</CODE>
+<DD>
+returns the subtree of <CODE><VAR>pr</VAR></CODE> pointed to by <CODE><VAR>ns</VAR></CODE>. Issues an error message if <CODE><VAR>ns</VAR></CODE> isn't a valid path for <CODE><VAR>pr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.update:VAL"></A>
+<DT> <CODE>update(<VAR>pr</VAR>, <VAR>ns</VAR>, <VAR>pr'</VAR>)</CODE>
+<DD>
+replaces the subtree of <CODE><VAR>pr</VAR></CODE> pointed to by <CODE><VAR>ns</VAR></CODE> with <CODE><VAR>pr'</VAR></CODE>.  Issues an error message if <CODE><VAR>ns</VAR></CODE> isn't valid for <CODE><VAR>pr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.maximumLengthPath:VAL"></A>
+<DT> <CODE>maximumLengthPath <VAR>pr</VAR></CODE>
+<DD>
+returns a leftmost, maximum length path for <CODE><VAR>pr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.validLeafPath:VAL"></A>
+<DT> <CODE>validLeafPath(<VAR>pr</VAR>, <VAR>ns</VAR>)</CODE>
+<DD>
+tests whether <CODE><VAR>ns</VAR></CODE> is a valid path for <CODE><VAR>pr</VAR></CODE> that points to a leaf of <CODE><VAR>pr</VAR></CODE>, i.e., to a subtree with no children.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.free:VAL"></A>
+<DT> <CODE>free <VAR>pr</VAR></CODE>
+<DD>
+returns the set of free program variables of <CODE><VAR>pr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.cp:TY"></A><CODE><B>type</B>&nbsp;cp</CODE>
+<DD>
+The abstract type of closed programs.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.toClosed:VAL"></A>
+<DT> <CODE>toClosed <VAR>pr</VAR></CODE>
+<DD>
+returns <CODE><VAR>pr</VAR></CODE>.  Issues an error message if <CODE><VAR>pr</VAR></CODE> is not closed.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.fromClosed:VAL"></A>
+<DT> <CODE>fromClosed <VAR>pr</VAR></CODE>
+<DD>
+returns <CODE><VAR>pr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.subst:VAL"></A>
+<DT> <CODE>subst(<VAR>pr</VAR>, <VAR>v</VAR>, <VAR>pr'</VAR>)</CODE>
+<DD>
+substitutes <CODE><VAR>pr</VAR></CODE> for all the free occurrences of <CODE><VAR>v</VAR></CODE> in <CODE><VAR>pr'</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.isValue:VAL"></A>
+<DT> <CODE>isValue <VAR>pr</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>pr</VAR></CODE> is a value.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.step:TY"></A><CODE><B>datatype</B>&nbsp;step<BR>
+&nbsp;&nbsp;=&nbsp;Value<BR>
+&nbsp;&nbsp;|&nbsp;Error<BR>
+&nbsp;&nbsp;|&nbsp;Next&nbsp;<B>of</B>&nbsp;cp</CODE>
+<DD>
+Datatype used by the function <CODE>step</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.step:VAL"></A>
+<DT> <CODE>step <VAR>pr</VAR></CODE>
+<DD>
+The next step function, for trying to run a closed program <CODE><VAR>pr</VAR></CODE> one step.  (See the textbook for its specification.)  If the result is <CODE>Value</CODE>, this means that <CODE><VAR>pr</VAR></CODE> is a value.  If the result is <CODE>Error</CODE>, this means that pr is an error.  And, if the result is <CODE>Next
+<VAR>pr'</VAR></CODE>, this means that running <CODE><VAR>pr</VAR></CODE> one step resulted in <CODE><VAR>pr'</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.run:TY"></A><CODE><B>datatype</B>&nbsp;run<BR>
+&nbsp;&nbsp;=&nbsp;Ans&nbsp;<B>of</B>&nbsp;cp<BR>
+&nbsp;&nbsp;|&nbsp;Fail&nbsp;<B>of</B>&nbsp;cp<BR>
+&nbsp;&nbsp;|&nbsp;Intermed&nbsp;<B>of</B>&nbsp;cp</CODE>
+<DD>
+Datatype used by the function <CODE>run</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.run:VAL"></A>
+<DT> <CODE>run(<VAR>pr</VAR>, <VAR>n</VAR>)</CODE>
+<DD>
+Tries to run <CODE><VAR>pr</VAR></CODE> <CODE><VAR>n</VAR></CODE> steps.  A result of <CODE>Ans <VAR>pr'</VAR></CODE> means that <CODE><VAR>pr</VAR></CODE> terminated with a value <CODE><VAR>pr'</VAR></CODE>.  A result of <CODE>Fail <VAR>pr'</VAR></CODE> means that <CODE><VAR>pr</VAR></CODE> terminated with an error <CODE><VAR>pr'</VAR></CODE>.  And a result of <CODE>Intermed <VAR>pr'</VAR></CODE> means that an intermediate result <CODE><VAR>pr'</VAR></CODE> was produced.  Issues an error message if <CODE><VAR>n</VAR></CODE> is negative.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.evaluate:VAL"></A>
+<DT> <CODE>evaluate(<VAR>pr</VAR>, <VAR>n</VAR>)</CODE>
+<DD>
+explains the significance of the value of type <CODE>run</CODE> produced by evaluating <CODE>run(<VAR>pr</VAR>, <VAR>n</VAR>)</CODE>.  Issues an error message if <CODE><VAR>pr</VAR></CODE> is not closed, or if <CODE><VAR>n</VAR></CODE> is negative.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.accept:TY"></A><CODE><B>datatype</B>&nbsp;accept<BR>
+&nbsp;&nbsp;=&nbsp;Accept<BR>
+&nbsp;&nbsp;|&nbsp;RejectWithFalse<BR>
+&nbsp;&nbsp;|&nbsp;RejectOtherwise<BR>
+&nbsp;&nbsp;|&nbsp;Unknown&nbsp;<B>of</B>&nbsp;cp</CODE>
+<DD>
+Datatype used by the <CODE>accept</CODE> function.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.accept:VAL"></A>
+<DT> <CODE>accept <VAR>pr</VAR> (<VAR>x</VAR>, <VAR>n</VAR>)</CODE>
+<DD>
+gives a partial answer to the question of whether <CODE><VAR>pr</VAR></CODE> accepts <CODE><VAR>x</VAR></CODE>, based on running <CODE>App(<VAR>pr</VAR>, Str <VAR>x</VAR>)</CODE> for <CODE><VAR>n</VAR></CODE> steps (or less, if fewer steps suffice to give a definitive answer).  A result of <CODE>Accept</CODE> means that <CODE><VAR>pr</VAR></CODE> accepted <CODE><VAR>x</VAR></CODE> by terminating with <CODE>Const True</CODE>.  A result of <CODE>RejectWithFalse</CODE> means that <CODE><VAR>pr</VAR></CODE> rejected <CODE><VAR>x</VAR></CODE> by yielding <CODE>Const
+False</CODE>.  A result of <CODE>RejectOtherwise</CODE> means that <CODE><VAR>pr</VAR></CODE> rejected <CODE><VAR>x</VAR></CODE> by terminating with a value other than <CODE>Const True</CODE> or <CODE>Const False</CODE>, or with an error.  And a result of <CODE>Unknown <VAR>cp</VAR></CODE> means that <CODE><VAR>n</VAR></CODE> steps of evaluation produced an intermediate program <CODE><VAR>pr'</VAR></CODE> that is neither a value nor an error.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.accepted:VAL"></A>
+<DT> <CODE>accepted <VAR>pr</VAR></CODE>
+<DD>
+issues an error message if <CODE><VAR>pr</VAR></CODE> isn't closed. Otherwise, returns a function <CODE><VAR>f</VAR></CODE> that behaves as follows, when called with argument <CODE>(<VAR>x</VAR>, <VAR>n</VAR>)</CODE>. If <CODE><VAR>n</VAR></CODE> is negative, then an error message is issued.  Otherwise, it explains the significance of the value of type <CODE>accept</CODE> produced by evaluating <CODE>accept <VAR>pr</VAR> (<VAR>x</VAR>, <VAR>n</VAR>)</CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.toRep:VAL"></A>
+<DT> <CODE>toRep <VAR>pr</VAR></CODE>
+<DD>
+returns the program representation representing <CODE><VAR>pr</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.fromRep:VAL"></A>
+<DT> <CODE>toRep <VAR>pr</VAR></CODE>
+<DD>
+If <CODE><VAR>pr</VAR></CODE> is a program representation, then <CODE>toRep</CODE> returns the program represented by <CODE><VAR>pr</VAR></CODE>; otherwise, it issues an error message.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.isRep:VAL"></A>
+<DT> <CODE>isRep <VAR>pr</VAR></CODE>
+<DD>
+tests whether <CODE><VAR>pr</VAR></CODE> is a program representation.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.jforlanNew:VAL"></A>
+<DT> <CODE>jforlanNew()</CODE>
+<DD>
+invokes JForlan, and returns the program that the user creates and commits.  Issues an error message if the user aborts, instead.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.jforlanEdit:VAL"></A>
+<DT> <CODE>jforlanEdit <VAR>prog</VAR></CODE>
+<DD>
+invokes JForlan, letting the user edit <CODE><VAR>prog</VAR></CODE>, and returning the resulting program that the user commits.  Issues an error message if the user aborts, instead.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.jforlanValidate:VAL"></A>
+<DT> <CODE>jforlanValidate</CODE>
+<DD>
+is a low-level function used by JForlan.  See the code for more information.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Prog.jforlanPretty:VAL"></A>
+<DT> <CODE>jforlanPretty</CODE>
+<DD>
+is a low-level function used by JForlan.  See the code for more information.
+<BR>
+<BR>
+
+</DL>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="prog-subsect.html">Parent</A>
+   | <A HREF="index.html">Root</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Forlan Version 4.7</I><BR>
+<I>Copyright &copy; 2018 Alley Stoughton</I><BR>
+
+<HR>
+</BODY></HTML>

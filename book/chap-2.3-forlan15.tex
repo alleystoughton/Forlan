@@ -1,0 +1,60 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ rel\ =\ SymRel.input\ "";
+\item[]\textsl{@\ }(0,\ 1),\ (1,\ 2),\ (0,\ 2),\ (0,\ 0),\ (1,\ 1),\ (2,\ 2)
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ rel\ =\ -\ :\ sym_rel}
+\item[]\textsl{-\ }SymRel.output("",\ rel);
+\item[]\textsl{(0,\ 0),\ (0,\ 1),\ (0,\ 2),\ (1,\ 1),\ (1,\ 2),\ (2,\ 2)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }SymSet.output("",\ SymRel.domain\ rel);
+\item[]\textsl{0,\ 1,\ 2}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }SymSet.output("",\ SymRel.range\ rel);
+\item[]\textsl{0,\ 1,\ 2}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }SymRel.relationFromTo
+\item[]\textsl{=\ }(rel,\ SymSet.fromString\ "0,\ 1,\ 2",\ SymSet.fromString\ "0,\ 1,\ 2");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }SymRel.relationOn(rel,\ SymSet.fromString\ "0,\ 1,\ 2");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }SymRel.reflexive(rel,\ SymSet.fromString\ "0,\ 1,\ 2");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }SymRel.symmetric\ rel;
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\item[]\textsl{-\ }SymRel.antisymmetric\ rel;
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }SymRel.transitive\ rel;
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }SymRel.total(rel,\ SymSet.fromString\ "0,\ 1,\ 2");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }val\ rel'\ =\ SymRel.inverse\ rel;
+\item[]\textsl{val\ rel'\ =\ -\ :\ sym_rel}
+\item[]\textsl{-\ }SymRel.output("",\ rel');
+\item[]\textsl{(0,\ 0),\ (1,\ 0),\ (1,\ 1),\ (2,\ 0),\ (2,\ 1),\ (2,\ 2)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ rel''\ =\ SymRel.compose(rel',\ rel);
+\item[]\textsl{val\ rel''\ =\ -\ :\ sym_rel}
+\item[]\textsl{-\ }SymRel.output("",\ rel'');
+\item[]\textsl{(0,\ 0),\ (0,\ 1),\ (0,\ 2),\ (1,\ 0),\ (1,\ 1),\ (1,\ 2),\ (2,\ 0),\ (2,\ 1),}
+\item[]\textsl{(2,\ 2)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

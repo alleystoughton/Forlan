@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Update the version number of Forlan in the *.template files
+
+if [[ $# != 1 || $1 != *.* ]];
+then echo usage $0 PRIMARY.SECONDARY;
+     exit 1;
+fi;
+
+primary=${1%%.*};
+secondary=${1##*.};
+
+tmpfile=change-version.tmp.$$
+
+function processfile ()
+{
+  sed "s/Forlan Version [0-9a-zA-Z]*\.[0-9a-zA-Z]*/Forlan Version $primary.$secondary/" \
+      $1 > $tmpfile;
+  mv $tmpfile $1;
+}
+
+for file in *.template;
+do processfile $file;
+done;

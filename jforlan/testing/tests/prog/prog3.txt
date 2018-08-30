@@ -1,0 +1,5 @@
+pair(sym(a),
+     pair(sym(<a<b,c>>),
+          pair(str(hello),
+               pair(str(%),
+                    str(<a><>hi)))))

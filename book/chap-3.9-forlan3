@@ -1,0 +1,2 @@
+val efa' = EFA.renameStatesCanonically efa;
+EFA.output("", efa');

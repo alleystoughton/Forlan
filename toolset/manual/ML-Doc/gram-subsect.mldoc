@@ -1,0 +1,31 @@
+<!-- gram-subsect.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>Grammars</TITLE>
+
+<SECTION>
+<HEAD>Grammars</HEAD>
+
+<PP>This subsection describes modules relating to context-free
+grammars&DASH;grammars for short.
+
+The <BF>PT</BF> module defines the abstract type of parse trees.
+
+The <BF>Prod</BF> module defines the concrete type of grammar
+productions, and the <BF>ProdSet</BF> module provides operations on
+sets of productions.
+
+And, the <BF>Grammar</BF> module defines the abstract type of grammars.</PP>
+
+<INCLFILE FILE="pt">
+<INCLFILE FILE="prod">
+<INCLFILE FILE="prod-set">
+<INCLFILE FILE="gram">
+</SECTION>

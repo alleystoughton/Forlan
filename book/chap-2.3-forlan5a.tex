@@ -1,0 +1,33 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }fun\ f\ x\ =\ x\ >=\ 1\ andalso\ x\ <=\ 10;
+\item[]\textsl{val\ f\ =\ fn\ :\ int\ ->\ bool}
+\item[]\textsl{-\ }fun\ g\ x\ =\ if\ x\ then\ "inside"\ else\ "outside";
+\item[]\textsl{val\ g\ =\ fn\ :\ bool\ ->\ string}
+\item[]\textsl{-\ }val\ h\ =\ g\ o\ f;
+\item[]\textsl{val\ h\ =\ fn\ :\ int\ ->\ string}
+\item[]\textsl{-\ }h\ \symbol{'176}5;
+\item[]\textsl{val\ it\ =\ "outside"\ :\ string}
+\item[]\textsl{-\ }h\ 6;
+\item[]\textsl{val\ it\ =\ "inside"\ :\ string}
+\item[]\textsl{-\ }h\ 14;
+\item[]\textsl{val\ it\ =\ "outside"\ :\ string}
+\end{list}

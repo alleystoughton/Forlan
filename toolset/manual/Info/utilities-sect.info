@@ -1,0 +1,12 @@
+@FILES
+  ["utilities-sect"; "Low-level Modules";
+    @SECTION "Low-level Modules" [
+       @FILE "version"
+       @FILE "params"
+       @FILE "pp"
+       @FILE "messages"
+       @FILE "use"
+       @FILE "debug"
+       @FILE "system"
+    ]
+  ]

@@ -1,0 +1,15 @@
+@FILES
+  ["tab"; "The Tab Module";]
+@SIGNATURE TAB "tab" [
+  @TYPES 
+    @TYPE tab
+  @VALS 
+    update
+    fromList
+    domain
+    lookup
+    isEmpty
+    toList
+    empty
+]
+@STRUCTURE Tab "tab" TAB

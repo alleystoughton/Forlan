@@ -1,0 +1,4 @@
+val reg = Reg.fromString "(012)*(21)";
+val rel = SymRel.fromString "(0, 1), (1, 2), (2, 3)";
+Reg.output("", Reg.rev reg);
+Reg.output("", Reg.renameAlphabet(reg, rel));

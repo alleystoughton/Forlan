@@ -1,0 +1,47 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ gram'\ =\ Gram.inter(gram,\ efa);
+\item[]\textsl{val\ gram'\ =\ -\ :\ gram}
+\item[]\textsl{-\ }Gram.output("",\ gram');
+\item[]\textsl{\symbol{'173}variables\symbol{'175}\ A,\ <A,A,A>,\ <A,A,B>,\ <A,B,B>\ \symbol{'173}start\ variable\symbol{'175}\ A}
+\item[]\textsl{\symbol{'173}productions\symbol{'175}}
+\item[]\textsl{A\ ->\ <A,A,B>;\ <A,A,A>\ ->\ %;}
+\item[]\textsl{<A,A,B>\ ->}
+\item[]\textsl{%\ |\ 0<A,A,A>1<A,B,B>\ |\ 0<A,A,B>1<A,B,B>\ |\ 0<A,B,B>1<A,B,B>;}
+\item[]\textsl{<A,B,B>\ ->\ %}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Gram.generated\ gram'\ (Str.fromString\ "0011");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }Gram.generated\ gram'\ (Str.fromString\ "0101");
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\item[]\textsl{-\ }Gram.generated\ gram'\ (Str.fromString\ "0001");
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\item[]\textsl{-\ }val\ dfa\ =
+\item[]\textsl{=\ }\ \ \ \ \ \ DFA.renameStatesCanonically
+\item[]\textsl{=\ }\ \ \ \ \ \ (DFA.minimize(nfaToDFA(efaToNFA\ efa)));
+\item[]\textsl{val\ dfa\ =\ -\ :\ dfa}
+\item[]\textsl{-\ }val\ gram''\ =\ Gram.minus(gram,\ dfa);
+\item[]\textsl{val\ gram''\ =\ -\ :\ gram}
+\item[]\textsl{-\ }Gram.generated\ gram''\ (Str.fromString\ "0101");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }Gram.generated\ gram''\ (Str.fromString\ "0011");
+\item[]\textsl{val\ it\ =\ false\ :\ bool}
+\end{list}

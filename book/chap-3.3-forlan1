@@ -1,0 +1,12 @@
+val ns = Reg.succCC(Reg.unionCC(Reg.singCC 1, Reg.singCC 1));
+Reg.ccToList ns;
+val ms = Reg.unionCC(ns, Reg.succCC ns);
+Reg.ccToList ms;
+Reg.ccToList(Reg.cc(Reg.fromString "(00*11*)*"));
+Reg.ccToList(Reg.cc(Reg.fromString "% + 0(0 + 11*0)*11*"));
+Reg.compareCC
+(Reg.cc(Reg.fromString "(00*11*)*"),
+ Reg.cc(Reg.fromString "% + 0(0 + 11*0)*11*"));
+Reg.compareCC
+(Reg.cc(Reg.fromString "(00*11*)*"),
+ Reg.cc(Reg.fromString "(1*10*0)*"));

@@ -1,0 +1,4 @@
+RFA.standard rfa;
+val rfa' = RFA.standardize rfa;
+RFA.output("", rfa');
+RFA.standard rfa';

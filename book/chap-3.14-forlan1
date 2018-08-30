@@ -1,0 +1,14 @@
+val lp = DFA.findAcceptingLP dfa (Str.input "");
+001010
+.
+LP.output("", lp);
+val pd = LP.findValidPumpingDivision lp; 
+val (lp1, lp2, lp3) = pd;
+LP.output("", lp1);
+LP.output("", lp2);
+LP.output("", lp3);
+val (u, v, w) = LP.strsOfValidPumpingDivision pd;
+(Str.toString u, Str.toString v, Str.toString v);
+val lp' = LP.pumpValidPumpingDivision(pd, 2);
+LP.output("", lp');
+Str.output("", LP.label lp');

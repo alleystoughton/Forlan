@@ -1,0 +1,10 @@
+@FILES
+  ["prod"; "The Prod Module";]
+@SIGNATURE PROD "prod" [
+  @TYPES 
+    @TYPE prod
+  @VALS 
+    equal
+    compare
+]
+@STRUCTURE Prod "prod" PROD

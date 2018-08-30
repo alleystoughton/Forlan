@@ -1,0 +1,33 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ gram'\ =\ Gram.eliminateEmptyProductions\ gram;
+\item[]\textsl{val\ gram'\ =\ -\ :\ gram}
+\item[]\textsl{-\ }Gram.output("",\ gram');
+\item[]\textsl{\symbol{'173}variables\symbol{'175}\ A,\ B\ \symbol{'173}start\ variable\symbol{'175}\ A}
+\item[]\textsl{\symbol{'173}productions\symbol{'175}\ A\ ->\ B\ |\ 01\ |\ BB\ |\ 0A1;\ B\ ->\ 2\ |\ 2B}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ gram''\ =\ Gram.eliminateEmptyAndUnitProductions\ gram;
+\item[]\textsl{val\ gram''\ =\ -\ :\ gram}
+\item[]\textsl{-\ }Gram.output("",\ gram'');
+\item[]\textsl{\symbol{'173}variables\symbol{'175}\ A,\ B\ \symbol{'173}start\ variable\symbol{'175}\ A}
+\item[]\textsl{\symbol{'173}productions\symbol{'175}\ A\ ->\ 2\ |\ 01\ |\ BB\ |\ 0A1;\ B\ ->\ 2\ |\ 2B}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

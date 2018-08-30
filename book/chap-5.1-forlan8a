@@ -1,0 +1,11 @@
+val pr = Prog.input "";
+app(lam(x, app(var(x), int(1))),
+    lam(y, var(y)))
+.
+val pr' = Prog.toRep pr;
+Prog.output("", pr');
+val pr'' = Prog.fromRep pr';
+Prog.equal(pr'', pr);
+Prog.isRep pr;
+Prog.isRep pr';
+Prog.isRep(Prog.fromString "pair(str(x), str(y))");

@@ -1,0 +1,13 @@
+val nfa' = NFA.input "";
+{states}
+A, B, C, D
+{start state}
+A
+{accepting states}
+D
+{transitions}
+A, 0 -> A; A, 1 -> A | B;
+B, 0 -> C; B, 1 -> C; B, 2 -> B;
+C, 0 -> D; C, 1 -> D; C, 2 -> C;
+D, 2 -> D
+.

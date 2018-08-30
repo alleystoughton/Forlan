@@ -1,0 +1,72 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ rel\ =\ SymRel.input\ "";
+\item[]\textsl{@\ }(1,\ 2),\ (2,\ 3),\ (3,\ 4)
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ rel\ =\ -\ :\ sym_rel}
+\item[]\textsl{-\ }SymRel.output("",\ rel);
+\item[]\textsl{(1,\ 2),\ (2,\ 3),\ (3,\ 4)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }SymSet.output("",\ SymRel.domain\ rel);
+\item[]\textsl{1,\ 2,\ 3}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }SymSet.output("",\ SymRel.range\ rel);
+\item[]\textsl{2,\ 3,\ 4}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }SymRel.function\ rel;
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }SymRel.functionFromTo
+\item[]\textsl{=\ }(rel,\ SymSet.fromString\ "1,\ 2,\ 3",\ SymSet.fromString\ "2,\ 3,\ 4");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }SymRel.injection\ rel;
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }SymRel.bijectionFromTo
+\item[]\textsl{=\ }(rel,\ SymSet.fromString\ "1,\ 2,\ 3",\ SymSet.fromString\ "2,\ 3,\ 4");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }val\ f\ =\ SymRel.applyFunction\ rel;
+\item[]\textsl{val\ f\ =\ fn\ :\ sym\ ->\ sym}
+\item[]\textsl{-\ }Sym.output("",\ f(Sym.fromString\ "1"));
+\item[]\textsl{2}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Sym.output("",\ f(Sym.fromString\ "2"));
+\item[]\textsl{3}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Sym.output("",\ f(Sym.fromString\ "3"));
+\item[]\textsl{4}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Sym.output("",\ f(Sym.fromString\ "4"));
+\item[]\textsl{argument\ not\ in\ domain}
+\item[]
+\item[]\textsl{uncaught\ exception\ Error}
+\item[]\textsl{-\ }val\ rel'\ =\ SymRel.input\ "";
+\item[]\textsl{@\ }(4,\ 3),\ (3,\ 2),\ (2,\ 1)
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ rel'\ =\ -\ :\ sym_rel}
+\item[]\textsl{-\ }val\ rel''\ =\ SymRel.compose(rel',\ rel);
+\item[]\textsl{val\ rel''\ =\ -\ :\ sym_rel}
+\item[]\textsl{-\ }SymRel.functionFromTo
+\item[]\textsl{=\ }(rel'',\ SymSet.fromString\ "1,\ 2,\ 3",
+\item[]\textsl{=\ }\ SymSet.fromString\ "1,\ 2,\ 3");
+\item[]\textsl{val\ it\ =\ true\ :\ bool}
+\item[]\textsl{-\ }SymRel.output("",\ rel'');
+\item[]\textsl{(1,\ 1),\ (2,\ 2),\ (3,\ 3)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

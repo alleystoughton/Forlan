@@ -1,0 +1,86 @@
+@FILES
+  ["reg"; "The Reg Module";]
+@SIGNATURE REG "reg" [
+  @TYPES 
+    @DATATYPE concr [ EmptyStr EmptySet Sym Closure Concat Union]
+    @TYPE cc
+    @TYPE reg
+  @VALS 
+    jforlanEdit
+    globallySimplify
+    toPP
+    jforlanPretty
+    sortUnions
+    rightConcat
+    rightUnion
+    toStrSet
+    isClosure
+    fromString
+    closure
+    obviousSubset
+    output
+    isUnion
+    union
+    fromConcr
+    size
+    fromSym
+    maximumLengthPath
+    numLeaves
+    input
+    alphabet
+    isEmptyStr
+    isSym
+    ccToList
+    jforlanValidate
+    emptyStr
+    locallySimplifyTrace
+    locallySimplify
+    validPath
+    allStr
+    weaklySimplified
+    inputFromLabToks
+    succCC
+    compare
+    isEmptySet
+    renameAlphabet
+    compareComplexityTotal
+    toString
+    concatsToList
+    weaklySimplify
+    emptySet
+    globallySimplified
+    power
+    hasEmp
+    globallySimplifyTrace
+    genConcat
+    update
+    genUnion
+    validLeafPath
+    compareComplexity
+    cc
+    numSyms
+    allSym
+    isConcat
+    hasSym
+    singCC
+    localSimplificationRelations
+    concat
+    fromStrSet
+    unionsToList
+    numConcats
+    split
+    rev
+    unionCC
+    select
+    locallySimplified
+    equal
+    toConcr
+    toStrSetOpt
+    prefix
+    jforlanNew
+    height
+    fromStr
+    compareCC
+    standardized
+]
+@STRUCTURE Reg "reg" REG

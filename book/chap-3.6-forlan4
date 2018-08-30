@@ -1,0 +1,14 @@
+SymSet.output("", processStr(bs, x));
+accepted(Str.input "");
+12111111
+.
+accepted(Str.input "");
+1211
+.
+LP.output("", findLP(bs, x, bs));
+LP.output("", findAcceptingLP(Str.input ""));
+12111111
+.
+LP.output("", findAcceptingLP(Str.input ""));
+222
+.

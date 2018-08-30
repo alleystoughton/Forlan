@@ -1,0 +1,296 @@
+\section{Diagonalization and Undecidable Problems}
+\label{DiagonalizationAndUndecidableProblems}
+
+In this section, we will use a technique called diagonalization to
+find a natural language that isn't recursively enumerable.  This will
+lead us to a language that is recursively enumerable but is not
+recursive.  It will also enable us to prove the undecidability of the
+halting problem.
+
+\subsection{Diagonalization}
+
+To find a non-r.e.\ language, we can use diagonalization, a technique
+we used in Section~\ref{BasisSetTheory} to show the uncountability of
+$\powset\,\nats$.
+
+Let $\Sigma$ be the alphabet used to describe programs: the digits and
+letters, plus the elements of $\{\commasym, \percsym, \mytildesym,
+\openparsym, \closparsym, \lesssym, \greatsym\}$.  Every element of
+$\Sigma^*$ either describes a unique closed program, or describes no
+closed programs.  Given $w\in\Sigma^*$, we write $L(w)$ for:
+\begin{itemize}
+\item $\emptyset$, if $w$ doesn't describe a closed program; and
+
+\item $L(\pr)$, where $\pr$ is the unique closed program described by
+  $w$, if $w$ does describe a closed program.
+\end{itemize}
+Thus $L(w)$ will always be a set of strings, even though it won't
+always be a language.
+
+Consider the infinite table of $0$'s and $1$'s in which both the rows
+and the columns are indexed by the elements of $\Sigma^*$, listed in
+ascending order according to our standard total ordering, and where a
+cell $(w_n, w_m)$ contains $1$ iff $w_n\in L(w_m)$, and contains $0$
+iff $w_n\not\in L(w_m)$.
+Each recursively enumerable language is $L(w_n)$ for some (non-unique)
+$n$, but not all the $L(w_n)$ are languages.
+Figure~\ref{DiagTable} shows
+\begin{figure}
+\begin{center}
+\input{chap-5.3-fig1.eepic}
+\end{center}
+\caption{Example Diagonalization Table}
+\label{DiagTable}
+\end{figure}
+how part of this table might look, where $w_i$, $w_j$ and $w_k$ are
+sample elements of $\Sigma^*$.  Because of the table's data, we have
+that $w_i\in L(w_j)$ and $w_j\not\in L(w_i)$.
+
+To define a non-r.e.\ $\Sigma$-language, we work our way down the diagonal of
+the table, putting $w_n$ into our language just when cell $(w_n,w_n)$
+of the table is $0$, i.e., when $w_n\not\in L(w_n)$.
+With our example table:
+\begin{itemize}
+\item $L(w_i)$ is not our language, since $w_i\in L(w_i)$, but $w_i$
+  is not in our language;
+
+\item $L(w_j)$ is not our language, since $w_j\not\in L(w_j)$, but
+  $w_j$ is in our language; and
+
+\item $L(w_k)$ is not our language, since $w_k\in L(w_k)$, but $w_k$
+  is not in our language.
+\end{itemize}
+In general, there is no $n\in\nats$ such that $L(w_n)$ is our
+language.  Consequently our language is not recursively enumerable.
+
+We formalize the above ideas as follows.  Define languages
+$L_d$ (``d'' for ``diagonal'') and $L_a$ (``a'' for ``accepted'') by:
+\begin{align*}
+L_d &= \setof{w\in\Sigma^*}{w\not\in L(w)} , \eqtxtl{and} \\
+L_a &= \setof{w\in\Sigma^*}{w\in L(w)} .
+\end{align*}
+Thus $L_d = \Sigma^* - L_a$.
+We have that, for all $w\in\Sigma^*$, $w\in L_a$ iff $w\in L(\pr)$,
+where $\pr$ is the unique closed program described by $w$.
+
+\begin{theorem}
+$L_d$ is not recursively enumerable.
+\end{theorem}
+
+\begin{proof}
+Suppose, toward a contradiction, that $L_d$ is recursively
+enumerable.  Thus, there is a closed program $\pr$ such that
+$L_d=L(\pr)$.  Let $w\in\Sigma^*$ be the string describing $\pr$.
+Thus $L(w)=L(\pr)=L_d$.
+
+There are two cases to consider.
+\begin{itemize}
+\item Suppose $w\in L_d$.  Then $w\not\in L(w)=L_d$---contradiction.
+
+\item Suppose $w\not\in L_d$.  Since $w\in\Sigma^*$, we have that
+  $w\in L(w)=L_d$---contradiction.
+\end{itemize}
+Since we obtained a contradiction in both cases, we have an
+overall contradiction.  Thus $L_d$ is not recursively enumerable.
+\end{proof}
+
+\begin{theorem}
+$L_a$ is recursively enumerable.
+\end{theorem}
+
+\begin{proof}
+Let $\mathit{acc}$ be the program that, when given $\progstr(w)$, for
+some $w\in\Str$, acts as follows.  First, it attempts to parse
+$\progstr(w)$ as a program $\pr$, represented as the value
+$\overline{\pr}$.  If this attempt fails, $\mathit{acc}$ returns
+$\progconst(\progfalse)$.  If $\pr$ is not closed, then $\mathit{acc}$
+returns $\progconst(\progfalse)$.  Otherwise, it uses our interpreter
+function to evaluate $\progapp(\pr,\progstr(w))$, using
+$\overline{\progapp(\pr,\progstr(w))}$.  If this interpretation
+returns $\overline{\progconst(\progtrue)}$, then $\mathit{acc}$ returns
+$\progconst(\progtrue)$.  If it returns anything other than
+$\overline{\progconst(\progtrue)}$, then $\mathit{acc}$ returns
+$\progconst(\progfalse)$.  (Thus, if the interpretation never returns,
+then $\mathit{acc}$ never terminates.)
+
+We can check that, for all $w\in\Str$, $w\in L_a$ iff
+$\eval(\progapp(\mathit{acc},\progstr(w))) =
+\norm(\progconst(\progtrue))$.  Thus $L_a$ is recursively enumerable.
+\end{proof}
+
+\begin{corollary}
+\label{RECor1}
+
+There is an alphabet $\Sigma$ and a recursively enumerable language
+$L\sub\Sigma^*$ such that $\Sigma^*-L$ is not recursively enumerable.
+\end{corollary}
+
+\begin{proof}
+$L_a\sub\Sigma^*$ is recursively enumerable, but
+$\Sigma^*-L_a=L_d$ is not recursively enumerable.
+\end{proof}
+
+\begin{corollary}
+\label{RECor2}
+
+There are recursively enumerable languages $L_1$ and $L_2$
+such that $L_1-L_2$ is not recursively enumerable.
+\end{corollary}
+
+\begin{proof}
+Follows from Corollary~\ref{RECor1}, since $\Sigma^*$ is
+recursively enumerable.
+\end{proof}
+
+\begin{corollary}
+\label{RECor3}
+
+$L_a$ is not recursive.
+\end{corollary}
+
+\begin{proof}
+Suppose, toward a contradiction, that $L_a$ is recursive.
+Since the recursive languages are closed under complementation,
+and $L_a\sub\Sigma^*$, we have that $L_d=\Sigma^*-L_a$ is
+recursive---contradiction.  Thus $L_a$ is not recursive.
+\end{proof}
+
+Since $L_a\in\RELan$ and $L_a\not\in\RecLan$, we have:
+
+\begin{theorem}
+The recursive languages are a proper subset of the recursively
+enumerable languages: $\RecLan\subsetneq \RELan$.
+\end{theorem}
+
+Combining this result with results
+from Sections~4.8 and 5.1, we have that
+\begin{gather*}
+\RegLan\subsetneq
+\CFLan\subsetneq
+\RecLan\subsetneq
+\RELan\subsetneq
+\Lan .
+\end{gather*}
+
+\subsection{Undecidability of the Halting Problem}
+
+We say that a closed program $\pr$ \emph{halts} iff
+$\eval\,\pr\neq\nonterm$.
+
+\begin{theorem}
+\label{Halting}
+
+There is no value $\halts$ such that, for all closed programs $\pr$,
+\begin{itemize}
+\item If $\pr$ halts, then $\eval(\progapp(\halts,\overline{\pr})) =
+  \norm(\progconst(\progtrue))$; and
+
+\item If $\pr$ does not halt, then
+  $\eval(\progapp(\halts,\overline{\pr})) =\norm(\progconst(\progfalse))$.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+Suppose, toward a contradiction, that such a $\halts$ does exist.  We
+use $\halts$ to construct a program $\mathit{acc}$ that behaves as
+follows when run on $\progstr(w)$, for some $w\in\Str$.  First, it
+attempts to parse $\progstr(w)$ as a program $\pr$, represented as
+the value $\overline{\pr}$.  If this attempt fails, it returns
+$\progconst(\progfalse)$.  If $\pr$ is not closed, then it returns
+$\progconst(\progfalse)$.  Otherwise, it calls $\halts$ with argument
+$\overline{\progapp(\pr,\progstr(w))}$.
+
+\begin{itemize}
+\item If $\halts$ returns $\progconst(\progtrue)$ (so we know that
+  $\progapp(\pr,\progstr(w))$ halts), then $\mathit{acc}$ applies the
+  interpreter function to $\overline{\progapp(\pr,\progstr(w))}$,
+  using it to evaluate $\progapp(\pr,\progstr(w))$.  If the
+  interpreter returns $\overline{\progconst(\progtrue)}$, then
+  $\mathit{acc}$ returns $\progconst(\progtrue)$.  Otherwise, the
+  interpreter returns some other value, and $\mathit{acc}$ returns
+  $\progconst(\progfalse)$.
+
+\item Otherwise, $\halts$ returns $\progconst(\progfalse)$ (so we know that
+  $\progapp(\pr,\progstr(w))$ does not halt), in which case
+  $\mathit{acc}$ returns $\progconst(\progfalse)$.
+\end{itemize}
+
+Now, we prove that $\mathit{acc}$ is a string predicate program
+testing whether a string is in $L_a$.
+
+\begin{itemize}
+\item Suppose $w\in L_a$.  Thus $w\in L(\pr)$, where $\pr$ is the
+  unique closed program described by $w$.  Hence
+  $\eval(\progapp(\pr,\progstr(w))) = \norm(\progconst(\progtrue))$.  It
+  is easy to show that $\eval(\progapp(\acc,\progstr(w))) =
+  \norm(\progconst(\progtrue))$.
+
+\item Suppose $w\not\in L_a$.  If $w\not\in\Sigma^*$, or
+  $w\in\Sigma^*$ but $w$ does not describe a program, or $w$ describes
+  a program that isn't closed, then $\eval(\progapp(\acc,\progstr(w)))
+  = \norm(\progconst(\progfalse))$.  So, suppose $w$ describes the closed
+  program $\pr$.  Then $w\not\in L(\pr)$, i.e.,
+  $\eval(\progapp(\pr,\progstr(w))) \neq \norm(\progconst(\progtrue))$.
+  It is easy to show that $\eval(\progapp(\acc,\progstr(w))) =
+  \norm(\progconst(\progfalse))$.
+\end{itemize}
+
+Thus $L_a$ is recursive---contradiction.  Thus there is no such
+$\mathit{halt}$.
+\end{proof}
+
+We say that a value $\pr$ \emph{halts on} a value $\pr'$ iff
+$\eval(\progapp(\pr,\pr'))\neq\nonterm$.
+
+\begin{corollary}[Undecidability of the Halting Problem]
+There is no value $\haltsOn$ such that, for all values
+$\pr$ and $\pr'$:
+\begin{itemize}
+\item if $\pr$ halts on $\pr'$, then
+  \begin{displaymath}
+    \eval(\progapp(\haltsOn,\progpair(\overline{\pr},\overline{\pr'}))) =
+    \norm(\progconst(\progtrue)) ; \eqtxt{and}
+  \end{displaymath}
+
+\item If $\pr$ does not halt on $\pr'$, then
+  \begin{displaymath}
+    \eval(\progapp(\haltsOn,\progpair(\overline{\pr},\overline{\pr'}))) =
+    \norm(\progconst(\progfalse)) .
+  \end{displaymath}
+\end{itemize}
+\end{corollary}
+
+\begin{proof}
+Suppose, toward a contradiction, that such a $\haltsOn$ exists.  Let
+$\halts$ be the value that takes in a value $\overline{\pr}$
+representing a closed program $\pr$, and then calls $\haltsOn$ with
+$\progpair(\overline{\proglam(\mathsf{x},\pr)},\overline{\progconst(\prognil)})$.
+Then this program satisfies the property of
+Theorem~\ref{Halting}---contradiction.  Thus such a $\haltsOn$ does
+not exist.
+\end{proof}
+
+\subsection{Other Undecidable Problems}
+
+Here are two other undecidable problems:
+\begin{itemize}
+\item Determining whether two grammars generate the same language.
+(In contrast, we gave an algorithm for checking whether two FAs are
+equivalent, and this algorithm can be implemented as a program.)
+
+\item Determining whether a grammar is ambiguous.
+\end{itemize}
+
+\subsection{Notes}
+
+Because a closed program can be evaluated by itself, i.e., without
+being supplied an input, our treatment of the undecidability of
+the halting problem is nonstandard.  First, we prove that there is
+no program that takes in a program as data and tests whether that
+program halts.  Our version of the undecidability of the halting
+then follows as a corollary.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "book"
+%%% End: 

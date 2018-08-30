@@ -1,0 +1,15 @@
+#!/bin/bash
+
+version=$(cat ../version.txt)
+html=$(cat ../html-directory.txt)
+
+echo Installing main WWW pages for Version $version of Forlan in $html
+
+rm -rf index.html
+tmpfile=/tmp/index-$$
+cp index.html.source $tmpfile
+sed "s/#VERSION#/$version/g" $tmpfile > index.html
+rm -rf $tmpfile
+
+cp book-and-slides.html style.css harper.pdf $html
+mv index.html $html

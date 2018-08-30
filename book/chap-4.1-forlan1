@@ -1,0 +1,2 @@
+val bs = Gram.alphabet gram;
+SymSet.output("", bs);  

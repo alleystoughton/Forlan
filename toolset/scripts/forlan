@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# start Forlan
+
+# edit the following line to set heapdir to the directory where Forlan's
+# heap image will reside
+
+heapdir=/usr/local/smlnj/bin/.heap
+
+# set sml to SML/NJ executable
+
+sml=/usr/local/bin/sml
+
+exec $sml @SMLload=$heapdir/forlan-heap @SMLcmdname=$0 "$@"

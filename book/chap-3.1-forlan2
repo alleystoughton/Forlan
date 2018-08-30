@@ -1,0 +1,25 @@
+val reg = Reg.input "";
+0*10* + %
+.
+Reg.size reg;
+Reg.numLeaves reg;
+val reg' = Reg.fromStr(Str.power(Str.input "", 3));
+01
+.
+Reg.output("", reg');
+Reg.size reg';
+Reg.numLeaves reg';
+Reg.compare(reg, reg');
+val reg'' = Reg.concat(Reg.closure reg, reg');
+Reg.output("", reg'');
+SymSet.output("", Reg.alphabet reg'');
+val reg''' = Reg.power(reg, 3);
+Reg.output("", reg''');
+Reg.size reg''';
+Reg.numLeaves reg''';
+Reg.output("", Reg.fromString "(0*(1(0*))) + %");
+Reg.output("", Reg.fromString "(0*1)0* + %");
+Reg.output("", Reg.fromString "0*1(0* + %)");
+Reg.equal
+(Reg.fromString "0*10* + %",
+ Reg.fromString "0*1(0* + %)");

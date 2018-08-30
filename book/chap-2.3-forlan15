@@ -1,0 +1,18 @@
+val rel = SymRel.input "";
+(0, 1), (1, 2), (0, 2), (0, 0), (1, 1), (2, 2)
+.
+SymRel.output("", rel);
+SymSet.output("", SymRel.domain rel);
+SymSet.output("", SymRel.range rel);
+SymRel.relationFromTo
+(rel, SymSet.fromString "0, 1, 2", SymSet.fromString "0, 1, 2");
+SymRel.relationOn(rel, SymSet.fromString "0, 1, 2");
+SymRel.reflexive(rel, SymSet.fromString "0, 1, 2");
+SymRel.symmetric rel;
+SymRel.antisymmetric rel;
+SymRel.transitive rel;
+SymRel.total(rel, SymSet.fromString "0, 1, 2");
+val rel' = SymRel.inverse rel;
+SymRel.output("", rel');
+val rel'' = SymRel.compose(rel', rel);
+SymRel.output("", rel'');

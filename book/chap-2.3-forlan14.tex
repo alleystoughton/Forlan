@@ -1,0 +1,44 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ xs\ =\ StrSet.input\ "";
+\item[]\textsl{@\ }hello,\ <id><num>,\ %
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ xs\ =\ -\ :\ str\ set}
+\item[]\textsl{-\ }val\ ys\ =\ StrSet.input\ "";
+\item[]\textsl{@\ }<id><num>,\ another\ 
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ ys\ =\ -\ :\ str\ set}
+\item[]\textsl{-\ }val\ zs\ =\ StrSet.union(xs,\ ys);
+\item[]\textsl{val\ zs\ =\ -\ :\ str\ set}
+\item[]\textsl{-\ }Set.size\ zs;
+\item[]\textsl{val\ it\ =\ 4\ :\ int}
+\item[]\textsl{-\ }StrSet.output("",\ zs);
+\item[]\textsl{%,\ <id><num>,\ hello,\ another}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ us\ =\ Set.filter\ (fn\ x\ =>\ length\ x\ mod\ 2\ =\ 0)\ zs;
+\item[]\textsl{val\ us\ =\ -\ :\ sym\ list\ set}
+\item[]\textsl{-\ }StrSet.output("",\ us);
+\item[]\textsl{%,\ <id><num>}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }SymSet.output("",\ StrSet.alphabet\ zs);
+\item[]\textsl{a,\ e,\ h,\ l,\ n,\ o,\ r,\ t,\ <id>,\ <num>}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# start JForlan
+
+# edit the following line to set appdir to the directory where
+# JForlan.app can be found
+
+appdir=/Applications
+
+exec java -jar $appdir/JForlan.app/Contents/Java/JForlan.jar $*

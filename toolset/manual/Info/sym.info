@@ -1,0 +1,25 @@
+@FILES
+  ["sym"; "The Sym Module";]
+@SIGNATURE SYM "sym" [
+  @TYPES 
+    @DATATYPE top [ Basic Compound]
+    @TYPE sym
+    @TYPE basic
+  @VALS 
+    input
+    toPP
+    jforlanPretty
+    jforlanValidate
+    toTop
+    equal
+    fromString
+    output
+    basicToChar
+    charToBasic
+    inputFromLabToks
+    compare
+    fromTop
+    toString
+    size
+]
+@STRUCTURE Sym "sym" SYM

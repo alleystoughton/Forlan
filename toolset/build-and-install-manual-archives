@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# build .tgz and .zip archives of Forlan manual, and put in html directory
+
+# requires that ML-Doc is installed
+
+html=$(cat ../html-directory.txt)
+version=$(cat ../version.txt)
+
+echo Building manual archives for Forlan Version $version and installing in $html
+
+cd manual
+change-version $version
+make
+tmpdir=$$-tmp-$$
+mkdir $tmpdir
+mkdir $tmpdir/forlan-manual-$version
+cp HTML/* $tmpdir/forlan-manual-$version
+cd $tmpdir
+tar cf forlan-manual-$version.tar forlan-manual-$version
+gzip forlan-manual-$version.tar
+mv forlan-manual-$version.tar.gz forlan-manual-$version.tgz
+mv -f forlan-manual-$version.tgz /tmp
+zip -r forlan-manual-$version.zip forlan-manual-$version
+mv -f forlan-manual-$version.zip /tmp
+cd ..
+rm -rf $tmpdir
+mv /tmp/forlan-manual-$version.tgz $html
+mv /tmp/forlan-manual-$version.zip $html

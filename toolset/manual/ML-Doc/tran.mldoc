@@ -1,0 +1,57 @@
+<!-- tran.mldoc -->
+
+<!-- Copyright (C) 2012 Alley Stoughton
+
+     The file is part of the Forlan toolset for experimenting with
+     formal languages.  See the file COPYING.txt for copying and
+     usage restrictions. -->
+
+<!DOCTYPE ML-DOC SYSTEM>
+
+<TITLE>The Tran Module</TITLE>
+
+<COPYRIGHT OWNER="Alley Stoughton" YEAR=2012>
+
+<INTERFACE>
+<HEAD>The <CD/Tran/ Module</HEAD>
+
+<PP>This module defines the concrete type of finite automata transitions.</PP>
+
+<STRUCTURE STRID="Tran">
+<OPAQUE>
+<SIGBODY SIGID="TRAN" FILE=TRAN>
+
+<SPEC>
+<TYPE><ID>tran<TY>Sym.sym * Str.str * Sym.sym
+<COMMENT>
+<PP>The type of transitions.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>compare<TY>tran Sort.total_ordering
+<COMMENT>
+<PROTOTY>
+compare
+</PROTOTY>
+<PP>is 
+<CD><STRREF TOPID/Set/.<VALREF STRID="Set"/compareTriple/(<STRREF TOPID/Sym/.<VALREF STRID="Sym"/compare/,
+<STRREF TOPID/Str/.<VALREF STRID="Str"/compare/,
+<STRREF TOPID/Sym/.<VALREF STRID="Sym"/compare/)</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>equal<TY>tran * tran -> bool
+<COMMENT>
+<PROTOTY>
+equal(<ARG/tran1/, <ARG/tran2/)
+</PROTOTY>
+<PP>tests whether <CD><ARG/tran1/</CD> and <CD><ARG/tran2/</CD> are
+equal.</PP>
+</COMMENT>
+</SPEC>
+
+</SIGBODY>
+</STRUCTURE>
+</INTERFACE>

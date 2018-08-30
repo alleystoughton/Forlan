@@ -1,0 +1,84 @@
+<!-- HTML/debug.html -->
+
+<!-- COPYRIGHT (c) 2012 Alley Stoughton. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The Debug Module</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY><A NAME="top"></A>
+<H1 align=CENTER>Forlan Manual</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>Debug</CODE> Module</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="DEBUG:SIG:SPEC"></A><CODE>DEBUG</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Debug:STR:SPEC"></A><CODE>Debug</CODE><B> :> </B>DEBUG<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+This module contains a function for debugging Forlan code.
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>val</B>&nbsp;<A NAME="STR:Debug.debug:VAL:SPEC" HREF="#STR:Debug.debug:VAL">debug</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;PP.pp)&nbsp;<B>-&gt;</B>&nbsp;PP.pp&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I></CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="STR:Debug.debug:VAL"></A>
+<DT> <CODE>debug <VAR>h</VAR></CODE>
+<DD>
+returns the function that, when called with <CODE>(<VAR>msgPP</VAR>,
+<VAR>x</VAR>)</CODE>, prints on the standard output <CODE>PP.toString
+<VAR>msgPP</VAR></CODE>, followed by a colon, followed by <CODE>PP.toString(<VAR>h</VAR> <VAR>x</VAR>)</CODE>, followed by a newline, followed by <CODE>&quot;(press RETURN to continue or interrupt character to interrupt)
+&quot;</CODE>; it then waits for user input; if the user responds by typing <EM>RETURN</EM>, then the function will return <CODE><VAR>x</VAR></CODE>.  
+<BLOCKQUOTE>
+<B>Example:</B><BR>
+
+<P>
+We can instrument the factorial function 
+<PRE>
+  fun fact n =
+        if n = 0
+        then 1
+        else n * fact(n - 1);
+</PRE>
+ for debugging as follows: 
+<PRE>
+  val debugInt = Debug.debug(PP.fromString o Int.toString);
+
+  fun fact n =
+        debugInt
+        (PP.fromString
+         (&quot;returning from fact &quot; ^ Int.toString n ^ &quot; with result&quot;),
+         if debugInt(PP.fromString &quot;entering fact with argument&quot;, n) = 0
+         then 1
+         else n * fact(n - 1));
+</PRE>
+</BLOCKQUOTE>
+<BR>
+<BR>
+
+</DL>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="utility-subsect.html">Parent</A>
+   | <A HREF="index.html">Root</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Forlan Version 4.7</I><BR>
+<I>Copyright &copy; 2018 Alley Stoughton</I><BR>
+
+<HR>
+</BODY></HTML>

@@ -1,0 +1,8 @@
+val rel = EFA.findIsomorphism(efa, efa');
+SymRel.output("", rel);
+LP.output("", FA.findAcceptingLP fa (Str.input ""));
+012345
+.
+LP.output("", EFA.findAcceptingLP efa' (Str.input ""));
+012345
+.
