@@ -1,2 +1,0 @@
-Skeleton 5
-d2f6d"FA"Cd"LP"d"PP"d"PT"d"DFA"d"EFA"Cd"NFA"d"RFA"d"Reg"d"Rel"d"Set"Cd"Str"d"Sym"d"Use"d"Var"d"Gram"Cd"Prod"d"Prog"d"Tran"d"Params"d"StrSet"Cd"SymRel"d"SymSet"d"Version"d"TranReg"d"Debug"Nad"TopLevel"h0

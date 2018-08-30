@@ -305,6 +305,10 @@ Theory: Integrating Experimentation and Proof</em>.
 </li>
 </ul>
 
+<p>The Forlan distribution is hosted on GitHub, and may be cloned or
+forked
+there: <a href="https://github.com/alleystoughton/Forlan/"><kbd>https://github.com/alleystoughton/Forlan/</kbd>.
+
 <p>The Forlan toolset and JForlan are released under the GNU General
 Public License, and the textbook is released under the GNU Free
 Documentation License.</p>

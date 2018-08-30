@@ -1,2 +1,0 @@
-Skeleton 5
-d2f6d"FA"Cd"PP"d"PT"d"DFA"d"EFA"d"Int"Cd"Reg"d"Set"d"Str"d"Sym"d"Tab"Cd"List"d"Prod"d"Sort"d"StrSet"d"String"Cd"SymRel"d"SymSet"d"TextIO"d"ListAux"d"ProdSet"Nad"Gram"jh2ad"M"gp1d"Messages"ad"L"gp1d"Lex"gp1c"GRAM"

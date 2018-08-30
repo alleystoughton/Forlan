@@ -19,7 +19,7 @@ The script ...
   build-heap-image
 
     builds an SML/NJ heap image for Forlan, which can be invoked by
-    scripts/forlan (on Linux/Mac OS X) and scripts/forlan.bat (on
+    scripts/forlan (on Linux/macOS) and scripts/forlan.bat (on
     Windows)
 
     installs heap image in /tmp

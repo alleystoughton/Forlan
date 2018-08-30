@@ -41,8 +41,8 @@ The subdirectory ...
 
   mac
 
-    contains Mac OS X-specific resources, and a script for building
-    a compressed tarball in html
+    contains macOS-specific resources, and a script for building a
+    compressed tarball in html
 
   linux
 
@@ -63,7 +63,7 @@ The script build-and-install:
   * builds JForlan from source, using Apache Ant, which must be installed
     and on the shell's PATH
 
-  * builds the compressed tarballs for Mac OS X and Linux, and the zip
+  * builds the compressed tarballs for macOS and Linux, and the zip
     archive for Windows, puts these files in the html directory, and
     then installs the html directory in the Forlan html directory
     ($html)

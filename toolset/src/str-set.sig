@@ -1,6 +1,6 @@
 (* str-set.sig
  *
- * COPYRIGHT (c) 2012 Alley Stoughton.
+ * COPYRIGHT (c) 2018 Alley Stoughton.
  *
  * extracted from str-set.mldoc
  *)

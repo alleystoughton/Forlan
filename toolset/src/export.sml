@@ -1,6 +1,6 @@
 (******************************** export.sml *********************************)
 
-(* Copyright (C) 2013 Alley Stoughton
+(* Copyright (C) 2001-2013 Alley Stoughton
 
    The file is part of the Forlan toolset for experimenting with
    formal languages.  See the file COPYING.txt for copying and
