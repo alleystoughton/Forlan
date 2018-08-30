@@ -1,14 +1,12 @@
-lemma: (x^i)^j = x^(ij).  Put right after x^{i+j} = x^i x^j.
-lemma: |x^n| = |x|n
-
-define disjoint in 1.1
-
-add transitive closure, etc., as exercises of 1.3
-
 In 1.1 add subjectivity characterization of set size ordering, and
 use in proof of minimization, near end.
 
+add transitive closure, etc., as exercises of 1.3
+
 add lexicographic total orders for tuple and lists (cf. well-founded relations)
+
+lemma: (x^i)^j = x^(ij).  Put right after x^{i+j} = x^i x^j.
+lemma: |x^n| = |x|n
 
 In 2.1 note that 0120 is ambiguous, but harmlessly so
 make alphabet a function from Lan to Alp

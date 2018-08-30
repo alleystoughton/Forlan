@@ -167,7 +167,7 @@ and is universally quantified%
 ---changing it uniformly to $m$, for instance, wouldn't change the
 meaning of $A$.  By the definition of $A$, we have that, for all $n$,
 \begin{gather*}
-n\in A\myiff n\in\nats\eqtxt{and}n^2\geq 20
+n\in A\myiff n\in\nats\eqtxt{and}n^2\geq 20.
 \end{gather*}
 Thus, e.g.,
 \begin{gather*}
@@ -210,6 +210,18 @@ Given $n,m\in\ints$, we write $[n:m]$ for $\setof{l\in\ints}{l\geq
 Thus $[n:m]$ is all of the integers that are at least $n$ and no
 more than $m$.  For example, $[-2:1]$ is $\{-2,-1,0,1\}$ and
 $[3:2]$ is $\emptyset$.
+
+Some uses of the $\setof{\cdots}{\cdots}$ notation are too ``big'' to
+be sets, and instead are \emph{proper classes}. A \emph{class} is a
+collection of universe elements, and a class is \emph{proper} iff it
+is not a set.  E.g., $\setof{A}{A\eqtxt{is a set and} A\not\in A}$ is
+a proper class: assuming that it is a set is inconsistent---makes it
+possible to prove anything. This is the so-called Russell's Paradox.
+\index{Russell's Paradox}%
+To know that a set formation is valid, it suffices to find a set that
+includes all the elements in the class being defined.  E.g., the above
+set formations are valid, because the classes being defined are
+subsets of $\nats$.
 \index{forming sets|)}%
 \index{set!formation|)}%
 
@@ -249,6 +261,9 @@ A\times B&=\setof{(x,y)}{x\in A\eqtxt{and}y\in B}
 \index{powerset}%
 \index{set!powerset}%
 \end{alignat*}
+The axioms of set theory assert that all of these set formations
+are valid (intersection and difference are obviously
+valid).
 
 Of course, union and intersection are both commutative
 \index{commutative!union}%
@@ -279,10 +294,17 @@ $\emptyset$ is the zero
 \index{zero!intersection}%
 \index{intersection!set!zero}%
 for intersection ($\emptyset\cap
-A=\emptyset=A\cap\emptyset$, for all sets $A$).  $A-B$ is formed by
-removing the elements of $B$ from $A$, if necessary.  For example,
-$\{0,1,2\}-\{1,4\}=\{0,2\}$.
+A=\emptyset=A\cap\emptyset$, for all sets $A$).
 
+It is easy to see that, for all sets $X$ and $Y$,
+$X\sub X\cup Y$ and $Y\sub X\cup Y$. We say that sets $X$ and
+$Y$ are \emph{disjoint} iff $X\cap Y=\emptyset$, i.e., iff
+\index{disjoint sets}%
+\index{set!disjoint}%
+$X$ and $Y$ have nothing in common.
+
+$A-B$ is formed by removing the elements of $B$ from $A$, if
+necessary.  For example, $\{0,1,2\}-\{1,4\}=\{0,2\}$.
 $A\times B$ consists of all ordered pairs $(x,y)$,
 \index{ordered pair}%
 \index{ ordered pair@$(\cdot,\cdot)$}%
@@ -330,7 +352,7 @@ Suppose $A$, $B$ and $C$ are sets.
 
 \begin{proof}
 We show (1), the proof of (2) being similar.
-We must show that $A\cap(B\cup C)\sub(A\cap B)\cup(A\cap C)\sub
+It will suffice to show that $A\cap(B\cup C)\sub(A\cap B)\cup(A\cap C)\sub
 A\cap(B\cup C)$.
 
 \begin{description}
@@ -390,6 +412,8 @@ least one element $A$ of $X$.  For example
 \{0,1,2,3\}=\{0,1\}\cup\{1,2\}\cup\{2,3\}, \\
 \bigcup\emptyset &= \emptyset.
 \end{align*}
+(Again, we rely on set theory's axioms to know this set formation
+is valid.)
 
 If $X$ is a \emph{nonempty} set of sets, then the \emph{generalized
 intersection}
@@ -410,12 +434,15 @@ For example
 \emptyset=\{0,1\}\cap\{1,2\}\cap\{2,3\} .
 \end{gather*}
 
-If we allowed $\bigcap\emptyset$, then it would contain
-all elements $a$ of our universe that are in all of the nonexistent
-elements of $\emptyset$, i.e., it would contain all elements of
-our universe.  It turns out, however, that there is no such
-set, which is why we may only take generalized intersections
-of non-empty sets.
+If we allowed $\bigcap\emptyset$, then it would contain all elements
+$a$ of our universe that are in all of the nonexistent elements of
+$\emptyset$, i.e., it would contain all elements of our universe. But
+this collection is a proper class, not a set. Let's consider the above
+reasoning in more detail.  Suppose $a$ is a universe element. To prove
+that $a\in A$, for all $A\in\emptyset$, suppose $A\in\emptyset$. But this is
+a logical contradiction, from which we may prove anything, in particular our
+\index{logical contradiction}%
+desired conclusion, $a\in A$.
 
 \subsection{Relations and Functions}
 
