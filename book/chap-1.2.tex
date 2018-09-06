@@ -115,7 +115,7 @@ $Q(n)$ derived from $P(n)$.
 \begin{proof}
 Suppose $P(n)$ is a property, and assume
 \begin{ctabbing}
-(*) \=\+ for all $n\in\nats$, \\
+(\ddag) \=\+ for all $n\in\nats$, \\
 if for all $m\in\nats$, if $m<n$, then $P(m)$, \\
 then $P(n)$.
 \end{ctabbing}
@@ -142,7 +142,7 @@ $P(m)$.  Since $m\leq n$, there are two cases to consider.
 that $P(m)$.
 
 \item Suppose $m=n$.  We must show that $P(n)$.
-By Property~(*), it will suffice to show that
+By Property~(\ddag), it will suffice to show that
 \begin{center}
 for all $m\in\nats$, if $m<n$, then $P(m)$.
 \end{center}
@@ -152,7 +152,7 @@ But this formula is exactly $Q(n)$, and so were are done.
 
 Now, we use the result of our mathematical induction to show that, for
 all $n\in\nats$, $P(n)$.  Suppose $n\in\nats$.  By our mathematical
-induction, we have $Q(n)$.  By Property~(*), it will suffice to show
+induction, we have $Q(n)$.  By Property~(\ddag), it will suffice to show
 that
 \begin{center}
 for all $m\in\nats$, if $m<n$, then $P(m)$.
@@ -306,7 +306,8 @@ We refer to the formula (\dag) as the \emph{inductive hypothesis}.
 \index{well-founded induction!inductive hypothesis}%
 When $A=\nats$ and $R={<}$, this is the same as the principle
 of strong induction.  But it's much more generally applicable than
-strong induction.
+strong induction. Furthermore, the proof of this theorem isn't
+by induction.
 
 \begin{proof}
 Suppose $A$ is a set, $R$ is a well-founded relation on $A$,
@@ -327,7 +328,7 @@ Because $R$ is well-founded on $A$, it follows that there is a $z\in X$
 that is $R$-minimal in $X$, i.e., such that there is no $y\in X$ such that
 $y\mathrel{R}z$.
 
-By (\ddag), we have that
+By (\ddag) and since $z\in X\sub A$, we have that
 \begin{ctabbing}
 if for all $y\in A$, if $y\mathrel{R}z$, then $P(y)$, \\
 then $P(z)$.
@@ -376,11 +377,11 @@ $\setof{(n,n+1)}{n\in\nats}$.
 Thus, for all $n,m\in\nats$, $m\mathrel{\pred_\nats}n$ iff $m$ is
 exactly one less than $n$.  Because ${\pred_\nats}\sub{<}$, and $<$ is
 well-founded on $\nats$, Proposition~\ref{WellFoundedSubset} tells us
-that $\pred_\nats$ is well-founded on $\nats$.  Since $0$ has no
+that $\pred_\nats$ is well-founded on $\nats$.  $0$ has no
 predecessors in $\pred_\nats$, and, for all $n\in\nats$, $n$ is the
-only predecessor of $n+1$ in $\pred_\nats$, a proof by well-founded
-induction on $\pred_\nats$ is essentially the same as a proof by
-mathematical induction.
+only predecessor of $n+1$ in $\pred_\nats$. Consequently, if a
+zero/non-zero case analysis is used, a proof by well-founded induction on
+$\pred_\nats$ will look like a proof by mathematical induction.
 
 Suppose $A$ and $B$ are sets, $S$ is a relation on $B$, and $f\in
 A\fun B$.  Then the \emph{inverse image of the relation} $S$

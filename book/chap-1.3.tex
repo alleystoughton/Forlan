@@ -114,10 +114,10 @@ the set $U$ such that:
 \item for all $X$-closed sets $V$, $U\sub V$.
 \end{itemize}
 This is what we mean by saying that $\Tree\,X$ is the \emph{least}
-$X$-closed set.  It is our first example of an \emph{inductive
-  definition}, the least (relative to $\sub$) set satisfying
-a given set of rules saying that if some elements are already in
-the set, then some other elements are also in the set.
+$X$-closed set. It is our first example of an \emph{inductive
+  definition}, the least (relative to $\sub$) set satisfying a given
+set of rules saying that if some elements are already in the set, then
+some other elements are also in the set.
 
 To see that there is a unique least $X$-closed set, we first
 prove the following lemma.
@@ -396,94 +396,97 @@ as required.
 
 Here are some examples of well-founded recursion:
 \begin{itemize}
-\item If we define $f\in\nats\fun B$ by well-founded recursion on
-$<$, then, when $f$ is called with $n\in\nats$, it may call itself
-recursively on any strictly smaller natural numbers.
-In the case $n=0$, it can't make any recursive calls.
+\item If we define $f\in\nats\fun B$ by well-founded recursion on $<$,
+  then, when $f$ is called with $n\in\nats$, it may call itself
+  recursively on any strictly smaller natural numbers.  In the case
+  $n=0$, it can't make any recursive calls.
 
 \item If we define $f\in\nats\fun B$ by well-founded recursion on
-the predecessor relation $\pred_\nats$, then when $f$ is called with
-$n\in\nats$, it may call itself recursively on $n-1$, in the
-case when $n\geq 1$, and may make no recursive calls, when $n=0$.
+  the predecessor relation $\pred_\nats$, then when $f$ is called with
+  $n\in\nats$, it may call itself recursively on $n-1$, in the
+  case when $n\geq 1$, and may make no recursive calls, when $n=0$.
 
-Thus, such a definition can be split into two parts:
-\begin{itemize}
-\item $f\,0 = \cdots$;
+  Thus, if such a definition case-splits according to whether
+  its input is $0$ or not, it can be split into two parts:
+  \begin{itemize}
+  \item $f\,0 = \cdots$;
 
-\item for all $n\in\nats$, $f(n + 1) = \cdots f\,n \cdots$.
-\end{itemize}
+  \item for all $n\in\nats$, $f(n + 1) = \cdots f\,n \cdots$.
+  \end{itemize}
+  We say that such a definition is by \emph{recursion on} $\nats$.
 
-\item If we define $f\in\Tree\,X\fun B$ by well-founded recursion
-on the predecessor relation $\pred_{\Tree\,X}$, then when $f$ is
-called on an $X$-tree $(x,[\tr_1,\ldots,\tr_n])$, it may call itself
-recursively on any of $\tr_1$, \ldots, $\tr_n$.  When $n=0$,
-it may make no recursive calls.
-We say that such a definition is by \emph{structural recursion}.
+\item If we define $f\in\Tree\,X\fun B$ by well-founded recursion on
+  the predecessor relation $\pred_{\Tree\,X}$, then when $f$ is called
+  on an $X$-tree $(x,[\tr_1,\ldots,\tr_n])$, it may call itself
+  recursively on any of $\tr_1$, \ldots, $\tr_n$.  When $n=0$, it may
+  make no recursive calls. We say that such a definition is by
+  \emph{structural recursion}.
 
-\item
-We may define the \emph{size} of an $X$-tree
-$(x,[\tr_1,\ldots,\tr_n])$ by summing the recursively computed sizes
-of $\tr_1$, \ldots, $\tr_n$, and then adding $1$. (When $n=0$,
-the sum of no sizes is $0$, and so we get $1$.) Then, e.g.,
-the size of
+\item We may define the \emph{size} of an $X$-tree
+  $(x,[\tr_1,\ldots,\tr_n])$ by summing the recursively computed sizes
+  of $\tr_1$, \ldots, $\tr_n$, and then adding $1$. (When $n=0$, the
+  sum of no sizes is $0$, and so we get $1$.) Then, e.g., the size of
 \begin{center}
 \input{chap-1.3-fig3.eepic}
 \end{center}
 is $6$. This defines a function ${\size}\in\Tree\,X\fun\nats$.
 
-\item
-We may define the \emph{number of leaves} of an $X$-tree
-$(x,[\tr_1,\ldots,\tr_n])$ as
-\begin{itemize}
-\item $1$, when $n=0$, and
+\item We may define the \emph{number of leaves} of an $X$-tree
+  $(x,[\tr_1,\ldots,\tr_n])$ as
+  \begin{itemize}
+  \item $1$, when $n=0$, and
 
-\item the sum of the recursively computed numbers of leaves of
-  $\tr_1$, \ldots, $\tr_n$, when $n\geq 1$.
-\end{itemize}
-Then, e.g., the number of leaves of
-\begin{center}
-\input{chap-1.3-fig3.eepic}
-\end{center}
-is $4$. This defines a function ${\numLeaves}\in\Tree\,X\fun\nats$.
+  \item the sum of the recursively computed numbers of leaves of
+    $\tr_1$, \ldots, $\tr_n$, when $n\geq 1$.
+  \end{itemize}
+  Then, e.g., the number of leaves of
+  \begin{center}
+    \input{chap-1.3-fig3.eepic}
+  \end{center}
+  is $4$. This defines a function ${\numLeaves}\in\Tree\,X\fun\nats$.
 
 \item We may define the \emph{height} of an $X$-tree
-$(x,[\tr_1,\ldots,\tr_n])$ as
-\begin{itemize}
-\item $0$, when $n=0$, and
+  $(x,[\tr_1,\ldots,\tr_n])$ as
+  \begin{itemize}
+  \item $0$, when $n=0$, and
 
-\item $1$ plus the maximum of the recursively computed heights
-of $\tr_1$, \ldots, $\tr_n$, when $n\geq 1$.
-\end{itemize}
-E.g., the height of
-\begin{center}
-\input{chap-1.3-fig3.eepic}
-\end{center}
-is $2$. This defines a function ${\height}\in\Tree\,X\fun\nats$.
-
-\item Given a set $X$, we can define a well-founded relation
-$\size_{\Tree\,X}$ on $\Tree\,X$ by: for all $\tr,\tr'\in\Tree\,X$,
-$\tr\mathrel{\size_{\Tree\,X}}\tr'$ iff $\size\,\tr < {\size}\,\tr'$.
-(This is an application of Proposition~\ref{InverseImageWellFounded}.)
-
-If we define a function $f\in\Tree\,X\fun B$ by well-founded recursion
-on $\size_{\Tree\,X}$, when $f$ is called with an $X$-tree $\tr$,
-it may call itself recursively on any $X$-trees with strictly smaller sizes.
+  \item $1$ plus the maximum of the recursively computed heights
+    of $\tr_1$, \ldots, $\tr_n$, when $n\geq 1$.
+  \end{itemize}
+  E.g., the height of
+  \begin{center}
+    \input{chap-1.3-fig3.eepic}
+  \end{center}
+  is $2$. This defines a function ${\height}\in\Tree\,X\fun\nats$.
 
 \item Given a set $X$, we can define a well-founded relation
-$\height_{\Tree\,X}$ on $\Tree\,X$ by: for all $\tr,\tr'\in\Tree\,X$,
-$\tr\mathrel{\height_{\Tree\,X}}\tr'$ iff $\height\,\tr < {\height}\,\tr'$.
+  $\size_{\Tree\,X}$ on $\Tree\,X$ by: for all $\tr,\tr'\in\Tree\,X$,
+  $\tr\mathrel{\size_{\Tree\,X}}\tr'$ iff
+  $\size\,\tr < {\size}\,\tr'$.  (This is an application of
+  Proposition~\ref{InverseImageWellFounded}.)
 
-If we define a function $f\in\Tree\,X\fun B$ by well-founded recursion
-on $\height_{\Tree\,X}$, when $f$ is called with an $X$-tree $\tr$,
-it may call itself recursively on any $X$-trees with strictly smaller heights.
+  If we define a function $f\in\Tree\,X\fun B$ by well-founded recursion
+  on $\size_{\Tree\,X}$, when $f$ is called with an $X$-tree $\tr$,
+  it may call itself recursively on any $X$-trees with strictly smaller sizes.
+  
+\item Given a set $X$, we can define a well-founded relation
+  $\height_{\Tree\,X}$ on $\Tree\,X$ by: for all
+  $\tr,\tr'\in\Tree\,X$, $\tr\mathrel{\height_{\Tree\,X}}\tr'$ iff
+  $\height\,\tr < {\height}\,\tr'$.
+
+  If we define a function $f\in\Tree\,X\fun B$ by well-founded
+  recursion on $\height_{\Tree\,X}$, when $f$ is called with an
+  $X$-tree $\tr$, it may call itself recursively on any $X$-trees with
+  strictly smaller heights.
 
 \item Given a set $X$, we can define a well-founded relation
-$\length_{\List\,X}$ on $\List\,X$ by: for all $\xs,\ys\in\List\,X$,
-$\xs\mathrel{\length_{\List\,X}}\ys$ iff $|\xs|<|\ys|$.
+  $\length_{\List\,X}$ on $\List\,X$ by: for all $\xs,\ys\in\List\,X$,
+  $\xs\mathrel{\length_{\List\,X}}\ys$ iff $|\xs|<|\ys|$.
 
-If we define a function $f\in\List\,X\fun B$ by well-founded recursion
-on $\length_{\List\,X}$, when $f$ is called with an $X$-list $\xs$,
-it may call itself recursively on any $X$-lists with strictly smaller lengths.
+  If we define a function $f\in\List\,X\fun B$ by well-founded
+  recursion on $\length_{\List\,X}$, when $f$ is called with an
+  $X$-list $\xs$, it may call itself recursively on any $X$-lists with
+  strictly smaller lengths.
 \end{itemize}
 \index{recursion|)}%
 

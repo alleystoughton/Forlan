@@ -507,7 +507,7 @@ $S$ and $R$ ($S\circ R$)
 is $\setof{(x,z)}{(x,y)\in R\eqtxt{and} (y,z)\in S,\eqtxt{for some} y}$.
 Intuitively, it's the relation formed by starting with a pair
 $(x,y)\in R$, following it with a pair $(y,z)\in S$ (one that begins
-where the pair from $R$ left off), and supressing the intermediate
+where the pair from $R$ left off), and suppressing the intermediate
 value $y$, leaving us with $(x,z)$.  For example, if $R=\{(1, 1), (1,
 2), (2, 3)\}$ and $S=\{(2, 3), (2, 4), (3, 4)\}$, then from
 $(1,2)\in R$ and $(2,3)\in S$, we can conclude $(1,3)\in S\circ R$.
@@ -536,13 +536,16 @@ how it is parenthesized.
 
 The \emph{inverse}
 \index{relation!inverse}%
-of a relation $R$ ($R^{-1}$) is the relation $\setof{(y,
-x)}{(x, y)\in R}$, i.e., it is the relation obtained by reversing each
-of the pairs in $R$.  For example, if $R=\{(0, 1), (1, 2), (1, 3)\}$,
-then the inverse of $R$ is $\{(1, 0), (2, 1), (3, 1)\}$.
-So for all sets $A$ and $B$, and relations $R$, if $R$ is
-a relation from $A$ to $B$, then $R^{-1}$ is a relation from
-$B$ to $A$.
+of a relation $R$ ($R^{-1}$) is the relation
+$\setof{(y, x)}{(x, y)\in R}$, i.e., it is the relation obtained by
+reversing each of the pairs in $R$.  For example, if
+$R=\{(0, 1), (1, 2), (1, 3)\}$, then the inverse of $R$ is
+$\{(1, 0), (2, 1), (3, 1)\}$.  So for all sets $A$ and $B$, and
+relations $R$, $R$ is a relation from $A$ to $B$ iff $R^{-1}$ is a
+relation from $B$ to $A$. We also have that, for all sets $A$ and $B$
+and relations $R$ from $A$ to $B$, $(R^{-1})^{-1} = R$. Furthermore,
+for all sets $A$, $B$ and $C$, relations $R$ from $A$ to $B$, and
+relations $S$ from $B$ to $C$, $(S\circ R)^{-1} = R^{-1}\circ S^{-1}$.
 
 A relation $R$ is:
 \begin{itemize}
@@ -607,7 +610,7 @@ We say that $R$ is a \emph{total ordering on} a set $A$ iff
 \index{total ordering}%
 $R$ is a transitive, antisymmetric and total relation on $A$.
 It is easy to see that such an $R$ will also be reflexive on $A$.
-Futhermore, if $R$ is a total ordering on $A$, then $R^{-1}$ is also a
+Furthermore, if $R$ is a total ordering on $A$, then $R^{-1}$ is also a
 total ordering on $A$.
 
 We often use a symbol like $\leq$ to stand for a total ordering on a
@@ -640,7 +643,8 @@ If $f$ is a function and $x\in\domain\,f$, we write $f\,x$ for the
 We say that $f$ is a \emph{function from}
 \index{function!from set to set}%
 a set $X$ \emph{to} a set $Y$ iff $f$ is a function, $\domain\,f=X$
-and $\range\,f\sub Y$.  We write $X\fun Y$
+and $\range\,f\sub Y$. Such an $f$ is also a function from
+$X$ to $\range\,f$. We write $X\fun Y$
 \index{ set of all functions@$\fun$}%
 \index{set! set of all functions@$\fun$}%
 for the set of all functions from $X$ to $Y$.
@@ -652,6 +656,12 @@ $f\,2=0$, $f$ is a function from $\{0,1,2\}$ to $\{0,1,2\}$,
 and $f\in\{0,1,2\}\fun\{0,1,2\}$.  Of course, $f$ is
 also in $\{0,1,2\}\fun\nats$, but it is not in
 $\nats\fun\{0,1,2\}$.
+
+\begin{exercise}
+Suppose $X$ is a set, and $x\in X$.  What are the elements of
+$\emptyset\fun X$, $X\fun\emptyset$, $\{x\}\fun X$ and $X\fun\{x\}$?
+Prove that your answers are correct.
+\end{exercise}
 
 We let $\fun$ associate to the right and have lower precedence than
 $\times$, so that, e.g., $A\times B\fun C\times D\fun E\times F$ means
@@ -833,7 +843,11 @@ is injective, but the function
 \begin{gather*}
 \{(0, 1), (1, 2), (2, 1)\}
 \end{gather*}
-is not injective (both $0$ and $2$ are sent to $1$).
+is not injective (both $0$ and $2$ are sent to $1$).  We say that $f$
+is an \emph{injection from} a set $X$ \emph{to} a set $Y$, iff $f$ is
+\index{injection from set to set}%
+\index{function!injection from set to set}%
+a function from $X$ to $Y$ and $f$ is injective.
 
 It is easy to see that:
 \begin{itemize}
@@ -892,9 +906,11 @@ we have that, for all sets $A,B,C$:
 
 We say that a set $X$ is:
 \begin{itemize}
-\item \emph{finite} iff $X\cong[1:n]$, for some $n\in\nats$;
+\item \emph{finite} iff $X\cong[1:n]$, for some $n\in\nats$
 \index{finite}%
 \index{set!finite}%
+(recall that $[1:n]$ is all of the natural numbers that are at least 1
+and no more than $n$, so that $[1:0]=\emptyset$);
 
 \item \emph{infinite} iff it is not finite;
 \index{infinite}%
@@ -999,11 +1015,11 @@ $\powset\,\nats$ is uncountable.
 
 \begin{proof}
 Suppose, toward a contradiction, that $\powset\,\nats$ is countable.
-Thus, there is a bijection $f$ from $\nats$ to 
-$\powset\,\nats$.  Define $X\in\setof{n\in\nats}{n\not\in f\,n}$,
-so that $X\in\powset\,\nats$.  By the definition of $f$, it
-follows that $X=f\,n$, for some $n\in\nats$.  There are two
-cases to consider.
+Because $\powset\,\nats$ is not finite, there is a bijection $f$
+from $\nats$ to $\powset\,\nats$.  Define
+$X\in\setof{n\in\nats}{n\not\in f\,n}$, so that $X\in\powset\,\nats$.
+By the definition of $f$, it follows that $X=f\,n$, for some
+$n\in\nats$.  There are two cases to consider.
 \begin{itemize}
 \item Suppose $n\in X$.  By the definition of $X$, it follows that
   $n\not\in f\,n=X$---contradiction.
@@ -1027,7 +1043,8 @@ We say that a set $X$ is \emph{no bigger} than a set $Y$ ($X\preceq Y$)
 \index{set! no bigger than@$\preceq$}%
 iff there is an injection from $X$ to $Y$, i.e., an
 injective function whose domain is $X$ and whose range
-is a subset of $Y$.  For example, the injection $\id_\nats$ shows that
+is a subset of $Y$. Because identity functions are injective,
+we have that $X\sub Y$ implies $X\preceq Y$; e.g.,
 $\nats\preceq\reals$.  This definition makes sense, because $X$ is
 no bigger than $Y$ iff $X$ has the same size as a subset of $Y$.
 \index{strictly smaller}%
@@ -1042,6 +1059,15 @@ for all sets $A$, $B$ and $C$:
 
 \item If $A\preceq B\preceq C$, then $A\preceq C$.
 \end{enumerate}
+We can also characterize $\preceq$ using ``surjectivity''. We
+say that $f$ is a \emph{surjection} from $X$ to $Y$ iff $f$ is a function
+\index{surjection from set to set}%
+\index{function!surjection from set to set}%
+from $X$ to $Y$ and $\range\,f = Y$. A consequence of set theory's
+Axiom of Choice is that, for all sets $X$ and $Y$, $X\preceq Y$ iff
+\index{Axiom of Choice}%
+$X = \emptyset$ or there is a surjection from $Y$ to $X$.
+
 Clearly, for all sets $A$ and $B$,
 if $A\cong B$, then $A\preceq B\preceq A$.  And, a famous result
 of set theory, the Schr\"oder-Bernstein Theorem,
@@ -1140,12 +1166,24 @@ of $X$.  E.g., when a function needs to either return an element of $X$
 or indicate that an error has occurred, it could return an
 element of $\Option\,X$, using $\none$ to indicate an error,
 and returning $\some\,x$ to indicate success with value $x$.
+E.g., we could define a function
+$f\in\nats\times\nats\fun\Option\,\Bool$ by:
+\begin{gather*}
+f(n,m) =
+\left\{ \begin{array}{ll}
+\none, & \eqtxt{if}m=0, \\
+\some\,\true & \eqtxt{if}m\neq 0 \eqtxt{and}
+n=ml \eqtxt{for some}l\in\nats, \\
+\some\,\false & \eqtxt{if}m\neq 0 \eqtxt{and}
+n\neq ml \eqtxt{for all}l\in\nats .
+\end{array} \right.  
+\end{gather*}
 
 \index{list|(}%
 Finally, we consider lists.  A \emph{list} is a function with domain
 $[1:n]$, for some $n\in\nats$.  (Recall that $[1:n]$ is all of the
 natural numbers that are at least 1 and no more than $n$.)
-For example $\emptyset$ is a list, as
+For example, $\emptyset$ is a list, as
 it is a function with domain $\emptyset=[1:0]$.  And $\{(1, 3), (2,
 5), (3, 7)\}$ is a list, as it is a function with domain $[1:3]$.
 Note that, if $x$ is a list, then $|x|$, the size of the set $x$,
@@ -1230,7 +1268,7 @@ $f,g\in\List\,X$, $f\myconcat g\in\List\,X$.
 In a traditional treatment of set theory, e.g., \cite{Enderton77}, the
 natural numbers, integers, real numbers and ordered pairs
 $(x,y)$ are encoded as sets.  But for our purposes, it is clearer to
-supress this detail.
+suppress this detail.
 
 Furthermore, in the traditional approach, $\nats$ is not a subset of
 $\ints$, and $\ints$ is not a subset of $\reals$.  On the other hand,
