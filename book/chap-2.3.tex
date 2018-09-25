@@ -11,7 +11,7 @@ definining SML functions.
 Instructions for installing and running Forlan on machines running
 \index{Forlan!installing}%
 \index{Forlan!running}%
-Linux, Mac OS X and Windows can be found on the Forlan website:
+Linux, macOS and Windows can be found on the Forlan website:
 \begin{center}
 \url{http://alleystoughton.us/forlan}.
 \end{center}
@@ -67,16 +67,16 @@ Forlan's primary prompt is ``\texttt{-}''.
 \index{Forlan!primary prompt}%
 \index{prompt!primary}%
 To exit Forlan, type \emph{CTRL}-\texttt{d}
-under Linux and Mac OS X, and \emph{CTRL}-\texttt{z} under Windows.
+under Linux and macOS, and \emph{CTRL}-\texttt{z} under Windows.
 To interrupt back to the Forlan top-level, type \emph{CTRL}-\texttt{c}.
 \index{Forlan!exiting}%
 \index{Forlan!interrupting}%
 
 On Windows, you may find it more convenient to invoke Forlan by
-double-clicking on the Forlan icon.  On all platforms, a much more flexible
-and satisfying way of running Forlan is as a subprocess of an IDE (integrated
-development environment).  See the Forlan website for
-information about how to do this.
+double-clicking on the Forlan icon.  On all platforms, a much more
+flexible and satisfying way of running Forlan is as a subprocess of
+the Emacs text editor.  See the Forlan website for information about
+how to do this.
 
 \subsection{The SML Core of Forlan}
 
@@ -163,12 +163,11 @@ E.g., \texttt{NONE}, \texttt{SOME\;1} and
 \texttt{bool\;option}.
 \input{chap-2.3-forlan2b}
 
-Instead of using \texttt{<}, \texttt{<=}, \texttt{>} and \texttt{>=}
-for comparing integers, SML offers a function \texttt{Int.compare} of
-type \texttt{int~*~int~->~order}, where the \texttt{order} type
-contains three elements: \texttt{LESS}, \texttt{EQUAL} and
-\texttt{GREATER}.
-\input{chap-2.3-forlan2c}
+In addition to the usual operators \texttt{<}, \texttt{<=}, \texttt{>}
+and \texttt{>=} for comparing integers, SML offers a function
+\texttt{Int.compare} of type \texttt{int~*~int~->~order}, where the
+\texttt{order} type contains three elements: \texttt{LESS},
+\texttt{EQUAL} and \texttt{GREATER}.  \input{chap-2.3-forlan2c}
 
 It is possible to bind the value of an expression to an
 identifier using a value declaration:
@@ -189,9 +188,11 @@ This last declaration uses pattern matching: \texttt{SOME(4~*~25)}
 is evaluated to $\mathtt{SOME}\;100$, and is then matched against the
 pattern \texttt{SOME~n}.  Because the constructors match, the
 pattern matching succeeds, and \texttt{n} becomes bound to \texttt{100}.
+The warning is because the SML typechecker doesn't know the
+expression won't evaluate to \texttt{NONE}.
 
 One can use a \texttt{let} expression to carry out some declarations
-in local environment, evaluate an expression in that environment, and
+in a local environment, evaluate an expression in that environment, and
 yield the result of that evaluation:
 \input{chap-2.3-forlan4a}
 When a declaration or expression spans more than one line, Forlan
@@ -351,7 +352,7 @@ string is written to the standard output;
 \item \texttt{equal} tests whether two symbols are equal.
 \end{itemize}
 All of Forlan's input functions read from the standard input
-when called with \texttt{""}, and all of Forlan's
+when called with \texttt{""} instead of a file, and all of Forlan's
 output functions write to the standard output when given
 \texttt{""} instead of a file.
 

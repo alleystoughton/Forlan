@@ -28,14 +28,21 @@ Thus, for all $a\in A$ and $x\in A^*$, the only predecessor of $ax$ in
 $\myright_A$ is $x$, and the only predecessor of $xa$ in
 $\myleft_A$ is $x$.  And, for all $y\in A^*$, the predecessors
 of $y$ in $\strong_A$ are the proper substrings of $y$.
+The empty string, $\%$, has no predecessors in any of these
+relations.
 
 The well-foundedness of $\myright_A$, $\myleft_A$ and $\strong_A$
 follows by Proposition~\ref{WellFoundedSubset}, since each of these
 relations is a subset of $\length_{\List\,A}$, which is a well-founded
 relation on $\List\,A$.
 
+We can do well-founded induction and recursion on these relations.
+In fact, what we called right and left recursion on strings in
+Section~\ref{SymbolsStringsAlphabetsAndFormalLanguages} correspond
+to recursion on $\myright_\Sym$ and $\myleft_\Sym$.
+
 We now introduce string induction principles corresponding to
-well-founded induction on each of these relations.
+well-founded induction on each of the above relations.
 
 \index{string induction!right|see {right string induction}}%
 \index{right string induction}%
@@ -548,18 +555,9 @@ Follows immediately from Lemmas~\ref{SSIProp2Lem1} and \ref{SSIProp2Lem2}.
 \end{proof}
 
 \begin{exercise}
-Define a function $\diff\in\{\mathsf{0,1}\}^*\fun\ints$ by:
-for all $w\in\{\mathsf{0,1}\}^*$,
-\begin{displaymath}
-\diff\,w =
-\eqtxtr{the number of $\mathsf{1}$'s in}w -
-\eqtxtr{the number of $\mathsf{0}$'s in}w .
-\end{displaymath}
-Thus $\diff\,\%=0$, $\diff\,\zerosf = -1$, $\diff\,\onesf = 1$, and
-for all $x,y\in\{\mathsf{0,1}\}^*$, $\diff(xy) = \diff\,x + \diff\,y$.
-Furthermore, for all $w\in\{\mathsf{0,1}\}^*$, $\diff\,w=0$ iff $w$
-has an equal number of $\zerosf$'s and $\onesf$'s.
-Let $X$ be the least subset of $\{\mathsf{0,1}\}^*$ such that:
+Define the function $\diff\in\{\mathsf{0,1}\}^*\fun\ints$ as in the
+above example.  Let $X$ be the least subset of $\{\mathsf{0,1}\}^*$
+such that:
 \begin{enumerate}[\quad(1)]
 \item $\%\in X$;
 

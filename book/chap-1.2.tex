@@ -286,6 +286,16 @@ the strict total ordering $<$ on $\nats$ is well-founded.  On the other hand,
 the strict total ordering $<$ on $\ints$ is \emph{not} well-founded, as $\ints$
 itself lacks a $<$-minimal element.
 
+Here's another negative example, showing that even if the underlying
+set is finite, the relation need not be well-founded. Let
+$A = \{0,1\}$, and $R = \{(0,1), (1,0)\}$. Then $0$ is the only
+predecessor of $1$ in $R$, and $1$ is the only predecessor of $0$ in
+$R$. Of the nonempty subsets of $A$, we have that $\{0\}$ and $\{1\}$
+have $R$-minimal elements. But consider $A$ itself. Then $0$ is not
+$R$-minimal in $A$, because $1\in A$ and $1\mathrel{R}0$. And $1$ is
+not $R$-minimal in $A$, because $0\in A$ and $0\mathrel{R}1$. Hence
+$R$ is not well-founded.
+
 \index{well-founded induction}%
 \index{induction!well-founded|see{well-founded induction}}%
 \begin{theorem}[Principle of Well-founded Induction]

@@ -44,19 +44,26 @@ $\List\,\Char$ such that:
 
 \item for all $n\in\nats$ and $x_1,\ldots,x_n\in\{[\,,]\}\cup\Sym$,
   \begin{displaymath}
-   [\,\langle\,] @ x_1 @ \cdots @ x_n @ [\,\rangle\,]\in\Sym . 
+    [\,\langle\,] \myconcat x_1 \myconcat \cdots \myconcat x_n \myconcat
+    [\,\rangle\,]\in\Sym . 
   \end{displaymath}
 \end{itemize}
-For example, $[\mathsf{9}]$, $[\,\langle,\,\rangle]$,
+This is an inductive definition (see
+Section~\ref{TreesAndInductiveDefinitions}).  $\Sym$ consists of just
+those lists of symbol characters that can be built using the above,
+two rules.  For example, $[\mathsf{9}]$, $[\,\langle,\,\rangle]$,
 $\mathsf{[\,\langle, \,i, \,d, \,\rangle]}$ and
 $\mathsf{[\,\langle, \,\langle, \,a, \,,, \,\rangle, \,b, \,\rangle]}$
 are symbols.  On the other hand, $[\,\langle,\,\rangle,\,\rangle]$ is
 not a symbol.
 
-It is easy to see that, for $x,y\in\List\,\Char$,
-if $x\myconcat y\in\Sym$, then exactly one of $x$
-and $y$ is $[\,]$.  In other words, a symbol never starts
-or ends with another symbol.
+We can prove by induction that, for all $z\in\Sym$, for all
+$x,y\in\List\,\Char$, if $z = x\myconcat y\in\Sym$, then:
+\begin{itemize}
+\item if $x\in\Sym$, then $y=[\,]$;
+\item if $y\in\Sym$, then $x=[\,]$.
+\end{itemize}
+Thus a symbol never starts or ends with another symbol.
 
 We normally abbreviate a symbol $[c_1,\ldots,c_n]$ to $c_1\cdots c_n$,
 so that $\mathsf{9}$, $\langle\,\rangle$, $\langle\mathsf{id}\rangle$

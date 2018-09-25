@@ -39,6 +39,8 @@ For example,
 \mathsf{\{(ab)(cd), (ab)(d), (abc)(cd), (abc)(d)\}} \\
 &= \mathsf{\{abcd, abd, abccd\}}.
 \end{align*}
+Note that, if $L_1,L_2\sub\Sigma^*$, for an alphabet $\Sigma$,
+then $L_1\myconcat L_2\sub\Sigma^*$.
 
 Concatenation of languages is associative: for all $L_1,L_2,L_3\in\Lan$,
 \index{associative!language concatenation}%
@@ -80,6 +82,9 @@ L^{n + 1} &= LL^n ,\eqtxt{for all}L\in\Lan\eqtxt{and}n\in\nats .
 \end{align*}
 We assign this exponentiation operation higher precedence than
 concatenation, so that $LL^n$ means $L(L^n)$ in the above definition.
+Note that, if $L\sub\Sigma^*$, for an alphabet $\Sigma$, then
+$L^n\sub\Sigma^*$, for all $n\in\nats$.
+
 For example, we have that
 \begin{align*}
 \mathsf{\{a,b\}}^2 &= 
@@ -151,6 +156,10 @@ For example,
    \{a,ba\}\cup
    \{aa,aba,baa,baba\}\cup\cdots}
 \end{align*}
+
+If $L$ is a language, then $L\sub\Sigma^*$ for some alphabet $\Sigma$,
+and thus $L^*$ is also a subset of $\Sigma^*$---showing that $L^*$
+is a language, not just a set of strings.
 
 Suppose $w\in\Str$.
 By Proposition~\ref{LangExponProp2}, we have
@@ -427,7 +436,8 @@ n\in\nats-\{0\} .
 We assign this operation the same precedence as closure, so that
 $\alpha\alpha^n$ means $\alpha(\alpha^n)$ in the above definition.
 Note that, in contrast to the definitions of $x^n$ and $L^n$,
-we have made use of two base cases, so that
+we have split the case $n+1$ into two subcases, depending upon
+whether $n=0$ or $n\geq 1$. Thus
 $\alpha^1$ is $\alpha$, not $\alpha\%$.
 For example, $\mathsf{(0+1)^3}=\mathsf{(0+1)(0+1)(0+1)}$.
 
@@ -442,7 +452,8 @@ beginning of the proof.
 \end{proof}
 
 An example consequence of the proposition is that
-$L(\mathsf{(0+1)^3})=L(\mathsf{0+1})^3=\{\mathsf{0,1}\}^3$.
+$L(\mathsf{(0+1)^3})=L(\mathsf{0+1})^3=\{\mathsf{0,1}\}^3$, the
+set of all strings of $\zerosf$'s and $\onesf$'s of length $3$.
 
 We define $\alphabet\in\Reg\fun\Alp$ by recursion:
 \index{regular expression!alphabet}%
@@ -593,11 +604,13 @@ $\{\mathsf{0}^1\}$, $\{\mathsf{0}^2\}$, \ldots, are all regular
 languages, we have that $\RegLan$ is infinite.  Furthermore, we can
 establish an injection $h$ from $\RegLan$ to $\Reg$: $h\,L$ is the
 first (in our enumeration of regular expressions) $\alpha$ such that
-$L(\alpha)=L$.  Because $\Reg$ is countably infinite, it follows
-that there is an injection from $\RegLan$ to $\nats$.  And
-we already gave an injection from $\nats$ to $\RegLan$, completing
-the proof that $\RegLan$ and $\nats$ have the same size, i.e.,
-that $\RegLan$ is countably infinite.
+$L(\alpha)=L$.  Because $\Reg$ is countably infinite, it follows that
+there is an injection from $\Reg$ to $\nats$.  Composing these
+injections, gives us an injection from $\RegLan$ to $\nats$.  And when
+observing that $\RegLan$ is infinite, we implicity gave an injection
+from $\nats$ to $\RegLan$. Thus, by the Schr\"oder-Bernstein Theorem,
+we have that $\RegLan$ and $\nats$ have the same size, so that
+$\RegLan$ is countably infinite.
 
 Since $\RegLan$ is countably infinite but $\Lan$ is uncountable, it
 follows that $\RegLan\subsetneq\Lan$, i.e., there are non-regular
@@ -682,7 +695,7 @@ are the same regular expression.  And, $\mathsf{((0^*)1)0^*+\%}$
 is a different regular expression, but one with the same meaning.
 Furthermore, $\mathsf{0^*1(0^*+\%)}$ is not only different from
 the two preceding regular expressions, but it has a different
-meaning (it generates $\mathsf{001}$ and fails to generate $\%$.)
+meaning (it fails to generate $\%$.)
 When regular expressions are outputted, as few parentheses as
 possible are used.
 
@@ -729,11 +742,13 @@ We can use the functions \texttt{allSym}, \texttt{allStr} and
 \texttt{fromStrSet} like this:
 \input{chap-3.1-forlan4}
 
+\subsection{JForlan}
+
 The Java program JForlan
 \index{JForlan}%
 can be used to view and edit regular expression trees.  It can be
-invoked directly, or run via Forlan.
-See the Forlan website for more information.
+invoked directly, or run via Forlan.  See the Forlan website for more
+information.
 
 \subsection{Notes}
 
