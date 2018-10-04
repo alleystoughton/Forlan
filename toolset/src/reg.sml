@@ -1429,7 +1429,7 @@ in
         M.messagePP(fn () => traceRegToPP(steps, reg))
 end
 
-(* an abstract type *)
+(* we treat the following as an abstract type *)
 
 type simp_rule_closure =
        (reg, (reg * rule_type * int list)list)Tab.tab *

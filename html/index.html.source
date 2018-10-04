@@ -38,6 +38,12 @@ Email: <a href="mailto:alley.stoughton@icloud.com">alley.stoughton@icloud.com</a
 <h2>What's New?</h2>
 
 <dl>
+<dt>Version 4.8</dt>
+<dd>
+Improved documentation of local and global regular expression
+simplification.  Continuing revision of book.
+</dd>
+
 <dt>Version 4.7</dt>
 <dd>
 Added functions to <kbd>StrSet</kbd> for prefix, suffix and substring
@@ -187,15 +193,16 @@ The root HTML file is <kbd>index.html</kbd></p>
 <p>Here are instructions for downloading and installing Forlan Version
 #VERSION# on a machine running Linux, macOS or Windows.</p>
 
-<p>The instructions that follow assume that SML/NJ has been installed
-in the directory/folder:</p>
+<p>The instructions assume that SML/NJ has been installed
+in the following locations:</p>
 
 <table class="std_indent">
 <tr>
 <td class="std">
 Linux/macOS</td>
 <td class="std">
-<kbd>/usr/local/smlnj</kbd>
+Distribution: <kbd>/usr/local/smlnj</kbd> <br/>
+Binary: <kbd>/usr/local/bin/sml</kbd>
 </td>
 </tr>
 <tr>
@@ -203,14 +210,23 @@ Linux/macOS</td>
 Windows
 </td>
 <td class="std">
-<kbd>C:\Program Files\SMLNJ</kbd>
+Distribution: <kbd>C:\Program Files\SMLNJ</kbd> <br/>
+Binary: <kbd>C:\Program Files\SMLNJ\bin\sml</kbd>
 </td>
 </tr>
 </table>
 
-<p>If you install SML/NJ somewhere else, you'll have to modify the
-instructions accordingly.  But you'll also have to make appropriate
-edits to the script <kbd>forlan</kbd> (under Linux/macOS) or
+<p>Copy the SML/NJ binary (<kbd>sml</kbd>) from the <kbd>bin</kbd>
+directory of the SML/NJ distribution to the binary directory (folder),
+if necssary.  And make sure the binary directory is on your shell's
+search path. Test this by running <kbd>sml</kbd>, and making sure it
+starts correctly. (You can exit by typing <em>CTRL</em>-<kbd>d</kbd>
+on Linux/macOS or <em>CTRL</em>-<kbd>z</kbd> on Windows.)</p>
+
+<p>If you install SML/NJ somewhere else, you'll have to modify
+the instructions accordingly.  But you'll also have to make
+appropriate edits to the script <kbd>forlan</kbd> (under Linux/macOS)
+or
 <kbd>forlan.bat</kbd> (under Windows).</p>
 
 <h3>Installing Forlan under Linux and macOS</h3>
@@ -231,7 +247,10 @@ after changing directory to the temporary directory:</p>
 
 <p>This will cause an SML/NJ heap image for Forlan to be written
 to the file <kbd>forlan-heap.x86-linux</kbd> (Linux) or
-<kbd>forlan-heap.x86-darwin</kbd> (macOS Intel).</p>
+<kbd>forlan-heap.x86-darwin</kbd> (macOS Intel). If you get
+an error saying that <kbd>sml</kbd> was not found, refer to
+the above instructions for making sure <kbd>sml</kbd> is on your shell's
+search path.</p>
 
 <p>Then move the bash shell script <kbd>forlan</kbd> to
 <kbd>/usr/local/bin</kbd>, and move the heap image
@@ -241,7 +260,7 @@ to <kbd>/usr/local/smlnj/bin/.heap</kbd>.</p>
 
 <p>Transfer the zip
 archive <a href="forlan-min-src-#VERSION#.zip"><kbd>forlan-min-src-#VERSION#.zip</kbd></a>
-to a temporary directory (folder).  (This zip archive contains the
+to a temporary directory.  (This zip archive contains the
 minimum source needed to compile Forlan.  If you plan to make changes
 to Forlan, you should get the full source.  See below.)  Extract the
 directory <kbd>forlan-min-src-#VERSION#</kbd> from this archive.
@@ -260,7 +279,10 @@ to the temporary directory:</p>
 </pre>
 
 <p>This will cause an SML/NJ heap image for Forlan to be written
-to the file <kbd>forlan-heap.x86-win32</kbd>.</p>
+to the file <kbd>forlan-heap.x86-win32</kbd>. If you get
+an error saying that <kbd>sml</kbd> was not found, refer to
+the above instructions for making sure <kbd>sml</kbd> is on your shell's
+search path.</p>
 
 <p>Then move the shell script <kbd>forlan.bat</kbd> to the directory
 <kbd>C:\Program Files\SMLNJ\bin</kbd>, and move the heap image to the

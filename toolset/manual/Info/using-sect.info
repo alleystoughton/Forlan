@@ -1,6 +1,0 @@
-@FILES
-  [@EMPTY "using-sect"; "Using Files";
-    @SECTION "Using Files" [
-       @FILE "use"
-    ]
-  ]

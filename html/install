@@ -11,5 +11,5 @@ cp index.html.source $tmpfile
 sed "s/#VERSION#/$version/g" $tmpfile > index.html
 rm -rf $tmpfile
 
-cp book-and-slides.html style.css harper.pdf $html
+cp style.css harper.pdf $html
 mv index.html $html

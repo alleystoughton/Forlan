@@ -1,9 +1,0 @@
-@FILES
-  ["int-aux"; "The IntAux Module";]
-@SIGNATURE INT_AUX "int-aux" [
-  @EXCEPTIONS 
-    Negative
-  @VALS 
-    toOrdinalString
-]
-@STRUCTURE IntAux "int-aux" INT_AUX

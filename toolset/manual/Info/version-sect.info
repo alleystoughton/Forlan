@@ -1,6 +1,0 @@
-@FILES
-  [@EMPTY "version-sect"; "Version";
-    @SECTION "Version" [
-       @FILE "version"
-    ]
-  ]

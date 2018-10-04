@@ -84,12 +84,11 @@ and that the successor operation on $\CC$ preserves union:
 \end{proposition}
 
 We define a relation $\ltcc$ on $\CC$ by: for all $\ns,\ms\in\CC$,
-$\ns\ltcc\ms$ either:
+$\ns\ltcc\ms$ iff either:
 \begin{itemize}
-\item $|ns| < |ms|$ and, for all $i\in[1:|\ns|]$,
-  $\ns\,i = \ms\,i$; or
+\item $\ms = \ns \myconcat \ls$ for some $\ls\in\CC$; or
 
-\item there is an $i\in\nats$ such that
+\item there is an $i\in\nats - \{0\}$ such that
   \begin{itemize}
   \item $i\leq|\ns|$ and $i\leq|\ms|$,
 
@@ -105,10 +104,6 @@ is strictly smaller than $\ms$'s value.  E.g.,
 $[2, 2]\leqcc[2, 2, 1]$ and $[2,1,1,0,0]\ltcc[2, 2, 1]$.
 
 \begin{proposition}
-$\ltcc$ is a strict total ordering on $\CC$.
-\end{proposition}
-
-\begin{proposition}
 \label{CCLTContext}
 \begin{enumerate}[\quad(1)]
 \item For all $\ns,\ms\in\CC$, $\overline{\ns} \ltcc \overline{\ms}$ iff
@@ -118,8 +113,16 @@ $\ltcc$ is a strict total ordering on $\CC$.
   $\ns \ltcc \ms$.
 
 \item For all $\ns,\ms\in\CC$, $\ns\ltcc\ns\cup\ms$.
-
 \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+$\ltcc$ is a strict total ordering on $\CC$.
+\end{proposition}
+
+\begin{proposition}
+\label{LTCCWellFounded}
+$\ltcc$ is a well-founded relation on $\CC$.
 \end{proposition}
 
 Now we can define the closure complexity of a regular expression.
@@ -420,7 +423,7 @@ any of the following forms:
 \begin{itemize}
 \item $\$+\beta$ or $\beta+\$$ (the $\$$ is redundant);
 
-\item $\beta+\beta$ or $\beta+(\beta\gamma)$ (the duplicate occurrence
+\item $\beta+\beta$ or $\beta+(\beta+\gamma)$ (the duplicate occurrence
   of $\beta$ is redundant);
 
 \item $\%\beta$ or $\beta\%$ (the $\%$ is redundant);
@@ -462,6 +465,7 @@ $L(\alpha)=\{a\}$, then $\alpha=a$, and for all $a\in\Sym$, if $\beta$
 is weakly simplified and $L(\beta)=\{a\}$, then $\beta=a$.  Suppose
 $a\in\Sym$, and assume that $\alpha\beta$ is weakly simplified and
 $L(\alpha\beta)=\{a\}$.  We must show that $\alpha\beta=a$.
+Because $\alpha\beta$ is weakly simplified, so are $\alpha$ and $\beta$.
 
 Since $L(\alpha)L(\beta)=L(\alpha\beta)=\{a\}$, there are two cases to
 consider.
@@ -1100,11 +1104,6 @@ $\simp$ is the well-founded relation on $\Reg$ that is defined below.
 First, we see that our strict total ordering $\ltcc$ on the set $\CC$
 of closure complexities is well-founded:
 
-\begin{proposition}
-\label{LTCCWellFounded}
-$\ltcc$ is a well-founded relation on $\CC$.
-\end{proposition}
-
 Next, define the relation $\simp$ on $\Reg$ by: for all $\alpha,\beta\in
 \Reg$, $\alpha\simp\beta$ iff either:
 \begin{itemize}
@@ -1215,7 +1214,7 @@ they same, but the number of symbols strictly decreases).
   then $\alpha^* + \beta \fun \alpha + \beta$.
 
 %19
-\item (alphabet) If $\alpha\not\in\{\%,\$\}$ and $\Sub(\alpha^n, \beta)$, then
+\item (symbols) If $\alpha\not\in\{\%,\$\}$ and $\Sub(\alpha^n, \beta)$, then
   $\alpha^{n+1}\alpha^* + \beta \fun \alpha^n\alpha^* + \beta$.
 
 %20
@@ -1224,11 +1223,11 @@ they same, but the number of symbols strictly decreases).
   + \cdots + \alpha^{m_l})^* \fun \% + \alpha^n\alpha^*$.
 
 %21
-\item (alphabet) If $\alpha\not\in\{\%,\$\}$, then $\alpha+\alpha\beta
+\item (symbols) If $\alpha\not\in\{\%,\$\}$, then $\alpha+\alpha\beta
   \fun \alpha(\%+\beta)$.
 
 %22
-\item (alphabet) If $\alpha\not\in\{\%,\$\}$, then $\alpha+\beta\alpha
+\item (symbols) If $\alpha\not\in\{\%,\$\}$, then $\alpha+\beta\alpha
   \fun (\%+\beta)\alpha$.
 
 %23

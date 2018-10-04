@@ -866,20 +866,26 @@ subset testing, then <CD>locallySimplified</CD> tests whether
 locallySimplifyTrace (NONE, <ARG/sub/) <ARG/reg/
 </PROTOTY>
 <PP>If <CD><ARG/sub/</CD> is a conservative approximation to subset
-testing, then <CD>locallySimplifyTrace</CD> returns the local
+testing, then <CD>locallySimplifyTrace</CD> returns the pair
+<CD>(true, <ARG/reg'/)</CD>, where <CD><ARG/reg'/</CD> is the local
 simplification of <CD><ARG/reg/</CD> with respect
-to <CD><ARG/sub/</CD>.  <CD>locallySimplifyTrace</CD> issues a
-series of tracing messages, explaining its operation.</PP>
+to <CD><ARG/sub/</CD>.  <CD>locallySimplifyTrace</CD> issues a series
+of tracing messages, explaining its operation.</PP>
 
 <PROTOTY>
 locallySimplifyTrace (SOME <ARG/n/, <ARG/sub/) <ARG/reg/
 </PROTOTY>
 <PP>If <CD><ARG/sub/</CD> is a conservative approximation to subset
-testing, then <CD>locallySimplifyTrace</CD> returns the local
+testing, then <CD>locallySimplifyTrace</CD> returns the pair
+<CD>(<ARG/full/, <ARG/reg'/)</CD>, where <CD><ARG/reg'/</CD> is the local
 simplification of <CD><ARG/reg/</CD> with respect
-to <CD><ARG/sub/</CD>, except that&DASH;at each recursive call of its
+to <CD><ARG/sub/</CD>,
+except that&DASH;at each recursive call of its
 principal function&DASH;it considers at most <CD><ARG/n/</CD>
-structural reorganizations of its argument.
+structural reorganizations of its argument, and <CD><ARG/full/</CD> will
+be <CD>true</CD> iff all structural reorganizations of <CD><ARG/reg'/</CD>
+were considered, so that <CD><ARG/reg'/</CD> is locally simplified.
+
 <CD>locallySimplifyTrace</CD> issues a series of tracing
 messages, explaining its operation.  Issues an error message
 if <CD><ARG/n/</CD> isn't at least <CD>1</CD>.</PP>
@@ -926,23 +932,26 @@ respect to <CD><ARG/sub/</CD>.</PP>
 </VAL>
 <COMMENT>
 <PROTOTY>
-globallySimplifyTrace (NONE, <ARG/b/, <ARG/sub/) <ARG/reg/
+globallySimplifyTrace (NONE, <ARG/dist/, <ARG/sub/) <ARG/reg/
 </PROTOTY>
 <PP>If <CD><ARG/sub/</CD> is a conservative approximation to
 subset testing, then <CD>globallySimplifyTrace</CD> returns the
+pair <CD>(true, <ARG/reg'/)</CD>, where <CD><ARG/reg'/</CD> is the
 global simplification of <CD><ARG/reg/</CD> with respect to
-<CD><ARG/b/</CD> and <CD><ARG/sub/</CD>.
+<CD><ARG/dist/</CD> and <CD><ARG/sub/</CD>.
 <CD>globallySimplifyTrace</CD> issues a
 series of tracing messages, explaining its operation.</PP>
 
 <PROTOTY>
-globallySimplifyTrace (SOME <ARG/n/, <ARG/b/, <ARG/sub/) <ARG/reg/
+globallySimplifyTrace (SOME <ARG/n/, <ARG/dist/, <ARG/sub/) <ARG/reg/
 </PROTOTY>
 <PP>If <CD><ARG/sub/</CD> is a conservative approximation to
 subset testing, then <CD>globallySimplifyTrace</CD> returns the
+pair <CD>(<ARG/full/, <ARG/reg'/)</CD>, where <CD><ARG/reg'/</CD> is the
 global simplification of <CD><ARG/reg/</CD> with respect to
-<CD><ARG/b/</CD> and <CD><ARG/sub/</CD>, except it curtails its search after
-considering <CD><ARG/n/</CD> candidates. 
+<CD><ARG/dist/</CD> and <CD><ARG/sub/</CD>, except it curtails its search after
+considering <CD><ARG/n/</CD> candidates, and <CD><ARG/full/</CD> is
+<CD>true</CD> iff all <CD><ARG/n/</CD> candidates were considered.
 <CD>globallySimplifyTrace</CD> issues a series of tracing messages,
 explaining its operation.  Issues an error message if <CD><ARG/n/</CD>
 isn't at least <CD>1</CD>.</PP>

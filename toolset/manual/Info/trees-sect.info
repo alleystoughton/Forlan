@@ -1,6 +1,0 @@
-@FILES
-  [@EMPTY "trees-sect"; "Trees";
-    @SECTION "Trees" [
-       @FILE "tree"
-    ]
-  ]

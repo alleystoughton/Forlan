@@ -684,14 +684,14 @@ If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing
 <DT> <A NAME="STR:Reg.locallySimplifyTrace:VAL"></A>
 <DT> <CODE>locallySimplifyTrace (NONE, <VAR>sub</VAR>) <VAR>reg</VAR></CODE>
 <DD>
-If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>locallySimplifyTrace</CODE> returns the local simplification of <CODE><VAR>reg</VAR></CODE> with respect to <CODE><VAR>sub</VAR></CODE>.  <CODE>locallySimplifyTrace</CODE> issues a series of tracing messages, explaining its operation.
+If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>locallySimplifyTrace</CODE> returns the pair <CODE>(true, <VAR>reg'</VAR>)</CODE>, where <CODE><VAR>reg'</VAR></CODE> is the local simplification of <CODE><VAR>reg</VAR></CODE> with respect to <CODE><VAR>sub</VAR></CODE>.  <CODE>locallySimplifyTrace</CODE> issues a series of tracing messages, explaining its operation.
 <BR>
 <BR>
 
 <DT> <A NAME="STR:Reg.locallySimplifyTrace:VAL"></A>
 <DT> <CODE>locallySimplifyTrace (SOME <VAR>n</VAR>, <VAR>sub</VAR>) <VAR>reg</VAR></CODE>
 <DD>
-If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>locallySimplifyTrace</CODE> returns the local simplification of <CODE><VAR>reg</VAR></CODE> with respect to <CODE><VAR>sub</VAR></CODE>, except that&#8212;at each recursive call of its principal function&#8212;it considers at most <CODE><VAR>n</VAR></CODE> structural reorganizations of its argument. <CODE>locallySimplifyTrace</CODE> issues a series of tracing messages, explaining its operation.  Issues an error message if <CODE><VAR>n</VAR></CODE> isn't at least <CODE>1</CODE>.
+If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>locallySimplifyTrace</CODE> returns the pair <CODE>(<VAR>full</VAR>, <VAR>reg'</VAR>)</CODE>, where <CODE><VAR>reg'</VAR></CODE> is the local simplification of <CODE><VAR>reg</VAR></CODE> with respect to <CODE><VAR>sub</VAR></CODE>, except that&#8212;at each recursive call of its principal function&#8212;it considers at most <CODE><VAR>n</VAR></CODE> structural reorganizations of its argument, and <CODE><VAR>full</VAR></CODE> will be <CODE>true</CODE> iff all structural reorganizations of <CODE><VAR>reg'</VAR></CODE> were considered, so that <CODE><VAR>reg'</VAR></CODE> is locally simplified.  <CODE>locallySimplifyTrace</CODE> issues a series of tracing messages, explaining its operation.  Issues an error message if <CODE><VAR>n</VAR></CODE> isn't at least <CODE>1</CODE>.
 <BR>
 <BR>
 
@@ -717,16 +717,16 @@ If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing
 <BR>
 
 <DT> <A NAME="STR:Reg.globallySimplifyTrace:VAL"></A>
-<DT> <CODE>globallySimplifyTrace (NONE, <VAR>b</VAR>, <VAR>sub</VAR>) <VAR>reg</VAR></CODE>
+<DT> <CODE>globallySimplifyTrace (NONE, <VAR>dist</VAR>, <VAR>sub</VAR>) <VAR>reg</VAR></CODE>
 <DD>
-If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>globallySimplifyTrace</CODE> returns the global simplification of <CODE><VAR>reg</VAR></CODE> with respect to <CODE><VAR>b</VAR></CODE> and <CODE><VAR>sub</VAR></CODE>. <CODE>globallySimplifyTrace</CODE> issues a series of tracing messages, explaining its operation.
+If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>globallySimplifyTrace</CODE> returns the pair <CODE>(true, <VAR>reg'</VAR>)</CODE>, where <CODE><VAR>reg'</VAR></CODE> is the global simplification of <CODE><VAR>reg</VAR></CODE> with respect to <CODE><VAR>dist</VAR></CODE> and <CODE><VAR>sub</VAR></CODE>. <CODE>globallySimplifyTrace</CODE> issues a series of tracing messages, explaining its operation.
 <BR>
 <BR>
 
 <DT> <A NAME="STR:Reg.globallySimplifyTrace:VAL"></A>
-<DT> <CODE>globallySimplifyTrace (SOME <VAR>n</VAR>, <VAR>b</VAR>, <VAR>sub</VAR>) <VAR>reg</VAR></CODE>
+<DT> <CODE>globallySimplifyTrace (SOME <VAR>n</VAR>, <VAR>dist</VAR>, <VAR>sub</VAR>) <VAR>reg</VAR></CODE>
 <DD>
-If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>globallySimplifyTrace</CODE> returns the global simplification of <CODE><VAR>reg</VAR></CODE> with respect to <CODE><VAR>b</VAR></CODE> and <CODE><VAR>sub</VAR></CODE>, except it curtails its search after considering <CODE><VAR>n</VAR></CODE> candidates.  <CODE>globallySimplifyTrace</CODE> issues a series of tracing messages, explaining its operation.  Issues an error message if <CODE><VAR>n</VAR></CODE> isn't at least <CODE>1</CODE>.
+If <CODE><VAR>sub</VAR></CODE> is a conservative approximation to subset testing, then <CODE>globallySimplifyTrace</CODE> returns the pair <CODE>(<VAR>full</VAR>, <VAR>reg'</VAR>)</CODE>, where <CODE><VAR>reg'</VAR></CODE> is the global simplification of <CODE><VAR>reg</VAR></CODE> with respect to <CODE><VAR>dist</VAR></CODE> and <CODE><VAR>sub</VAR></CODE>, except it curtails its search after considering <CODE><VAR>n</VAR></CODE> candidates, and <CODE><VAR>full</VAR></CODE> is <CODE>true</CODE> iff all <CODE><VAR>n</VAR></CODE> candidates were considered. <CODE>globallySimplifyTrace</CODE> issues a series of tracing messages, explaining its operation.  Issues an error message if <CODE><VAR>n</VAR></CODE> isn't at least <CODE>1</CODE>.
 <BR>
 <BR>
 
@@ -799,7 +799,7 @@ is a low-level function used by JForlan.  See the code for more information.
    ]</B>
 </CENTER>
 <P>
-<I>Forlan Version 4.7</I><BR>
+<I>Forlan Version 4.8</I><BR>
 <I>Copyright &copy; 2018 Alley Stoughton</I><BR>
 
 <HR>

@@ -1,6 +1,0 @@
-@FILES
-  [@EMPTY "debugging-sect"; "Debugging";
-    @SECTION "Debugging" [
-       @FILE "debug"
-    ]
-  ]

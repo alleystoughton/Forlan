@@ -307,12 +307,45 @@ the function definition were reversed, the function being defined
 would never return.
 
 Pattern matching is especially useful when doing list processing.
-E.g., we can define the list reversal function like this:
+E.g., we could (inefficiently) define the list reversal function like
+this:
 \input{chap-2.3-forlan7b}
 Calling \texttt{rev} with the empty list will result in the empty
 list being returned.  And calling it with a nonempty list will
 temporarily bind \texttt{x} to the list's head, bind \texttt{xs} to its
-tail, and then evaluate the expression \texttt{rev~xs~@~[x]}.
+tail, and then evaluate the expression \texttt{rev~xs~@~[x]},
+recursively calling \texttt{rev}, and then returning the result of
+appending the result of this recursive call and \texttt{[x]}.
+Unfortunately, this definition of \texttt{rev} is slow for long lists,
+as \texttt{@} rebuilds its left argument. Instead, the official
+definition of \texttt{rev} is much more efficient:
+\input{chap-2.3-forlan7b1}
+When \texttt{rev} is called with \texttt{[1, 2, 3, 4]}, it
+calls the auxiliary function \texttt{rv} with the pair
+\texttt{([1, 2, 3, 4], [])}. The recursive calls that
+\texttt{rv} makes to itself are a special kind of recursion
+called \emph{tail recursion}.
+\index{Standard ML!tail recursion}%
+\index{tail recursion}%
+The SML/NJ compiler generates
+code for such calls that simply jumps back to the beginning of \texttt{rv},
+only changing its arguments.
+We have the following sequence of calls: \texttt{rv([1, 2, 3, 4], [])}
+calls \texttt{rv([2, 3, 4], [1])} calls \texttt{rv([3, 4], [2, 1])}
+calls \texttt{rv([4], [3, 2, 1])} calls \texttt{rv([], [4, 3, 2, 1])},
+which returns \texttt{[4, 2, 2, 1]}, which is returned as the result
+of \texttt{rev}.
+
+\index{Standard ML!recursive datatype}%
+\index{Standard ML!tree}%
+Finally, we can define recursive datatypes, and define functions
+by structural recursion on recursive datatypes. E.g., here's how
+we can define the datatype of labeled binary trees (both leaves and
+nodes (non-leaves) can have labels):
+\input{chap-2.3-forlan7c}
+Then we can define a function for reversing a tree, and apply it to
+\texttt{tr}:
+\input{chap-2.3-forlan7d}
 \index{Standard ML|)}%
 
 \subsection{Symbols}

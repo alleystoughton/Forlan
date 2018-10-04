@@ -1,7 +1,0 @@
-@FILES
-  [@EMPTY "pretty-sect"; "Pretty Printing";
-    @SECTION "Pretty Printing and Messages" [
-       @FILE "pp"
-       @FILE "messages"
-    ]
-  ]
