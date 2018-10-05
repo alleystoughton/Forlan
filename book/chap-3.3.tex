@@ -41,22 +41,25 @@ greater than the star-height of $\gamma_2$.
 So, we need a better measure of the closure-related complexity of
 regular expressions than star-height.  Toward that end, let's define a
 \emph{closure complexity} to be a nonempty list $\ns$ of natural
+\index{closure complexity}%
+\index{regular expression!closure complexity}%
 numbers that is (not-necessarily strictly) descending: for all
 $i\in[1:|\ns|-1]$, $\ns\,i\geq \ns(i+1)$.  This is a way of
 representing nonempty multisets of natural numbers that makes it easy
 to define the usual ordering on multisets. We write $\CC$ for the set
-of all closure complexities.  For all $n\in\nats$, $[n]$ is a
-\emph{singleton} closure complexity.  The \emph{union} of closure
-complexities $\ns$ and $\ms$ ($\ns\cup\ms$) is the closure complexity
-that results from putting $\ns\myconcat\ms$ in descending order,
-keeping any duplicate elements.  (Here we are overloading the term
-union and the operation $\cup$, but the set-theoretic union isn't an
-operation on closure complexities, and so no confusion should result.)
-E.g., $[3,2,2,1]\cup[4,2,1,0] = [4,3,2,2,2,1,1,0]$.  The
+of all closure complexities. E.g., $[3, 2, 2, 1]$ is a closure
+complexity, but $[3, 2, 3]$ and $[\,]$ are not.  For all $n\in\nats$,
+$[n]$ is a \emph{singleton} closure complexity.  The \emph{union} of
+closure complexities $\ns$ and $\ms$ ($\ns\cup\ms$) is the closure
+complexity that results from putting $\ns\myconcat\ms$ in descending
+order, keeping any duplicate elements.  (Here we are overloading the
+term union and the operation $\cup$, but the set-theoretic union isn't
+an operation on closure complexities, and so no confusion should
+result.)  E.g., $[3,2,2,1]\cup[4,2,1,0] = [4,3,2,2,2,1,1,0]$.  The
 \emph{successor} $\overline{\ns}$ of a closure complexity $\ns$ is the
 closure complexity formed by adding one to each element of $\ns$,
-maintaining the order of the elements.  E.g., $\overline{[3,2,2,1]} =
-[4,3,3,2]$.
+maintaining the order of the elements.  E.g.,
+$\overline{[3,2,2,1]} = [4,3,3,2]$.
 
 It is easy to see that $\cup$ is commutative and associative on $\CC$,
 and that the successor operation on $\CC$ preserves union:
@@ -154,6 +157,13 @@ together all the paths through $\alpha$ that terminate in leafs, then
 counting the numbers of closures visited when following each of these
 paths, and finally putting those sums in descending order.
 
+Returning to our initial examples, we have that
+$\cc(\mathsf{(00^*11^*)^*}) = [2,2,1,1]$ and $\cc(\% + \mathsf{0(0 +
+  11^*0)^*11^*}) = [2,1,1,1,1,0,0,0]$.  Since
+$[2,1,1,1,1,0,0,0]\ltcc[2,2,1,1]$, the closure
+complexity of $\% + \mathsf{0(0 + 11^*0)^*11^*}$ is strictly smaller
+than the closure complexity of $\mathsf{(00^*11^*)^*}$.
+
 \begin{proposition}
 For all $\alpha\in\Reg$, $|\cc\,\alpha| = \numLeaves\,\alpha$.
 \end{proposition}
@@ -172,6 +182,7 @@ ways of forming regular expressions.  In fact, we can prove even
 stronger results.
 
 \begin{proposition}
+\label{RegCCEquiv}
 \begin{enumerate}[\quad(1)]
 \item For all $\alpha\in\Reg$, $\cc\,\alpha = \cc\,\beta$
   iff $\cc(\alpha^*) = \cc(\beta^*)$.
@@ -194,7 +205,28 @@ stronger results.
 Follows by Proposition~\ref{CCEquivContext}.
 \end{proof}
 
+The following proposition says that if we replace a subtree of
+a regular expression by a regular expression with the same closure
+complexity, then the closure complexity of the
+resulting, whole regular expression will be unchanged.
+
 \begin{proposition}
+\label{RegCCEquivSubstituteSubtree}
+
+Suppose $\alpha,\beta,\beta'\in\Reg$, $\cc\,\beta = \cc\,\beta'$,
+$\pat\in\Path$ is valid for $\alpha$, and $\beta$ is
+the subtree of $\alpha$ at position $\pat$.
+Let $\alpha'$ be the result of replacing the subtree at
+position $\pat$ in $\alpha$ by $\beta'$. Then $\cc\,\alpha =
+\cc\,\alpha'$.
+\end{proposition}
+
+\begin{proof}
+By induction on $\alpha$ using Proposition~\ref{RegCCEquiv}.
+\end{proof}
+
+\begin{proposition}
+\label{RegCCLTContext}
 \begin{enumerate}[\quad(1)]
 \item For all $\alpha\in\Reg$, $\cc\,\alpha\ltcc\cc\,\beta$
   iff $\cc(\alpha^*)\ltcc\cc(\beta^*)$.
@@ -217,12 +249,26 @@ Follows by Proposition~\ref{CCEquivContext}.
 Follows by Proposition~\ref{CCLTContext}.
 \end{proof}
 
-Returning to our initial examples, we have that
-$\cc(\mathsf{(00^*11^*)^*}) = [2,2,1,1]$ and $\cc(\% + \mathsf{0(0 +
-  11^*0)^*11^*}) = [2,1,1,1,1,0,0,0]$.  Since
-$[2,1,1,1,1,0,0,0]\ltcc[2,2,1,1]$, the closure
-complexity of $\% + \mathsf{0(0 + 11^*0)^*11^*}$ is strictly smaller
-than the closure complexity of $\mathsf{(00^*11^*)^*}$.
+The following proposition says that if we replace a subtree of a regular
+expression by a regular expression with strictly smaller closure
+complexity, that the resulting, whole regular expression
+will have strictly smaller closure complexity than the original
+regular expression.
+
+\begin{proposition}
+\label{RegCCLTSubstituteSubtree}
+
+Suppose $\alpha,\beta,\beta'\in\Reg$, $\cc\,\beta'\ltcc\cc\,\beta$,
+$\pat\in\Path$ is valid for $\alpha$, and $\beta$ is
+the subtree of $\alpha$ at position $\pat$.
+Let $\alpha'$ be the result of replacing the subtree at
+position $\pat$ in $\alpha$ by $\beta'$. Then $\cc\,\alpha'\ltcc
+\cc\,\alpha$.
+\end{proposition}
+
+\begin{proof}
+By induction on $\alpha$, using Proposition~\ref{RegCCLTContext}.
+\end{proof}
 
 When judging the relative complexity of regular expressions $\alpha$
 and $\beta$, we will first look at how their closure complexities are
@@ -248,11 +294,11 @@ is defined by recursion:
 \eqtxt{and}\\
 \numConcats(\alpha + \beta) &= \numConcats\,\alpha + \numConcats\,\beta .
 \end{align*}
-Thus $\numConcats\,\alpha$ is the number of concatenations in $\alpha$,
-i.e., the number of subtrees of $\alpha$ that are concatenations,
-where a given subtree may occur (and will be counted) multiple times.
-E.g., $\numConcats(\mathsf{((01)^*(01))^*}) = 3$.
-The function
+Thus $\numConcats\,\alpha$ is the number of concatenations in
+$\alpha$, i.e., the number of subtrees of $\alpha$ that are
+concatenations, where a given concatenation may occur (and will be
+counted) multiple times.  E.g.,
+$\numConcats(\mathsf{((01)^*(01))^*}) = 3$.  The function
 \index{numSyms@$\numSyms$}%
 \index{regular expression!numSyms@$\numSyms$}%
 \index{regular expression!number of symbols}%
@@ -327,8 +373,8 @@ their relative complexity according to whether they are standardized,
 thinking that a standardized regular expression is simpler than one
 that is not standardized.
 
-To summarize, we say that a regular expression $\alpha$ \emph{is
-simpler (less complex) than} $\beta$ iff:
+We define a relation $\ltsimp$ on $\Reg$ by, for all $\alpha,\beta\in\Reg$,
+$\alpha\ltsimp\beta$ iff:
 \begin{itemize}
 \item $\cc\,\alpha \ltcc \cc\,\beta$; or
 
@@ -346,11 +392,18 @@ simpler (less complex) than} $\beta$ iff:
   \numSyms\,\beta$, but $\alpha$ is standardized and $\beta$ is
   not standardized.
 \end{itemize}
-We define relations $\leqsimp$ and $\equivsimp$ on $\Reg$ by: for all
-$\alpha,\beta\in\Reg$, $\alpha\leqsimp\beta$ iff $\alpha$ is simpler
-than $\beta$, and $\alpha\equivsimp\beta$ iff
-$\alpha\leqsimp\beta\leqsimp\alpha$.  We say that $\alpha$ \emph{has the
-same complexity as} $\beta$ iff $\alpha\equivsimp\beta$.
+
+We read $\alpha\ltsimp\beta$ as $\alpha$ is \emph{simpler} (less
+\emph{complex}) than $\beta$.  We define a relation $\equivsimp$ on
+$\Reg$ by, for all $\alpha,\beta\in\Reg$, $\alpha\equivsimp\beta$ iff
+$\alpha$ and $\beta$ have the same closure complexity, size, numbers
+of concatenations, numbers of symbols, and status of being (or not
+being) standardized.  We read $\alpha\equivsimp\beta$ as $\alpha$ and
+$\beta$ have the \emph{same complexity}.  Finally, we define a
+relation $\leqsimp$ on $\Reg$ by, for all $\alpha,\beta\in\Reg$,
+$\alpha\leqsimp\beta$ iff $\alpha\ltsimp\beta$ or
+$\alpha\equivsimp\beta$.  We read $\alpha\leqsimp\beta$ as $\alpha$ is
+at least as simpler as (no more complex) than $\beta$
 
 For example, the following regular expressions are equivalent and have
 the same complexity:
@@ -361,11 +414,15 @@ the same complexity:
 
 \begin{proposition}
 \begin{enumerate}[\quad(1)]
-\item $\leqsimp$ is a reflexive, transitive and total relation on
-  $\Reg$.
+\item $\ltsimp$ is transitive.
 
-\item $\equivsimp$ is a reflexive, transitive and symmetric relation on
-  $\Reg$.
+\item $\equivsimp$ is reflexive on $\Reg$, transitive and symmetric.
+
+\item For all $\alpha,\beta\in\Reg$, exactly one of the following holds:
+$\alpha\ltsimp\beta$, $\beta\ltsimp\alpha$ or $\alpha\equivsimp\beta$.
+
+\item $\leqsimp$ is transitive, and, for all $\alpha,\beta\in\Reg$,
+$\alpha\equivsimp\beta$ iff $\alpha\leq\beta$ and $\beta\leq\alpha$.
 \end{enumerate}
 \end{proposition}
 
@@ -401,7 +458,7 @@ val compareComplexityTotal : reg * reg -> order
 The first two functions implement the functions with the same names.
 The function \texttt{standardized} tests whether a regular expression
 is standardized, and the function \texttt{compareComplexity} implements
-$\leqsimp$.  Finally, \texttt{compareComplexityTotal} is like
+$\leqsimp$/$\equivsimp$. Finally, \texttt{compareComplexityTotal} is like
 \texttt{compareComplexity}, but falls back on \texttt{Reg.compare}
 (our total ordering on regular expressions) to order regular expressions
 with the same complexity.  Thus \texttt{compareComplexityTotal} is
@@ -522,7 +579,7 @@ An easy induction on regular expressions.
 \end{proof}
 
 Next, we see how we can test whether a regular expression is weakly
-simplified via a simple stuctural recursion.  Define
+simplified via a simple structural recursion.  Define
 $\weaklySimplified\in\Reg\fun\Bool$ by structural recursion, as
 follows.  Given a regular expression $\alpha$, it proceeds as follows:
 \begin{itemize}
@@ -581,7 +638,7 @@ $\alpha$ is \emph{almost weakly simplified} iff either:
 \item $w\in\{\%,\$\}$; or
 
 \item all elements of $\concatsToList\,\alpha$ are weakly simplified,
-  and are not $\%$, $\$$ or concatentations.
+  and are not $\%$, $\$$ or concatenations.
 \end{itemize}
 
 For example, $\mathsf{0^*0(1+2)^*(1+2)} =
@@ -602,7 +659,7 @@ Let
 
 We define a function $\shiftClosuresRight\in\AWS\fun\WS$ by recursion.
 Given $\alpha\in\AWS$, $\shiftClosuresRight$ proceeds as follows.  If
-$\alpha$ is not a concatentation, than it returns $\alpha$.
+$\alpha$ is not a concatenation, than it returns $\alpha$.
 Otherwise, $\alpha = \alpha_1\alpha_2$ for some $\alpha_1,\alpha_2\in\Reg$.
 Since $\alpha$ is almost weakly simplified, so is $\alpha_2$.  So it lets
 $\alpha'_2\in\WS$ be the result of calling $\shiftClosuresRight$ on
@@ -684,7 +741,7 @@ $\alpha,\beta\in\WS$:
 To see that the last clause of this definition is proper, suppose
 that $\alpha,\beta\in\WS-\{\%,\$\}$.  Thus all the elements of
 $\concatsToList\,\alpha$ and $\concatsToList\,\beta$ are weakly
-simplified, and are not $\%$, $\$$ or concatentations.  Hence
+simplified, and are not $\%$, $\$$ or concatenations.  Hence
 \begin{displaymath}
 \concatsToList(\rightConcat(\alpha,\beta)) =  
 \concatsToList\,\alpha \myconcat \concatsToList\,\beta
@@ -789,7 +846,7 @@ $\weaklySimplify(\alpha) = \alpha$.
 \end{proposition}
 
 \begin{proof}
-By induction on regular expresssions.
+By induction on regular expressions.
 \end{proof}
 
 Using our weak simplification algorithm, we can define an algorithm
@@ -813,7 +870,7 @@ The function \texttt{weaklySimplified} tests whether its argument is
 weakly simplified, and \texttt{weaklySimplify} implements
 $\weaklySimplify$.  Finally, the function \texttt{toStrSet} implements our
 algorithm for calculating the language generated by a regular expression,
-if that langauge is finite, and for announcing the this language is
+if that language is finite, and for announcing the this language is
 infinite, otherwise.
 
 Here are some examples of how these functions can be used:
@@ -1101,10 +1158,7 @@ $\alpha\fun\beta$ because of a reduction rule, we have that
 $\alphabet\,\beta\sub\alphabet\,\alpha$ and $\beta\simp\alpha$, where
 $\simp$ is the well-founded relation on $\Reg$ that is defined below.
 
-First, we see that our strict total ordering $\ltcc$ on the set $\CC$
-of closure complexities is well-founded:
-
-Next, define the relation $\simp$ on $\Reg$ by: for all $\alpha,\beta\in
+We define the relation $\simp$ on $\Reg$ by: for all $\alpha,\beta\in
 \Reg$, $\alpha\simp\beta$ iff either:
 \begin{itemize}
 \item $\cc\,\alpha\ltcc\cc\,\beta$; or
@@ -1118,6 +1172,9 @@ Next, define the relation $\simp$ on $\Reg$ by: for all $\alpha,\beta\in
   \mysize\,\beta$, and $\numConcats\,\alpha = \numConcats\,\beta$, but
   $\numSyms\,\alpha < \numSyms\,\beta$.
 \end{itemize}
+Note that this is almost the same definition as that of
+$\ltsimp$---the difference being that $\simp$ doesn't have
+the final step involving standardization.
 
 \begin{proposition}
 $\simp$ is a well-founded relation on $\Reg$.
@@ -1126,18 +1183,18 @@ $\simp$ is a well-founded relation on $\Reg$.
 \begin{proof}
 Follows by Propositions~\ref{LTCCWellFounded}, \ref{LexWellFounded}
 and \ref{InverseImageWellFounded}, plus the fact that $<$ is
-well-founded on $\nats$.
+well-founded on $\nats$ (Proposition~\ref{NonemptyLeastProp}).
 \end{proof}
 
 Our reduction rules follow.  In the rules, we abbreviate
 $\hasEmp\,\alpha=\true$ and $\Sub(\alpha,\beta)=\true$ to
 $\hasEmp\,\alpha$ and $\Sub(\alpha,\beta)$, respectively.  Most of
 the rules strictly decrease a regular expression's closure complexity
-and size.  The exceptions are labeled ``size'' (for when the closure
+and size.  The exceptions are labeled ``cc'' (for when the closure
 complexity strictly decreases, but the size strictly increases),
 ``concatenations'' (for when the closure complexity and size are
-preserved, but the number of concatentations strictly decreases) or
-``alphabet'' (for when the closure complexity and size normally strictly
+preserved, but the number of concatenations strictly decreases) or
+``symbols'' (for when the closure complexity and size normally strictly
 decrease, but occasionally they and the number of concatenations stay
 they same, but the number of symbols strictly decreases).
 
@@ -1190,17 +1247,17 @@ they same, but the number of symbols strictly decreases).
   $(\alpha\beta + \gamma)^* \fun (\alpha + \gamma)^*$.
 
 %14
-\item (size) If $\mynot(\hasEmp\,\alpha)$ and $\cc\,\alpha \cup
+\item (cc) If $\mynot(\hasEmp\,\alpha)$ and $\cc\,\alpha \cup
   \overline{\cc\,\beta} \ltcc \overline{\overline{\cc\,\beta}}$, then
   $(\alpha\beta^*)^* \fun \% + \alpha(\alpha+\beta)^*$.
 
 %15
-\item (size) If $\mynot(\hasEmp\,\beta)$ and $\overline{\cc\,\alpha} \cup
+\item (cc) If $\mynot(\hasEmp\,\beta)$ and $\overline{\cc\,\alpha} \cup
   \cc\,\beta \ltcc \overline{\overline{\cc\,\alpha}}$, then
   $(\alpha^*\beta)^* \fun \% + (\alpha+\beta)^*\beta$.
 
 %16
-\item (size) If $\mynot(\hasEmp\,\alpha)$ or $\mynot(\hasEmp\,\gamma)$, and
+\item (cc) If $\mynot(\hasEmp\,\alpha)$ or $\mynot(\hasEmp\,\gamma)$, and
   $\cc\,\alpha \cup \overline{\cc\,\beta} \cup \cc\,\gamma \ltcc
   \overline{\overline{\cc,\beta}}$, then $(\alpha\beta^*\gamma)^*
   \fun \% + \alpha(\beta + \gamma\alpha)^*\gamma$.
@@ -1371,7 +1428,7 @@ val locallySimplify      :
 val locallySimplifyTrace :
       int option * (reg * reg -> bool) -> reg -> bool * reg
 \end{verbatim}
-The function \texttt{locallySimplify} takes in a conservative
+The function \texttt{locallySimplified} takes in a conservative
 approximation to subset testing $\Sub$ and returns a function that
 tests whether a regular expression is $\Sub$-locally simplified.  The
 function \texttt{locallySimplifyTrace} implements $\locallySimplify$.
@@ -1418,7 +1475,7 @@ distributive variant---the distributive ones.  The simplest element of
 $X$ is then selected (when there isn't a unique simplest element, the
 smallest of the simplest elements---in our total ordering on regular
 expressions---is selected).  (A proof that the generation of $X$
-terminates even in the distributive case will follow.)
+terminates even in the distributive case is not yet complete.)
 
 Of course, this algorithm is much less efficient than the local
 one, but by revisiting choices, it is capable of producing simpler
@@ -1460,8 +1517,8 @@ val globallySimplifyTrace :
 val globallySimplify      :
       int option * bool * (reg * reg -> bool) -> reg -> bool * reg
 \end{verbatim}
-The function \texttt{globallySimplify} takes in a boolean $b$ and a
-conservative approximation to subset testing $\Sub$ and returns a
+The function \texttt{globallySimplified} takes in a boolean $b$ and a
+conservative approximation to subset testing $\Sub$, and returns a
 function that tests whether a regular expression is globally
 simplified with respect to $b$ and $\Sub$.  The function
 \texttt{globallySimplifyTrace} implements $\globallySimplify$.  It
