@@ -1186,6 +1186,22 @@ and \ref{InverseImageWellFounded}, plus the fact that $<$ is
 well-founded on $\nats$ (Proposition~\ref{NonemptyLeastProp}).
 \end{proof}
 
+The following proposition says that if we replace a subtree of a
+regular expression by a regular expression that is a
+$\simp$-predecessor of that subtree, that the resulting, whole regular
+expression will be a $\simp$-predecessor of the original, whole
+regular expression.
+
+\begin{proposition}
+\label{RegSimpSubtreeSubstitute}
+
+Suppose $\alpha,\beta,\beta'\in\Reg$, $\beta'\simp\beta$,
+$\pat\in\Path$ is valid for $\alpha$, and $\beta$ is
+the subtree of $\alpha$ at position $\pat$.
+Let $\alpha'$ be the result of replacing the subtree at
+position $\pat$ in $\alpha$ by $\beta'$. Then $\alpha'\simp\alpha$.
+\end{proposition}
+
 Our reduction rules follow.  In the rules, we abbreviate
 $\hasEmp\,\alpha=\true$ and $\Sub(\alpha,\beta)=\true$ to
 $\hasEmp\,\alpha$ and $\Sub(\alpha,\beta)$, respectively.  Most of
