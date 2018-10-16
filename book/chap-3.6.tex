@@ -110,10 +110,10 @@ For all $q\in Q_M$ and $y\in S$,
 
 \begin{proof}
 The ``only if'' (left-to-right) direction is by induction on $X$:
-we show that, for all $(q,y)\in X$, $q\in\Delta_M(P,\pre(y))$.
+we show that, for all $(q,y)\in X$, $q\in\Delta_M(P,\pre\,y)$.
 \begin{itemize}
 \item Suppose $p\in P$.  Then $p\in\Delta_M(P,\%)$.  But
-$\pre(w)=\%$, so that $p\in\Delta_M(P,\pre(w))$.
+$\pre\,w=\%$, so that $p\in\Delta_M(P,\pre\,w)$.
 
 \item Suppose $q,r\in Q_M$, $x,y\in\Str$, $(q,xy)\in X$ and
 $(q,x,r)\in T_M$.  Assume the inductive hypothesis:
@@ -122,9 +122,9 @@ Thus there is an $\lp\in\LP$
 such that $\pre(xy)$ is the label of $\lp$, $\lp$ is valid for $M$,
 the start state of $\lp$ is in $P$, and $q$ is the end state of $\lp$.
 Let $lp'\in\LP$ be the result of adding the step $q,x\Rightarrow r$ at
-the end of $\lp$.  Thus $\pre(y)$ is the label of $\lp'$, $\lp'$ is
+the end of $\lp$.  Thus $\pre\,y$ is the label of $\lp'$, $\lp'$ is
 valid for $M$, the start state of $\lp'$ is in $P$, and $r$ is the end
-state of $\lp'$, showing that $r\in\Delta_M(P,\pre(y))$.
+state of $\lp'$, showing that $r\in\Delta_M(P,\pre\,y)$.
 \end{itemize}
 
 For the `if'' (right-to-left) direction, we have that there is a
@@ -132,12 +132,13 @@ labeled path
 \begin{gather*}
 q_1\lparr{x_1}q_2\lparr{x_2}\cdots\,q_{n-1}\lparr{x_{n-1}}q_n ,
 \end{gather*}
-that is valid for $M$ and where $\pre(y)=x_1x_2\cdots x_{n-1}$,
-$q_1\in P$ and $q_n=q$.  Since $q_1\in P$ and $w=\pre(y)y=x_1x_2\cdots
-x_{n-1}y$, we have that $(q_1, x_1x_2\cdots x_{n-1}y)=(q_1,w)\in X$.  But
-$(q_1,x_1,q_2)\in T_M$, and thus $(q_2, x_2\cdots x_{n-1}y)\in X$.
-Continuing on in this way, (we could do this by mathematical induction),
-we finally get that $(q,y)=(q_n,y)\in X$.
+that is valid for $M$ and where $\pre\,y=x_1x_2\cdots x_{n-1}$,
+$q_1\in P$ and $q_n=q$.  Since $q_1\in P$ and
+$w=(\pre\,y)y=x_1x_2\cdots x_{n-1}y$, we have that
+$(q_1, x_1x_2\cdots x_{n-1}y)=(q_1,w)\in X$, by (1).  But
+$(q_1,x_1,q_2)\in T_M$, and thus $(q_2, x_2\cdots x_{n-1}y)\in X$,
+by (2). Continuing on in this way (we could do this by mathematical
+induction), we finally get that $(q,y)=(q_n,y)\in X$.
 \end{proof}
 
 \begin{lemma}

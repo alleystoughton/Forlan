@@ -177,7 +177,8 @@ that there is no isomorphism from $M$ to $N$:
 
 \item $s_N\in A_N$, but $s_M\not\in A_M$.
 \end{itemize}
-Otherwise, it calls its main, recursive function, $\findIso$.
+Otherwise, it calls its main function, $\findIso$, which is
+defined by well-founded recursion.
 
 The function $\findIso$ is called with an argument $(f,
 [C_1,\ldots,C_n])$, where:
@@ -208,9 +209,9 @@ Thus, we have the following facts:
 \end{itemize}
 
 Each argument to a recursive call of $\findIso$ will be strictly
-smaller than the argument to the original call in the \emph{termination
-relation} in which argument $(f, [C_1,\ldots,C_n])$ is less than argument
-$(f', [C'_1,\ldots,C'_m])$ iff either:
+smaller than the argument to the original call in the well-founded
+\emph{termination relation} in which argument $(f, [C_1,\ldots,C_n])$
+is less than argument $(f', [C'_1,\ldots,C'_m])$ iff either:
 \begin{itemize}
 \item $|f|>|f'|$ (remember that $|f|\leq|Q_M|=|Q_N|$); or
 
@@ -218,7 +219,6 @@ $(f', [C'_1,\ldots,C'_m])$ iff either:
   $C_1,\,\ldots,C_n$ is strictly less than the sum of the weights of
   the constraints $C'_1, \,\ldots,C'_m$.
 \end{itemize}
-Thus every call of $\findIso$ will terminate.
 
 When $\findIso$ is called with argument $(f, [C_1,\ldots,C_n])$, the
 following property, which we call (\dag), will hold: for all bijections
@@ -244,7 +244,8 @@ Initially, the algorithm calls $\findIso$ with the \emph{initial argument}:
 (\emptyset, [(\{s_M\}, \{s_N\}), (U, V), (X, Y)]) ,
 \end{displaymath}
 where $U = A_M - \{s_M\}$, $V = A_N - \{s_N\}$, $X = (Q_M - A_M) -
-\{s_M\}$ and $Y= (Q_N - A_N) - \{s_N\}$.
+\{s_M\}$ and $Y= (Q_N - A_N) - \{s_N\}$. Clearly the initial
+argument satisfies (\dag).
 
 If $\findIso$ is called with argument $(f, [\,])$, then it returns
 $\some\,f$.

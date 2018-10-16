@@ -71,7 +71,7 @@ subset $Y$ of $Q_M$ such that:
 \item for all $q,r\in Q_M$ and $x\in\Str$, if $r\in Y$ and
 $(q,x,r)\in T_M$, then $q\in Y$.
 \end{itemize}
-This time it's the accepting states of $M$ that initially added
+This time it's the accepting states of $M$ that are initially added
 to our set, since each accepting state is trivially live.
 Then, if $r$ is live, and $(q,x,r)$ is a transition
 of $M$, then $q$ is clearly live.
@@ -124,10 +124,14 @@ If $M$ is a simplified finite automaton, then
 $\alphabet\,M=\alphabet(L(M))$.
 \end{proposition}
 
-We always have that $\alphabet(L(M))\sub\alphabet\,M$.  But, when $M$
+\begin{proof}
+We always have that $\alphabet(L(M))\sub\alphabet\,M$.  But, because $M$
 is simplified, we also have that $\alphabet\,M\sub\alphabet(L(M))$,
 i.e., that every symbol appearing in a string of one of $M$'s
 transitions also appears in one of the strings accepted by $M$.
+This is because given any transition $(p,x,q)$ of a simplified
+finite automaton, $p$ is reachable and $q$ is live.
+\end{proof}
 
 To give our simplification algorithm for finite automta, we need an
 auxiliary function for removing redundant transitions from an FA.

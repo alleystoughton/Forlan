@@ -1143,6 +1143,15 @@ concatenations and number of symbols of a regular expression:
 
 \item $(\alpha\beta)^*\alpha \fun \alpha(\beta\alpha)^*$.
 \end{enumerate}
+For even small regular expressions, there may be a very large number
+of ways to reorganize them using the structural rules. E.g., suppose
+$\alpha_1,\ldots,\alpha_n$ are distinct regular expressions, for
+$n\geq 1$. There are $n!$ ways of ordering the $\alpha_i$.  And there
+are $(2n)! / (n!)(n+1)!$ (these are the Catalan numbers) binary trees
+with exactly $n$ leaves. Consequently, using structural rules (1), (2)
+and (5) (withing making changes inside the $\alpha_i$), we can
+reorganize $\alpha_1+\cdots+\alpha_n$ into $(n!)(2n)! / (n!)(n+1)!$
+regular expressions. For $n=16$, this is about $7*10^{20}$.
 
 There are two \emph{distributive rules}, which preserve the
 alphabet of a regular expression:
