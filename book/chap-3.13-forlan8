@@ -1,0 +1,3 @@
+val dfa' = DFA.minimize dfa;
+DFA.isomorphic(dfa', dfa);
+DFA.numStates dfa';

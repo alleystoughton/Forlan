@@ -100,11 +100,13 @@ $\ns\ltcc\ms$ iff either:
   \item $\ns\,i < \ms\,i$.
   \end{itemize}
 \end{itemize}
-In other words, $ns\ltcc\ms$ iff either $\ms$ consists of the
+In other words, $\ns\ltcc\ms$ iff either $\ms$ consists of the
 result of appending a nonempty list at the end of $\ns$, or
 $\ns$ and $\ms$ agree up to some point, at which $\ns$'s value
 is strictly smaller than $\ms$'s value.  E.g.,
-$[2, 2]\leqcc[2, 2, 1]$ and $[2,1,1,0,0]\ltcc[2, 2, 1]$.
+$[2, 2]\ltcc[2, 2, 1]$ and $[2,1,1,0,0]\ltcc[2, 2, 1]$.
+We define the relation $\leqcc$ on $\CC$ by: for all $\ns,\ms\in\CC$,
+$\ns\leqcc\ms$ iff $\ns\ltcc\ms$ or $\ns=\ms$.
 
 \begin{proposition}
 \label{CCLTContext}
@@ -1327,7 +1329,7 @@ they same, but the number of symbols strictly decreases).
    $\% + \alpha^* \beta \fun \alpha^*$.
 \end{enumerate}
 
-In rules (14)-(16), the preconditions involving $\cc$ are necessary
+In rules (14)--(16), the preconditions involving $\cc$ are necessary
 and sufficient conditions for the right-hand side to have strictly
 smaller closure complexity than the left-hand side.
 

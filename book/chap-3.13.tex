@@ -377,11 +377,12 @@ Follows from Lemma~\ref{MinimizationLemma3}(1).
 \end{proof}
 
 In order to define the DFA $N$ that is the result of our minimization
-algorithm, we need a bit more notation.  As in Section~3.10, we write
-$\overline{P}$ for the result of coding a finite set of symbols $P$ as
-a symbol.  E.g., $\overline{\{\Bsf,\Asf\}} = \langle\Asf,\Bsf\rangle$.
+algorithm, we need a bit more notation.  As in
+Section~\ref{DeterministicFiniteAutomata}, we write $\overline{P}$ for
+the result of coding a finite set of symbols $P$ as a symbol.  E.g.,
+$\overline{\{\Bsf,\Asf\}} = \langle\Asf,\Bsf\rangle$.
 
-If $q\in Q_{M'}$, we write $[q]$ for $\setof{r\in Q_{M'}}{(r,q)\in
+If $q\in Q_{M'}$, we write $[q]$ for $\setof{p\in Q_{M'}}{(p,q)\in
   Y}$, which is called the \emph{equivalence class} of $q$.  Using
 Lemma~\ref{MinimizationLemma4}, it is easy to show that, $q\in[q]$,
 for all $q\in Q_{M'}$, and $[q]=[r]$ iff $(q,r)\in Y$, for all $q,r\in
@@ -585,14 +586,21 @@ so that $yz\in L(N')=L(M')$.  Hence
 $\delta_{M'}(\delta_{M'}(s_{M'},y), z) = \delta_{M'}(s_{M'},yz) \in
 A_{M'}$.
 
-Because $h$ is a function, $\range\,h=Q_N$ is finite, $\domain\,h\sub
-Q_{N'}$ and $|Q_{N'}|\leq|Q_N|$, we have that $|Q_{N'}|=|Q_N|$ and $h$
+Because $h$ is a function and $\range\,h=Q_N$, we have that
+$|Q_N|\leq |\domain\,f|\leq Q_{N'}$. But $|Q_{N'}|\leq |Q_N|$, and thus
+$|Q_{N'}| = |Q_N|$. Because $Q_{N'}$ and $Q_N$ are finite, it
+follows that $\domain\,h = Q_{N'}$ and $h$ is injective, so that $h$
 is a bijection from $Q_{N'}$ to $Q_N$.  Thus, every state of $N'$ is
-reachable, and, for all $w\in(\alphabet\,M')^* = (\alphabet\,N)^* =
-(\alphabet\,N')^*$, $h(\delta_{N'}(s_{N'},w))=\delta_N(s_N,w)$.  The
-remainder of the proof that $h$ is an isomorphism from $N'$ to $N$ is
-easy.
+reachable, and, for all
+$w\in(\alphabet\,M')^* = (\alphabet\,N)^* = (\alphabet\,N')^*$,
+$h(\delta_{N'}(s_{N'},w))=\delta_N(s_N,w)$.  The remainder of the
+proof that $h$ is an isomorphism from $N'$ to $N$ is easy.
 \end{proof}
+
+\begin{exercise}
+Expand on the last sentence of Lemma~\ref{MinimizationLemma8},
+proving that $h$ is an isomorphism from $N'$ to $N$ is easy.
+\end{exercise}
 
 We define a function $\minimize\in\DFA\fun\DFA$ by:
 $\minimize\,M$ is the result of running the above algorithm on
@@ -635,6 +643,27 @@ DFA
 then we can minimize the alphabet size and number of states of \texttt{dfa}
 as follows.
 \input{chap-3.13-forlan5}
+
+Finally, let's revisit an example from
+Section~\ref{DeterministicFiniteAutomata}. Suppose \texttt{nfa} is the
+$4$-state NFA
+\begin{center}
+\input{chap-3.13-fig5.eepic}
+\end{center}
+As we saw, our NFA-to-DFA conversion algorithm converts \texttt{nfa}
+to a DFA \texttt{dfa} with $16$ states:
+
+\input{chap-3.13-forlan7}
+
+We can now use Forlan to verify that there is no DFA with fewer than
+$16$ states that accepts the same language as \texttt{nfa}:
+
+\input{chap-3.13-forlan8}
+
+Thus we have an example where the smallest DFA accepting a language
+requires exponentially more states than the smallest NFA accepting that
+language. (This is true even though we haven't proven that an NFA
+must have at least $4$ states to accept the same language as \texttt{nfa}.)
 
 \subsection{Notes}
 

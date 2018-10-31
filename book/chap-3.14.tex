@@ -38,13 +38,14 @@ When we use the Pumping Lemma, we can imagine that we are interacting
 with it.  We can give the Pumping Lemma a regular language $L$, and
 the lemma will give us back a natural number $n$ such that the
 property of the lemma holds.  We have no control over the value of
-$n$.  We can then give the lemma a string $z$ that is in $L$ and has
-at least $n$ symbols.  (If $L$ is finite, though, there will be no
-elements of $L$ with at least $n$ symbols, and so we won't be able to
-proceed.)  The lemma will then break $z$ up into parts $u$, $v$ and
-$w$ in such way that (1)--(3) hold.  We have no control over how $z$
-is broken up into these parts.  (1) says that $uv$ has no more than
-$n$ symbols.  (2) says that $v$ is nonempty.  And (3) says that, if we
+$n$; all we know is that the property of the lemma holds.  We can then
+give the lemma a string $z$ that is in $L$ and has at least $n$
+symbols. We'll have to choose $z$ as a function of $n$, because we
+don't know what $n$ is. The lemma will then break $z$ up into parts
+$u$, $v$ and $w$ in such way that (1)--(3) hold.  We have no control
+over how $z$ is broken up into these parts; all we know is that
+$z=uvw$ and (1)--(3) hold.  (1) says that $uv$ has no more than $n$
+symbols.  (2) says that $v$ is nonempty.  And (3) says that, if we
 ``pump'' (duplicate) $v$ as many times as we like, the resulting
 string will still be in $L$.
 

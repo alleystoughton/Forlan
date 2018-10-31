@@ -1,0 +1,5 @@
+fun revTree (Leaf n)            = Leaf n
+  | revTree (Node(m, tr1, tr2)) =
+      Node(m, revTree tr2, revTree tr1);
+revTree tr;
+revTree it;

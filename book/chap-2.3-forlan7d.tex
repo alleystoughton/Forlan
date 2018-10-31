@@ -1,0 +1,31 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }fun\ revTree\ (Leaf\ n)\ \ \ \ \ \ \ \ \ \ \ \ =\ Leaf\ n
+\item[]\textsl{=\ }\ \ |\ revTree\ (Node(m,\ tr1,\ tr2))\ =
+\item[]\textsl{=\ }\ \ \ \ \ \ Node(m,\ revTree\ tr2,\ revTree\ tr1);
+\item[]\textsl{val\ revTree\ =\ fn\ :\ ('a,'b)\ tree\ ->\ ('a,'b)\ tree}
+\item[]\textsl{-\ }revTree\ tr;
+\item[]\textsl{val\ it\ =\ Node\ (true,Leaf\ 8,Node\ (false,Leaf\ \symbol{'176}1,Leaf\ 7))}
+\item[]\textsl{\ \ :\ (bool,int)\ tree}
+\item[]\textsl{-\ }revTree\ it;
+\item[]\textsl{val\ it\ =\ Node\ (true,Node\ (false,Leaf\ 7,Leaf\ \symbol{'176}1),Leaf\ 8)}
+\item[]\textsl{\ \ :\ (bool,int)\ tree}
+\end{list}

@@ -1,0 +1,5 @@
+fun rev xs =
+      let fun rv(nil,     vs) = vs
+            | rv(u :: us, vs) = rv(us, u :: vs)
+      in rv(xs, nil) end;
+rev [1, 2, 3, 4];

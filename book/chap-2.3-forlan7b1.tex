@@ -1,0 +1,28 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }fun\ rev\ xs\ =
+\item[]\textsl{=\ }\ \ \ \ \ \ let\ fun\ rv(nil,\ \ \ \ \ vs)\ =\ vs
+\item[]\textsl{=\ }\ \ \ \ \ \ \ \ \ \ \ \ |\ rv(u\ ::\ us,\ vs)\ =\ rv(us,\ u\ ::\ vs)
+\item[]\textsl{=\ }\ \ \ \ \ \ in\ rv(xs,\ nil)\ end;
+\item[]\textsl{val\ rev\ =\ fn\ :\ 'a\ list\ ->\ 'a\ list}
+\item[]\textsl{-\ }rev\ \symbol{'133}1,\ 2,\ 3,\ 4\symbol{'135};
+\item[]\textsl{val\ it\ =\ \symbol{'133}4,3,2,1\symbol{'135}\ :\ int\ list}
+\end{list}

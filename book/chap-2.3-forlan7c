@@ -1,0 +1,6 @@
+datatype ('a, 'b) tree =
+    Leaf of 'b
+  | Node of 'a * ('a, 'b) tree * ('a, 'b) tree;
+Leaf;
+Node;
+val tr = Node(true, Node(false, Leaf 7, Leaf ~1), Leaf 8);
