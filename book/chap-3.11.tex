@@ -306,6 +306,26 @@ and language $X$, we simply need that:
   not being in $X$.
 \end{itemize}
 
+\begin{exercise}
+\label{AllGoodDFACorrLem}
+Define $\diff\in\{\mathsf{0,1}\}^*\fun\ints$ by:
+\index{diff@$\diff$}%
+\index{string!diff@$\diff$}%
+\index{difference function}%
+\index{string!difference function}%
+for all $w\in\{\mathsf{0,1}\}^*$,
+\begin{displaymath}
+\diff\,w =
+\eqtxtr{the number of $\mathsf{1}$'s in}w -
+\eqtxtr{the number of $\mathsf{0}$'s in}w .
+\end{displaymath}
+Define $\AllPrefixGood$ to be the language
+$\setof{w\in\{\mathsf{0,1}\}^*}{\eqtxtr{for all prefixes} v\eqtxt{of}
+  w, |\diff\,v|\leq 2}$.  Find a DFA $\allPrefixGoodDFA$ such that
+$L(\allPrefixGoodDFA) = \AllPrefixGood$, and prove that your solution
+is correct.
+\end{exercise}
+
 \subsection{Simplification of DFAs}
 
 Let $M$ be our example DFA

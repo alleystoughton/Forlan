@@ -231,7 +231,7 @@ specification.
   input, and supplies this string to code $\code_1$.
 \end{itemize}
 
-\subsection*{Design of Finite State Systems}
+\subsection{Design of Finite State Systems}
 
 \index{finite automaton!design|(}%
 \index{finite state system!design|(}%
@@ -790,6 +790,34 @@ Thus, $\allLongStutterDFA$ is the DFA of Figure~\ref{StuttDFASynExamp}.
 \caption{DFA Accepting $\AllLongStutter$}
 \label{StuttDFASynExamp}
 \end{figure}
+
+\begin{exercise}
+Define $\diff\in\{\mathsf{0,1}\}^*\fun\ints$ by:
+\index{diff@$\diff$}%
+\index{string!diff@$\diff$}%
+\index{difference function}%
+\index{string!difference function}%
+for all $w\in\{\mathsf{0,1}\}^*$,
+\begin{displaymath}
+\diff\,w =
+\eqtxtr{the number of $\mathsf{1}$'s in}w -
+\eqtxtr{the number of $\mathsf{0}$'s in}w .
+\end{displaymath}
+Let
+$\AllPrefixGood = \setof{w\in\{\mathsf{0,1}\}^*}{\eqtxtr{for all
+    prefixes} v\eqtxt{of}w, |\diff\,v|\leq 2}$.  Suppose we have a DFA
+$\allPrefixGoodDFA$, and we have already proved (see
+Exercise~\ref{AllGoodDFACorrLem})
+$L(\allPrefixGoodDFA) = \AllPrefixGood$. Let
+$\AllSubstringGood = \setof{w\in\{\mathsf{0,1}\}^*}{\eqtxtr{for all
+    substrings} v\eqtxt{of}w, |\diff\,v|\leq 2}$.  Show how we can
+transform $\allPrefixGoodDFA$ into a minimized DFA
+$\allSubstringGoodDFA$ such that
+$L(\allSubstringGoodDFA) = \AllSubstringGood$. Prove that your
+transformation is correct. Finally, realize your transformation in
+Forlan, and draw the resulting DFA.
+\end{exercise}
+
 \index{finite state system!synthesis|)}%
 \index{finite automaton!synthesis|)}%
 

@@ -63,14 +63,17 @@ or
 \idsym} .
 \end{gather*}
 
-The Forlan syntax for grammars is very similar to the notation
-used above.  E.g., here is how our example
-grammar can be described in Forlan's syntax:
+The Forlan syntax for grammars is very similar to the notation used
+above.  E.g., our example grammar can be described in Forlan's syntax
+by
 \begin{verbatim}
-{variables}
-E
-{start variable}
-E
+{variables} E {start variable} E
+{productions}
+E -> E<plus>E; E -> E<times>E; E -> <openPar>E<closPar>; E -> <id>
+\end{verbatim}
+or
+\begin{verbatim}
+{variables} E {start variable} E
 {productions}
 E -> E<plus>E | E<times>E | <openPar>E<closPar> | <id>
 \end{verbatim}
@@ -98,7 +101,7 @@ The \emph{alphabet of} a grammar $G$ ($\alphabet\,G$) is
 \begin{align*}
 &\quad\; \{\,a\in\Sym\mid\eqtxtr{there are}q,x\eqtxt{such that}q\fun x\in P_G
 \eqtxt{and} \\
-&\hspace{2.4cm} a\in\alphabet\,x \,\} \\
+&\hspace{2.6cm} a\in\alphabet\,x \,\} \\
 &- Q_G .
 \end{align*}
 I.e., $\alphabet\,G$ is all of the symbols appearing in the strings of
@@ -407,6 +410,15 @@ parsed using $G$:
 \begin{center}
 \input{chap-4.1-fig5.eepic}
 \end{center}
+
+\begin{exercise}
+Let
+\begin{displaymath}
+X = \setof{\zerosf^i\onesf^j\twosf^k}{i,j,k\in\nats\eqtxt{and either}
+i\neq j\eqtxt{or}j\neq k} .
+\end{displaymath}
+Find a grammar $G$ such that $L(G)=X$.
+\end{exercise}
 
 \subsection{Notes}
 
