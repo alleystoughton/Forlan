@@ -443,27 +443,37 @@ such functions explicitly.
 \texttt{Set} provides various constants and functions for
 processing sets, but we will only make direct use of a few of them:
 \begin{verbatim}
-val toList : 'a set -> 'a list
-val size   : 'a set -> int
-val empty  : 'a set
-val sing   : 'a -> 'a set
-val filter : ('a -> bool) -> 'a set -> 'a set
+val toList  : 'a set -> 'a list
+val size    : 'a set -> int
+val empty   : 'a set
+val isEmpty : 'a set -> bool
+val sing    : 'a -> 'a set
+val filter  : ('a -> bool) -> 'a set -> 'a set
+val all     : ('a -> bool) -> 'a set -> bool
+val exists  : ('a -> bool) -> 'a set -> bool
 \end{verbatim}
 \index{Set@\texttt{Set}!toList@\texttt{toList}}%
 \index{Set@\texttt{Set}!size@\texttt{size}}%
 \index{Set@\texttt{Set}!empty@\texttt{empty}}%
+\index{Set@\texttt{Set}!notEmpty@\texttt{notEmpty}}%
 \index{Set@\texttt{Set}!sing@\texttt{sing}}%
 \index{Set@\texttt{Set}!filter@\texttt{filter}}%
+\index{Set@\texttt{Set}!all@\texttt{all}}%
+\index{Set@\texttt{Set}!exists@\texttt{exists}}%
 These values are polymorphic: \texttt{'a} can be \texttt{int},
 \texttt{sym}, etc.
 The function \texttt{toList} returns the elements of a set, listing
 them in ascending order, according to the set's total ordering.
 The function \texttt{size} returns the size of a set.
-The value \texttt{empty} is the empty set.
+The value \texttt{empty} is the empty set, and the function
+\texttt{isEmpty} checks whether a set is empty.
 The function \texttt{sing} makes a value $x$ into the singleton
-set $\{x\}$. And \texttt{filter} goes through the elements of a set,
-keeping those elements on which the supplied predicate function
-returns \texttt{true}.
+set $\{x\}$. The function \texttt{filter} goes through the elements of
+a set, keeping those elements on which the supplied predicate function
+returns \texttt{true}. The function \texttt{all} checks whether all
+elements of a set satisfy a predicate, whereas the function
+\texttt{exists} checks whether at least one element of a set satisfies
+the predicate.
 
 \subsection{Sets of Symbols}
 
