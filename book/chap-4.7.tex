@@ -24,14 +24,16 @@ context-free.
 \subsection{Operations on Grammars}
 
 First, we consider some basic grammars and operations on grammars.
-The grammar with variable $\Asf$ and production $\Asf\fun\%$
-generates the language $\{\%\}$.
-The grammar with variable $\Asf$ and no productions generates 
-the language $\emptyset$.
-If $w$ is a string, then the grammar with variable $\Asf$ and
-production $\Asf\fun w$ generates the language $\{w\}$.
-Actually, we must be careful to chose a variable that doesn't occur
-in $w$.
+The grammar, $\emptyStr$, with variable $\Asf$ and production
+$\Asf\fun\%$ generates the language $\{\%\}$.  The grammar,
+$\emptySet$, with variable $\Asf$ and no productions generates the
+language $\emptyset$.  If $w$ is a string, then the grammar with
+variable $\Asf$ and production $\Asf\fun w$ generates the language
+$\{w\}$.  Actually, we must be careful to chose a variable that
+doesn't occur in $w$. We can do that by adding as many nested
+\texttt{<} and \texttt{>} around \texttt{A} as needed (\texttt{A},
+\texttt{<A>}, \texttt{<<A>>}, etc.). This defines functions
+$\strToGram\in\Str\fun\Gram$ and $\symToGram\in\Sym\fun\Gram$.
 
 Suppose $G_1$ and $G_2$ are grammars.  We can define a grammar $H$
 such that $L(H)=L(G_1)\cup L(G_2)$ by unioning together the variables
@@ -52,6 +54,9 @@ $q\not\in\alphabet\,G_1\cup\alphabet\,G_2$.
 Our official union operation for grammars renames the variables
 of $G_1$ and $G_2$, and chooses the start variable $q$,
 in a uniform way that makes the preceding properties hold.
+This gives us a function
+$\union\in\Gram\times\Gram\fun\Gram$.
+
 We do something similar when defining the other closure
 operations.  In what follows, though, we'll ignore this issue,
 so as to keep things simple.
@@ -63,6 +68,7 @@ along with production
 \begin{gather*}
   q\fun s_{G_1}s_{G_2} .
 \end{gather*}
+This gives us a function $\concat\in\Gram\times\Gram\fun\Gram$.
 
 Suppose $G$ is a grammar.  We can define a grammar $H$ such that
 $L(H)=L(G)^*$ by adding to the variables and productions of $G$ a new
@@ -70,6 +76,7 @@ start variable $q$, along with productions
 \begin{gather*}
 q\fun \%\mid s_Gq .
 \end{gather*}
+This gives us a function $\closure\in\Gram\fun\Gram$.
 
 Next, we consider reversal and alphabet renaming operations on
 grammars.  Given a grammar $G$, we can define a grammar $H$ such that
@@ -79,6 +86,7 @@ grammars.  Given a grammar $G$, we can define a grammar $H$ such that
 \index{reversal!language}%
 $L(H)=L(G)^R$ by simply reversing the right-sides of $G$'s
 productions.
+This gives a function $\rev\in\Gram\fun\Gram$.
 
 Given a grammar $G$ and a bijection $f$ from a set of symbols that is
 a superset of $\alphabet\,G$ to some set of symbols, we can define a
@@ -89,7 +97,12 @@ grammar $H$ such that $L(H)=L(G)^f$ by renaming the elements of
 \index{alphabet renaming!language}%
 $\alphabet\,G$ in the right-sides of $G$'s productions using $f$.
 Actually, we may have to rename the variables of $G$ to avoid clashes
-with the elements of the renamed alphabet.
+with the elements of the renamed alphabet.  Let
+$X=\setof{(G,f)}{G\in\Gram\eqtxt{and}f\eqtxtl{is a bijection from a
+    set of symbols that}\eqtxtr{is a superset
+    of}\alphabet\,G\eqtxtl{to some set of symbols}}$.  Then the above
+definition gives us a function
+$\renameAlphabet\in X\fun\Gram$.
 
 From Section~\ref{ClosurePropertiesOfRegularLanguages},
 we know that if we can define a prefix-closure operation
@@ -134,12 +147,12 @@ f(a_1)\langle\twosf,a_2\rangle \mid \cdots \mid
 f(a_1)\,f(a_2)\cdots\langle\twosf,a_n\rangle ,
 \end{gather*}
 where $f(a) = a$, if $a\in\alphabet\,G'$, and
-$f(a)=\langle\onesf,a\rangle$, if $a\in Q_{G'}$.
-It's crucial that $G'$ is simplified; otherwise productions with
-useless symbols would be turned into productions that generated
-strings.
-Finally, the start variable of $H$ is $\langle\twosf,s_{G'}\rangle$.
+$f(a)=\langle\onesf,a\rangle$, if $a\in Q_{G'}$.  It's crucial that
+$G'$ is simplified; otherwise productions with useless symbols would
+be turned into productions that generated strings. Finally, the start
+variable of $H$ is $\langle\twosf,s_{G'}\rangle$.
 
+The above definition gives a function $\prefix\in\Gram\fun\Gram$.
 For example, the grammar
 \begin{gather*}
 \Asf\fun \% \mid \zerosf\Asf\onesf
@@ -163,7 +176,7 @@ For all $p\in Q_G$ and $q, r\in Q_M$, $H$ has a variable
 $\langle p,q,r\rangle$ that generates
 \begin{gather*}
 \setof{w\in(\alphabet\,G)^*}{w\in\Pi_{G,p} \eqtxt{and}
- r\in\Delta(\{q\},w)} .
+ r\in\Delta_M(\{q\},w)} .
 \end{gather*}
 The remaining variable of $H$ is $\Asf$, which is its start variable.
 
@@ -172,7 +185,7 @@ For each $r\in A_M$, $H$ has a production
   \Asf \fun \langle s_G, s_M, r\rangle .
 \end{gather*}
 And for each $\%$-production $p\fun\%$ of $G$ and $q,r\in Q_M$, if
-$r\in \Delta(\{q\}, \%)$,
+$r\in \Delta_M(\{q\}, \%)$,
 then $H$ will have the production
 \begin{gather*}
   \langle p,q,r\rangle \fun \% .
@@ -187,8 +200,8 @@ f \in (\alphabet\,G \cup Q_G) \times Q_M \times Q_M\fun
 by: for all $a\in\alphabet\,G \cup Q_G$ and $q,r\in Q_M$,
 \begin{gather*}
   f(a, q, r) =
-  \casesdef{a}{\eqtxtr{if} a\in\alphabet\,G , \eqtxtl{and}}%
-  {\langle a,q,r\rangle}{\eqtxtr{if} a\in Q_G .}
+  \casesdef{a,}{\eqtxtr{if} a\in\alphabet\,G , \eqtxtl{and}}%
+  {\langle a,q,r\rangle,}{\eqtxtr{if} a\in Q_G .}
 \end{gather*}
 Then, for all $p\in Q_G$, $n\in\nats-\{0\}$,
 $a_1,\ldots,a_n\in\Sym$ and $q_1,\ldots,q_{n+1}\in Q_M$, if
@@ -196,16 +209,18 @@ $a_1,\ldots,a_n\in\Sym$ and $q_1,\ldots,q_{n+1}\in Q_M$, if
 \item $p\fun a_1\cdots a_n\in P_G$, and
 
 \item for all $i\in[1:n]$, if $a_i\in\alphabet\,G$, then
-  $q_{i+1}\in\Delta(\{q_i\},a_i)$,
+  $q_{i+1}\in\Delta_M(\{q_i\},a_i)$,
 \end{itemize}
-then
+then we let
 \begin{gather*}
   \langle p,q_1,q_{n+1}\rangle \fun 
   f(a_1,q_1,q_2) \cdots f(a_n,q_n,q_{n+1})
 \end{gather*}
-is a production of $H$.
+be a production of $H$.
 
-For example, let $G$ be the grammar
+The above definition gives us a function
+$\inter\in\Gram\times\Gram\fun\Gram$.  For example, let $G$ be the
+grammar
 \begin{gather*}
   \Asf \fun \% \mid \mathsf{0A1A} \mid \mathsf{1A0A} ,
 \end{gather*}
@@ -231,6 +246,79 @@ Then $\simplify\,H$ is
 \end{align*}
 Note that simplification eliminated the variable
 $\langle\Asf,\Bsf,\Asf\rangle$.
+If we hand simplify further, we can turn this into:
+\begin{align*}
+\Asf &\fun \langle\Asf,\Asf,\Bsf\rangle , \\
+\langle\Asf,\Asf,\Bsf\rangle &\fun
+\% \mid \zerosf\langle\Asf,\Asf,\Bsf\rangle\onesf
+\end{align*}
+
+To prove that our intersection algorithm is correct, we'll need two
+lemmas.
+
+\begin{lemma}
+\label{GramEFAInter1}
+For $p\in Q_G$, let the property $P_p(w)$, for $w\in\Pi_{G,p}$, be:
+\begin{quotation}
+\noindent
+for all $q,r\in Q_M$, if $r\in\Delta_M(\{q\},w)$, then
+$w\in\Pi_{H,\langle p, q, r\rangle}$.
+\end{quotation}
+Then, for all $p\in Q_G$, for all $w\in\Pi_{G,p}$, $P_p(w)$.
+\end{lemma}
+
+\begin{proof}
+By induction on $\Pi$. In (2), we use the fact that, if
+$n\in\nats-\{0\}$, $q_1,q_{n+1}\in Q_M$,
+$w_1,\ldots,w_n\in\Str$ and
+$q_{n+1}\in\Delta_M(\{q_1\}, w_1\cdots w_n)$, then
+there are $q_2,\ldots,q_n\in Q_M$ such that
+$q_{i+1}\in\Delta_M(\{q_i\}, w_i)$, for all $i\in[1:n]$. (This is
+true because $M$ is an EFA; if $M$ were an FA, we wouldn't be able to
+conclude this.)
+\end{proof}
+
+\begin{lemma}
+\label{GramEFAInter2}
+Let the property $P_\Asf(w)$, for $w\in\Pi_{H,\Asf}$, be
+\begin{quotation}
+\noindent
+$w\in L(G)$ and $w\in L(M)$.  
+\end{quotation}
+For $p\in Q_G$ and $q,r\in Q_M$,
+let the property $P_{\langle p,q,r\rangle}(w)$, for
+$w\in\Pi_{H,\langle p,q,r\rangle}$, be
+\begin{quotation}
+\noindent
+$w\in\Pi_{G,p}$ and $r\in\Delta_M(\{q\},w)$.
+\end{quotation}
+Then:
+\begin{enumerate}[(1)]
+\item For all $w\in\Pi_{H,\Asf}$, $P_\Asf(w)$.
+
+\item For all $p\in Q_G$ and $q,r\in Q_M$, for all
+$w\in\Pi_{H,\langle p,q,r\rangle}$, $P_{\langle p,q,r\rangle}(w)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+We proceed by induction on $\Pi$.
+\end{proof}
+
+\begin{lemma}
+$L(H) = L(G)\cap L(M)$.
+\end{lemma}
+
+\begin{proof}
+$L(H) \sub L(G)\cap L(M)$ follows by Lemma~\ref{GramEFAInter2}(1).
+
+For the other inclusion, suppose $w\in L(G)\cap L(M)$, so that
+$w\in\Pi_{G,s_M}$ and $r\in\Delta_M(\{s_m\},w)$, for some $r\in A_M$. By
+Lemma~\ref{GramEFAInter1}, it follows that
+$w\in\Pi_{H,\langle s_G, s_M, r\rangle}$. But because $r\in A_M$, we
+have that $\Asf\fun\langle s_G, s_M, r\rangle$ is a production of $H$.
+Thus $w\in\Pi_{H,\Asf}=L(H)$.
+\end{proof}
 
 Finally, we consider a difference operation/algorithm.
 Given a grammar $G$ and a DFA $M$, we can define the difference of
@@ -239,7 +327,9 @@ $G$ and $M$ to be
 \inter(G, \mycomplement(M, \alphabet\,G)) .
 \end{gather*}
 This is analogous to what we did when defining the difference of
-DFAs.
+DFAs (see Section~\ref{ClosurePropertiesOfRegularLanguages}).
+This definition gives us a function
+$\minus\in\Gram\times\DFA\fun\Gram$.
 
 The following theorem summarizes the closure properties for context-free
 languages.
@@ -302,8 +392,12 @@ val minus          : gram * dfa -> gram
 \index{Gram@\texttt{Gram}!prefix@\texttt{prefix}}%
 \index{Gram@\texttt{Gram}!inter@\texttt{inter}}%
 \index{Gram@\texttt{Gram}!minus@\texttt{minus}}%
-The functions \texttt{fromStr} and \texttt{fromSym}
-and are also available in the top-level environment with the names
+Most of these functions implement the mathematical functions with the
+same names. The function \texttt{renameAlphabet} raises an exception
+if its second argument isn't a bijection whose domain is a superset of
+the alphabet of its first argument.  The functions \texttt{fromStr}
+and \texttt{fromSym} correspond to $\strToGram$ and $\symToGram$,
+and are also available in the top-level environment with those names
 \begin{verbatim}
 val strToGram : str -> gram
 val symToGram : sym -> gram

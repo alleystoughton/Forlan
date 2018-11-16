@@ -29,16 +29,16 @@ $w\in(\alphabet\,G)^*$ such that $w$ is the yield of multiple valid
 parse trees for $G$ whose root labels are $s_G$; otherwise, $G$ is
 \emph{unambiguous}.
 
-The grammar
+Let $G$ be the grammar
 \begin{gather*}
 \Asf \fun \% \mid \mathsf{0A1A} \mid \mathsf{1A0A}
 \end{gather*}
-is a grammar generating all elements
+which generates all elements
 of $\{\mathsf{0,1}\}^*$ with a $\diff$ of $0$, for the $\diff$
 function such that $\diff\,\zerosf = -1$ and $\diff\,\onesf = 1$.
 It is ambiguous as, e.g., $\mathsf{0101}$ can be parsed as
 $\mathsf{0\%1(01)}$ or $\mathsf{0(10)1\%}$.
-But in Section~4.5, we saw another grammar for this
+But in Section~4.5, we saw another grammar, $H$, for this
 language:
 \begin{align*}
 \Asf &\fun \% \mid \zerosf\Bsf\Asf \mid \onesf\Csf\Asf , \\
@@ -50,6 +50,14 @@ The reason is that $\Pi_\Bsf$ is all elements of $\{\mathsf{0,1}\}^*$
 with a $\diff$ of $1$, but with no proper prefixes with positive
 $\diff$'s, and $\Pi_\Csf$ has the corresponding property for
 $0$/negative.
+
+\begin{exercise}
+Prove that $L(G) = L(H)$.
+\end{exercise}
+
+\begin{exercise}
+Prove that $H$ is unambiguous.
+\end{exercise}
 
 \subsection{Disambiguating Grammars of Operators}
 
@@ -152,10 +160,17 @@ F$ out of a string $w$, returning $\none$ to indicate failure, and
 $\some(\pt,y)$, where $y$ is the remainder of $w$, otherwise.
 
 Although most programming languages support mutual recursion, in this
-book, we haven't formally justified well-founded mutual recursion.  
+book, we haven't formally justified well-founded mutual recursion.
 Instead, we can work with a single recursive function with domain
 $\{0,1,2\}\times\Str$, where the $0$, $1$ or $2$ indicates whether
 it's $\parE$, $\parT$ or $\parF$, respectively, that is being called.
+The range of this function will be $\Option({\cal U}\times\Str)$,
+where $\cal U$ is the union of three disjoint sets:
+$\{0\}\times{\cal E}$, $\{1\}\times{\cal T}$ and
+$\{2\}\times{\cal F}$. E.g., when the function is called with $(0,w)$,
+it will either return $\none$ or $\some((0,\pt), z)$, where
+$\pt\in\cal E$ and $x\in\Str$. But to keep the notation simple, below,
+we'll assume the parsing functions can call each other.
 
 The well-founded ordering we are using allows:
 \begin{itemize}

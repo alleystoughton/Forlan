@@ -353,7 +353,8 @@ There are seven productions to consider.
 
 \begin{description}
 \item[\quad($\Bsf\fun\zerosf\Bsf\Bsf$)] Suppose $w_1,w_2\in\Pi_\Bsf$,
-  and assume the inductive hypothesis, $w_1,w_2\in Y$.  We must show
+  and assume the inductive hypothesis, $w_1,w_2\in Y$.  Thus $w_1$ and
+  $w_2$ are nonempty. We must show
   that $\zerosf w_1w_2\in Y$.  Clearly, $\diff(\zerosf w_1w_2) =
   -1 + 1 + 1 = 1$.  So, suppose $v$ is a proper prefix of
   $\zerosf w_1w_2$.  We must show that $\diff\,v\leq 0$.
@@ -372,6 +373,26 @@ There are seven productions to consider.
 
 \item The remaining productions are handled similarly.
 \end{description}
+
+\begin{exercise}
+Let
+\begin{displaymath}
+  X = \setof{\zerosf^i\onesf^j\twosf^k\threesf^l}{i,j,k,l\in\nats\eqtxt{and}
+    i + j = k + l} .
+\end{displaymath}
+Find a grammar $G$ such that $L(G) = X$, and prove that your answer is
+correct.
+\end{exercise}
+
+\begin{exercise}
+Let
+\begin{displaymath}
+X = \setof{\zerosf^i\onesf^j\twosf^k}{i,j,k\in\nats\eqtxt{and either}
+i\neq j\eqtxt{or}j\neq k} .
+\end{displaymath}
+Find a grammar $G$ such that $L(G) = X$, and prove that your answer is
+correct.
+\end{exercise}
 
 \subsection{Notes}
 
