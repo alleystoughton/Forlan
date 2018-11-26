@@ -560,6 +560,65 @@ simplified <ARG/gram/
 </SPEC>
 
 <SPEC>
+<VAL>eliminateVariable<TY>gram * Sym.sym -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+eliminateVariable(<ARG/gram/, <ARG/q/)
+</PROTOTY>
+<PP>eliminates the variable <CD><ARG/q/</CD> from <CD><ARG/gram/</CD>,
+if this is possible, and issues an appropriate error message,
+otherwise.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>eliminateVariableOpt<TY>gram * Sym.sym -> gram option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+eliminateVariableOpt(<ARG/gram/, <ARG/q/)
+</PROTOTY>
+<PP>returns <CD>SOME <ARG/gram'/</CD>, where <CD><ARG/gram'/</CD> is
+the result of eliminating the variable <CD><ARG/q/</CD>
+from <CD><ARG/gram/</CD>, if this is possible, and returns
+<CD>NONE</CD>, otherwise.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>restart<TY>gram -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+restart <ARG/gram/
+</PROTOTY>
+<PP>If there is only one production involving the start
+variable <CD><ARG/st/</CD> of <CD><ARG/gram/</CD>, and that production
+is to a single variable <CD><ARG/q/</CD>, then <CD>restart</CD>
+returns the result of eliminating that production (along
+with <CD><ARG/st/</CD>), and making <CD><ARG/q/</CD> be the new start
+variable; otherwise, <CD>restart</CD> issues an appropriate error
+message.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>restartOpt<TY>gram -> gram option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+restartOpt <ARG/gram/
+</PROTOTY>
+<PP>If there is only one production involving the start
+variable <CD><ARG/st/</CD> of <CD><ARG/gram/</CD>, and that production
+is to a single variable <CD><ARG/q/</CD>, then <CD>restartOpt
+<ARG/gram/</CD> returns <CD>SOME <ARG/gram'/</CD>,
+where <CD><ARG/gram'/</CD> is the result of eliminating that
+production (along with <CD><ARG/st/</CD>), and making <CD><ARG/q/</CD>
+be the new start variable; otherwise, <CD>restartOpt</CD>
+returns <CD>NONE</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
 <VAL>nullableVariables<TY>gram -> Sym.sym Set.set</TY></VAL>
 <COMMENT>
 <PROTOTY>

@@ -10,10 +10,12 @@ can be obtained by defining direct conversions.
 \subsection{Converting Regular Expressions to Grammars}
 
 Regular expressions are converted to grammars using a recursive
-algorithm that makes use of the operations on grammars that were
-defined in Section~\ref{ClosurePropertiesOfContextFreeLanguages}.  The
-structure of the algorithm is very similar to the structure of our
-algorithm for converting regular expressions to finite automata.
+algorithm that makes use of some of the operations on grammars that
+were defined in Section~\ref{ClosurePropertiesOfContextFreeLanguages}.
+The structure of the algorithm is very similar to the structure of our
+algorithm for converting regular expressions to finite automata (see
+Section~\ref{ClosurePropertiesOfRegularLanguages}).  This
+gives us a function $\regToGram\in\Reg\fun\Gram$.
 
 The algorithm is implemented in Forlan by the function
 \begin{verbatim}
@@ -28,19 +30,27 @@ Here is how we can convert the regular expression $\mathsf{01 +
 
 \subsection{Converting Finite Automata to Grammars}
 
-We'll explain the process of converting finite automata to grammars
-using an example.  Suppose $M$ is the DFA
+Suppose $M$ is an FA. We define a function/algorithm $\faToGram\in
+\FA\fun\Gram$ by, for all FAs $M$, $\faToGram\,M$ is the grammar
+$G$ defined below. If $Q_M\cap\alphabet\,M=\emptyset$, then $G$ is
+defined by
+\begin{itemize}
+\item $Q_G = Q_M$;
+
+\item $s_G = s_M$;
+
+\item $P_G = \setof{q\fun xr}{q,x\fun r\in T_M} \cup
+  \setof{q\fun\%}{q\in A_M}$.
+\end{itemize}
+Otherwise, we first rename the states of $M$ using a uniform
+number of $\langle$ and $\rangle$ pairs, so as to avoid conflicts
+with the elements of $M$'s alphabet.
+
+For example, suppose $M$ is the DFA
 \begin{center}
   \input{chap-4.8-fig1.eepic}
 \end{center}
-The variables of our grammar $G$ consist of the states of $M$, and its
-start variable is the start state $\Asf$ of $M$.
-(If the symbols of the labels of $M$'s transitions conflict with $M$'s states,
-we'll have to rename the states of $M$ first.)
-We can translate each transition $q, x\fun r$ to a production
-$q\fun xr$.  And, since $\Asf$ is an accepting state of
-$M$, we add the production $\Asf\fun\%$.
-This gives us the grammar
+Our algorithm converts $M$ into the grammar
 \begin{align*}
   \Asf &\fun \% \mid \mathsf{0B} \mid \mathsf{1A} , \\
   \Bsf &\fun \mathsf{0A} \mid \mathsf{1B} .
@@ -57,17 +67,29 @@ valid parse tree for $G$
 \end{center}
 which explains why $\mathsf{100}\in L(G)$.
 
+If we have converted an FA $M$ to a grammar $G$, we can prove
+$L(M)\sub L(G)$ by induction on the lengths of labeled paths,
+and we can prove $L(G)\sub L(M)$ by induction on parse trees.
+Thus we have $L(G) = L(M)$.
+
+\begin{exercise}
+State and prove a pair of lemmas that can be used to prove
+the inclusions $L(M)\sub L(G)$ and $L(G)\sub L(M)$.
+\end{exercise}
+
 The Forlan module \texttt{Gram} contains the function
 \begin{verbatim}
 val fromFA : fa -> gram
 \end{verbatim}
 which implements our algorithm for converting finite automata to
 grammars.  It's available in the top-level environment with the name
-texttt{faToGram}.
+\texttt{faToGram}.
 
 Suppose \texttt{fa} of type \texttt{fa} is bound to $M$.  Here is how
 we can convert $M$ to a grammar using Forlan:
 \input{chap-4.8-forlan3}
+
+\subsection{Consequences of Conversion Functions}
 
 Because of the existence of our conversion functions, we have that
 every regular language is a context-free language.
@@ -76,7 +98,8 @@ is context-free, because of the grammar
 \begin{gather*}
   \Asf\fun\%\mid\zerosf\Asf\onesf ,
 \end{gather*}
-but is not regular, as we proved in Section 3.13.
+but is not regular, as we proved in
+Section~\ref{ThePumpingLemmaForRegularLanguages}.
 
 Summarizing, we have:
 

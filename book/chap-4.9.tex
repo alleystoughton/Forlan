@@ -15,9 +15,9 @@ method for showing the certain languages are not context-free.
 
 We will begin by giving an algorithm for turning a grammar $G$ into a
 simplified grammar with no productions of the form $q\fun\%$ and
-$q\fun r$.  This will allow us to give an algorithm that, given
-a grammar $G$, returns $L(G)$, when it is finite, and reports that
-$L(G)$ is infinite, otherwise.
+$q\fun r$. This will enable us to give an algorithm that takes in a
+grammar $G$, and calculates $L(G)$, when it is finite, and reports
+that it is infinite, otherwise.
 
 \subsection{Removing $\%$-Productions}
 
@@ -125,15 +125,37 @@ For example, if \texttt{gram} is the grammar
 then we can proceed as follows.
 \input{chap-4.9-forlan1}
 
-\subsection*{Generating a Grammar's Language When Finite}
+\subsection{Generating a Grammar's Language When Finite}
 
 We can now give an algorithm that takes in a grammar $G$ and generates
 $L(G)$, when it is finite, and reports that $L(G)$ is infinite,
-otherwise.  The algorithm begins by letting $G'$ be the simplified
-grammar that results from eliminating $\%$-productions and unit
-productions from $G$.  If $G'$ contains recursion---either direct, or
-mutual---then $L(G')$ is infinite.  Otherwise, we can calculate
-$L(G')$ from the bottom-up, and add $\%$ iff $G$ generates $\%$.
+otherwise. The algorithm begins by letting $G'$ be the result of
+eliminating $\%$-productions and unit productions from $G$. Thus $G'$
+is simplified and generates $L(G)-\{\%\}$.
+
+If there is recursion in the productions of $G'$---either direct or
+mutual---then there is a variable $q$ of $G'$ and a valid parse tree
+$\pt$ for $G'$, such that the height of $\pt$ is at least one, $q$ is
+the root label of $\pt$, and the yield of $\pt$ has the form $xqy$,
+for strings $x$ and $y$, each of whose symbols is in
+$\alphabet\,G'\cup Q_{G'}$. (In particular, $q$ may appear in $x$ or
+$y$.) Because $G'$ lacks $\%$- and unit-productions, it follows that
+$x\neq\%$ or $y\neq\%$. Because each variable of $G'$ is generating,
+we can turn $\pt$ into a valid parse tree $\pt'$ whose root label is
+$q$, and whose yield has the form $uqv$, for
+$u,v\in(\alphabet\,G')^*$, where $u\neq\%$ or $v\neq\%$.
+
+Thus we have that $uqv\in\Pi_{G',q}$, and an easy mathemtical
+induction shows that $u^nqv^n\in\Pi_q$ for all $n\in\nats$.  Because
+$u\neq\%$ or $v\neq\%$, it follows that there are infinitely many
+strings generated from $q$ in $G'$. And, since $q$ is reachable, and
+every variable of $G'$ is generating, it follows that $L(G')$, and
+thus $L(G)$, is infinite.
+
+Consequently, our algorthim can continue as follows. If the
+productions of $G'$ have recursion, then it reports that $L(G)$ is
+infinite.  Otherwise, it calculates $L(G')$ from the bottom-up, and
+adds $\%$ iff $G$ generates $\%$.
 
 The Forlan module \texttt{Gram} defines the following function:
 \begin{verbatim}
@@ -156,7 +178,7 @@ Then we can proceed as follows:
 \input{chap-4.9-forlan3}  
 
 Suppose we have a grammar $G$ and a natural number $n$, and we wish to
-generate all elements of $L(G)$ of length $n$.  We can start by
+generate the set of all elements of $L(G)$ of length $n$.  We can start by
 creating an EFA $M$ accepting all strings over the alphabet of $G$
 with length $n$.  Then, we can intersect $G$ with $M$, and apply
 \texttt{Gram.toStrSet} to the resulting grammar.
@@ -237,9 +259,7 @@ texttt{gram}:
 
 \subsection{Notes}
 
-Our algorithm for producing $L(G)$, when it's finite, and reporting
-that $L(G)$ is infinite, otherwise, uses familiar techniques, but
-isn't usually included in a book on formal language theory.
+The material in this section is standard.
 
 %%% Local Variables: 
 %%% mode: latex

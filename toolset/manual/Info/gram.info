@@ -14,6 +14,7 @@
     closure
     output
     inter
+    restartOpt
     fromConcr
     union
     sub
@@ -31,6 +32,7 @@
     findIsomorphism
     chomskyNormalForm
     findIsomorphismOpt
+    eliminateVariable
     compare
     generatedFromVariable
     renameAlphabet
@@ -39,21 +41,23 @@
     emptySet
     minus
     renameVariablesCanonically
-    genConcat
     fromReg
+    genConcat
     genUnion
     parseAlphabetFromVariableOpt
     isomorphism
     parseAlphabetOpt
+    eliminateVariableOpt
     eliminateEmptyProductions
     hasNoEmptyProductions
     hasNoEmptyOrUnitProductions
+    restart
     nullableVariables
     concat
     fromStrSet
+    rev
     isomorphic
     reachableFromBackwards
-    rev
     validPT
     equal
     toConcr
@@ -64,8 +68,8 @@
     toStrSetOpt
     parseAlphabet
     simplify
-    parseOpt
     prefix
+    parseOpt
     checkPT
     eliminateEmptyAndUnitProductions
     fromFA

@@ -69,6 +69,10 @@ This module defines the abstract type of grammars.
 <B>val</B>&nbsp;<A NAME="STR:Gram.reachified:VAL:SPEC" HREF="#STR:Gram.reachified:VAL">reachified</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
 <B>val</B>&nbsp;<A NAME="STR:Gram.simplify:VAL:SPEC" HREF="#STR:Gram.simplify:VAL">simplify</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
 <B>val</B>&nbsp;<A NAME="STR:Gram.simplified:VAL:SPEC" HREF="#STR:Gram.simplified:VAL">simplified</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.eliminateVariable:VAL:SPEC" HREF="#STR:Gram.eliminateVariable:VAL">eliminateVariable</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.eliminateVariableOpt:VAL:SPEC" HREF="#STR:Gram.eliminateVariableOpt:VAL">eliminateVariableOpt</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;<B>-&gt;</B>&nbsp;gram&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.restart:VAL:SPEC" HREF="#STR:Gram.restart:VAL">restart</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.restartOpt:VAL:SPEC" HREF="#STR:Gram.restartOpt:VAL">restartOpt</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram&nbsp;option<BR>
 <B>val</B>&nbsp;<A NAME="STR:Gram.nullableVariables:VAL:SPEC" HREF="#STR:Gram.nullableVariables:VAL">nullableVariables</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:Gram.hasNoEmptyProductions:VAL:SPEC" HREF="#STR:Gram.hasNoEmptyProductions:VAL">hasNoEmptyProductions</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
 <B>val</B>&nbsp;<A NAME="STR:Gram.eliminateEmptyProductions:VAL:SPEC" HREF="#STR:Gram.eliminateEmptyProductions:VAL">eliminateEmptyProductions</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
@@ -415,6 +419,35 @@ tests whether <CODE><VAR>gram</VAR></CODE> is simplified.
 <BR>
 <BR>
 
+<DT> <A NAME="STR:Gram.eliminateVariable:VAL"></A>
+<DT> <CODE>eliminateVariable(<VAR>gram</VAR>, <VAR>q</VAR>)</CODE>
+<DD>
+eliminates the variable <CODE><VAR>q</VAR></CODE> from <CODE><VAR>gram</VAR></CODE>, if this is possible, and issues an appropriate error message, otherwise.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.eliminateVariableOpt:VAL"></A>
+<DT> <CODE>eliminateVariableOpt(<VAR>gram</VAR>, <VAR>q</VAR>)</CODE>
+<DD>
+returns <CODE>SOME <VAR>gram'</VAR></CODE>, where <CODE><VAR>gram'</VAR></CODE> is the result of eliminating the variable <CODE><VAR>q</VAR></CODE> from <CODE><VAR>gram</VAR></CODE>, if this is possible, and returns <CODE>NONE</CODE>, otherwise.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.restart:VAL"></A>
+<DT> <CODE>restart <VAR>gram</VAR></CODE>
+<DD>
+If there is only one production involving the start variable <CODE><VAR>st</VAR></CODE> of <CODE><VAR>gram</VAR></CODE>, and that production is to a single variable <CODE><VAR>q</VAR></CODE>, then <CODE>restart</CODE> returns the result of eliminating that production (along with <CODE><VAR>st</VAR></CODE>), and making <CODE><VAR>q</VAR></CODE> be the new start variable; otherwise, <CODE>restart</CODE> issues an appropriate error message.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.restartOpt:VAL"></A>
+<DT> <CODE>restartOpt <VAR>gram</VAR></CODE>
+<DD>
+If there is only one production involving the start variable <CODE><VAR>st</VAR></CODE> of <CODE><VAR>gram</VAR></CODE>, and that production is to a single variable <CODE><VAR>q</VAR></CODE>, then <CODE>restartOpt
+<VAR>gram</VAR></CODE> returns <CODE>SOME <VAR>gram'</VAR></CODE>, where <CODE><VAR>gram'</VAR></CODE> is the result of eliminating that production (along with <CODE><VAR>st</VAR></CODE>), and making <CODE><VAR>q</VAR></CODE> be the new start variable; otherwise, <CODE>restartOpt</CODE> returns <CODE>NONE</CODE>.
+<BR>
+<BR>
+
 <DT> <A NAME="STR:Gram.nullableVariables:VAL"></A>
 <DT> <CODE>nullableVariables <VAR>gram</VAR></CODE>
 <DD>
@@ -613,7 +646,7 @@ returns the difference of <CODE><VAR>gram</VAR></CODE> and <CODE><VAR>dfa</VAR><
    ]</B>
 </CENTER>
 <P>
-<I>Forlan Version 4.8</I><BR>
+<I>Forlan Version 4.9</I><BR>
 <I>Copyright &copy; 2018 Alley Stoughton</I><BR>
 
 <HR>

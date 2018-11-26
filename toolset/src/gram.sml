@@ -893,6 +893,98 @@ fun simplify gram =
 
 fun simplified gram = equal(simplify gram, gram)
 
+fun eliminateVariable(gram, q) =
+      let val gram         = simplify gram
+          val vars         = variables gram
+          val start        = startVariable gram
+          val prods        = productions gram
+          val sameVarProds = Set.filter (fn (p, _) => Sym.equal(p, q)) prods
+
+          fun processProd x (p, y) =
+                (p,
+                 List.concat
+                 (map (fn a => if Sym.equal(a, q) then x else [a]) y))
+      in if not(SymSet.memb(q, vars))
+           then M.errorString
+                (fn () =>
+                      ["variable", "not", "in", "simplification", "of",
+                       "grammar"])
+         else if (Sym.equal(q, start))
+           then M.errorString
+                (fn () => ["cannot", "eliminate", "start", "variable"])
+         else if Set.size sameVarProds > 1
+           then M.errorString
+                (fn () =>
+                      ["variable", "appears", "appears", "on", "left",
+                       "sides", "of", "multiple", "productions", "of",
+                       "simplification", "of", "grammar"])
+         else let val prod as (_, x) = Set.hd sameVarProds
+                  val restProds      = ProdSet.minus(prods, Set.sing prod)
+                  (* q does not appear in x, because then q would not
+                     be generating *)
+              in {vars  = SymSet.minus(vars, Set.sing q),
+                  start = start,
+                  prods = ProdSet.map (processProd x) restProds}
+              end
+      end
+
+fun eliminateVariableOpt(gram, q) =
+      SOME(M.quiet(fn () => eliminateVariable(gram, q)))
+        handle _ => NONE
+
+fun restart gram =
+      let val gram          = simplify gram
+          val vars          = variables gram
+          val start         = startVariable gram
+          val prods         = productions gram
+          val startProds    =
+                Set.filter (fn (p, _) => Sym.equal(p, start)) prods
+          val useStartProds =
+                Set.filter
+                (fn (_, y) => List.exists (fn a => Sym.equal(a, start)) y)
+                prods
+      in if not(Set.isEmpty useStartProds)
+           then M.errorString
+                (fn () =>
+                      ["start", "variable", "appears", "on", "right",
+                       "side", "of", "production", "of", "simplification",
+                       "of", "grammar"])
+         else if Set.isEmpty startProds
+           then M.errorString
+                (fn () =>
+                      ["no", "productions", "from", "start", "variable",
+                       "in", "simplification", "of", "grammar"])
+         else if Set.size startProds > 1
+           then M.errorString
+                (fn () =>
+                      ["multiple", "productions", "from", "start",
+                       "variable", "in", "simplification", "of",
+                       "grammar"])
+         else let val prod as (_, x) = Set.hd startProds
+              in case x of
+                      [a] =>
+                        if not(SymSet.memb(a, vars))
+                        then M.errorString
+                             (fn () =>
+                                   ["production", "from", "start", "variable",
+                                    "in", "simplification", "of", "grammar",
+                                    "is", "not", "to", "single", "variable"])
+                        else {vars = SymSet.minus(vars, Set.sing start),
+                              start = a,
+                              prods = ProdSet.minus(prods, Set.sing prod)}
+                    | _   =>
+                      M.errorString
+                      (fn () =>
+                            ["production", "from", "start", "variable",
+                             "in", "simplification", "of", "grammar",
+                             "is", "not", "to", "single", "variable"])
+              end
+      end
+
+fun restartOpt gram =
+      SOME(M.quiet(fn () => restart gram))
+        handle _ => NONE
+
 fun nullableVariables gram =
       let val prods = productions gram
 

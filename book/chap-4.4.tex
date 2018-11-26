@@ -265,6 +265,50 @@ And, Suppose \texttt{gram''} of type \texttt{gram} is bound to the grammar
 We can simplify our grammar as follows:
 \input{chap-4.4-forlan3}
 
+\subsection{Hand-simplification Operations}
+
+Given a simplified grammar $G$, there are often ways we can hand-simplify
+the grammar further. Below are two examples:
+\begin{itemize}
+\item Suppose $G$ has a variable $q$ that is not $s_G$, and that
+  appears on the left side of exactly one production: $q\fun
+  x$. Because $G$ is simplified, it follows that $q$ does not occur in
+  $x$ (or $q$ would not be generating).  Then we can form an
+  equivalent grammar $G'$ by deleting $q$ and $q\fun x$ from $G$, and
+  transforming each remaining production $p\fun y$ into $p\fun z$,
+  where $z$ is the result of replacing each occurrence of $q$ in $y$
+  by $x$.
+
+  We refer to this operation as \emph{eliminating} $q$ \emph{from}
+  $G$.
+
+\item Suppose there is exactly one production of $G$ involving $s_G$,
+  where that production has the form $s_G\fun q$, for some variable
+  $q$ of $G$. Then we can form an equivalent grammar $G'$ by deleting
+  $s_G$ and $s_G\fun q$ from $G$, and making $q$ be the start variable
+  of $G'$.
+
+  We refer to this operation as \emph{restarting} $G$.
+\end{itemize}
+
+The Forlan module \texttt{Gram} has functions corresponding to these
+two operations:
+\begin{verbatim}
+val eliminateVariable : gram * sym -> gram
+val restart           : gram -> gram
+\end{verbatim}
+Both begin by simplifying the supplied grammar.
+
+For instance, suppose $\texttt{gram}$ is the grammar
+\begin{align*}
+\Asf &\fun \mathsf{B}, \\
+\Bsf &\fun \zerosf \mid \Csf\onesf\Csf , \\
+\Csf &\fun \onesf\Bsf\twosf .
+\end{align*}
+
+Then we can proceed as follows:
+\input{chap-4.4-forlan5}
+
 \subsection{Notes}
 
 As described above, our definition of useless variable is weaker than

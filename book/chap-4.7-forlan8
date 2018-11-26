@@ -1,8 +1,17 @@
 val gram' = Gram.inter(gram, efa);
 Gram.output("", gram');
-Gram.generated gram' (Str.fromString "0011");
-Gram.generated gram' (Str.fromString "0101");
-Gram.generated gram' (Str.fromString "0001");
+val gram'' =
+      Gram.eliminateVariable
+      (Gram.eliminateVariable(gram', Sym.fromString "<A,A,A>"),
+       Sym.fromString "<A,B,B>");
+val gram''' =
+      Gram.renameVariablesCanonically
+      (Gram.restart(Gram.simplify gram''));
+Gram.simplify( gram'');
+Gram.output("", gram''');
+Gram.generated gram''' (Str.fromString "0011");
+Gram.generated gram''' (Str.fromString "0101");
+Gram.generated gram''' (Str.fromString "0001");
 val dfa =
       DFA.renameStatesCanonically
       (DFA.minimize(nfaToDFA(efaToNFA efa)));

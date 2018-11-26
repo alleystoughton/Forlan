@@ -55,6 +55,10 @@ signature GRAM =
     val reachified : gram -> bool
     val simplify : gram -> gram
     val simplified : gram -> bool
+    val eliminateVariable : gram * Sym.sym -> gram
+    val eliminateVariableOpt : gram * Sym.sym -> gram option
+    val restart : gram -> gram
+    val restartOpt : gram -> gram option
     val nullableVariables : gram -> Sym.sym Set.set
     val hasNoEmptyProductions : gram -> bool
     val eliminateEmptyProductions : gram -> gram

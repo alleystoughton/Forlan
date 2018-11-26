@@ -668,6 +668,7 @@
     closure
     output
     inter
+    restartOpt
     union
     fromConcr
     sub
@@ -684,30 +685,33 @@
     parsable
     chomskyNormalForm
     findIsomorphism
+    eliminateVariable
     findIsomorphismOpt
     compare
     renameAlphabet
     generatedFromVariable
     toString
-    emptySet
     reachableFrom
+    emptySet
     minus
     renameVariablesCanonically
-    genConcat
     fromReg
+    genConcat
     genUnion
     parseAlphabetFromVariableOpt
     isomorphism
     parseAlphabetOpt
+    eliminateVariableOpt
     eliminateEmptyProductions
     hasNoEmptyProductions
     hasNoEmptyOrUnitProductions
+    restart
     nullableVariables
     concat
     fromStrSet
+    rev
     isomorphic
     reachableFromBackwards
-    rev
     validPT
     equal
     toConcr

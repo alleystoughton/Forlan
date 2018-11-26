@@ -38,6 +38,14 @@ Email: <a href="mailto:alley.stoughton@icloud.com">alley.stoughton@icloud.com</a
 <h2>What's New?</h2>
 
 <dl>
+<dt>Version 4.9</dt>
+<dd>
+Added two functions for hand-simplification of grammars to 
+<kbd>Gram</kbd> module (see the manual and book for descriptions
+of <kbd>eliminateVariable</kbd> and <kbd>restart</kbd>). Continuing
+revision of book.
+</dd>
+
 <dt>Version 4.8</dt>
 <dd>
 Improved documentation of local and global regular expression
