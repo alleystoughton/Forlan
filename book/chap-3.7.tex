@@ -241,6 +241,20 @@ then $\simplify\,N$ is the finite automaton
 \input{chap-3.7-fig7.eepic}
 \end{center}
 
+Our simplification function/algorithm $\simplify$ gives us an
+algorithm for testing whether an FA is simplified: we apply
+$\simplify$ to it, and check that the resulting FA is equal to
+the original one.
+
+\index{finite automaton!testing that language accepted is empty}
+\index{testing that language accepted by finite automaton is empty}
+Our simplification algorithm gives us an algorithm for testing whether
+the language accepted by an FA $M$ is empty. We first simplify $M$,
+calling the result $N$. We then test whether $A_N=\emptyset$.  If
+the answer is ``yes'', clearly $L(M)=L(N)=\emptyset$. And if the
+answer is ``no'', then $s_N$ is useful, and so $N$ (and thus $M$) accepts
+at least one string.
+
 The Forlan module \texttt{FA}
 \index{FA@\texttt{FA}}%
 includes the following functions relating to the simplification of

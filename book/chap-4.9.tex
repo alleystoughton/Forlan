@@ -61,6 +61,11 @@ our new grammar.
   $\Bsf\fun\mathsf{2B}$ with the productions $\Bsf\fun\mathsf{2B}$ and
   $\Bsf\fun\mathsf{2}$.
 \end{itemize}
+(If a production has $n$ occurrences of nullable variables in its
+right side, then there will be $2^n$ new right sides, corresponding to
+all ways of deleting or not deleting those $n$ variable
+occurrences. But if a right side of $\%$ would result, we don't
+include it.)
 This give us the grammar
 \begin{align*}
 \Asf &\fun \mathsf{0A1} \mid \mathsf{01} \mid \mathsf{BB} \mid \Bsf , \\
@@ -145,12 +150,13 @@ we can turn $\pt$ into a valid parse tree $\pt'$ whose root label is
 $q$, and whose yield has the form $uqv$, for
 $u,v\in(\alphabet\,G')^*$, where $u\neq\%$ or $v\neq\%$.
 
-Thus we have that $uqv\in\Pi_{G',q}$, and an easy mathemtical
-induction shows that $u^nqv^n\in\Pi_q$ for all $n\in\nats$.  Because
-$u\neq\%$ or $v\neq\%$, it follows that there are infinitely many
-strings generated from $q$ in $G'$. And, since $q$ is reachable, and
-every variable of $G'$ is generating, it follows that $L(G')$, and
-thus $L(G)$, is infinite.
+Thus we have that $uqv$ is parsable from $q$ in $G$', and an easy
+mathemtical induction shows that $u^nqv^n$ is parsable from $q$ in
+$G'$, for all $n\in\nats$.  Because $u\neq\%$ or $v\neq\%$, and $q$ is
+generating, it follows that there are infinitely many strings
+generated from $q$ in $G'$. And, since $q$ is reachable, and every
+variable of $G'$ is generating, it follows that $L(G')$, and thus
+$L(G)$, is infinite.
 
 Consequently, our algorthim can continue as follows. If the
 productions of $G'$ have recursion, then it reports that $L(G)$ is

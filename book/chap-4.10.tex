@@ -20,7 +20,7 @@ closed under intersection, complementation or set-difference.
 
 \begin{lemma}[Pumping Lemma for Context Free Languages]
 For all context-free languages $L$, there is a
-$n\in\nats$ such that, for all $z\in\Str$, if $z\in L$
+$n\in\nats-\{0\}$ such that, for all $z\in\Str$, if $z\in L$
 and $|z|\geq n$, then there are $u,v,w,x,y\in\Str$ such
 that $z=uvwxy$ and
 \begin{enumerate}[\quad(1)]
@@ -35,7 +35,7 @@ that $z=uvwxy$ and
 Before proving the pumping lemma, let's see how it can be used to show
 that $L=\setof{\zerosf^n\onesf^n\twosf^n}{n\in\nats}$ is not
 context-free.  Suppose, toward a contradiction that $L$ is
-context-free.  Thus there is an $n\in\nats$ with the property of the
+context-free.  Thus there is an $n\in\nats-\{0\}$ with the property of the
 lemma.  Let $z={\zerosf^n\onesf^n\twosf^n}$.
 Since $z\in L$ and $|z|=3n\geq n$, we have that there are
 $u,v,w,x,y\in\Str$ such that $z=uvwxy$ and
@@ -88,13 +88,14 @@ This can be proved by induction on $\pt$.
 \begin{proof}
 Suppose $L$ is a context-free language.  By the results of the
 preceding section, there is a grammar $G$ in Chomsky Normal Form such
-that $L(G)=L-\{\%\}$.  Let $k=|Q_G|$ and $n= 2^k$.  Suppose $z\in
-Str$, $z\in L$ and $|z|\geq n$.  Since $n\geq 2$, we have that
-$z\neq\%$.  Thus $z\in L-\{\%\}=L(G)$, so that there is a parse tree
-$\pt$ such that $\pt$ is valid for $G$, $\rootLabel\,\pt=s_G$ and
-$\yield\,\pt=z$.  By our fact about CNF grammars, we have that the
-height of $\pt$ is at least $k+1$.  (If $\pt$'s height were only $k$,
-then $|z|\leq 2^{k-1}<n$, which is impossible.)
+that $L(G)=L-\{\%\}$.  Let $k=|Q_G|$ and $n= 2^k$.  Thus
+$n\in\nats-\{0\}$. Suppose $z\in Str$, $z\in L$ and $|z|\geq n$.
+Since $n\geq 1$, we have that $z\neq\%$.  Thus $z\in L-\{\%\}=L(G)$,
+so that there is a parse tree $\pt$ such that $\pt$ is valid for $G$,
+$\rootLabel\,\pt=s_G$ and $\yield\,\pt=z$.  By our fact about CNF
+grammars, we have that the height of $\pt$ is at least $k+1$.  (If
+$\pt$'s height were only $k$, then $|z|\leq 2^{k-1}<n$, which is
+impossible.)
 
 The rest of the proof can be visualized using the
 diagram
@@ -148,7 +149,7 @@ It remains to show Part~(3), i.e., that $uv^iwx^iy\in L(G)\sub L$, for
 all $i\in\nats$.  We define a valid parse tree $\pt_i$ for $G$, with root
 label $q$ and yield $v^iwx^i$, by recursion on $i\in\nats$.  We let $\pt_0$ be
 $\pt''$.  Then, if $i\in\nats$, we form $\pt_{i+1}$ from $\pt'$ by
-replacing the subtree at position $\pat''''$ by $\pt_i$.
+replacing the subtree at position $\pat'''$ by $\pt_i$.
 
 Suppose $i\in\nats$.  Then the parse tree formed from $\pt$ by
 replacing the subtree at position $\pat'$ by $\pt_i$ is valid for $G$,
@@ -356,6 +357,8 @@ Thus
 \end{gather*}
 is not context-free, giving us a counterexample to the
 context-free languages being closed under set difference.
+Of course, this is also a counterexample to the context-free
+languages being closed under complementation.
 
 \subsection{Notes}
 

@@ -2,9 +2,177 @@
 \label{BasisSetTheory}
 
 \index{set|(}%
-In this section, we will cover the material on sets, relations,
+In this section, we will cover the material on logic, sets, relations,
 functions and data structures that will be needed in what follows.
 Much of this material should be at least partly familiar.
+
+\subsection{Review of Classical Logic}
+
+\index{logic|(}%
+\index{classical logic|(}%
+We begin by very briefly reviewing the rules of classical logic. We
+can build \emph{formulas} using basic predicates (like ``x = y''),
+\index{formulas}%
+\index{logic!formulas}%
+plus the following quantifiers and connectives:
+\begin{itemize}
+\item $\textbf{For all}\; x, P(x)$ (\emph{universal
+\index{universal quantification}%
+\index{logic!universal quantification}%
+    quantification}). The most typical way of proving such a formula
+  is to add the variable $x$ to the \emph{variable context} (each
+  element of which stands for some element of the universe of
+  values)\footnote{We rename $x$ first, if $x$ is already in the
+    variable context.}, and then go about proving $P(x)$ (possibly
+  making use of any of the current \emph{assumptions}).
+\index{assumptions}%
+\index{logic!assumptions}%
+
+\item $\textbf{There exists an}\; x, \,\textbf{such that}\; P(x)$
+  (\emph{existential quantification}).  The most typical way of
+\index{existential quantification}%
+\index{logic!existential quantification}%
+  proving such a formula is to prove that $P(t)$ holds, where $t$ is
+  some term (expression), all of whose variables appear in the
+  variable context.
+
+\item $P \myand Q$ (\emph{conjunction}). The most typical way of
+\index{conjunction}%
+\index{logic!conjunction}%
+  proving such a formula is to prove \emph{both} $P$ and $Q$, individually.
+
+\item $P \myor Q$ (\emph{disjunction}). The most typical way
+\index{disjunction}%
+\index{logic!disjunction}%
+  of proving such a formula is to prove \emph{one} of $P$ or $Q$.
+
+\item $P \myimplies Q$ (also written \textbf{if} $P$,
+  \textbf{then} $Q$) (\emph{implication}).  The most typical way to
+\index{implication}%
+\index{logic!implication}%
+  prove such a formula is to add $P$ to our current assumptions, and
+  then use these assumptions to establish the truth of $Q$.
+
+\item $\textbf{Not}\; P$ ($P$ does not hold; negation). The most typical
+\index{negation}%
+\index{logic!negation}%
+  way to prove such a formula is to show that, if we add $P$ to our
+  current assumptions, we can prove a contradiction---something obviously
+  false.
+\end{itemize}
+
+In formulas involving the connectives \textbf{not}, \textbf{and} and
+\textbf{or}, we give \textbf{not} the highest precedence, \textbf{and}
+the next highest precedence, and \textbf{or} the lowest
+precedence. Because $(P \myand Q) \myand R$ is
+equivalent to $P \myand (Q \myand R)$, we don't need
+to use parentheses when combining multiple occurrences of
+\textbf{and}.  The same is true for \textbf{or}.
+When we write $P \myiffbf Q$ (``if and only if''), this means that
+$(P \myimplies Q) \myand (Q \myimplies P)$.  $P \myimplies Q$
+is equivalent to $\textbf{not}\;P \myor Q$.
+
+Universal and existential quantification have lower precedence
+than the connectives, and extend as far as possible. E.g.,
+$\textbf{for all}\; x, \;\textbf{for all}\; y, P(x)\myand Q(y)$ means
+$\textbf{for all}\; x, \;\textbf{for all}\; y, (P(x)\myand Q(y))$.
+We can rename quantified variables in formulas, maintaining equivalence,
+e.g., turning
+$\textbf{for all}\; x, \;\textbf{for all}\; y, P(x)\myand Q(y)$ into
+$\textbf{for all}\; y, \;\textbf{for all}\; z, P(y)\myand Q(z)$.
+We often abbreviate nested universal or existential quantifications,
+writing, e.g., 
+$\textbf{for all}\; x, y, P(x)\myand Q(y)$ instead of
+$\textbf{for all}\; x, \;\textbf{for all}\; y, P(x)\myand Q(y)$.
+
+We have that:
+\begin{itemize}
+\item $\textbf{Not for all}\; x, P(x)$, is equivalent to
+  $\textbf{there exists an}\; x \;\textbf{such that not}\; P(x)$;
+
+\item $\textbf{Not there exists an}\; x \;\textbf{such that}\; P(x)$ is
+  equivalent to $\textbf{for all}\; x, \;\textbf{not}\; P(x)$;
+
+\item $\textbf{Not} (P \myand Q)$ is equivalent to
+  $\textbf{not}\; P \myor \,\textbf{not}\; Q$;
+
+\item $\textbf{Not} (P \myor Q)$ is equivalent to $\textbf{not}\;
+  P \myand \,\textbf{not}\; Q$;
+
+\item $\textbf{Not} (P \myimplies Q)$ is equivalent to $P
+  \myand \textbf{not}\; Q$;
+
+\item $\textbf{Not not}\; P$ is equivalent to $P$.
+\end{itemize}
+
+Furthermore:
+\begin{itemize}
+\item If the current assumptions are contradictory, we can prove
+\index{logical contradiction}%
+\index{logic!contradiction}%
+  any conclusion, $Q$.
+
+\item If we have the assumptions $P \,\myimplies\, Q$ and $P$, we
+  may conclude $Q$.
+
+\item If we have the assumption $\textbf{for all}\; x, P(x)$, and $t$ is
+  a term whose variables come from the variable context, then
+  we may conclude $P(t)$.
+
+\item If one of our assumptions is a disjunction $P \myor Q$,
+  and we are trying to prove $R$, then it suffices to:
+  \begin{itemize}
+  \item show that $R$ follows from $P$ plus whatever other assumptions
+    we have; and
+  \item show that $R$ follows from $Q$ plus whatever other assumptions
+    we have.
+  \end{itemize}
+  This rule is called \emph{disjunction elimination}. It generalizes
+\index{disjunction elimination}%
+\index{logic!disjunction elimination}%
+  to when there are more than two disjuncts.
+
+\item If one of our assumptions is $\textbf{there exists an}\; x
+  \;\textbf{such that}\; P(x)$, and we are trying to prove $R$, it
+  suffices to introduce the assumption that $P(x)$ holds, where the
+  variable $x$ is added to our variable context (and so stands for
+  some element of the value universe)\footnote{We rename $x$ first,
+  if $x$ is already in the variable context.}, and then establish that $R$
+  holds. This rule is called \emph{existential elimination}.
+\index{existential elimination}%
+\index{logic!existential elimination}%
+
+\item When trying to prove a conclusion $P$ from some set of assumptions,
+  we can suspend this proof, and go about proving a formula $Q$ from
+  the same set of assumptions. If this sub-proof succeeds, we can
+\index{sub-proof}%
+\index{logic!sub-proof}%
+  add $Q$ to our original set of assumptions, and then go on with
+  our proof of $P$.
+\end{itemize}
+
+An alternative way of proving $P \myimplies Q$ is to prove its
+\emph{contrapositive}:
+\index{contrapositive}%
+\index{logic!contrapositive}%
+$\textbf{not}\; Q \myimplies \textbf{not}\; P$.
+
+When we do a \emph{case analysis}, we first prove (this may be
+\index{case analysis}%
+\index{logic!case analysis}%
+obvious, in which case we may leave the proof implicit) that a disjunction
+$P_1 \myor \cdots \myor P_n$ holds, adding it to our
+assumptions. We then use disjunction elimination, showing our
+conclusion follows from each of $P_1,\ldots,P_n$.
+
+Finally, when proving $P$ using \emph{proof by contradiction}, we
+\index{proof by contradiction}%
+\index{logic!proof by contradiction}%
+temporarily add $\textbf{not}\;P$ to our assumptions and then try to
+derive a contradiction (i.e., prove something that's obviously
+false). If we succeed, then $P$ follows from our original assumptions.
+\index{logic|)}%
+\index{classical logic|)}%
 
 \subsection{Describing Sets by Listing Their Elements}
 
@@ -63,6 +231,23 @@ Sets $A$ and $B$ are equal ($A=B$)
 iff (if and only if) they have the same elements, i.e., for all $x$,
 \index{iff}%
 $x\in A$ iff $x\in B$.
+We write
+\begin{displaymath}
+  \textrm{for all}\; x \in X, P(x)
+\end{displaymath}
+as an abbreviation for
+\begin{displaymath}
+  \textrm{for all}\; x, x\in X \mathbin{\textrm{implies}} P(x) .
+\end{displaymath}
+And we write 
+\begin{displaymath}
+  \textrm{there exists an}\; x \in X, P(x)
+\end{displaymath}
+as an abbreviation for
+\begin{displaymath}
+  \textrm{there exists an}\; x \;\textrm{such that}\; x\in X
+  \mathbin{\textrm{and}} P(x) .
+\end{displaymath}
 
 Suppose $A$ and $B$ are sets.  We say that:
 \begin{itemize}
@@ -87,17 +272,16 @@ iff $A\sub B$ but $A\neq B$.
 In other words: $A$ is a subset of $B$ iff every everything in $A$ is
 also in $B$, and $A$ is a proper subset of $B$ iff everything in $A$
 is in $B$, but there is at least one element of $B$ that is not in
-$A$.
+$A$. For example, $\emptyset\subsetneq\nats$, $\nats\sub\nats$ and
+$\nats\subsetneq\ints$.
 
-For example, $\emptyset\subsetneq\nats$, $\nats\sub\nats$ and
-$\nats\subsetneq\ints$.  The definition of $\sub$ gives us the most
-common way of showing that $A\sub B$: we suppose that $x\in A$, and
-show (with no additional assumptions about $x$) that $x\in B$.
-Similarly, if we want to show that $A=B$, it will suffice to show that
-$A\sub B$ and $B\sub A$, i.e., that everything in $A$ is in $B$, and
-everything in $B$ is in $A$.  Of course, we can also use the
-usual properties of equality to show set equalities.  E.g.,
-if $A=B$ and $B=C$, we have that $A=C$.
+The definition of $\sub$ gives us the most common way of showing that
+$A\sub B$: we suppose that $x\in A$, and show (with no additional
+assumptions about $x$) that $x\in B$.  If we want to show that $A=B$,
+it will suffice to show that $A\sub B$ and $B\sub A$, i.e., that
+everything in $A$ is in $B$, and everything in $B$ is in $A$.  Of
+course, we can also use the usual properties of equality to show set
+equalities.  E.g., if $A=B$ and $B=C$, we have that $A=C$.
 
 Note that, for all sets $A$, $B$ and $C$:
 \begin{itemize}
@@ -219,9 +403,9 @@ a proper class: assuming that it is a set is inconsistent---makes it
 possible to prove anything. This is the so-called Russell's Paradox.
 \index{Russell's Paradox}%
 To know that a set formation is valid, it suffices to find a set that
-includes all the elements in the class being defined.  E.g., the above
-set formations are valid, because the classes being defined are
-subsets of $\nats$.
+includes all the elements in the class being defined.  E.g., the
+definitions of $A$ and $B$ are valid, because the classes being
+defined are subsets of $\nats$.
 \index{forming sets|)}%
 \index{set!formation|)}%
 
@@ -442,6 +626,7 @@ reasoning in more detail.  Suppose $a$ is a universe element. To prove
 that $a\in A$, for all $A\in\emptyset$, suppose $A\in\emptyset$. But this is
 a logical contradiction, from which we may prove anything, in particular our
 \index{logical contradiction}%
+\index{logic!contradiction}%
 desired conclusion, $a\in A$.
 
 \subsection{Relations and Functions}
@@ -788,17 +973,22 @@ f\,n =
 \end{displaymath}
 \end{exercise}
 
-If the domain of $f$ is a product $X_1\times\cdots\times X_n$,
-for $n\geq 1$ and
-\index{product}%
-sets $X_1,\ldots,X_n$, we often abbreviate $f((x_1,\ldots,x_n))$ to
-$f(x_1,\ldots,x_n)$.  We write $\hash{i}_{X_1,\ldots,X_n}$ (or just
+If $X_1,\ldots,X_n$ are sets, for $n\geq 1$, we write \index{product}%
 \index{ hash@$\hash{\cdot}$}%
-$\hash{i}$, if $n$ and the $X_i$ are clear from the context) for the
-$i$-th \emph{projection} function, which selects the $i$-th component
 \index{projection}%
 \index{tuple!projection}%
-of a tuple, i.e., transforms an input $(x_1,\ldots,x_n)$ to $x_i$.
+$\hash{i}_{X_1,\ldots,X_n}$ (or just $\hash{i}$, if $n$ and the $X_i$
+are clear from the context) for the $i$-th \emph{projection} function
+from $X_1\times\cdots\times X_n$ to $X_i$, which selects the $i$-th component of
+a tuple, i.e., transforms an input $(x_1,\ldots,x_n)$ to $x_i$.
+
+One of the forms of the Axiom of Choice
+\index{Axiom of Choice}%
+says that, for all sets $X$ of nonempty sets, there is a function $f$
+with domain $X$ such that, for all $Y\in X$, $f\,Y\in Y$. In other
+words, $f$ is a \emph{choice function}
+\index{choice function}%
+that given an element $Y$ of $X$, is able to pick an element of $Y$.
 
 \subsection{Set Cardinality}
 
@@ -962,8 +1152,8 @@ Chapter~\ref{RecursiveAndRecursivelyEnumerableLanguages}.  Let's consider
 the proof that $\powset\,\nats$ is uncountable.
 
 We proceed using proof by contradiction.
+\index{logic!proof by contradiction}%
 \index{proof by contradiction}%
-\index{contradiction!proof by}%
 Suppose $\powset\,\nats$ is countable.  If we can obtain a
 contradiction, it will follow that $\powset\,\nats$ is uncountable.
 Since $\powset\,\nats$ is not finite, it follows that there is a

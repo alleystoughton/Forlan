@@ -22,7 +22,7 @@ we will show how the Pumping Lemma can be used to prove that $L$ is
 non-regular.  Finally, we will prove the Pumping Lemma.
 
 \begin{lemma}[Pumping Lemma for Regular Languages]
-For all regular languages $L$, there is a $n\in\nats$ such that,
+For all regular languages $L$, there is an $n\in\nats-\{0\}$ such that,
 for all $z\in\Str$, if $z\in L$ and $|z|\geq n$, then
 there are $u,v,w\in\Str$ such that $z=uvw$ and
 \begin{enumerate}[\quad(1)]
@@ -36,16 +36,16 @@ there are $u,v,w\in\Str$ such that $z=uvw$ and
 
 When we use the Pumping Lemma, we can imagine that we are interacting
 with it.  We can give the Pumping Lemma a regular language $L$, and
-the lemma will give us back a natural number $n$ such that the
-property of the lemma holds.  We have no control over the value of
-$n$; all we know is that the property of the lemma holds.  We can then
-give the lemma a string $z$ that is in $L$ and has at least $n$
-symbols. We'll have to choose $z$ as a function of $n$, because we
-don't know what $n$ is. The lemma will then break $z$ up into parts
-$u$, $v$ and $w$ in such way that (1)--(3) hold.  We have no control
-over how $z$ is broken up into these parts; all we know is that
-$z=uvw$ and (1)--(3) hold.  (1) says that $uv$ has no more than $n$
-symbols.  (2) says that $v$ is nonempty.  And (3) says that, if we
+the lemma will give us back a non-zero natural number $n$ such that
+the property of the lemma holds.  We have no control over the value of
+$n$; all we know is that $n\geq 1$ and the property of the lemma holds.
+We can then give the lemma a string $z$ that is in $L$ and has at
+least $n$ symbols. We'll have to choose $z$ as a function of $n$,
+because we don't know what $n$ is. The lemma will then break $z$ up
+into parts $u$, $v$ and $w$ in such way that (1)--(3) hold.  We have
+no control over how $z$ is broken up into these parts; all we know is
+that $z=uvw$ and (1)--(3) hold.  (1) says that $uv$ has no more than
+$n$ symbols.  (2) says that $v$ is nonempty.  And (3) says that, if we
 ``pump'' (duplicate) $v$ as many times as we like, the resulting
 string will still be in $L$.
 
@@ -59,7 +59,7 @@ $L$ is not regular.
 
 \begin{proof}
 Suppose, toward a contradiction, that $L$ is regular.
-Thus there is an $n\in\nats$ with the property of the Pumping Lemma.
+Thus there is an $n\in\nats-\{0\}$ with the property of the Pumping Lemma.
 Suppose $z=\zerosf^n\onesf^n$.  Since $z\in L$ and
 $|z|=2n\geq n$, it follows that there are $u,v,w\in\Str$ such that
 $z=uvw$ and properties (1)--(3) of the lemma hold.  Since
@@ -84,7 +84,7 @@ In the preceding proof, we obtained a contradiction by pumping zero
 times ($uv^0w$), but pumping two or more times ($uv^2w$, $\ldots$) would
 also have worked.  For a case when pumping zeros times is
 insufficient, consider $A=\setof{\zerosf^n\onesf^m}{n<m}$.  Given
-$n\in\nats$ by the Pumping Lemma, we can let
+$n\in\nats-\{0\}$ by the Pumping Lemma, we can let
 $z=\zerosf^n\onesf^{n+1}$, obliging the lemma to split $z$ into $uvw$,
 in such a way that (1)--(3) hold.  Hence $v$ will consist entirely of
 $\zerosf$'s.  Pumping $v$ zero times won't take us outside of $A$.  On
@@ -94,11 +94,11 @@ $\onesf$'s, giving us the needed contradiction.
 Now, let's prove the Pumping Lemma.
 
 \begin{proof}
-Suppose $L$ is a regular
-language.  Thus there is a NFA $M$ such that $L(M)=L$.  Let
-$n=|Q_M|$.  Suppose $z\in\Str$, $z\in L$ and $|z|\geq n$.  Let
-$m=|z|$.  Thus $1\leq n\leq|z|=m$.
-Since $z\in L=L(M)$, there is a valid labeled path for $M$
+Suppose $L$ is a regular language.  Thus there is a NFA $M$ such that
+$L(M)=L$.  Let $n=|Q_M|$.  Since $Q_M\neq\emptyset$, we have
+$n\geq 1$, so that $n\in\nats-\{0\}$.  Suppose $z\in\Str$, $z\in L$
+and $|z|\geq n$.  Let $m=|z|$.  Thus $1\leq n\leq|z|=m$.  Since
+$z\in L=L(M)$, there is a valid labeled path for $M$
 \begin{gather*}
 q_1\lparr{a_1}q_2\lparr{a_2}\cdots\,q_m\lparr{a_m}q_{m+1} ,
 \end{gather*}
@@ -165,21 +165,22 @@ $\{\mathsf{0,1}\}^*$ such that
 \end{enumerate}
 Let's try to prove that $X$ is non-regular, using the Pumping Lemma.
 We suppose, toward a contradiction, that $X$ is regular, and give it
-to the Pumping Lemma, getting back the $n\in\nats$ with the property
+to the Pumping Lemma, getting back the $n\in\nats-\{0\}$ with the property
 of the lemma, where $X$ has been substituted for $L$.  But then, how
 do we go about choosing the $z\in\Str$ such that $z\in X$ and $|z|\geq
 n$?  We need to find a string expression $\myexp$ involving the
 variable $n$, such that, for all $n\in\nats$, $\myexp\in X$
 and $|\myexp|\geq n$.
 
-Because $\%\in X$, we have that $\zerosf\onesf=\zerosf\%\onesf\%\in
-X$.  Thus
+Because $\%\in X$, we have that
+$\zerosf\onesf=\zerosf\%\onesf\%\in X$.  Thus
 $\zerosf\onesf\zerosf\onesf=\zerosf\%\onesf(\zerosf\onesf)\in X$.
 Generalizing, we can easily prove that, for all $n\in\nats$,
 $(\zerosf\onesf)^n\in X$.  Thus we could let $z=(\zerosf\onesf)^n$.
 Unfortunately, this won't lead to the needed contradiction, since the
-Pumping Lemma could break $z$ up into $u=\%$, $v=\zerosf\onesf$ and
-$w=(\zerosf\onesf)^{n-1}$.
+Pumping Lemma may have chosen $n=2$, and may break $z$
+up into $u=\%$, $v=\zerosf\onesf$ and $w=(\zerosf\onesf)^{n-1}$---with
+the consequence that (1)--(3) hold.
 
 Trying again, we have that $\%\in X$, $\zerosf\onesf\in X$ and
 $\zerosf(\zerosf\onesf)\onesf\%=\zerosf\zerosf\onesf\onesf\in X$.

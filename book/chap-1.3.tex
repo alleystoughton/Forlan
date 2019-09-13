@@ -85,7 +85,7 @@ Thus the definition says that $\Tree\,X$ is the least $X$-closed set,
 where we've yet to say just what ``least'' means.
 
 First we address the concern that there might not be any $X$-closed sets.
-A easy result of set theory says that:
+An easy result of set theory says that:
 
 \begin{lemma}
 \label{ClosureLem}
@@ -268,9 +268,9 @@ Do the induction on trees used by the preceding proof.
 Suppose $R$ is a well-founded relation on a set $A$.  We can define a
 function $f$ from $A$ to a set $B$ by \emph{well-founded recursion on}
 $R$.  The idea is simple: when $f$ is called with an element $x\in A$,
-it may call itself recursively on any of the predecessors of $x$ in
-$R$.  Typically, such a definition will be concrete enough that we can
-regard it as defining an algorithm as well as a function.
+it may call itself recursively on as many of the predecessors of $x$ in
+$R$ as it wants.  Typically, such a definition will be concrete enough
+that we can regard it as defining an algorithm as well as a function.
 
 If $R$ is a well-founded relation on a set $A$, and $B$ is a set,
 then we write $\Rec_{A,R,B}$ for
@@ -559,7 +559,7 @@ $\tr$ iff there is a valid path $\xs$ for $\tr$ such that
 $\tr'=\select(\tr,\xs)$.  And $\tr'$ \emph{is a leaf of} $\tr$
 iff $\tr'$ is a subtree of $\tr$ and $\tr'$ has no children.
 
-Finally, we can define a function that takes in a $X$-tree $\tr$,
+Finally, we can define a function that takes in an $X$-tree $\tr$,
 a valid path $\xs$ for $\tr$, and an $X$-tree $\tr'$, and
 returns the result of replacing the subtree of $\tr$ pointed
 to by $\xs$ with $\tr'$.

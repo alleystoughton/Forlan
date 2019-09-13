@@ -1,6 +1,4 @@
-val gram' =
-      Gram.eliminateVariable
-      (gram, Sym.fromString "C");
+val gram' = Gram.eliminateVariable(gram, Sym.fromString "C");
 Gram.output("", gram');
 val gram'' = Gram.restart gram;
 Gram.output("", gram'');

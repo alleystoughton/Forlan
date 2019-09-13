@@ -7,7 +7,6 @@ val gram'' =
 val gram''' =
       Gram.renameVariablesCanonically
       (Gram.restart(Gram.simplify gram''));
-Gram.simplify( gram'');
 Gram.output("", gram''');
 Gram.generated gram''' (Str.fromString "0011");
 Gram.generated gram''' (Str.fromString "0101");

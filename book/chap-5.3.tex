@@ -69,9 +69,11 @@ $L_d$ (``d'' for ``diagonal'') and $L_a$ (``a'' for ``accepted'') by:
 L_d &= \setof{w\in\Sigma^*}{w\not\in L(w)} , \eqtxtl{and} \\
 L_a &= \setof{w\in\Sigma^*}{w\in L(w)} .
 \end{align*}
-Thus $L_d = \Sigma^* - L_a$.
-We have that, for all $w\in\Sigma^*$, $w\in L_a$ iff $w\in L(\pr)$,
-where $\pr$ is the unique closed program described by $w$.
+
+Thus $L_d = \Sigma^* - L_a$.  We have that, for all $w\in\Sigma^*$,
+$w\in L_a$ iff $w\in L(\pr)$, for some closed program (which will be
+unique) described by $w$. (When $w$ doesn't describe a closed program,
+$L(w)=\emptyset$.)
 
 \begin{theorem}
 $L_d$ is not recursively enumerable.

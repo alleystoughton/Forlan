@@ -38,6 +38,13 @@ Email: <a href="mailto:alley.stoughton@icloud.com">alley.stoughton@icloud.com</a
 <h2>What's New?</h2>
 
 <dl>
+<dt>Version 4.10</dt>
+<dd>
+Generalized <kbd>eliminateVariable</kbd> to work when variable to be
+elminated has multiple productions (without self-recursion).
+Continuing revision of book.
+</dd>
+
 <dt>Version 4.9</dt>
 <dd>
 Added two functions for hand-simplification of grammars to 
@@ -140,9 +147,9 @@ can be designed and proved correct.</p>
 
 <p>The textbook is still a work-in-progress, but drafts are
 available. The most recent
-<a href="book2012.pdf">full draft is from September 2012</a>.  But
+<a href="book-summer2019.pdf">full draft is from Summer 2019</a>.  But
 a <a href="book.pdf">revision is being made during the fall of
-2018</a>, in a series of steps.  The LaTeX source for the draft is
+2019</a>, in a series of steps.  The LaTeX source for the draft is
 part of Forlan's distribution.  It is released under the GNU Free
 Documentation License.</p>
 
@@ -156,16 +163,24 @@ the implementation of Forlan, though, one must have a good working
 knowledge of Standard ML.</p>
 
 <p>More information about SML can be obtained from
-Robert Harper's draft book
-<a href="harper.pdf"><em>Programming in Standard ML</em></a>.
-Alternatively, one can read one of the following books:</p>
+L. C. Paulson's <em>ML for the Working Programmer</em>, second
+edition, Cambridge University Press, 1966. It
+is <a href="https://www.cl.cam.ac.uk/~lp15/MLbook/pub-details.html">available
+online</a>, for personal use.</p>
+
+<p>If you like learning from examples, here's a
+brief <a href="https://alleystoughton.us/getting-started-typed-fp/">tutorial
+on SML.</a></p>
+
+<p>You may also consult these other books and draft books:</p>
 
 <ul>
-<li>L. C. Paulson, <em>ML for the Working Programmer</em>,
-second edition, Cambridge University Press, 1996.</li>
+<li>J. D. Ullman, <a href="http://infolab.stanford.edu/~ullman/emlp.html"><em>Elements
+of ML Programming</em>, ML97 edition,</a> Prentice Hall, 1998.</li>
 
-<li>J. D. Ullman, <em>Elements of ML Programming</em>, 
-ML97 edition, Prentice Hall, 1998.</li>
+<li>Robert
+Harper, <a href="http://www.cs.cmu.edu/~rwh/isml/book.pdf">Programming
+in Standard ML, draft 2011.</a></li>
 </ul>
 
 <p>People who are already familiar with Objective Caml (OCaml),
