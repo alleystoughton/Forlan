@@ -1,0 +1,39 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }datatype\ a\ =
+\item[]\textsl{=\ }\ \ \ \ A1\ of\ int
+\item[]\textsl{=\ }\ \ |\ A2\ of\ b\ \symbol{'052}\ b
+\item[]\textsl{=\ }and\ \ \ \ \ \ b\ =
+\item[]\textsl{=\ }\ \ \ \ B1\ of\ bool
+\item[]\textsl{=\ }\ \ |\ B2\ of\ a\ \symbol{'052}\ a;
+\item[]\textsl{datatype\ a\ =\ A1\ of\ int\ |\ A2\ of\ b\ \symbol{'052}\ b}
+\item[]\textsl{datatype\ b\ =\ B1\ of\ bool\ |\ B2\ of\ a\ \symbol{'052}\ a}
+\item[]\textsl{-\ }fun\ rev_a\ (A1\ n)\ \ \ \ \ =\ A1\ n
+\item[]\textsl{=\ }\ \ |\ rev_a\ (A2(x,\ y))\ =\ A2(rev_b\ y,\ rev_b\ x)
+\item[]\textsl{=\ }and\ rev_b\ (B1\ b)\ \ \ \ \ =\ B1\ b
+\item[]\textsl{=\ }\ \ |\ rev_b\ (B2(x,\ y))\ =\ B2(rev_a\ y,\ rev_a\ x);
+\item[]\textsl{val\ rev_a\ =\ fn\ :\ a\ ->\ a}
+\item[]\textsl{val\ rev_b\ =\ fn\ :\ b\ ->\ b}
+\item[]\textsl{-\ }val\ a\ =\ A2(B2(A1\ 3,\ A1\ 4),\ B1\ true);
+\item[]\textsl{val\ a\ =\ A2\ (B2\ (A1\ 3,A1\ 4),B1\ true)\ :\ a}
+\item[]\textsl{-\ }rev_a\ a;
+\item[]\textsl{val\ it\ =\ A2\ (B1\ true,B2\ (A1\ 4,A1\ 3))\ :\ a}
+\end{list}

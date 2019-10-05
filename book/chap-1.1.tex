@@ -21,6 +21,8 @@ plus the following quantifiers and connectives:
 \index{logic!universal quantification}%
     quantification}). The most typical way of proving such a formula
   is to add the variable $x$ to the \emph{variable context} (each
+\index{variable context}%
+\index{logic!variable context}%
   element of which stands for some element of the universe of
   values)\footnote{We rename $x$ first, if $x$ is already in the
     variable context.}, and then go about proving $P(x)$ (possibly
@@ -28,7 +30,7 @@ plus the following quantifiers and connectives:
 \index{assumptions}%
 \index{logic!assumptions}%
 
-\item $\textbf{There exists an}\; x, \,\textbf{such that}\; P(x)$
+\item $\textbf{There exists an}\; x \;\textbf{such that}\; P(x)$
   (\emph{existential quantification}).  The most typical way of
 \index{existential quantification}%
 \index{logic!existential quantification}%
@@ -151,19 +153,26 @@ Furthermore:
   our proof of $P$.
 \end{itemize}
 
-An alternative way of proving $P \myimplies Q$ is to prove its
-\emph{contrapositive}:
+We have that $P \myimplies Q$ is equivalent to
+$\textbf{not}\; P \myor Q$.  It is also equivalent to its
+\emph{contrapositive},
 \index{contrapositive}%
 \index{logic!contrapositive}%
 $\textbf{not}\; Q \myimplies \textbf{not}\; P$.
 
+By the Law of the Excluded Middle, we have that $P\myor \textbf{not}\;P$,
+\index{Law of the Excluded Middle}%
+\index{logic!Law of the Excluded Middle}%
+i.e., that either $P$ or its negation holds.
+
 When we do a \emph{case analysis}, we first prove (this may be
 \index{case analysis}%
 \index{logic!case analysis}%
-obvious, in which case we may leave the proof implicit) that a disjunction
-$P_1 \myor \cdots \myor P_n$ holds, adding it to our
+obvious, in which case we may leave the proof implicit) that a
+disjunction $P_1 \myor \cdots \myor P_n$ holds, adding it to our
 assumptions. We then use disjunction elimination, showing our
-conclusion follows from each of $P_1,\ldots,P_n$.
+conclusion follows from each of $P_1,\ldots,P_n$.  Case analysis is
+often done in conjunction with the Law of the Excluded Middle.
 
 Finally, when proving $P$ using \emph{proof by contradiction}, we
 \index{proof by contradiction}%
@@ -171,6 +180,47 @@ Finally, when proving $P$ using \emph{proof by contradiction}, we
 temporarily add $\textbf{not}\;P$ to our assumptions and then try to
 derive a contradiction (i.e., prove something that's obviously
 false). If we succeed, then $P$ follows from our original assumptions.
+
+We write
+\begin{displaymath}
+  \textbf{for all sets}\; X, P(X)
+\end{displaymath}
+as an abbreviation for
+\begin{displaymath}
+  \textbf{for all}\; X, X\; \textbf{is a set} \mathbin{\textbf{implies}} P(X) .
+\end{displaymath}
+And we write 
+\begin{displaymath}
+  \textbf{there exists a set}\; X \;\textbf{such that}\; P(X)
+\end{displaymath}
+as an abbreviation for
+\begin{displaymath}
+  \textbf{there exists an} \; X \;\textbf{such that}\;
+  X \;\textbf{is a set} \mathbin{\textbf{and}} P(X) .
+\end{displaymath}
+Thus we have that:
+\begin{displaymath}
+  \textbf{not for all sets}\; X, P(X)
+\end{displaymath}
+is equivalent to
+\begin{displaymath}
+  \textbf{there exists a set}\; X \; \textbf{such that not}\; P(X);
+\end{displaymath}
+and
+\begin{displaymath}
+  \textbf{not there exists a set}\; X \;\textbf{such that}\; P(X)
+\end{displaymath}
+is equivalent to
+\begin{displaymath}
+  \textbf{for all sets}\, X, \textbf{not}\; P(X) .
+\end{displaymath}
+When writing proofs involving these abbreviated formulas, we compress
+some proof steps into single steps in obvious ways.  For example, when
+proving $\textbf{for all sets}\; X, P(X)$, we simply introduce the
+assumption that $X$ is a set, and then go about proving $P(X)$,
+instead of first adding $X$ to our variable context, and then adding
+the fact that $X$ is a set to our current assumptions.  We make use of
+similar formula abbreviations without comment.
 \index{logic|)}%
 \index{classical logic|)}%
 
@@ -241,12 +291,28 @@ as an abbreviation for
 \end{displaymath}
 And we write 
 \begin{displaymath}
-  \textrm{there exists an}\; x \in X, P(x)
+  \textrm{there exists an}\; x \in X \;\textrm{such that}\; P(x)
 \end{displaymath}
 as an abbreviation for
 \begin{displaymath}
   \textrm{there exists an}\; x \;\textrm{such that}\; x\in X
   \mathbin{\textrm{and}} P(x) .
+\end{displaymath}
+Thus, we have that:
+\begin{displaymath}
+\textrm{Not for all}\; x\in X, P(x)  
+\end{displaymath}
+is equivalent to
+\begin{displaymath}
+\textrm{there exists an}\; x\in X \;\textrm{such that not}\; P(x);
+\end{displaymath}
+and
+\begin{displaymath}
+\textrm{Not there exists an}\; x\in X \;\textrm{such that}\; P(x)  
+\end{displaymath}
+is equivalent to
+\begin{displaymath}
+\textrm{for all}\; x\in X, \;\textrm{not}\; P(x) .  
 \end{displaymath}
 
 Suppose $A$ and $B$ are sets.  We say that:
@@ -326,6 +392,25 @@ Furthermore, for all sets $A$, $B$ and $C$:
 
 \item if $A\supsetneq B\supsetneq C$, then $A\supsetneq C$.
 \end{itemize}
+
+We write
+\begin{displaymath}
+  \textrm{for all}\; X \sub Y, P(X)
+\end{displaymath}
+as an abbreviation for
+\begin{displaymath}
+  \textrm{for all sets}\; X, X\sub Y \mathbin{\textrm{implies}} P(X) .
+\end{displaymath}
+And we write 
+\begin{displaymath}
+  \textrm{there exists an}\; X \sub Y \;\textrm{such that}\; P(X)
+\end{displaymath}
+as an abbreviation for
+\begin{displaymath}
+  \textrm{there exists a set}\; X \;\textrm{such that}\; X\sub Y
+  \mathbin{\textrm{and}} P(X) .
+\end{displaymath}
+And we make use of similar abbreviations without comment.
 
 \subsection{Set Formation}
 
@@ -982,13 +1067,13 @@ are clear from the context) for the $i$-th \emph{projection} function
 from $X_1\times\cdots\times X_n$ to $X_i$, which selects the $i$-th component of
 a tuple, i.e., transforms an input $(x_1,\ldots,x_n)$ to $x_i$.
 
-One of the forms of the Axiom of Choice
+One of the forms of set theory's Axiom of Choice
 \index{Axiom of Choice}%
 says that, for all sets $X$ of nonempty sets, there is a function $f$
 with domain $X$ such that, for all $Y\in X$, $f\,Y\in Y$. In other
 words, $f$ is a \emph{choice function}
 \index{choice function}%
-that given an element $Y$ of $X$, is able to pick an element of $Y$.
+that, given an element $Y$ of $X$, is able to pick an element of $Y$.
 
 \subsection{Set Cardinality}
 
@@ -1078,12 +1163,12 @@ $f^{-1}$ is a bijection from $B$ to $A$.
 \end{enumerate}
 \end{exercise}
 
-We say that a set $X$ has the \emph{same size} as a set $Y$
-\index{same size}%
-\index{set!same size}%
+We say that a set $X$ is \emph{equinumerous} to a set $Y$
+\index{equinumerous}%
+\index{set!equinumerous}%
 ($X\cong Y$)
-\index{ same size@$\cong$}%
-\index{set! same size@$\cong$}%
+\index{ equinumerous@$\cong$}%
+\index{set! equinumerous@$\cong$}%
 iff there is a bijection from $X$ to $Y$.  By Exercise~\ref{BijectionEx2},
 we have that, for all sets $A,B,C$:
 \begin{enumerate}[\quad (1)]
@@ -1120,11 +1205,11 @@ and no more than $n$, so that $[1:0]=\emptyset$);
 \index{set!uncountable|see{uncountable}}%
 \end{itemize}
 
-Every set $X$ has a \emph{size} or \emph{cardinality} ($|X|$)
-\index{ size of@$\sizedot$}%
+Every set $X$ has a \emph{size} or \emph{cardinality} ($|X|$) \index{
+  size of@$\sizedot$}%
 \index{set! size of@$\sizedot$}%
-and we have that, for all sets $X$ and $Y$, $|X|=|Y|$ iff
-$X\cong Y$.  The sizes of finite sets are natural numbers.
+and we have that, for all sets $X$ and $Y$, $|X|=|Y|$ iff $X\cong
+Y$. The sizes of finite sets are natural numbers.
 
 We have that:
 \begin{itemize}
@@ -1209,7 +1294,15 @@ Because $\powset\,\nats$ is not finite, there is a bijection $f$
 from $\nats$ to $\powset\,\nats$.  Define
 $X\in\setof{n\in\nats}{n\not\in f\,n}$, so that $X\in\powset\,\nats$.
 By the definition of $f$, it follows that $X=f\,n$, for some
-$n\in\nats$.  There are two cases to consider.
+$n\in\nats$.\footnote{Here we are doing an existential elimination,
+introducing $n$ into our variable context, and introducing $X=f\,n$ into
+our current assumptions. If we already had $n$ in our variable context, we
+would have had to first rename it.}
+\index{existential elimination}%
+\index{logic!existential elimination}%
+\index{variable context}%
+\index{logic!variable context}%
+There are two cases to consider.
 \begin{itemize}
 \item Suppose $n\in X$.  By the definition of $X$, it follows that
   $n\not\in f\,n=X$---contradiction.
@@ -1226,21 +1319,24 @@ We have seen how bijections may be used to determine whether sets have
 the same size.  But how can we compare the relative sizes of sets,
 i.e., say whether one set is smaller or larger than another?  The
 answer is to make use of injective functions.
-\index{no bigger}%
-\index{set!no bigger}%
-We say that a set $X$ is \emph{no bigger} than a set $Y$ ($X\preceq Y$)
-\index{ no bigger than@$\preceq$}%
-\index{set! no bigger than@$\preceq$}%
+\index{dominated}%
+\index{set!dominated}%
+We say that a set $X$ is \emph{dominated} by a set $Y$ ($X\preceq Y$)
+\index{ dominated@$\preceq$}%
+\index{set! dominated@$\preceq$}%
 iff there is an injection from $X$ to $Y$, i.e., an
 injective function whose domain is $X$ and whose range
 is a subset of $Y$. Because identity functions are injective,
 we have that $X\sub Y$ implies $X\preceq Y$; e.g.,
 $\nats\preceq\reals$.  This definition makes sense, because $X$ is
-no bigger than $Y$ iff $X$ has the same size as a subset of $Y$.
-\index{strictly smaller}%
-\index{set!strictly smaller}%
-We say that $X$ is \emph{strictly smaller} than $Y$ iff
-$X\preceq Y$ and $X\not\cong Y$.
+dominated by $Y$ iff $X$ is equinumerous to a subset of $Y$.
+We say that a set $X$ is \emph{strictly dominated} by a set $Y$
+\index{strictly dominated}%
+\index{set!strictly dominated}%
+($X\prec Y$)
+\index{ strictly dominated@$\prec$}%
+\index{set! strictly dominated@$\prec$}%
+iff $X\preceq Y$ but $X\not\cong Y$.
 
 Using our observations about injections, we have that,
 for all sets $A$, $B$ and $C$:
@@ -1253,7 +1349,7 @@ We can also characterize $\preceq$ using ``surjectivity''. We
 say that $f$ is a \emph{surjection} from $X$ to $Y$ iff $f$ is a function
 \index{surjection from set to set}%
 \index{function!surjection from set to set}%
-from $X$ to $Y$ and $\range\,f = Y$. A consequence of set theory's
+from $X$ to $Y$ and $\range\,f = Y$. A consequence of the
 Axiom of Choice is that, for all sets $X$ and $Y$, $X\preceq Y$ iff
 \index{Axiom of Choice}%
 $X = \emptyset$ or there is a surjection from $Y$ to $X$.
@@ -1271,6 +1367,7 @@ sets have the same size.
 Use the Schr\"oder-Bernstein Theorem to show that
 $\nats\cong\nats\times\nats$.  Hint: use the following consequence of
 the Fundamental Theorem of Arithmetic: if two finite, ascending (each
+\index{Fundamental Theorem of Arithmetic}%
 element is $\leq$ the next) sequences of prime numbers (natural
 numbers that are at least $2$ and have no divisors other than $1$ and
 themselves) have the same product (the product of the empty sequence is
@@ -1279,16 +1376,18 @@ $1$), then they are equal.
 
 One of the forms of the Axiom of Choice
 \index{Axiom of Choice}%
-says that, for all sets $A$ and $B$, either $A\preceq B$ or $B\preceq
-A$, i.e., either $A$ is no bigger than $B$, or $B$ is no bigger than
-$A$. Furthermore, the sizes of sets are ordered in such a way
-that, for all sets $A$ and $B$, $|A|\leq|B|$ iff $A\preceq B$,
-which tells us that, given sets $A$ and $B$, either $|A|\leq|B|$ or
-$|B|\leq|A|$.
+says that, for all sets $A$ and $B$, either $A\preceq B$ or
+$B\preceq A$, i.e., either $A$ is dominated by $B$, or $B$ is
+dominated by $A$. The sizes of sets are ordered in such a way that,
+for all sets $A$ and $B$: $|A|\leq|B|$ iff $A\preceq B$; and $|A|<|B|$
+iff $A\prec B$. $\leq$ and $<$ on set sizes have all the properties of a
+total ordering and the corresponding strict total ordering, except
+that the collection of all set sizes is a proper class, and so
+$\leq$ and $<$ are also proper classes.
+
 Given the above machinery, one can strengthen
 Proposition~\ref{PowsetNatsUncountableProp} into: for
-all sets $X$, $X$ is strictly smaller than $\powset\,X$, i.e.,
-$|X|<|\powset\,X|$.
+all sets $X$, $X\prec \powset\,X$, and so $|X|<|\powset\,X|$.
 \index{set!cardinality|)}%
 \index{set!size|)}%
 \index{size!set|)}%
@@ -1455,16 +1554,18 @@ $f,g\in\List\,X$, $f\myconcat g\in\List\,X$.
 
 \subsection{Notes}
 
-In a traditional treatment of set theory, e.g., \cite{Enderton77}, the
-natural numbers, integers, real numbers and ordered pairs
-$(x,y)$ are encoded as sets.  But for our purposes, it is clearer to
-suppress this detail.
+In set theory (see, e.g., \cite{Enderton77}), the natural numbers,
+integers, real numbers and ordered pairs $(x,y)$ are encoded as sets.
+But for our purposes, it is clearer to suppress this detail.
 
-Furthermore, in the traditional approach, $\nats$ is not a subset of
-$\ints$, and $\ints$ is not a subset of $\reals$.  On the other hand,
-there are proper subsets of $\reals$ corresponding to $\nats$ and
-$\ints$, and these are what we take $\nats$ and $\ints$ to be, so that
-$\nats\subsetneq\ints\subsetneq\reals$.  \index{set|)}%
+Furthermore, in set theory, $\nats$ is not a subset of $\ints$, and
+$\ints$ is not a subset of $\reals$.  On the other hand, there are
+proper subsets of $\reals$ corresponding to the natural numbers and
+the integers, and these are what we take $\nats$ and $\ints$ to be, so
+that $\nats\subsetneq\ints\subsetneq\reals$. Thus, for us, the sizes of
+finite sets are also elements of the subset of $\reals$ that we
+treat as the natural numbers.
+\index{set|)}%
 
 %%% Local Variables: 
 %%% mode: latex

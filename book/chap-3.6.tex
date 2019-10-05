@@ -41,7 +41,7 @@ Then, $\Delta_M(\{\Asf\},\mathsf{12111111}) =
 \mathsf{A\lparr{1}A\lparr{2}C\lparr{111}C\lparr{111}C}
 \end{gather*}
 are all of the labeled paths that are labeled by $\mathsf{12111111}$,
-valid in $M$ and whose start states are $\Asf$.
+valid for $M$ and whose start states are $\Asf$.
 Furthermore, $\Delta_M(\{\Asf,\Bsf,\Csf\},\mathsf{11}) =
 \{\Asf,\Bsf\}$, since
 \begin{gather*}
@@ -50,7 +50,7 @@ Furthermore, $\Delta_M(\{\Asf,\Bsf,\Csf\},\mathsf{11}) =
 \mathsf{B\lparr{11}B}
 \end{gather*}
 are all of the labeled paths that are labeled by $\mathsf{11}$ and
-valid in $M$.
+valid for $M$.
 
 Suppose $M$ is a finite automaton, $P\sub Q_M$ and $w\in Str$.
 We can calculate $\Delta_M(P,w)$ as follows.
@@ -111,7 +111,7 @@ For all $q\in Q_M$ and $y\in S$,
 \begin{proof}
 The ``only if'' (left-to-right) direction is by induction on $X$:
 we show that, for all $(q,y)\in X$, $q\in\Delta_M(P,\pre\,y)$.
-\begin{itemize}
+\begin{enumerate}[(1)]
 \item Suppose $p\in P$.  Then $p\in\Delta_M(P,\%)$.  But
 $\pre\,w=\%$, so that $p\in\Delta_M(P,\pre\,w)$.
 
@@ -125,7 +125,7 @@ Let $lp'\in\LP$ be the result of adding the step $q,x\Rightarrow r$ at
 the end of $\lp$.  Thus $\pre\,y$ is the label of $\lp'$, $\lp'$ is
 valid for $M$, the start state of $\lp'$ is in $P$, and $r$ is the end
 state of $\lp'$, showing that $r\in\Delta_M(P,\pre\,y)$.
-\end{itemize}
+\end{enumerate}
 
 For the `if'' (right-to-left) direction, we have that there is a
 labeled path
@@ -179,7 +179,7 @@ L(M) = \setof{w\in\Str}{\Delta_M(\{s_M\}, w)
 
 \begin{proof}
 Suppose $w\in L(M)$.  Then $w$ is the label of a labeled path $\lp$
-such that $\lp$ is valid in $M$, the start state of $\lp$ is $s_M$ and
+such that $\lp$ is valid for $M$, the start state of $\lp$ is $s_M$ and
 the end state of $\lp$ is in $A_M$.  Let $q$ be the end state of
 $\lp$.  Thus $q\in\Delta_M(\{s_M\}, w)$ and $q\in A_M$, showing that
 $\Delta_M(\{s_M\}, w)\cap A_M\neq\emptyset$.
@@ -187,7 +187,7 @@ $\Delta_M(\{s_M\}, w)\cap A_M\neq\emptyset$.
 Suppose $\Delta_M(\{s_M\}, w)\cap A_M\neq\emptyset$, so that
 there is a $q$ such that $q\in\Delta_M(\{s_M\}, w)$ and
 $q\in A_M$.  Thus $w$ is the label of a labeled path $\lp$ such that
-$\lp$ is valid in $M$, the start state of $\lp$ is $s_M$,
+$\lp$ is valid for $M$, the start state of $\lp$ is $s_M$,
 and the end state of $\lp$ is $q\in A_M$.  Thus $w\in L(M)$.
 \end{proof}
 
@@ -199,14 +199,14 @@ and then check if this set contains at least one accepting state.
 Given a finite automaton $M$, subsets $P,R$ of $Q_M$ and a string $w$,
 \index{finite automaton!searching for labeled paths}%
 how do we search for a labeled path that is labeled by $w$, valid
-in $M$, starts from an element of $P$, and ends with an element of $R$?
+for $M$, starts from an element of $P$, and ends with an element of $R$?
 What we need to do is associate with each pair
 \begin{gather*}
 (q,y)
 \end{gather*}
 of the set $X$ that we generate when computing $\Delta_M(P,w)$ a
 labeled path $\lp$ such that $\lp$ is labeled by $\pre(y)$, $\lp$ is
-valid in $M$, the start state of $\lp$ is an element of $P$, and the
+valid for $M$, the start state of $\lp$ is an element of $P$, and the
 end state of $\lp$ is $q$.  If we process the elements of $X$ in a
 breadth-first (rather than depth-first) manner, this will ensure that
 these labeled paths are as short as possible.  As we generate the

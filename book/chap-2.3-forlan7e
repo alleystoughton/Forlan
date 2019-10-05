@@ -1,0 +1,12 @@
+datatype a =
+    A1 of int
+  | A2 of b * b
+and      b =
+    B1 of bool
+  | B2 of a * a;
+fun rev_a (A1 n)     = A1 n
+  | rev_a (A2(x, y)) = A2(rev_b y, rev_b x)
+and rev_b (B1 b)     = B1 b
+  | rev_b (B2(x, y)) = B2(rev_a y, rev_a x);
+val a = A2(B2(A1 3, A1 4), B1 true);
+rev_a a;

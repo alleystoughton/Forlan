@@ -71,6 +71,8 @@ Now that we know what language concatenation is, we can say what it
 means to raise a language to a power.  We define the \emph{language}
 \index{concatenation!language!power}%
 \index{language!concatenation!power}%
+\index{concatenation!language!exponentiation}%
+\index{language!concatenation!exponentiation}%
 $L^n$ \emph{formed by raising} a language $L$ \emph{to the
   power} $n\in\nats$
 \index{ power@$\cdot^\cdot$}%
@@ -427,6 +429,7 @@ We define the \emph{regular expression} $\alpha^n$ \emph{formed by
 raising} a regular expression $\alpha$ \emph{to the power} $n\in\nats$ by
 recursion on $n$:
 \index{regular expression!power}%
+\index{regular expression!exponentiation}%
 \begin{align*}
 \alpha^0       &= \%, \eqtxt{for all}\alpha\in\Reg; \\
 \alpha^1       &= \alpha, \eqtxt{for all}\alpha\in\Reg; \eqtxt{and} \\
@@ -447,8 +450,8 @@ For all $\alpha\in\Reg$ and $n\in\nats$, $L(\alpha^n)=L(\alpha)^n$.
 \end{proposition}
 
 \begin{proof}
-An easy mathematical induction on $n$.  $\alpha$ may be fixed at the
-beginning of the proof.
+By mathematical induction on $n$, case-splitting in the inductive
+step. $\alpha$ may be fixed at the beginning of the proof.
 \end{proof}
 
 An example consequence of the proposition is that
@@ -541,7 +544,7 @@ recursion:
 \begin{align*}
 \concatsToList({@}(\alpha, \beta)) &=
 [\alpha] \myconcat \concatsToList\,\beta, \eqtxt{and} \\
-\concatsToList\,\alpha &= \alpha,
+\concatsToList\,\alpha &= [\alpha],
 \eqtxt{if} \alpha \eqtxtl{is not a concatenation}.
 \end{align*}
 And $\unionsToList\in\Reg\fun\List\,\Reg$ is defined by structural
@@ -549,7 +552,7 @@ recursion:
 \begin{align*}
 \unionsToList({+}(\alpha, \beta)) &=
 [\alpha] \myconcat \unionsToList\,\beta, \eqtxt{and} \\
-\unionsToList\,\alpha &= \alpha,
+\unionsToList\,\alpha &= [\alpha],
 \eqtxt{if} \alpha \eqtxtl{is not a union}.
 \end{align*}
 E.g., $\concatsToList(\mathsf{(12)34}) = [\mathsf{12, 3, 4}]$
