@@ -49,6 +49,8 @@ This module provides operations on finite sets of Forlan strings, i.e., values o
 <B>val</B>&nbsp;<A NAME="STR:StrSet.power:VAL:SPEC" HREF="#STR:StrSet.power:VAL">power</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:StrSet.rev:VAL:SPEC" HREF="#STR:StrSet.rev:VAL">rev</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:StrSet.prefixes:VAL:SPEC" HREF="#STR:StrSet.prefixes:VAL">prefixes</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.suffixes:VAL:SPEC" HREF="#STR:StrSet.suffixes:VAL">suffixes</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.substrings:VAL:SPEC" HREF="#STR:StrSet.substrings:VAL">substrings</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:StrSet.prefix:VAL:SPEC" HREF="#STR:StrSet.prefix:VAL">prefix</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:StrSet.suffix:VAL:SPEC" HREF="#STR:StrSet.suffix:VAL">suffix</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:StrSet.substring:VAL:SPEC" HREF="#STR:StrSet.substring:VAL">substring</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
@@ -212,6 +214,20 @@ returns the set of all prefixes of <CODE><VAR>x</VAR></CODE>.
 <BR>
 <BR>
 
+<DT> <A NAME="STR:StrSet.suffixes:VAL"></A>
+<DT> <CODE>suffixes <VAR>x</VAR></CODE>
+<DD>
+returns the set of all suffixes of <CODE><VAR>x</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:StrSet.substrings:VAL"></A>
+<DT> <CODE>substrings <VAR>x</VAR></CODE>
+<DD>
+returns the set of all substrings of <CODE><VAR>x</VAR></CODE>.
+<BR>
+<BR>
+
 <DT> <A NAME="STR:StrSet.prefix:VAL"></A>
 <DT> <CODE>prefix <VAR>xs</VAR></CODE>
 <DD>
@@ -266,8 +282,8 @@ renames the alphabet of <CODE><VAR>xs</VAR></CODE> using the bijection <CODE><VA
    ]</B>
 </CENTER>
 <P>
-<I>Forlan Version 4.10</I><BR>
-<I>Copyright &copy; 2018 Alley Stoughton</I><BR>
+<I>Forlan Version 4.11</I><BR>
+<I>Copyright &copy; 2019 Alley Stoughton</I><BR>
 
 <HR>
 </BODY></HTML>

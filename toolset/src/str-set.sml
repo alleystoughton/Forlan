@@ -109,11 +109,13 @@ fun prefixes nil       = Set.sing []
 
 fun prefix xs = genUnion(Set.mapToList prefixes xs)
 
-fun prefixes x = prefix(Set.sing x)
-
 fun suffix xs = rev(prefix(rev xs))
 
+fun suffixes x = suffix(Set.sing x)
+
 fun substring xs = suffix(prefix xs)
+
+fun substrings x = substring(Set.sing x)
 
 fun alphabet xs = SymSet.genUnion(Set.mapToList Str.alphabet xs)
 

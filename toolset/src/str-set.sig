@@ -30,6 +30,8 @@ signature STR_SET =
     val power : Str.str Set.set * int -> Str.str Set.set
     val rev : Str.str Set.set -> Str.str Set.set
     val prefixes : Str.str -> Str.str Set.set
+    val suffixes : Str.str -> Str.str Set.set
+    val substrings : Str.str -> Str.str Set.set
     val prefix : Str.str Set.set -> Str.str Set.set
     val suffix : Str.str Set.set -> Str.str Set.set
     val substring : Str.str Set.set -> Str.str Set.set

@@ -277,6 +277,26 @@ prefixes <ARG/x/
 </SPEC>
 
 <SPEC>
+<VAL>suffixes<TY>Str.str -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+suffixes <ARG/x/
+</PROTOTY>
+<PP>returns the set of all suffixes of <CD><ARG/x/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>substrings<TY>Str.str -> Str.str Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+substrings <ARG/x/
+</PROTOTY>
+<PP>returns the set of all substrings of <CD><ARG/x/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
 <VAL>prefix<TY>Str.str Set.set -> Str.str Set.set</TY></VAL>
 <COMMENT>
 <PROTOTY>

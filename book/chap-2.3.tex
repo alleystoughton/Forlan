@@ -604,18 +604,21 @@ finite languages),
 \index{language}%
 including:
 \begin{verbatim}
-val input    : string -> str set
-val output   : string * str set -> unit
-val fromList : str list -> str set
-val memb     : str * str set -> bool
-val subset   : str set * str set -> bool
-val equal    : str set * str set -> bool
-val union    : str set * str set -> str set
-val inter    : str set * str set -> str set
-val minus    : str set * str set -> str set
-val genUnion : str set list -> str set
-val genInter : str set list -> str set
-val alphabet : str set -> sym set
+val input      : string -> str set
+val output     : string * str set -> unit
+val fromList   : str list -> str set
+val memb       : str * str set -> bool
+val subset     : str set * str set -> bool
+val equal      : str set * str set -> bool
+val union      : str set * str set -> str set
+val inter      : str set * str set -> str set
+val minus      : str set * str set -> str set
+val genUnion   : str set list -> str set
+val genInter   : str set list -> str set
+val alphabet   : str set -> sym set
+val prefixes   : str -> str set
+val suffixes   : str -> str set
+val substrings : str -> str set
 \end{verbatim}
 \index{StrSet@\texttt{StrSet}!input@\texttt{input}}%
 \index{StrSet@\texttt{StrSet}!output@\texttt{output}}%
@@ -629,10 +632,17 @@ val alphabet : str set -> sym set
 \index{StrSet@\texttt{StrSet}!genUnion@\texttt{genUnion}}%
 \index{StrSet@\texttt{StrSet}!genInter@\texttt{getInter}}%
 \index{StrSet@\texttt{StrSet}!alphabet@\texttt{alphabet}}%
+\index{StrSet@\texttt{StrSet}!prefixes@\texttt{prefixes}}%
+\index{StrSet@\texttt{StrSet}!suffixes@\texttt{suffixes}}%
+\index{StrSet@\texttt{StrSet}!substrings@\texttt{substrings}}%
 The total ordering associated with sets of strings is our
 total ordering on strings.
 Sets of strings are expressed in Forlan's syntax as sequences of strings,
 separated by commas.
+The function \texttt{alphabet} returns the alphabet of a finite
+language. And the functions \texttt{prefixes}, \texttt{suffixes} and
+\texttt{substrings} return the sets of all prefixes, suffixes and
+substrings of a string.
 
 Here are some example uses of the functions of \texttt{StrSet}:
 \input{chap-2.3-forlan14}

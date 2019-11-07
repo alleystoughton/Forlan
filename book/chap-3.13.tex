@@ -79,21 +79,25 @@ q\in A_{M'}\myiff r\in A_{N'} .
 If this is true, it says that the machines are equivalent; otherwise
 it says they are not equivalent.
 
-We can easily prove the correctness of our algorithm.
+We can easily prove the correctness of our algorithm:
+\begin{itemize}
+\item Suppose every pair $(q,r)\in X$ consists of two accepting states
+  or of two non-accepting states.  Suppose, toward a contradiction,
+  that $L(M')\neq L(N')$.  Then there is a string $w$ that is accepted
+  by one of the machines but is not accepted by the other.  Since both
+  machines have alphabet $\Sigma$, we have that $w\in\Sigma^*$.  Thus
+  Lemma~\ref{EquivLem1} tells us that
+  $(\delta_{M'}(s_{M'},w),\delta_{N'}(s_{N'},w))\in X$.  But one side
+  of this pair is an accepting state and the other is a non-accepting
+  one---contradiction.  Thus $L(M')=L(N')$.
 
-Suppose every pair $(q,r)\in X$ consists of two accepting states or
-of two non-accepting states.  Suppose, toward a contradiction, that
-$L(M')\neq L(N')$.  Then there is a string $w$ that is accepted by
-one of the machines but is not accepted by the other.  Since both
-machines have alphabet $\Sigma$, Lemma~\ref{EquivLem1} tells
-us that $(\delta_{M'}(s_{M'},w),\delta_{N'}(s_{N'},w))\in X$.
-But one side of this pair is an accepting state and the other is
-a non-accepting one---contradiction.  Thus $L(M')=L(N')$.
-
-Suppose we find a pair $(q,r)\in X$ such that one of $q$ and $r$
-is an accepting state but the other is not.  By Lemma~\ref{EquivLem2},
-it will follow that there is a string $w$ that is accepted by one of
-the machines but not accepted by the other one, i.e., that $L(M')\neq L(N')$.
+\item Suppose we find a pair $(q,r)\in X$ such that one of $q$ and $r$
+  is an accepting state but the other is not.  By
+  Lemma~\ref{EquivLem2}, it will follow that there is a $w\in\Sigma^*$
+  such that $q=\delta_{M'}(s_{M'},w)$ and $r=\delta_{N'}(s_{N'},w)$.
+  Thus $w$ is accepted by one machine but not the other, so that
+  $L(M')\neq L(N')$.
+\end{itemize}
 
 In the case of our example, we have that
 $X=\{(\Asf,\Asf), (\Bsf,\Bsf), (\Asf,\Csf)\}$.
@@ -525,7 +529,7 @@ $N$ is deterministically simplified.
 \end{lemma}
 
 \begin{proof}
-To see that all elements of $N$ are reachable, suppose $q\in Q_{M'}$.
+To see that all elements of $Q_N$ are reachable, suppose $q\in Q_{M'}$.
 Because $M'$ is deterministically simplified, there is a
 $w\in(\alphabet\,M')^*$ such that $q=\delta_{M'}(s_{M'},w)$.  Thus
 $\delta_N(s_N,w) = \overline{[\delta_{M'}(s_{M'},w)]} = \overline{[q]}$.
@@ -546,10 +550,12 @@ thus we have that $N$ has at most one dead state.
 Suppose $N'$ is a DFA such that $N'\approx M'$,
 $\alphabet\,N'=\alphabet\,M'$ and $|Q_{N'}|\leq|Q_N|$.  Then $N'$ is
 isomorphic to $N$.
+\index{isomorphism!finite automaton}%
+\index{finite automaton!isomorphism}%
 \end{lemma}
 
 \begin{proof}
-We have that $L(N')=L(M')$.  And the states of $M'$ and $N$ are
+We have that $L(N')=L(M')=L(N)$.  And the states of $M'$ and $N$ are
 all reachable.  Let the relation $h$ between $Q_{N'}$ and $Q_N$ be
 \begin{gather*}
   \setof{(\delta_{N'}(s_{N'},w),\delta_N(s_N,w))}{w\in(\alphabet\,M')^*}
@@ -587,19 +593,29 @@ $\delta_{M'}(\delta_{M'}(s_{M'},y), z) = \delta_{M'}(s_{M'},yz) \in
 A_{M'}$.
 
 Because $h$ is a function and $\range\,h=Q_N$, we have that
-$|Q_N|\leq |\domain\,f|\leq Q_{N'}$. But $|Q_{N'}|\leq |Q_N|$, and thus
+$|Q_N|\leq |\domain\,f|\leq |Q_{N'}|$. But $|Q_{N'}|\leq |Q_N|$, and thus
 $|Q_{N'}| = |Q_N|$. Because $Q_{N'}$ and $Q_N$ are finite, it
 follows that $\domain\,h = Q_{N'}$ and $h$ is injective, so that $h$
 is a bijection from $Q_{N'}$ to $Q_N$.  Thus, every state of $N'$ is
 reachable, and, for all
 $w\in(\alphabet\,M')^* = (\alphabet\,N)^* = (\alphabet\,N')^*$,
 $h(\delta_{N'}(s_{N'},w))=\delta_N(s_N,w)$.  The remainder of the
-proof that $h$ is an isomorphism from $N'$ to $N$ is easy.
+proof that $h$ is an isomorphism from $N'$ to $N$ is fairly
+straightforward.
 \end{proof}
 
+The following exercises formalizes the last sentence of
+Lemma~\ref{MinimizationLemma8}.
+
 \begin{exercise}
-Expand on the last sentence of Lemma~\ref{MinimizationLemma8},
-proving that $h$ is an isomorphism from $N'$ to $N$ is easy.
+Suppose $N'$ and $N$ are equivalent DFAs with alphabet $\Sigma$, all
+of whose states are reachable (for all $q\in Q_{N'}$, there is a
+$w\in\Sigma^*$ such that $\delta_{N'}(s_{N'},w) = q$; and for all
+$q\in Q_{N}$, there is a $w\in\Sigma^*$ such that
+$\delta_{N}(s_{N},w) = q$). Suppose $h$ is a bijection from $Q_{N'}$
+to $Q_N$ such that, for all $w\in\Sigma^*$,
+$h(\delta_{N'}(s_{N'},w))=\delta_N(s_N,w)$. Prove that $h$ is
+an isomorphism from $N'$ to $N$.
 \end{exercise}
 
 We define a function $\minimize\in\DFA\fun\DFA$ by:

@@ -1,0 +1,6 @@
+val xs = StrSet.input "";
+123, 0234, 16
+.
+StrSet.output("", StrSet.prefix xs);
+StrSet.output("", StrSet.suffix xs);
+StrSet.output("", StrSet.substring xs);

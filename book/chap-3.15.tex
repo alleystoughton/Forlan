@@ -351,6 +351,9 @@ some $a\in\{\mathsf{0,1}\}$;
 
 \item $w$ is \emph{long} iff $|w|\geq 5$.
 \end{itemize}
+(We can generalize what follows to work two parameters: an alphabet
+$\Sigma$ (instead of $\{\mathsf{0,1}\}$) and a length $n\in\nats$
+(instead of $5$---the length above which we consider a string long).)
 So, e.g., $\mathsf{1001}$ and $\mathsf{10110}$ both stutter, but
 $\mathsf{01010}$ and $\mathsf{101}$ don't.  Saying that strings of
 length $5$ or more are ``long'' is arbitrary; what follows can be
@@ -790,6 +793,13 @@ Thus, $\allLongStutterDFA$ is the DFA of Figure~\ref{StuttDFASynExamp}.
 \caption{DFA Accepting $\AllLongStutter$}
 \label{StuttDFASynExamp}
 \end{figure}
+
+\begin{exercise}
+\label{StutGen}
+Generalize the preceding example to work with two parameters: an alphabet
+$\Sigma$ (instead of $\{\mathsf{0,1}\}$) and a length $n\in\nats$ (instead
+of $5$---the length above which we consider a string long).
+\end{exercise}
 
 \begin{exercise}
 Define $\diff\in\{\mathsf{0,1}\}^*\fun\ints$ by:

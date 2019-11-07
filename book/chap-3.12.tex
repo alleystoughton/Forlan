@@ -1099,6 +1099,17 @@ is $\setof{w}{w^R\in L} = \setof{w^R}{w\in L}$.  I.e., $L^R$ is formed
 by reversing all of the elements of $L$.  For example, $\{\mathsf{011,
 1011}\}^R = \{\mathsf{110, 1101}\}$.
 
+The module \texttt{StrSet}
+\index{StrSet@\texttt{StrSet}}%
+defines the function
+\begin{verbatim}
+val rev : str set -> str set
+\end{verbatim}
+\index{StrSet@\texttt{StrSet}!rev@\texttt{rev}}%
+that implements language reversal. E.g., we can
+proceed as follows:
+\input{chap-3.12-forlan4}
+
 Define $\rev\in\Reg\fun\Reg$ by recursion:
 \index{regular expression!reversal}%
 \index{reversal!regular expression}%
@@ -1218,6 +1229,21 @@ For all languages $L$:
 \end{itemize}
 \end{proposition}
 
+The module \texttt{StrSet}
+\index{StrSet@\texttt{StrSet}}%
+defines the functions
+\begin{verbatim}
+val prefix    : str set -> str set
+val suffix    : str set -> str set
+val substring : str set -> str set
+\end{verbatim}
+\index{StrSet@\texttt{StrSet}!prefix@\texttt{prefix}}%
+\index{StrSet@\texttt{StrSet}!suffix@\texttt{suffix}}%
+\index{StrSet@\texttt{StrSet}!substring@\texttt{substring}}%
+that implement prefix-, suffix- and substring-closure. 
+E.g., we can proceed as follows:
+\input{chap-3.12-forlan4a}
+
 Now, we define a function $\prefix\in\EFA\fun\EFA$ such that
 \index{prefix@$\prefix$}%
 \index{empty-string finite automaton!prefix@$\prefix$}%
@@ -1312,6 +1338,24 @@ $f$ ($L^f\in\Lan$) is formed by applying $f$ to every symbol of every string
 of $L$.  For example, if $L=\{\mathsf{012, 12}\}$ and
 $f=\mathsf{\{(0, 1), (1, 2), (2, 3)\}}$, then $L^f=\{\mathsf{123,
 23}\}$.
+
+The module \texttt{Str}
+\index{Str@\texttt{Str}}%
+defines the function
+\begin{verbatim}
+val renameAlphabet : str * sym_rel -> str
+\end{verbatim}
+that implements alphabet renaming for strings.
+And the module \texttt{StrSet}
+\index{StrSet@\texttt{StrSet}}%
+defines the function
+\begin{verbatim}
+val renameAlphabet : str set * sym_rel -> str set
+\end{verbatim}
+\index{StrSet@\texttt{StrSet}!renameAlphabet@\texttt{renameAlphabet}}%
+that implements alphabet renaming for languages.
+E.g., we can proceed as follows:
+\input{chap-3.12-forlan4b}
 
 Let $X=\setof{(\alpha,f)}{\alpha\in\Reg\eqtxt{and}f\eqtxtl{is a
 bijection from a set of symbols that}\eqtxtr{is a superset

@@ -151,6 +151,20 @@ For instance, we have that:
 \end{align*}
 Thus $\mathsf{0100}$ is accepted by $M$.
 
+It is easy to see that, for all DFAs $M$ and $q\in Q_M$:
+\begin{itemize}
+\item $q$ is reachable in $M$ iff there is a $w\in(\alphabet\, M)^*$,
+  $\delta_M(s_M, w) = q$;
+\index{reachable state}%
+\index{deterministic finite automaton!reachable state}%
+and
+
+\item $q$ is live in $M$ iff there is a $w\in(\alphabet\, M)^*$,
+  $\delta_M(q, w) = r$, for some $r\in A_M$.
+\index{live state}%
+\index{deterministic finite automaton!live state}%
+\end{itemize}
+
 \subsection{Proving the Correctness of DFAs}
 
 Since every DFA is an FA, we could prove the correctness of DFAs

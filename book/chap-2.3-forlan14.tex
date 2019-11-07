@@ -41,4 +41,15 @@
 \item[]\textsl{-\ }SymSet.output("",\ StrSet.alphabet\ zs);
 \item[]\textsl{a,\ e,\ h,\ l,\ n,\ o,\ r,\ t,\ <id>,\ <num>}
 \item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ x\ =\ Str.fromString\ "0123";
+\item[]\textsl{val\ x\ =\ \symbol{'133}-,-,-,-\symbol{'135}\ :\ str}
+\item[]\textsl{-\ }StrSet.output("",\ StrSet.prefixes\ x);
+\item[]\textsl{%,\ 0,\ 01,\ 012,\ 0123}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }StrSet.output("",\ StrSet.suffixes\ x);
+\item[]\textsl{%,\ 3,\ 23,\ 123,\ 0123}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }StrSet.output("",\ StrSet.substrings\ x);
+\item[]\textsl{%,\ 0,\ 1,\ 2,\ 3,\ 01,\ 12,\ 23,\ 012,\ 123,\ 0123}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
 \end{list}

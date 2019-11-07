@@ -1,0 +1,13 @@
+val f = SymRel.input "";
+(0, a), (1, b), (2, c), (3, d), (4, e), (6, f)
+.
+val x = Str.fromString "012364";
+Str.toString(Str.renameAlphabet(x, f));
+val y = Str.fromString "4271";
+Str.toString(Str.renameAlphabet(y, f));
+val xs = StrSet.input "";
+123, 0234, 16
+.
+StrSet.output("", StrSet.renameAlphabet(xs, f));
+val ys = StrSet.fromString "123, 0271";
+StrSet.output("", StrSet.renameAlphabet(ys, f));

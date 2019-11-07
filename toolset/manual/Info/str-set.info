@@ -10,12 +10,14 @@
     prefixes
     equal
     fromString
+    suffixes
     prefix
     map
     fromList
     substring
     output
     inter
+    substrings
     inputFromLabToks
     suffix
     subset

@@ -1,0 +1,4 @@
+val xs = StrSet.input "";
+123, 234, 16
+.
+StrSet.output("", StrSet.rev xs);

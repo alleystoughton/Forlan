@@ -9,6 +9,6 @@
 structure Version =
 struct
 
-fun getVersion() = "4.10"
+fun getVersion() = "4.11"
 
 end;

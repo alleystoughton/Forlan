@@ -1,0 +1,48 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ f\ =\ SymRel.input\ "";
+\item[]\textsl{@\ }(0,\ a),\ (1,\ b),\ (2,\ c),\ (3,\ d),\ (4,\ e),\ (6,\ f)
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ f\ =\ -\ :\ sym_rel}
+\item[]\textsl{-\ }val\ x\ =\ Str.fromString\ "012364";
+\item[]\textsl{val\ x\ =\ \symbol{'133}-,-,-,-,-,-\symbol{'135}\ :\ str}
+\item[]\textsl{-\ }Str.toString(Str.renameAlphabet(x,\ f));
+\item[]\textsl{val\ it\ =\ "abcdfe"\ :\ string}
+\item[]\textsl{-\ }val\ y\ =\ Str.fromString\ "4271";
+\item[]\textsl{val\ y\ =\ \symbol{'133}-,-,-,-\symbol{'135}\ :\ str}
+\item[]\textsl{-\ }Str.toString(Str.renameAlphabet(y,\ f));
+\item[]\textsl{invalid\ alphabet\ renaming\ for\ string}
+\item[]
+\item[]\textsl{uncaught\ exception\ Error}
+\item[]\textsl{-\ }val\ xs\ =\ StrSet.input\ "";
+\item[]\textsl{@\ }123,\ 0234,\ 16
+\item[]\textsl{@\ }.
+\item[]\textsl{val\ xs\ =\ -\ :\ str\ set}
+\item[]\textsl{-\ }StrSet.output("",\ StrSet.renameAlphabet(xs,\ f));
+\item[]\textsl{bf,\ bcd,\ acde}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ ys\ =\ StrSet.fromString\ "123,\ 0271";
+\item[]\textsl{val\ ys\ =\ -\ :\ str\ set}
+\item[]\textsl{-\ }StrSet.output("",\ StrSet.renameAlphabet(ys,\ f));
+\item[]\textsl{invalid\ alphabet\ renaming\ for\ string\ set}
+\item[]
+\item[]\textsl{uncaught\ exception\ Error}
+\end{list}

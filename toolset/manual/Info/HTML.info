@@ -922,6 +922,7 @@
     prefixes
     equal
     fromString
+    suffixes
     map
     prefix
     fromList
@@ -929,6 +930,7 @@
     substring
     inter
     inputFromLabToks
+    substrings
     suffix
     subset
     compare

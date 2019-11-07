@@ -10,3 +10,7 @@ StrSet.output("", zs);
 val us = Set.filter (fn x => length x mod 2 = 0) zs;
 StrSet.output("", us);
 SymSet.output("", StrSet.alphabet zs);
+val x = Str.fromString "0123";
+StrSet.output("", StrSet.prefixes x);
+StrSet.output("", StrSet.suffixes x);
+StrSet.output("", StrSet.substrings x);
