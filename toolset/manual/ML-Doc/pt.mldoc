@@ -213,7 +213,7 @@ no children.</PP>
 <VAL>compare<TY>pt Sort.total_ordering</TY></VAL>
 <COMMENT>
 <PROTOTY>
-comare
+compare
 </PROTOTY>
 <PP>is defined by:
 <CODE>
@@ -247,7 +247,7 @@ equal.</PP>
 <PROTOTY>
 cons(<ARG/a/, <ARG/ptsOpt/)
 </PROTOTY>
-<PP>returns <CD>Cons(<ARG/a/, <ARG/ptsOpt/)</CD>.</PP>
+<PP>returns <CD>Node(<ARG/a/, <ARG/ptsOpt/)</CD>.</PP>
 </COMMENT>
 </SPEC>
 
@@ -269,7 +269,7 @@ decons <ARG/pt/
 </PROTOTY>
 <PP>returns <CD>(<ARG/a/, <ARG/ptsOpt/)</CD>, where <CD><ARG/a/</CD> and
 <CD><ARG/ptsOpt/</CD> are unique such that <CD><ARG/pt/</CD> is
-equal to <CD>Cons(<ARG/a/, <ARG/ptsOpt/)</CD>.</PP>
+equal to <CD>Node(<ARG/a/, <ARG/ptsOpt/)</CD>.</PP>
 </COMMENT>
 </SPEC>
 

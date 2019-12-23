@@ -175,7 +175,7 @@ Now, we consider an algorithm for minimizing the sizes of the alphabet
 and set of states of a DFA $M$.  First, the algorithm minimizes the
 size of $M$'s alphabet, and makes the automaton be deterministically
 simplified, by letting $M'=\determSimplify(M,\emptyset)$.  Thus
-$M'\approx M$ and $\alphabet\,M'=\alphabet(L(M))$.
+$M'\approx M$, $\alphabet\,M'=\alphabet(L(M))$ $|Q_{M'}|\leq|Q_M|$.
 
 For example, if $M$ is the DFA
 \begin{center}
@@ -415,9 +415,10 @@ Finally, the algorithm defines the DFA $N$ as follows:
 {\overline{[\delta_{M'}(\min\,P,a)]}})}%
 {P\in Z\eqtxt{and}a\in\alphabet\,M'}$.
 \end{itemize}
-Then $N$ is a DFA with alphabet $\alphabet\,M'$ and, for all $P\in Z$
-and $a\in\alphabet\,M'$, $\delta_N(\overline{P},a)=
-\overline{[\delta_{M'}(\min\,P,a)]}$.
+Then $N$ is a DFA with alphabet
+$\alphabet\,M'=\alphabet(L(M))$, $|Q_N|\leq|Q_{M'}|\leq|Q_M|$, and,
+for all $P\in Z$ and $a\in\alphabet\,M'$,
+$\delta_N(\overline{P},a)= \overline{[\delta_{M'}(\min\,P,a)]}$.
 
 In the case of our example, we have that
 \begin{itemize}
@@ -604,7 +605,7 @@ proof that $h$ is an isomorphism from $N'$ to $N$ is fairly
 straightforward.
 \end{proof}
 
-The following exercises formalizes the last sentence of
+The following exercise formalizes the last sentence of
 Lemma~\ref{MinimizationLemma8}.
 
 \begin{exercise}
@@ -631,6 +632,8 @@ For all $M\in\DFA$:
 
 \item $\alphabet(\minimize\,M)=\alphabet(L(M))$;
 
+\item $|Q_{\minimize\,M}| \leq |Q_M|$;
+
 \item $\minimize\,M$ is deterministically simplified; and
 
 \item for all $N\in\DFA$, if $N\approx M$, $\alphabet\,N=\alphabet(L(M))$ and
@@ -644,6 +647,11 @@ Thus
 \end{center}
 is, up to isomorphism, the only four-or-fewer state DFA with alphabet
 $\{\zerosf,\onesf\}$ that is equivalent to $M$.
+
+\begin{exercise}
+Use Theorem~\ref{Minimization} to show that, for all DFAs $M$ and $N$,
+if $M\approx N$, then $\minimize\,M$ is isomorphic to $\minimize\,N$.
+\end{exercise}
 
 The Forlan module DFA includes the function
 \begin{verbatim}

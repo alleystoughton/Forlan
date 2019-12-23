@@ -1,0 +1,4 @@
+use "elim-vars.sml";
+Gram.output("", gram1);
+Gram.numVariables gram1;
+Gram.numProductions gram1;

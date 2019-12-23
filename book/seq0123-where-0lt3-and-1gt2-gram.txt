@@ -1,0 +1,6 @@
+{variables} A, B, <1>, <3> {start variable} A
+{productions}
+A -> 0A3 | B<3>;
+B -> 1B2 | <1>;
+<1> -> 1 | 1<1>;
+<3> -> 3 | 3<3>

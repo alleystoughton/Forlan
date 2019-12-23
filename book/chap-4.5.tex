@@ -28,7 +28,7 @@ then $\Pi_\zerosf=\{\zerosf\}$, $\Pi_\onesf=\{\onesf\}$ and $\Pi_\Asf=
 \label{PiProp}
 Suppose $G$ is a grammar.
 \begin{enumerate}[\quad(1)]
-\item For all $a\in\alphabet\,G$, ${a}\in\Pi_{G,a}$.
+\item For all $a\in\alphabet\,G$, $\Pi_{G,a}=\{a\}$.
 
 \item For all $q\in Q_G$, if $q\fun\%\in P_G$, then
   ${\%}\in\Pi_{G,q}$.
@@ -387,8 +387,8 @@ correct.
 \begin{exercise}
 Let
 \begin{displaymath}
-X = \setof{\zerosf^i\onesf^j\twosf^k}{i,j,k\in\nats\eqtxt{and either}
-i\neq j\eqtxt{or}j\neq k} .
+X = \setof{\zerosf^i\onesf^j\twosf^k}{i,j,k\in\nats\eqtxt{and}
+(i\neq j\eqtxt{or}j\neq k)} .
 \end{displaymath}
 Find a grammar $G$ such that $L(G) = X$, and prove that your answer is
 correct.

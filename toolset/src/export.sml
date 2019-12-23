@@ -1,6 +1,6 @@
 (******************************** export.sml *********************************)
 
-(* Copyright (C) 2001-2013 Alley Stoughton
+(* Copyright (C) 2001-2019 Alley Stoughton
 
    The file is part of the Forlan toolset for experimenting with
    formal languages.  See the file COPYING.txt for copying and
@@ -14,13 +14,15 @@ structure M  = Messages
 fun existsFile s = OS.FileSys.access(s, nil)
 
 local
-  val smlVersionList = #version_id(Compiler.version)
+  val versionList = (*#version_id(Compiler.version)*) [110, 96]
+
+  fun vlToStr (n :: (ms as m :: ls)) =
+        Int.toString n ^ "." ^ vlToStr ms
+    | vlToStr [n]                    = Int.toString n
+    | vlToStr _                      = M.cannotHappen()
+
 in
-  val smlVersion =
-        if length smlVersionList = 1
-        then Int.toString(hd smlVersionList)
-        else concat[Int.toString(hd smlVersionList), ".",
-                    Int.toString(hd(tl(smlVersionList)))]
+  val smlVersion = vlToStr versionList
 end
 
 local

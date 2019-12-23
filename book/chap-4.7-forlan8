@@ -1,9 +1,13 @@
 val gram' = Gram.inter(gram, efa);
 Gram.output("", gram');
+fun elimVars(gram, nil)     = gram
+  | elimVars(gram, q :: qs) =
+      elimVars(Gram.eliminateVariable(gram, q), qs);
 val gram'' =
-      Gram.eliminateVariable
-      (Gram.eliminateVariable(gram', Sym.fromString "<A,A,A>"),
-       Sym.fromString "<A,B,B>");
+      elimVars
+      (gram',
+       [Sym.fromString "<A,A,A>",
+        Sym.fromString "<A,B,B>"]);
 val gram''' =
       Gram.renameVariablesCanonically
       (Gram.restart(Gram.simplify gram''));

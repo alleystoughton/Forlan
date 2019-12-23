@@ -1,0 +1,3 @@
+val seq0123Where0lt3And1gt2Gram =
+      Gram.input "seq0123-where-0lt3-and-1gt2-gram.txt";
+val even0plus1Alp23DFA = DFA.input "even0plus1-alp23-dfa.txt";

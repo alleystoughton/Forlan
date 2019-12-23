@@ -69,7 +69,7 @@ are $L_1\cup L_2$, $L_1L_2$, $L^*$ and $L_1\cap L_2$.
 
 \begin{proof}
 We consider the concatenation case as an example.  Since $L_1$ and
-$L_2$ are recursively enumerable, there are programs $\pr_1$ and
+$L_2$ are recursively enumerable, there are closed programs $\pr_1$ and
 $\pr_2$ such that, for all $w\in\Str$, $w\in L_1$ iff
 $\eval(\progapp(\pr_1,\progstr(w)))=\norm(\progconst(\progtrue))$, and
 for all $w\in\Str$, $w\in L_2$ iff
@@ -78,7 +78,7 @@ $\eval(\progapp(\pr_2,\progstr(w)))=\norm(\progconst(\progtrue))$.
 inputs.)
 
 To show that $L_1L_2$ is recursively enumerable, we will construct a
-program $\pr$ such that, for all $w\in\Str$, $w\in L_1L_2$ iff
+closed program $\pr$ such that, for all $w\in\Str$, $w\in L_1L_2$ iff
 $\eval(\progapp(\pr,\progstr(w)))=\norm(\progconst(\progtrue))$.
 
 When $\pr$ is called with $\progstr(w)$, for some $w\in\Str$, it
@@ -129,7 +129,7 @@ $L$ is recursive.
 
 \begin{proof}
 Since $L$ and $\Sigma^*-L$ are recursively enumerable languages,
-there are programs $\pr_1$ and $\pr_2$ such that, for all $w\in\Str$,
+there are closed programs $\pr_1$ and $\pr_2$ such that, for all $w\in\Str$,
 $w\in L$ iff
 $\eval(\progapp(\pr_1,\progstr(w)))=\norm(\progconst(\progtrue))$, and
 for all $w\in\Str$, $w\in\Sigma^*-L$ iff

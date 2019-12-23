@@ -1,6 +1,6 @@
 (************************************ use ************************************)
 
-(* Copyright (C) 2001-2012 Alley Stoughton
+(* Copyright (C) 2001-2019 Alley Stoughton
 
    The file is part of the Forlan toolset for experimenting with
    formal languages.  See the file COPYING.txt for copying and
@@ -11,7 +11,7 @@ struct
 
 structure M = Messages
 
-val standardUse = Compiler.Interact.useFile
+val standardUse = use
 
 val lastUsedFile : string option ref = ref NONE
 

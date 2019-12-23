@@ -1,0 +1,10 @@
+val gram = Gram.renameVariablesCanonically(Gram.input "");
+{variables} A, C, E {start variable} A
+{productions}
+A -> 1CE | 00A33 | 0C33E | 1C23E | 011C23E;
+C -> 1 | 11C | 11C22;
+E -> 3 | 33E
+.
+Gram.output("", gram);
+Gram.numVariables gram;
+Gram.numProductions gram;

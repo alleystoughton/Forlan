@@ -313,7 +313,7 @@ $L(H) = L(G)\cap L(M)$.
 $L(H) \sub L(G)\cap L(M)$ follows by Lemma~\ref{GramEFAInter2}(1).
 
 For the other inclusion, suppose $w\in L(G)\cap L(M)$, so that
-$w\in\Pi_{G,s_M}$ and $r\in\Delta_M(\{s_m\},w)$, for some $r\in A_M$. By
+$w\in\Pi_{G,s_G}$ and $r\in\Delta_M(\{s_M\},w)$, for some $r\in A_M$. By
 Lemma~\ref{GramEFAInter1}, it follows that
 $w\in\Pi_{H,\langle s_G, s_M, r\rangle}$. But because $r\in A_M$, we
 have that $\Asf\fun\langle s_G, s_M, r\rangle$ is a production of $H$.
@@ -414,8 +414,8 @@ renaming operations can be used as follows:
 And here is an example use of the prefix-closure operation:
 \input{chap-4.7-forlan6}
 
-Finally, to see how we can use \texttt{Gram.inter} and
-\texttt{Gram.minus}, let \texttt{gram} be the grammar
+To see how we can use \texttt{Gram.inter} and \texttt{Gram.minus}, let
+\texttt{gram} be the grammar
 \begin{gather*}
   \Asf \fun \% \mid \mathsf{0A1A} \mid \mathsf{1A0A} ,
 \end{gather*}
@@ -424,6 +424,100 @@ and \texttt{efa} be the EFA
   \input{chap-4.7-fig1.eepic}
 \end{center}
 \input{chap-4.7-forlan8}
+
+We'll end this section with a more sophisticated example.  Define a
+language X by:
+\begin{gather*}
+X = \setof{\zerosf^i\onesf^j\twosf^k\threesf^l}{i, j, k, l\in\nats \eqtxt{and}
+i<l\eqtxt{and}j>k\eqtxt{and} i + j \eqtxt{is even and} k + l \eqtxt{is
+odd}} .
+\end{gather*}
+Let's see how Forlan can help us come up with a grammar generating $X$.
+First, we put the text
+\verbatiminput{seq0123-where-0lt3-and-1gt2-gram.txt}
+for a grammar generating
+$\setof{\zerosf^i\onesf^j\twosf^k\threesf^l}{i, j, k, l\in\nats
+  \eqtxt{and} i<l\eqtxt{and}j>k}$
+in the file \texttt{seq0123-where-0lt3-and-1gt2-gram.txt}. Next we put the text
+\verbatiminput{even0plus1-alp23-dfa.txt}
+for a DFA accepting all elements of $\{\mathsf{0,1,2,3}\}^*$ in which
+the sum of the numbers of $\zerosf$'s and $\onesf$'s is even
+in the file \texttt{even0plus1-alp23-dfa.txt}.
+Then we load the grammar and DFA into Forlan:
+\input{chap-4.7-forlan9}
+Next, we put the Forlan program
+\verbatiminput{find-gram.sml}
+in the file \texttt{find-gram.sml}, and proceed as follows:
+\input{chap-4.7-forlan10}
+In the grammar \texttt{gram0}, there are opportunities for
+hand-simplification using Forlan. We put the text
+\verbatiminput{elim-vars.sml}
+in the file \texttt{elim-vars.sml}, and proceed as follows:
+\input{chap-4.7-forlan11}
+
+We finish up by making some final improvements to \texttt{gram1},
+working outside of Forlan. First, note that in \texttt{gram1}, $\Esf$
+and its productions, and $\Fsf$ and its productions, have the same
+form. There is no reason to have both of them, and so we can remove
+$\Fsf$ and its productions, replacing all occurrences of $\Fsf$ in
+the remaining productions by $\Esf$. This gives us the grammar:
+\begin{align*}
+\mathsf{A} &\fun \mathsf{BE} \mid \mathsf{00A33} \mid \mathsf{0C3E3} \mid
+  \mathsf{1C23E} \mid \mathsf{01B2E3} \\
+\mathsf{B} &\fun \mathsf{1D} \mid \mathsf{11B22} \\
+\mathsf{C} &\fun \mathsf{D} \mid \mathsf{11C22} \\
+\mathsf{D} &\fun \mathsf{1} \mid \mathsf{11D} \\
+\mathsf{E} &\fun \mathsf{3} \mid \mathsf{33E} .
+\end{align*}
+Next, because $\Esf$ generates only strings of $\threesf$'s, we
+can replace the occurrences of $\mathsf{E3}$ on the right-hand sides
+of $\Asf$'s productions by $\mathsf{3E}$, yielding:
+\begin{align*}
+\mathsf{A} &\fun \mathsf{BE} \mid \mathsf{00A33} \mid \mathsf{0C33E} \mid
+  \mathsf{1C23E} \mid \mathsf{01B23E} \\
+\mathsf{B} &\fun \mathsf{1D} \mid \mathsf{11B22} \\
+\mathsf{C} &\fun \mathsf{D} \mid \mathsf{11C22} \\
+\mathsf{D} &\fun \mathsf{1} \mid \mathsf{11D} \\
+\mathsf{E} &\fun \mathsf{3} \mid \mathsf{33E} .
+\end{align*}
+Next, we note that
+\begin{align*}
+  \Pi_\Dsf &= \setof{\onesf^m}{m\in\nats\eqtxt{and} m \eqtxtl{is odd}} , \\
+  \Pi_\Csf &= \setof{\onesf^{2n}\onesf^m\twosf^{2n}}{n,m\in\nats\eqtxt{and}
+    m \eqtxtl{is odd}} , \\
+  \Pi_\Bsf &= \setof{\onesf^{2n}\onesf\onesf^m\twosf^{2n}}{n,m\in\nats\eqtxt{and}
+    m \eqtxtl{is odd}} =
+    \setof{\onesf\onesf^{2n}\onesf^m\twosf^{2n}}{n,m\in\nats\eqtxt{and}
+    m \eqtxtl{is odd}} = \{\onesf\}\Pi_\Csf .
+\end{align*}
+Thus we can remove $\Bsf$ and its productions, replacing all occurrences of
+$\Bsf$ by $\mathsf{1C}$:
+\begin{align*}
+\mathsf{A} &\fun \mathsf{1CE} \mid \mathsf{00A33} \mid \mathsf{0C33E} \mid
+  \mathsf{1C23E} \mid \mathsf{011C23E} \\
+\mathsf{C} &\fun \mathsf{D} \mid \mathsf{11C22} \\
+\mathsf{D} &\fun \mathsf{1} \mid \mathsf{11D} \\
+\mathsf{E} &\fun \mathsf{3} \mid \mathsf{33E} .
+\end{align*}
+Since $\Dsf$ is only used in a production of $\Csf$,
+we can combine the productions of $\Csf$ and $\Dsf$, yielding
+\begin{align*}
+\mathsf{C} &\fun \onesf \mid \mathsf{11C} \mid \mathsf{11C22} .
+\end{align*}
+Our whole grammar is now:
+\begin{align*}
+\mathsf{A} &\fun \mathsf{1CE} \mid \mathsf{00A33} \mid \mathsf{0C33E} \mid
+  \mathsf{1C23E} \mid \mathsf{011C23E} \\
+\mathsf{C} &\fun \onesf \mid \mathsf{11C} \mid \mathsf{11C22} \\
+\mathsf{E} &\fun \mathsf{3} \mid \mathsf{33E}
+\end{align*}
+or (renaming the variables and reordering $\Asf$'s productions for clarity)
+\begin{align*}
+\mathsf{A} &\fun \mathsf{1BC} \mid \mathsf{1B23C} \mid \mathsf{0B33C}
+  \mid \mathsf{011B23C} \mid \mathsf{00A33} \\
+\mathsf{B} &\fun \onesf \mid \mathsf{11B} \mid \mathsf{11B22} \\
+\mathsf{C} &\fun \mathsf{3} \mid \mathsf{33C} .
+\end{align*}
 
 \index{context-free language!closure properties|)}%
 

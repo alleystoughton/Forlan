@@ -260,6 +260,16 @@ then the parse tree
 \end{center}
 is valid for $G$.
 
+\begin{proposition}
+Suppose $G$ is a grammar. For all parse trees $\pt$, if $\pt$ is valid
+for $G$, then $\rootLabel\,\pt\in Q_G\cup\alphabet\,G$ and
+$\yield\,\pt \in (Q_G\cup\alphabet\,G)^*$.
+\end{proposition}
+
+\begin{proof}
+By induction on $\pt$.
+\end{proof}
+
 Suppose $G$ is a grammar, $w\in\Str$ and $a\in\Sym$.  We say that $w$
 \emph{is parsable from} $a$ \emph{using} $G$ iff there is a parse tree
 $\pt$ such that:
@@ -270,8 +280,8 @@ $\pt$ such that:
 
 \item the yield of $\pt$ is $w$.
 \end{itemize}
-(Thus we will have that $w\in(Q_G\cup\alphabet\,G)^*$, and either
-$a\in Q_G$ or $a = w$.)
+Thus we will have that $w\in(Q_G\cup\alphabet\,G)^*$, and either
+$a\in Q_G$ or $[a] = w$.
 We say that a string $w$ \emph{is generated from} a variable $q\in Q_G$
 \emph{using} $G$ iff $w\in(\alphabet\,G)^*$ and $w$ is parsable from
 $q$.
@@ -414,8 +424,8 @@ parsed using $G$:
 \begin{exercise}
 Let
 \begin{displaymath}
-X = \setof{\zerosf^i\onesf^j\twosf^k}{i,j,k\in\nats\eqtxt{and either}
-i\neq j\eqtxt{or}j\neq k} .
+X = \setof{\zerosf^i\onesf^j\twosf^k}{i,j,k\in\nats\eqtxt{and}
+(i\neq j\eqtxt{or}j\neq k)} .
 \end{displaymath}
 Find a grammar $G$ such that $L(G)=X$.
 \end{exercise}

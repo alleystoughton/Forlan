@@ -1,6 +1,6 @@
 (********************************* forlan.cm *********************************)
 
-(* Copyright (C) 2012 Alley Stoughton
+(* Copyright (C) 2012-2019 Alley Stoughton
 
    The file is part of the Forlan toolset for experimenting with
    formal languages.  See the file COPYING.txt for copying and
@@ -24,9 +24,8 @@ is
 (************************* Basis Library and Compiler ************************)
 
   $/basis.cm
-  $smlnj/cm.cm
   $smlnj/compiler.cm
-  $smlnj/compiler/compiler.cm
+  $smlnj/cm.cm
 
 (**************************** Add MLDoc as CM Tool ***************************)
 

@@ -32,8 +32,8 @@ and the columns are indexed by the elements of $\Sigma^*$, listed in
 ascending order according to our standard total ordering, and where a
 cell $(w_n, w_m)$ contains $1$ iff $w_n\in L(w_m)$, and contains $0$
 iff $w_n\not\in L(w_m)$.
-Each recursively enumerable language is $L(w_n)$ for some (non-unique)
-$n$, but not all the $L(w_n)$ are languages.
+Each recursively enumerable language is $L(w_m)$ for some (non-unique)
+$m$, but not all the $L(w_m)$ are languages.
 Figure~\ref{DiagTable} shows
 \begin{figure}
 \begin{center}
@@ -101,7 +101,7 @@ $L_a$ is recursively enumerable.
 \end{theorem}
 
 \begin{proof}
-Let $\mathit{acc}$ be the program that, when given $\progstr(w)$, for
+Let $\mathit{acc}$ be the closed program that, when given $\progstr(w)$, for
 some $w\in\Str$, acts as follows.  First, it attempts to parse
 $\progstr(w)$ as a program $\pr$, represented as the value
 $\overline{\pr}$.  If this attempt fails, $\mathit{acc}$ returns
@@ -194,7 +194,7 @@ There is no value $\halts$ such that, for all closed programs $\pr$,
 
 \begin{proof}
 Suppose, toward a contradiction, that such a $\halts$ does exist.  We
-use $\halts$ to construct a program $\mathit{acc}$ that behaves as
+use $\halts$ to construct a closed program $\mathit{acc}$ that behaves as
 follows when run on $\progstr(w)$, for some $w\in\Str$.  First, it
 attempts to parse $\progstr(w)$ as a program $\pr$, represented as
 the value $\overline{\pr}$.  If this attempt fails, it returns
@@ -265,9 +265,10 @@ $\pr$ and $\pr'$:
 \begin{proof}
 Suppose, toward a contradiction, that such a $\haltsOn$ exists.  Let
 $\halts$ be the value that takes in a value $\overline{\pr}$
-representing a closed program $\pr$, and then calls $\haltsOn$ with
+representing a closed program $\pr$, and then returns the result of
+calling $\haltsOn$ with
 $\progpair(\overline{\proglam(\mathsf{x},\pr)},\overline{\progconst(\prognil)})$.
-Then this program satisfies the property of
+Then this value satisfies the property of
 Theorem~\ref{Halting}---contradiction.  Thus such a $\haltsOn$ does
 not exist.
 \end{proof}

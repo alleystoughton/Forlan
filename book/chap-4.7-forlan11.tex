@@ -1,0 +1,36 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }use\ "elim-vars.sml";
+\item[]\textsl{\symbol{'133}opening\ elim-vars.sml\symbol{'135}}
+\item[]\textsl{val\ elimVars\ =\ fn\ :\ gram\ \symbol{'052}\ string\ list\ ->\ gram}
+\item[]\textsl{val\ gram1\ =\ -\ :\ gram}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Gram.output("",\ gram1);
+\item[]\textsl{\symbol{'173}variables\symbol{'175}\ A,\ B,\ C,\ D,\ E,\ F\ \symbol{'173}start\ variable\symbol{'175}\ A}
+\item[]\textsl{\symbol{'173}productions\symbol{'175}}
+\item[]\textsl{A\ ->\ BE\ |\ 00A33\ |\ 0C3F3\ |\ 1C23E\ |\ 01B2F3;\ B\ ->\ 1D\ |\ 11B22;}
+\item[]\textsl{C\ ->\ D\ |\ 11C22;\ D\ ->\ 1\ |\ 11D;\ E\ ->\ 3\ |\ 33E;\ F\ ->\ 3\ |\ 33F}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }Gram.numVariables\ gram1;
+\item[]\textsl{val\ it\ =\ 6\ :\ int}
+\item[]\textsl{-\ }Gram.numProductions\ gram1;
+\item[]\textsl{val\ it\ =\ 15\ :\ int}
+\end{list}

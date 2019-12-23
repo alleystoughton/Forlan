@@ -1,0 +1,4 @@
+use "find-gram.sml";
+Gram.output("", gram0);
+Gram.numVariables gram0;
+Gram.numProductions gram0;
