@@ -52,6 +52,7 @@
     hasNoEmptyProductions
     hasNoEmptyOrUnitProductions
     restart
+    eliminateVariableConstraints
     nullableVariables
     concat
     fromStrSet
@@ -72,6 +73,7 @@
     parseOpt
     checkPT
     eliminateEmptyAndUnitProductions
+    eliminateVariableConstraintsOpt
     fromFA
     fromStr
     generated

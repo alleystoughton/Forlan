@@ -706,6 +706,7 @@
     hasNoEmptyProductions
     hasNoEmptyOrUnitProductions
     restart
+    eliminateVariableConstraints
     nullableVariables
     concat
     fromStrSet
@@ -726,6 +727,7 @@
     prefix
     checkPT
     eliminateEmptyAndUnitProductions
+    eliminateVariableConstraintsOpt
     fromFA
     fromStr
     generated

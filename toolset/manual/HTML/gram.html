@@ -71,6 +71,9 @@ This module defines the abstract type of grammars.
 <B>val</B>&nbsp;<A NAME="STR:Gram.simplified:VAL:SPEC" HREF="#STR:Gram.simplified:VAL">simplified</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
 <B>val</B>&nbsp;<A NAME="STR:Gram.eliminateVariable:VAL:SPEC" HREF="#STR:Gram.eliminateVariable:VAL">eliminateVariable</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
 <B>val</B>&nbsp;<A NAME="STR:Gram.eliminateVariableOpt:VAL:SPEC" HREF="#STR:Gram.eliminateVariableOpt:VAL">eliminateVariableOpt</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;<B>-&gt;</B>&nbsp;gram&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.eliminateVariableConstraints:VAL:SPEC" HREF="#STR:Gram.eliminateVariableConstraints:VAL">eliminateVariableConstraints</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;int&nbsp;option&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
+<B>val</B>&nbsp;<A NAME="STR:Gram.eliminateVariableConstraintsOpt:VAL:SPEC" HREF="#STR:Gram.eliminateVariableConstraintsOpt:VAL">eliminateVariableConstraintsOpt</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;int&nbsp;option<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;gram&nbsp;option<BR>
 <B>val</B>&nbsp;<A NAME="STR:Gram.restart:VAL:SPEC" HREF="#STR:Gram.restart:VAL">restart</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram<BR>
 <B>val</B>&nbsp;<A NAME="STR:Gram.restartOpt:VAL:SPEC" HREF="#STR:Gram.restartOpt:VAL">restartOpt</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;gram&nbsp;option<BR>
 <B>val</B>&nbsp;<A NAME="STR:Gram.nullableVariables:VAL:SPEC" HREF="#STR:Gram.nullableVariables:VAL">nullableVariables</A>&nbsp;<B>:</B>&nbsp;gram&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
@@ -430,6 +433,20 @@ eliminates the variable <CODE><VAR>q</VAR></CODE> from <CODE><VAR>gram</VAR></CO
 <DT> <CODE>eliminateVariableOpt(<VAR>gram</VAR>, <VAR>q</VAR>)</CODE>
 <DD>
 returns <CODE>SOME <VAR>gram'</VAR></CODE>, where <CODE><VAR>gram'</VAR></CODE> is the result of eliminating the variable <CODE><VAR>q</VAR></CODE> from <CODE><VAR>gram</VAR></CODE>, if this is possible, and returns <CODE>NONE</CODE>, otherwise.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.eliminateVariableConstraints:VAL"></A>
+<DT> <CODE>eliminateVariableConstraints(<VAR>gram</VAR>, <VAR>q</VAR>,  <VAR>selfProdsMaxOpt</VAR>, <VAR>selfProdsSizeMaxOpt</VAR>)</CODE>
+<DD>
+behaves like <CODE>eliminateVariable(<VAR>gram</VAR>, <VAR>q</VAR>)</CODE>, but fails with an appropriate error message if, after simplification, the number of productions in the grammar involving <CODE><VAR>q</VAR></CODE> is more than <CODE><VAR>selfProdsMaxOpt</VAR></CODE>, or there is a production involving <CODE><VAR>q</VAR></CODE> whose right hand side has size bigger than <CODE><VAR>selfProdsSizeMaxOpt</VAR></CODE>.
+<BR>
+<BR>
+
+<DT> <A NAME="STR:Gram.eliminateVariableConstraintsOpt:VAL"></A>
+<DT> <CODE>eliminateVariableConstraintsOpt(<VAR>gram</VAR>, <VAR>q</VAR>,  <VAR>selfProdsMaxOpt</VAR>, <VAR>selfProdsSizeMaxOpt</VAR>)</CODE>
+<DD>
+returns <CODE>SOME <VAR>gram'</VAR></CODE>, where <CODE><VAR>gram'</VAR></CODE> is the result of calling <CODE>eliminateVariableConstraints</CODE> with the same arguments, if that call terminates without an exception, and returns <CODE>NONE</CODE>, otherwise.
 <BR>
 <BR>
 

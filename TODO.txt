@@ -21,14 +21,6 @@ In 3.3, say what <simp is (<=simp but not >=simp; so strictly simpler)
 In 3.11, make proof that DFA is correct show iff for all states; this means
 showing properties disjoint.
 
-In 3.13, use subjectivity characterization of set size ordering in
-proof of minimization, near end.
-
-In 3.15, use renameStatesCanonically on both sides of minimize in
-minAndRen; state in lemma that
-
-  minimize(minAndRen M) iso minAndRen M
-
 thinking about removing some uses of ... e.g., in definition of yield in
 Section 4.1, and definition of label of labeled path, and pumping lemma
 for regular languages.  Not clear if goal should be to get rid of all of

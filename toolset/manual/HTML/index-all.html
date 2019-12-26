@@ -823,7 +823,7 @@
 <A HREF="messages.html#SIG:MESSAGES.errorPP:VAL:SPEC"><CODE><B>errorPP</B>, MESSAGES</CODE></A>
 <TR>
 <TD COLSPAN=2>
-<A HREF="gram.html#SIG:GRAM.eliminateVariableOpt:VAL:SPEC"><CODE><B>eliminateVariableOpt</B>, GRAM</CODE></A>
+<A HREF="gram.html#SIG:GRAM.eliminateVariableConstraints:VAL:SPEC"><CODE><B>eliminateVariableConstraints</B>, GRAM</CODE></A>
 <TD>
 <TD>
 <A HREF="reg.html#SIG:REG.emptyStr:VAL:SPEC"><CODE>REG</CODE></A>
@@ -831,23 +831,21 @@
 <A HREF="messages.html#SIG:MESSAGES.errorString:VAL:SPEC"><CODE><B>errorString</B>, MESSAGES</CODE></A>
 <TR>
 <TD COLSPAN=2>
-<B>empty</B>
+<A HREF="gram.html#SIG:GRAM.eliminateVariableConstraintsOpt:VAL:SPEC"><CODE><B>eliminateVariableConstraintsOpt</B>, GRAM</CODE></A>
 <TD COLSPAN=2>
 <A HREF="lp.html#SIG:LP.endState:VAL:SPEC"><CODE><B>endState</B>, LP</CODE></A>
 <TD COLSPAN=2>
 <A HREF="prog.html#SIG:PROG.evaluate:VAL:SPEC"><CODE><B>evaluate</B>, PROG</CODE></A>
 <TR>
-<TD>
-<TD>
-<A HREF="pp.html#SIG:PP.empty:VAL:SPEC"><CODE>PP</CODE></A>
+<TD COLSPAN=2>
+<A HREF="gram.html#SIG:GRAM.eliminateVariableOpt:VAL:SPEC"><CODE><B>eliminateVariableOpt</B>, GRAM</CODE></A>
 <TD COLSPAN=2>
 <A HREF="lex.html#SIG:LEX.tok:TY:SPEC"><CODE><B>EOF</B>, LEX</CODE></A>
 <TD COLSPAN=2>
 <A HREF="set.html#SIG:SET.exists:VAL:SPEC"><CODE><B>exists</B>, SET</CODE></A>
 <TR>
-<TD>
-<TD>
-<A HREF="set.html#SIG:SET.empty:VAL:SPEC"><CODE>SET</CODE></A>
+<TD COLSPAN=2>
+<B>empty</B>
 <TD COLSPAN=2>
 <A HREF="dfa.html#SIG:DFA.relationship:TY:SPEC"><CODE><B>Equal</B>, DFA</CODE></A>
 <TD COLSPAN=2>
@@ -855,14 +853,15 @@
 <TR>
 <TD>
 <TD>
-<A HREF="tab.html#SIG:TAB.empty:VAL:SPEC"><CODE>TAB</CODE></A>
+<A HREF="pp.html#SIG:PP.empty:VAL:SPEC"><CODE>PP</CODE></A>
 <TD COLSPAN=2>
 <B>equal</B>
 <TD COLSPAN=2>
 <A HREF="lex.html#SIG:LEX.expectedLetter:VAL:SPEC"><CODE><B>expectedLetter</B>, LEX</CODE></A>
 <TR>
-<TD COLSPAN=2>
-<B>emptyClose</B>
+<TD>
+<TD>
+<A HREF="set.html#SIG:SET.empty:VAL:SPEC"><CODE>SET</CODE></A>
 <TD>
 <TD>
 <A HREF="dfa.html#SIG:DFA.equal:VAL:SPEC"><CODE>DFA</CODE></A>
@@ -871,24 +870,24 @@
 <TR>
 <TD>
 <TD>
-<A HREF="efa.html#SIG:EFA.emptyClose:VAL:SPEC"><CODE>EFA</CODE></A>
+<A HREF="tab.html#SIG:TAB.empty:VAL:SPEC"><CODE>TAB</CODE></A>
 <TD>
 <TD>
 <A HREF="efa.html#SIG:EFA.equal:VAL:SPEC"><CODE>EFA</CODE></A>
 <TD COLSPAN=2>
 <A HREF="lex.html#SIG:LEX.expectedTok:VAL:SPEC"><CODE><B>expectedTok</B>, LEX</CODE></A>
 <TR>
-<TD>
-<TD>
-<A HREF="fa.html#SIG:FA.emptyClose:VAL:SPEC"><CODE>FA</CODE></A>
+<TD COLSPAN=2>
+<B>emptyClose</B>
 <TD>
 <TD>
 <A HREF="fa.html#SIG:FA.equal:VAL:SPEC"><CODE>FA</CODE></A>
 <TD>
 <TD>
 <TR>
-<TD COLSPAN=2>
-<B>emptyCloseBackwards</B>
+<TD>
+<TD>
+<A HREF="efa.html#SIG:EFA.emptyClose:VAL:SPEC"><CODE>EFA</CODE></A>
 <TD>
 <TD>
 <A HREF="gram.html#SIG:GRAM.equal:VAL:SPEC"><CODE>GRAM</CODE></A>
@@ -897,10 +896,27 @@
 <TR>
 <TD>
 <TD>
-<A HREF="efa.html#SIG:EFA.emptyCloseBackwards:VAL:SPEC"><CODE>EFA</CODE></A>
+<A HREF="fa.html#SIG:FA.emptyClose:VAL:SPEC"><CODE>FA</CODE></A>
 <TD>
 <TD>
 <A HREF="lp.html#SIG:LP.equal:VAL:SPEC"><CODE>LP</CODE></A>
+<TD>
+<TD>
+<TR>
+<TD COLSPAN=2>
+<B>emptyCloseBackwards</B>
+<TD>
+<TD>
+<A HREF="nfa.html#SIG:NFA.equal:VAL:SPEC"><CODE>NFA</CODE></A>
+<TD>
+<TD>
+<TR>
+<TD>
+<TD>
+<A HREF="efa.html#SIG:EFA.emptyCloseBackwards:VAL:SPEC"><CODE>EFA</CODE></A>
+<TD>
+<TD>
+<A HREF="prod.html#SIG:PROD.equal:VAL:SPEC"><CODE>PROD</CODE></A>
 <TD>
 <TD>
 <TR>
@@ -909,7 +925,7 @@
 <A HREF="fa.html#SIG:FA.emptyCloseBackwards:VAL:SPEC"><CODE>FA</CODE></A>
 <TD>
 <TD>
-<A HREF="nfa.html#SIG:NFA.equal:VAL:SPEC"><CODE>NFA</CODE></A>
+<A HREF="prod-set.html#SIG:PROD_SET.equal:VAL:SPEC"><CODE>PROD_SET</CODE></A>
 <TD>
 <TD>
 <TR>
@@ -917,30 +933,12 @@
 <A HREF="reg.html#SIG:REG.concr:TY:SPEC"><CODE><B>EmptySet</B>, REG</CODE></A>
 <TD>
 <TD>
-<A HREF="prod.html#SIG:PROD.equal:VAL:SPEC"><CODE>PROD</CODE></A>
+<A HREF="prog.html#SIG:PROG.equal:VAL:SPEC"><CODE>PROG</CODE></A>
 <TD>
 <TD>
 <TR>
 <TD COLSPAN=2>
 <B>emptySet</B>
-<TD>
-<TD>
-<A HREF="prod-set.html#SIG:PROD_SET.equal:VAL:SPEC"><CODE>PROD_SET</CODE></A>
-<TD>
-<TD>
-<TR>
-<TD>
-<TD>
-<A HREF="dfa.html#SIG:DFA.emptySet:VAL:SPEC"><CODE>DFA</CODE></A>
-<TD>
-<TD>
-<A HREF="prog.html#SIG:PROG.equal:VAL:SPEC"><CODE>PROG</CODE></A>
-<TD>
-<TD>
-<TR>
-<TD>
-<TD>
-<A HREF="efa.html#SIG:EFA.emptySet:VAL:SPEC"><CODE>EFA</CODE></A>
 <TD>
 <TD>
 <A HREF="pt.html#SIG:PT.equal:VAL:SPEC"><CODE>PT</CODE></A>
@@ -949,7 +947,7 @@
 <TR>
 <TD>
 <TD>
-<A HREF="fa.html#SIG:FA.emptySet:VAL:SPEC"><CODE>FA</CODE></A>
+<A HREF="dfa.html#SIG:DFA.emptySet:VAL:SPEC"><CODE>DFA</CODE></A>
 <TD>
 <TD>
 <A HREF="reg.html#SIG:REG.equal:VAL:SPEC"><CODE>REG</CODE></A>
@@ -958,7 +956,7 @@
 <TR>
 <TD>
 <TD>
-<A HREF="gram.html#SIG:GRAM.emptySet:VAL:SPEC"><CODE>GRAM</CODE></A>
+<A HREF="efa.html#SIG:EFA.emptySet:VAL:SPEC"><CODE>EFA</CODE></A>
 <TD>
 <TD>
 <A HREF="rfa.html#SIG:RFA.equal:VAL:SPEC"><CODE>RFA</CODE></A>
@@ -967,7 +965,7 @@
 <TR>
 <TD>
 <TD>
-<A HREF="nfa.html#SIG:NFA.emptySet:VAL:SPEC"><CODE>NFA</CODE></A>
+<A HREF="fa.html#SIG:FA.emptySet:VAL:SPEC"><CODE>FA</CODE></A>
 <TD>
 <TD>
 <A HREF="set.html#SIG:SET.equal:VAL:SPEC"><CODE>SET</CODE></A>
@@ -976,7 +974,7 @@
 <TR>
 <TD>
 <TD>
-<A HREF="reg.html#SIG:REG.emptySet:VAL:SPEC"><CODE>REG</CODE></A>
+<A HREF="gram.html#SIG:GRAM.emptySet:VAL:SPEC"><CODE>GRAM</CODE></A>
 <TD>
 <TD>
 <A HREF="sort.html#SIG:SORT.equal:VAL:SPEC"><CODE>SORT</CODE></A>
@@ -985,6 +983,7 @@
 <TR>
 <TD>
 <TD>
+<A HREF="nfa.html#SIG:NFA.emptySet:VAL:SPEC"><CODE>NFA</CODE></A>
 <TD>
 <TD>
 <A HREF="str.html#SIG:STR.equal:VAL:SPEC"><CODE>STR</CODE></A>
@@ -993,6 +992,7 @@
 <TR>
 <TD>
 <TD>
+<A HREF="reg.html#SIG:REG.emptySet:VAL:SPEC"><CODE>REG</CODE></A>
 <TD>
 <TD>
 <A HREF="str-set.html#SIG:STR_SET.equal:VAL:SPEC"><CODE>STR_SET</CODE></A>

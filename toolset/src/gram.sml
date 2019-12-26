@@ -893,7 +893,8 @@ fun simplify gram =
 
 fun simplified gram = equal(simplify gram, gram)
 
-fun eliminateVariable(gram, q) =
+fun eliminateVariableConstraints
+    (gram, q, selfProdsMaxOpt, selfProdsSizeMaxOpt) =
       let val gram             = simplify gram
           val vars             = variables gram
           val start            = startVariable gram
@@ -905,6 +906,9 @@ fun eliminateVariable(gram, q) =
                 (fn (_, x) => List.exists (fn a => Sym.equal(a, q)) x)
                 sameVarProds
           val sameVarProdsRHSs = StrSet.map #2 sameVarProds
+
+          fun maxSizeRHS xs =
+                ListAux.max(map List.length (Set.toList xs))
 
           fun substSameVarProds (p, y) =
                 let fun subst nil       = Set.sing nil
@@ -929,11 +933,37 @@ fun eliminateVariable(gram, q) =
          else if (Sym.equal(q, start))
            then M.errorString
                 (fn () => ["cannot", "eliminate", "start", "variable"])
+         else if isSome selfProdsMaxOpt andalso
+                 Set.size sameVarProdsRHSs > valOf selfProdsMaxOpt
+           then M.errorString
+                (fn () =>
+                      ["too", "many", "productions", "from", "variable",
+                       "to", "be", "eliminated", "in", "simplification",
+                       "of", "grammar"])
+         else if isSome selfProdsSizeMaxOpt andalso
+                 maxSizeRHS sameVarProdsRHSs > valOf selfProdsSizeMaxOpt
+           then M.errorString
+                (fn () =>
+                      ["in", "simplification", "of", "grammar", "there",
+                       "is", "variable", "with", "right", "side", "that",
+                       "is", "too", "big"])
          else {vars  = SymSet.minus(vars, Set.sing q),
                start = start,
                prods =
                  ProdSet.genUnion(Set.mapToList substSameVarProds restProds)}
       end
+
+fun eliminateVariableConstraintsOpt
+    (gram, q, selfProdsMaxOpt, selfProdsSizeMaxOpt) =
+      SOME
+      (M.quiet
+       (fn () =>
+             eliminateVariableConstraints
+             (gram, q, selfProdsMaxOpt, selfProdsSizeMaxOpt)))
+        handle _ => NONE
+
+fun eliminateVariable(gram, q) =
+      eliminateVariableConstraints(gram, q, NONE, NONE)
 
 fun eliminateVariableOpt(gram, q) =
       SOME(M.quiet(fn () => eliminateVariable(gram, q)))

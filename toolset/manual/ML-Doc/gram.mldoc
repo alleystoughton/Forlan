@@ -585,6 +585,40 @@ from <CD><ARG/gram/</CD>, if this is possible, and returns
 </SPEC>
 
 <SPEC>
+<VAL>eliminateVariableConstraints
+  <TY>gram * Sym.sym * int option * int option -> gram</TY></VAL>
+<COMMENT>
+<PROTOTY>
+eliminateVariableConstraints(<ARG/gram/, <ARG/q/, 
+<ARG/selfProdsMaxOpt/, <ARG/selfProdsSizeMaxOpt/)
+</PROTOTY>
+<PP>behaves like <CD>eliminateVariable(<ARG/gram/, <ARG/q/)</CD>, but
+fails with an appropriate error message if, after simplification, the
+number of productions in the grammar involving <CD><ARG/q/</CD> is more
+than <CD><ARG/selfProdsMaxOpt/</CD>, or there is a production
+involving <CD><ARG/q/</CD> whose right hand side has size bigger
+than <CD><ARG/selfProdsSizeMaxOpt/</CD>.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>eliminateVariableConstraintsOpt
+  <TY>gram * Sym.sym * int option * int option -> gram option</TY></VAL>
+<COMMENT>
+<PROTOTY>
+eliminateVariableConstraintsOpt(<ARG/gram/, <ARG/q/, 
+<ARG/selfProdsMaxOpt/, <ARG/selfProdsSizeMaxOpt/)
+</PROTOTY>
+<PP>returns <CD>SOME <ARG/gram'/</CD>, where <CD><ARG/gram'/</CD> is
+the result of calling <CD>eliminateVariableConstraints</CD> with
+the same arguments, if that call terminates without an exception,
+and returns <CD>NONE</CD>, otherwise.
+</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
 <VAL>restart<TY>gram -> gram</TY></VAL>
 <COMMENT>
 <PROTOTY>

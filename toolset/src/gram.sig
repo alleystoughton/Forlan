@@ -57,6 +57,12 @@ signature GRAM =
     val simplified : gram -> bool
     val eliminateVariable : gram * Sym.sym -> gram
     val eliminateVariableOpt : gram * Sym.sym -> gram option
+    val eliminateVariableConstraints : gram * Sym.sym * int option * int option
+                                         -> gram
+    val eliminateVariableConstraintsOpt : gram
+                                            * Sym.sym
+                                            * int option
+                                            * int option -> gram option
     val restart : gram -> gram
     val restartOpt : gram -> gram option
     val nullableVariables : gram -> Sym.sym Set.set

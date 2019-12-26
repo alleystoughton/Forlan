@@ -16,10 +16,10 @@ fun existsFile s = OS.FileSys.access(s, nil)
 local
   val versionList = (*#version_id(Compiler.version)*) [110, 96]
 
-  fun vlToStr (n :: (ms as m :: ls)) =
+  fun vlToStr (n :: (ms as _ :: _)) =
         Int.toString n ^ "." ^ vlToStr ms
-    | vlToStr [n]                    = Int.toString n
-    | vlToStr _                      = M.cannotHappen()
+    | vlToStr [n]                   = Int.toString n
+    | vlToStr _                     = M.cannotHappen()
 
 in
   val smlVersion = vlToStr versionList
