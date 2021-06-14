@@ -4,14 +4,14 @@
   @TYPES 
     @TYPE var
   @VALS 
-    input
-    toPP
-    equal
-    fromString
-    beginsWithVar
     output
-    inputLabFromLabToks
-    compare
+    toPP
+    beginsWithVar
     toString
+    fromString
+    equal
+    compare
+    inputLabFromLabToks
+    input
 ]
 @STRUCTURE Var "var" VAR

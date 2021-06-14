@@ -4,4 +4,4 @@
 -- subdirectory of the ML-Doc distribution
 
 ENTITY   %document-entities  "Entities.sgml"
-CATALOG                      "/usr/local/share/smlnj/ml-doc/lib/catalog"
+CATALOG                      "/usr/local/share/ml-doc/lib/catalog"

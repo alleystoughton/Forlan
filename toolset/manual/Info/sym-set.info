@@ -2,23 +2,23 @@
   ["sym-set"; "The SymSet Module";]
 @SIGNATURE SYM_SET "sym-set" [
   @VALS 
-    input
-    memb
+    output
     toPP
     genUnion
-    equal
+    toString
     fromString
+    inter
+    minus
+    equal
     map
     fromList
-    output
-    inter
-    inputFromLabToks
     subset
-    compare
     union
-    toString
-    minus
-    genInter
+    compare
+    memb
     mapFromList
+    inputFromLabToks
+    genInter
+    input
 ]
 @STRUCTURE SymSet "sym-set" SYM_SET

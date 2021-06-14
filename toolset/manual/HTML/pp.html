@@ -28,16 +28,16 @@ The module implements a simple form of pretty-printing.
 <BLOCKQUOTE>
 <CODE><B>val</B>&nbsp;<A NAME="STR:PP.newline:VAL:SPEC" HREF="#STR:PP.newline:VAL">newline</A>&nbsp;<B>:</B>&nbsp;string<BR>
 <B>type</B>&nbsp;<A NAME="STR:PP.pp:TY:SPEC" HREF="#STR:PP.pp:TY">pp</A><BR>
-<B>val</B>&nbsp;<A NAME="STR:PP.toString:VAL:SPEC" HREF="#STR:PP.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.toString:VAL:SPEC" HREF="#STR:PP.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-></B>&nbsp;string<BR>
 <B>val</B>&nbsp;<A NAME="STR:PP.empty:VAL:SPEC" HREF="#STR:PP.empty:VAL">empty</A>&nbsp;<B>:</B>&nbsp;pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:PP.block:VAL:SPEC" HREF="#STR:PP.block:VAL">block</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;pp&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:PP.decorate:VAL:SPEC" HREF="#STR:PP.decorate:VAL">decorate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;pp&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:PP.quote:VAL:SPEC" HREF="#STR:PP.quote:VAL">quote</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-&gt;</B>&nbsp;pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:PP.comma:VAL:SPEC" HREF="#STR:PP.comma:VAL">comma</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-&gt;</B>&nbsp;pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:PP.colon:VAL:SPEC" HREF="#STR:PP.colon:VAL">colon</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-&gt;</B>&nbsp;pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:PP.semicolon:VAL:SPEC" HREF="#STR:PP.semicolon:VAL">semicolon</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-&gt;</B>&nbsp;pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:PP.fromString:VAL:SPEC" HREF="#STR:PP.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:PP.fromStringSplitEscape:VAL:SPEC" HREF="#STR:PP.fromStringSplitEscape:VAL">fromStringSplitEscape</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;pp</CODE>
+<B>val</B>&nbsp;<A NAME="STR:PP.block:VAL:SPEC" HREF="#STR:PP.block:VAL">block</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;pp&nbsp;list&nbsp;<B>-></B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.decorate:VAL:SPEC" HREF="#STR:PP.decorate:VAL">decorate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;pp&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-></B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.quote:VAL:SPEC" HREF="#STR:PP.quote:VAL">quote</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-></B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.comma:VAL:SPEC" HREF="#STR:PP.comma:VAL">comma</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-></B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.colon:VAL:SPEC" HREF="#STR:PP.colon:VAL">colon</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-></B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.semicolon:VAL:SPEC" HREF="#STR:PP.semicolon:VAL">semicolon</A>&nbsp;<B>:</B>&nbsp;pp&nbsp;<B>-></B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.fromString:VAL:SPEC" HREF="#STR:PP.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PP.fromStringSplitEscape:VAL:SPEC" HREF="#STR:PP.fromStringSplitEscape:VAL">fromStringSplitEscape</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;pp</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

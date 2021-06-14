@@ -4,37 +4,37 @@
   @TYPES 
     @TYPE set
   @VALS 
-    tl
-    exists
-    genUnion
-    filter
-    map
-    fromList
-    sing
-    inter
-    union
-    isEmpty
-    size
     genTimes
-    empty
-    memb
-    comparePair
-    compareTriple
-    equal
-    all
     partition
-    hd
-    mapToList
-    times
-    compareList
+    inter
     position
-    times3
-    isNonEmpty
-    subset
-    compare
-    genInter
-    minus
-    mapFromList
     toList
+    map
+    subset
+    memb
+    genInter
+    compareList
+    isNonEmpty
+    exists
+    all
+    genUnion
+    hd
+    empty
+    equal
+    minus
+    fromList
+    times3
+    compare
+    union
+    mapFromList
+    times
+    filter
+    mapToList
+    comparePair
+    size
+    compareTriple
+    tl
+    isEmpty
+    sing
 ]
 @STRUCTURE Set "set" SET

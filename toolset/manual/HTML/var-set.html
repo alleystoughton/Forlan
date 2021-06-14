@@ -27,24 +27,24 @@ This module provides operations on finite sets of variables, i.e., values of typ
 <HR>
 <H4>Interface</H4>
 <BLOCKQUOTE>
-<CODE><B>val</B>&nbsp;<A NAME="STR:VarSet.memb:VAL:SPEC" HREF="#STR:VarSet.memb:VAL">memb</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.fromList:VAL:SPEC" HREF="#STR:VarSet.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Var.var&nbsp;Set.set<BR>
+<CODE><B>val</B>&nbsp;<A NAME="STR:VarSet.memb:VAL:SPEC" HREF="#STR:VarSet.memb:VAL">memb</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;<B>*</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.fromList:VAL:SPEC" HREF="#STR:VarSet.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;list&nbsp;<B>-></B>&nbsp;Var.var&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:VarSet.compare:VAL:SPEC" HREF="#STR:VarSet.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;Sort.total_ordering<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.subset:VAL:SPEC" HREF="#STR:VarSet.subset:VAL">subset</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.equal:VAL:SPEC" HREF="#STR:VarSet.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.map:VAL:SPEC" HREF="#STR:VarSet.map:VAL">map</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;Var.var)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Var.var&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.mapFromList:VAL:SPEC" HREF="#STR:VarSet.mapFromList:VAL">mapFromList</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;Var.var)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Var.var&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.union:VAL:SPEC" HREF="#STR:VarSet.union:VAL">union</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Var.var&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.genUnion:VAL:SPEC" HREF="#STR:VarSet.genUnion:VAL">genUnion</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Var.var&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.inter:VAL:SPEC" HREF="#STR:VarSet.inter:VAL">inter</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Var.var&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.genInter:VAL:SPEC" HREF="#STR:VarSet.genInter:VAL">genInter</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Var.var&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.minus:VAL:SPEC" HREF="#STR:VarSet.minus:VAL">minus</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Var.var&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.inputFromLabToks:VAL:SPEC" HREF="#STR:VarSet.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.fromString:VAL:SPEC" HREF="#STR:VarSet.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;Var.var&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.input:VAL:SPEC" HREF="#STR:VarSet.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;Var.var&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.toPP:VAL:SPEC" HREF="#STR:VarSet.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.toString:VAL:SPEC" HREF="#STR:VarSet.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;string<BR>
-<B>val</B>&nbsp;<A NAME="STR:VarSet.output:VAL:SPEC" HREF="#STR:VarSet.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.subset:VAL:SPEC" HREF="#STR:VarSet.subset:VAL">subset</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.equal:VAL:SPEC" HREF="#STR:VarSet.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.map:VAL:SPEC" HREF="#STR:VarSet.map:VAL">map</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-></B>&nbsp;Var.var)&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Var.var&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.mapFromList:VAL:SPEC" HREF="#STR:VarSet.mapFromList:VAL">mapFromList</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-></B>&nbsp;Var.var)&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-></B>&nbsp;Var.var&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.union:VAL:SPEC" HREF="#STR:VarSet.union:VAL">union</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Var.var&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.genUnion:VAL:SPEC" HREF="#STR:VarSet.genUnion:VAL">genUnion</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;list&nbsp;<B>-></B>&nbsp;Var.var&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.inter:VAL:SPEC" HREF="#STR:VarSet.inter:VAL">inter</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Var.var&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.genInter:VAL:SPEC" HREF="#STR:VarSet.genInter:VAL">genInter</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;list&nbsp;<B>-></B>&nbsp;Var.var&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.minus:VAL:SPEC" HREF="#STR:VarSet.minus:VAL">minus</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Var.var&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.inputFromLabToks:VAL:SPEC" HREF="#STR:VarSet.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-></B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.fromString:VAL:SPEC" HREF="#STR:VarSet.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;Var.var&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.input:VAL:SPEC" HREF="#STR:VarSet.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;Var.var&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.toPP:VAL:SPEC" HREF="#STR:VarSet.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-></B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.toString:VAL:SPEC" HREF="#STR:VarSet.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-></B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:VarSet.output:VAL:SPEC" HREF="#STR:VarSet.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;Var.var&nbsp;Set.set&nbsp;<B>-></B>&nbsp;unit</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

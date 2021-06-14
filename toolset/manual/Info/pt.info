@@ -2,41 +2,41 @@
   ["pt"; "The PT Module";]
 @SIGNATURE PT "pt" [
   @TYPES 
-    @TYPE pumping_division
     @TYPE pt
+    @TYPE pumping_division
     @DATATYPE concr [ Node]
   @VALS 
-    jforlanEdit
-    toPP
-    update
-    jforlanPretty
     validLeafPath
-    yield
-    fromString
     output
+    toString
+    jforlanEdit
     cons
-    rootLabel
-    validPumpingDivision
-    strsOfValidPumpingDivision
-    findValidPumpingDivision
+    selectPT
+    validPath
     pumpValidPumpingDivision
     fromConcr
-    size
-    maximumLengthPath
-    input
-    numLeaves
-    checkPumpingDivision
-    selectPT
-    jforlanValidate
-    toConcr
-    equal
-    validPath
-    jforlanNew
-    compare
-    leaf
-    height
     findValidPumpingDivisionOpt
-    toString
+    update
+    leaf
+    input
+    findValidPumpingDivision
+    numLeaves
+    toConcr
+    height
+    maximumLengthPath
+    strsOfValidPumpingDivision
+    toPP
     decons
+    fromString
+    jforlanNew
+    yield
+    equal
+    validPumpingDivision
+    compare
+    jforlanValidate
+    size
+    checkPumpingDivision
+    rootLabel
+    jforlanPretty
 ]
 @STRUCTURE PT "pt" PT

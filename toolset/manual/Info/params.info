@@ -2,22 +2,22 @@
   ["params"; "The Params Module";]
 @SIGNATURE PARAMS "params" [
   @VALS 
-    getCompilationManagerVerbosity
+    setPrintingDataStructureDepth
+    getSearchPath
+    setCompilationManagerVerbosity
+    getPrintingDataStructureDepth
+    getWorkingDirectory
+    setPrintingStringSize
     setTrackExceptions
     getPrintingLineLength
+    setSearchPath
     setPrintingListLength
-    getWorkingDirectory
-    setPrintingDataStructureDepth
-    setCompilationManagerVerbosity
-    getPrintingStringSize
-    setPrintingLineLength
     setWorkingDirectory
-    getSearchPath
     getTrackExceptions
     setPrintingOfGarbageCollectionMessages
-    setPrintingStringSize
+    setPrintingLineLength
+    getPrintingStringSize
     getPrintingListLength
-    getPrintingDataStructureDepth
-    setSearchPath
+    getCompilationManagerVerbosity
 ]
 @STRUCTURE Params "params" PARAMS

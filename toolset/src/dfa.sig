@@ -1,6 +1,6 @@
 (* dfa.sig
  *
- * COPYRIGHT (c) 2018 Alley Stoughton.
+ * COPYRIGHT (c) 2021 Alley Stoughton.
  *
  * extracted from dfa.mldoc
  *)

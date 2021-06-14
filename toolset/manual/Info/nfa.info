@@ -4,53 +4,53 @@
   @TYPES 
     @TYPE nfa
   @VALS 
-    toPP
+    isomorphic
+    emptyStr
+    findIsomorphism
+    transitions
+    findIsomorphismOpt
+    output
+    toString
     renameStatesCanonically
     isomorphism
-    fromString
-    startState
-    fromEFA
-    injToEFA
-    output
     inter
-    states
-    numStates
-    accepted
-    sub
-    findAcceptingLP
-    validLP
-    fromSym
-    findLP
-    isomorphic
-    findAcceptingLPOpt
-    findLPOpt
-    valid
-    input
-    alphabet
-    transitionFun
-    reachified
-    simplified
-    transitionFunBackwards
-    emptyStr
-    equal
-    checkLP
-    projFromEFA
-    reachify
-    findIsomorphism
-    renameStates
-    simplify
-    prefix
-    transitions
-    numTransitions
-    findIsomorphismOpt
-    acceptingStates
-    projFromFA
-    compare
-    processStr
     renameAlphabet
-    toString
+    processStr
+    transitionFun
+    startState
+    acceptingStates
+    reachify
+    reachified
     emptySet
     injToFA
+    projFromEFA
     genInter
+    injToEFA
+    findAcceptingLPOpt
+    input
+    findLPOpt
+    states
+    accepted
+    toPP
+    projFromFA
+    fromString
+    prefix
+    simplify
+    simplified
+    equal
+    valid
+    checkLP
+    transitionFunBackwards
+    fromSym
+    compare
+    validLP
+    numStates
+    sub
+    renameStates
+    findLP
+    fromEFA
+    findAcceptingLP
+    alphabet
+    numTransitions
 ]
 @STRUCTURE NFA "nfa" NFA

@@ -27,24 +27,24 @@ This module provides operations on finite sets of productions, i.e., values of t
 <HR>
 <H4>Interface</H4>
 <BLOCKQUOTE>
-<CODE><B>val</B>&nbsp;<A NAME="STR:ProdSet.memb:VAL:SPEC" HREF="#STR:ProdSet.memb:VAL">memb</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;<B>*</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.fromList:VAL:SPEC" HREF="#STR:ProdSet.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Prod.prod&nbsp;Set.set<BR>
+<CODE><B>val</B>&nbsp;<A NAME="STR:ProdSet.memb:VAL:SPEC" HREF="#STR:ProdSet.memb:VAL">memb</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;<B>*</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.fromList:VAL:SPEC" HREF="#STR:ProdSet.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;list&nbsp;<B>-></B>&nbsp;Prod.prod&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:ProdSet.compare:VAL:SPEC" HREF="#STR:ProdSet.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;Sort.total_ordering<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.subset:VAL:SPEC" HREF="#STR:ProdSet.subset:VAL">subset</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.equal:VAL:SPEC" HREF="#STR:ProdSet.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.map:VAL:SPEC" HREF="#STR:ProdSet.map:VAL">map</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;Prod.prod)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Prod.prod&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.mapFromList:VAL:SPEC" HREF="#STR:ProdSet.mapFromList:VAL">mapFromList</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;Prod.prod)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Prod.prod&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.union:VAL:SPEC" HREF="#STR:ProdSet.union:VAL">union</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Prod.prod&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.genUnion:VAL:SPEC" HREF="#STR:ProdSet.genUnion:VAL">genUnion</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Prod.prod&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.inter:VAL:SPEC" HREF="#STR:ProdSet.inter:VAL">inter</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Prod.prod&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.genInter:VAL:SPEC" HREF="#STR:ProdSet.genInter:VAL">genInter</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Prod.prod&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.minus:VAL:SPEC" HREF="#STR:ProdSet.minus:VAL">minus</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Prod.prod&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.inputFromLabToks:VAL:SPEC" HREF="#STR:ProdSet.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.fromString:VAL:SPEC" HREF="#STR:ProdSet.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;Prod.prod&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.input:VAL:SPEC" HREF="#STR:ProdSet.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;Prod.prod&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.toPP:VAL:SPEC" HREF="#STR:ProdSet.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.toString:VAL:SPEC" HREF="#STR:ProdSet.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;string<BR>
-<B>val</B>&nbsp;<A NAME="STR:ProdSet.output:VAL:SPEC" HREF="#STR:ProdSet.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.subset:VAL:SPEC" HREF="#STR:ProdSet.subset:VAL">subset</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.equal:VAL:SPEC" HREF="#STR:ProdSet.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.map:VAL:SPEC" HREF="#STR:ProdSet.map:VAL">map</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-></B>&nbsp;Prod.prod)&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Prod.prod&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.mapFromList:VAL:SPEC" HREF="#STR:ProdSet.mapFromList:VAL">mapFromList</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-></B>&nbsp;Prod.prod)&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-></B>&nbsp;Prod.prod&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.union:VAL:SPEC" HREF="#STR:ProdSet.union:VAL">union</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Prod.prod&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.genUnion:VAL:SPEC" HREF="#STR:ProdSet.genUnion:VAL">genUnion</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;list&nbsp;<B>-></B>&nbsp;Prod.prod&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.inter:VAL:SPEC" HREF="#STR:ProdSet.inter:VAL">inter</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Prod.prod&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.genInter:VAL:SPEC" HREF="#STR:ProdSet.genInter:VAL">genInter</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;list&nbsp;<B>-></B>&nbsp;Prod.prod&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.minus:VAL:SPEC" HREF="#STR:ProdSet.minus:VAL">minus</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Prod.prod&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.inputFromLabToks:VAL:SPEC" HREF="#STR:ProdSet.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-></B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.fromString:VAL:SPEC" HREF="#STR:ProdSet.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;Prod.prod&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.input:VAL:SPEC" HREF="#STR:ProdSet.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;Prod.prod&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.toPP:VAL:SPEC" HREF="#STR:ProdSet.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-></B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.toString:VAL:SPEC" HREF="#STR:ProdSet.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-></B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:ProdSet.output:VAL:SPEC" HREF="#STR:ProdSet.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;Prod.prod&nbsp;Set.set&nbsp;<B>-></B>&nbsp;unit</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

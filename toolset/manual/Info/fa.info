@@ -2,64 +2,64 @@
   ["fa"; "The FA Module";]
 @SIGNATURE FA "fa" [
   @TYPES 
-    @TYPE concr
     @TYPE fa
+    @TYPE concr
   @VALS 
+    isomorphic
+    emptyStr
+    closure
+    findIsomorphism
+    transitions
+    findIsomorphismOpt
+    output
+    toString
+    renameStatesCanonically
     jforlanEdit
-    fromReg
-    genConcat
+    isomorphism
+    renameAlphabet
+    emptyCloseBackwards
+    processStr
+    fromConcr
+    transitionFun
+    startState
+    acceptingStates
+    rev
+    reachify
+    reachified
+    emptySet
+    emptyClose
+    findAcceptingLPOpt
+    input
+    concat
+    findLPOpt
+    states
+    fromStr
+    accepted
+    toConcr
     genUnion
     toPP
-    jforlanPretty
-    emptyCloseBackwards
-    renameStatesCanonically
-    isomorphism
+    fromReg
     fromString
-    closure
-    startState
-    output
-    states
-    numStates
-    concat
-    union
-    fromConcr
-    accepted
-    sub
-    findAcceptingLP
-    validLP
-    rev
-    fromSym
-    findLP
-    isomorphic
-    findAcceptingLPOpt
-    findLPOpt
-    valid
-    input
-    alphabet
-    transitionFun
-    reachified
-    emptyClose
-    jforlanValidate
-    simplified
-    transitionFunBackwards
-    emptyStr
-    toConcr
-    equal
-    checkLP
-    reachify
-    findIsomorphism
-    renameStates
     simplify
-    transitions
-    numTransitions
-    findIsomorphismOpt
-    acceptingStates
     jforlanNew
+    simplified
+    genConcat
+    equal
+    valid
+    checkLP
+    transitionFunBackwards
+    union
+    fromSym
     compare
-    processStr
-    renameAlphabet
-    toString
-    emptySet
-    fromStr
+    jforlanValidate
+    validLP
+    numStates
+    sub
+    renameStates
+    findLP
+    findAcceptingLP
+    alphabet
+    numTransitions
+    jforlanPretty
 ]
 @STRUCTURE FA "fa" FA

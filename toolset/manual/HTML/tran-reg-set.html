@@ -27,28 +27,28 @@ This module provides operations on finite sets of regular expression transitions
 <HR>
 <H4>Interface</H4>
 <BLOCKQUOTE>
-<CODE><B>val</B>&nbsp;<A NAME="STR:TranRegSet.memb:VAL:SPEC" HREF="#STR:TranRegSet.memb:VAL">memb</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:TranRegSet.fromList:VAL:SPEC" HREF="#STR:TranRegSet.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<CODE><B>val</B>&nbsp;<A NAME="STR:TranRegSet.memb:VAL:SPEC" HREF="#STR:TranRegSet.memb:VAL">memb</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.fromList:VAL:SPEC" HREF="#STR:TranRegSet.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;list&nbsp;<B>-></B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:TranRegSet.compare:VAL:SPEC" HREF="#STR:TranRegSet.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;Sort.total_ordering<BR>
-<B>val</B>&nbsp;<A NAME="STR:TranRegSet.subset:VAL:SPEC" HREF="#STR:TranRegSet.subset:VAL">subset</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:TranRegSet.equal:VAL:SPEC" HREF="#STR:TranRegSet.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:TranRegSet.map:VAL:SPEC" HREF="#STR:TranRegSet.map:VAL">map</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:TranRegSet.mapFromList:VAL:SPEC" HREF="#STR:TranRegSet.mapFromList:VAL">mapFromList</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.subset:VAL:SPEC" HREF="#STR:TranRegSet.subset:VAL">subset</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.equal:VAL:SPEC" HREF="#STR:TranRegSet.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.map:VAL:SPEC" HREF="#STR:TranRegSet.map:VAL">map</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-></B>&nbsp;TranReg.tran_reg)&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;Set.set&nbsp;<B>-></B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.mapFromList:VAL:SPEC" HREF="#STR:TranRegSet.mapFromList:VAL">mapFromList</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-></B>&nbsp;TranReg.tran_reg)&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-></B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:TranRegSet.union:VAL:SPEC" HREF="#STR:TranRegSet.union:VAL">union</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:TranRegSet.genUnion:VAL:SPEC" HREF="#STR:TranRegSet.genUnion:VAL">genUnion</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-></B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.genUnion:VAL:SPEC" HREF="#STR:TranRegSet.genUnion:VAL">genUnion</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;list&nbsp;<B>-></B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:TranRegSet.inter:VAL:SPEC" HREF="#STR:TranRegSet.inter:VAL">inter</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:TranRegSet.genInter:VAL:SPEC" HREF="#STR:TranRegSet.genInter:VAL">genInter</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-></B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.genInter:VAL:SPEC" HREF="#STR:TranRegSet.genInter:VAL">genInter</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;list&nbsp;<B>-></B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:TranRegSet.minus:VAL:SPEC" HREF="#STR:TranRegSet.minus:VAL">minus</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-></B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:TranRegSet.inputFromLabToks:VAL:SPEC" HREF="#STR:TranRegSet.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:TranRegSet.fromString:VAL:SPEC" HREF="#STR:TranRegSet.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:TranRegSet.input:VAL:SPEC" HREF="#STR:TranRegSet.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:TranRegSet.toPP:VAL:SPEC" HREF="#STR:TranRegSet.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:TranRegSet.toString:VAL:SPEC" HREF="#STR:TranRegSet.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;string<BR>
-<B>val</B>&nbsp;<A NAME="STR:TranRegSet.output:VAL:SPEC" HREF="#STR:TranRegSet.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-></B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.fromString:VAL:SPEC" HREF="#STR:TranRegSet.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.input:VAL:SPEC" HREF="#STR:TranRegSet.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.toPP:VAL:SPEC" HREF="#STR:TranRegSet.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-></B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.toString:VAL:SPEC" HREF="#STR:TranRegSet.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-></B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:TranRegSet.output:VAL:SPEC" HREF="#STR:TranRegSet.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;TranReg.tran_reg&nbsp;Set.set&nbsp;<B>-></B>&nbsp;unit</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

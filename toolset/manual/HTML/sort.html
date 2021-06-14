@@ -35,18 +35,18 @@ In the following specifications, if <CODE><VAR>xs</VAR></CODE> and <CODE><VAR>yz
 <HR>
 <H4>Interface</H4>
 <BLOCKQUOTE>
-<CODE><B>type</B>&nbsp;<I>'a</I>&nbsp;<A NAME="STR:Sort.total_ordering:TY:SPEC" HREF="#STR:Sort.total_ordering:TY">total_ordering</A>&nbsp;=&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;order<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sort.equal:VAL:SPEC" HREF="#STR:Sort.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sort.less:VAL:SPEC" HREF="#STR:Sort.less:VAL">less</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sort.lessEqual:VAL:SPEC" HREF="#STR:Sort.lessEqual:VAL">lessEqual</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sort.sorted:VAL:SPEC" HREF="#STR:Sort.sorted:VAL">sorted</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sort.insert:VAL:SPEC" HREF="#STR:Sort.insert:VAL">insert</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sort.merge:VAL:SPEC" HREF="#STR:Sort.merge:VAL">merge</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sort.sort:VAL:SPEC" HREF="#STR:Sort.sort:VAL">sort</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list</CODE>
+<CODE><B>type</B>&nbsp;<I>'a</I>&nbsp;<A NAME="STR:Sort.total_ordering:TY:SPEC" HREF="#STR:Sort.total_ordering:TY">total_ordering</A>&nbsp;=&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-></B>&nbsp;order<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sort.equal:VAL:SPEC" HREF="#STR:Sort.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sort.less:VAL:SPEC" HREF="#STR:Sort.less:VAL">less</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sort.lessEqual:VAL:SPEC" HREF="#STR:Sort.lessEqual:VAL">lessEqual</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sort.sorted:VAL:SPEC" HREF="#STR:Sort.sorted:VAL">sorted</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sort.insert:VAL:SPEC" HREF="#STR:Sort.insert:VAL">insert</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sort.merge:VAL:SPEC" HREF="#STR:Sort.merge:VAL">merge</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sort.sort:VAL:SPEC" HREF="#STR:Sort.sort:VAL">sort</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>
-<DT> <A NAME="STR:Sort.total_ordering:TY"></A><CODE><B>type</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;=&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;order</CODE>
+<DT> <A NAME="STR:Sort.total_ordering:TY"></A><CODE><B>type</B>&nbsp;<I>'a</I>&nbsp;total_ordering&nbsp;=&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-></B>&nbsp;order</CODE>
 <DD>
 The type of total orderings.  A value <CODE><VAR>cmp</VAR></CODE> (for &quot;compare&quot;) of type <CODE><VAR>'a</VAR> total_ordering</CODE> must satisfy the following formulas, for all values <CODE><VAR>x</VAR></CODE>, <CODE><VAR>y</VAR></CODE> and <CODE><VAR>z</VAR></CODE> of type <CODE><VAR>'a</VAR></CODE>: 
 <UL>

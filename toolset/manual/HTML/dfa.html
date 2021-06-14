@@ -1,6 +1,6 @@
 <!-- HTML/dfa.html -->
 
-<!-- COPYRIGHT (c) 2018 Alley Stoughton. -->
+<!-- COPYRIGHT (c) 2021 Alley Stoughton. -->
 
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
 <HTML>
@@ -27,69 +27,69 @@ This module defines the abstract type of deterministic finite automata (DFAs).
 <H4>Interface</H4>
 <BLOCKQUOTE>
 <CODE><B>type</B>&nbsp;<A NAME="STR:DFA.dfa:TY:SPEC" HREF="#STR:DFA.dfa:TY">dfa</A><BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.injToFA:VAL:SPEC" HREF="#STR:DFA.injToFA:VAL">injToFA</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;FA.fa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.injToEFA:VAL:SPEC" HREF="#STR:DFA.injToEFA:VAL">injToEFA</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;EFA.efa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.injToNFA:VAL:SPEC" HREF="#STR:DFA.injToNFA:VAL">injToNFA</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;NFA.nfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.valid:VAL:SPEC" HREF="#STR:DFA.valid:VAL">valid</A>&nbsp;<B>:</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.projFromFA:VAL:SPEC" HREF="#STR:DFA.projFromFA:VAL">projFromFA</A>&nbsp;<B>:</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.projFromEFA:VAL:SPEC" HREF="#STR:DFA.projFromEFA:VAL">projFromEFA</A>&nbsp;<B>:</B>&nbsp;EFA.efa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.projFromNFA:VAL:SPEC" HREF="#STR:DFA.projFromNFA:VAL">projFromNFA</A>&nbsp;<B>:</B>&nbsp;NFA.nfa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.fromString:VAL:SPEC" HREF="#STR:DFA.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.input:VAL:SPEC" HREF="#STR:DFA.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.toPP:VAL:SPEC" HREF="#STR:DFA.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.toString:VAL:SPEC" HREF="#STR:DFA.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;string<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.output:VAL:SPEC" HREF="#STR:DFA.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.states:VAL:SPEC" HREF="#STR:DFA.states:VAL">states</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.startState:VAL:SPEC" HREF="#STR:DFA.startState:VAL">startState</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.acceptingStates:VAL:SPEC" HREF="#STR:DFA.acceptingStates:VAL">acceptingStates</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.transitions:VAL:SPEC" HREF="#STR:DFA.transitions:VAL">transitions</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Tran.tran&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.injToFA:VAL:SPEC" HREF="#STR:DFA.injToFA:VAL">injToFA</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;FA.fa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.injToEFA:VAL:SPEC" HREF="#STR:DFA.injToEFA:VAL">injToEFA</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;EFA.efa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.injToNFA:VAL:SPEC" HREF="#STR:DFA.injToNFA:VAL">injToNFA</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;NFA.nfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.valid:VAL:SPEC" HREF="#STR:DFA.valid:VAL">valid</A>&nbsp;<B>:</B>&nbsp;FA.fa&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.projFromFA:VAL:SPEC" HREF="#STR:DFA.projFromFA:VAL">projFromFA</A>&nbsp;<B>:</B>&nbsp;FA.fa&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.projFromEFA:VAL:SPEC" HREF="#STR:DFA.projFromEFA:VAL">projFromEFA</A>&nbsp;<B>:</B>&nbsp;EFA.efa&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.projFromNFA:VAL:SPEC" HREF="#STR:DFA.projFromNFA:VAL">projFromNFA</A>&nbsp;<B>:</B>&nbsp;NFA.nfa&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.fromString:VAL:SPEC" HREF="#STR:DFA.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.input:VAL:SPEC" HREF="#STR:DFA.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.toPP:VAL:SPEC" HREF="#STR:DFA.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.toString:VAL:SPEC" HREF="#STR:DFA.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.output:VAL:SPEC" HREF="#STR:DFA.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.states:VAL:SPEC" HREF="#STR:DFA.states:VAL">states</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.startState:VAL:SPEC" HREF="#STR:DFA.startState:VAL">startState</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Sym.sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.acceptingStates:VAL:SPEC" HREF="#STR:DFA.acceptingStates:VAL">acceptingStates</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.transitions:VAL:SPEC" HREF="#STR:DFA.transitions:VAL">transitions</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Tran.tran&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:DFA.compare:VAL:SPEC" HREF="#STR:DFA.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;Sort.total_ordering<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.equal:VAL:SPEC" HREF="#STR:DFA.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.numStates:VAL:SPEC" HREF="#STR:DFA.numStates:VAL">numStates</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.numTransitions:VAL:SPEC" HREF="#STR:DFA.numTransitions:VAL">numTransitions</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.alphabet:VAL:SPEC" HREF="#STR:DFA.alphabet:VAL">alphabet</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.sub:VAL:SPEC" HREF="#STR:DFA.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.transitionFun:VAL:SPEC" HREF="#STR:DFA.transitionFun:VAL">transitionFun</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.transitionFunBackwards:VAL:SPEC" HREF="#STR:DFA.transitionFunBackwards:VAL">transitionFunBackwards</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.processStr:VAL:SPEC" HREF="#STR:DFA.processStr:VAL">processStr</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.accepted:VAL:SPEC" HREF="#STR:DFA.accepted:VAL">accepted</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.reachify:VAL:SPEC" HREF="#STR:DFA.reachify:VAL">reachify</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.reachified:VAL:SPEC" HREF="#STR:DFA.reachified:VAL">reachified</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.renameStates:VAL:SPEC" HREF="#STR:DFA.renameStates:VAL">renameStates</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.renameStatesCanonically:VAL:SPEC" HREF="#STR:DFA.renameStatesCanonically:VAL">renameStatesCanonically</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.isomorphism:VAL:SPEC" HREF="#STR:DFA.isomorphism:VAL">isomorphism</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.findIsomorphismOpt:VAL:SPEC" HREF="#STR:DFA.findIsomorphismOpt:VAL">findIsomorphismOpt</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;SymRel.sym_rel&nbsp;option<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.findIsomorphism:VAL:SPEC" HREF="#STR:DFA.findIsomorphism:VAL">findIsomorphism</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;SymRel.sym_rel<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.isomorphic:VAL:SPEC" HREF="#STR:DFA.isomorphic:VAL">isomorphic</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.renameAlphabet:VAL:SPEC" HREF="#STR:DFA.renameAlphabet:VAL">renameAlphabet</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.checkLP:VAL:SPEC" HREF="#STR:DFA.checkLP:VAL">checkLP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.validLP:VAL:SPEC" HREF="#STR:DFA.validLP:VAL">validLP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.findLPOpt:VAL:SPEC" HREF="#STR:DFA.findLPOpt:VAL">findLPOpt</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;option<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.findLP:VAL:SPEC" HREF="#STR:DFA.findLP:VAL">findLP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;LP.lp<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.findAcceptingLPOpt:VAL:SPEC" HREF="#STR:DFA.findAcceptingLPOpt:VAL">findAcceptingLPOpt</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;option<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.findAcceptingLP:VAL:SPEC" HREF="#STR:DFA.findAcceptingLP:VAL">findAcceptingLP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;LP.lp<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.equal:VAL:SPEC" HREF="#STR:DFA.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.numStates:VAL:SPEC" HREF="#STR:DFA.numStates:VAL">numStates</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.numTransitions:VAL:SPEC" HREF="#STR:DFA.numTransitions:VAL">numTransitions</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.alphabet:VAL:SPEC" HREF="#STR:DFA.alphabet:VAL">alphabet</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.sub:VAL:SPEC" HREF="#STR:DFA.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.transitionFun:VAL:SPEC" HREF="#STR:DFA.transitionFun:VAL">transitionFun</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.transitionFunBackwards:VAL:SPEC" HREF="#STR:DFA.transitionFunBackwards:VAL">transitionFunBackwards</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.processStr:VAL:SPEC" HREF="#STR:DFA.processStr:VAL">processStr</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.accepted:VAL:SPEC" HREF="#STR:DFA.accepted:VAL">accepted</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Str.str&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.reachify:VAL:SPEC" HREF="#STR:DFA.reachify:VAL">reachify</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.reachified:VAL:SPEC" HREF="#STR:DFA.reachified:VAL">reachified</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.renameStates:VAL:SPEC" HREF="#STR:DFA.renameStates:VAL">renameStates</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.renameStatesCanonically:VAL:SPEC" HREF="#STR:DFA.renameStatesCanonically:VAL">renameStatesCanonically</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.isomorphism:VAL:SPEC" HREF="#STR:DFA.isomorphism:VAL">isomorphism</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.findIsomorphismOpt:VAL:SPEC" HREF="#STR:DFA.findIsomorphismOpt:VAL">findIsomorphismOpt</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;SymRel.sym_rel&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.findIsomorphism:VAL:SPEC" HREF="#STR:DFA.findIsomorphism:VAL">findIsomorphism</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;SymRel.sym_rel<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.isomorphic:VAL:SPEC" HREF="#STR:DFA.isomorphic:VAL">isomorphic</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.renameAlphabet:VAL:SPEC" HREF="#STR:DFA.renameAlphabet:VAL">renameAlphabet</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.checkLP:VAL:SPEC" HREF="#STR:DFA.checkLP:VAL">checkLP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;LP.lp&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.validLP:VAL:SPEC" HREF="#STR:DFA.validLP:VAL">validLP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;LP.lp&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.findLPOpt:VAL:SPEC" HREF="#STR:DFA.findLPOpt:VAL">findLPOpt</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-></B>&nbsp;LP.lp&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.findLP:VAL:SPEC" HREF="#STR:DFA.findLP:VAL">findLP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-></B>&nbsp;LP.lp<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.findAcceptingLPOpt:VAL:SPEC" HREF="#STR:DFA.findAcceptingLPOpt:VAL">findAcceptingLPOpt</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Str.str&nbsp;<B>-></B>&nbsp;LP.lp&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.findAcceptingLP:VAL:SPEC" HREF="#STR:DFA.findAcceptingLP:VAL">findAcceptingLP</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Str.str&nbsp;<B>-></B>&nbsp;LP.lp<BR>
 <B>val</B>&nbsp;<A NAME="STR:DFA.emptyStr:VAL:SPEC" HREF="#STR:DFA.emptyStr:VAL">emptyStr</A>&nbsp;<B>:</B>&nbsp;dfa<BR>
 <B>val</B>&nbsp;<A NAME="STR:DFA.emptySet:VAL:SPEC" HREF="#STR:DFA.emptySet:VAL">emptySet</A>&nbsp;<B>:</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.inter:VAL:SPEC" HREF="#STR:DFA.inter:VAL">inter</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.genInter:VAL:SPEC" HREF="#STR:DFA.genInter:VAL">genInter</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.determTransitionFun:VAL:SPEC" HREF="#STR:DFA.determTransitionFun:VAL">determTransitionFun</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;<B>-&gt;</B>&nbsp;Sym.sym<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.determProcessStr:VAL:SPEC" HREF="#STR:DFA.determProcessStr:VAL">determProcessStr</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Sym.sym<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.determAccepted:VAL:SPEC" HREF="#STR:DFA.determAccepted:VAL">determAccepted</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.fromNFA:VAL:SPEC" HREF="#STR:DFA.fromNFA:VAL">fromNFA</A>&nbsp;<B>:</B>&nbsp;NFA.nfa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.determSimplified:VAL:SPEC" HREF="#STR:DFA.determSimplified:VAL">determSimplified</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.determSimplify:VAL:SPEC" HREF="#STR:DFA.determSimplify:VAL">determSimplify</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.minimize:VAL:SPEC" HREF="#STR:DFA.minimize:VAL">minimize</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.complement:VAL:SPEC" HREF="#STR:DFA.complement:VAL">complement</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.minus:VAL:SPEC" HREF="#STR:DFA.minus:VAL">minus</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.inter:VAL:SPEC" HREF="#STR:DFA.inter:VAL">inter</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.genInter:VAL:SPEC" HREF="#STR:DFA.genInter:VAL">genInter</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;list&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.determTransitionFun:VAL:SPEC" HREF="#STR:DFA.determTransitionFun:VAL">determTransitionFun</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;<B>-></B>&nbsp;Sym.sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.determProcessStr:VAL:SPEC" HREF="#STR:DFA.determProcessStr:VAL">determProcessStr</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>-></B>&nbsp;Sym.sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.determAccepted:VAL:SPEC" HREF="#STR:DFA.determAccepted:VAL">determAccepted</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;Str.str&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.fromNFA:VAL:SPEC" HREF="#STR:DFA.fromNFA:VAL">fromNFA</A>&nbsp;<B>:</B>&nbsp;NFA.nfa&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.determSimplified:VAL:SPEC" HREF="#STR:DFA.determSimplified:VAL">determSimplified</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.determSimplify:VAL:SPEC" HREF="#STR:DFA.determSimplify:VAL">determSimplify</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.minimize:VAL:SPEC" HREF="#STR:DFA.minimize:VAL">minimize</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.complement:VAL:SPEC" HREF="#STR:DFA.complement:VAL">complement</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-></B>&nbsp;dfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.minus:VAL:SPEC" HREF="#STR:DFA.minus:VAL">minus</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;dfa<BR>
 <B>datatype</B>&nbsp;<A NAME="STR:DFA.relationship:TY:SPEC" HREF="#STR:DFA.relationship:TY">relationship</A><BR>
 &nbsp;&nbsp;=&nbsp;<A NAME="STR:DFA.Equal:TY:SPEC" HREF="#STR:DFA.Equal:TY">Equal</A><BR>
 &nbsp;&nbsp;|&nbsp;<A NAME="STR:DFA.ProperSub:TY:SPEC" HREF="#STR:DFA.ProperSub:TY">ProperSub</A>&nbsp;<B>of</B>&nbsp;Str.str<BR>
 &nbsp;&nbsp;|&nbsp;<A NAME="STR:DFA.ProperSup:TY:SPEC" HREF="#STR:DFA.ProperSup:TY">ProperSup</A>&nbsp;<B>of</B>&nbsp;Str.str<BR>
 &nbsp;&nbsp;|&nbsp;<A NAME="STR:DFA.Incomp:TY:SPEC" HREF="#STR:DFA.Incomp:TY">Incomp</A>&nbsp;<B>of</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.relation:VAL:SPEC" HREF="#STR:DFA.relation:VAL">relation</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;relationship<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.relationship:VAL:SPEC" HREF="#STR:DFA.relationship:VAL">relationship</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.subset:VAL:SPEC" HREF="#STR:DFA.subset:VAL">subset</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:DFA.equivalent:VAL:SPEC" HREF="#STR:DFA.equivalent:VAL">equivalent</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-&gt;</B>&nbsp;bool</CODE>
+<B>val</B>&nbsp;<A NAME="STR:DFA.relation:VAL:SPEC" HREF="#STR:DFA.relation:VAL">relation</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;relationship<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.relationship:VAL:SPEC" HREF="#STR:DFA.relationship:VAL">relationship</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.subset:VAL:SPEC" HREF="#STR:DFA.subset:VAL">subset</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:DFA.equivalent:VAL:SPEC" HREF="#STR:DFA.equivalent:VAL">equivalent</A>&nbsp;<B>:</B>&nbsp;dfa&nbsp;<B>*</B>&nbsp;dfa&nbsp;<B>-></B>&nbsp;bool</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

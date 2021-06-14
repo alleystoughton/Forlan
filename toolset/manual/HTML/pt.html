@@ -28,40 +28,40 @@ This module defines the abstract type of parse trees.
 <BLOCKQUOTE>
 <CODE><B>datatype</B>&nbsp;<A NAME="STR:PT.concr:TY:SPEC" HREF="#STR:PT.concr:TY">concr</A>&nbsp;=&nbsp;<A NAME="STR:PT.Node:TY:SPEC" HREF="#STR:PT.Node:TY">Node</A>&nbsp;<B>of</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;concr&nbsp;list&nbsp;option<BR>
 <B>type</B>&nbsp;<A NAME="STR:PT.pt:TY:SPEC" HREF="#STR:PT.pt:TY">pt</A><BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.fromConcr:VAL:SPEC" HREF="#STR:PT.fromConcr:VAL">fromConcr</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.toConcr:VAL:SPEC" HREF="#STR:PT.toConcr:VAL">toConcr</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;concr<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.fromString:VAL:SPEC" HREF="#STR:PT.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.input:VAL:SPEC" HREF="#STR:PT.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.toPP:VAL:SPEC" HREF="#STR:PT.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.toString:VAL:SPEC" HREF="#STR:PT.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;string<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.output:VAL:SPEC" HREF="#STR:PT.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.validPath:VAL:SPEC" HREF="#STR:PT.validPath:VAL">validPath</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.height:VAL:SPEC" HREF="#STR:PT.height:VAL">height</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.size:VAL:SPEC" HREF="#STR:PT.size:VAL">size</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.numLeaves:VAL:SPEC" HREF="#STR:PT.numLeaves:VAL">numLeaves</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.selectPT:VAL:SPEC" HREF="#STR:PT.selectPT:VAL">selectPT</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;pt&nbsp;option<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.update:VAL:SPEC" HREF="#STR:PT.update:VAL">update</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>*</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.maximumLengthPath:VAL:SPEC" HREF="#STR:PT.maximumLengthPath:VAL">maximumLengthPath</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.validLeafPath:VAL:SPEC" HREF="#STR:PT.validLeafPath:VAL">validLeafPath</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.fromConcr:VAL:SPEC" HREF="#STR:PT.fromConcr:VAL">fromConcr</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-></B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.toConcr:VAL:SPEC" HREF="#STR:PT.toConcr:VAL">toConcr</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;concr<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.fromString:VAL:SPEC" HREF="#STR:PT.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.input:VAL:SPEC" HREF="#STR:PT.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.toPP:VAL:SPEC" HREF="#STR:PT.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.toString:VAL:SPEC" HREF="#STR:PT.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.output:VAL:SPEC" HREF="#STR:PT.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.validPath:VAL:SPEC" HREF="#STR:PT.validPath:VAL">validPath</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.height:VAL:SPEC" HREF="#STR:PT.height:VAL">height</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.size:VAL:SPEC" HREF="#STR:PT.size:VAL">size</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.numLeaves:VAL:SPEC" HREF="#STR:PT.numLeaves:VAL">numLeaves</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.selectPT:VAL:SPEC" HREF="#STR:PT.selectPT:VAL">selectPT</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-></B>&nbsp;pt&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.update:VAL:SPEC" HREF="#STR:PT.update:VAL">update</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>*</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.maximumLengthPath:VAL:SPEC" HREF="#STR:PT.maximumLengthPath:VAL">maximumLengthPath</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;int&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.validLeafPath:VAL:SPEC" HREF="#STR:PT.validLeafPath:VAL">validLeafPath</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;int&nbsp;list&nbsp;<B>-></B>&nbsp;bool<BR>
 <B>val</B>&nbsp;<A NAME="STR:PT.compare:VAL:SPEC" HREF="#STR:PT.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;Sort.total_ordering<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.equal:VAL:SPEC" HREF="#STR:PT.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.cons:VAL:SPEC" HREF="#STR:PT.cons:VAL">cons</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;pt&nbsp;list&nbsp;option&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.leaf:VAL:SPEC" HREF="#STR:PT.leaf:VAL">leaf</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.decons:VAL:SPEC" HREF="#STR:PT.decons:VAL">decons</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;pt&nbsp;list&nbsp;option<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.rootLabel:VAL:SPEC" HREF="#STR:PT.rootLabel:VAL">rootLabel</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;Sym.sym<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.yield:VAL:SPEC" HREF="#STR:PT.yield:VAL">yield</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;Str.str<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.equal:VAL:SPEC" HREF="#STR:PT.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>*</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.cons:VAL:SPEC" HREF="#STR:PT.cons:VAL">cons</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;pt&nbsp;list&nbsp;option&nbsp;<B>-></B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.leaf:VAL:SPEC" HREF="#STR:PT.leaf:VAL">leaf</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;<B>-></B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.decons:VAL:SPEC" HREF="#STR:PT.decons:VAL">decons</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;pt&nbsp;list&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.rootLabel:VAL:SPEC" HREF="#STR:PT.rootLabel:VAL">rootLabel</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;Sym.sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.yield:VAL:SPEC" HREF="#STR:PT.yield:VAL">yield</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;Str.str<BR>
 <B>type</B>&nbsp;<A NAME="STR:PT.pumping_division:TY:SPEC" HREF="#STR:PT.pumping_division:TY">pumping_division</A>&nbsp;=&nbsp;(pt&nbsp;<B>*</B>&nbsp;int&nbsp;list)&nbsp;<B>*</B>&nbsp;(pt&nbsp;<B>*</B>&nbsp;int&nbsp;list)&nbsp;<B>*</B>&nbsp;pt<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.checkPumpingDivision:VAL:SPEC" HREF="#STR:PT.checkPumpingDivision:VAL">checkPumpingDivision</A>&nbsp;<B>:</B>&nbsp;pumping_division&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.validPumpingDivision:VAL:SPEC" HREF="#STR:PT.validPumpingDivision:VAL">validPumpingDivision</A>&nbsp;<B>:</B>&nbsp;pumping_division&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.checkPumpingDivision:VAL:SPEC" HREF="#STR:PT.checkPumpingDivision:VAL">checkPumpingDivision</A>&nbsp;<B>:</B>&nbsp;pumping_division&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.validPumpingDivision:VAL:SPEC" HREF="#STR:PT.validPumpingDivision:VAL">validPumpingDivision</A>&nbsp;<B>:</B>&nbsp;pumping_division&nbsp;<B>-></B>&nbsp;bool<BR>
 <B>val</B>&nbsp;<A NAME="STR:PT.strsOfValidPumpingDivision:VAL:SPEC" HREF="#STR:PT.strsOfValidPumpingDivision:VAL">strsOfValidPumpingDivision</A>&nbsp;<B>:</B>&nbsp;pumping_division<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.pumpValidPumpingDivision:VAL:SPEC" HREF="#STR:PT.pumpValidPumpingDivision:VAL">pumpValidPumpingDivision</A>&nbsp;<B>:</B>&nbsp;pumping_division&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.findValidPumpingDivision:VAL:SPEC" HREF="#STR:PT.findValidPumpingDivision:VAL">findValidPumpingDivision</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;pumping_division<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.findValidPumpingDivisionOpt:VAL:SPEC" HREF="#STR:PT.findValidPumpingDivisionOpt:VAL">findValidPumpingDivisionOpt</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;pumping_division&nbsp;option<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.jforlanNew:VAL:SPEC" HREF="#STR:PT.jforlanNew:VAL">jforlanNew</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.jforlanEdit:VAL:SPEC" HREF="#STR:PT.jforlanEdit:VAL">jforlanEdit</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-&gt;</B>&nbsp;pt<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.jforlanValidate:VAL:SPEC" HREF="#STR:PT.jforlanValidate:VAL">jforlanValidate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:PT.jforlanPretty:VAL:SPEC" HREF="#STR:PT.jforlanPretty:VAL">jforlanPretty</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-></B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.pumpValidPumpingDivision:VAL:SPEC" HREF="#STR:PT.pumpValidPumpingDivision:VAL">pumpValidPumpingDivision</A>&nbsp;<B>:</B>&nbsp;pumping_division&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-></B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.findValidPumpingDivision:VAL:SPEC" HREF="#STR:PT.findValidPumpingDivision:VAL">findValidPumpingDivision</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;pumping_division<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.findValidPumpingDivisionOpt:VAL:SPEC" HREF="#STR:PT.findValidPumpingDivisionOpt:VAL">findValidPumpingDivisionOpt</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;pumping_division&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.jforlanNew:VAL:SPEC" HREF="#STR:PT.jforlanNew:VAL">jforlanNew</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-></B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.jforlanEdit:VAL:SPEC" HREF="#STR:PT.jforlanEdit:VAL">jforlanEdit</A>&nbsp;<B>:</B>&nbsp;pt&nbsp;<B>-></B>&nbsp;pt<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.jforlanValidate:VAL:SPEC" HREF="#STR:PT.jforlanValidate:VAL">jforlanValidate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:PT.jforlanPretty:VAL:SPEC" HREF="#STR:PT.jforlanPretty:VAL">jforlanPretty</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;unit</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

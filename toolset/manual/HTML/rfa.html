@@ -33,40 +33,40 @@ This module defines the abstract type of regular expression finite automata (RFA
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trans&nbsp;<B>:</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>
 <B>type</B>&nbsp;<A NAME="STR:RFA.rfa:TY:SPEC" HREF="#STR:RFA.rfa:TY">rfa</A><BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.valid:VAL:SPEC" HREF="#STR:RFA.valid:VAL">valid</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.fromConcr:VAL:SPEC" HREF="#STR:RFA.fromConcr:VAL">fromConcr</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.toConcr:VAL:SPEC" HREF="#STR:RFA.toConcr:VAL">toConcr</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;concr<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.fromString:VAL:SPEC" HREF="#STR:RFA.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.input:VAL:SPEC" HREF="#STR:RFA.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.toPP:VAL:SPEC" HREF="#STR:RFA.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.toString:VAL:SPEC" HREF="#STR:RFA.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;string<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.output:VAL:SPEC" HREF="#STR:RFA.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.states:VAL:SPEC" HREF="#STR:RFA.states:VAL">states</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.startState:VAL:SPEC" HREF="#STR:RFA.startState:VAL">startState</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.acceptingStates:VAL:SPEC" HREF="#STR:RFA.acceptingStates:VAL">acceptingStates</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.transitions:VAL:SPEC" HREF="#STR:RFA.transitions:VAL">transitions</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.valid:VAL:SPEC" HREF="#STR:RFA.valid:VAL">valid</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.fromConcr:VAL:SPEC" HREF="#STR:RFA.fromConcr:VAL">fromConcr</A>&nbsp;<B>:</B>&nbsp;concr&nbsp;<B>-></B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.toConcr:VAL:SPEC" HREF="#STR:RFA.toConcr:VAL">toConcr</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;concr<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.fromString:VAL:SPEC" HREF="#STR:RFA.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.input:VAL:SPEC" HREF="#STR:RFA.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.toPP:VAL:SPEC" HREF="#STR:RFA.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.toString:VAL:SPEC" HREF="#STR:RFA.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.output:VAL:SPEC" HREF="#STR:RFA.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.states:VAL:SPEC" HREF="#STR:RFA.states:VAL">states</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.startState:VAL:SPEC" HREF="#STR:RFA.startState:VAL">startState</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;Sym.sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.acceptingStates:VAL:SPEC" HREF="#STR:RFA.acceptingStates:VAL">acceptingStates</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.transitions:VAL:SPEC" HREF="#STR:RFA.transitions:VAL">transitions</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;TranReg.tran_reg&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:RFA.compare:VAL:SPEC" HREF="#STR:RFA.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;Sort.total_ordering<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.equal:VAL:SPEC" HREF="#STR:RFA.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.numStates:VAL:SPEC" HREF="#STR:RFA.numStates:VAL">numStates</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.numTransitions:VAL:SPEC" HREF="#STR:RFA.numTransitions:VAL">numTransitions</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.alphabet:VAL:SPEC" HREF="#STR:RFA.alphabet:VAL">alphabet</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.sub:VAL:SPEC" HREF="#STR:RFA.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.renameStates:VAL:SPEC" HREF="#STR:RFA.renameStates:VAL">renameStates</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.renameStatesCanonically:VAL:SPEC" HREF="#STR:RFA.renameStatesCanonically:VAL">renameStatesCanonically</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.checkLP:VAL:SPEC" HREF="#STR:RFA.checkLP:VAL">checkLP</A>&nbsp;<B>:</B>&nbsp;(Str.str&nbsp;<B>*</B>&nbsp;Reg.reg&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.validLP:VAL:SPEC" HREF="#STR:RFA.validLP:VAL">validLP</A>&nbsp;<B>:</B>&nbsp;(Str.str&nbsp;<B>*</B>&nbsp;Reg.reg&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;LP.lp&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.standard:VAL:SPEC" HREF="#STR:RFA.standard:VAL">standard</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.standardize:VAL:SPEC" HREF="#STR:RFA.standardize:VAL">standardize</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.fromFA:VAL:SPEC" HREF="#STR:RFA.fromFA:VAL">fromFA</A>&nbsp;<B>:</B>&nbsp;(Reg.reg&nbsp;<B>-&gt;</B>&nbsp;Reg.reg)&nbsp;<B>-&gt;</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.eliminateState:VAL:SPEC" HREF="#STR:RFA.eliminateState:VAL">eliminateState</A>&nbsp;<B>:</B>&nbsp;(Reg.reg&nbsp;<B>-&gt;</B>&nbsp;Reg.reg)&nbsp;<B>-&gt;</B>&nbsp;rfa&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.toReg:VAL:SPEC" HREF="#STR:RFA.toReg:VAL">toReg</A>&nbsp;<B>:</B>&nbsp;(Reg.reg&nbsp;<B>-&gt;</B>&nbsp;Reg.reg)&nbsp;<B>-&gt;</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;Reg.reg<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.faToReg:VAL:SPEC" HREF="#STR:RFA.faToReg:VAL">faToReg</A>&nbsp;<B>:</B>&nbsp;(Reg.reg&nbsp;<B>-&gt;</B>&nbsp;Reg.reg)&nbsp;<B>-&gt;</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;Reg.reg<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.faToRegPerms:VAL:SPEC" HREF="#STR:RFA.faToRegPerms:VAL">faToRegPerms</A>&nbsp;<B>:</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;(Reg.reg&nbsp;<B>-&gt;</B>&nbsp;Reg.reg)&nbsp;<B>-&gt;</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;Reg.reg<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.faToRegPermsTrace:VAL:SPEC" HREF="#STR:RFA.faToRegPermsTrace:VAL">faToRegPermsTrace</A>&nbsp;<B>:</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;(Reg.reg&nbsp;<B>-&gt;</B>&nbsp;Reg.reg)&nbsp;<B>-&gt;</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;Reg.reg<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.jforlanNew:VAL:SPEC" HREF="#STR:RFA.jforlanNew:VAL">jforlanNew</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.jforlanEdit:VAL:SPEC" HREF="#STR:RFA.jforlanEdit:VAL">jforlanEdit</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-&gt;</B>&nbsp;rfa<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.jforlanValidate:VAL:SPEC" HREF="#STR:RFA.jforlanValidate:VAL">jforlanValidate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:RFA.jforlanPretty:VAL:SPEC" HREF="#STR:RFA.jforlanPretty:VAL">jforlanPretty</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+<B>val</B>&nbsp;<A NAME="STR:RFA.equal:VAL:SPEC" HREF="#STR:RFA.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.numStates:VAL:SPEC" HREF="#STR:RFA.numStates:VAL">numStates</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.numTransitions:VAL:SPEC" HREF="#STR:RFA.numTransitions:VAL">numTransitions</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.alphabet:VAL:SPEC" HREF="#STR:RFA.alphabet:VAL">alphabet</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.sub:VAL:SPEC" HREF="#STR:RFA.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.renameStates:VAL:SPEC" HREF="#STR:RFA.renameStates:VAL">renameStates</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-></B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.renameStatesCanonically:VAL:SPEC" HREF="#STR:RFA.renameStatesCanonically:VAL">renameStatesCanonically</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.checkLP:VAL:SPEC" HREF="#STR:RFA.checkLP:VAL">checkLP</A>&nbsp;<B>:</B>&nbsp;(Str.str&nbsp;<B>*</B>&nbsp;Reg.reg&nbsp;<B>-></B>&nbsp;bool)&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;LP.lp&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.validLP:VAL:SPEC" HREF="#STR:RFA.validLP:VAL">validLP</A>&nbsp;<B>:</B>&nbsp;(Str.str&nbsp;<B>*</B>&nbsp;Reg.reg&nbsp;<B>-></B>&nbsp;bool)&nbsp;<B>*</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;LP.lp&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.standard:VAL:SPEC" HREF="#STR:RFA.standard:VAL">standard</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.standardize:VAL:SPEC" HREF="#STR:RFA.standardize:VAL">standardize</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.fromFA:VAL:SPEC" HREF="#STR:RFA.fromFA:VAL">fromFA</A>&nbsp;<B>:</B>&nbsp;(Reg.reg&nbsp;<B>-></B>&nbsp;Reg.reg)&nbsp;<B>-></B>&nbsp;FA.fa&nbsp;<B>-></B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.eliminateState:VAL:SPEC" HREF="#STR:RFA.eliminateState:VAL">eliminateState</A>&nbsp;<B>:</B>&nbsp;(Reg.reg&nbsp;<B>-></B>&nbsp;Reg.reg)&nbsp;<B>-></B>&nbsp;rfa&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;<B>-></B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.toReg:VAL:SPEC" HREF="#STR:RFA.toReg:VAL">toReg</A>&nbsp;<B>:</B>&nbsp;(Reg.reg&nbsp;<B>-></B>&nbsp;Reg.reg)&nbsp;<B>-></B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;Reg.reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.faToReg:VAL:SPEC" HREF="#STR:RFA.faToReg:VAL">faToReg</A>&nbsp;<B>:</B>&nbsp;(Reg.reg&nbsp;<B>-></B>&nbsp;Reg.reg)&nbsp;<B>-></B>&nbsp;FA.fa&nbsp;<B>-></B>&nbsp;Reg.reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.faToRegPerms:VAL:SPEC" HREF="#STR:RFA.faToRegPerms:VAL">faToRegPerms</A>&nbsp;<B>:</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;(Reg.reg&nbsp;<B>-></B>&nbsp;Reg.reg)&nbsp;<B>-></B>&nbsp;FA.fa&nbsp;<B>-></B>&nbsp;Reg.reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.faToRegPermsTrace:VAL:SPEC" HREF="#STR:RFA.faToRegPermsTrace:VAL">faToRegPermsTrace</A>&nbsp;<B>:</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;(Reg.reg&nbsp;<B>-></B>&nbsp;Reg.reg)&nbsp;<B>-></B>&nbsp;FA.fa&nbsp;<B>-></B>&nbsp;Reg.reg<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.jforlanNew:VAL:SPEC" HREF="#STR:RFA.jforlanNew:VAL">jforlanNew</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-></B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.jforlanEdit:VAL:SPEC" HREF="#STR:RFA.jforlanEdit:VAL">jforlanEdit</A>&nbsp;<B>:</B>&nbsp;rfa&nbsp;<B>-></B>&nbsp;rfa<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.jforlanValidate:VAL:SPEC" HREF="#STR:RFA.jforlanValidate:VAL">jforlanValidate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:RFA.jforlanPretty:VAL:SPEC" HREF="#STR:RFA.jforlanPretty:VAL">jforlanPretty</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;unit</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>
@@ -327,7 +327,7 @@ works through the first <CODE><VAR>n</VAR></CODE> bijections (ordered by <CODE><
 <BR>
 <BR>
 
-<DT> <A NAME="STR:RFA.faToRegPermsTrace:VAL"></A><CODE><B>val</B>&nbsp;faToRegPermsTrace&nbsp;<B>:</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;(Reg.reg&nbsp;<B>-&gt;</B>&nbsp;Reg.reg)&nbsp;<B>-&gt;</B>&nbsp;FA.fa&nbsp;<B>-&gt;</B>&nbsp;Reg.reg</CODE>
+<DT> <A NAME="STR:RFA.faToRegPermsTrace:VAL"></A><CODE><B>val</B>&nbsp;faToRegPermsTrace&nbsp;<B>:</B>&nbsp;int&nbsp;option&nbsp;<B>*</B>&nbsp;(Reg.reg&nbsp;<B>-></B>&nbsp;Reg.reg)&nbsp;<B>-></B>&nbsp;FA.fa&nbsp;<B>-></B>&nbsp;Reg.reg</CODE>
 <DD>
 is like <CODE>faToRegPerms</CODE>, but issues tracing messages, explaining its operation.
 <BR>

@@ -27,24 +27,24 @@ This module provides operations on finite sets of Forlan symbols, i.e., values o
 <HR>
 <H4>Interface</H4>
 <BLOCKQUOTE>
-<CODE><B>val</B>&nbsp;<A NAME="STR:SymSet.memb:VAL:SPEC" HREF="#STR:SymSet.memb:VAL">memb</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.fromList:VAL:SPEC" HREF="#STR:SymSet.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<CODE><B>val</B>&nbsp;<A NAME="STR:SymSet.memb:VAL:SPEC" HREF="#STR:SymSet.memb:VAL">memb</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.fromList:VAL:SPEC" HREF="#STR:SymSet.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;list&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:SymSet.compare:VAL:SPEC" HREF="#STR:SymSet.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;Sort.total_ordering<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.subset:VAL:SPEC" HREF="#STR:SymSet.subset:VAL">subset</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.equal:VAL:SPEC" HREF="#STR:SymSet.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.map:VAL:SPEC" HREF="#STR:SymSet.map:VAL">map</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;Sym.sym)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.mapFromList:VAL:SPEC" HREF="#STR:SymSet.mapFromList:VAL">mapFromList</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;Sym.sym)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.union:VAL:SPEC" HREF="#STR:SymSet.union:VAL">union</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.genUnion:VAL:SPEC" HREF="#STR:SymSet.genUnion:VAL">genUnion</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.inter:VAL:SPEC" HREF="#STR:SymSet.inter:VAL">inter</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.genInter:VAL:SPEC" HREF="#STR:SymSet.genInter:VAL">genInter</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.minus:VAL:SPEC" HREF="#STR:SymSet.minus:VAL">minus</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.inputFromLabToks:VAL:SPEC" HREF="#STR:SymSet.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.fromString:VAL:SPEC" HREF="#STR:SymSet.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.input:VAL:SPEC" HREF="#STR:SymSet.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.toPP:VAL:SPEC" HREF="#STR:SymSet.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.toString:VAL:SPEC" HREF="#STR:SymSet.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;string<BR>
-<B>val</B>&nbsp;<A NAME="STR:SymSet.output:VAL:SPEC" HREF="#STR:SymSet.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.subset:VAL:SPEC" HREF="#STR:SymSet.subset:VAL">subset</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.equal:VAL:SPEC" HREF="#STR:SymSet.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.map:VAL:SPEC" HREF="#STR:SymSet.map:VAL">map</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-></B>&nbsp;Sym.sym)&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.mapFromList:VAL:SPEC" HREF="#STR:SymSet.mapFromList:VAL">mapFromList</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-></B>&nbsp;Sym.sym)&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.union:VAL:SPEC" HREF="#STR:SymSet.union:VAL">union</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.genUnion:VAL:SPEC" HREF="#STR:SymSet.genUnion:VAL">genUnion</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;list&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.inter:VAL:SPEC" HREF="#STR:SymSet.inter:VAL">inter</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.genInter:VAL:SPEC" HREF="#STR:SymSet.genInter:VAL">genInter</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;list&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.minus:VAL:SPEC" HREF="#STR:SymSet.minus:VAL">minus</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.inputFromLabToks:VAL:SPEC" HREF="#STR:SymSet.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.fromString:VAL:SPEC" HREF="#STR:SymSet.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.input:VAL:SPEC" HREF="#STR:SymSet.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.toPP:VAL:SPEC" HREF="#STR:SymSet.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-></B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.toString:VAL:SPEC" HREF="#STR:SymSet.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-></B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:SymSet.output:VAL:SPEC" HREF="#STR:SymSet.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;Sym.sym&nbsp;Set.set&nbsp;<B>-></B>&nbsp;unit</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

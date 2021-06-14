@@ -26,14 +26,14 @@ This module contains functions for issuing informational and error messages.
 <HR>
 <H4>Interface</H4>
 <BLOCKQUOTE>
-<CODE><B>val</B>&nbsp;<A NAME="STR:Messages.messagePP:VAL:SPEC" HREF="#STR:Messages.messagePP:VAL">messagePP</A>&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;PP.pp&nbsp;list)&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:Messages.messageString:VAL:SPEC" HREF="#STR:Messages.messageString:VAL">messageString</A>&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;list)&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<CODE><B>val</B>&nbsp;<A NAME="STR:Messages.messagePP:VAL:SPEC" HREF="#STR:Messages.messagePP:VAL">messagePP</A>&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-></B>&nbsp;PP.pp&nbsp;list)&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Messages.messageString:VAL:SPEC" HREF="#STR:Messages.messageString:VAL">messageString</A>&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-></B>&nbsp;string&nbsp;list)&nbsp;<B>-></B>&nbsp;unit<BR>
 <B>exception</B>&nbsp;<A NAME="STR:Messages.Error:EXN:SPEC" HREF="#STR:Messages.Error:EXN">Error</A><BR>
-<B>val</B>&nbsp;<A NAME="STR:Messages.errorPP:VAL:SPEC" HREF="#STR:Messages.errorPP:VAL">errorPP</A>&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;PP.pp&nbsp;list)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
-<B>val</B>&nbsp;<A NAME="STR:Messages.errorString:VAL:SPEC" HREF="#STR:Messages.errorString:VAL">errorString</A>&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;list)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
-<B>val</B>&nbsp;<A NAME="STR:Messages.quiet:VAL:SPEC" HREF="#STR:Messages.quiet:VAL">quiet</A>&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="STR:Messages.errorPP:VAL:SPEC" HREF="#STR:Messages.errorPP:VAL">errorPP</A>&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-></B>&nbsp;PP.pp&nbsp;list)&nbsp;<B>-></B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="STR:Messages.errorString:VAL:SPEC" HREF="#STR:Messages.errorString:VAL">errorString</A>&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-></B>&nbsp;string&nbsp;list)&nbsp;<B>-></B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="STR:Messages.quiet:VAL:SPEC" HREF="#STR:Messages.quiet:VAL">quiet</A>&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-></B>&nbsp;<I>'a</I>)&nbsp;<B>-></B>&nbsp;<I>'a</I><BR>
 <B>exception</B>&nbsp;<A NAME="STR:Messages.CannotHappen:EXN:SPEC" HREF="#STR:Messages.CannotHappen:EXN">CannotHappen</A><BR>
-<B>val</B>&nbsp;<A NAME="STR:Messages.cannotHappen:VAL:SPEC" HREF="#STR:Messages.cannotHappen:VAL">cannotHappen</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I></CODE>
+<B>val</B>&nbsp;<A NAME="STR:Messages.cannotHappen:VAL:SPEC" HREF="#STR:Messages.cannotHappen:VAL">cannotHappen</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-></B>&nbsp;<I>'a</I></CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

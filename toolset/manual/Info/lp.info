@@ -2,32 +2,32 @@
   ["lp"; "The LP Module";]
 @SIGNATURE LP "lp" [
   @TYPES 
+    @TYPE lp
     @TYPE pumping_division
     @DATATYPE concr [ Sym Cons]
-    @TYPE lp
   @VALS 
-    input
-    length
-    checkPumpingDivision
-    toPP
-    equal
     toConcr
-    sym
-    fromString
-    startState
-    join
-    label
-    splitAt
-    output
-    cons
-    validPumpingDivision
-    findValidPumpingDivision
     strsOfValidPumpingDivision
-    pumpValidPumpingDivision
-    compare
-    endState
-    findValidPumpingDivisionOpt
-    fromConcr
+    sym
+    output
+    toPP
     toString
+    cons
+    fromString
+    pumpValidPumpingDivision
+    fromConcr
+    equal
+    startState
+    findValidPumpingDivisionOpt
+    validPumpingDivision
+    compare
+    length
+    splitAt
+    join
+    input
+    checkPumpingDivision
+    findValidPumpingDivision
+    label
+    endState
 ]
 @STRUCTURE LP "lp" LP

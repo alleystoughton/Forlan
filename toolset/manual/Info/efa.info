@@ -4,59 +4,59 @@
   @TYPES 
     @TYPE efa
   @VALS 
-    genConcat
-    genUnion
-    toPP
-    emptyCloseBackwards
+    isomorphic
+    emptyStr
+    closure
+    findIsomorphism
+    transitions
+    findIsomorphismOpt
+    output
+    toString
     renameStatesCanonically
     isomorphism
-    fromString
-    closure
-    startState
-    output
     inter
-    states
-    numStates
-    concat
-    union
-    accepted
-    sub
-    findAcceptingLP
-    validLP
-    rev
-    fromSym
-    findLP
-    isomorphic
-    findAcceptingLPOpt
-    findLPOpt
-    valid
-    input
-    alphabet
-    transitionFun
-    reachified
-    emptyClose
-    simplified
-    transitionFunBackwards
-    emptyStr
-    equal
-    checkLP
-    reachify
-    findIsomorphism
-    renameStates
-    simplify
-    prefix
-    transitions
-    numTransitions
-    findIsomorphismOpt
-    acceptingStates
-    projFromFA
-    compare
-    processStr
     renameAlphabet
-    toString
-    fromFA
+    emptyCloseBackwards
+    processStr
+    transitionFun
+    startState
+    acceptingStates
+    rev
+    reachify
+    reachified
     emptySet
     injToFA
     genInter
+    emptyClose
+    findAcceptingLPOpt
+    input
+    concat
+    findLPOpt
+    states
+    accepted
+    genUnion
+    toPP
+    projFromFA
+    fromString
+    prefix
+    simplify
+    simplified
+    genConcat
+    equal
+    valid
+    checkLP
+    transitionFunBackwards
+    union
+    fromSym
+    compare
+    validLP
+    numStates
+    sub
+    renameStates
+    findLP
+    fromFA
+    findAcceptingLP
+    alphabet
+    numTransitions
 ]
 @STRUCTURE EFA "efa" EFA

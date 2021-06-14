@@ -4,12 +4,12 @@
   @TYPES 
     @TYPE tab
   @VALS 
-    update
-    fromList
-    domain
     lookup
-    isEmpty
     toList
     empty
+    fromList
+    domain
+    update
+    isEmpty
 ]
 @STRUCTURE Tab "tab" TAB

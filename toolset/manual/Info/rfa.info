@@ -2,42 +2,42 @@
   ["rfa"; "The RFA Module";]
 @SIGNATURE RFA "rfa" [
   @TYPES 
-    @TYPE concr
     @TYPE rfa
+    @TYPE concr
   @VALS 
-    jforlanEdit
-    toPP
-    jforlanPretty
-    renameStatesCanonically
-    fromString
-    faToRegPermsTrace
-    startState
-    faToRegPerms
-    output
-    standard
-    toReg
-    states
-    numStates
-    fromConcr
-    sub
-    validLP
-    valid
-    input
-    alphabet
-    jforlanValidate
-    toConcr
-    equal
-    standardize
-    checkLP
-    renameStates
     transitions
-    numTransitions
-    acceptingStates
-    jforlanNew
-    compare
-    faToReg
-    eliminateState
+    output
+    faToRegPerms
     toString
+    renameStatesCanonically
+    toReg
+    jforlanEdit
+    standard
+    standardize
+    fromConcr
+    startState
+    acceptingStates
+    faToRegPermsTrace
+    faToReg
+    input
+    states
+    toConcr
+    toPP
+    fromString
+    jforlanNew
+    eliminateState
+    equal
+    valid
+    checkLP
+    compare
+    jforlanValidate
+    numStates
+    sub
+    renameStates
+    validLP
     fromFA
+    alphabet
+    numTransitions
+    jforlanPretty
 ]
 @STRUCTURE RFA "rfa" RFA

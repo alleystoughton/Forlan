@@ -27,27 +27,27 @@ This module provides operations on Forlan strings, i.e., lists of Forlan symbols
 <H4>Interface</H4>
 <BLOCKQUOTE>
 <CODE><B>type</B>&nbsp;<A NAME="STR:Str.str:TY:SPEC" HREF="#STR:Str.str:TY">str</A>&nbsp;=&nbsp;Sym.sym&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.possBeginsWithStr:VAL:SPEC" HREF="#STR:Str.possBeginsWithStr:VAL">possBeginsWithStr</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.inputFromLabToks:VAL:SPEC" HREF="#STR:Str.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;str&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.fromString:VAL:SPEC" HREF="#STR:Str.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;str<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.input:VAL:SPEC" HREF="#STR:Str.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;str<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.toPP:VAL:SPEC" HREF="#STR:Str.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.toString:VAL:SPEC" HREF="#STR:Str.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>-&gt;</B>&nbsp;string<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.output:VAL:SPEC" HREF="#STR:Str.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;str&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.last:VAL:SPEC" HREF="#STR:Str.last:VAL">last</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>-&gt;</B>&nbsp;Sym.sym<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.allButLast:VAL:SPEC" HREF="#STR:Str.allButLast:VAL">allButLast</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>-&gt;</B>&nbsp;str<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.possBeginsWithStr:VAL:SPEC" HREF="#STR:Str.possBeginsWithStr:VAL">possBeginsWithStr</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.inputFromLabToks:VAL:SPEC" HREF="#STR:Str.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-></B>&nbsp;str&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.fromString:VAL:SPEC" HREF="#STR:Str.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;str<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.input:VAL:SPEC" HREF="#STR:Str.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;str<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.toPP:VAL:SPEC" HREF="#STR:Str.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>-></B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.toString:VAL:SPEC" HREF="#STR:Str.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>-></B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.output:VAL:SPEC" HREF="#STR:Str.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;str&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.last:VAL:SPEC" HREF="#STR:Str.last:VAL">last</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>-></B>&nbsp;Sym.sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.allButLast:VAL:SPEC" HREF="#STR:Str.allButLast:VAL">allButLast</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>-></B>&nbsp;str<BR>
 <B>val</B>&nbsp;<A NAME="STR:Str.compare:VAL:SPEC" HREF="#STR:Str.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;str&nbsp;Sort.total_ordering<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.equal:VAL:SPEC" HREF="#STR:Str.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;str&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.alphabet:VAL:SPEC" HREF="#STR:Str.alphabet:VAL">alphabet</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.renameAlphabet:VAL:SPEC" HREF="#STR:Str.renameAlphabet:VAL">renameAlphabet</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;str<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.prefix:VAL:SPEC" HREF="#STR:Str.prefix:VAL">prefix</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;str&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.suffix:VAL:SPEC" HREF="#STR:Str.suffix:VAL">suffix</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;str&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.substr:VAL:SPEC" HREF="#STR:Str.substr:VAL">substr</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;str&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.power:VAL:SPEC" HREF="#STR:Str.power:VAL">power</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;str<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.removePrefix:VAL:SPEC" HREF="#STR:Str.removePrefix:VAL">removePrefix</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;str&nbsp;<B>-&gt;</B>&nbsp;str&nbsp;option<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.removeSuffix:VAL:SPEC" HREF="#STR:Str.removeSuffix:VAL">removeSuffix</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;str&nbsp;<B>-&gt;</B>&nbsp;str&nbsp;option<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.jforlanValidate:VAL:SPEC" HREF="#STR:Str.jforlanValidate:VAL">jforlanValidate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:Str.jforlanPretty:VAL:SPEC" HREF="#STR:Str.jforlanPretty:VAL">jforlanPretty</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+<B>val</B>&nbsp;<A NAME="STR:Str.equal:VAL:SPEC" HREF="#STR:Str.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;str&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.alphabet:VAL:SPEC" HREF="#STR:Str.alphabet:VAL">alphabet</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.renameAlphabet:VAL:SPEC" HREF="#STR:Str.renameAlphabet:VAL">renameAlphabet</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-></B>&nbsp;str<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.prefix:VAL:SPEC" HREF="#STR:Str.prefix:VAL">prefix</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;str&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.suffix:VAL:SPEC" HREF="#STR:Str.suffix:VAL">suffix</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;str&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.substr:VAL:SPEC" HREF="#STR:Str.substr:VAL">substr</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;str&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.power:VAL:SPEC" HREF="#STR:Str.power:VAL">power</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-></B>&nbsp;str<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.removePrefix:VAL:SPEC" HREF="#STR:Str.removePrefix:VAL">removePrefix</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;str&nbsp;<B>-></B>&nbsp;str&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.removeSuffix:VAL:SPEC" HREF="#STR:Str.removeSuffix:VAL">removeSuffix</A>&nbsp;<B>:</B>&nbsp;str&nbsp;<B>*</B>&nbsp;str&nbsp;<B>-></B>&nbsp;str&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.jforlanValidate:VAL:SPEC" HREF="#STR:Str.jforlanValidate:VAL">jforlanValidate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Str.jforlanPretty:VAL:SPEC" HREF="#STR:Str.jforlanPretty:VAL">jforlanPretty</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;unit</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

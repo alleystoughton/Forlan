@@ -347,17 +347,18 @@ If we can show that $h$ is closed, then we will have that $f\sub h$,
 because $f$ is the least closed set, and thus we'll be able to
 conclude that $f$ is a function.  To show that $h$ is closed, suppose
 $x\in A$, $g\in\setof{y\in A}{y\mathrel{R}x}\fun B$ and $g\sub h$.  We
-must show that $(x, F(x, g))\in h$.  It will suffice to show that, for
-all $y'\in B$, if $(x,y')\in f$, then $F(x, g) = y'$.  Suppose $y'\in
-B$ and $(x,y')\in f$.  We must show that $F(x, g) = y'$.  Because
-$(x,y')\in f$, and $f$ is the least closed subset of $A\times B$,
-there must be a $g'\in \setof{y\in
-  A}{y\mathrel{R}x}\fun B$ such that $g'\sub f$ and $y'=F(x, g')$.
-Thus it will suffice to show that $F(x,g) = F(x, g')$, which will follow
-from showing that $g=g'$, i.e., for all $z\in\setof{y\in
-  A}{y\mathrel{R}x}$, $g\,z=g'\,z$.  Suppose $z\in\setof{y\in
-  A}{y\mathrel{R}x}$.  We must show that $g\,z=g'\,z$.  Since
-$z\in\setof{y\in A}{y\mathrel{R}x}$, we have that $z\in A$ and
+must show that $(x, F(x, g))\in h$. Because $g\sub h\sub f$ and $f$ is
+closed, we have that $(x, F(x, g))\in f$.  It remains to show that,
+for all $y'\in B$, if $(x,y')\in f$, then $F(x, g) = y'$.  Suppose
+$y'\in B$ and $(x,y')\in f$.  We must show that $F(x, g) = y'$.
+Because $(x,y')\in f$, and $f$ is the least closed subset of
+$A\times B$, there must be a
+$g'\in \setof{y\in A}{y\mathrel{R}x}\fun B$ such that $g'\sub f$ and
+$y'=F(x, g')$.  Thus it will suffice to show that $F(x,g) = F(x, g')$,
+which will follow from showing that $g=g'$, i.e., for all
+$z\in\setof{y\in A}{y\mathrel{R}x}$, $g\,z=g'\,z$.  Suppose
+$z\in\setof{y\in A}{y\mathrel{R}x}$.  We must show that $g\,z=g'\,z$.
+Since $z\in\setof{y\in A}{y\mathrel{R}x}$, we have that $z\in A$ and
 $z\mathrel{R}x$.  Because $(z,g\,z)\in g\sub h$, we have that
 $(z,g\,z)\in h$.  Since $(z,g'\,z)\in g'\sub f$, we have that
 $(z,g'\,z)\in f$.  Hence, by the definition of $h$, we have that

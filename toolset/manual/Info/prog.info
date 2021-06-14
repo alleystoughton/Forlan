@@ -2,62 +2,62 @@
   ["prog"; "The Prog Module";]
 @SIGNATURE PROG "prog" [
   @TYPES 
-    @DATATYPE run [ Ans Fail Intermed]
-    @DATATYPE concr [ Var Const Int Sym Str Pair Calc Cond App Lam LetSimp LetRec]
-    @DATATYPE accept [ Accept RejectWithFalse RejectOtherwise Unknown]
     @TYPE cp
-    @DATATYPE oper [ IsNil IsInt IsNeg IsZero IsPos IsSym IsStr IsPair IsLam Plus Minus Compare Fst Snd ConsSym DeconsSym SymListToStr StrToSymList]
-    @DATATYPE const [ True False Nil]
+    @DATATYPE accept [ Accept RejectWithFalse RejectOtherwise Unknown]
+    @DATATYPE run [ Ans Fail Intermed]
     @TYPE prog
     @DATATYPE step [ Value Error Next]
+    @DATATYPE const [ True False Nil]
+    @DATATYPE oper [ IsNil IsInt IsNeg IsZero IsPos IsSym IsStr IsPair IsLam Plus Minus Compare Fst Snd ConsSym DeconsSym SymListToStr StrToSymList]
+    @DATATYPE concr [ Var Const Int Sym Str Pair Calc Cond App Lam LetSimp LetRec]
   @VALS 
-    subst
-    jforlanEdit
-    free
-    toPP
-    update
-    jforlanPretty
-    cond
     validLeafPath
-    str
-    lam
-    fromRep
-    fromString
-    pair
-    toStr
-    accept
     output
-    isRep
-    accepted
-    fromConcr
-    var
-    toRep
-    size
-    toClosed
-    maximumLengthPath
-    letRec
-    input
-    numLeaves
-    select
-    run
-    jforlanValidate
-    toConcr
-    equal
-    isValue
-    sym
-    validPath
-    fromClosed
-    letSimp
-    app
-    calc
-    jforlanNew
-    evaluate
-    const
-    compare
-    height
     toString
-    int
-    step
+    jforlanEdit
+    accept
+    run
+    validPath
+    app
+    select
+    fromConcr
+    toRep
+    isRep
+    toClosed
+    update
+    fromClosed
+    isValue
+    input
+    free
+    numLeaves
+    accepted
     fromStr
+    toConcr
+    height
+    maximumLengthPath
+    sym
+    toPP
+    fromString
+    lam
+    evaluate
+    jforlanNew
+    letRec
+    step
+    equal
+    fromRep
+    str
+    pair
+    subst
+    letSimp
+    toStr
+    const
+    calc
+    compare
+    jforlanValidate
+    size
+    cond
+    var
+    int
+    jforlanPretty
 ]
 @STRUCTURE Prog "prog" PROG

@@ -4,16 +4,16 @@
   @TYPES 
     @TYPE pp
   @VALS 
-    newline
+    block
+    toString
     decorate
     fromString
-    colon
-    fromStringSplitEscape
-    semicolon
-    toString
-    block
-    comma
-    quote
+    newline
     empty
+    quote
+    comma
+    fromStringSplitEscape
+    colon
+    semicolon
 ]
 @STRUCTURE PP "pp" PP

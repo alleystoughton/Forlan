@@ -29,18 +29,18 @@ The lexical analyzer first strips its input of all whitespace and comments, wher
 <H4>Interface</H4>
 <BLOCKQUOTE>
 <CODE><B>type</B>&nbsp;<A NAME="STR:Lex.basic:TY:SPEC" HREF="#STR:Lex.basic:TY">basic</A><BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.charToBasic:VAL:SPEC" HREF="#STR:Lex.charToBasic:VAL">charToBasic</A>&nbsp;<B>:</B>&nbsp;char&nbsp;<B>-&gt;</B>&nbsp;basic<BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.basicToChar:VAL:SPEC" HREF="#STR:Lex.basicToChar:VAL">basicToChar</A>&nbsp;<B>:</B>&nbsp;basic&nbsp;<B>-&gt;</B>&nbsp;char<BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.charToBasic:VAL:SPEC" HREF="#STR:Lex.charToBasic:VAL">charToBasic</A>&nbsp;<B>:</B>&nbsp;char&nbsp;<B>-></B>&nbsp;basic<BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.basicToChar:VAL:SPEC" HREF="#STR:Lex.basicToChar:VAL">basicToChar</A>&nbsp;<B>:</B>&nbsp;basic&nbsp;<B>-></B>&nbsp;char<BR>
 <B>type</B>&nbsp;<A NAME="STR:Lex.sym:TY:SPEC" HREF="#STR:Lex.sym:TY">sym</A><BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.symToString:VAL:SPEC" HREF="#STR:Lex.symToString:VAL">symToString</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-&gt;</B>&nbsp;string<BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.sizeSym:VAL:SPEC" HREF="#STR:Lex.sizeSym:VAL">sizeSym</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.symToString:VAL:SPEC" HREF="#STR:Lex.symToString:VAL">symToString</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-></B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.sizeSym:VAL:SPEC" HREF="#STR:Lex.sizeSym:VAL">sizeSym</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-></B>&nbsp;int<BR>
 <B>val</B>&nbsp;<A NAME="STR:Lex.compareSym:VAL:SPEC" HREF="#STR:Lex.compareSym:VAL">compareSym</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;Sort.total_ordering<BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.symToPP:VAL:SPEC" HREF="#STR:Lex.symToPP:VAL">symToPP</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.symToPP:VAL:SPEC" HREF="#STR:Lex.symToPP:VAL">symToPP</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-></B>&nbsp;PP.pp<BR>
 <B>datatype</B>&nbsp;<A NAME="STR:Lex.sym_top:TY:SPEC" HREF="#STR:Lex.sym_top:TY">sym_top</A><BR>
 &nbsp;&nbsp;=&nbsp;<A NAME="STR:Lex.BasicSymTop:TY:SPEC" HREF="#STR:Lex.BasicSymTop:TY">BasicSymTop</A>&nbsp;<B>of</B>&nbsp;basic<BR>
 &nbsp;&nbsp;|&nbsp;<A NAME="STR:Lex.CompoundSymTop:TY:SPEC" HREF="#STR:Lex.CompoundSymTop:TY">CompoundSymTop</A>&nbsp;<B>of</B>&nbsp;sym&nbsp;option&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.symTopToSym:VAL:SPEC" HREF="#STR:Lex.symTopToSym:VAL">symTopToSym</A>&nbsp;<B>:</B>&nbsp;sym_top&nbsp;<B>-&gt;</B>&nbsp;sym<BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.symToSymTop:VAL:SPEC" HREF="#STR:Lex.symToSymTop:VAL">symToSymTop</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-&gt;</B>&nbsp;sym_top<BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.symTopToSym:VAL:SPEC" HREF="#STR:Lex.symTopToSym:VAL">symTopToSym</A>&nbsp;<B>:</B>&nbsp;sym_top&nbsp;<B>-></B>&nbsp;sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.symToSymTop:VAL:SPEC" HREF="#STR:Lex.symToSymTop:VAL">symToSymTop</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-></B>&nbsp;sym_top<BR>
 <B>datatype</B>&nbsp;<A NAME="STR:Lex.tok:TY:SPEC" HREF="#STR:Lex.tok:TY">tok</A><BR>
 &nbsp;&nbsp;=&nbsp;<A NAME="STR:Lex.Bar:TY:SPEC" HREF="#STR:Lex.Bar:TY">Bar</A><BR>
 &nbsp;&nbsp;|&nbsp;<A NAME="STR:Lex.Comma:TY:SPEC" HREF="#STR:Lex.Comma:TY">Comma</A><BR>
@@ -57,17 +57,17 @@ The lexical analyzer first strips its input of all whitespace and comments, wher
 &nbsp;&nbsp;|&nbsp;<A NAME="STR:Lex.Sym:TY:SPEC" HREF="#STR:Lex.Sym:TY">Sym</A>&nbsp;<B>of</B>&nbsp;sym<BR>
 &nbsp;&nbsp;|&nbsp;<A NAME="STR:Lex.Heading:TY:SPEC" HREF="#STR:Lex.Heading:TY">Heading</A>&nbsp;<B>of</B>&nbsp;string<BR>
 &nbsp;&nbsp;|&nbsp;<A NAME="STR:Lex.EOF:TY:SPEC" HREF="#STR:Lex.EOF:TY">EOF</A><BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.equalTok:VAL:SPEC" HREF="#STR:Lex.equalTok:VAL">equalTok</A>&nbsp;<B>:</B>&nbsp;tok&nbsp;<B>*</B>&nbsp;tok&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.errorNotEOFTerminated:VAL:SPEC" HREF="#STR:Lex.errorNotEOFTerminated:VAL">errorNotEOFTerminated</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.expectedTok:VAL:SPEC" HREF="#STR:Lex.expectedTok:VAL">expectedTok</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;tok&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.expectedDigit:VAL:SPEC" HREF="#STR:Lex.expectedDigit:VAL">expectedDigit</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.expectedLetter:VAL:SPEC" HREF="#STR:Lex.expectedLetter:VAL">expectedLetter</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.expectedLetterOrDigit:VAL:SPEC" HREF="#STR:Lex.expectedLetterOrDigit:VAL">expectedLetterOrDigit</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.unexpectedTok:VAL:SPEC" HREF="#STR:Lex.unexpectedTok:VAL">unexpectedTok</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;tok&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.checkInLabToks:VAL:SPEC" HREF="#STR:Lex.checkInLabToks:VAL">checkInLabToks</A>&nbsp;<B>:</B>&nbsp;tok&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;tok)&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;tok)&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.error:VAL:SPEC" HREF="#STR:Lex.error:VAL">error</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;PP.pp&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.lexString:VAL:SPEC" HREF="#STR:Lex.lexString:VAL">lexString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;tok)&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:Lex.lexFile:VAL:SPEC" HREF="#STR:Lex.lexFile:VAL">lexFile</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;tok)&nbsp;list</CODE>
+<B>val</B>&nbsp;<A NAME="STR:Lex.equalTok:VAL:SPEC" HREF="#STR:Lex.equalTok:VAL">equalTok</A>&nbsp;<B>:</B>&nbsp;tok&nbsp;<B>*</B>&nbsp;tok&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.errorNotEOFTerminated:VAL:SPEC" HREF="#STR:Lex.errorNotEOFTerminated:VAL">errorNotEOFTerminated</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-></B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.expectedTok:VAL:SPEC" HREF="#STR:Lex.expectedTok:VAL">expectedTok</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;tok&nbsp;<B>-></B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.expectedDigit:VAL:SPEC" HREF="#STR:Lex.expectedDigit:VAL">expectedDigit</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-></B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.expectedLetter:VAL:SPEC" HREF="#STR:Lex.expectedLetter:VAL">expectedLetter</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-></B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.expectedLetterOrDigit:VAL:SPEC" HREF="#STR:Lex.expectedLetterOrDigit:VAL">expectedLetterOrDigit</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-></B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.unexpectedTok:VAL:SPEC" HREF="#STR:Lex.unexpectedTok:VAL">unexpectedTok</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;tok&nbsp;<B>-></B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.checkInLabToks:VAL:SPEC" HREF="#STR:Lex.checkInLabToks:VAL">checkInLabToks</A>&nbsp;<B>:</B>&nbsp;tok&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;tok)&nbsp;list&nbsp;<B>-></B>&nbsp;(int&nbsp;<B>*</B>&nbsp;tok)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.error:VAL:SPEC" HREF="#STR:Lex.error:VAL">error</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;PP.pp&nbsp;list&nbsp;<B>-></B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.lexString:VAL:SPEC" HREF="#STR:Lex.lexString:VAL">lexString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;(int&nbsp;<B>*</B>&nbsp;tok)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Lex.lexFile:VAL:SPEC" HREF="#STR:Lex.lexFile:VAL">lexFile</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;(int&nbsp;<B>*</B>&nbsp;tok)&nbsp;list</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

@@ -2,66 +2,66 @@
   ["dfa"; "The DFA Module";]
 @SIGNATURE DFA "dfa" [
   @TYPES 
-    @DATATYPE relationship [ Equal ProperSub ProperSup Incomp]
     @TYPE dfa
+    @DATATYPE relationship [ Equal ProperSub ProperSup Incomp]
   @VALS 
-    toPP
-    determTransitionFun
+    isomorphic
+    emptyStr
+    determSimplified
+    findIsomorphism
+    transitions
+    findIsomorphismOpt
+    output
+    toString
     renameStatesCanonically
     isomorphism
-    fromString
-    startState
-    injToEFA
-    output
     inter
-    states
-    numStates
-    fromNFA
-    injToNFA
-    accepted
-    determAccepted
-    sub
-    findAcceptingLP
-    validLP
-    findLP
-    isomorphic
-    equivalent
-    findAcceptingLPOpt
-    findLPOpt
-    valid
-    input
-    alphabet
-    minimize
-    transitionFun
-    reachified
-    transitionFunBackwards
-    determSimplified
-    emptyStr
-    equal
-    checkLP
-    findIsomorphism
-    projFromEFA
-    reachify
-    renameStates
-    determSimplify
-    transitions
-    numTransitions
-    findIsomorphismOpt
-    relationship
-    acceptingStates
-    complement
-    projFromNFA
-    subset
-    projFromFA
-    compare
-    processStr
-    determProcessStr
     renameAlphabet
-    toString
+    injToNFA
+    processStr
+    transitionFun
+    startState
+    acceptingStates
+    reachify
+    subset
+    determSimplify
+    reachified
+    projFromNFA
     emptySet
     injToFA
-    minus
+    projFromEFA
     genInter
+    injToEFA
+    findAcceptingLPOpt
+    input
+    complement
+    minimize
+    findLPOpt
+    states
+    accepted
     relation
+    determAccepted
+    toPP
+    projFromFA
+    determTransitionFun
+    fromString
+    fromNFA
+    minus
+    equal
+    determProcessStr
+    valid
+    checkLP
+    transitionFunBackwards
+    compare
+    equivalent
+    validLP
+    numStates
+    sub
+    renameStates
+    findLP
+    findAcceptingLP
+    alphabet
+    relationship
+    numTransitions
 ]
 @STRUCTURE DFA "dfa" DFA

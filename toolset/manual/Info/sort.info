@@ -5,11 +5,11 @@
     @TYPE total_ordering
   @VALS 
     merge
-    sort
-    equal
-    sorted
     insert
-    less
+    sorted
+    equal
     lessEqual
+    sort
+    less
 ]
 @STRUCTURE Sort "sort" SORT

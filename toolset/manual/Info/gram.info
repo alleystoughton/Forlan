@@ -2,80 +2,80 @@
   ["gram"; "The Gram Module";]
 @SIGNATURE GRAM "gram" [
   @TYPES 
-    @TYPE concr
     @TYPE gram
+    @TYPE concr
   @VALS 
-    renameVariables
-    inChomskyNormalForm
-    toPP
-    startVariable
-    toStrSet
-    fromString
-    closure
-    output
-    inter
-    restartOpt
-    fromConcr
-    union
-    sub
-    fromSym
-    input
-    valid
-    alphabet
-    reachified
-    parseAlphabetFromVariable
-    simplified
-    emptyStr
-    numVariables
-    parsable
-    numProductions
     findIsomorphism
-    chomskyNormalForm
-    findIsomorphismOpt
-    eliminateVariable
-    compare
-    generatedFromVariable
-    renameAlphabet
+    eliminateVariableConstraintsOpt
+    renameVariables
+    output
     toString
-    reachableFrom
-    emptySet
-    minus
-    renameVariablesCanonically
-    fromReg
-    genConcat
-    genUnion
-    parseAlphabetFromVariableOpt
-    isomorphism
-    parseAlphabetOpt
-    eliminateVariableOpt
-    eliminateEmptyProductions
-    hasNoEmptyProductions
-    hasNoEmptyOrUnitProductions
-    restart
-    eliminateVariableConstraints
-    nullableVariables
-    concat
-    fromStrSet
-    rev
-    isomorphic
-    reachableFromBackwards
-    validPT
-    equal
-    toConcr
-    variables
+    inter
     productions
     parse
-    reachify
-    toStrSetOpt
-    parseAlphabet
-    simplify
-    prefix
-    parseOpt
-    checkPT
+    restartOpt
     eliminateEmptyAndUnitProductions
-    eliminateVariableConstraintsOpt
-    fromFA
+    reachableFromBackwards
+    generatedFromVariable
+    reachify
+    checkPT
+    startVariable
+    reachified
+    inChomskyNormalForm
+    eliminateVariableOpt
+    emptySet
+    eliminateVariable
+    hasNoEmptyProductions
+    reachableFrom
     fromStr
+    toConcr
+    chomskyNormalForm
+    toPP
+    fromReg
+    nullableVariables
+    parseAlphabetFromVariable
+    parseAlphabet
+    prefix
+    simplified
+    eliminateVariableConstraints
+    minus
+    equal
+    fromStrSet
+    valid
+    compare
+    fromSym
+    union
+    numProductions
+    hasNoEmptyOrUnitProductions
+    isomorphic
+    parsable
+    emptyStr
+    variables
+    closure
+    findIsomorphismOpt
+    parseAlphabetFromVariableOpt
+    numVariables
+    parseAlphabetOpt
+    isomorphism
+    renameAlphabet
+    renameVariablesCanonically
+    fromConcr
+    rev
+    input
+    concat
+    toStrSetOpt
+    eliminateEmptyProductions
     generated
+    genUnion
+    validPT
+    fromString
+    simplify
+    restart
+    genConcat
+    parseOpt
+    toStrSet
+    sub
+    fromFA
+    alphabet
 ]
 @STRUCTURE Gram "gram" GRAM

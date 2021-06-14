@@ -27,13 +27,13 @@ This module defines an abstract type of finite tables (maps).
 <H4>Interface</H4>
 <BLOCKQUOTE>
 <CODE><B>type</B>&nbsp;(<I>'a</I>,<I>'b</I>)&nbsp;<A NAME="STR:Tab.tab:TY:SPEC" HREF="#STR:Tab.tab:TY">tab</A><BR>
-<B>val</B>&nbsp;<A NAME="STR:Tab.lookup:VAL:SPEC" HREF="#STR:Tab.lookup:VAL">lookup</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;Sort.total_ordering&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;option<BR>
-<B>val</B>&nbsp;<A NAME="STR:Tab.isEmpty:VAL:SPEC" HREF="#STR:Tab.isEmpty:VAL">isEmpty</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Tab.lookup:VAL:SPEC" HREF="#STR:Tab.lookup:VAL">lookup</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;Sort.total_ordering&nbsp;<B>-></B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-></B>&nbsp;<I>'b</I>&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:Tab.isEmpty:VAL:SPEC" HREF="#STR:Tab.isEmpty:VAL">isEmpty</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab&nbsp;<B>-></B>&nbsp;bool<BR>
 <B>val</B>&nbsp;<A NAME="STR:Tab.empty:VAL:SPEC" HREF="#STR:Tab.empty:VAL">empty</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab<BR>
-<B>val</B>&nbsp;<A NAME="STR:Tab.update:VAL:SPEC" HREF="#STR:Tab.update:VAL">update</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;Sort.total_ordering&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab&nbsp;<B>*</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>)&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab<BR>
-<B>val</B>&nbsp;<A NAME="STR:Tab.domain:VAL:SPEC" HREF="#STR:Tab.domain:VAL">domain</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;Sort.total_ordering&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:Tab.toList:VAL:SPEC" HREF="#STR:Tab.toList:VAL">toList</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>)&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:Tab.fromList:VAL:SPEC" HREF="#STR:Tab.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;Sort.total_ordering&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>)&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab</CODE>
+<B>val</B>&nbsp;<A NAME="STR:Tab.update:VAL:SPEC" HREF="#STR:Tab.update:VAL">update</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;Sort.total_ordering&nbsp;<B>-></B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab&nbsp;<B>*</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>)&nbsp;list&nbsp;<B>-></B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab<BR>
+<B>val</B>&nbsp;<A NAME="STR:Tab.domain:VAL:SPEC" HREF="#STR:Tab.domain:VAL">domain</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;Sort.total_ordering&nbsp;<B>-></B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:Tab.toList:VAL:SPEC" HREF="#STR:Tab.toList:VAL">toList</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab&nbsp;<B>-></B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Tab.fromList:VAL:SPEC" HREF="#STR:Tab.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;Sort.total_ordering&nbsp;<B>-></B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>)&nbsp;list&nbsp;<B>-></B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;tab</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

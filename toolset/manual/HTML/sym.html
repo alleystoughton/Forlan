@@ -27,25 +27,25 @@ This module provides the abstract type of Forlan symbols.  (This abstract type i
 <H4>Interface</H4>
 <BLOCKQUOTE>
 <CODE><B>type</B>&nbsp;<A NAME="STR:Sym.basic:TY:SPEC" HREF="#STR:Sym.basic:TY">basic</A>&nbsp;=&nbsp;Lex.basic<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sym.charToBasic:VAL:SPEC" HREF="#STR:Sym.charToBasic:VAL">charToBasic</A>&nbsp;<B>:</B>&nbsp;char&nbsp;<B>-&gt;</B>&nbsp;basic<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sym.basicToChar:VAL:SPEC" HREF="#STR:Sym.basicToChar:VAL">basicToChar</A>&nbsp;<B>:</B>&nbsp;basic&nbsp;<B>-&gt;</B>&nbsp;char<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sym.charToBasic:VAL:SPEC" HREF="#STR:Sym.charToBasic:VAL">charToBasic</A>&nbsp;<B>:</B>&nbsp;char&nbsp;<B>-></B>&nbsp;basic<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sym.basicToChar:VAL:SPEC" HREF="#STR:Sym.basicToChar:VAL">basicToChar</A>&nbsp;<B>:</B>&nbsp;basic&nbsp;<B>-></B>&nbsp;char<BR>
 <B>type</B>&nbsp;<A NAME="STR:Sym.sym:TY:SPEC" HREF="#STR:Sym.sym:TY">sym</A>&nbsp;=&nbsp;Lex.sym<BR>
 <B>datatype</B>&nbsp;<A NAME="STR:Sym.top:TY:SPEC" HREF="#STR:Sym.top:TY">top</A><BR>
 &nbsp;&nbsp;=&nbsp;<A NAME="STR:Sym.Basic:TY:SPEC" HREF="#STR:Sym.Basic:TY">Basic</A>&nbsp;<B>of</B>&nbsp;basic<BR>
 &nbsp;&nbsp;|&nbsp;<A NAME="STR:Sym.Compound:TY:SPEC" HREF="#STR:Sym.Compound:TY">Compound</A>&nbsp;<B>of</B>&nbsp;sym&nbsp;option&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sym.fromTop:VAL:SPEC" HREF="#STR:Sym.fromTop:VAL">fromTop</A>&nbsp;<B>:</B>&nbsp;top&nbsp;<B>-&gt;</B>&nbsp;sym<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sym.toTop:VAL:SPEC" HREF="#STR:Sym.toTop:VAL">toTop</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-&gt;</B>&nbsp;top<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sym.inputFromLabToks:VAL:SPEC" HREF="#STR:Sym.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;sym&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sym.fromString:VAL:SPEC" HREF="#STR:Sym.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;sym<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sym.input:VAL:SPEC" HREF="#STR:Sym.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;sym<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sym.toPP:VAL:SPEC" HREF="#STR:Sym.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sym.toString:VAL:SPEC" HREF="#STR:Sym.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-&gt;</B>&nbsp;string<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sym.output:VAL:SPEC" HREF="#STR:Sym.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;sym&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sym.fromTop:VAL:SPEC" HREF="#STR:Sym.fromTop:VAL">fromTop</A>&nbsp;<B>:</B>&nbsp;top&nbsp;<B>-></B>&nbsp;sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sym.toTop:VAL:SPEC" HREF="#STR:Sym.toTop:VAL">toTop</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-></B>&nbsp;top<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sym.inputFromLabToks:VAL:SPEC" HREF="#STR:Sym.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-></B>&nbsp;sym&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sym.fromString:VAL:SPEC" HREF="#STR:Sym.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sym.input:VAL:SPEC" HREF="#STR:Sym.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;sym<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sym.toPP:VAL:SPEC" HREF="#STR:Sym.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-></B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sym.toString:VAL:SPEC" HREF="#STR:Sym.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-></B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sym.output:VAL:SPEC" HREF="#STR:Sym.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;sym&nbsp;<B>-></B>&nbsp;unit<BR>
 <B>val</B>&nbsp;<A NAME="STR:Sym.compare:VAL:SPEC" HREF="#STR:Sym.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;Sort.total_ordering<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sym.equal:VAL:SPEC" HREF="#STR:Sym.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>*</B>&nbsp;sym&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sym.size:VAL:SPEC" HREF="#STR:Sym.size:VAL">size</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sym.jforlanValidate:VAL:SPEC" HREF="#STR:Sym.jforlanValidate:VAL">jforlanValidate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:Sym.jforlanPretty:VAL:SPEC" HREF="#STR:Sym.jforlanPretty:VAL">jforlanPretty</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+<B>val</B>&nbsp;<A NAME="STR:Sym.equal:VAL:SPEC" HREF="#STR:Sym.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>*</B>&nbsp;sym&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sym.size:VAL:SPEC" HREF="#STR:Sym.size:VAL">size</A>&nbsp;<B>:</B>&nbsp;sym&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sym.jforlanValidate:VAL:SPEC" HREF="#STR:Sym.jforlanValidate:VAL">jforlanValidate</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Sym.jforlanPretty:VAL:SPEC" HREF="#STR:Sym.jforlanPretty:VAL">jforlanPretty</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;unit</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

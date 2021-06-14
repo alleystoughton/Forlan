@@ -2,14 +2,14 @@
   ["messages"; "The Messages Module";]
 @SIGNATURE MESSAGES "messages" [
   @EXCEPTIONS 
-    Error
     CannotHappen
+    Error
   @VALS 
+    cannotHappen
+    messagePP
     messageString
     errorString
-    messagePP
     quiet
     errorPP
-    cannotHappen
 ]
 @STRUCTURE Messages "messages" MESSAGES

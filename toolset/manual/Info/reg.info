@@ -2,85 +2,85 @@
   ["reg"; "The Reg Module";]
 @SIGNATURE REG "reg" [
   @TYPES 
-    @DATATYPE concr [ EmptyStr EmptySet Sym Closure Concat Union]
     @TYPE cc
     @TYPE reg
+    @DATATYPE concr [ EmptyStr EmptySet Sym Closure Concat Union]
   @VALS 
-    jforlanEdit
-    globallySimplify
-    toPP
-    jforlanPretty
     sortUnions
-    rightConcat
-    rightUnion
-    toStrSet
-    isClosure
-    fromString
-    closure
-    obviousSubset
-    output
-    isUnion
-    union
-    fromConcr
-    size
-    fromSym
-    maximumLengthPath
-    numLeaves
-    input
-    alphabet
-    isEmptyStr
-    isSym
-    ccToList
-    jforlanValidate
-    emptyStr
-    locallySimplifyTrace
-    locallySimplify
-    validPath
-    allStr
-    weaklySimplified
-    inputFromLabToks
-    succCC
-    compare
-    isEmptySet
-    renameAlphabet
-    compareComplexityTotal
-    toString
-    concatsToList
-    weaklySimplify
-    emptySet
-    globallySimplified
-    power
-    hasEmp
-    globallySimplifyTrace
-    genConcat
-    update
-    genUnion
     validLeafPath
-    compareComplexity
-    cc
-    numSyms
+    unionCC
+    compareCC
+    split
+    isUnion
+    output
+    obviousSubset
+    toString
+    isEmptySet
+    jforlanEdit
     allSym
     isConcat
-    hasSym
+    select
+    weaklySimplify
+    isClosure
+    isSym
+    emptySet
+    compareComplexityTotal
+    concatsToList
+    fromStr
+    toConcr
+    height
+    toPP
+    weaklySimplified
+    locallySimplifyTrace
+    prefix
+    succCC
+    standardized
     singCC
     localSimplificationRelations
-    concat
-    fromStrSet
-    unionsToList
-    numConcats
-    split
-    rev
-    unionCC
-    select
-    locallySimplified
     equal
-    toConcr
+    fromStrSet
+    allStr
+    compare
+    union
+    fromSym
+    rightUnion
+    locallySimplified
+    inputFromLabToks
+    size
+    globallySimplifyTrace
+    emptyStr
+    closure
+    globallySimplified
+    numSyms
+    hasEmp
+    numConcats
+    validPath
+    renameAlphabet
+    fromConcr
+    isEmptyStr
+    rev
+    hasSym
+    update
+    compareComplexity
+    input
+    concat
+    rightConcat
     toStrSetOpt
-    prefix
+    numLeaves
+    globallySimplify
+    maximumLengthPath
+    cc
+    genUnion
+    power
+    fromString
     jforlanNew
-    height
-    fromStr
-    compareCC
-    standardized
+    unionsToList
+    genConcat
+    toStrSet
+    locallySimplify
+    jforlanValidate
+    alphabet
+    ccToList
+    jforlanPretty
 ]
 @STRUCTURE Reg "reg" REG

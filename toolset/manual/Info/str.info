@@ -4,26 +4,26 @@
   @TYPES 
     @TYPE str
   @VALS 
-    input
-    alphabet
-    possBeginsWithStr
-    removeSuffix
     substr
+    removePrefix
+    allButLast
+    removeSuffix
+    output
     toPP
-    jforlanPretty
-    jforlanValidate
-    equal
+    toString
+    power
     fromString
     prefix
-    output
+    suffix
+    renameAlphabet
+    equal
+    compare
+    jforlanValidate
+    possBeginsWithStr
     last
     inputFromLabToks
-    suffix
-    compare
-    allButLast
-    renameAlphabet
-    toString
-    removePrefix
-    power
+    alphabet
+    input
+    jforlanPretty
 ]
 @STRUCTURE Str "str" STR

@@ -4,53 +4,53 @@
   @TYPES 
     @TYPE sym_rel
   @VALS 
+    functionFromTo
+    inverse
+    output
+    toString
+    restrictFunction
+    inter
+    function
+    relationOn
+    map
+    domain
+    bijectionFromSupersetAvoiding
+    subset
+    memb
+    genInter
+    input
+    applyFunction
+    updateFunction
+    symmetric
+    injection
     toPP
     genUnion
-    function
-    mlFunctionToFunction
-    makeBijectionFromAvoiding
-    fromString
-    bijectionFromAvoiding
-    symmetric
-    map
-    fromList
-    reflexiveTransitiveClosure
-    output
-    inter
-    injection
-    relationFromTo
-    restrictFunction
-    domain
-    union
-    antisymmetric
-    symmetricClosure
-    applyFunction
-    functionFromTo
-    range
-    input
-    memb
-    comparePair
-    transitiveSymmetricClosure
-    compose
-    bijectionFromSupersetAvoiding
-    reflexiveClosure
-    equal
-    updateFunction
-    transitive
-    inverse
-    inputFromLabToks
-    total
-    subset
-    apply
-    transitiveClosure
-    compare
-    toString
-    reflexive
-    relationOn
-    genInter
-    minus
-    reflexiveTransitiveSymmetricClosure
     bijectionFromTo
+    bijectionFromAvoiding
+    fromString
+    relationFromTo
+    transitiveSymmetricClosure
+    equal
+    minus
+    mlFunctionToFunction
+    fromList
+    range
+    transitive
+    transitiveClosure
+    compose
+    compare
+    union
+    reflexiveClosure
     mapFromList
+    symmetricClosure
+    comparePair
+    antisymmetric
+    inputFromLabToks
+    apply
+    reflexive
+    reflexiveTransitiveSymmetricClosure
+    makeBijectionFromAvoiding
+    total
+    reflexiveTransitiveClosure
 ]
 @STRUCTURE SymRel "sym-rel" SYM_REL

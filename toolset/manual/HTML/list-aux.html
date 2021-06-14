@@ -26,19 +26,19 @@ This module defines auxiliary functions on lists.
 <HR>
 <H4>Interface</H4>
 <BLOCKQUOTE>
-<CODE><B>val</B>&nbsp;<A NAME="STR:ListAux.sum:VAL:SPEC" HREF="#STR:ListAux.sum:VAL">sum</A>&nbsp;<B>:</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:ListAux.prod:VAL:SPEC" HREF="#STR:ListAux.prod:VAL">prod</A>&nbsp;<B>:</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:ListAux.max:VAL:SPEC" HREF="#STR:ListAux.max:VAL">max</A>&nbsp;<B>:</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:ListAux.min:VAL:SPEC" HREF="#STR:ListAux.min:VAL">min</A>&nbsp;<B>:</B>&nbsp;int&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:ListAux.sub:VAL:SPEC" HREF="#STR:ListAux.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
-<B>val</B>&nbsp;<A NAME="STR:ListAux.update:VAL:SPEC" HREF="#STR:ListAux.update:VAL">update</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:ListAux.position:VAL:SPEC" HREF="#STR:ListAux.position:VAL">position</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;option<BR>
-<B>val</B>&nbsp;<A NAME="STR:ListAux.repeat:VAL:SPEC" HREF="#STR:ListAux.repeat:VAL">repeat</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:ListAux.allButLast:VAL:SPEC" HREF="#STR:ListAux.allButLast:VAL">allButLast</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:ListAux.splitAt:VAL:SPEC" HREF="#STR:ListAux.splitAt:VAL">splitAt</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:ListAux.allSplittings:VAL:SPEC" HREF="#STR:ListAux.allSplittings:VAL">allSplittings</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;list)&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:ListAux.adjacentElts:VAL:SPEC" HREF="#STR:ListAux.adjacentElts:VAL">adjacentElts</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>)&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:ListAux.fromTo:VAL:SPEC" HREF="#STR:ListAux.fromTo:VAL">fromTo</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;list</CODE>
+<CODE><B>val</B>&nbsp;<A NAME="STR:ListAux.sum:VAL:SPEC" HREF="#STR:ListAux.sum:VAL">sum</A>&nbsp;<B>:</B>&nbsp;int&nbsp;list&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:ListAux.prod:VAL:SPEC" HREF="#STR:ListAux.prod:VAL">prod</A>&nbsp;<B>:</B>&nbsp;int&nbsp;list&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:ListAux.max:VAL:SPEC" HREF="#STR:ListAux.max:VAL">max</A>&nbsp;<B>:</B>&nbsp;int&nbsp;list&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:ListAux.min:VAL:SPEC" HREF="#STR:ListAux.min:VAL">min</A>&nbsp;<B>:</B>&nbsp;int&nbsp;list&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:ListAux.sub:VAL:SPEC" HREF="#STR:ListAux.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-></B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="STR:ListAux.update:VAL:SPEC" HREF="#STR:ListAux.update:VAL">update</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:ListAux.position:VAL:SPEC" HREF="#STR:ListAux.position:VAL">position</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-></B>&nbsp;bool)&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-></B>&nbsp;int&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="STR:ListAux.repeat:VAL:SPEC" HREF="#STR:ListAux.repeat:VAL">repeat</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:ListAux.allButLast:VAL:SPEC" HREF="#STR:ListAux.allButLast:VAL">allButLast</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:ListAux.splitAt:VAL:SPEC" HREF="#STR:ListAux.splitAt:VAL">splitAt</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:ListAux.allSplittings:VAL:SPEC" HREF="#STR:ListAux.allSplittings:VAL">allSplittings</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-></B>&nbsp;(<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;list)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:ListAux.adjacentElts:VAL:SPEC" HREF="#STR:ListAux.adjacentElts:VAL">adjacentElts</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-></B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:ListAux.fromTo:VAL:SPEC" HREF="#STR:ListAux.fromTo:VAL">fromTo</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-></B>&nbsp;int&nbsp;list</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

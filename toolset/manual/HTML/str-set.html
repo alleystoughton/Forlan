@@ -27,35 +27,35 @@ This module provides operations on finite sets of Forlan strings, i.e., values o
 <HR>
 <H4>Interface</H4>
 <BLOCKQUOTE>
-<CODE><B>val</B>&nbsp;<A NAME="STR:StrSet.memb:VAL:SPEC" HREF="#STR:StrSet.memb:VAL">memb</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.fromList:VAL:SPEC" HREF="#STR:StrSet.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
+<CODE><B>val</B>&nbsp;<A NAME="STR:StrSet.memb:VAL:SPEC" HREF="#STR:StrSet.memb:VAL">memb</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.fromList:VAL:SPEC" HREF="#STR:StrSet.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;list&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
 <B>val</B>&nbsp;<A NAME="STR:StrSet.compare:VAL:SPEC" HREF="#STR:StrSet.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;Sort.total_ordering<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.subset:VAL:SPEC" HREF="#STR:StrSet.subset:VAL">subset</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.equal:VAL:SPEC" HREF="#STR:StrSet.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.map:VAL:SPEC" HREF="#STR:StrSet.map:VAL">map</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;Str.str)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.mapFromList:VAL:SPEC" HREF="#STR:StrSet.mapFromList:VAL">mapFromList</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;Str.str)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.union:VAL:SPEC" HREF="#STR:StrSet.union:VAL">union</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.genUnion:VAL:SPEC" HREF="#STR:StrSet.genUnion:VAL">genUnion</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.inter:VAL:SPEC" HREF="#STR:StrSet.inter:VAL">inter</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.genInter:VAL:SPEC" HREF="#STR:StrSet.genInter:VAL">genInter</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.minus:VAL:SPEC" HREF="#STR:StrSet.minus:VAL">minus</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.inputFromLabToks:VAL:SPEC" HREF="#STR:StrSet.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.fromString:VAL:SPEC" HREF="#STR:StrSet.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.input:VAL:SPEC" HREF="#STR:StrSet.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.toPP:VAL:SPEC" HREF="#STR:StrSet.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.toString:VAL:SPEC" HREF="#STR:StrSet.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;string<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.output:VAL:SPEC" HREF="#STR:StrSet.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.concat:VAL:SPEC" HREF="#STR:StrSet.concat:VAL">concat</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.power:VAL:SPEC" HREF="#STR:StrSet.power:VAL">power</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.rev:VAL:SPEC" HREF="#STR:StrSet.rev:VAL">rev</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.prefixes:VAL:SPEC" HREF="#STR:StrSet.prefixes:VAL">prefixes</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.suffixes:VAL:SPEC" HREF="#STR:StrSet.suffixes:VAL">suffixes</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.substrings:VAL:SPEC" HREF="#STR:StrSet.substrings:VAL">substrings</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.prefix:VAL:SPEC" HREF="#STR:StrSet.prefix:VAL">prefix</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.suffix:VAL:SPEC" HREF="#STR:StrSet.suffix:VAL">suffix</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.substring:VAL:SPEC" HREF="#STR:StrSet.substring:VAL">substring</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.alphabet:VAL:SPEC" HREF="#STR:StrSet.alphabet:VAL">alphabet</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-&gt;</B>&nbsp;Sym.sym&nbsp;Set.set<BR>
-<B>val</B>&nbsp;<A NAME="STR:StrSet.renameAlphabet:VAL:SPEC" HREF="#STR:StrSet.renameAlphabet:VAL">renameAlphabet</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-&gt;</B>&nbsp;Str.str&nbsp;Set.set</CODE>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.subset:VAL:SPEC" HREF="#STR:StrSet.subset:VAL">subset</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.equal:VAL:SPEC" HREF="#STR:StrSet.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.map:VAL:SPEC" HREF="#STR:StrSet.map:VAL">map</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-></B>&nbsp;Str.str)&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.mapFromList:VAL:SPEC" HREF="#STR:StrSet.mapFromList:VAL">mapFromList</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-></B>&nbsp;Str.str)&nbsp;<B>-></B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.union:VAL:SPEC" HREF="#STR:StrSet.union:VAL">union</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.genUnion:VAL:SPEC" HREF="#STR:StrSet.genUnion:VAL">genUnion</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;list&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.inter:VAL:SPEC" HREF="#STR:StrSet.inter:VAL">inter</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.genInter:VAL:SPEC" HREF="#STR:StrSet.genInter:VAL">genInter</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;list&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.minus:VAL:SPEC" HREF="#STR:StrSet.minus:VAL">minus</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.inputFromLabToks:VAL:SPEC" HREF="#STR:StrSet.inputFromLabToks:VAL">inputFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.fromString:VAL:SPEC" HREF="#STR:StrSet.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.input:VAL:SPEC" HREF="#STR:StrSet.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.toPP:VAL:SPEC" HREF="#STR:StrSet.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.toString:VAL:SPEC" HREF="#STR:StrSet.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.output:VAL:SPEC" HREF="#STR:StrSet.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.concat:VAL:SPEC" HREF="#STR:StrSet.concat:VAL">concat</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.power:VAL:SPEC" HREF="#STR:StrSet.power:VAL">power</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.rev:VAL:SPEC" HREF="#STR:StrSet.rev:VAL">rev</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.prefixes:VAL:SPEC" HREF="#STR:StrSet.prefixes:VAL">prefixes</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.suffixes:VAL:SPEC" HREF="#STR:StrSet.suffixes:VAL">suffixes</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.substrings:VAL:SPEC" HREF="#STR:StrSet.substrings:VAL">substrings</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.prefix:VAL:SPEC" HREF="#STR:StrSet.prefix:VAL">prefix</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.suffix:VAL:SPEC" HREF="#STR:StrSet.suffix:VAL">suffix</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.substring:VAL:SPEC" HREF="#STR:StrSet.substring:VAL">substring</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.alphabet:VAL:SPEC" HREF="#STR:StrSet.alphabet:VAL">alphabet</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>-></B>&nbsp;Sym.sym&nbsp;Set.set<BR>
+<B>val</B>&nbsp;<A NAME="STR:StrSet.renameAlphabet:VAL:SPEC" HREF="#STR:StrSet.renameAlphabet:VAL">renameAlphabet</A>&nbsp;<B>:</B>&nbsp;Str.str&nbsp;Set.set&nbsp;<B>*</B>&nbsp;SymRel.sym_rel&nbsp;<B>-></B>&nbsp;Str.str&nbsp;Set.set</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

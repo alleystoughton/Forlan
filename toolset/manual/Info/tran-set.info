@@ -2,23 +2,23 @@
   ["tran-set"; "The TranSet Module";]
 @SIGNATURE TRAN_SET "tran-set" [
   @VALS 
-    input
-    memb
+    output
     toPP
     genUnion
-    equal
+    toString
     fromString
+    inter
+    minus
+    equal
     map
     fromList
-    output
-    inter
-    inputFromLabToks
     subset
-    compare
     union
-    toString
-    minus
-    genInter
+    compare
+    memb
     mapFromList
+    inputFromLabToks
+    genInter
+    input
 ]
 @STRUCTURE TranSet "tran-set" TRAN_SET

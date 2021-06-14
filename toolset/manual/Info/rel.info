@@ -4,33 +4,33 @@
   @TYPES 
     @TYPE rel
   @VALS 
-    transitiveSymmetricClosure
-    function
-    compose
-    bijectionFromSupersetAvoiding
-    reflexiveClosure
-    mlFunctionToFunction
-    updateFunction
-    transitive
-    bijectionFromAvoiding
-    inverse
+    functionFromTo
     symmetric
-    reflexiveTransitiveClosure
     injection
-    total
+    inverse
+    bijectionFromTo
+    bijectionFromAvoiding
     relationFromTo
     restrictFunction
-    transitiveClosure
-    apply
-    domain
-    antisymmetric
-    symmetricClosure
-    reflexive
+    function
+    transitiveSymmetricClosure
     relationOn
-    applyFunction
-    functionFromTo
-    reflexiveTransitiveSymmetricClosure
+    mlFunctionToFunction
+    domain
+    bijectionFromSupersetAvoiding
+    transitive
     range
-    bijectionFromTo
+    compose
+    transitiveClosure
+    reflexiveClosure
+    symmetricClosure
+    antisymmetric
+    applyFunction
+    reflexive
+    apply
+    updateFunction
+    reflexiveTransitiveSymmetricClosure
+    reflexiveTransitiveClosure
+    total
 ]
 @STRUCTURE Rel "rel" REL

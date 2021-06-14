@@ -2,24 +2,24 @@
   ["sym"; "The Sym Module";]
 @SIGNATURE SYM "sym" [
   @TYPES 
-    @DATATYPE top [ Basic Compound]
     @TYPE sym
+    @DATATYPE top [ Basic Compound]
     @TYPE basic
   @VALS 
-    input
-    toPP
-    jforlanPretty
-    jforlanValidate
-    toTop
-    equal
-    fromString
     output
-    basicToChar
-    charToBasic
-    inputFromLabToks
-    compare
-    fromTop
+    toPP
     toString
+    toTop
+    fromString
+    basicToChar
+    fromTop
+    equal
+    compare
+    jforlanValidate
+    inputFromLabToks
+    charToBasic
+    input
     size
+    jforlanPretty
 ]
 @STRUCTURE Sym "sym" SYM

@@ -27,15 +27,15 @@ This module defines the abstract type of program variables.
 <H4>Interface</H4>
 <BLOCKQUOTE>
 <CODE><B>type</B>&nbsp;<A NAME="STR:Var.var:TY:SPEC" HREF="#STR:Var.var:TY">var</A><BR>
-<B>val</B>&nbsp;<A NAME="STR:Var.beginsWithVar:VAL:SPEC" HREF="#STR:Var.beginsWithVar:VAL">beginsWithVar</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:Var.inputLabFromLabToks:VAL:SPEC" HREF="#STR:Var.inputLabFromLabToks:VAL">inputLabFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;<B>*</B>&nbsp;var&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:Var.fromString:VAL:SPEC" HREF="#STR:Var.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;var<BR>
-<B>val</B>&nbsp;<A NAME="STR:Var.input:VAL:SPEC" HREF="#STR:Var.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;var<BR>
-<B>val</B>&nbsp;<A NAME="STR:Var.toPP:VAL:SPEC" HREF="#STR:Var.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;var&nbsp;<B>-&gt;</B>&nbsp;PP.pp<BR>
-<B>val</B>&nbsp;<A NAME="STR:Var.toString:VAL:SPEC" HREF="#STR:Var.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;var&nbsp;<B>-&gt;</B>&nbsp;string<BR>
-<B>val</B>&nbsp;<A NAME="STR:Var.output:VAL:SPEC" HREF="#STR:Var.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;var&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Var.beginsWithVar:VAL:SPEC" HREF="#STR:Var.beginsWithVar:VAL">beginsWithVar</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Var.inputLabFromLabToks:VAL:SPEC" HREF="#STR:Var.inputLabFromLabToks:VAL">inputLabFromLabToks</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list&nbsp;<B>-></B>&nbsp;int&nbsp;<B>*</B>&nbsp;var&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;Lex.tok)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Var.fromString:VAL:SPEC" HREF="#STR:Var.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;var<BR>
+<B>val</B>&nbsp;<A NAME="STR:Var.input:VAL:SPEC" HREF="#STR:Var.input:VAL">input</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;var<BR>
+<B>val</B>&nbsp;<A NAME="STR:Var.toPP:VAL:SPEC" HREF="#STR:Var.toPP:VAL">toPP</A>&nbsp;<B>:</B>&nbsp;var&nbsp;<B>-></B>&nbsp;PP.pp<BR>
+<B>val</B>&nbsp;<A NAME="STR:Var.toString:VAL:SPEC" HREF="#STR:Var.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;var&nbsp;<B>-></B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:Var.output:VAL:SPEC" HREF="#STR:Var.output:VAL">output</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;var&nbsp;<B>-></B>&nbsp;unit<BR>
 <B>val</B>&nbsp;<A NAME="STR:Var.compare:VAL:SPEC" HREF="#STR:Var.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;var&nbsp;Sort.total_ordering<BR>
-<B>val</B>&nbsp;<A NAME="STR:Var.equal:VAL:SPEC" HREF="#STR:Var.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;var&nbsp;<B>*</B>&nbsp;var&nbsp;<B>-&gt;</B>&nbsp;bool</CODE>
+<B>val</B>&nbsp;<A NAME="STR:Var.equal:VAL:SPEC" HREF="#STR:Var.equal:VAL">equal</A>&nbsp;<B>:</B>&nbsp;var&nbsp;<B>*</B>&nbsp;var&nbsp;<B>-></B>&nbsp;bool</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>

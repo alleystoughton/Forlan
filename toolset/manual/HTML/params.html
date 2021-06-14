@@ -26,23 +26,23 @@ This module contains functions for querying and setting Forlan parameters.
 <HR>
 <H4>Interface</H4>
 <BLOCKQUOTE>
-<CODE><B>val</B>&nbsp;<A NAME="STR:Params.getSearchPath:VAL:SPEC" HREF="#STR:Params.getSearchPath:VAL">getSearchPath</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;list<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.setSearchPath:VAL:SPEC" HREF="#STR:Params.setSearchPath:VAL">setSearchPath</A>&nbsp;<B>:</B>&nbsp;string&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.getWorkingDirectory:VAL:SPEC" HREF="#STR:Params.getWorkingDirectory:VAL">getWorkingDirectory</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;string<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.setWorkingDirectory:VAL:SPEC" HREF="#STR:Params.setWorkingDirectory:VAL">setWorkingDirectory</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.getPrintingListLength:VAL:SPEC" HREF="#STR:Params.getPrintingListLength:VAL">getPrintingListLength</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingListLength:VAL:SPEC" HREF="#STR:Params.setPrintingListLength:VAL">setPrintingListLength</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.getPrintingStringSize:VAL:SPEC" HREF="#STR:Params.getPrintingStringSize:VAL">getPrintingStringSize</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingStringSize:VAL:SPEC" HREF="#STR:Params.setPrintingStringSize:VAL">setPrintingStringSize</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.getPrintingDataStructureDepth:VAL:SPEC" HREF="#STR:Params.getPrintingDataStructureDepth:VAL">getPrintingDataStructureDepth</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingDataStructureDepth:VAL:SPEC" HREF="#STR:Params.setPrintingDataStructureDepth:VAL">setPrintingDataStructureDepth</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.getPrintingLineLength:VAL:SPEC" HREF="#STR:Params.getPrintingLineLength:VAL">getPrintingLineLength</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;int<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingLineLength:VAL:SPEC" HREF="#STR:Params.setPrintingLineLength:VAL">setPrintingLineLength</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingOfGarbageCollectionMessages:VAL:SPEC" HREF="#STR:Params.setPrintingOfGarbageCollectionMessages:VAL">setPrintingOfGarbageCollectionMessages</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.getTrackExceptions:VAL:SPEC" HREF="#STR:Params.getTrackExceptions:VAL">getTrackExceptions</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.setTrackExceptions:VAL:SPEC" HREF="#STR:Params.setTrackExceptions:VAL">setTrackExceptions</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.getCompilationManagerVerbosity:VAL:SPEC" HREF="#STR:Params.getCompilationManagerVerbosity:VAL">getCompilationManagerVerbosity</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
-<B>val</B>&nbsp;<A NAME="STR:Params.setCompilationManagerVerbosity:VAL:SPEC" HREF="#STR:Params.setCompilationManagerVerbosity:VAL">setCompilationManagerVerbosity</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+<CODE><B>val</B>&nbsp;<A NAME="STR:Params.getSearchPath:VAL:SPEC" HREF="#STR:Params.getSearchPath:VAL">getSearchPath</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-></B>&nbsp;string&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setSearchPath:VAL:SPEC" HREF="#STR:Params.setSearchPath:VAL">setSearchPath</A>&nbsp;<B>:</B>&nbsp;string&nbsp;list&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.getWorkingDirectory:VAL:SPEC" HREF="#STR:Params.getWorkingDirectory:VAL">getWorkingDirectory</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-></B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setWorkingDirectory:VAL:SPEC" HREF="#STR:Params.setWorkingDirectory:VAL">setWorkingDirectory</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.getPrintingListLength:VAL:SPEC" HREF="#STR:Params.getPrintingListLength:VAL">getPrintingListLength</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingListLength:VAL:SPEC" HREF="#STR:Params.setPrintingListLength:VAL">setPrintingListLength</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.getPrintingStringSize:VAL:SPEC" HREF="#STR:Params.getPrintingStringSize:VAL">getPrintingStringSize</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingStringSize:VAL:SPEC" HREF="#STR:Params.setPrintingStringSize:VAL">setPrintingStringSize</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.getPrintingDataStructureDepth:VAL:SPEC" HREF="#STR:Params.getPrintingDataStructureDepth:VAL">getPrintingDataStructureDepth</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingDataStructureDepth:VAL:SPEC" HREF="#STR:Params.setPrintingDataStructureDepth:VAL">setPrintingDataStructureDepth</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.getPrintingLineLength:VAL:SPEC" HREF="#STR:Params.getPrintingLineLength:VAL">getPrintingLineLength</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-></B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingLineLength:VAL:SPEC" HREF="#STR:Params.setPrintingLineLength:VAL">setPrintingLineLength</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setPrintingOfGarbageCollectionMessages:VAL:SPEC" HREF="#STR:Params.setPrintingOfGarbageCollectionMessages:VAL">setPrintingOfGarbageCollectionMessages</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.getTrackExceptions:VAL:SPEC" HREF="#STR:Params.getTrackExceptions:VAL">getTrackExceptions</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setTrackExceptions:VAL:SPEC" HREF="#STR:Params.setTrackExceptions:VAL">setTrackExceptions</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>-></B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.getCompilationManagerVerbosity:VAL:SPEC" HREF="#STR:Params.getCompilationManagerVerbosity:VAL">getCompilationManagerVerbosity</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-></B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="STR:Params.setCompilationManagerVerbosity:VAL:SPEC" HREF="#STR:Params.setCompilationManagerVerbosity:VAL">setCompilationManagerVerbosity</A>&nbsp;<B>:</B>&nbsp;bool&nbsp;<B>-></B>&nbsp;unit</CODE>
 </BLOCKQUOTE>
 <H4>Description</H4>
 <DL>
