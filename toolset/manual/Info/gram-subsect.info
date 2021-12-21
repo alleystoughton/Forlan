@@ -1,9 +1,0 @@
-@FILES
-  ["gram-subsect"; "Grammars";
-    @SECTION "Grammars" [
-       @FILE "pt"
-       @FILE "prod"
-       @FILE "prod-set"
-       @FILE "gram"
-    ]
-  ]

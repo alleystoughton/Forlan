@@ -15,7 +15,7 @@
 <INTERFACE>
 <HEAD>The <CD/Version/ Module</HEAD>
 
-<PP>This module contains a function for determining the versions
+<PP>This module contains functions for determining the versions
 of Forlan and SML of New Jersey.</PP
 
 <STRUCTURE STRID="Version">

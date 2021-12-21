@@ -1,8 +1,0 @@
-@FILES
-  ["system"; "The System Module";]
-@SIGNATURE SYSTEM "system" [
-  @VALS 
-    runJForlan
-    makeTempFile
-]
-@STRUCTURE System "system" SYSTEM

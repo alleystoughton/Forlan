@@ -1,6 +1,0 @@
-@FILES
-  ["lex-subsect"; "Lexical Analysis";
-    @SECTION "Lexical Analysis" [
-       @FILE "lex"
-    ]
-  ]

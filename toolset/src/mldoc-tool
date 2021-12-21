@@ -7,6 +7,7 @@ base=${1%.mldoc}
 echo extracting $base.sig from $1
 rm -f $base.sig
 cd ../manual
+mkdir -p Sigs
 if extract-sig ML-Doc/$1;
 then chmod 444 Sigs/$base.sig
      mv Sigs/$base.sig ../src;

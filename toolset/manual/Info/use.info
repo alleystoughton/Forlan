@@ -1,7 +1,0 @@
-@FILES
-  ["use"; "The Use Module";]
-@SIGNATURE USE "use" [
-  @VALS 
-    use
-]
-@STRUCTURE Use "use" USE
