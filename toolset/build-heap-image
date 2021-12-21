@@ -5,12 +5,13 @@
 # ML-Doc doesn't have to be installed if the src/BASE.sig files are
 # newer than the BASE.mldoc files
 
-version=$(cat ../version.txt)
+forlan_version=$(cat ../version.txt)
+smlnj_version=$(sml < /dev/null | grep 'Standard ML of New Jersey' | sed -e 's/Standard ML of New Jersey (64-bit) v//' -e 's/ \[built.*//')
 
-echo Building Heap Image for Forlan Version $version
+echo "Building Heap Image for Forlan Version $version (based on SML/NJ Version $sml_version)"
 
 cd src
-change-version $version
+change-version $forlan_version $smlnj_version
 cleanup
 
 sml <<'END_OF_INPUT'

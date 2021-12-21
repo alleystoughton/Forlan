@@ -11,20 +11,6 @@ struct
 
 structure M  = Messages
 
-fun existsFile s = OS.FileSys.access(s, nil)
-
-local
-  val versionList = (*#version_id(Compiler.version)*) [110, 99]
-
-  fun vlToStr (n :: (ms as _ :: _)) =
-        Int.toString n ^ "." ^ vlToStr ms
-    | vlToStr [n]                   = Int.toString n
-    | vlToStr _                     = M.cannotHappen()
-
-in
-  val smlVersion = vlToStr versionList
-end
-
 local
   val toLower = String.map Char.toLower
 in
@@ -63,7 +49,7 @@ fun export() =
             (fn () =>
                   ["Forlan", "Version", Version.getVersion(), "(based",
                    "on", "Standard", "ML", "of", "New", "Jersey",
-                   "Version", smlVersion ^ ")"]))
+                   "Version", Version.getSMLNJVersion() ^ ")"]))
       else (M.messageString
             (fn () =>
                   ["Heap", "image", "written", "to", "file:",

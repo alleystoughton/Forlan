@@ -13,5 +13,8 @@
 *.out
 *.ps
 *.toc
+.DS_Store
 
+jforlan/JForlan.app
+jforlan/JForlan.jar
 toolset/src/.cm/

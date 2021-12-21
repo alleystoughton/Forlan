@@ -1,6 +1,6 @@
 (******************************* top-level.sml *******************************)
 
-(* Copyright (C) 2001-2012 Alley Stoughton
+(* Copyright (C) 2001-2021 Alley Stoughton
 
    The file is part of the Forlan toolset for experimenting with
    formal languages.  See the file COPYING.txt for copying and
@@ -14,6 +14,7 @@ struct
 (********************************** Version **********************************)
 
 val getVersion : unit -> string = Version.getVersion
+val getSMLNJVersion : unit -> string = Version.getSMLNJVersion
 
 (******************************** Parameters *********************************)
 

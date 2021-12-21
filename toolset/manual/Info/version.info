@@ -2,6 +2,7 @@
   ["version"; "The Version Module";]
 @SIGNATURE VERSION "version" [
   @VALS 
+    getSMLNJVersion
     getVersion
 ]
 @STRUCTURE Version "version" VERSION

@@ -2,13 +2,15 @@
 
 date=$(date +%Y)
 
-if [ $# != 1 ];
-then echo usage $0 PRIMARY.SECONDARY;
+if [ $# != 2 ];
+then echo usage $0 Forlan_version SMLNL_version;
      exit 1;
 fi;
 
-rm -rf version.sml
+rm -f version.sml
 
-sed -e "s/#YEAR#/$date/" -e "s/#VERSION#/$1/" version.sml.template > version.sml
+sed -e "s/#YEAR#/$date/" -e \
+    "s/#VERSION#/$1/" -e "s/#SMLNJVERSION#/$2/" \
+    version.sml.template > version.sml
 
 chmod 444 version.sml

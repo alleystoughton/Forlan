@@ -570,6 +570,7 @@
 ]
 @SIGNATURE VERSION "version" [
   @VALS 
+    getSMLNJVersion
     getVersion
 ]
 @SIGNATURE PROD_SET "prod-set" [

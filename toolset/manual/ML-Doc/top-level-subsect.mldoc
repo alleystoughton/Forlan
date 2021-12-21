@@ -32,6 +32,10 @@ from.</PP>
 <TD><CD><KW/val/ getVersion : unit -> string</CD></TD>
 <TD><CD><STRREF/Version/.<VALREF STRID="Version"/getVersion/</CD></TD>
 </TR>
+<TR>
+<TD><CD><KW/val/ getSMLNJVersion : unit -> string</CD></TD>
+<TD><CD><STRREF/Version/.<VALREF STRID="Version"/getSMLNJVersion/</CD></TD>
+</TR>
 </TABLE>
 
 </SECTION>

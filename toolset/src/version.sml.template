@@ -11,4 +11,6 @@ struct
 
 fun getVersion() = "#VERSION#"
 
+fun getSMLNJVersion() = "#SMLNJVERSION#"
+
 end;

@@ -7,4 +7,5 @@
 
 appdir=/Applications
 
-exec java -jar $appdir/JForlan.app/Contents/Java/JForlan.jar $*
+# suppress start up message ...AdjustCapsLockLEDForKeyTransitionHandling...
+exec java -jar $appdir/JForlan.app/Contents/Java/JForlan.jar $* 2> /dev/null

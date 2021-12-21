@@ -11,4 +11,6 @@ struct
 
 fun getVersion() = "4.12"
 
+fun getSMLNJVersion() = "110.99.2"
+
 end;
