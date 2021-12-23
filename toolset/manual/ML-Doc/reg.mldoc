@@ -906,50 +906,41 @@ messages are issued.</PP>
 </SPEC>
 
 <SPEC>
-<VAL>globallySimplified<TY>bool * (reg * reg -> bool) -> reg -> bool</TY></VAL>
+<VAL>globallySimplified<TY>(reg * reg -> bool) -> reg -> bool</TY></VAL>
 <COMMENT>
 <PROTOTY>
-globallySimplified (<ARG/true/, <ARG/sub/) <ARG/reg/
+globallySimplified <ARG/sub/ <ARG/reg/
 </PROTOTY>
 <PP>If <CD><ARG/sub/</CD> is a conservative approximation to
 subset testing, then <CD>globallySimplified</CD> tests whether
-<CD><ARG/reg/</CD> is distributively, globally simplified with respect
-to <CD><ARG/sub/</CD>.</PP>
-
-<PROTOTY>
-globallySimplified (<ARG/false/, <ARG/sub/) <ARG/reg/
-</PROTOTY>
-<PP>If <CD><ARG/sub/</CD> is a conservative approximation to
-subset testing, then <CD>globallySimplified</CD> tests whether
-<CD><ARG/reg/</CD> is non-distributively, globally simplified with
+<CD><ARG/reg/</CD> is globally simplified with
 respect to <CD><ARG/sub/</CD>.</PP>
 </COMMENT>
 </SPEC>
 
 <SPEC>
 <VAL>globallySimplifyTrace
-<TY>int option * bool * (reg * reg -> bool) -> reg -> bool * reg</TY>
+<TY>int option * (reg * reg -> bool) -> reg -> bool * reg</TY>
 </VAL>
 <COMMENT>
 <PROTOTY>
-globallySimplifyTrace (NONE, <ARG/dist/, <ARG/sub/) <ARG/reg/
+globallySimplifyTrace (NONE, <ARG/sub/) <ARG/reg/
 </PROTOTY>
 <PP>If <CD><ARG/sub/</CD> is a conservative approximation to
 subset testing, then <CD>globallySimplifyTrace</CD> returns the
 pair <CD>(true, <ARG/reg'/)</CD>, where <CD><ARG/reg'/</CD> is the
 global simplification of <CD><ARG/reg/</CD> with respect to
-<CD><ARG/dist/</CD> and <CD><ARG/sub/</CD>.
-<CD>globallySimplifyTrace</CD> issues a
+<CD><ARG/sub/</CD>. <CD>globallySimplifyTrace</CD> issues a
 series of tracing messages, explaining its operation.</PP>
 
 <PROTOTY>
-globallySimplifyTrace (SOME <ARG/n/, <ARG/dist/, <ARG/sub/) <ARG/reg/
+globallySimplifyTrace (SOME <ARG/n/, <ARG/sub/) <ARG/reg/
 </PROTOTY>
 <PP>If <CD><ARG/sub/</CD> is a conservative approximation to
 subset testing, then <CD>globallySimplifyTrace</CD> returns the
 pair <CD>(<ARG/full/, <ARG/reg'/)</CD>, where <CD><ARG/reg'/</CD> is the
 global simplification of <CD><ARG/reg/</CD> with respect to
-<CD><ARG/dist/</CD> and <CD><ARG/sub/</CD>, except it curtails its search after
+<CD><ARG/sub/</CD>, except it curtails its search after
 considering <CD><ARG/n/</CD> candidates, and <CD><ARG/full/</CD> is
 <CD>true</CD> iff all <CD><ARG/n/</CD> candidates were considered.
 <CD>globallySimplifyTrace</CD> issues a series of tracing messages,
@@ -958,7 +949,7 @@ isn't at least <CD>1</CD>.</PP>
 
 <SPEC>
 <VAL>globallySimplify
-<TY>int option * bool * (reg * reg -> bool) -> reg -> bool * reg</TY>
+<TY>int option * (reg * reg -> bool) -> reg -> bool * reg</TY>
 </VAL>
 <COMMENT>
 <PROTOTY>

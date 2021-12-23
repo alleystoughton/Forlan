@@ -83,10 +83,10 @@ signature REG =
     val locallySimplifyTrace : int option * (reg * reg -> bool)
                                  -> reg -> bool * reg
     val locallySimplify : int option * (reg * reg -> bool) -> reg -> bool * reg
-    val globallySimplified : bool * (reg * reg -> bool) -> reg -> bool
-    val globallySimplifyTrace : int option * bool * (reg * reg -> bool)
+    val globallySimplified : (reg * reg -> bool) -> reg -> bool
+    val globallySimplifyTrace : int option * (reg * reg -> bool)
                                   -> reg -> bool * reg
-    val globallySimplify : int option * bool * (reg * reg -> bool)
+    val globallySimplify : int option * (reg * reg -> bool)
                              -> reg -> bool * reg
     val renameAlphabet : reg * SymRel.sym_rel -> reg
     val rev : reg -> reg

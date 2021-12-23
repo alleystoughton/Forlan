@@ -477,6 +477,38 @@ $\alphabet(\mathsf{0^*10^*+\%}) = \mathsf{\{0,1\}}$.
 We say that $\alphabet\,\alpha$ is \emph{the alphabet of} a regular
 expression $\alpha$.
 
+Because the alphabet of regular expressions is defined by structural
+recursion, we can prove the following proposition by induction
+on regular expressions:
+\begin{proposition}
+\label{RegAlphabetSubtreeSubstitute}
+\begin{enumerate}[\quad(1)]
+\item Suppose $\alpha,\beta,\beta'\in\Reg$,
+  $\alphabet\,\beta' = \alphabet\,\beta$, $\pat\in\Path$ is valid for
+  $\alpha$, and $\beta$ is the subtree of $\alpha$ at position $\pat$.
+  Let $\alpha'$ be the result of replacing the subtree at position
+  $\pat$ in $\alpha$ by $\beta'$. Then
+  $\alphabet\,\alpha' = \alphabet\,\alpha$.
+
+\item Suppose $\alpha,\beta,\beta'\in\Reg$,
+  $\alphabet\,\beta' \sub \alphabet\,\beta$, $\pat\in\Path$ is valid for
+  $\alpha$, and $\beta$ is the subtree of $\alpha$ at position $\pat$.
+  Let $\alpha'$ be the result of replacing the subtree at position
+  $\pat$ in $\alpha$ by $\beta'$. Then
+  $\alphabet\,\alpha' \sub \alphabet\,\alpha$.
+\end{enumerate}
+\end{proposition}
+
+\begin{exercise}
+\label{RegExactExpOverAlphabetFinite}
+Suppose $\Sigma$ is an alphabet.
+For $n\in\nats$, define
+$X_n = \setof{\alpha\in\Reg}{\alphabet\,\alpha\sub\Sigma
+  \eqtxt{and} \size\,\alpha = n}$. Prove that, for all
+$n\in\nats$, $X_n$ is finite. Hint: use strong induction
+on $n$.
+\end{exercise}
+
 \begin{proposition}
 \label{AlphabetRegMeaning}
 For all $\alpha\in\Reg$, $\alphabet(L(\alpha))\sub\alphabet\,\alpha$.

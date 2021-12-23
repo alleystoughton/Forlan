@@ -791,15 +791,11 @@ fun localSimplificationRelations(reg, reg') =
 
 datatype rule_type = WeakSimpRule
                    | StructRule of int
-                   | DistRule of int
                    | ReductRule of int
 
 fun ruleTypeToPPList WeakSimpRule   = [PP.fromString "weak simplification"]
   | ruleTypeToPPList (StructRule n) =
       [PP.fromString "structural", PP.fromString "rule",
-       PP.fromString(Int.toString n)]
-  | ruleTypeToPPList (DistRule n)   =
-      [PP.fromString "distributive", PP.fromString "rule",
        PP.fromString(Int.toString n)]
   | ruleTypeToPPList (ReductRule n) = 
       [PP.fromString "reduction", PP.fromString "rule",
@@ -807,8 +803,7 @@ fun ruleTypeToPPList WeakSimpRule   = [PP.fromString "weak simplification"]
 
 fun ruleTypeKind WeakSimpRule   = 1
   | ruleTypeKind (StructRule _) = 2
-  | ruleTypeKind (DistRule _)   = 3
-  | ruleTypeKind (ReductRule _) = 4
+  | ruleTypeKind (ReductRule _) = 3
 
 fun compareRuleType(rt, rt') =
       case Int.compare(ruleTypeKind rt, ruleTypeKind rt') of
@@ -817,7 +812,6 @@ fun compareRuleType(rt, rt') =
              (case (rt, rt') of
                    (WeakSimpRule, _)             => EQUAL
                  | (StructRule n, StructRule n') => Int.compare(n, n')
-                 | (DistRule n,   DistRule n')   => Int.compare(n, n')
                  | (ReductRule n, ReductRule n') => Int.compare(n, n')
                  | _                             => M.cannotHappen())
          | GREATER => GREATER
@@ -913,26 +907,6 @@ fun structRule9 reg =
 val structRules =
       [structRule1, structRule2, structRule3, structRule4, structRule5,
        structRule6, structRule7, structRule8, structRule9]
-
-(* distributive rules *)
-
-(* alpha(beta1 + beta2) -> alpha beta1 + alpha beta2 *)
-
-fun distRule1 reg =
-      case reg of
-           Concat(reg1, Union(reg2, reg3)) =>
-             SOME(DistRule 1, Union(Concat(reg1, reg2), Concat(reg1, reg3)))
-         | _                               => NONE
-
-(* (alpha1 + alpha2)beta -> alpha1 beta + alpha2 beta *)
-
-fun distRule2 reg =
-      case reg of
-           Concat(Union(reg1, reg2), reg3) =>
-             SOME(DistRule 2, Union(Concat(reg1, reg3), Concat(reg2, reg3)))
-         | _                               => NONE
-
-val distRules = [distRule1, distRule2]
 
 (* reduction rules *)
 
@@ -1335,8 +1309,6 @@ fun reductRules sub =
 
 fun simpRules sub = [weakSimpRule] @ structRules @ reductRules sub
 
-fun simpRulesDist sub = simpRules sub @ distRules
-
 (* auxiliary functions for local and global simplification *)
 
 local
@@ -1431,9 +1403,7 @@ end
 
 (* we treat the following as an abstract type *)
 
-type simp_rule_closure =
-       (reg, (reg * rule_type * int list)list)Tab.tab *
-       trace_reg list
+type simp_rule_closure = reg Set.set * trace_reg list
 
 (* val simpRuleClosure :
          (reg -> (rule_type * reg)option)list * reg ->
@@ -1448,30 +1418,33 @@ type simp_rule_closure =
    sequence of trace_reg's, (steps_1, reg_1), (steps_2, reg_2), ...,
    such that:
 
-     length steps_1 <= length steps_2 <= ...; and
-
      reg_1, reg_2, ..., are (without duplication) the regular
      expressions that can be formed from reg by repeatedly using
-     elements of srs on arbitrary subtrees; and
+     elements of srs on arbitrary subtrees;
 
-     for all (steps', reg') : trace_reg starting from reg, there is an
-     i such that reg_i = reg' and length steps_i <= length steps' *)
+     each steps_i explains how reg_i was formed from reg (there is
+     never a repetition of the same regular expression in steps_i,
+     and reg_i never appears in steps_i);
+     
+     length steps_1 <= length steps_2 <= ... *)
 
-fun simpRuleClosure(srs, reg) =
-      let fun next(_,      nil)                             = NONE
-            | next(oldTab, (trReg as (steps, reg)) :: news) =
-                (case Tab.lookup compare (oldTab, reg) of
-                      NONE   =>
-                        let val oldTab =
-                                  Tab.update compare (oldTab, [(reg, steps)])
-                            val news   =
-                                  news @
-                                  map (fn (rt, ns, reg') =>
-                                            (steps @ [(reg, rt, ns)], reg'))
-                                      (multipleSimpRules(srs, reg))
-                        in SOME(trReg, (oldTab, news)) end
-                    | SOME _ => next(oldTab, news))
-      in ((Tab.empty, [(nil, reg)]), next) end
+fun simpRuleClosure((srs, reg) :
+                      (reg -> (rule_type * reg)option)list * reg) :
+        simp_rule_closure *
+        (simp_rule_closure -> (trace_reg * simp_rule_closure)option) =
+      let fun next(_,   nil)                             = NONE
+            | next(old, (trReg as (steps, reg)) :: news) =
+                if Set.memb compare (reg, old)
+                then next(old, news)
+                else let val old =
+                               Set.union compare (old, Set.sing reg)
+                         val news   =
+                               news @
+                               map (fn (rt, ns, reg') =>
+                                         (steps @ [(reg, rt, ns)], reg'))
+                                   (multipleSimpRules(srs, reg))
+                        in SOME(trReg, (old, news)) end
+      in ((Set.empty, [(nil, reg)]), next) end
 
 (* local simplification *)
 
@@ -1608,9 +1581,8 @@ fun locallySimplify(nOpt, sub) reg =
 
 (* global simplification *)
 
-fun globallySimplified (dist, sub) reg =
-      let val rules        = if dist then simpRulesDist sub else simpRules sub
-          val (clos, next) = simpRuleClosure(rules, reg)
+fun globallySimplified sub reg =
+      let val (clos, next) = simpRuleClosure(simpRules sub, reg)
 
           fun loop NONE                    = true
             | loop (SOME((_, reg'), clos)) =
@@ -1618,7 +1590,7 @@ fun globallySimplified (dist, sub) reg =
                 loop(next clos)
       in loop(next clos) end
 
-fun globallySimplifyCommon(nOpt, dist, sub, reg) =
+fun globallySimplifyCommon(nOpt, sub, reg) =
       let fun isDone NONE     = false
             | isDone (SOME n) = n = 0
 
@@ -1629,10 +1601,9 @@ fun globallySimplifyCommon(nOpt, dist, sub, reg) =
             | simplerThan((_, reg), SOME(_, reg')) =
                 compareComplexityTotal(reg, reg') = LESS
 
-          val rules        = if dist then simpRulesDist sub else simpRules sub
-          val (clos, next) = simpRuleClosure(rules, reg)
+          val (clos, next) = simpRuleClosure(simpRules sub, reg)
 
-          fun loop(nOpt, NONE, trRegOpt, depth, n, maxSiz)               =
+          fun loop(nOpt, NONE, trRegOpt, trlen, n, maxSiz)               =
                 (M.messagePP
                  (fn () =>
                        [PP.fromString "search", PP.fromString "completed",
@@ -1647,7 +1618,7 @@ fun globallySimplifyCommon(nOpt, dist, sub, reg) =
                        [PP.fromString "is", PP.fromString "globally",
                         PP.fromString "simplified"]);
                  (true, #2(valOf trRegOpt)))
-            | loop(nOpt, SOME(trReg', clos), trRegOpt, depth, n, maxSiz) =
+            | loop(nOpt, SOME(trReg', clos), trRegOpt, trlen, n, maxSiz) =
                 if isDone nOpt
                 then (M.messagePP
                       (fn () =>
@@ -1664,15 +1635,15 @@ fun globallySimplifyCommon(nOpt, dist, sub, reg) =
                              PP.fromString "be", PP.fromString "globally",
                              PP.fromString "simplified"]);
                       (false, #2(valOf trRegOpt)))
-                else let val depth =
-                               if length(#1 trReg') > depth
+                else let val trlen =
+                               if length(#1 trReg') > trlen
                                then (M.messageString
                                      (fn () =>
                                            ["considering", "candidates", "with",
                                             "explanations", "of", "length",
-                                            Int.toString(depth + 1)]);
-                                     depth + 1)
-                               else depth
+                                            Int.toString(trlen + 1)]);
+                                     trlen + 1)
+                               else trlen
                      in if simplerThan(trReg', trRegOpt)
                         then (M.messagePP
                               (fn () =>
@@ -1680,29 +1651,29 @@ fun globallySimplifyCommon(nOpt, dist, sub, reg) =
                                      PP.fromString "result",
                                      PP.fromString "now:"] @
                                     traceRegToPP trReg');
-                              loop(decr nOpt, next clos, SOME trReg', depth,
+                              loop(decr nOpt, next clos, SOME trReg', trlen,
                                    n + 1, Int.max(maxSiz, size(#2 trReg'))))
-                        else loop(decr nOpt, next clos, trRegOpt, depth,
+                        else loop(decr nOpt, next clos, trRegOpt, trlen,
                                   n + 1, Int.max(maxSiz, size(#2 trReg')))
                      end
       in loop(nOpt, next clos, NONE, ~1, 0, 0) end
 
-fun globallySimplifyTrace(nOpt, dist, sub) =
+fun globallySimplifyTrace(nOpt, sub) =
       if case nOpt of
               NONE   => false
             | SOME n => n < 1
       then M.errorString
            (fn () => ["limit", "must", "be", "at", "least", "1"])
-      else fn reg => globallySimplifyCommon(nOpt, dist, sub, reg)
+      else fn reg => globallySimplifyCommon(nOpt, sub, reg)
 
-fun globallySimplify(nOpt, dist, sub) =
+fun globallySimplify(nOpt, sub) =
       if case nOpt of
               NONE   => false
             | SOME n => n < 1
       then M.errorString
            (fn () => ["limit", "must", "be", "at", "least", "1"])
       else fn reg =>
-                M.quiet(fn () => globallySimplifyCommon(nOpt, dist, sub, reg))
+                M.quiet(fn () => globallySimplifyCommon(nOpt, sub, reg))
 
 (***************************** Closure Algorithms *****************************)
 
