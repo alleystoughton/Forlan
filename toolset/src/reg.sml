@@ -1,6 +1,6 @@
 (********************************** reg.sml **********************************)
 
-(* Copyright (C) 2001-2012 Alley Stoughton
+(* Copyright (C) 2001-2021 Alley Stoughton
 
    The file is part of the Forlan toolset for experimenting with
    formal languages.  See the file COPYING.txt for copying and
@@ -521,30 +521,32 @@ fun weaklySimplified EmptyStr                    = true
               weaklySimplified reg1               andalso
               weaklySimplified reg2)
 
-(* reg is EmptyStr or EmptySet, or all elements of concatsToList reg
-   are weakly simplified, are not EmptyStr or EmptySet, and don't have
-   the form Concat(_, _) *)
+(* reg is ALMOST WEAKLY SIMPLIFIED iff reg is EmptyStr or EmptySet, or
+   all elements of concatsToList reg are weakly simplified, are not
+   EmptyStr or EmptySet, and don't have the form Concat(_, _) *)
 
 (* val csm : reg * int -> int
 
    CLOSURE SHIFT METRIC
 
-   reg1 <csm reg2 iff
-   numLeaves reg1 = numLeaves reg2 and,
-   for all n >= 0, csm(reg1, n) < csm(reg2, n)
+   reg1 <csm reg2 iff numLeaves reg1 = numLeaves reg2 and, for all n
+   >= 0, csm(reg1, n) < csm(reg2, n)
 
-   this relation is well founded, and is compatible with contexts
+   this relation is well founded, and is compatible concatenation
+   on both the left and right sides, as well as with closure (we don't
+   need it to be compatible with union)
 
-   we say that THE CLOSURE SHIFT METRIC STRICTLY DECREASES FROM reg2
-   TO reg1 (or reg1 IS STRICTLY LESS THAN reg2 IN THE CLOSURE SHIFT
-   METRIC) iff reg1 <csm reg2 *)
+   reg1 =csm reg2 iff numLeaves reg1 = numLeaves reg2 and, for all n
+   >= 0, csm(reg1, n) = csm(reg2, n)
+
+   reg1 <=csm reg2 iff reg1 <csm reg2 or reg1 =csm reg2 *)
 
 fun csm(EmptyStr, _)           = 0
   | csm(EmptySet, _)           = 0
   | csm(Sym _, _)              = 0
   | csm(Closure reg, n)        = csm(reg, n) + n
   | csm(Concat(reg1, reg2), n) = csm(reg1, numLeaves reg2 + n) + csm(reg2, n)
-  | csm(Union(reg1, reg2), n)  = csm(reg1, numLeaves reg2 + n) + csm(reg2, n)
+  | csm(Union(reg1, reg2), n)  = 0
 
 (* if reg is almost weakly simplified, then shiftClosuresRight reg is
    equivalent to reg, is weakly simplified, has the same alphabet as
@@ -581,8 +583,9 @@ in
      is equivalent to reg, is weakly simplified, has the same alphabet
      as reg, has the same closure complexity as reg, has the same size
      as reg, has the same number of concatenations as reg, has the
-     same number of symbols as reg, and either has strictly smaller
-     closure shift metric than reg, or is equal to reg
+     same number of symbols as reg, and either is <csm reg, or is =csm
+     reg; furthermore if reg isn't EmptyStr or EmptySet, then
+     shiftClosuresRight reg isn't EmptyStr or EmptySet
 
      in a recursive call, either the size strictly decreases or the
      size is preserved and the closure shift metric strictly decreases *)

@@ -339,7 +339,7 @@ iff none of $\alpha$'s subtrees have any of the following forms:
   left-to-right, by grouping concatenations to the right); and
 
 \item $\beta^*\beta$, $\beta^*(\beta\gamma)$,
-  $(\beta_1\beta_2)^*\beta_1$ or $(\beta_1\beta_2)^*\beta_1\gamma$
+  $(\beta_1\beta_2)^*\beta_1$ or $(\beta_1\beta_2)^*(\beta_1\gamma)$
   (moving closures to the right makes a regular expression easier to
   understand/process from left-to-right).
 \end{itemize}
@@ -646,7 +646,37 @@ By induction on regular expressions.
 \end{proof}
 
 In preparation for giving our weak simplification algorithm, we need
-to define some auxiliary functions.  We say that a regular expression
+to define some auxiliary functions. We will also prove some lemmas
+that will support our proofs about the weak simplification algorithm.
+
+First, we prove lemmas about $\rightConcat$ and $\rightUnion$ of
+Section~\ref{RegularExpressionsAndLanguages}.
+
+\begin{lemma}
+\label{RightConcatLem}
+If $\alpha,\beta\in\Reg$, then $\rightConcat(\alpha,\beta)$ is
+equivalent to $\alpha\beta$, and has the same alphabet, closure
+complexity, size, number of concatentations, number of symbols, and
+number of leaves as $\alpha\beta$.
+\end{lemma}
+
+\begin{proof}
+By induction on $\alpha$.
+\end{proof}
+
+\begin{lemma}
+\label{RightUnionLem}
+If $\alpha,\beta\in\Reg$, then $\rightUnion(\alpha,\beta)$ is
+equivalent to $\alpha+\beta$, and has the same alphabet, closure
+complexity, size, number of concatentations, and number of symbols as
+$\alpha+\beta$.
+\end{lemma}
+
+\begin{proof}
+By induction on $\alpha$.
+\end{proof}
+
+We say that a regular expression
 $\alpha$ is \emph{almost weakly simplified} iff either:
 \begin{itemize}
 \item $w\in\{\%,\$\}$; or
@@ -671,26 +701,186 @@ Let
   \AWS &= \setof{\alpha\in\Reg}{\alpha\eqtxtl{is almost weakly simplified}} .
 \end{align*}
 
-We define a function $\shiftClosuresRight\in\AWS\fun\WS$ by recursion.
-Given $\alpha\in\AWS$, $\shiftClosuresRight$ proceeds as follows.  If
-$\alpha$ is not a concatenation, than it returns $\alpha$.
-Otherwise, $\alpha = \alpha_1\alpha_2$ for some $\alpha_1,\alpha_2\in\Reg$.
-Since $\alpha$ is almost weakly simplified, so is $\alpha_2$.  So it lets
-$\alpha'_2\in\WS$ be the result of calling $\shiftClosuresRight$ on
-$\alpha_2$.
+In preparation for defining a function
+$\shiftClosuresRight\in\AWS\fun\WS$ for shifting closures to the right
+in concatenations at the top-level, we need a ``closure shift
+metric''. Define $\csm\in\Reg\times\nats\fun\nats$ by structural
+recursion on its first argument:
 \begin{itemize}
-\item If $\alpha_1\alpha'_2$ has the form $\beta^*\beta$, for some
-  $\beta\in\Reg$, then $\shiftClosuresRight$ returns
-  \begin{displaymath}
-    \shiftClosuresRight(\rightConcat(\beta, \beta^*)) .
-  \end{displaymath}
+\item for all $n\in\nats$, $\csm(\%, n) = 0$;
 
-\item Otherwise, if $\alpha_1\alpha'_2$ has the form
-  $\beta^*\beta\gamma$, for some $\beta,\gamma\in\Reg$,
-  then $\shiftClosuresRight$ returns
+\item for all $n\in\nats$, $\csm(\$, n) = 0$;
+
+\item for all $n\in\nats$ and symbols $a$, $\csm(a, n) = 0$;
+
+\item for all $n\in\nats$ and $\alpha\in\Reg$,
+  $\csm(\alpha^*, n) = \csm(\alpha, n) + n$;
+
+\item for all $n\in\nats$ and $\alpha,\beta\in\Reg$,
+  $\csm(\alpha\beta, n) = \csm(\alpha, \numLeaves\,\beta + n) +
+  \csm(\beta, n)$;
+
+\item for all $n\in\nats$ and $\alpha, \beta\in\Reg$,
+  $\csm(\alpha+\beta, n) = 0$.
+\end{itemize}
+
+Define relations $\ltcsm$, $\equivcsm$ and $\lecsm$
+on $\Reg$ by:
+\begin{itemize}
+\item $\alpha\ltcsm\beta$ iff, for all $n\in\nats$,
+  $\numLeaves\,\alpha = \numLeaves\,\beta$ and
+  $\csm(\alpha, n) < \csm(\beta, n)$;
+
+\item $\alpha\equivcsm\beta$ iff for all $n\in\nats$,
+  $\numLeaves\,\alpha = \numLeaves\,\beta$ and
+  $\csm(\alpha, n) = \csm(\beta, n)$;
+
+\item $\alpha\lecsm\beta$ iff $\alpha\ltcsm\beta$ or
+  $\alpha\equivcsm\beta$.
+\end{itemize}
+
+\begin{lemma}
+\label{CSMWF}
+$\ltcsm$ is a well-founded relation on $\Reg$.
+\end{lemma}
+
+\begin{proof}
+By Proposition~\ref{InverseImageWellFounded}, the relation $R$ on
+$\Reg$ defined by $\alpha\mathrel{R}\beta$ iff
+$\csm(\alpha, 0)<\csm(\beta, 0)$ is well-founded, because $<$ is
+well-founded.  But ${\ltcsm}\sub R$, and thus $\ltcsm$ is well-founded
+by Proposition~\ref{WellFoundedSubset}.
+\end{proof}
+
+The following lemma holds by easy calculations:
+
+\begin{lemma}
+\begin{enumerate}[\quad(1)]
+\item $\ltcsm$ and $\equivcsm$ are transitive, and $\equivcsm$ is
+  symmetric.
+
+\item For all $\alpha, \beta, \gamma\in\ Reg$, if
+  $\alpha\ltcsm\beta\equivcsm\gamma$, then $\alpha\ltcsm\gamma$.
+
+\item For all $\alpha, \beta, \gamma\in\ Reg$, if
+  $\alpha\equivcsm\beta\ltcsm\gamma$, then $\alpha\ltcsm\gamma$.
+
+\item $\lecsm$ is transitive.
+
+\item For all $\alpha, \beta, \gamma\in\ Reg$, if
+  $\alpha\ltcsm\beta\lecsm\gamma$, then $\alpha\lecsm\gamma$.
+
+\item For all $\alpha, \beta, \gamma\in\ Reg$, if
+  $\alpha\lecsm\beta\ltcsm\gamma$, then $\alpha\lecsm\gamma$.
+
+\item For all $\alpha, \beta, \gamma\in\ Reg$, if
+  $\alpha\equivcsm\beta\lecsm\gamma$, then $\alpha\lecsm\gamma$.
+
+\item For all $\alpha, \beta, \gamma\in\ Reg$, if
+  $\alpha\lecsm\beta\equivcsm\gamma$, then $\alpha\lecsm\gamma$.
+\end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+\label{CSMContexts}
+Suppose $\gamma,\alpha,\beta\in\Reg$.
+\begin{enumerate}[\quad(1)]
+\item If $\alpha\ltcsm\beta$, then $\gamma\alpha\ltcsm\gamma\beta$.
+\item If $\alpha\equivcsm\beta$, then $\gamma\alpha\equivcsm\gamma\beta$.
+\item If $\alpha\ltcsm\beta$, then $\alpha\gamma\ltcsm\beta\gamma$.
+\item If $\alpha\equivcsm\beta$, then $\alpha\gamma\equivcsm\beta\gamma$.
+\item If $\alpha\ltcsm\beta$, then $\alpha^*\ltcsm\beta^*$.
+\item If $\alpha\equivcsm\beta$, then $\alpha^*\equivcsm\beta^*$.
+\item If $\alpha\lecsm\beta$, then $\gamma\alpha\lecsm\gamma\beta$.
+\item If $\alpha\lecsm\beta$, then $\alpha\gamma\lecsm\beta\gamma$.
+\item If $\alpha\lecsm\beta$, then $\alpha^*\lecsm\beta^*$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+By easy calculations.
+\end{proof}
+
+\begin{lemma}
+\label{RightConcatCSM}
+If $\alpha,\beta\in\Reg$, then
+$\rightConcat(\alpha,\beta)\equivcsm\alpha\beta$.
+\end{lemma}
+
+\begin{proof}
+By structural induction on $\alpha$.
+\end{proof}
+
+We define $\shiftClosuresRight\in\AWS\fun\WS$ by well-founded
+recursion on the lexicographic relation that first considers size and
+then falls back on $\ltcsm$. We want that, for all $\alpha\in\AWS$,
+$\shiftClosuresRight\,\alpha$ is equivalent
+to $\alpha$, and that it has the same alphabet, closure complexity,
+size, number of concatenations and number of symbols as $\alpha$.  But
+to prove this, we also need that
+\begin{itemize}
+\item $\shiftClosuresRight\,\alpha\lecsm\alpha$;
+
+\item if $\alpha\notin\{\%,\$\}$, then $\shiftClosuresRight\,\alpha\not\in
+\{\%,\$\}$.
+\end{itemize}
+Given $\alpha\in\AWS$, $\shiftClosuresRight$ proceeds as follows.  If
+$\alpha$ is not a concatenation, than it returns $\alpha$, which will
+be weakly simplified and satisfy the remaining properties.  Otherwise,
+$\alpha = \alpha_1\alpha_2$ for some $\alpha_1,\alpha_2\in\Reg$.
+Since $\alpha$ is almost weakly simplified, then: $\alpha_1$ is weakly
+simplified and is either a symbol, a closure or a union; and
+$\alpha_2$ is almost weakly simplified and is neither $\%$ nor $\$$.
+So $\shiftClosuresRight$ lets
+$\alpha'_2\in\WS$ be the result of recursively calling itself on
+$\alpha_2$ (this is legal, because
+$\alpha_2$ is strictly smaller than $\alpha$).  Then
+$\alpha'_2$ is neither $\%$ nor $\$$. Furthermore $\alpha'_2$ is
+equivalent to $\alpha_2$, $\alpha'_2\lecsm\alpha_2$, and $\alpha'_2$
+has the same alphabet, closure complexity, size, number of
+concatenations, and number of symbols as $\alpha_2$.  Thus we have
+that $\alpha_1\alpha'_2$ is equivalent $\alpha_1\alpha_2=\alpha$,
+$\alpha_1\alpha'_2\lecsm\alpha_1\alpha_2=\alpha$ (by
+Lemma~\ref{CSMContexts}), and $\alpha_1\alpha'_2$ has the same
+alphabet, closure complexity, size, number of concatenations, and
+number of symbols as $\alpha$.
+\begin{itemize}
+\item Suppose $\alpha_1\alpha'_2$ has the form $\beta^*\beta$, for
+  some $\beta\in\Reg$.  An easy calculation shows that
+  $\beta\beta^* \ltcsm \beta^*\beta\lecsm\alpha$, so that
+  $\beta\beta^* \ltcsm \alpha$.  Furthermore, $\beta\beta^*$ is
+  equivalent to $\beta^*\beta$ (and so is equivalent to $\alpha$), and
+  has the same alphabet, closure complexity, size, number of
+  concatenations, and number of symbols as $\beta^*\beta$ (and so as
+  $\alpha$). If $\beta$ is a concatenation, then $\beta\beta^*$ will
+  not be almost weakly simplified, so let
+  $\gamma = \rightConcat(\beta, \beta^*)$. Then $\gamma$ is almost
+  weakly simplified, and by Lemma~\ref{RightConcatCSM}, we have that
+  $\gamma\equivcsm\beta\beta^*$, and (Lemma~\ref{RightConcatLem}),
+  $\gamma$ is equivalent to $\beta\beta^*$, and $\gamma$ has the same
+  alphabet, closure complexity, size, number of concatenations, and
+  number of symbols as $\beta\beta^*$. Thus $\gamma\ltcsm\alpha$,
+  $\gamma$ is equivalent to $\alpha$, and $\gamma$ has the same
+  alphabet, closure complexity, size, number of concatenations, and
+  number of symbols as $\alpha$.  Because $\gamma$ has the same size
+  as $\alpha$ but $\gamma\ltcsm\alpha$, it is legal for
+  $\shiftClosuresRight$ to recursively call itself with $\gamma$ and
+  return the result, $\delta$, giving us that $\delta$ is weakly
+  simplified, $\delta\lecsm\gamma$, $\delta$ is equivalent to
+  $\gamma$, and $\delta$ has the same alphabet, closure complexity,
+  size, number of concatenations, and number of symbols as
+  $\gamma$. Thus $\delta$ is weakly simplified, $\delta\lecsm\alpha$,
+  $\delta$ is equivalent to $\alpha$, and $\delta$ has the same
+  alphabet, closure complexity, size, number of concatenations, and
+  number of symbols as $\alpha$.
+
+\item Otherwise, suppose $\alpha_1\alpha'_2$ has the form
+  $\beta^*\beta\gamma$, for some $\beta,\gamma\in\Reg$. Then
+  $\shiftClosuresRight$ returns
   \begin{displaymath}
-   \shiftClosuresRight(\beta\beta^*\gamma)) . 
+   \shiftClosuresRight(\beta\beta^*\gamma) . 
   \end{displaymath}
+  This is correct for similar reasons to the first case.
 
 \item Otherwise, if $\alpha_1\alpha'_2$ has the form
   $(\beta_1\beta_2)^*\beta_1$, for some
@@ -698,6 +888,7 @@ $\alpha_2$.
   \begin{displaymath}
    \shiftClosuresRight(\beta_1(\rightConcat(\beta_2,\beta_1))^*) . 
   \end{displaymath}
+  This is correct for similar reasons to the first case.
 
 \item Otherwise, if $\alpha_1\alpha'_2$ has the form
   $(\beta_1\beta_2)^*\beta_1\gamma$, for some
@@ -705,19 +896,17 @@ $\alpha_2$.
   \begin{displaymath}
    \shiftClosuresRight(\beta_1(\rightConcat(\beta_2,\beta_1))^*\gamma) . 
   \end{displaymath}
+  This is correct for similar reasons to the first case.
 
-\item Otherwise, $\shiftClosuresRight$ returns $\alpha_1\alpha'_2$.
+\item Otherwise, $\shiftClosuresRight$ returns $\alpha_1\alpha'_2$,
+  which is weakly simplified and satisfies the other properties.
 \end{itemize}
-
-(The work needed to justify the kind of well-founded recursion used in
-$\shiftClosuresRight$'s definition will be added in a subsequent
-revision.)
 
 \begin{proposition}
 \label{ShiftClosuresRightLem}
-For all $\alpha\in\AWS$, $\shiftClosuresRight\,\alpha$ is equivalent to
-$\alpha$ and has the same closure complexity, size, number of
-concatenations and number of symbols as $\alpha$.
+For all $\alpha\in\AWS$, $\shiftClosuresRight\,\alpha$ is equivalent
+to $\alpha$ and has the same alphabet, closure complexity, size,
+number of concatenations and number of symbols as $\alpha$.
 \end{proposition}
 
 Define a function $\deepClosure\in\WS\fun\WS$ as follows.  For all

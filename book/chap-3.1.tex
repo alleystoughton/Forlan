@@ -590,6 +590,20 @@ recursion:
 E.g., $\concatsToList(\mathsf{(12)34}) = [\mathsf{12, 3, 4}]$
 and $\unionsToList(\mathsf{(0+1)+2+3}) = [\mathsf{0 + 1, 2, 3}]$.
 
+\begin{lemma}
+\label{ConcatsToListRightConcat}
+For all $\alpha,\beta\in\Reg$,
+$\concatsToList(\rightConcat(\alpha,\beta)) = \concatsToList\,\alpha
+\myconcat \concatsToList\,\beta$.
+\end{lemma}
+
+\begin{lemma}
+\label{UnionsToListRightUnion}
+For all $\alpha,\beta\in\Reg$,
+$\unionsToList(\rightUnion(\alpha,\beta)) = \unionsToList\,\alpha
+  \myconcat \unionsToList\,\beta$.
+\end{lemma}
+
 Finally, $\sortUnions\in\Reg\fun\Reg$ is defined by:
 \begin{displaymath}
 \sortUnions\,\alpha = \genUnion\,\bar{\beta} ,
