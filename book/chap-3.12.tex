@@ -1339,6 +1339,17 @@ of $L$.  For example, if $L=\{\mathsf{012, 12}\}$ and
 $f=\mathsf{\{(0, 1), (1, 2), (2, 3)\}}$, then $L^f=\{\mathsf{123,
 23}\}$.
 
+\begin{exercise}
+Suppose
+$L = \setof{w\in\{\mathsf{0,1,2}\}^*}{w\eqtxt{has an even number
+    of occurrences of}\zerosf}$. Suppose $f$ is the bijection from
+$\{\mathsf{0,1,2}\}$ to $\{\mathsf{0,1,2}\}$ defined by:
+$f\,\zerosf = \onesf$, $f\,\onesf = \zerosf$, and
+$f\,\twosf = \twosf$. Show that $L^f = 
+\setof{w\in\{\mathsf{0,1,2}\}^*}{w\eqtxt{has an even number
+    of occurrences of }\onesf}$.
+\end{exercise}
+
 The module \texttt{Str}
 \index{Str@\texttt{Str}}%
 defines the function
