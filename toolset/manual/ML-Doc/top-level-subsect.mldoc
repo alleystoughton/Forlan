@@ -121,6 +121,14 @@ STRID="Params"/setPrintingOfGarbageCollectionMessages/</CD></TD>
 <TD><CD><KW/val/ setCompilationManagerVerbosity : bool -> unit</CD></TD>
 <TD><CD><STRREF/Params/.<VALREF STRID="Params"/setCompilationManagerVerbosity/</CD></TD>
 </TR>
+<TR>
+<TD><CD><KW/val/ getBindNonExhaustiveWarn : unit -> bool</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/getBindNonExhaustiveWarn/</CD></TD>
+</TR>
+<TR>
+<TD><CD><KW/val/ setBindNonExhaustiveWarn : bool -> unit</CD></TD>
+<TD><CD><STRREF/Params/.<VALREF STRID="Params"/setBindNonExhaustiveWarn/</CD></TD>
+</TR>
 </TABLE>
 
 </SECTION>

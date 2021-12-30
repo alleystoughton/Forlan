@@ -1,6 +1,6 @@
 <!-- params.mldoc -->
 
-<!-- Copyright (C) 2001-2012 Alley Stoughton
+<!-- Copyright (C) 2001-2022 Alley Stoughton
 
      The file is part of the Forlan toolset for experimenting with
      formal languages.  See the file COPYING.txt for copying and
@@ -211,6 +211,28 @@ setCompilationManagerVerbosity <ARG/b/
 </PROTOTY>
 <PP>sets whether the compilation manager will be verbose in
 its messaging.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>getBindNonExhaustiveWarn<TY>unit -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+getBindNonExhaustiveWarn()
+</PROTOTY>
+<PP>returns whether warnings are issued for potentially
+non-exhaustive bindings. The default is not to do so.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>setBindNonExhaustiveWarn<TY>bool -> unit</TY></VAL>
+<COMMENT>
+<PROTOTY>
+setBindNonExhaustiveWarn <ARG/b/
+</PROTOTY>
+<PP>sets whether warnings should be issued for potentially
+non-exhaustive bindings.</PP>
 </COMMENT>
 </SPEC>
 

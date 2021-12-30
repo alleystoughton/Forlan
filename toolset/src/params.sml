@@ -1,6 +1,6 @@
 (******************************** params.sml *********************************)
 
-(* Copyright (C) 2001-2012 Alley Stoughton
+(* Copyright (C) 2001-2022 Alley Stoughton
 
    The file is part of the Forlan toolset for experimenting with
    formal languages.  See the file COPYING.txt for copying and
@@ -53,5 +53,9 @@ fun setTrackExceptions b = Control.trackExn := b
 fun getCompilationManagerVerbosity() = #get (CM.Control.verbose) ()
 
 val setCompilationManagerVerbosity = #set (CM.Control.verbose)
+
+fun getBindNonExhaustiveWarn() = !Control.MC.bindNonExhaustiveWarn
+
+fun setBindNonExhaustiveWarn b = Control.MC.bindNonExhaustiveWarn := b
 
 end;

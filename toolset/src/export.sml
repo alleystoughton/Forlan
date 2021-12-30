@@ -45,6 +45,7 @@ fun export() =
             Params.setPrintingOfGarbageCollectionMessages false;
             Params.setTrackExceptions false;
             Params.setCompilationManagerVerbosity false;
+            Params.setBindNonExhaustiveWarn false;
             M.messageString
             (fn () =>
                   ["Forlan", "Version", Version.getVersion(), "(based",

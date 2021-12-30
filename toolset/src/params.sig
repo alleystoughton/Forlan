@@ -24,4 +24,6 @@ signature PARAMS =
     val setTrackExceptions : bool -> unit
     val getCompilationManagerVerbosity : unit -> bool
     val setCompilationManagerVerbosity : bool -> unit
+    val getBindNonExhaustiveWarn : unit -> bool
+    val setBindNonExhaustiveWarn : bool -> unit
   end

@@ -57,6 +57,18 @@ val getCompilationManagerVerbosity : unit -> bool =
 val setCompilationManagerVerbosity : bool -> unit =
       Params.setCompilationManagerVerbosity
 
+val getCompilationManagerVerbosity : unit -> bool =
+      Params.getCompilationManagerVerbosity
+
+val setCompilationManagerVerbosity : bool -> unit =
+      Params.setCompilationManagerVerbosity
+
+val getBindNonExhaustiveWarn : unit -> bool =
+      Params.getBindNonExhaustiveWarn
+
+val setBindNonExhaustiveWarn : bool -> unit =
+      Params.setBindNonExhaustiveWarn
+
 (********************************* Debugging *********************************)
 
 val debug : ('a -> PP.pp) -> PP.pp * 'a -> 'a = Debug.debug
