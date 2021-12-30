@@ -76,6 +76,8 @@ Whenever possible, we will use the mathematical variables $a$, $b$ and
 $c$ to name symbols.
 \index{a, b, c@$a,b,c$}%
 \index{symbol!a, b, c@$a,b,c$}%
+For this reason, in examples, we often work with symbols that are
+digits in order to avoid ambiguity.
 We order $\Sym$ first by length, and then lexicographically (in
 dictionary order).  So, we have that
 \begin{gather*}
@@ -104,6 +106,8 @@ Whenever possible, we will use the mathematical variables $u$,
 \index{u, v, w, x, y, z, w@$u, v, w, x, y, z$}%
 \index{string!u, v, w, x, y, z, w@$u, v, w, x, y, z$}%
 $v$, $w$, $x$, $y$ and $z$ to name strings.
+For this reason, in examples, we often work with symbols that are
+digits in order to avoid ambiguity.
 
 We typically abbreviate the empty string $[\,]$ to $\%$, and
 \index{ percent@$\%$}%
@@ -220,9 +224,6 @@ For example, we have that
 \label{StrPowerProp}
 For all $x\in\Str$ and $n,m\in\nats$, $x^{n+m}=x^nx^m$.
 \end{proposition}
-\index{string!power}%
-\index{concatenation!string!power}%
-\index{string!concatenation!power}%
 
 \begin{proof}
 Suppose $x\in\Str$ and $m\in\nats$.  We use mathematical induction
@@ -251,6 +252,14 @@ x^{n+1} &= xx^n && \by{definition}, \\
 x^{n+1} &= x^nx^1 = x^nx && \by{Proposition~\ref{StrPowerProp}} .
 %\by{Proposition~\ref{StrPowerProp}} .
 \end{alignat*}
+
+\begin{exercise}
+Show that, for all $x\in\Str$ and $n,m\in\nats$, $(x^n)^m = x^{nm}$.
+\end{exercise}
+
+\begin{exercise}
+Show that, for all $x\in\Str$ and $n\in\nats$, $|x^n| = n * |x|$.
+\end{exercise}
 
 Next, we consider the prefix, suffix and substring relations on
 strings.  Suppose $x$ and $y$ are strings.  We say that:
@@ -470,10 +479,11 @@ and is thus uncountable.
 Show that $\powset(\nats)$ has the same size as  $\powset(\mathsf{\{0\}}^*)$.
 \end{exercise}
 
-Given a language $L$, we write $\alphabet\,L$
+We overload $\alphabet$ as a function from $\Lan$ to $\Alp$:
+$\alphabet\,L$ is
 \index{alphabet@$\alphabet$}%
 \index{language!alphabet@$\alphabet$}%
-for the \emph{alphabet}
+the \emph{alphabet}
 \index{alphabet!language}%
 \index{language!alphabet}%
 \begin{gather*}

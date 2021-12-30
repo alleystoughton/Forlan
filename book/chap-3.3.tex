@@ -1122,6 +1122,17 @@ For all $\alpha\in\Reg$, $\%\in L(\alpha)$ iff $\hasEmp\,\alpha =
 \true$.
 \end{proposition}
 
+When interpreting a function (like $\hasEmp$) as an algorithm, we
+regard uses of $\myand$ and $\myor$ as ``short circuiting''. I.e., if
+\index{short circuiting}%
+\index{and@$\myand$}%
+\index{or@$\myor$}%
+the left argument to $\myand$ evaluates to $\false$, it doesn't bother
+to evaluate the right argument, as the overall result will be
+$\false$; and if the left argument to $\myor$ evaluates to $\true$, it
+doesn't bother to evaluate the right argument, as the overall result
+will be $\true$.
+
 \begin{proof}
 By induction on regular expressions.
 \end{proof}

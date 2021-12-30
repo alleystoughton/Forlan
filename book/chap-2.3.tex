@@ -338,7 +338,7 @@ of \texttt{rev}.
 
 \index{Standard ML!recursive datatype}%
 \index{Standard ML!tree}%
-Finally, we can define recursive datatypes, and define functions
+We can define recursive datatypes, and define functions
 by structural recursion on recursive datatypes. E.g., here's how
 we can define the datatype of labeled binary trees (both leaves and
 nodes (non-leaves) can have labels):
@@ -349,6 +349,16 @@ Then we can define a function for reversing a tree, and apply it to
 And here is how we can define mutually recursive datatypes, along with
 mutually recursive functions over them:
 \input{chap-2.3-forlan7e}
+
+Finally, we can use the underscore \verb^_^ (\emph{wildcard} pattern) in a
+pattern to match any value, and can use \texttt{as} in a pattern to
+bind an identifier
+\index{Standard ML!patterns}%
+\index{Standard ML!wild card}%
+\index{Standard ML!underscore}%
+\index{Standard ML!as}%
+to the whole of a value that is in turn deconstructed by a
+sub-pattern: \input{chap-2.3-forlan7f}
 \index{Standard ML|)}%
 
 \subsection{Symbols}

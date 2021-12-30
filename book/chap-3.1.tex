@@ -278,9 +278,8 @@ Whenever possible, we will use the mathematical variables
 $\alpha$, $\beta$ and $\gamma$
 \index{alpha, beta, gamma@$\alpha$, $\beta$, $\gamma$}%
 \index{regular expression!alpha, beta, gamma@$\alpha$, $\beta$, $\gamma$}%
-to name regular expressions.  Since
-regular expressions are $\RegLab$-trees, we may talk of their sizes
-and heights.
+to name regular expressions. Since regular expressions are
+$\RegLab$-trees, we may talk of their sizes and heights.
 
 For example,
 \begin{gather*}
@@ -730,6 +729,8 @@ val sortUnions    : reg -> reg
 val allSym        : sym set -> reg
 val allStr        : sym set -> reg
 val fromStrSet    : str set -> reg
+val select        : reg * int list -> reg
+val update        : reg * int list * reg -> reg
 \end{verbatim}
 
 The Forlan syntax for regular expressions is the infix/postfix one
@@ -772,7 +773,7 @@ The function \texttt{power} raises a regular
 expression to a power, and the
 function \texttt{alphabet} returns the alphabet of a regular
 expression.
-Finally, the functions \texttt{genConcat}, \texttt{genUnion},
+The functions \texttt{genConcat}, \texttt{genUnion},
 \texttt{rightConcat}, \texttt{rightUnion}, \texttt{concatsToList},
 \texttt{unionsToList}, \texttt{sortUnions}, \texttt{allSym} and
 \texttt{allStr} implement the functions with the same names.
@@ -780,6 +781,12 @@ The function \texttt{fromStrSet} returns $\$$, if called with
 the empty set. Otherwise, it returns $\mathtt{fromStr}\,x_1 + \cdots +
 \mathtt{fromStr}\,x_n$, where $x_1,\ldots,x_n$ are the elements
 of its argument, listed in strictly ascending order.
+The function \texttt{select} returns the subtree of a regular expression
+at a given position (path), whereas the function \texttt{update}
+makes a regular expression that is the same as its first argument except
+that the subtree at the given position is equal to its third
+argument. These functions issue error messages when given invalid
+paths for their first arguments.
 
 Here are some example uses of the functions of \texttt{Reg}:
 \input{chap-3.1-forlan2}
@@ -790,6 +797,8 @@ We can use the functions \texttt{genConcat}, \texttt{genUnion},
 We can use the functions \texttt{allSym}, \texttt{allStr} and
 \texttt{fromStrSet} like this:
 \input{chap-3.1-forlan4}
+Finally, we can use \texttt{select} and \texttt{update} like this:
+\input{chap-3.1-forlan5}
 
 \subsection{JForlan}
 

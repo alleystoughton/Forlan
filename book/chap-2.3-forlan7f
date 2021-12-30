@@ -1,0 +1,8 @@
+fun g nil       = nil
+  | g (_ :: xs) = xs;
+g [3, 5, 1];
+fun f nil             = nil
+  | f (xs as y :: ys) = if y then xs else ys;
+f [];
+f [true, false, true];
+f [false, true, true];

@@ -1,0 +1,44 @@
+\begin{list}{}
+{\setlength{\leftmargin}{\leftmargini}
+\setlength{\rightmargin}{0cm}
+\setlength{\itemindent}{0cm}
+\setlength{\listparindent}{0cm}
+\setlength{\itemsep}{0cm}
+\setlength{\parsep}{0cm}
+\setlength{\labelsep}{0cm}
+\setlength{\labelwidth}{0cm}
+\catcode`\#=12
+\catcode`\$=12
+\catcode`\%=12
+\catcode`\^=12
+\catcode`\_=12
+\catcode`\.=12
+\catcode`\?=12
+\catcode`\!=12
+\catcode`\&=12
+\ttfamily}
+\small
+\item[]\textsl{-\ }val\ pt\ =\ PT.cons(Sym.fromString\ "A",\ NONE);
+\item[]\textsl{val\ pt\ =\ -\ :\ pt}
+\item[]\textsl{-\ }PT.output("",\ pt);
+\item[]\textsl{A(%)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pt'\ =\ PT.update(pt,\ \symbol{'133}1\symbol{'135},\ PT.leaf(Sym.fromString\ "B"));
+\item[]\textsl{val\ pt'\ =\ -\ :\ pt}
+\item[]\textsl{-\ }PT.output("",\ pt');
+\item[]\textsl{A(B)}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pt''\ =
+\item[]\textsl{=\ }\ \ PT.update
+\item[]\textsl{=\ }\ \ (pt',\ \symbol{'133}1\symbol{'135},
+\item[]\textsl{=\ }\ \ \ PT.cons(Sym.fromString\ "C",\ SOME\symbol{'133}pt,\ pt\symbol{'135}));
+\item[]\textsl{val\ pt''\ =\ -\ :\ pt}
+\item[]\textsl{-\ }PT.output("",\ pt'');
+\item[]\textsl{A(C(A(%),\ A(%)))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\item[]\textsl{-\ }val\ pt'''\ =\ valOf(PT.selectPT(pt'',\ \symbol{'133}1\symbol{'135}));
+\item[]\textsl{val\ pt'''\ =\ -\ :\ pt}
+\item[]\textsl{-\ }PT.output("",\ pt''');
+\item[]\textsl{C(A(%),\ A(%))}
+\item[]\textsl{val\ it\ =\ ()\ :\ unit}
+\end{list}

@@ -1,0 +1,4 @@
+val reg = Reg.fromString "((0 + 1)1*)*";
+Reg.output("", Reg.select(reg, [1, 2]));
+val reg' = Reg.update(reg, [1, 1], Reg.fromString "2");
+Reg.output("", reg');

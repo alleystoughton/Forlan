@@ -21,9 +21,10 @@ that it is infinite, otherwise.
 
 \subsection{Removing $\%$-Productions}
 
-A $\%$-\emph{production} is a production of the form $q\fun\%$.  We
-will show by example how to turn a grammar $G$ into a simplified
-grammar with no $\%$-productions that generates $L(G)-\{\%\}$.
+Recall that an $\%$-\emph{production} is a production of the form
+$q\fun\%$.  We will show by example how to turn a grammar $G$ into a
+simplified grammar with no $\%$-productions that generates
+$L(G)-\{\%\}$.
 
 Suppose $G$ is the grammar
 \begin{align*}
@@ -76,11 +77,11 @@ of our example is already simplified, however.
 
 \subsection{Removing Unit Productions}
 
-A \emph{unit production} for a grammar $G$ is a production of the
-form $q\fun r$, where $r$ is a variable (possibly equal to $q$).  We
-now show by example how to turn a grammar $G$ into a simplified
-grammar with no $\%$-productions or unit productions that generates
-$L(G)-\{\%\}$.
+Recall that a \emph{unit production} for a grammar $G$ is a production
+of the form $q\fun r$, where $r$ is a variable (possibly equal to
+$q$).  We now show by example how to turn a grammar $G$ into a
+simplified grammar with no $\%$-productions or unit productions that
+generates $L(G)-\{\%\}$.
 
 Suppose $G$ is the grammar
 \begin{align*}
@@ -144,10 +145,10 @@ $\pt$ for $G'$, such that the height of $\pt$ is at least one, $q$ is
 the root label of $\pt$, and the yield of $\pt$ has the form $xqy$,
 for strings $x$ and $y$, each of whose symbols is in
 $\alphabet\,G'\cup Q_{G'}$. (In particular, $q$ may appear in $x$ or
-$y$.) Because $G'$ lacks $\%$- and unit-productions, it follows that
-$x\neq\%$ or $y\neq\%$. Because each variable of $G'$ is generating,
-we can turn $\pt$ into a valid parse tree $\pt'$ whose root label is
-$q$, and whose yield has the form $uqv$, for
+$y$.) Because $G'$ lacks $\%$-productions and unit productions, it
+follows that $x\neq\%$ or $y\neq\%$. Because each variable of $G'$ is
+generating, we can turn $\pt$ into a valid parse tree $\pt'$ whose
+root label is $q$, and whose yield has the form $uqv$, for
 $u,v\in(\alphabet\,G')^*$, where $u\neq\%$ or $v\neq\%$.
 
 Thus we have that $uqv$ is parsable from $q$ in $G$', and an easy

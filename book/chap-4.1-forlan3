@@ -1,0 +1,11 @@
+val pt = PT.cons(Sym.fromString "A", NONE);
+PT.output("", pt);
+val pt' = PT.update(pt, [1], PT.leaf(Sym.fromString "B"));
+PT.output("", pt');
+val pt'' =
+  PT.update
+  (pt', [1],
+   PT.cons(Sym.fromString "C", SOME[pt, pt]));
+PT.output("", pt'');
+val pt''' = valOf(PT.selectPT(pt'', [1]));
+PT.output("", pt''');

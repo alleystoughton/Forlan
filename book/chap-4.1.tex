@@ -29,6 +29,14 @@ the set of all grammars.  Since every grammar can be described by a
 finite sequence of ASCII characters, we have that $\Gram$ is countably
 infinite.
 
+We give two forms of productions special names:
+\begin{itemize}
+\item An $\%$-\emph{production} is a production of the form $q\fun\%$.
+
+\item A \emph{unit production} for a grammar $G$ is a production of
+  the form $q\fun r$, where $r$ is a variable (possibly equal to $q$).
+\end{itemize}
+
 As an example, we can define a grammar $G$ (of arithmetic expressions) as
 follows:
 \begin{itemize}
@@ -390,6 +398,35 @@ arithmetic expressions,
 \end{gather*}
 Here are some examples of how we can process parse trees using Forlan:
 \input{chap-4.1-forlan2}
+
+The Forlan module \texttt{PT} also defines these functions
+for processing parse trees:
+\begin{verbatim}
+val selectPT : pt * int list -> pt option
+val update   : pt * int list * pt -> pt
+val cons     : sym * pt list option -> pt
+val leaf     : sym -> pt
+val decons   : pt -> sym * pt list option
+\end{verbatim}
+The function \texttt{selectPT} selects the parse tree at
+a given position (path), returning \texttt{SOME} of that tree,
+if the path is valid, and returning \texttt{NONE} otherwise
+(\texttt{NONE} is returned if the path takes us to a leaf 
+labeled $\%$ in the $(\Sym\cup\{\%\})$-tree). The
+function \texttt{update} replaces the subtree at a given position
+of its first argument by its third argument, issuing an error
+message if the supplied path is invalid (we are allowed to replace
+a leaf labeled $\%$ by a parse tree). The function \texttt{cons}
+builds a parse tree whose root is labeled by the supplied symbol, $a$.
+If the second argument is \texttt{NONE}, the parse tree will be $a(\%)$.
+If the second argument is $\texttt{SOME}\;\pts$, then $\pts$ will be
+its children. $\texttt{leaf}\,a$ is an abbreviation for
+$\texttt{cons(}a\texttt{, SOME [])}$. Finally, \texttt{decons}
+deconstructs a parse tree into the label $a$ of its root node, paired
+with either \texttt{NONE}, if the tree as $a(\%)$, or \texttt{SOME}
+of its children.
+Here are some examples of how we can use these functions:
+\input{chap-4.1-forlan3}
 
 \subsection{Grammar Synthesis}
 
