@@ -1,6 +1,9 @@
 \section{Finite Automata and Labeled Paths}
 \label{FiniteAutomataAndLabeledPaths}
 
+\index{finite automaton|(}
+\index{FA|(}
+
 In this section, we: say what finite automata (FA) are, and show how
 they can be processed using Forlan; say what labeled paths are, and
 show how they can be processed using Forlan; and use the notion of
@@ -33,11 +36,11 @@ middles, and then by their right-hand sides, using our total orderings
 on symbols and strings.  This gives us a total ordering on
 transitions.
 
-We often abbreviate $Q_M$, $s_M$, $A_M$ and $T_M$ to $Q$,
-$s$, $A$ and $T$, when it's clear which FA we are
-working with.  Whenever possible, we will use the mathematical
-variables $p$, $q$ and $r$ to name states.
-We write $\FA$ for the set of all finite automata, which is a
+We often abbreviate $Q_M$, $s_M$, $A_M$ and $T_M$ to $Q$, $s$, $A$ and
+$T$, when it's clear which FA we are working with.  Whenever possible,
+we will use the mathematical variables $p$, $q$ and $r$ to name
+states.  We write $\FA$ for the set of all finite automata, which is a
+\index{finite automaton!FA@$\FA$}%
 countably infinite set.
 
 As an example, we can define an FA $M$ as follows:
@@ -93,13 +96,16 @@ A, 0 -> B | C
 \end{verbatim}
 
 The Forlan module \texttt{FA} defines an abstract type \texttt{fa} (in
+\index{FA@\texttt{FA}}%
+\index{FA@\texttt{FA}!fa@\texttt{fa}}%
 the top-level environment) of finite automata, as well as a large
 number of functions and constants for processing FAs, including:
 \begin{verbatim}
 val input  : string -> fa
 val output : string * fa -> unit 
 \end{verbatim}
-
+\index{FA@\texttt{FA}!input@\texttt{input}}%
+\index{FA@\texttt{FA}!output@\texttt{output}}%
 Remember that it's possible to read input from a file, and to write
 output to a file.  During printing, Forlan merges transitions into
 transition families whenever possible.
@@ -128,6 +134,8 @@ The Java program JForlan, can be used to view and edit finite
 automata.  It can be invoked directly, or run via Forlan.  See the
 Forlan website for more information.
 
+\index{finite automaton!alphabet}%
+\index{finite automaton!alphabet@$\alphabet$}%
 We define a function $\alphabet\in\FA\fun\Alp$ by: for all $M\in\FA$,
 $\alphabet\,M$ is $\setof{a\in\Sym}{\eqtxt{there are}q,x,r\eqtxt{such
     that} q,x\fun r\in T_M\eqtxt{and}a\in\alphabet\,x}$.  I.e.,
@@ -136,6 +144,7 @@ transitions.  We say that $\alphabet\,M$ is \emph{the alphabet of}
 $M$.  For example, the alphabet of our example FA $M$ is
 $\{\mathsf{0,1,2}\}$.
 
+\index{finite automaton!sub-FA}%
 We say that an FA $M$ is a \emph{sub-FA} of an FA $N$ iff:
 \begin{itemize}
 \item $Q_M\sub Q_N$;
@@ -153,6 +162,11 @@ val numTransitions : fa -> int
 val alphabet       : fa -> sym set
 val sub            : fa * fa -> bool
 \end{verbatim}
+\index{FA@\texttt{FA}!equal@\texttt{equal}}%
+\index{FA@\texttt{FA}!numStates@\texttt{numStates}}%
+\index{FA@\texttt{FA}!numTransitions@\texttt{numTransitions}}%
+\index{FA@\texttt{FA}!alphabet@\texttt{alphabet}}%
+\index{FA@\texttt{FA}!sub@\texttt{sub}}%
 The function \texttt{equal} tests whether two FAs are equal, i.e.,
 whether they have the same states, start states, accepting states
 and transitions.
@@ -168,6 +182,7 @@ For example, we can continue out Forlan session as follows:
 \subsection{Labeled Paths and FA Meaning}
 
 We will formally explain when strings are accepted by finite automata
+\index{finite automaton!labeled path}%
 using the notion of a labeled path.  A \emph{labeled path} consists of
 a pair $(\xs,q)$, where $\xs\in\List(\Sym\times\Str)$ and $q\in\Sym$,
 and the set $\LP$ of labeled paths is
@@ -260,6 +275,7 @@ $T_M$ (and $\Csf\in Q_M$). But the labeled path
 \end{gather*}
 is not valid for $M$, since $\Asf,\%\fun\Asf\not\in T_M$.
 
+\index{finite automaton!accepted by}%
 A string $w$ is \emph{accepted by} a finite automaton $M$ iff
 there is a labeled path $\lp$ such that
 \begin{itemize}
@@ -280,6 +296,10 @@ since this labeled path is valid for $M$, is labeled by $\mathsf{0112} =
 \mathsf{(0)(11)(2)}$, has a start state ($\Asf$) that is $M$'s start state,
 and has an end state ($\Csf$) that is one of $M$'s accepting states.
 
+\index{finite automaton!meaning}%
+\index{finite automaton!language accepted by}%
+\index{L(@$L(\cdot)$}%
+\index{finite automaton!L(@$L(\cdot)$}%}%
 Clearly, if $w$ is accepted by $M$, then
 $\alphabet\,w\sub\alphabet\,M$.  Thus $\setof{w\in\Str}{w\eqtxt{is
     accepted by}M}\sub(\alphabet\,M)^*$, so we may define the
@@ -333,6 +353,14 @@ val label      : lp -> str
 val length     : lp -> int
 val join       : lp * lp -> lp
 \end{verbatim}
+\index{LP@\texttt{LP}}%
+\index{LP@\texttt{LP}!input@\texttt{input}}%
+\index{LP@\texttt{LP}!output@\texttt{output}}%
+\index{LP@\texttt{LP}!startState@\texttt{startState}}%
+\index{LP@\texttt{LP}!endState@\texttt{endState}}%
+\index{LP@\texttt{LP}!label@\texttt{label}}%
+\index{LP@\texttt{LP}!length@\texttt{length}}%
+\index{LP@\texttt{LP}!join@\texttt{join}}%
 The function \texttt{equal} tests whether two labeled paths are
 equal.  The functions \texttt{startState}, \texttt{endState},
 \texttt{label} and \texttt{length} return the start state, end
@@ -345,6 +373,8 @@ The module \texttt{FA} also defines the functions
 val checkLP : fa -> lp -> unit
 val validLP : fa -> lp -> bool
 \end{verbatim}
+\index{FA@\texttt{FA}!checkLP@\texttt{checkLP}}%
+\index{FA@\texttt{FA}!validLP@\texttt{validLP}}%
 for checking whether a labeled path is valid in a finite automaton.
 These are curried functions---functions that return functions
 as their results.
@@ -363,6 +393,7 @@ Here are some examples of labeled path and FA processing
 
 \subsection{Design of Finite Automata}
 
+\index{finite automaton!design|(}%
 In this subsection, we give two examples of finite automata
 design.  First, let's find a finite automaton that accepts the set
 of all strings of $\zerosf$'s and $\onesf$'s with an even number of
@@ -417,6 +448,8 @@ Find a finite automaton $M$ such that $L(M)=B$.  Hint: see the second
 example of Subsection~\ref{ProvingTheCorrectnessOfRegularExpressions}.
 \end{exercise}
 
+\index{finite automaton!design|)}%
+
 \subsection{Notes}
 
 Finite automata are normally defined via transition functions,
@@ -443,6 +476,9 @@ automata.  Furthermore, using labeled paths to say when---and
 how---strings are accepted by finite automata is simple, natural and
 diagrammatic.  It's the analogue of using parse trees to say
 when---and how---strings are generated by grammars.
+
+\index{finite automaton|)}
+\index{FA|)}
 
 %%% Local Variables: 
 %%% mode: latex

@@ -1,6 +1,10 @@
 \section{Empty-string Finite Automata}
 \label{EmptyStringFiniteAutomata}
 
+\index{finite automaton!empty string|(}%
+\index{empty string finite automaton|(}%
+\index{EFA|(}%
+
 In this and the following two sections, we will study three
 progressively more restricted kinds of finite automata:
 \begin{itemize}
@@ -38,6 +42,8 @@ of the FA is either $\%$ or has a single symbol.
 
 For example, $\Asf,\%\fun\Bsf$ and $\Asf,\onesf\fun\Bsf$ are legal EFA
 transitions, but $\Asf,\onesf\onesf\fun\Bsf$ is not legal.  We write
+\index{finite automaton!EFA@$\EFA$}%
+\index{empty string finite automaton!EFA@$\EFA$}%
 $\EFA$ for the set of all empty-string finite automata.  Thus
 $\EFA\subsetneq\FA$.
 
@@ -59,6 +65,8 @@ Suppose $M$ is an EFA.
 
 \subsection{Converting FAs to EFAs}
 
+\index{finite automaton!converting FA to EFA}%
+\index{empty string finite automaton!converting FA to EFA}%
 If we want to convert an FA into an equivalent EFA, we can proceed as
 follows.  Every state of the FA will be a state of the EFA, the start
 and accepting states are unchanged, and every transition of the FA
@@ -106,6 +114,8 @@ where $n\geq 2$ and the $b_i$ are symbols, with the transitions
 \langle 1,r\rangle.
 \end{gather*}
 
+\index{finite automaton!faToEFA@$\faToEFA$}%
+\index{empty string finite automaton!faToEFA@$\faToEFA$}%
 We define a function $\faToEFA\in\FA\fun\EFA$ that converts FAs into
 EFAs by saying that $\faToEFA\,M$ is the result of running the above
 algorithm on input $M$.
@@ -122,6 +132,8 @@ For all $M\in\FA$:
 \subsection{Processing EFAs in Forlan}
 
 The Forlan module \texttt{EFA} defines an abstract type \texttt{efa}
+\index{EFA@\texttt{EFA}}%
+\index{EFA@\texttt{EFA}!efa@\texttt{efa}}%
 (in the top-level environment) of empty-string finite automata,
 along with various functions for processing EFAs.
 Values of type \texttt{efa} are implemented as values of type \texttt{fa}, and
@@ -130,6 +142,8 @@ the module EFA provides functions
 val injToFA    : efa -> fa
 val projFromFA : fa -> efa
 \end{verbatim}
+\index{EFA@\texttt{EFA}!injToFA@\texttt{injToFA}}%
+\index{EFA@\texttt{EFA}!projFromFA@\texttt{projFromFA}}%
 for making a value of type \texttt{efa} have type \texttt{fa}, i.e.,
 ``injecting'' an \texttt{efa} into type \texttt{fa}, and for
 making a value of type \texttt{fa} that is an EFA have type
@@ -138,12 +152,16 @@ type \texttt{efa}.  If one tries to project an \texttt{fa} that is not
 an EFA to type \texttt{efa}, an error is signaled.  The functions
 \texttt{injToFA} and \texttt{projFromFA} are available in the top-level
 environment as \texttt{injEFAToFA} and \texttt{projFAToEFA}, respectively.
+\index{empty string finite automaton!injEFAToFA@\texttt{injEFAToFA}}%
+\index{empty string finite automaton!projFAToEFA@\texttt{projFAToEFA}}%
 
 The module \texttt{EFA} also defines the functions:
 \begin{verbatim}
 val input  : string -> efa
 val fromFA : fa -> efa
 \end{verbatim}
+\index{EFA@\texttt{EFA}!input@\texttt{input}}%
+\index{EFA@\texttt{EFA}!fromFA@\texttt{fromFA}}%
 The function \texttt{input} is used to input an EFA, i.e., to input a
 value of type \texttt{fa} using \texttt{FA.input}, and then attempt to
 project it to type \texttt{efa}.  The function \texttt{fromFA}
@@ -152,6 +170,7 @@ the top-level environment with that name:
 \begin{verbatim}
 val faToEFA : fa -> efa
 \end{verbatim}
+\index{empty string finite automaton!faToEFA@\texttt{faToEFA}}%
 
 Finally, most of the functions for processing FAs that were introduced
 in previous sections are inherited by \texttt{EFA}:
@@ -175,6 +194,24 @@ val findAcceptingLP         : efa -> str -> lp
 val simplified              : efa -> bool
 val simplify                : efa -> efa
 \end{verbatim}
+\index{EFA@\texttt{EFA}!output@\texttt{output}}%
+\index{EFA@\texttt{EFA}!numStates@\texttt{numStates}}%
+\index{EFA@\texttt{EFA}!numTransitions@\texttt{numTransitions}}%
+\index{EFA@\texttt{EFA}!equal@\texttt{equal}}%
+\index{EFA@\texttt{EFA}!alphabet@\texttt{alphabet}}%
+\index{EFA@\texttt{EFA}!checkLP@\texttt{checkLP}}%
+\index{EFA@\texttt{EFA}!validLP@\texttt{validLP}}%
+\index{EFA@\texttt{EFA}!isomorphism@\texttt{isomorphism}}%
+\index{EFA@\texttt{EFA}!findIsomorphism@\texttt{findIsomorphism}}%
+\index{EFA@\texttt{EFA}!isomorphic@\texttt{isomorphic}}%
+\index{EFA@\texttt{EFA}!renameStates@\texttt{renameStates}}%
+\index{EFA@\texttt{EFA}!renameStatesCanonically@\texttt{renameStatesCanonically}}%
+\index{EFA@\texttt{EFA}!processStr@\texttt{processStr}}%
+\index{EFA@\texttt{EFA}!accepted@\texttt{accepted}}%
+\index{EFA@\texttt{EFA}!findLP@\texttt{findLP}}%
+\index{EFA@\texttt{EFA}!findAcceptingLP@\texttt{findAcceptingLP}}%
+\index{EFA@\texttt{EFA}!simplified@\texttt{simplified}}%
+\index{EFA@\texttt{EFA}!simplify@\texttt{simplify}}%
 
 Suppose that \texttt{fa} is the finite automaton
 \begin{center}
@@ -188,6 +225,10 @@ Here are some example uses of a few of the above functions:
 The algorithm for converting FAs to EFAs is obvious, but our use of
 structured state names so as to make the resulting EFAs
 self-documenting is novel.
+
+\index{finite automaton!empty string|)}%
+\index{empty string finite automaton|)}%
+\index{EFA|)}%
 
 %%% Local Variables: 
 %%% mode: latex

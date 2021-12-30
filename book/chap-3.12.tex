@@ -1,6 +1,9 @@
 \section{Closure Properties of Regular Languages}
 \label{ClosurePropertiesOfRegularLanguages}
 
+\index{closure properties of regular languages|(}%
+\index{regular languages!closure properties|(}%
+
 In this section, we show how to convert regular expressions to finite
 automata, as well as how to convert finite automata to regular
 expressions.  As a result, we will be able to conclude that the
@@ -40,15 +43,20 @@ expressions and automata.
 
 \subsection{Converting Regular Expressions to FAs}
 
+\index{regular expression!converting to FA}%
+\index{finite automaton!converting from regular expression}%
+
 In order to give an algorithm for converting regular expressions to
 finite automata, we must first define several constants and operations
 on FAs.
 
+\index{finite automaton!emptyStr@$\emptyStr$}%
 We write $\emptyStr$ for the \emph{canonical finite
 automaton for} $\%$,
 \begin{center}
 \input{chap-3.12-fig1.eepic}
 \end{center}
+\index{finite automaton!emptySet@$\emptySet$}%
 And we write $\emptySet$ for \emph{canonical finite automaton for} $\emptyset$,
 \begin{center}
 \input{chap-3.12-fig2.eepic}
@@ -59,18 +67,23 @@ are also NFAs and EFAs.  Thus, we also refer to $\emptyStr$ as the
 \emph{canonical DFA/NFA/EFA/FA for} $\%$, and $\emptySet$ as the
 \emph{canonical DFA/NFA/EFA/FA for} $\emptyset$.
 
+\index{finite automaton!strToFA@$\strToFA$}%
 Next, we define a function $\strToFA\in\Str\fun\FA$ by:
 $\strToFA\,x$ is the \emph{canonical finite automaton for} $x$,
 \begin{center}
 \input{chap-3.12-fig10.eepic}
 \end{center}
 Thus, for all $x\in\Str$, $L(\strToFA\,x)=\{x\}$.
+\index{nondeterministic finite automaton!symToNFA@$\symToNFA$}%
 It is also convenient to define a function $\symToNFA\in\Sym\fun\NFA$
 by: $\symToNFA\,a=\strToFA\,a$.  Then, for all $a\in\Sym$,
 $L(\symToNFA\,a)=\{a\}$.  Of course, $\symToNFA$ is also an element of
 $\Sym\fun\EFA$ and $\Sym\fun\FA$, and we say that $\symToNFA\,a$ is
 the \emph{canonical NFA/EFA/FA for} $a$.
 
+\index{union!finite automaton}%
+\index{finite automaton!union}%
+\index{finite automaton!union@$\union$}%
 Next, we define a function/algorithm $\union\in\FA\times\FA\fun\FA$
 such that $L(\union(M_1,M_2))=L(M_1)\cup L(M_2)$, for all
 $M_1,M_2\in\FA$.  If $M_1,M_2\in\FA$, then $\union(M_1,M_2)$,
@@ -121,6 +134,9 @@ For all $M_1,M_2\in\FA$:
 For all $M_1,M_2\in\EFA$, $\union(M_1,M_2)\in\EFA$.
 \end{proposition}
 
+\index{concatenation!finite automaton}%
+\index{finite automaton!concatenation}%
+\index{finite automaton!concat@$\concat$}%
 Next, we define a function/algorithm $\concat\in\FA\times\FA\fun\FA$
 such that $L(\concat(M_1,M_2))=L(M_1)L(M_2)$, for all
 $M_1,M_2\in\FA$.  If $M_1,M_2\in\FA$, then $\concat(M_1,M_2)$, \emph{the
@@ -174,6 +190,9 @@ For all $M_1,M_2\in\FA$:
 For all $M_1,M_2\in\EFA$, $\concat(M_1,M_2)\in\EFA$.
 \end{proposition}
 
+\index{closure!finite automaton}%
+\index{finite automaton!closure}%
+\index{finite automaton!closure@$\closure$}%
 Next, we define a function/algorithm $\closure\in\FA\fun\FA$ such that
 $L(\closure\,M)=L(M)^*$, for all $M\in\FA$.  If $M\in\FA$, then
 $\closure\,M$, \emph{the closure of} $M$, is the FA $N$ such that:
@@ -215,6 +234,8 @@ For all $M\in\FA$,
 For all $M\in\EFA$, $\closure\,M\in\EFA$.
 \end{proposition}
 
+\index{regular expression!regToFA@$\regToFA$}%
+\index{finite automaton!regToFA@$\regToFA$}%
 We define a function/algorithm $\regToFA\in\Reg\fun\FA$ by well-founded
 recursion on the height of regular expressions, as follows.
 The goal is for $L(\regToFA\,\alpha)$ to be equal to $L(\alpha)$, for
@@ -280,6 +301,14 @@ val concat   : fa * fa -> fa
 val closure  : fa -> fa
 val fromReg  : reg -> fa
 \end{verbatim}
+\index{FA@\texttt{FA}!emptyStr@\texttt{emptyStr}}%
+\index{FA@\texttt{FA}!emptySet@\texttt{emptySet}}%
+\index{FA@\texttt{FA}!fromStr@\texttt{fromStr}}%
+\index{FA@\texttt{FA}!fromSym@\texttt{fromSym}}%
+\index{FA@\texttt{FA}!union@\texttt{union}}%
+\index{FA@\texttt{FA}!concat@\texttt{concat}}%
+\index{FA@\texttt{FA}!closure@\texttt{closure}}%
+\index{FA@\texttt{FA}!fromReg@\texttt{fromReg}}%
 \texttt{emptyStr} and \texttt{emptySet} correspond to $\emptyStr$ and
 $\emptySet$, respectively.
 The functions \texttt{fromStr} and \texttt{fromSym} correspond to
@@ -289,6 +318,8 @@ environment with the names
 val strToFA : str -> fa
 val symToFA : sym -> fa
 \end{verbatim}
+\index{finite automaton!strToFA@\texttt{strToFA}}%
+\index{finite automaton!symToFA@\texttt{symToFA}}%
 \texttt{union} and \texttt{concat} and \texttt{closure} correspond to
 $\union$, $\concat$ and $\closure$, respectively.
 The function \texttt{fromReg} corresponds to $\regToFA$ and is
@@ -296,18 +327,31 @@ available in the top-level environment with that name:
 \begin{verbatim}
 val regToFA : reg -> fa
 \end{verbatim}
-
+\index{finite automaton!regToFA@\texttt{regToFA}}%
 The constants \texttt{emptyStr} and \texttt{emptySet} are inherited by
 the modules \texttt{DFA}, \texttt{NFA} and \texttt{EFA}.
+\index{DFA@\texttt{DFA}!emptyStr@\texttt{emptyStr}}%
+\index{DFA@\texttt{DFA}!emptySet@\texttt{emptySet}}%
+\index{NFA@\texttt{NFA}!emptyStr@\texttt{emptyStr}}%
+\index{NFA@\texttt{NFA}!emptySet@\texttt{emptySet}}%
+\index{EFA@\texttt{EFA}!emptyStr@\texttt{emptyStr}}%
+\index{EFA@\texttt{EFA}!emptySet@\texttt{emptySet}}%
 The function \texttt{fromSym} is inherited by
 the modules \texttt{NFA} and \texttt{EFA}, and is available in
+\index{NFA@\texttt{NFA}!fromSym@\texttt{fromSym}}%
+\index{EFA@\texttt{EFA}!fromSym@\texttt{fromSym}}%
 the top-level environment with the names
 \begin{verbatim}
 val symToNFA : sym -> nfa
 val symToEFA : sym -> efa
 \end{verbatim}
+\index{nondeterministic finite automaton!symToNFA@\texttt{symToNFA}}%
+\index{empty string finite automaton!symToEFA@\texttt{symToEFA}}%
 The functions \texttt{union}, \texttt{concat} and \texttt{closure} are
 inherited by the module \texttt{EFA}.
+\index{EFA@\texttt{EFA}!union@\texttt{union}}%
+\index{EFA@\texttt{EFA}!concat@\texttt{concat}}%
+\index{EFA@\texttt{EFA}!closure@\texttt{closure}}%
 
 Here is how the regular expression $\mathsf{0^*11+001^*}$ can
 be converted to an FA in Forlan:
@@ -325,10 +369,16 @@ generated by regular expressions:
 
 \subsection{Converting FAs to Regular Expressions}
 
+\index{regular expression!converting from FA}%
+\index{finite automaton!converting to regular expression}%
+
 Our algorithm for converting FAs to regular expressions makes
 use of a more general kind of finite automata that we call
 regular expression finite automata.
 
+\index{regular expression finite automaton}%
+\index{finite automaton!regular expression}%
+\index{RFA}%
 A \emph{regular expression finite automaton} (RFA) $M$ consists of:
 \begin{itemize}
 \item a finite set $Q_M$ of symbols;
@@ -369,6 +419,8 @@ and expressed in Forlan as
 {transitions} A, 2 -> A; A, 00* -> B; B, 3 -> B; B, 11* -> A
 \end{verbatim}
 
+\index{regular expression finite automaton!alphabet}%
+\index{regular expression finite automaton!alphabet@$\alphabet$}
 We define a function $\alphabet\in\RFA\fun\Alp$ by: for all
 $M\in\RFA$, $\alphabet\,M$ is $\setof{a\in\Sym}{\eqtxt{there
     are}q,\alpha,r\eqtxt{such that} q,\alpha\fun r\in
@@ -379,6 +431,8 @@ $M$'s transitions.  We say that $\alphabet\,M$ is \emph{the alphabet
 $\{\mathsf{0,1,2}\}$.
 
 The Forlan module \texttt{RFA} defines an abstract type \texttt{rfa}
+\index{RFA@\texttt{RFA}}%
+\index{RFA@\texttt{RFA}!rfa@\texttt{rfa}}%
 (in the top-level environment) of regular expression finite automata,
 as well as some functions for processing RFAs including:
 \begin{verbatim}
@@ -389,7 +443,13 @@ val numStates      : rfa -> int
 val numTransitions : rfa -> int
 val equal          : rfa * rfa -> bool
 \end{verbatim}
-
+\index{RFA@\texttt{RFA}!input@\texttt{input}}%
+\index{RFA@\texttt{RFA}!output@\texttt{output}}%
+\index{RFA@\texttt{RFA}!alphabet@\texttt{alphabet}}%
+\index{RFA@\texttt{RFA}!numStates@\texttt{numStates}}%
+\index{RFA@\texttt{RFA}!numTransitions@\texttt{numTransitions}}%
+\index{RFA@\texttt{RFA}!equal@\texttt{equal}}%
+\index{JForlan}
 JForlan can be used to view and edit regular expression finite
 automata.  It can be invoked directly, or run via Forlan.  See the
 Forlan website for more information.
@@ -402,7 +462,10 @@ have analogous properties. The \texttt{RFA} module has the functions
 val renameStates            : rfa * sym_rel -> rfa
 val renameStatesCanonically : rfa -> rfa
 \end{verbatim}
+\index{RFA@\texttt{RFA}!renameStates@\texttt{renameStates}}%
+\index{RFA@\texttt{RFA}!renameStatesCanonically@\texttt{renameStatesCanonically}}%
 
+\index{regular expression finite automaton!labeled path}%
 A labeled path
 \begin{gather*}
 q_1\lparr{x_1}q_2\lparr{x_2}\cdots\,q_n\lparr{x_n}q_{n+1} ,
@@ -431,12 +494,15 @@ The \texttt{RFA} module contains the functions
 val checkLP : (str * reg -> bool) * rfa -> lp -> unit
 val validLP : (str * reg -> bool) * rfa -> lp -> bool
 \end{verbatim}
+\index{RFA@\texttt{RFA}!checkLP@\texttt{checkLP}}%
+\index{RFA@\texttt{RFA}!validLP@\texttt{validLP}}%
 which are analogous to the identically named functions provided by
 \texttt{FA}, except that they take a first argument whose job is
 to test whether a string is generated by a regular expression.
 For example, we can proceed as follows:
 \input{chap-3.12-forlan2}
 
+\index{regular expression finite automaton!accepted by}%
 A string $w$ is \emph{accepted by} an RFA $M$ iff
 there is a labeled path $\lp$ such that
 \begin{itemize}
@@ -449,8 +515,12 @@ there is a labeled path $\lp$ such that
 \item the end state of $\lp$ is an accepting state of $M$.
 \end{itemize}
 We have that, if $w$ is accepted by $M$, then
-$\alphabet\,w\sub\alphabet\,M$.  The \emph{language accepted by} an
-RFA $M$ ($L(M)$) is
+$\alphabet\,w\sub\alphabet\,M$.
+\index{regular expression finite automaton!meaning}%
+\index{regular expression finite automaton!language accepted by}%
+\index{L(@$L(\cdot)$}%
+\index{regular expression finite automaton!L(@$L(\cdot)$}%}%
+The \emph{language accepted by} an RFA $M$ ($L(M)$) is
 \begin{gather*}
 \setof{w\in\Str}{w\eqtxt{is accepted by}M}.
 \end{gather*}
@@ -482,6 +552,8 @@ where $\beta_1,\ldots,\beta_n$ are all of the elements of this set,
 listed in increasing order and without repetition.
 
 Now, we define a function/algorithm
+\index{regular expression!faToRFA@$\faToRFA$}%
+\index{regular expression finite automata!faToRFA@$\faToRFA$}%
 \begin{gather*}
 \faToRFA\in(\Reg\fun\Reg)\fun\FA\fun\RFA .  
 \end{gather*}
@@ -524,6 +596,7 @@ The \texttt{RFA} module has a function
 \begin{verbatim}
 val fromFA : (reg -> reg) -> fa -> rfa
 \end{verbatim}
+\index{RFA@\texttt{RFA}!fromFA@\texttt{fromFA}}%
 that corresponds to $\faToRFA$.
 Here is how our conversion example can be carried out in Forlan:
 \input{chap-3.12-forlan2a}
@@ -538,6 +611,7 @@ We say that an RFA $M$ is \emph{standard} iff
   \emph{from} that state (even from the accepting state to itself).
 \end{itemize}
 
+\index{regular expression finite automaton!standard}%
 \begin{proposition}
 Suppose $M$ is a standard RFA with only two states,
 and that $q$ is $M's$ accepting state.
@@ -550,6 +624,7 @@ and that $q$ is $M's$ accepting state.
 \end{enumerate}
 \end{proposition}
 
+\index{regular expression finite automaton!standardize@$\standardize$}%
 We define a function $\standardize\in\RFA\fun\RFA$ that standardizes
 an RFA, as follows.  Given an argument $M$, it returns the RFA $N$
 such that:
@@ -594,6 +669,8 @@ The \texttt{RFA} module has functions
 val standard    : rfa -> bool
 val standardize : rfa -> rfa
 \end{verbatim}
+\index{RFA@\texttt{RFA}!standard@\texttt{standard}}%
+\index{RFA@\texttt{RFA}!standardize@\texttt{standardize}}%
 The function \texttt{standard} tests whether an RFA is standard,
 and the function \texttt{standardize} corresponds to
 $\standardize$.
@@ -601,6 +678,7 @@ $\standardize$.
 Here is how the above example can be carried out in Forlan:
 \input{chap-3.12-forlan2b}
 
+\index{regular expression finite automata!eliminateState@$\eliminateState$}%
 Next, we define a function $\eliminateState$ that takes in a function
 $\Simp\in\Reg\fun\Reg$, and returns a function that takes in a pair
 $(M, q)$, where $M$ is an RFA and $q\in Q_M-(\{s_M\}\cup A_M)$, and
@@ -692,6 +770,7 @@ The \texttt{RFA} module has a function
 \begin{verbatim}
 val eliminateState : (reg -> reg) -> rfa * sym -> rfa
 \end{verbatim}
+\index{RFA@\texttt{RFA}!eliminateState@\texttt{eliminateState}}%
 that corresponds to $\eliminateState$.
 Here is how our state-elimination examples can be carried out in Forlan:
 \input{chap-3.12-forlan3}
@@ -699,6 +778,7 @@ And \texttt{eliminateState} stops us from eliminating a start state or
 an accepting state:
 \input{chap-3.12-forlan3a}
 
+\index{regular expression finite automaton!rfaToReg@$\rfaToReg$}%
 Now, we use $\eliminateState$ to define a function/algorithm
 \begin{displaymath}
   \rfaToReg \in (\Reg\fun\Reg) \fun \RFA \fun \Reg .
@@ -735,6 +815,7 @@ Then:
 \end{proposition}
 
 Finally, we define our RFA to regular expression conversion algorithm/function:
+\index{regular expression finite automaton!rfaToReg@$\faToReg$}%
 \begin{gather*}
 \faToReg\in(\Reg\fun\Reg)\fun\FA\fun\Reg .  
 \end{gather*}
@@ -763,6 +844,10 @@ val faToReg           : (reg -> reg) -> fa -> reg
 val faToRegPerms      : int option * (reg -> reg) -> fa -> reg
 val faToRegPermsTrace : int option * (reg -> reg) -> fa -> reg
 \end{verbatim}
+\index{RFA@\texttt{RFA}!toReg@\texttt{toReg}}%
+\index{RFA@\texttt{RFA}!faToReg@\texttt{faToReg}}%
+\index{RFA@\texttt{RFA}!faToRegPerms@\texttt{faToRegPerms}}%
+\index{RFA@\texttt{RFA}!faToRegPermsTrace@\texttt{faToRegPermsTrace}}%
 The function \texttt{toReg} corresponds to $\rfaToReg$.
 The function \texttt{faToReg} is the implementation of $\faToReg$.  If
 $\Simp$ is a simplification function and $M$ is an FA, then
@@ -784,6 +869,12 @@ val faToReg           : (reg -> reg) -> fa -> reg
 val faToRegPerms      : int option * (reg -> reg) -> fa -> reg
 val faToRegPermsTrace : int option * (reg -> reg) -> fa -> reg
 \end{verbatim}
+\index{regular expression!faToReg@\texttt{faToReg}}%
+\index{regular expression!faToRegPerms@\texttt{faToRegPerms}}%
+\index{regular expression!faToRegPermsTrace@\texttt{faToRegPermsTrace}}%
+\index{finite automaton!faToReg@\texttt{faToReg}}%
+\index{finite automaton!faToRegPerms@\texttt{faToRegPerms}}%
+\index{finite automaton!faToRegPermsTrace@\texttt{faToRegPermsTrace}}%
 
 Suppose \texttt{fa} is the FA
 \begin{center}
@@ -808,6 +899,8 @@ $\Bsf$, $\Csf$, $\Dsf$ and $\Asf$, in that order.
 
 \subsection{Characterization of Regular Languages}
 
+\index{characterization of regular languages}%
+\index{regular languages: characterization}%
 Since we have algorithms for converting back and forth between
 regular expressions and finite automata, as well as algorithms for
 converting FAs to RFAs, RFAs to regular expressions,
@@ -835,6 +928,8 @@ Suppose $L$ is a language.  The following statements are equivalent:
 
 \subsection{More Closure Properties/Algorithms}
 
+\index{intersection! empty string finite automaton}%
+\index{empty string finite automaton!intersection}%
 Consider the EFAs $M_1$ and $M_2$:
 \begin{center}
 \input{chap-3.12-fig14.eepic}
@@ -877,6 +972,7 @@ $\nextEmp(\Bsf,\Asf) = \{(\Bsf,\Bsf)\}$ and $\nextEmp(\Bsf,\Bsf) =
 \emptyset$.
 
 Now, we define a function/algorithm
+\index{empty string finite automaton!inter@$\inter$}%
 $\inter\in\EFA\times\EFA\fun\EFA$ such that
 $L(\inter(M_1,M_2))=L(M_1)\cap L(M_2)$, for all $M_1,M_2\in\EFA$.
 Given EFAs $M_1$ and $M_2$, $\inter(M_1,M_2)$, the \emph{intersection of}
@@ -931,10 +1027,14 @@ For all $M_1,M_2\in\EFA$:
 \end{itemize}
 \end{theorem}
 
+\index{nondeterministic finite automaton!intersection}%
+\index{nondeterministic finite automaton!inter@$\inter$}%
 \begin{proposition}
 For all $M_1,M_2\in\NFA$, $\inter(M_1,M_2)\in\NFA$.
 \end{proposition}
 
+\index{deterministic finite automaton!intersection}%
+\index{deterministic finite automaton!inter@$\inter$}%
 \begin{proposition}
 For all $M_1,M_2\in\DFA$:
 \begin{enumerate}[\quad(1)]
@@ -944,6 +1044,8 @@ For all $M_1,M_2\in\DFA$:
 \end{enumerate}
 \end{proposition}
 
+\index{deterministic finite automaton!complementation}%
+\index{deterministic finite automaton!complement@$\mycomplement$}%
 Next, we define a function $\mycomplement\in\DFA\times\Alp\fun\DFA$
 such that, for all $M\in\DFA$ and $\Sigma\in\Alp$,
 \begin{gather*}
@@ -1019,6 +1121,9 @@ Let $X=\setof{w\in\{\mathsf{0,1}\}^*}{\mathsf{000}\eqtxt{is not a
 \mathsf{000}\eqtxt{is a substring of}w} .
 \end{alignat*}
 
+\index{difference! deterministic finite automaton}%
+\index{deterministic finite automaton!difference}%
+\index{deterministic finite automaton!minus@$\minus$}%
 We define a function/algorithm $\minus\in\DFA\times\DFA\fun\DFA$ by:
 $\minus(M_1,M_2)$, the \emph{difference of} $M_1$ \emph{and} $M_2$, is
 \begin{gather*}
@@ -1611,6 +1716,9 @@ on EFAs, not just on DFAs.  By giving a complementation algorithm on
 DFAs that allows us to partially control the alphabet of the resulting
 DFA, we are able to give an algorithm for computing the difference of
 DFAs that works even when the DFAs have different alphabets.
+
+\index{closure properties of regular languages|)}%
+\index{regular languages!closure properties|)}%
 
 %%% Local Variables: 
 %%% mode: latex

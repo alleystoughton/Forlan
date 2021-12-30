@@ -2,6 +2,8 @@
 Regular Expressions}
 \label{ApplicationsOfFiniteAutomataAndRegularExpressions}
 
+\index{applications of finite automata and regular expressions|(}%
+
 In this section we consider three applications of the material from
 Chapter 3: searching for regular expressions in files; lexical
 analysis; and the design of finite state systems.
@@ -48,6 +50,8 @@ In what follows, we write:
 
 \subsection{Searching for Regular Expression in Files}
 
+\index{applications of finite automata and regular
+  expressions!searching in text files}%
 Given a file and a regular expression $\alpha$ whose alphabet is a
 subset of $\Sigma-\{\newlinesym\}$, how can we find all lines of the
 file with substrings in $L(\alpha)$?  (E.g., $\alpha$ might be
@@ -67,6 +71,8 @@ lines that are accepted by $N$.
 
 \subsection{Lexical Analysis}
 
+\index{applications of finite automata and regular
+  expressions!lexical analysis}%
 A lexical analyzer is the part of a compiler that groups the
 characters of a program into lexical items or tokens.  The modern
 approach to specifying a lexical analyzer for a programming language
@@ -233,8 +239,9 @@ specification.
 
 \subsection{Design of Finite State Systems}
 
-\index{finite automaton!design|(}%
-\index{finite state system!design|(}%
+\index{applications of finite automata and regular
+  expressions!design of finite state systems|(}%
+
 Deterministic finite automata give us a means to efficiently---both in
 terms of time and space---check membership in a regular language.  In
 terms of time, a single left-to-right scan of the string is needed.
@@ -828,8 +835,8 @@ transformation is correct. Finally, realize your transformation in
 Forlan, and draw the resulting DFA.
 \end{exercise}
 
-\index{finite state system!synthesis|)}%
-\index{finite automaton!synthesis|)}%
+\index{applications of finite automata and regular
+  expressions!design of finite state systems|)}%
 
 \subsection{Notes}
 
@@ -839,6 +846,8 @@ designing finite state systems depends upon having access to a
 toolset, like Forlan, that is embedded in a programming language and
 implements our algorithms for manipulating finite automata and regular
 expressions.
+
+\index{applications of finite automata and regular expressions|)}%
 
 %%% Local Variables: 
 %%% mode: latex

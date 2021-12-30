@@ -1,6 +1,10 @@
 \section{Nondeterministic Finite Automata}
 \label{NondeterministicFiniteAutomata}
 
+\index{finite automaton!nondeterministic|(}%
+\index{nondeterministic finite automaton|(}%
+\index{NFA|(}%
+
 In this section, we study the second of our more restricted kinds of
 finite automata: nondeterministic finite automata.
 
@@ -16,6 +20,8 @@ of the FA has a single symbol.
 For example, $\Asf,\onesf\fun \Bsf$ is a legal NFA transition, but
 $\Asf, \%\fun \Bsf$ and $\Asf,\onesf\onesf\fun \Bsf$ are not legal.
 We write $\NFA$ for the set of all nondeterministic finite automata.
+\index{finite automaton!NFA@$\NFA$}%
+\index{nondeterministic finite automaton!NFA@$\NFA$}%
 Thus $\NFA\subsetneq\EFA\subsetneq\FA$.
 
 The following proposition obviously holds.
@@ -35,6 +41,9 @@ $\renameStates(M, f)$ is an NFA.
 \end{proposition}
 
 \subsection{Converting EFAs to NFAs}
+
+\index{empty string finite automaton!converting EFA to NFA}%
+\index{nondeterministic finite automaton!converting EFA to NFA}%
 
 Suppose $M$ is the EFA
 \begin{center}
@@ -121,6 +130,8 @@ which it is possible to reach elements of $P$ by sequences of
 $\%$-transitions.
 
 We define a function/algorithm $\efaToNFA\in\EFA\fun\NFA$ that
+\index{empty string finite automaton!efaToNFA@$\efaToNFA$}%
+\index{nondeterministic finite automaton!efaToNFA@$\efaToNFA$}%
 converts EFAs into NFAs by saying that $\efaToNFA\,M$ is the NFA $N$
 such that:
 \begin{itemize}
@@ -222,6 +233,9 @@ for computing forwards and backwards empty-closures:
 val emptyClose          : fa -> sym set -> sym set
 val emptyCloseBackwards : fa -> sym set -> sym set
 \end{verbatim}
+\index{FA@\texttt{FA}!emptyClose@\texttt{emptyClose}}%
+\index{FA@\texttt{FA}!emptyCloseBackwards@\texttt{emptyCloseBackwards}}%
+
 For example, if \texttt{fa} is bound to the finite automaton
 \begin{center}
 \input{chap-3.10-fig2.eepic}
@@ -230,6 +244,8 @@ then we can compute the empty-closure of $\{\Asf\}$ as follows:
 \input{chap-3.10-forlan1}
 
 The Forlan module \texttt{NFA} defines an abstract type \texttt{nfa}
+\index{NFA@\texttt{NFA}}%
+\index{NFA@\texttt{NFA}!nfa@\texttt{nfa}}%
 (in the top-level environment) of nondeterministic finite automata,
 along with various functions for processing NFAs.  Values of type
 \texttt{nfa} are implemented as values of type \texttt{fa}, and the
@@ -240,16 +256,26 @@ val injToEFA    : nfa -> efa
 val projFromFA  : fa -> nfa
 val projFromEFA : efa -> nfa
 \end{verbatim}
+\index{NFA@\texttt{NFA}!injToFA@\texttt{injToFA}}%
+\index{iNFA@\texttt{iNFA}!injToEFA@\texttt{injToEFA}}%
+\index{proNFA@\texttt{proNFA}!projFromFA@\texttt{projFromFA}}%
+\index{projNFA@\texttt{projNFA}!projFromEFA@\texttt{projFromEFA}}%
 The functions \texttt{injToFA}, \texttt{injToEFA}, \texttt{projFromFA} and
-texttt{projFromEFA} are available in the top-level environment as
-texttt{injNFAToFA}, \texttt{injNFAToEFA}, \texttt{projFAToNFA} and
-texttt{projEFAToNFA}, respectively.
+\texttt{projFromEFA} are available in the top-level environment as
+\texttt{injNFAToFA}, \texttt{injNFAToEFA}, \texttt{projFAToNFA} and
+\texttt{projEFAToNFA}, respectively.
+\index{nondeterministic finite automaton!injNFAToEFA@\texttt{injNFAToEFA}}%
+\index{nondeterministic finite automaton!projFAToNFA@\texttt{projFAToNFA}}%
+\index{nondeterministic finite automaton!projEFAToNFA@\texttt{projEFAToNFA}}%
 
 The module \texttt{NFA} also defines the functions:
 \begin{verbatim}
 val input   : string -> nfa
 val fromEFA : efa -> nfa
 \end{verbatim}
+\index{NFA@\texttt{NFA}!input@\texttt{input}}%
+\index{NFA@\texttt{NFA}!fromEFA@\texttt{fromEFA}}%
+
 The function \texttt{input} is used to input an NFA, and
 the function \texttt{fromEFA} corresponds to our
 conversion function $\efaToNFA$, and is available in the top-level
@@ -257,6 +283,7 @@ environment with that name:
 \begin{verbatim}
 val efaToNFA : efa -> nfa
 \end{verbatim}
+\index{nondeterministic finite automaton!efaToNFA@\texttt{efaToNFA}}%
 
 Most of the functions for processing FAs that were introduced
 in previous sections are inherited by \texttt{NFA}:
@@ -280,12 +307,32 @@ val findAcceptingLP         : nfa -> str -> lp
 val simplified              : nfa -> bool
 val simplify                : nfa -> nfa
 \end{verbatim}
+\index{NFA@\texttt{NFA}!output@\texttt{output}}%
+\index{NFA@\texttt{NFA}!numStates@\texttt{numStates}}%
+\index{NFA@\texttt{NFA}!numTransitions@\texttt{numTransitions}}%
+\index{NFA@\texttt{NFA}!alphabet@\texttt{alphabet}}%
+\index{NFA@\texttt{NFA}!equal@\texttt{equal}}%
+\index{NFA@\texttt{NFA}!checkLP@\texttt{checkLP}}%
+\index{NFA@\texttt{NFA}!validLP@\texttt{validLP}}%
+\index{NFA@\texttt{NFA}!isomorphism@\texttt{isomorphism}}%
+\index{NFA@\texttt{NFA}!findIsomorphism@\texttt{findIsomorphism}}%
+\index{NFA@\texttt{NFA}!isomorphic@\texttt{isomorphic}}%
+\index{NFA@\texttt{NFA}!renameStates@\texttt{renameStates}}%
+\index{NFA@\texttt{NFA}!renameStatesCanonically@\texttt{renameStatesCanonically}}%
+\index{NFA@\texttt{NFA}!processStr@\texttt{processStr}}%
+\index{NFA@\texttt{NFA}!accepted@\texttt{accepted}}%
+\index{NFA@\texttt{NFA}!findLP@\texttt{findLP}}%
+\index{NFA@\texttt{NFA}!findAcceptingLP@\texttt{findAcceptingLP}}%
+\index{NFA@\texttt{NFA}!simplified@\texttt{simplified}}%
+\index{NFA@\texttt{NFA}!simplify@\texttt{simplify}}%
 Finally, the functions for computing forwards and backwards
 empty-closures are inherited by the EFA module
 \begin{verbatim}
 val emptyClose          : efa -> sym set -> sym set
 val emptyCloseBackwards : efa -> sym set -> sym set
 \end{verbatim}
+\index{EFA@\texttt{EFA}!emptyClose@\texttt{emptyClose}}%
+\index{EFA@\texttt{EFA}!emptyCloseBackwards@\texttt{emptyCloseBackwards}}%
 
 Suppose that \texttt{efa} is the \texttt{efa}
 \begin{center}
@@ -299,6 +346,10 @@ Here are some example uses of a few of the above functions:
 Because we have defined the meaning of finite automata via labeled
 paths instead of transition functions, our EFA to NFA conversion algorithm
 is easy to understand and prove correct.
+
+\index{finite automaton!nondeterministic|)}%
+\index{nondeterministic finite automaton|)}%
+\index{NFA|)}%
 
 %%% Local Variables: 
 %%% mode: latex

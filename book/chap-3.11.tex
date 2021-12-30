@@ -1,6 +1,10 @@
 \section{Deterministic Finite Automata}
 \label{DeterministicFiniteAutomata}
 
+\index{finite automaton!deterministic|(}%
+\index{deterministic finite automaton|(}%
+\index{DFA|(}%
+
 In this section, we study the third of our more restricted kinds of
 finite automata: deterministic finite automata.
 
@@ -18,6 +22,8 @@ such that $q,a\fun r\in T_M$.
 In other words, an FA is a DFA iff it is an NFA and, for every state
 $q$ of the automaton and every symbol $a$ of the automaton's alphabet,
 there is exactly one state that can be entered from state $q$ by
+\index{finite automaton!DFA@$\DFA$}%
+\index{deterministic finite automaton!DFA@$\DFA$}%
 reading $a$ from the automaton's input.  We write $\DFA$ for the set
 of all deterministic finite automata.  Thus
 $\DFA\subsetneq\NFA\subsetneq\EFA\subsetneq\FA$.
@@ -64,6 +70,8 @@ $|\Delta_M(\{q\},w)|=1${.}
 An easy left string induction on $w$.
 \end{proof}
 
+\index{deterministic finite automaton!transition function}%
+\index{deterministic finite automaton!delta@$\delta$}%
 Suppose $M$ is a DFA.  Because of Proposition~\ref{DetermProp1}, we
 can define \emph{the transition function} $\delta_M$ \emph{for} $M$,
 $\delta_M\in Q_M\times(\alphabet\,M)^*\fun Q_M$, by:
@@ -167,6 +175,7 @@ and
 
 \subsection{Proving the Correctness of DFAs}
 
+\index{deterministic finite automaton!proving correctness}%
 Since every DFA is an FA, we could prove the correctness of DFAs
 using the techniques that we have already studied.
 But it turns out that giving a separate proof that enough is accepted
@@ -342,6 +351,8 @@ is correct.
 
 \subsection{Simplification of DFAs}
 
+\index{deterministic finite automaton!simplification}%
+\index{simplification!deterministic finite automaton}%
 Let $M$ be our example DFA
 \begin{center}
 \input{chap-3.11-fig2.eepic}
@@ -355,6 +366,8 @@ need:
 
 \item a corresponding simplification procedure for DFAs.
 \end{itemize}
+\index{deterministically simplified}%
+\index{deterministic finite automaton!deterministically simplified}%
 We say that a DFA $M$ is \emph{deterministically simplified} iff
 \begin{itemize}
 \item every element of $Q_M$ is reachable; and
@@ -463,6 +476,7 @@ $\dead$ so that it's not in $Q_{M'}$);
 \end{itemize}
 (If $\Sigma\sub\alphabet(L(M))$, then $|Q_N|\leq |Q_M|$.)
 
+\index{deterministic finite automaton!determSimplify@$\determSimplify$}
 We define a function $\determSimplify\in\DFA\times\Alp\fun\DFA$
 by: $\determSimplify(M,\Sigma)$ is the result of
 running the above algorithm on $M$ and $\Sigma$.
@@ -497,6 +511,8 @@ $\determSimplify(M,\Sigma)$ has one more state than does $M$.
 
 \subsection{Converting NFAs to DFAs}
 
+\index{nondeterministic finite automaton!converting NFA to DFA}%
+\index{deterministic finite automaton!converting NFA to DFA}%
 Suppose $M$ is the NFA
 \begin{center}
 \input{chap-3.11-fig6.eepic}
@@ -694,6 +710,8 @@ $L(N)=L(M)$.
 \end{description}
 \end{proof}
 
+\index{deterministic finite automaton!nfaToDFA@$\nfaToDFA$}%
+\index{nondeterministic finite automaton!nfaToDFA@$\nfaToDFA$}%
 We define a function $\nfaToDFA\in\NFA\fun\DFA$ by: $\nfaToDFA\,M$ is
 the result of running the preceding algorithm with input $M$.
 
@@ -710,6 +728,8 @@ For all $M\in\NFA$:
 \subsection{Processing DFAs in Forlan}
 
 The Forlan module \texttt{DFA} defines an abstract type \texttt{dfa}
+\index{DFA@\texttt{DFA}}%
+\index{DFA@\texttt{DFA}!dfa@\texttt{dfa}}%
 (in the top-level environment) of deterministic finite automata,
 along with various functions for processing DFAs.
 Values of type \texttt{dfa} are implemented as values of type \texttt{fa}, and
@@ -722,9 +742,21 @@ val projFromFA  : fa -> dfa
 val projFromEFA : efa -> dfa
 val projFromNFA : nfa -> dfa
 \end{verbatim}
+\index{DFA@\texttt{DFA}!injToFA@\texttt{injToFA}}%
+\index{DFA@\texttt{DFA}!injToEFA@\texttt{injToEFA}}%
+\index{DFA@\texttt{DFA}!injToNFA@\texttt{injToNFA}}%
+\index{DFA@\texttt{DFA}!projFromFA@\texttt{projFromFA}}%
+\index{DFA@\texttt{DFA}!projFromEFA@\texttt{projFromEFA}}%
+\index{DFA@\texttt{DFA}!projFromNFA@\texttt{projFromNFA}}%
 These functions are available in the top-level environment with the
 names \texttt{injDFAToFA}, \texttt{injDFAToEFA}, \texttt{injDFAToNFA},
 \texttt{projFAToDFA}, \texttt{projEFAToDFA} and \texttt{projNFAToDFA}.
+\index{deterministic finite automaton!injDFAToFA@\texttt{injDFAToFA}}%
+\index{deterministic finite automaton!injDFAToEFA@\texttt{injDFAToEFA}}%
+\index{deterministic finite automaton!injDFAToNFA@\texttt{injDFAToNFA}}%
+\index{deterministic finite automaton!projFAToDFA@\texttt{projFAToDFA}}%
+\index{deterministic finite automaton!projEFAToDFA@\texttt{projEFAToDFA}}%
+\index{deterministic finite automaton!projNFAToDFA@\texttt{projNFAToDFA}}%
 
 The module \texttt{DFA} also defines the functions:
 \begin{verbatim}
@@ -735,6 +767,12 @@ val determSimplified : dfa -> bool
 val determSimplify   : dfa * sym set -> dfa
 val fromNFA          : nfa -> dfa
 \end{verbatim}
+\index{DFA@\texttt{DFA}!input@\texttt{input}}%
+\index{DFA@\texttt{DFA}!determProcStr@\texttt{determProcStr}}%
+\index{DFA@\texttt{DFA}!determAccepted@\texttt{determAccepted}}%
+\index{DFA@\texttt{DFA}!determSimplified@\texttt{determSimplified}}%
+\index{DFA@\texttt{DFA}!determSimplify@\texttt{determSimplify}}%
+\index{DFA@\texttt{DFA}!fromNFA@\texttt{fromNFA}}%
 The function \texttt{input} is used to input a DFA.  The function
 \texttt{determProcStr} is used to compute $\delta_M(q,w)$ for a DFA
 $M$, using the properties of $\delta_M$.  The function
@@ -748,6 +786,7 @@ in the top-level environment with that name:
 \begin{verbatim}
 val nfaToDFA : nfa -> dfa
 \end{verbatim}
+\index{DFA@\texttt{DFA}!nfaToDFA@\texttt{nfaToDFA}}%
 
 Most of the functions for processing FAs that were introduced
 in previous sections are inherited by \texttt{DFA}:
@@ -769,6 +808,22 @@ val accepted                : dfa -> str -> bool
 val findLP                  : dfa -> sym set * str * sym set -> lp
 val findAcceptingLP         : dfa -> str -> lp
 \end{verbatim}
+\index{DFA@\texttt{DFA}!output@\texttt{output}}%
+\index{DFA@\texttt{DFA}!numStates@\texttt{numStates}}%
+\index{DFA@\texttt{DFA}!numTransitions@\texttt{numTransitions}}%
+\index{DFA@\texttt{DFA}!alphabet@\texttt{alphabet}}%
+\index{DFA@\texttt{DFA}!equal@\texttt{equal}}%
+\index{DFA@\texttt{DFA}!checkLP@\texttt{checkLP}}%
+\index{DFA@\texttt{DFA}!validLP@\texttt{validLP}}%
+\index{DFA@\texttt{DFA}!isomorphism@\texttt{isomorphism}}%
+\index{DFA@\texttt{DFA}!findIsomorphism@\texttt{findIsomorphism}}%
+\index{DFA@\texttt{DFA}!isomorphic@\texttt{isomorphic}}%
+\index{DFA@\texttt{DFA}!renameStates@\texttt{renameStates}}%
+\index{DFA@\texttt{DFA}!renameStatesCanonically@\texttt{renameStatesCanonically}}%
+\index{DFA@\texttt{DFA}!processStr@\texttt{processStr}}%
+\index{DFA@\texttt{DFA}!accepted@\texttt{accepted}}%
+\index{DFA@\texttt{DFA}!findLP@\texttt{findLP}}%
+\index{DFA@\texttt{DFA}!findAcceptingLP@\texttt{findAcceptingLP}}%
 
 Suppose \texttt{dfa} is the DFA
 \begin{center}
@@ -823,6 +878,10 @@ using induction on $\Lambda$ plus proof by contradiction, is novel,
 simple and elegant.  The material on deterministic simplification is
 original, but straightforward.  And the algorithm for converting NFAs
 to DFAs is standard.
+
+\index{finite automaton!deterministic|)}%
+\index{deterministic finite automaton|)}%
+\index{DFA|)}%
 
 %%% Local Variables: 
 %%% mode: latex

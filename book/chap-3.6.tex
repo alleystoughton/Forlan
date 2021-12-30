@@ -2,8 +2,8 @@
 \label{CheckingAcceptanceAndFindingAcceptingPaths}
 
 In this section we study algorithms for checking whether a string is
-\index{finite automaton!checking for string acceptance}%
-\index{finite automaton!searching for labeled paths}%
+\index{finite automaton!checking for string acceptance|(}%
+\index{finite automaton!searching for labeled paths|(}%
 accepted by a finite automaton, and for finding a labeled path that
 explains why a string is accepted by a finite automaton.
 
@@ -11,8 +11,8 @@ explains why a string is accepted by a finite automaton.
 
 Suppose $M$ is a finite automaton.  We define a function
 $\Delta_M\in\powset\,Q_M\times\Str\fun\powset\,Q_M$ by:
-\index{Delta@$\Delta_\cdot$}%
-\index{finite automaton!Delta@$\Delta_\cdot$}%
+\index{Delta@$\Delta_\cdot(\cdot,\cdot)$}%
+\index{finite automaton!Delta@$\Delta_\cdot(\cdot,\cdot)$}%
 $\Delta_M(P,w)$ is the set of all $r\in Q_M$ such that there is
 an $\lp\in\LP$ such that
 \begin{itemize}
@@ -56,7 +56,7 @@ Suppose $M$ is a finite automaton, $P\sub Q_M$ and $w\in Str$.
 We can calculate $\Delta_M(P,w)$ as follows.
 \index{Delta@$\Delta_\cdot$}%
 \index{finite automaton!Delta@$\Delta_\cdot$}%
-\index{finite automaton!calculating Delta@calculating $\Delta_\cdot(\cdot,\cdot)$}%
+\index{finite automaton!Delta calculating@$\Delta_\cdot(\cdot,\cdot)$!calculating}%
 
 Let $S$ be the set of all suffixes of $w$.  Given $y\in S$, we write
 $\pre\,y$ for the unique $x$ such that $w=xy$.
@@ -172,7 +172,7 @@ Suppose $M$ is a finite automaton.  Then
 L(M) = \setof{w\in\Str}{\Delta_M(\{s_M\}, w)
 \index{L(.)@$L(\cdot)$}%
 \index{finite automaton!L(.)@$L(\cdot)$}%
-\index{finite automaton!characterizing L(.)@characterizing $L(\cdot)$}%
+\index{finite automaton!L characterizing@$L(\cdot)$!characterizing}%
 \mathbin{\cap}A_M\mathrel{\neq}\emptyset} .
 \end{gather*}
 \end{proposition}
@@ -269,6 +269,9 @@ The material in this section is original.  Our definition of the
 meaning of FAs via labeled paths allows us not simply to test \emph{whether}
 an FA accepts a string $w$, but to ask for evidence---in the form of a
 labeled path---for \emph{why} FA accepts $w$.
+
+\index{finite automaton!checking for string acceptance|)}%
+\index{finite automaton!searching for labeled paths|)}%
 
 %%% Local Variables: 
 %%% mode: latex

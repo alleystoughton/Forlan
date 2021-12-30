@@ -7,6 +7,8 @@ of a DFA.  We also see how these functions can be used in Forlan.
 
 \subsection{Testing the Equivalence of DFAs}
 
+\index{deterministic finite automaton!equivalence testing}%
+
 Suppose $M$ and $N$ are DFAs.  Our algorithm for checking whether they
 are equivalent proceeds as follows.  First, it converts $M$ and $N$
 into DFAs with identical alphabets.  Let
@@ -126,6 +128,9 @@ val relationship : dfa * dfa -> unit
 val subset       : dfa * dfa -> bool
 val equivalent   : dfa * dfa -> bool
 \end{verbatim}
+\index{DFA@\texttt{DFA}!relationship@\texttt{relationship}}%
+\index{DFA@\texttt{DFA}!subset@\texttt{subset}}%
+\index{DFA@\texttt{DFA}!equivalent@\texttt{equivalent}}%
 The function \texttt{relationship} figures out the relationship
 between the languages accepted by two DFAs (are they equal, is one a
 proper subset of the other, is neither a subset of the other), and
@@ -170,6 +175,8 @@ carries out these actions:
 \input{chap-3.13-forlan3a}
 
 \subsection{Minimization of DFAs}
+
+\index{deterministic finite automaton!minimization}%
 
 Now, we consider an algorithm for minimizing the sizes of the alphabet
 and set of states of a DFA $M$.  First, the algorithm minimizes the
@@ -619,6 +626,7 @@ $h(\delta_{N'}(s_{N'},w))=\delta_N(s_N,w)$. Prove that $h$ is
 an isomorphism from $N'$ to $N$.
 \end{exercise}
 
+\index{deterministic finite automaton!minimize@$\minimize$}%
 We define a function $\minimize\in\DFA\fun\DFA$ by:
 $\minimize\,M$ is the result of running the above algorithm on
 input $M$.
@@ -657,6 +665,7 @@ The Forlan module DFA includes the function
 \begin{verbatim}
 val minimize : dfa -> dfa
 \end{verbatim}
+\index{DFA@\texttt{DFA}!minimize@\texttt{minimize}}%
 for minimizing DFAs.
 
 For example, if \texttt{dfa} of type \texttt{dfa} is bound to our example

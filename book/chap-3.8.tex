@@ -1,6 +1,7 @@
 \section{Proving the Correctness of Finite Automata}
 \label{ProvingTheCorrectnessOfFiniteAutomata}
 
+\index{finite automaton!proof of correctness|(}
 In this section, we consider techniques for proving the correctness
 of finite automata, i.e., for proving that finite automata accept
 the languages we want them to.
@@ -26,6 +27,8 @@ ${r}\in\Delta_M(\{p\},xy)$.
 
 Suppose $M$ is a finite automaton and $q\in Q_M$.
 Then we define
+\index{Lambda@$\Lambda_{\cdot,\cdot}$}%
+\index{finite automaton!Lambda@$\Lambda_{\cdot,\cdot}$}%
 \begin{displaymath}
 \Lambda_{M,q} = \setof{w\in\Str}{q\in\Delta_M(\{s_M\},w)}.
 \end{displaymath}
@@ -407,6 +410,8 @@ correctness proofs using induction on the length of strings.  In
 contrast, we have introduced and applied elegant techniques for
 proving the correctness of FAs.  Of particular note is our principle
 of induction on $\Lambda$.
+
+\index{finite automaton!proof of correctness|)}
 
 %%% Local Variables: 
 %%% mode: latex
