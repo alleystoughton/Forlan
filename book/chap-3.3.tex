@@ -47,19 +47,19 @@ numbers that is (not-necessarily strictly) descending: for all
 $i\in[1:|\ns|-1]$, $\ns\,i\geq \ns(i+1)$.  This is a way of
 representing nonempty multisets of natural numbers that makes it easy
 to define the usual ordering on multisets. We write $\CC$ for the set
+\index{regular expression!CC@$\CC$}%
 of all closure complexities. E.g., $[3, 2, 2, 1]$ is a closure
 complexity, but $[3, 2, 3]$ and $[\,]$ are not.  For all $n\in\nats$,
 $[n]$ is a \emph{singleton} closure complexity.  The \emph{union} of
 closure complexities $\ns$ and $\ms$ ($\ns\cup\ms$) is the closure
 complexity that results from putting $\ns\myconcat\ms$ in descending
 order, keeping any duplicate elements.  (Here we are overloading the
-term union and the operation $\cup$, but the set-theoretic union isn't
-an operation on closure complexities, and so no confusion should
-result.)  E.g., $[3,2,2,1]\cup[4,2,1,0] = [4,3,2,2,2,1,1,0]$.  The
-\emph{successor} $\overline{\ns}$ of a closure complexity $\ns$ is the
-closure complexity formed by adding one to each element of $\ns$,
-maintaining the order of the elements.  E.g.,
-$\overline{[3,2,2,1]} = [4,3,3,2]$.
+term union and the operation $\cup$, but we will never treat closure
+complexities as sets, so no confusion should result.)  E.g.,
+$[3,2,2,1]\cup[4,2,1,0] = [4,3,2,2,2,1,1,0]$.  The \emph{successor}
+$\overline{\ns}$ of a closure complexity $\ns$ is the closure
+complexity formed by adding one to each element of $\ns$, maintaining
+the order of the elements.  E.g., $\overline{[3,2,2,1]} = [4,3,3,2]$.
 
 It is easy to see that $\cup$ is commutative and associative on $\CC$,
 and that the successor operation on $\CC$ preserves union:
@@ -594,6 +594,7 @@ An easy induction on regular expressions.
 
 Next, we see how we can test whether a regular expression is weakly
 simplified via a simple structural recursion.  Define
+\index{regular expression!weaklySimplified@$\weaklySimplified$}%
 $\weaklySimplified\in\Reg\fun\Bool$ by structural recursion, as
 follows.  Given a regular expression $\alpha$, it proceeds as follows:
 \begin{itemize}
@@ -989,6 +990,7 @@ $\alpha+\beta$, and has no more symbols than $\alpha+\beta$.
 \end{lemma}
 
 Now, we can define our weak simplification function/algorithm.
+\index{regular expression!weaklySimplify@$\weaklySimplify$}%
 Define $\weaklySimplify\in\Reg\fun\WS$ by structural recursion:
 \begin{itemize}
 \item $\weaklySimplify\,\% = \%$;
@@ -1081,6 +1083,9 @@ val weaklySimplified : reg -> bool
 val weaklySimplify   : reg -> reg
 val toStrSet         : reg -> str set
 \end{verbatim}
+\index{Reg@\texttt{Reg}!weaklySimplified@\texttt{weaklySimplified}}%
+\index{Reg@\texttt{Reg}!weaklySimplify@\texttt{weaklySimplify}}%
+\index{Reg@\texttt{Reg}!toStrSet@\texttt{toStrSet}}%
 \texttt{weaklySimplified} and \texttt{weaklySimplify}
 implement $\weaklySimplified$ and $\weaklySimplify$,
 respectively. Finally, the function \texttt{toStrSet} implements our
@@ -1336,11 +1341,16 @@ val hasEmp        : reg -> bool
 val hasSym        : sym * reg -> bool
 val obviousSubset : reg * reg -> bool
 \end{verbatim}
+\index{Reg@\texttt{Reg}!hasEmp@\texttt{hasEmp}}%
+\index{Reg@\texttt{Reg}!hasSym@\texttt{hasSym}}%
+\index{Reg@\texttt{Reg}!obviousSubset@\texttt{obviousSubset}}%
 Here are some examples of how they can be used:
 \input{chap-3.3-forlan3}
 
 Our local and global simplification algorithms make use of
 simplification rules, which may be applied to arbitrary subtrees of
+\index{regular expression!simplification rule}%
+\index{regular expression!rule}%
 regular expressions. A \emph{simplification rule} (or \emph{rule}, for
 short) is a pair $(\alpha, \beta)$, where $\alpha$ and $\beta$ are
 like regular expressions except that some of their leaves may be
@@ -1364,8 +1374,6 @@ substituting the $\lambda_i$ for the $x_i$ in $\alpha$ gives us
 $\delta$, then we can \emph{apply} $\alpha\fun\beta$ \emph{to}
 \index{simplification rule application}%
 \index{regular expression!simplification rule application}%
-\index{simplification!regular expression!simplification rule
-  application}%
 $\gamma$ \emph{at position} $\pat$ (and we say that the rule is
 \emph{applicable to} $\gamma$ at this position), \emph{yielding} the
 result of replacing the subtree at position $\pat$ in $\gamma$ by the
@@ -1387,7 +1395,8 @@ simplification as a rule, allowing the subtree of a regular expression
 at some position to be replaced by its weak simplification.  We begin
 by considering the structural rules.
 
-There are nine \emph{structural rules}, \index{structural rule}%
+There are nine \emph{structural rules},
+\index{structural rule}%
 \index{regular expression!structural rule}%
 \index{simplification!regular expression!structural rule}%
 which preserve the alphabet, closure complexity, size, number of
@@ -1455,6 +1464,9 @@ added at a previous stage or earlier in this stage.  Eventually, there
 will be no more regular expressions to add, because $X$ is finite.
 
 There are $26$ \emph{reduction rules}, some of which make use of a
+\index{reduction rule}%
+\index{regular expression!reduction rule}%
+\index{simplification!regular expression!reduction rule}%
 conservative approximation $\Sub$ to subset testing. For all of these
 rules $\alpha\fun\beta$, if we substitute regular expressions
 $\lambda_i$ for the variables $x_i$ of $\alpha$ (and thus $\beta$),
@@ -1681,6 +1693,7 @@ have that
 \end{displaymath}
 
 Suppose $\Sub$ is a conservative approximation to subset testing.
+\index{regular expression!locally simplified}%
 We say that a regular expression $\alpha$ is \emph{locally simplified with
 respect to} $\Sub$:
 iff
@@ -1694,6 +1707,8 @@ iff
 
 \subsection*{Local Simplification}
 
+\index{regular expression!simplification!local|(}%
+\index{regular expression!local simplification|(}%
 The \emph{local simplification of} a regular expression $\alpha$
 \emph{with respect to} a conservative approximation to subset testing
 $\Sub$ proceeds as follows.  It calls its main function with the weak
@@ -1745,6 +1760,7 @@ guarantee that another local choice wouldn't result in a simpler
 global answer.
 
 We define a function/algorithm
+\index{regular expression!locallySimplify@$\locallySimplify$}%
 \begin{displaymath}
 \locallySimplify\in(\Reg\times\Reg\fun\Bool)\fun\Reg\fun\Reg
 \end{displaymath}
@@ -1783,6 +1799,9 @@ val locallySimplify      :
 val locallySimplifyTrace :
       int option * (reg * reg -> bool) -> reg -> bool * reg
 \end{verbatim}
+\index{Reg@\texttt{Reg}!locallySimplified@\texttt{locallySimplified}}%
+\index{Reg@\texttt{Reg}!locallySimplify@\texttt{locallySimplify}}%
+\index{Reg@\texttt{Reg}!locallySimplifyTrace@\texttt{locallySimplifyTrace}}%
 The function \texttt{locallySimplified} takes in a conservative
 approximation to subset testing $\Sub$ and returns a function that
 tests whether a regular expression is $\Sub$-locally simplified.  The
@@ -1810,10 +1829,16 @@ often has to bound the number of such reorganizations, as in:
 \input{chap-3.3-forlan5}
 Note that, in this transcript, \texttt{reg'} turns out to be
 locally simplified, despite the fact that \texttt{b'} is \texttt{false}.
+\index{regular expression!simplification!local|)}%
+\index{regular expression!local simplification|)}%
 
 \subsection*{Global Simplification}
 
+\index{regular expression!simplification!global|(}%
+\index{regular expression!global simplification|(}%
+
 Given a conservative approximation to subset testing $\Sub$, and a
+\index{regular expression!globally simplified}%
 regular expression $\alpha$, we say that $\alpha$ is \emph{globally
   simplified with respect to} $\Sub$ iff no strictly simpler regular
 expression can be found by an arbitrary number of applications (to
@@ -1948,6 +1973,7 @@ can conclude that $X=V$ is finite.
 \end{proof}
 
 We define a function/algorithm
+\index{regular expression!globallySimplify@$\globallySimplify$}%
 \begin{displaymath}
 \globallySimplify\in(\Reg\times\Reg\fun\Bool)\fun\Reg\fun\Reg 
 \end{displaymath}
@@ -1982,6 +2008,10 @@ val globallySimplifyTrace :
 val globallySimplify      :
       int option * (reg * reg -> bool) -> reg -> bool * reg
 \end{verbatim}
+\index{Reg@\texttt{Reg}!globallySimplified@\texttt{globallySimplified}}%
+\index{Reg@\texttt{Reg}!globallySimplifyTrace@\texttt{globallySimplifyTrace}}%
+\index{Reg@\texttt{Reg}!globallySimplify@\texttt{globallySimplify}}%
+
 The function \texttt{globallySimplified} takes in a conservative
 approximation to subset testing $\Sub$, and returns a function that
 tests whether a regular expression is globally simplified with respect
@@ -2008,6 +2038,9 @@ acceptable time-frame.
 
 Here are some examples of how these functions can be used.
 \input{chap-3.3-forlan6}
+
+\index{regular expression!simplification!global|)}%
+\index{regular expression!global simplification|)}%
 
 \subsection{Notes}
 

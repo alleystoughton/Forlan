@@ -531,6 +531,8 @@ we have that
 \end{align*}
 
 Next, we define some useful auxiliary functions on regular expressions.
+\index{regular expression!generalized concatenation}
+\index{regular expression!genConcat@$\genConcat$}
 The \emph{generalized concatenation} function
 $\genConcat\in\List\,\Reg\fun\Reg$ is defined by right recursion:
 \begin{align*}
@@ -539,6 +541,8 @@ $\genConcat\in\List\,\Reg\fun\Reg$ is defined by right recursion:
 \genConcat([\alpha] \myconcat \bar{\alpha}) &=
 {@}(\alpha, \genConcat\,\bar{\alpha}) , \eqtxt{if} \bar{\alpha}\neq [\,] .
 \end{align*}
+\index{regular expression!generalized union}
+\index{regular expression!genUnion@$\genUnion$}
 And the \emph{generalized union} function
 $\genUnion\in\List\,\Reg\fun\Reg$ is defined by right recursion:
 \begin{align*}
@@ -550,6 +554,7 @@ $\genUnion\in\List\,\Reg\fun\Reg$ is defined by right recursion:
 E.g., $\genConcat[\mathsf{1, 0, 12, 3+4}] = \mathsf{10(12)(3+4)}$ and
 $\genUnion[\mathsf{1, 0, 12, 3+4}] = \mathsf{1 + 0 + (12) + 3 + 4}$.
 
+\index{regular expression!rightConcat@$\rightConcat$}
 $\rightConcat\in\Reg\times\Reg\fun\Reg$ is defined by
 structural recursion on its first argument:
 \begin{align*}
@@ -558,6 +563,7 @@ structural recursion on its first argument:
 \rightConcat(\alpha, \beta) &= {@}(\alpha, \beta),
 \eqtxt{if} \alpha \eqtxtl{is not a concatenation}.
 \end{align*}
+\index{regular expression!rightUnion@$\rightUnion$}
 And $\rightUnion\in\Reg\times\Reg\fun\Reg$ is defined by
 structural recursion on its first argument:
 \begin{align*}
@@ -570,6 +576,7 @@ E.g., $\rightConcat(\mathsf{012}, \mathsf{345}) =
 \mathsf{012345}$ and $\rightUnion(\mathsf{0 + 1 + 2}, \mathsf{1 + 2 + 3}) =
 \mathsf{0 + 1 + 2 + 1 + 2 + 3}$.
 
+\index{regular expression!concatsToList@$\concatsToList$}
 $\concatsToList\in\Reg\fun\List\,\Reg$ is defined by structural
 recursion:
 \begin{align*}
@@ -578,6 +585,7 @@ recursion:
 \concatsToList\,\alpha &= [\alpha],
 \eqtxt{if} \alpha \eqtxtl{is not a concatenation}.
 \end{align*}
+\index{regular expression!unionsToList@$\unionsToList$}
 And $\unionsToList\in\Reg\fun\List\,\Reg$ is defined by structural
 recursion:
 \begin{align*}
@@ -603,6 +611,7 @@ $\unionsToList(\rightUnion(\alpha,\beta)) = \unionsToList\,\alpha
   \myconcat \unionsToList\,\beta$.
 \end{lemma}
 
+\index{regular expression!sortUnions@$\sortUnions$}
 Finally, $\sortUnions\in\Reg\fun\Reg$ is defined by:
 \begin{displaymath}
 \sortUnions\,\alpha = \genUnion\,\bar{\beta} ,
@@ -612,6 +621,8 @@ $\unionsToList\,\alpha$ into strictly ascending order (without
 duplicates), according to our total ordering on regular expressions.
 E.g., $\sortUnions(\mathsf{1 + 0 + 23 + 1}) = \mathsf{0 + 1 + 23}$.
 
+\index{regular expression!allSym@$\allSym$}
+\index{regular expression!allStr@$\allStr$}
 We define functions $\allSym\in\Alp\fun\Reg$ and $\allStr\in
 \Alp\fun\Reg$ as follows.  Given an alphabet $\Sigma$, $\allSym\,\Sigma$
 is the \emph{all symbols regular expression} for $\Sigma$:
@@ -662,9 +673,8 @@ $\RegLan$ is countably infinite.
 
 Since $\RegLan$ is countably infinite but $\Lan$ is uncountable, it
 follows that $\RegLan\subsetneq\Lan$, i.e., there are non-regular
-languages.
-In Section~\ref{ThePumpingLemmaForRegularLanguages}, we will see a concrete
-example of a non-regular language.
+languages.  In Section~\ref{ThePumpingLemmaForRegularLanguages}, we
+will see a concrete example of a non-regular language.
 
 \subsection{Processing Regular Expressions in Forlan}
 
@@ -702,6 +712,8 @@ functions and constants for processing regular expressions, including:
 \index{Reg@\texttt{Reg}!allSym@\texttt{allSym}}%
 \index{Reg@\texttt{Reg}!allStr@\texttt{allStr}}%
 \index{Reg@\texttt{Reg}!fromStrSet@\texttt{fromStrSet}}%
+\index{Reg@\texttt{Reg}!select@\texttt{select}}%
+\index{Reg@\texttt{Reg}!update@\texttt{update}}%
 \begin{verbatim}
 val input         : string -> reg
 val output        : string * reg -> unit
