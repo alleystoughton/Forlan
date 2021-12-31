@@ -30,6 +30,10 @@ q\tranarr{x}r
 \end{gather*}
 or $q,x\fun r$).
 \end{itemize}
+\index{finite automaton!states}%
+\index{finite automaton!start state}%
+\index{finite automaton!accepting states}%
+\index{finite automaton!transitions}%
 
 We order transitions first by their left-hand sides, then by their
 middles, and then by their right-hand sides, using our total orderings
@@ -74,6 +78,7 @@ input is \emph{accepted} by the machine; otherwise, we say that the
 input is \emph{rejected}.  The meaning of a machine is the language
 consisting of all strings that it accepts.
 
+\index{finite automaton!Forlan syntax}%
 Here is how our example FA $M$ can be expressed in Forlan's syntax:
 \verbatiminput{3.4-fa}
 Since whitespace characters are ignored by Forlan's input routines,
@@ -182,7 +187,9 @@ For example, we can continue out Forlan session as follows:
 \subsection{Labeled Paths and FA Meaning}
 
 We will formally explain when strings are accepted by finite automata
-\index{finite automaton!labeled path}%
+\index{finite automaton!labeled path|see{labeled path}}%
+\index{labeled path}%
+\index{labeled path!LP@$\LP$}%
 using the notion of a labeled path.  A \emph{labeled path} consists of
 a pair $(\xs,q)$, where $\xs\in\List(\Sym\times\Str)$ and $q\in\Sym$,
 and the set $\LP$ of labeled paths is
@@ -217,6 +224,11 @@ We say that:
   concatenating the right-hand sides of $\xs$ ($\%$, if $\xs$ is
   empty).
 \end{itemize}
+\index{labeled path!startState@$\startState$}%
+\index{labeled path!endState@$\myendState$}%
+\index{labeled path!length}%
+\index{labeled path!label@$\mylabel$}%
+
 This defines functions $\startState\in\LP\fun\Sym$,
 $\myendState\in\LP\fun\Sym$ and $\mylabel\in\LP\fun\Str$.
 For example $\Asf = ([\,],\Asf)$
@@ -334,6 +346,9 @@ valid for $M$ will also be valid for $N$.  Furthermore, we have that:
 If $M$ is a sub-FA of $N$, then $L(M)\sub L(N)$.
 \end{proposition}
 
+\index{regular expression!equivalence|(}%
+\index{ equiv@$\approx$}%
+\index{regular expression! equiv@$\approx$}%
 We say that finite automata $M$ and $N$ are \emph{equivalent} iff
 $L(M) = L(N)$.  In other words, $M$ and $N$ are equivalent iff $M$ and
 $N$ accept the same language.  We define a relation $\approx$ on $\FA$

@@ -1,6 +1,9 @@
 \section{Simplification of Grammars}
 \label{SimplificationOfGrammars}
 
+\index{simplification!grammar|(}%
+\index{grammar!simplification|(}%
+
 In this section, we say what it means for a grammar to be simplified,
 give a simplification algorithm for grammars, and see how to use this
 algorithm in Forlan.
@@ -29,6 +32,9 @@ of $\pt$.
 
 This example leads us to the following definitions.  Suppose $G$ is a
 grammar.  We say that a variable $q$ of $G$ is:
+\index{grammar!reachable variable}%
+\index{grammar!generating variable}%
+\index{grammar!useful variable}%
 \begin{itemize}
 \item \emph{reachable in} $G$ iff there is a $w\in\Str$ such that
   $w$ is parsable from $s_G$ using $G$, and $a\in\alphabet\,w$;
@@ -77,9 +83,11 @@ except that its set of productions is $U$.
 If $G$ is a grammar and $(q,x)\in P_G$, we say that:
 \begin{itemize}
 \item $(q,x)$ \emph{is redundant in} $G$ iff $x$ is parsable from $q$
+\index{grammar!redundant production}%
  using $H$, where $H=G/(P_G - \{(q,x)\})$; and
 
 \item $(q,x)$ \emph{is irredundant in} $G$ iff $(q,x)$ is not
+\index{grammar!irredundant production}%
   redundant in $G$.
 \end{itemize}
 
@@ -87,6 +95,7 @@ Now we are able to say when a grammar is simplified.  The reader
 should compare this definition with the definition in
 Section~\ref{SimplificationOfFiniteAutomata} of when a finite
 automaton is simplified.
+\index{grammar!simplified}%
 A grammar $G$ is \emph{simplified} iff either
 \begin{itemize}
 \item every variable of $G$ is useful, and every production of $G$
@@ -118,6 +127,7 @@ $a\in\alphabet\,w$ for some $w\in L(G)$.
 
 Next, we give an algorithm for removing redundant productions.
 Given a grammar $G$, $q\in Q_G$ and $x\in\Str$, we say that
+\index{grammar!implicit production}%
 $(q,x)$ \emph{is implicit in} $G$ iff $x$ is parsable from $q$ using
 $G$.
 
@@ -218,6 +228,9 @@ Here is what happens if we apply our simplification algorithm to $G$.
   But $G''$ has no redundant productions, and so we are done.
 \end{itemize}
 
+\index{simplify@$\simplify$}%
+\index{grammar!simplify@$\simplify$}%
+\index{simplification!grammar!simplify@$\simplify$}%
 We define a function $\simplify\in\Gram\fun\Gram$ by: for all
 $G\in\Gram$, $\simplify\,G$ is the result of running the above
 algorithm on $G$.
@@ -254,6 +267,8 @@ The Forlan module \texttt{Gram} defines the functions
 val simplify   : gram -> gram
 val simplified : gram -> bool
 \end{verbatim}
+\index{Gram@\texttt{Gram}!simplify@\texttt{simplify}}%
+\index{Gram@\texttt{Gram}!simplified@\texttt{simplified}}%
 The function \texttt{simplify} corresponds to $\simplify$, and
 \texttt{simplified} tests whether a grammar is simplified.
 
@@ -276,6 +291,8 @@ We can simplify our grammar as follows:
 
 \subsection{Hand-simplification Operations}
 
+\index{grammar!simplification!hand}%
+\index{grammar!hand simplification}%
 Given a simplified grammar $G$, there are often ways we can hand-simplify
 the grammar further. Below are two examples:
 \begin{itemize}
@@ -291,6 +308,7 @@ the grammar further. Below are two examples:
   of $x_i$.
 
   We refer to this operation as \emph{eliminating} $q$ \emph{from}
+\index{grammar!variable elimination}%
   $G$.
 
 \item Suppose there is exactly one production of $G$ involving $s_G$,
@@ -300,6 +318,7 @@ the grammar further. Below are two examples:
   of $G'$.
 
   We refer to this operation as \emph{restarting} $G$.
+\index{grammar!restarting}%
 \end{itemize}
 
 The Forlan module \texttt{Gram} has functions corresponding to these
@@ -308,6 +327,8 @@ two operations, first simplifying the supplied grammar:
 val eliminateVariable : gram * sym -> gram
 val restart           : gram -> gram
 \end{verbatim}
+\index{Gram@\texttt{Gram}!eliminateVariable@\texttt{eliminateVariable}}%
+\index{Gram@\texttt{Gram}!restart@\texttt{restart}}%
 Both begin by simplifying the supplied grammar.
 
 For instance, suppose $\texttt{gram}$ is the grammar
@@ -331,6 +352,9 @@ grammars have no redundant productions is natural, although
 non-standard, and our algorithm for removing redundant productions is
 straightforward. The algorithms for restarting and eliminating
 variables from grammars are non-standard but obvious.
+
+\index{simplification!grammar|)}%
+\index{grammar!simplification|)}%
 
 %%% Local Variables: 
 %%% mode: latex

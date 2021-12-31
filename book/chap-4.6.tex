@@ -1,6 +1,8 @@
 \section{Ambiguity of Grammars}
 \label{AmbiguityOfGrammars}
 
+\index{grammar!ambiguity|(}%
+
 In this section, we say what it means for a grammar to be ambiguous.
 We also give a straightforward method for disambiguating
 grammars for languages with operators of various precedences and
@@ -24,9 +26,11 @@ In $\pt_1$, multiplication has higher precedence than addition; in
 $\pt_2$, the situation is reversed.  Because there are multiple ways
 of parsing this string, we say that our grammar is ``ambiguous''.
 
+\index{grammar!ambiguous}%
 A grammar $G$ is \emph{ambiguous} iff there is a
 $w\in(\alphabet\,G)^*$ such that $w$ is the yield of multiple valid
 parse trees for $G$ whose root labels are $s_G$; otherwise, $G$ is
+\index{grammar!unambiguous}%
 \emph{unambiguous}.
 
 Let $G$ be the grammar
@@ -61,6 +65,7 @@ Prove that $H$ is unambiguous.
 
 \subsection{Disambiguating Grammars of Operators}
 
+\index{grammar!disambiguation}%
 Not every ambiguous grammar can be turned into an equivalent
 unambiguous one.  However, we can use a simple technique to
 disambiguate our grammar of arithmetic expressions, and this technique
@@ -136,6 +141,8 @@ is
 
 \subsection{Top-down Parsing}
 
+\index{grammar!top-down parsing}%
+\index{top-down parsing}%
 Top-down parsing is a simple and efficient parsing method for
 unambiguous grammars of operators like
 \begin{align*}
@@ -262,6 +269,8 @@ left recursive productions is to first translate the left recursion to
 right recursion, and then restructure the parse trees produced by the
 parser.  In contrast, we showed a direct approach to handling left
 recursion that works for grammars of operators.
+
+\index{grammar!ambiguity|)}%
 
 %%% Local Variables: 
 %%% mode: latex

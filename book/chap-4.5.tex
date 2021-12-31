@@ -1,6 +1,8 @@
 \section{Proving the Correctness of Grammars}
 \label{ProvingTheCorrectnessOfGrammars}
 
+\index{grammar!proof of correctness|(}
+
 In this section, we consider techniques for proving the correctness of
 grammars, i.e., for proving that grammars generate the languages we want
 them to.
@@ -8,6 +10,8 @@ them to.
 \subsection{Preliminaries}
 
 Suppose $G$ is a grammar and $a\in Q_G\cup\alphabet\,G$.  Then
+\index{ Pi@$\Pi_{\cdot,\cdot}$}%
+\index{finite automaton! Pi@$\Pi_{\cdot,\cdot}$}%
 \begin{displaymath}
 \Pi_{G,a}=\setof{w\in(\alphabet\,G)^*}{w \eqtxt{is parsable from} a
   \eqtxt{using} G} .  
@@ -263,6 +267,7 @@ this led to our introducing the Principle of Induction on $\Lambda$.
 Here, we introduce an induction principle called Induction on $\Pi$.
 
 \begin{theorem}[Principle of Induction on $\Pi$]
+\index{grammar!Principle of Induction on $Pi$}%
 Suppose $G$ is a grammar, $P_q(w)$ is a property of a
 string $w\in\Pi_{G,q}$, for all $q\in Q_G$, and
 $P_a(w)$, for $a\in\alphabet\,G$, says ``$w=a$''.
@@ -402,6 +407,8 @@ correctness proofs using induction on the length of strings.  In
 contrast, we have introduced and applied elegant techniques for
 proving the correctness of grammars.  Of particular note is our principle
 of induction on $\Pi$.
+
+\index{grammar!proof of correctness|)}
 
 %%% Local Variables: 
 %%% mode: latex

@@ -1,6 +1,7 @@
 \section{A Parsing Algorithm}
 \label{AParsingAlgorithm}
 
+\index{grammar!parsing algorithm|(}%
 In this section, we consider a simple, fairly inefficient parsing
 algorithm that works for all context-free grammars.  In
 Section~\ref{AmbiguityOfGrammars}, we consider an efficient parsing
@@ -164,6 +165,7 @@ consists of the most recently added elements.
   repeats; Otherwise, the result is $Y$.
 \end{itemize}
 
+\index{grammar!minimal parse}%
 We say that a parse tree $\pt$ is \emph{a minimal parse} of a string
 $w$ \emph{from} a symbol $a$ \emph{using} a grammar $G$ iff $\pt$ is
 valid for $G$, $\rootLabel\,\pt = a$ and $\yield\,\pt = w$, and there
@@ -200,6 +202,9 @@ val parsable              : gram -> sym * str -> bool
 val generatedFromVariable : gram -> sym * str -> bool
 val generated             : gram -> str -> bool
 \end{verbatim}
+\index{Gram@\texttt{Gram}!parsable@\texttt{parsable}}%
+\index{Gram@\texttt{Gram}!generatedFromVariable@\texttt{generatedFromVariable}}%
+\index{Gram@\texttt{Gram}!generated@\texttt{generated}}%
 The function \texttt{parsable} tests whether a string $w$ is parsable
 from a symbol $a$ using a grammar $G$.  The function
 \texttt{generatedFromVariable} tests whether a string $w$ is generated
@@ -213,6 +218,9 @@ val parse                     : gram -> sym * str -> pt
 val parseAlphabetFromVariable : gram -> sym * str -> pt
 val parseAlphabet             : gram -> str -> pt
 \end{verbatim}
+\index{Gram@\texttt{Gram}!parse@\texttt{parse}}%
+\index{Gram@\texttt{Gram}!parseAlphabetFromVariable@\texttt{parseAlphabetFromVarable}}%
+\index{Gram@\texttt{Gram}!parseAlphabet@\texttt{parseAlphabet}}%
 The function \texttt{parse} tries to find a minimal parse of a string
 $w$ from a symbol $a$ using a grammar $G$; it issues an error message
 if $w\not\in(Q_G\cup\alphabet\,G)^*$, or $a\not\in
@@ -247,6 +255,8 @@ as try to find parses of such strings:
 Our parsability and parsing algorithms are straightforward generalizations of
 the familiar algorithm for checking whether a grammar in Chomsky Normal Form
 generates a string.
+
+\index{grammar!parsing algorithm|)}%
 
 %%% Local Variables: 
 %%% mode: latex

@@ -1,6 +1,9 @@
 \section{Isomorphism of Grammars}
 \label{IsomorphismOfGrammars}
 
+\index{isomorphism!grammar|(}%
+\index{grammar!isomorphism|(}%
+
 In this section, we study grammar isomorphism, i.e., the way in
 which grammars can have the same structure, even though they may have
 different variables.
@@ -54,8 +57,9 @@ implies having the same alphabet and equivalence.
 There is an algorithm for finding an isomorphism from one grammar to
 another, if one exists, or reporting that there is no such
 isomorphism.  It's similar to the algorithm for finding an isomorphism
-between finite automata.
+between finite automata of Section~\ref{IsomorphismOfFiniteAutomata}.
 
+\index{grammar!renameVariables@$\renameVariables$}%
 The function $\renameVariables$ takes in a pair $(G,f)$, where $G$ is
 a grammar and $f$ is a bijection from $Q_G$ to a set of symbols with
 the property that $\range\,f\cap\alphabet\,G=\emptyset$, and returns
@@ -64,6 +68,7 @@ bijection $f$.  The resulting grammar will be isomorphic to $G$.
 
 The following function is a special case of $\renameVariables$.
 The function $\renameVariablesCanonically\in\Gram\fun\Gram$ renames the
+\index{grammar!renameVariablesCanonically@$\renameVariablesCanonically$}%
 variables of a grammar $G$ to:
 \begin{itemize}
 \item $\mathsf{A}$, $\mathsf{B}$, etc., when the grammar has no more
@@ -88,6 +93,11 @@ val isomorphic                 : gram * gram -> bool
 val renameVariables            : gram * sym_rel -> gram
 val renameVariablesCanonically : gram -> gram
 \end{verbatim}
+\index{Gram@\texttt{Gram}!isomorphism@\texttt{isomorphism}}%
+\index{Gram@\texttt{Gram}!findIsomorphism@\texttt{findIsomorphism}}%
+\index{Gram@\texttt{Gram}!isomorphic@\texttt{isomorphic}}%
+\index{Gram@\texttt{Gram}!renameVariables@\texttt{renameVariables}}%
+\index{Gram@\texttt{Gram}!renameVariablesCanonically@\texttt{renameVariablesCanoically}}%
 The function \texttt{isomorphism} checks whether a relation on symbols
 is an isomorphism from one grammar to another.  The function
 \texttt{findIsomorphism} tries to find an isomorphism from one grammar
@@ -130,6 +140,9 @@ Here are some examples of how the above functions can be used:
 Considering grammar isomorphism is non-traditional, but relatively
 straightforward.  We were led to doing so mostly because of the need to
 support variable renaming.
+
+\index{isomorphism!grammar|(}%
+\index{grammar!isomorphism|(}%
 
 %%% Local Variables: 
 %%% mode: latex
