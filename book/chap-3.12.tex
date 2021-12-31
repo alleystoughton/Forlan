@@ -83,6 +83,7 @@ the \emph{canonical NFA/EFA/FA for} $a$.
 \index{language!union}%
 \index{finite automaton!union}%
 \index{finite automaton!union@$\union$}%
+\index{union!finite automaton}%
 Next, we define a function/algorithm $\union\in\FA\times\FA\fun\FA$
 such that $L(\union(M_1,M_2))=L(M_1)\cup L(M_2)$, for all
 $M_1,M_2\in\FA$.  If $M_1,M_2\in\FA$, then $\union(M_1,M_2)$,
@@ -136,6 +137,7 @@ For all $M_1,M_2\in\EFA$, $\union(M_1,M_2)\in\EFA$.
 \index{language!concatenation}%
 \index{finite automaton!concatenation}%
 \index{finite automaton!concat@$\concat$}%
+\index{concatenation!finite automaton}%
 Next, we define a function/algorithm $\concat\in\FA\times\FA\fun\FA$
 such that $L(\concat(M_1,M_2))=L(M_1)L(M_2)$, for all
 $M_1,M_2\in\FA$.  If $M_1,M_2\in\FA$, then $\concat(M_1,M_2)$, \emph{the
@@ -192,6 +194,7 @@ For all $M_1,M_2\in\EFA$, $\concat(M_1,M_2)\in\EFA$.
 \index{language!closure}%
 \index{finite automaton!closure}%
 \index{finite automaton!closure@$\closure$}%
+\index{closure!finite automaton}%
 Next, we define a function/algorithm $\closure\in\FA\fun\FA$ such that
 $L(\closure\,M)=L(M)^*$, for all $M\in\FA$.  If $M\in\FA$, then
 $\closure\,M$, \emph{the closure of} $M$, is the FA $N$ such that:
@@ -345,7 +348,7 @@ val symToNFA : sym -> nfa
 val symToEFA : sym -> efa
 \end{verbatim}
 \index{nondeterministic finite automaton!symToNFA@\texttt{symToNFA}}%
-\index{empty string finite automaton!symToEFA@\texttt{symToEFA}}%
+\index{empty-string finite automaton!symToEFA@\texttt{symToEFA}}%
 The functions \texttt{union}, \texttt{concat} and \texttt{closure} are
 inherited by the module \texttt{EFA}.
 \index{EFA@\texttt{EFA}!union@\texttt{union}}%
@@ -552,7 +555,7 @@ listed in increasing order and without repetition.
 
 Now, we define a function/algorithm
 \index{regular expression!faToRFA@$\faToRFA$}%
-\index{regular expression finite automata!faToRFA@$\faToRFA$}%
+\index{regular expression finite automaton!faToRFA@$\faToRFA$}%
 \begin{gather*}
 \faToRFA\in(\Reg\fun\Reg)\fun\FA\fun\RFA .  
 \end{gather*}
@@ -677,7 +680,7 @@ $\standardize$.
 Here is how the above example can be carried out in Forlan:
 \input{chap-3.12-forlan2b}
 
-\index{regular expression finite automata!eliminateState@$\eliminateState$}%
+\index{regular expression finite automaton!eliminateState@$\eliminateState$}%
 Next, we define a function $\eliminateState$ that takes in a function
 $\Simp\in\Reg\fun\Reg$, and returns a function that takes in a pair
 $(M, q)$, where $M$ is an RFA and $q\in Q_M-(\{s_M\}\cup A_M)$, and
@@ -928,7 +931,8 @@ Suppose $L$ is a language.  The following statements are equivalent:
 \subsection{More Closure Properties/Algorithms}
 
 \index{language!intersection}%
-\index{empty string finite automaton!intersection}%
+\index{empty-string finite automaton!intersection}%
+\index{intersection!empty-string finite automaton}%
 Consider the EFAs $M_1$ and $M_2$:
 \begin{center}
 \input{chap-3.12-fig14.eepic}
@@ -971,7 +975,7 @@ $\nextEmp(\Bsf,\Asf) = \{(\Bsf,\Bsf)\}$ and $\nextEmp(\Bsf,\Bsf) =
 \emptyset$.
 
 Now, we define a function/algorithm
-\index{empty string finite automaton!inter@$\inter$}%
+\index{empty-string finite automaton!inter@$\inter$}%
 $\inter\in\EFA\times\EFA\fun\EFA$ such that
 $L(\inter(M_1,M_2))=L(M_1)\cap L(M_2)$, for all $M_1,M_2\in\EFA$.
 Given EFAs $M_1$ and $M_2$, $\inter(M_1,M_2)$, the \emph{intersection of}
@@ -1028,12 +1032,14 @@ For all $M_1,M_2\in\EFA$:
 
 \index{nondeterministic finite automaton!intersection}%
 \index{nondeterministic finite automaton!inter@$\inter$}%
+\index{intersection!nondeterministic finite automaton}%
 \begin{proposition}
 For all $M_1,M_2\in\NFA$, $\inter(M_1,M_2)\in\NFA$.
 \end{proposition}
 
 \index{deterministic finite automaton!intersection}%
 \index{deterministic finite automaton!inter@$\inter$}%
+\index{intersection!deterministic finite automaton}%
 \begin{proposition}
 For all $M_1,M_2\in\DFA$:
 \begin{enumerate}[\quad(1)]
@@ -1043,6 +1049,7 @@ For all $M_1,M_2\in\DFA$:
 \end{enumerate}
 \end{proposition}
 
+\index{complementation!deterministic finite automaton}%
 \index{deterministic finite automaton!complementation}%
 \index{deterministic finite automaton!complement@$\mycomplement$}%
 Next, we define a function $\mycomplement\in\DFA\times\Alp\fun\DFA$
@@ -1123,6 +1130,7 @@ Let $X=\setof{w\in\{\mathsf{0,1}\}^*}{\mathsf{000}\eqtxt{is not a
 \index{language!difference}%
 \index{deterministic finite automaton!difference}%
 \index{deterministic finite automaton!minus@$\minus$}%
+\index{difference!deterministic finite automaton}%
 We define a function/algorithm $\minus\in\DFA\times\DFA\fun\DFA$ by:
 $\minus(M_1,M_2)$, the \emph{difference of} $M_1$ \emph{and} $M_2$, is
 \begin{gather*}
@@ -1215,6 +1223,7 @@ proceed as follows:
 
 Define $\rev\in\Reg\fun\Reg$ by recursion:
 \index{regular expression!reversal}%
+\index{reversal!regular expression}%
 \index{rev@$\rev$}%
 \index{regular expression!rev@$\rev$}%
 \begin{align*}
@@ -1249,6 +1258,7 @@ to reverse all of the transitions, add a new start state, with
 $\%$-transitions to all of the original accepting states, and make the
 original start state be the unique accepting state.  Formally, we
 define a function $\rev\in\FA\fun\FA$ as
+\index{reversal!finite automaton}%
 \index{finite automaton!reversal}%
 \index{empty-string finite automaton!reversal}%
 \index{rev@$\rev$}%
@@ -1343,6 +1353,7 @@ E.g., we can proceed as follows:
 
 Now, we define a function $\prefix\in\EFA\fun\EFA$ such that
 \index{prefix@$\prefix$}%
+\index{prefix-closure!empty-string finite automaton}%
 \index{empty-string finite automaton!prefix@$\prefix$}%
 \index{empty-string finite automaton!prefix-closure}%
 \index{prefix-closure!empty-string finite automaton}%
@@ -1385,7 +1396,7 @@ For all $M\in\NFA$, $\prefix\,M\in\NFA$.
 \end{proposition}
 \index{nondeterministic finite automaton!prefix@$\prefix$}%
 \index{nondeterministic finite automaton!prefix-closure}%
-
+\index{prefix-closure!nondeterministic finite automaton}%
 Now we can define suffix-closure and substring-closure
 operations on EFAs as follows.  The functions $\suffix,\substring\in
 \EFA\fun\EFA$ are defined by:
@@ -1393,6 +1404,8 @@ operations on EFAs as follows.  The functions $\suffix,\substring\in
 \index{empty-string finite automaton!substring@$\substring$}%
 \index{empty-string finite automaton!suffix-closure}%
 \index{empty-string finite automaton!substring-closure}%
+\index{suffix-closure!empty-string finite automaton}%
+\index{substring-closure!empty-string finite automaton}%
 \begin{align*}
 \suffix\,M &= \rev(\prefix(\rev\,M))) , \eqtxt{and} \\
 \substring\,M &= \suffix(\prefix\,M)) .
@@ -1412,9 +1425,9 @@ automata using bijections on symbols.  If $x$ is a string and $f$ is a
 bijection from a set of symbols that is a superset of $\alphabet\,x$
 (maybe $\alphabet\,x$ itself, i.e., the symbols appearing in $x$) to
 some set of symbols, then the \emph{renaming of} $x$ \emph{using} $f$
-($x^f\in\Str$) is the result of applying $f$ to \index{alphabet
-  renaming!string}%
+($x^f\in\Str$) is the result of applying $f$ to
 \index{string!alphabet renaming}%
+\index{alphabet renaming!string}%
 \index{ power@$\cdot^\cdot$}%
 \index{string! power@$\cdot^\cdot$}%
 each symbol of $x$.  For example, if
@@ -1425,6 +1438,7 @@ If $L$ is a language, and $f$ is a bijection from a set of symbols
 that is a superset of $\alphabet\,L$ (maybe $\alphabet\,L$ itself)
 to some set of symbols, then the \emph{renaming of} $L$ \emph{using}
 \index{language!alphabet renaming}%
+\index{alphabet renaming!language}%
 \index{ power@$\cdot^\cdot$}%
 \index{language! power@$\cdot^\cdot$}%
 $f$ ($L^f\in\Lan$) is formed by applying $f$ to every symbol of every string
@@ -1467,6 +1481,7 @@ of}\alphabet\,\alpha\eqtxtl{to some set of symbols}}$.
 Then, the function $\renameAlphabet\in X\fun\Reg$ takes in a pair
 $(\alpha,f)$ and
 \index{regular expression!alphabet renaming}%
+\index{alphabet renaming!regular expression}%
 \index{renameAlphabet@$\renameAlphabet$}%
 \index{regular expression!renameAlphabet@$\renameAlphabet$}%
 returns the regular expression produced from $\alpha$ by renaming each
@@ -1497,6 +1512,7 @@ Let $X=\setof{(M,f)}{M\in\FA\eqtxt{and}f\eqtxtl{is a
 bijection from a set of symbols that}\eqtxtr{is a superset
 of}\alphabet\,M\eqtxtl{to some set of symbols}}$.
 Then, the function $\renameAlphabet\in X\fun\FA$ takes in a pair $(M,f)$ and
+\index{alphabet renaming!finite automaton}%
 \index{finite automaton!alphabet renaming}%
 \index{empty-string finite automaton!alphabet renaming}%
 \index{nondeterministic finite automaton!alphabet renaming}%
@@ -1535,6 +1551,26 @@ are supersets of $\alphabet\,M$ to sets of symbols:
 \end{itemize}
 \end{theorem}
 
+\index{union!regular languages closed under}%
+\index{regular language!closed under union}%
+\index{concatenation!regular languages closed under}%
+\index{regular language!closed under concatenation}%
+\index{closure!regular languages closed under}%
+\index{regular language!closed under closure}%
+\index{intersection!regular languages closed under}%
+\index{regular language!closed under intersection}%
+\index{difference!regular languages closed under}%
+\index{regular language!closed under difference}%
+\index{reversal!regular languages closed under}%
+\index{regular language!closed under reversal}%
+\index{prefix-closure!regular languages closed under}%
+\index{regular language!closed under prefix-closure}%
+\index{suffix-closure!regular languages closed under}%
+\index{regular language!closed under suffix-closure}%
+\index{substring-closure!regular languages closed under}%
+\index{regular language!closed under substring-closure}%
+\index{alphabet-renaming!regular languages closed under}%
+\index{regular language!closed under alphabet-renaming}%
 \begin{theorem}
 \label{ClosurePropTheorem}
 Suppose $L,L_1,L_2\in\RegLan$.
@@ -1571,6 +1607,11 @@ expressions, the operations $\prefix$, $\suffix$ and $\substring$ on
 EFAs, the operation $\renameAlphabet$ on regular expressions, and
 Theorem~\ref{RegularEquiv}.
 \end{proof}
+
+From Theorem~\ref{ClosurePropTheorem}(5), it follows that the
+regular languages are closed under complementation.
+\index{complementation!regular languages closed under}%
+\index{regular language!closed under complementation}%
 
 The Forlan module \texttt{EFA} defines the function/algorithm
 \begin{verbatim}

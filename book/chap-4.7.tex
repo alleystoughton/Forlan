@@ -60,8 +60,9 @@ of $G_1$ and $G_2$, and chooses the start variable $q$,
 in a uniform way that makes the preceding properties hold.
 This gives us a function
 $\union\in\Gram\times\Gram\fun\Gram$.
-\index{grammar!union@$union$}%
+\index{grammar!union@$\union$}%
 \index{grammar!union}%
+\index{union!grammar}%
 
 We do something similar when defining the other closure
 operations.  In what follows, though, we'll ignore this issue,
@@ -77,6 +78,7 @@ along with production
 This gives us a function $\concat\in\Gram\times\Gram\fun\Gram$.
 \index{grammar!concat@$\concat$}%
 \index{grammar!concatenation}%
+\index{concatenation!grammar}%
 
 Suppose $G$ is a grammar.  We can define a grammar $H$ such that
 $L(H)=L(G)^*$ by adding to the variables and productions of $G$ a new
@@ -87,10 +89,12 @@ q\fun \%\mid s_Gq .
 This gives us a function $\closure\in\Gram\fun\Gram$.
 \index{grammar!closure@$\closure$}%
 \index{grammar!closure}%
+\index{closure!grammar}%
 
 Next, we consider reversal and alphabet renaming operations on
 grammars.  Given a grammar $G$, we can define a grammar $H$ such that
 \index{grammar!reversal}%
+\index{reversal!grammar}%
 $L(H)=L(G)^R$ by simply reversing the right-sides of $G$'s
 productions.
 This gives a function $\rev\in\Gram\fun\Gram$.
@@ -101,6 +105,7 @@ a superset of $\alphabet\,G$ to some set of symbols, we can define a
 grammar $H$ such that $L(H)=L(G)^f$ by renaming the elements of
 \index{grammar!alphabet renaming}%
 \index{language!alphabet renaming}%
+\index{alphabet renaming!grammar}%
 $\alphabet\,G$ in the right-sides of $G$'s productions using $f$.
 Actually, we may have to rename the variables of $G$ to avoid clashes
 with the elements of the renamed alphabet.  Let
@@ -119,6 +124,9 @@ we know that if we can define a prefix-closure operation
 \index{grammar!prefix-closure}%
 \index{grammar!suffix-closure}%
 \index{grammar!substring-closure}%
+\index{prefix-closure!grammar}%
+\index{suffix-closure!grammar}%
+\index{substring-closure!grammar}%
 on grammars, then we can obtain suffix-closure and substring-closure
 operations on grammars from the prefix-closure and grammar reversal
 operations.
@@ -173,6 +181,7 @@ is turned into the grammar
 
 \index{language!intersection}%
 \index{grammar!intersection with EFA}%
+\index{intersection!grammar with EFA}%
 We now consider an algorithm for intersecting a grammar $G$ with an
 EFA $M$, resulting in $\simplify\,H$, where the grammar $H$ is defined
 as follows.
@@ -339,6 +348,30 @@ $\minus\in\Gram\times\DFA\fun\Gram$.
 The following theorem summarizes the closure properties for context-free
 languages.
 
+\index{union!context-free languages closed under}%
+\index{context-free language!closed under union}%
+\index{concatenation!context-free languages closed under}%
+\index{context-free language!closed under concatenation}%
+\index{closure!context-free languages closed under}%
+\index{context-free language!closed under closure}%
+\index{reversal!context-free languages closed under}%
+\index{context-free language!closed under reversal}%
+\index{alphabet-renaming!context-free languages closed under}%
+\index{context-free language!closed under alphabet-renaming}%
+\index{prefix-closure!context-free languages closed under}%
+\index{context-free language!closed under prefix-closure}%
+\index{suffix-closure!context-free languages closed under}%
+\index{context-free language!closed under suffix-closure}%
+\index{substring-closure!context-free languages closed under}%
+\index{context-free language!closed under substring-closure}%
+\index{intersection!context-free languages closed under with regular
+  languages}%
+\index{context-free language!closed under intersection with regular
+  languages}%
+\index{difference!context-free languages closed under with regular
+  languages}%
+\index{context-free language!closed under difference with regular
+  languages}%
 \begin{theorem}
 Suppose $L,L_1,L_2\in\CFLan$ and $L'\in\RegLan$.
 Then:
