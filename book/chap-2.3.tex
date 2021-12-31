@@ -6,7 +6,7 @@ The Forlan
 toolset is an extension of the Standard ML of New Jersey (SML/NJ)
 implementation of Standard ML (SML).  It is implemented as a set of
 SML modules.  It is used interactively, and users can extend Forlan by
-definining SML functions.
+defining SML functions.
 
 Instructions for installing and running Forlan on machines running
 \index{Forlan!installing}%
@@ -216,7 +216,7 @@ arguments of type $t_1$ and producing results (if they terminate
 without raising exceptions) of type $t_2$.  SML infers the types of
 functions.  The function application \texttt{f(4~+~5)} is evaluated as
 follows.  First, the argument \texttt{4~+~5} is evaluated, resulting
-in \texttt{9}.  Then a local envionment is created in which \texttt{n}
+in \texttt{9}.  Then a local environment is created in which \texttt{n}
 is bound to \texttt{9}, and \texttt{f}'s body is evaluated in that
 environment, producing \texttt{18}.  Function application has higher
 precedence than operators like \texttt{+}.
@@ -232,7 +232,7 @@ than the operator \texttt{->}.
 
 Except for basic entities like integers and booleans, all values in
 SML are represented by pointers, so that passing such a value to a
-function, or putting it in a datastructure, only involves copying a
+function, or putting it in a data structure, only involves copying a
 pointer.
 
 Given functions $f$ and $g$ of types \texttt{$t_1$\;->\;$t_2$} and
@@ -277,7 +277,7 @@ function application associates to the left, so that
 $f\,x\,y$ means $(f\,x)y$, i.e., apply $f$ to $x$, and
 then apply the resulting function to $y$.
 
-The following example shows that local envionments are kept alive as
+The following example shows that local environments are kept alive as
 as long as there are accessible function values referring to them:
 \input{chap-2.3-forlan5d}
 If the local environment containing the binding of \texttt{x} was
