@@ -440,7 +440,7 @@ val compareCC : cc * cc -> order
 \end{verbatim}
 The function \texttt{ccToList} is the identity function on closure
 complexities: all that changes is the type.  $\mathtt{singCC\,n}$
-returns the singleton closure complexity $[n]$, if $n$ is nonnegative;
+returns the singleton closure complexity $[n]$, if $n$ is non-negative;
 otherwise it issues an error message.  The functions \texttt{unionCC}
 and \texttt{succCC} implement the union and successor operations on
 closure complexities.  The function \texttt{cc} corresponds to $\cc$, and
@@ -659,7 +659,7 @@ Section~\ref{RegularExpressionsAndLanguages}.
 \label{RightConcatLem}
 If $\alpha,\beta\in\Reg$, then $\rightConcat(\alpha,\beta)$ is
 equivalent to $\alpha\beta$, and has the same alphabet, closure
-complexity, size, number of concatentations, number of symbols, and
+complexity, size, number of concatenations, number of symbols, and
 number of leaves as $\alpha\beta$.
 \end{lemma}
 
@@ -671,7 +671,7 @@ By induction on $\alpha$.
 \label{RightUnionLem}
 If $\alpha,\beta\in\Reg$, then $\rightUnion(\alpha,\beta)$ is
 equivalent to $\alpha+\beta$, and has the same alphabet, closure
-complexity, size, number of concatentations, and number of symbols as
+complexity, size, number of concatenations, and number of symbols as
 $\alpha+\beta$.
 \end{lemma}
 
@@ -1379,7 +1379,7 @@ $\delta$, then we can \emph{apply} $\alpha\fun\beta$ \emph{to}
 $\gamma$ \emph{at position} $\pat$ (and we say that the rule is
 \emph{applicable to} $\gamma$ at this position), \emph{yielding} the
 result of replacing the subtree at position $\pat$ in $\gamma$ by the
-result of subsituting the $\lambda_i$ for the $x_i$ in $\beta$.  For
+result of substituting the $\lambda_i$ for the $x_i$ in $\beta$.  For
 example, applying $\alpha+\beta\fun\beta+\alpha$ at position $[1]$ in
 $(\zerosf + \onesf)\twosf$ yields $(\onesf + \zerosf)\twosf$.
 
@@ -1428,7 +1428,7 @@ $\alpha$ (and thus $\beta$), yielding $\alpha'$ and $\beta'$, we will
 have that $\alphabet\,\alpha'\sub\alphabet\,\beta'$.
 
 By Proposition~\ref{RegCCEquivSubstituteSubtree}, and because of how
-the alphabet, size, numbers of concatentations, and numbers of symbols
+the alphabet, size, numbers of concatenations, and numbers of symbols
 of a regular expression are defined by structural recursion, if we
 apply a structural rule to a subtree of a regular expression, this
 will preserve the alphabet, closure complexity, size, number of
@@ -1718,7 +1718,7 @@ simplification, $\beta$, of $\alpha$. Then the closure complexity,
 size, number of concatenations, and number of symbols of $\beta$ are
 no bigger than those of $\alpha$,
 $\alphabet\,\beta\sub\alphabet\,\alpha$,
-$\beta$ is equivlant to $\alpha$ and $\beta\leqsimp\alpha$.
+$\beta$ is equivalent to $\alpha$ and $\beta\leqsimp\alpha$.
 
 The main function is defined by well-founded recursion on $\simp$.  It
 works as follows, when called with a weakly simplified argument,
@@ -1879,7 +1879,7 @@ our total ordering on regular expressions---is selected).  If this
 element is a $\simp$-predecessor of $\alpha$, it will be
 ${\leqsimp}\,\alpha$. Otherwise, it will have the same closure
 complexity, size, numbers of concatenations and numbers of symbols as
-$\alpha$. And it will be standarized, as weak simplification of a
+$\alpha$. And it will be standardized, as weak simplification of a
 non-standardized regular expression will standardize it, making it
 more simplified. Thus it will be ${\leqsimp}\,\alpha$.  Similarly, it
 will be globally simplified with respect to $\Sub$, as otherwise it

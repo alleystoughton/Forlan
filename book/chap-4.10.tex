@@ -1,7 +1,7 @@
 \section{The Pumping Lemma for Context-free Languages}
 \label{ThePumpingLemmaForContextFreeLanguages}
 
-\index{pumping lemma!context-free languags|(}%
+\index{pumping lemma!context-free languages|(}%
 \index{context-free language!pumping lemma|(}%
 
 Consider the language $L =
@@ -91,7 +91,7 @@ This can be proved by induction on $\pt$.
 Suppose $L$ is a context-free language.  By the results of the
 preceding section, there is a grammar $G$ in Chomsky Normal Form such
 that $L(G)=L-\{\%\}$.  Let $k=|Q_G|$ and $n= 2^k$.  Thus
-$n\in\nats-\{0\}$. Suppose $z\in Str$, $z\in L$ and $|z|\geq n$.
+$n\in\nats-\{0\}$. Suppose $z\in \Str$, $z\in L$ and $|z|\geq n$.
 Since $n\geq 1$, we have that $z\neq\%$.  Thus $z\in L-\{\%\}=L(G)$,
 so that there is a parse tree $\pt$ such that $\pt$ is valid for $G$,
 $\rootLabel\,\pt=s_G$ and $\yield\,\pt=z$.  By our fact about CNF
@@ -375,7 +375,7 @@ Apart from the subsection on Forlan's support for experimenting with
 the pumping lemma, the material in this section is completely
 standard.
 
-\index{pumping lemma!context-free languags|)}%
+\index{pumping lemma!context-free languages|)}%
 \index{context-free language!pumping lemma|)}%
 
 %%% Local Variables: 

@@ -8,7 +8,7 @@ languages.
 \subsection{Programs}
 
 \index{program|(}%
-Our programming language is statically scoped, i.e., nonlocal names
+Our programming language is statically scoped, i.e., non-local names
 used by functions are interpreted relative to the environments in
 which they are declared.  It is dynamically typed, in that all type
 checking happens at runtime.  It is deterministic, in the sense that
@@ -191,7 +191,7 @@ Informally:
   result of evaluating $\pr_1$.
 
 \item A recursive let $\progletRec(v_1,v_2,\pr_1,\pr_2)$ is evaluated
-  by evaluating $\pr_2$ in an envionment in which $v_1$ has been
+  by evaluating $\pr_2$ in an environment in which $v_1$ has been
   recursively declared by:
   \begin{displaymath}
     v_1 = \proglam(v_2, \pr_1) .
@@ -1380,8 +1380,8 @@ a string is an element of
 $\setof{\zerosf^n\onesf^n\twosf^n}{n\in\nats}$, as follows:
 \input{chap-5.1-forlan9}
 
-\index{language!recursive|see{recursive langauge}}%
-\index{language!recursively enumerable|see{recursively enumerable langauge}}%
+\index{language!recursive|see{recursive language}}%
+\index{language!recursively enumerable|see{recursively enumerable language}}%
 \index{recursive language}%
 \index{recursively enumerable language}%
 We say that a language $L$ is:

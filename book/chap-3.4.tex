@@ -472,8 +472,8 @@ example of Subsection~\ref{ProvingTheCorrectnessOfRegularExpressions}.
 \subsection{Notes}
 
 Finite automata are normally defined via transition functions,
-$\delta$, which is simple to do for deterministric finite automata,
-but increasingly complicated as one adds degrees of nontermininism.
+$\delta$, which is simple to do for deterministic finite automata,
+but increasingly complicated as one adds degrees of nondeterminism.
 Furthermore, this approach means that a deterministic finite automaton
 (DFA) is not a nondeterministic finite automaton (NFA), and that an
 NFA is not an $\epsilon$-NFA, because the transition function of a DFA
@@ -488,7 +488,7 @@ strings.
 
 In contrast, our approach is very simple.  Instead of transition
 functions, we work with finite sets of transitions, enabling us to
-define the deterministric finite automata, nondeterministic finite
+define the deterministic finite automata, nondeterministic finite
 automata, and nondeterministic finite automata with $\%$-moves (which
 we call empty-string finite automata) as restrictions on finite
 automata.  Furthermore, using labeled paths to say when---and
