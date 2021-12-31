@@ -7,6 +7,7 @@ languages.
 
 \subsection{Programs}
 
+\index{program|(}%
 Our programming language is statically scoped, i.e., nonlocal names
 used by functions are interpreted relative to the environments in
 which they are declared.  It is dynamically typed, in that all type
@@ -19,6 +20,8 @@ must be completely evaluated before the function is called.
 To say what programs are, we need some preliminary definitions:
 \begin{itemize}
 \item A \emph{variable} is a nonempty string of letters
+\index{program!variable}%
+\index{program!ProgVar@$\ProgVar$}%
   ($\mathsf{a,b,\ldots,z,A,B,\ldots,Z}$) and digits
   ($\mathsf{0,1,\ldots,9}$) that begins with a letter.  We write
   $\ProgVar$ for the set of all variables, and we order variables
@@ -26,19 +29,24 @@ To say what programs are, we need some preliminary definitions:
   $\ProgVar$.
 
 \item A \emph{constant} is one of the strings $\progtrue$, $\progfalse$ and
+\index{program!constant}%
+\index{program!ProgConst@$\ProgConst$}%
   $\prognil$, and we write $\ProgConst$ for the set of all constants.
 
 \item A \emph{program operator} is one of the strings
+\index{program!operator}%
   $\progisNil$, $\progisInt$, $\progisNeg$, $\progisZero$,
   $\progisPos$, $\progisSym$, $\progisStr$, $\progisPair$,
   $\progisLam$, $\progplus$, $\progminus$, $\progcompare$, $\progfst$,
   $\progsnd$, $\progconsSym$, $\progdeconsSym$, $\progsymListToStr$ and
   $\progstrToSymList$, and we write $\ProgOper$ for the set of
+\index{program!ProgOper@$\ProgOper$}%
   all operators.
 \end{itemize}
 
 Programs are trees (see Section~\ref{TreesAndInductiveDefinitions})
 whose labels come from the set $\ProgLab$ of \emph{program labels},
+\index{program!label}%
 which consists of the union of:
 \begin{description}
 \item[\quad(variable)] $\setof{\progvar(v)}{v\in\ProgVar}$;
@@ -69,6 +77,9 @@ which consists of the union of:
 \item[\quad(recursive let)] $\setof{\progletRec(v_1,v_2)}{v_1,v_2\in\ProgVar}$.
 \end{description}
 
+\index{program}%
+\index{program:Prog@$\Prog$}%
+\index{Prog@$\Prog$}%
 Let the set $\Prog$ of \emph{programs} be the least subset
 of $\Tree\,\ProgLab$ such that:
 \begin{description}
@@ -195,6 +206,7 @@ Lists are represented by pairs:
 represents the $n$-length list whose elements are $\pr_1$, $\pr_2$, \ldots,
 $\pr_n$ (so $\progconst(\prognil)$ represents the empty list).
 
+\index{program!Forlan syntax}%
 In the Forlan syntax for programs, the elements of $\Prog$ are
 written using our standard syntax for trees, except that:
 \begin{itemize}
@@ -218,6 +230,7 @@ is written as
 letSimp(x, int(~12), var(x))
 \end{verbatim}
 
+\index{program!described as strings}%
 Programs can also be described as strings over the
 alphabet consisting of the letters and digits, plus the elements of
 \begin{displaymath}
@@ -259,6 +272,8 @@ string describes at most one program.  (E.g., the string
 $\mathsf{\commasym\closparsym}$ doesn't describe a program.)
 
 The Forlan module \texttt{Var} defines the abstract type (in the top-level
+\index{Var@\texttt{Var}}%
+\index{Var@\texttt{Var}!var@\texttt{var}}%
 environment) \texttt{var} of variables, along with functions, including:
 \begin{verbatim}
 val input   : string -> var
@@ -266,6 +281,10 @@ val output  : string * var -> unit
 val compare : var * var -> order
 val equal   : var * var -> bool
 \end{verbatim}
+\index{Var@\texttt{Var}!input@\texttt{input}}%
+\index{Var@\texttt{Var}!output@\texttt{output}}%
+\index{Var@\texttt{Var}!compare@\texttt{compare}}%
+\index{Var@\texttt{Var}!equal@\texttt{equal}}%
 The function \texttt{compare} implements our total ordering on
 variables, and \texttt{equal} tests whether two
 variables are equal.
@@ -318,6 +337,8 @@ intersection of a nonempty list of sets of variables $\xss$, returning
 the set of all variables appearing in all elements of $\xss$.
 
 The Forlan module \texttt{Prog} defines the abstract type (in the top-level
+\index{Prog@\texttt{Prog}}%
+\index{Prog@\texttt{Prog}!prog@\texttt{prog}}%
 environment) \texttt{prog} of programs, along with a number of types and
 functions, including:
 \begin{verbatim}
@@ -346,6 +367,26 @@ val size    : prog -> int
 val fromStr : str -> prog
 val toStr   : prog -> str
 \end{verbatim}
+\index{Prog@\texttt{Prog}!oper@\texttt{oper}}%
+\index{Prog@\texttt{Prog}!var@\texttt{var}}%
+\index{Prog@\texttt{Prog}!const@\texttt{const}}%
+\index{Prog@\texttt{Prog}!int@\texttt{int}}%
+\index{Prog@\texttt{Prog}!sym@\texttt{sym}}%
+\index{Prog@\texttt{Prog}!str@\texttt{str}}%
+\index{Prog@\texttt{Prog}!pair@\texttt{pair}}%
+\index{Prog@\texttt{Prog}!calc@\texttt{calc}}%
+\index{Prog@\texttt{Prog}!cond@\texttt{cond}}%
+\index{Prog@\texttt{Prog}!app@\texttt{app}}%
+\index{Prog@\texttt{Prog}!lam@\texttt{lam}}%
+\index{Prog@\texttt{Prog}!letSimp@\texttt{letSimp}}%
+\index{Prog@\texttt{Prog}!letRec@\texttt{letRec}}%
+\index{Prog@\texttt{Prog}!input@\texttt{input}}%
+\index{Prog@\texttt{Prog}!output@\texttt{output}}%
+\index{Prog@\texttt{Prog}!equal@\texttt{equal}}%
+\index{Prog@\texttt{Prog}!height@\texttt{height}}%
+\index{Prog@\texttt{Prog}!size@\texttt{size}}%
+\index{Prog@\texttt{Prog}!fromStr@\texttt{fromStr}}%
+\index{Prog@\texttt{Prog}!toStr@\texttt{toStr}}%
 \texttt{const} and \texttt{oper} are the datatypes of program constants
 and operators.
 The function \texttt{var} takes in a program variable $v$, and
@@ -390,12 +431,17 @@ to the unique string describing it.
 For example, we can proceed as follows:
 \input{chap-5.1-forlan1}
 
+\index{JForlan}%
 The Java program JForlan, can be used to view and edit program trees.
 It can be invoked directly, or run via Forlan.  See the Forlan website
 for more information.
 
+\index{program|)}%
+
 \subsection{Program Meaning}
 
+\index{program!meaning|(}%
+\index{program!variable binding}%
 Variables are \emph{bound} (declared) in programs, as follows:
 \begin{itemize}
 \item $\proglam(v, \pr)$ binds $v$ in $\pr$;
@@ -409,6 +455,7 @@ We say that an occurrence of a variable in a program is \emph{free} iff
 it isn't bound.
 
 Formally, we define a function $\free\in\Prog\fun
+\index{program!free@$\free$}%
 \setof{X\sub\ProgVar}{X\eqtxtl{is finite}}$ by structural recursion:
 \begin{itemize}
 \item $\free(\progvar(v)) = \emptyset$, for all $v\in\ProgVar$;
@@ -449,6 +496,8 @@ Formally, we define a function $\free\in\Prog\fun
 If $v\in\ProgVar$ and $pr\in\Prog$, we say that $v$ \emph{is free in}
 $\pr$ iff $v\in\free\,pr$.
 
+\index{program!closed}%
+\index{program!CP@$\CP$}%
 A program $\pr$ is \emph{closed} iff it has no free variables, i.e.,
 $\free\,\pr = \emptyset$.  We write $\CP$ for the set of all closed
 programs.
@@ -461,6 +510,10 @@ type cp
 val toClosed   : prog -> cp
 val fromClosed : cp -> prog
 \end{verbatim}
+\index{Prog@\texttt{Prog}!free@\texttt{free}}%
+\index{Prog@\texttt{Prog}!cp@\texttt{cp}}%
+\index{Prog@\texttt{Prog}!toClosed@\texttt{toClosed}}%
+\index{Prog@\texttt{Prog}!fromClosed@\texttt{fromClosed}}%
 The function \texttt{free} returns the free variables of its argument.
 The type \texttt{cp} (in the top-level environment) is the type of
 closed programs.  The function \texttt{toClosed} issues an error message
@@ -471,6 +524,8 @@ For example, we can proceed as follows:
 \input{chap-5.1-forlan2}
 
 Next, we define a function
+\index{program!substitution}%
+\index{program!subst@$\subst$}%
 $\subst\in\CP\times\ProgVar\times\Prog\fun\Prog$ for substituting a
 closed program for all of the free occurrences of a variable in a
 program.  $\subst$ is defined by structural recursion on its third
@@ -567,10 +622,13 @@ The module \texttt{Prog} also defines the function
 \begin{verbatim}
 val subst : cp * var * prog -> prog
 \end{verbatim}
+\index{Prog@\texttt{Prog}!subst@\texttt{subst}}%
 corresponding to $\subst$.  Here are some examples of its use:
 \input{chap-5.1-forlan3}
 
 Next, we single out certain closed programs as completely evaluated,
+\index{program!value}%
+\index{program!Val@$\Val$}%
 or values.  Let the set $\Val$ of \emph{values} be the least subset of
 $\CP$ such that:
 \begin{description}
@@ -600,11 +658,13 @@ The module \texttt{Prog} also defines a function
 \begin{verbatim}
 val isValue : cp -> bool
 \end{verbatim}
+\index{Prog@\texttt{Prog}!isValue@\texttt{isValue}}%
 that tests whether a closed program is a value.  Here are some
 examples of its use:
 \input{chap-5.1-forlan4}
 
 To explain the meaning of program operators, we define a function
+\index{program!calculate@$\calculate$}%
 $\calculate\in\ProgOper\times\Val\fun\Option\,\Val$, which returns
 $\none$ to indicate an error, and returns $\some\,\pr$ when the
 application of the operator produced the value $\pr$.  We proceed
@@ -766,6 +826,11 @@ value:
 \item (otherwise) Return $\none$.
 \end{itemize}
 
+\index{program!Step@$\Step$}%
+\index{program!step@$\step$}%
+\index{program!value@$\myvalue$}%
+\index{program!error@$\error$}%
+\index{program!next@$\next$}%
 Now we are able to say how closed programs evaluate.  Let
 \begin{displaymath}
   \Step = \{\myvalue, \error\} \cup
@@ -880,6 +945,10 @@ datatype step = Value
               | Next of cp
 val step : cp -> step
 \end{verbatim}
+\index{Prog@\texttt{Prog}!step@\texttt{step}}%
+\index{Prog@\texttt{Prog}!Value@\texttt{Value}}%
+\index{Prog@\texttt{Prog}!Error@\texttt{Error}}%
+\index{Prog@\texttt{Prog}!Next@\texttt{Next}}%
 For example, here is an example of how a nonterminating recursive
 function can be evaluated:
 \input{chap-5.1-forlan5}
@@ -889,6 +958,11 @@ For all $\pr\in\CP$, $\step\,\pr = \myvalue$ iff $\pr\in\Val$.
 \end{proposition}
 
 Let
+\index{program!Run@$\Run$}%
+\index{program!run@$\run$}%
+\index{program!ans@$\ans$}%
+\index{program!fail@$\fail$}%
+\index{program!intermed@$\intermed$}%
 \begin{align*}
   \Run &= \setof{\ans\,\pr}{\pr\in\Val} \\
   &\cup \;\setof{\fail\,\pr}{\pr\in\CP} \\
@@ -921,6 +995,11 @@ datatype run = Ans      of cp
 val run      : cp * int -> run
 val evaluate : prog * int -> unit
 \end{verbatim}
+\index{Prog@\texttt{Prog}!Ans@\texttt{Ans}}%
+\index{Prog@\texttt{Prog}!Fail@\texttt{Fail}}%
+\index{Prog@\texttt{Prog}!Intermed@\texttt{Intermed}}%
+\index{Prog@\texttt{Prog}!run@\texttt{run}}%
+\index{Prog@\texttt{Prog}!evaluate@\texttt{evaluate}}%
 The function \texttt{run} corresponds to $\run$, except that it issues
 an error message when its second argument is negative.  The function
 \texttt{evaluate} issues an error message if its first argument,
@@ -955,6 +1034,11 @@ And here are some other uses of \texttt{evaluate}:
 
 Now we can define the mathematical meaning of closed programs.
 Let
+\index{program!Eval@$\Eval$}%
+\index{program!eval@$\eval$}%
+\index{program!nonterm@$\nonterm$}%
+\index{program!error@$\error$}%
+\index{program!norm@$\norm$}%
 \begin{displaymath}
 \Eval = \{\nonterm,\error\}\cup\setof{\norm\,\pr}{\pr\in\Val} .  
 \end{displaymath}
@@ -995,14 +1079,19 @@ For example:
   \norm(\progint(3))$.
 \end{itemize}
 
+\index{program!meaning|)}%
+
 \subsection{Programs as Data}
 
+\index{program!as data|(}%
 In Section~\ref{DiagonalizationAndUndecidableProblems}, we will be
 concerned with programs that process programs.  Because programs
 are described by strings, these program processing programs could
 work on strings.  But that would be complicated and cumbersome.  It's
 far better to represent programs using pairs.
 
+\index{program!representation as data}%
+\index{program!Rep@$\Rep$}%
 The set $\Rep$ of \emph{program representations} is the least subset of
 $\Val$ such that:
 \begin{description}
@@ -1071,6 +1160,7 @@ $\Val$ such that:
   \end{displaymath}
 \end{description}
 
+\index{program! repr@$\overline{\;\cdot\;}$}%
 We define a function $\overline{\;\cdot\;}\in\Prog\fun\Rep$
 by structural recursion:
 \begin{itemize}
@@ -1144,6 +1234,7 @@ by structural recursion:
   \progpair(\overline{\pr_1}, \overline{\pr_2})))) .
   \end{multline*}
 \end{itemize}
+\index{program!represents}%
 If $\pr\in\Prog$, we say that $\overline{\pr}$ \emph{represents} $\pr$,
 and that $\pr$ \emph{is represented by} $\overline{\pr}$.
 
@@ -1160,6 +1251,9 @@ val toRep   : prog -> prog
 val fromRep : prog -> prog
 val isRep   : prog -> bool
 \end{verbatim}
+\index{Prog@\texttt{Prog}!toRep@\texttt{toRep}}%
+\index{Prog@\texttt{Prog}!fromRep@\texttt{fromRep}}%
+\index{Prog@\texttt{Prog}!isRep@\texttt{isRep}}%
 The function \texttt{toRep} converts a program to the program representation
 that represents it.  The function \texttt{fromRep} issues an error message
 if its argument isn't a program representation; otherwise it returns the
@@ -1174,6 +1268,7 @@ representation represents a closed program, as well to write a program
 that tests whether a program representation represents a value.
 
 It is possible to write a function in our programming language that
+\index{program!interpreter}%
 acts as an interpreter:
 \begin{itemize}
 \item It takes in a value $\overline{\pr}$, representing a closed
@@ -1196,6 +1291,7 @@ E.g.,
     \progconst(\prognil))}$ evaluates to $\overline{\progconst(\progfalse)}$.
 
 We can also write a function in our programming language that acts as
+\index{program!incremental interpreter}%
 an \emph{incremental} interpreter:
 \begin{itemize}
 \item At each stage of its evaluation of a closed program, it carries
@@ -1211,17 +1307,26 @@ an \emph{incremental} interpreter:
   will continue this process.
 \end{itemize}
 
+\index{program!as data|)}%
+
 \subsection{Recursive and Recursively Enumerable Languages}
 
+\index{program!string predicate program}%
+\index{string predicate program}%
 A \emph{string predicate program} $\pr$ is a closed program such that, for
 all strings $w$, $\eval(\progapp(\pr,\progstr(w)))\in
 \{\norm(\progconst(\progtrue)),\norm(\progconst(\progfalse))\}$.
 
+\index{program!string accepted by}%
 A string $w$ is \emph{accepted by} a closed program $\pr$ iff
 $\eval(\progapp(\pr,\progstr(w))) = \norm(\progconst(\progtrue))$.
 We write $L(\pr)$ for the set of all strings accepted by a closed
 program $\pr$.  When this set is a language, then we refer to $L(\pr)$
 as the \emph{language accepted by} $\pr$.  (E.g., if
+\index{program!meaning}%
+\index{program!language accepted by}%
+\index{L(@$L(\cdot)$}%
+\index{program!L(@$L(\cdot)$}%}%
 $\pr=\proglam(\mathsf{x},\progconst(\progtrue))$, then $L(\pr) =
 \Str$, and so is not a language.)
 
@@ -1229,6 +1334,7 @@ The \texttt{Prog} module also includes:
 \begin{verbatim}
 val accepted : prog -> str * int -> unit
 \end{verbatim}
+\index{Prog@\texttt{Prog}!accepted@\texttt{accepted}}%
 The function \texttt{accepted} takes in a program $\pr$, and issues
 and error message if $\pr$ is not closed.  Otherwise, it returns
 a function $f$ that behaves as follows, when called with a pair
@@ -1274,6 +1380,10 @@ a string is an element of
 $\setof{\zerosf^n\onesf^n\twosf^n}{n\in\nats}$, as follows:
 \input{chap-5.1-forlan9}
 
+\index{language!recursive|see{recursive langauge}}%
+\index{language!recursively enumerable|see{recursively enumerable langauge}}%
+\index{recursive language}%
+\index{recursively enumerable language}%
 We say that a language $L$ is:
 \begin{itemize}
 \item \emph{recursive} iff $L=L(\pr)$, for some string predicate program $\pr$;
@@ -1284,6 +1394,10 @@ We say that a language $L$ is:
 \end{itemize}
 
 We define
+\index{recursive language!RecLan@$\RecLan$}%
+\index{language!RecLan@$\RecLan$}%
+\index{recursively enumerable language!RELan@$\RELan$}%
+\index{language!RELan@$\RELan$}%
 \begin{align*}
 \RecLan &= \setof{L\in\Lan}{L\eqtxtl{is recursive}} , \eqtxtl{and} \\
 \RELan &= \setof{L\in\Lan}{L\eqtxtl{is recursively enumerable}} .
@@ -1376,6 +1490,8 @@ w\in L\;\eqtxt{iff}\;\eval(\progapp(\pr,\progstr(w)))=
 \end{description}
 \end{proof}
 
+\index{context-free language!proper subset of recursive languages}%
+\index{recursive language!proper superset of context-free languages}%
 \begin{theorem}
 The context-free languages are a proper subset of the
 recursive languages: $\CFLan\subsetneq\RecLan$.

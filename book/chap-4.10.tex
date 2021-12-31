@@ -1,6 +1,9 @@
 \section{The Pumping Lemma for Context-free Languages}
 \label{ThePumpingLemmaForContextFreeLanguages}
 
+\index{pumping lemma!context-free languags|(}%
+\index{context-free language!pumping lemma|(}%
+
 Consider the language $L =
 \setof{\zerosf^n\onesf^n\twosf^n}{n\in\nats}$.  Is $L$ context-free,
 i.e., is there a grammar that generates $L$?  Although it's easy to
@@ -170,7 +173,12 @@ val strsOfValidPumpingDivision :
 val pumpValidPumpingDivision   : pumping_division * int -> pt
 val findValidPumpingDivision   : pt -> pumping_division
 \end{verbatim}
-
+\index{PT@\texttt{PT}!pumping_division@\texttt{pumping\_division}}%
+\index{PT@\texttt{PT}!checkPumpingDivision@\texttt{checkPumpingDivision}}%
+\index{PT@\texttt{PT}!validPumpingDivision@\texttt{validPumpingDivision}}%
+\index{PT@\texttt{PT}!strsOfValidPumpingDivision@\texttt{strsOfValidPumpingDivision}}%
+\index{PT@\texttt{PT}!pumpValidPumpingDivision@\texttt{pumpValidPumpingDivision}}%
+\index{PT@\texttt{PT}!findValidPumpingDivision@\texttt{findValidPumpingDivision}}%
 A \emph{pumping division} is a triple $((\pt_1, \pat_1), (\pt_2,
 \pat_2), \pt3)$, where $\pt_1, \pt_2, \pt_3\in\PT$ and $\pat_1,
 \pat_2\in\List\,\ints$.  We say that a pumping division $((\pt_1,
@@ -310,6 +318,8 @@ Then we can proceed as follows:
 
 \subsection{Consequences of Pumping Lemma}
 
+\index{context-free language!pumping lemma!consequences}%
+\index{pumping lemma!context-free languages!consequences}%
 We are now in a position to show that the context-free languages are
 \emph{not} closed under either intersection or set difference.
 Suppose
@@ -364,6 +374,9 @@ languages being closed under complementation.
 Apart from the subsection on Forlan's support for experimenting with
 the pumping lemma, the material in this section is completely
 standard.
+
+\index{pumping lemma!context-free languags|)}%
+\index{context-free language!pumping lemma|)}%
 
 %%% Local Variables: 
 %%% mode: latex

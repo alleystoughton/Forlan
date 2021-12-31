@@ -21,6 +21,7 @@ that it is infinite, otherwise.
 
 \subsection{Removing $\%$-Productions}
 
+\index{grammar!removing $\%$-productions}%
 Recall that an $\%$-\emph{production} is a production of the form
 $q\fun\%$.  We will show by example how to turn a grammar $G$ into a
 simplified grammar with no $\%$-productions that generates
@@ -77,6 +78,7 @@ of our example is already simplified, however.
 
 \subsection{Removing Unit Productions}
 
+\index{grammar!removing unit productions}
 Recall that a \emph{unit production} for a grammar $G$ is a production
 of the form $q\fun r$, where $r$ is a variable (possibly equal to
 $q$).  We now show by example how to turn a grammar $G$ into a
@@ -123,6 +125,9 @@ The Forlan module \texttt{Gram} defines the following functions:
 val eliminateEmptyProductions        : gram -> gram
 val eliminateEmptyAndUnitProductions : gram -> gram
 \end{verbatim}
+\index{Gram@\texttt{Gram}!eliminateEmptyProductions@\texttt{eliminateEmptyProductions}}%
+\index{Gram@\texttt{Gram}!eliminateEmptyAndUnitProductions@\texttt{eliminateEmptyAndUnitProductions}}%
+
 For example, if \texttt{gram} is the grammar
 \begin{align*}
 \Asf &\fun \mathsf{0A1} \mid \mathsf{BB} , \\
@@ -133,6 +138,7 @@ then we can proceed as follows.
 
 \subsection{Generating a Grammar's Language When Finite}
 
+\index{grammar!generating language when finite}%
 We can now give an algorithm that takes in a grammar $G$ and generates
 $L(G)$, when it is finite, and reports that $L(G)$ is infinite,
 otherwise. The algorithm begins by letting $G'$ be the result of
@@ -168,6 +174,7 @@ The Forlan module \texttt{Gram} defines the following function:
 \begin{verbatim}
 val toStrSet : gram -> str set
 \end{verbatim}
+\index{Gram@\texttt{Gram}!toStrSet@\texttt{toStrSet}}%
 Suppose \texttt{gram} is the grammar
 \begin{align*}
 \Asf &\fun \mathsf{BB}, \\
@@ -192,6 +199,8 @@ with length $n$.  Then, we can intersect $G$ with $M$, and apply
 
 \subsection{Chomsky Normal Form}
 
+\index{grammar!Chomsky Normal Form}%
+\index{Chomsky Normal Form}%
 A grammar $G$ is in \emph{Chomsky Normal Form} (CNF) iff
 each of its productions has one of the following forms:
 \begin{itemize}
@@ -253,6 +262,8 @@ The Forlan module \texttt{Gram} defines the following function:
 \begin{verbatim}
 val chomskyNormalForm : gram -> gram
 \end{verbatim}
+\index{Gram@\texttt{Gram}!chomskyNormalForm@\texttt{chomskyNormalForm}}%
+
 Suppose \texttt{gram} of type \texttt{gram} is bound to the grammar with
 variables $\Asf$ and $\Bsf$, start variable $\Asf$, and productions
 \begin{align*}

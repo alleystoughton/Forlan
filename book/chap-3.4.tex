@@ -45,6 +45,7 @@ $T$, when it's clear which FA we are working with.  Whenever possible,
 we will use the mathematical variables $p$, $q$ and $r$ to name
 states.  We write $\FA$ for the set of all finite automata, which is a
 \index{finite automaton!FA@$\FA$}%
+\index{FA@$\FA$}%
 countably infinite set.
 
 As an example, we can define an FA $M$ as follows:
@@ -226,7 +227,7 @@ We say that:
 \end{itemize}
 \index{labeled path!startState@$\startState$}%
 \index{labeled path!endState@$\myendState$}%
-\index{labeled path!length}%
+\index{labeled path!length@$\sizedot$}%
 \index{labeled path!label@$\mylabel$}%
 
 This defines functions $\startState\in\LP\fun\Sym$,
@@ -243,6 +244,7 @@ length is $3$, and label is $\mathsf{(0)(11)(2)}=\mathsf{0112}$.
 We can join compatible paths together.  Let $\JOIN=
 \setof{(\lp_1,\lp_2)\in\LP\times\LP}{\myendState\,\lp_1 = \startState\,\lp_2}$,
 and define $\join\in\JOIN\fun\LP$ by: for all $\xs,\ys\in\List(\Sym\times\Str)$
+\index{labeled path!join@$\join$}%
 and $q,r\in\Sym$, if $((\xs,q),(\ys,r))\in\JOIN$, then
 $\join((\xs,q), (\ys,r)) = (\xs\myconcat\ys, r)$.  E.g., if
 $\lp_1$ and $\lp_2$ are defined by
@@ -258,6 +260,8 @@ then $\join(\lp_1,\lp_2)$ is
 \lparr{\mathsf{11}}\Bsf\lparr{\mathsf{2}}\Csf .
 \end{gather*}
 
+\index{finite automaton!labeled path!valid}%
+\index{labeled path!valid}%
 A labeled path $(\xs,q)\in\LP$ is \emph{valid for} an FA $M$ iff
 \begin{itemize}
 \item for all $i\in[1:|\xs|-1]$, $\hash{1}(\xs\,i),\hash{2}(\xs\,i)\fun

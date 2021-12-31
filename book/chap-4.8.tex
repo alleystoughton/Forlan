@@ -1,6 +1,11 @@
 \section{Converting Regular Expressions and FA to Grammars}
 \label{ConvertingRegularExpressionsAndFAToGrammars}
 
+\index{regular expression!converting to grammar|(}%
+\index{finite automaton!converting to grammar|(}%
+\index{grammar!converting from regular expression|(}%
+\index{grammar!converting from finite automaton|(}%
+
 In this section, we give simple algorithms for converting regular
 expressions and finite automata to grammars.  Since we have algorithms
 for converting between regular expressions and finite automata, it is
@@ -16,13 +21,18 @@ The structure of the algorithm is very similar to the structure of our
 algorithm for converting regular expressions to finite automata (see
 Section~\ref{ClosurePropertiesOfRegularLanguages}).  This
 gives us a function $\regToGram\in\Reg\fun\Gram$.
+\index{grammar!regToGram@$\regToGram$}%
+\index{regular expression!regToGram@$\regToGram$}%
 
 The algorithm is implemented in Forlan by the function
 \begin{verbatim}
 val fromReg : reg -> gram
 \end{verbatim}
+\index{Gram@\texttt{Gram}!fromReg@\texttt{fromReg}}%
 of the \texttt{Gram} module.  It's available in the top-level
 environment with the name \texttt{regToGram}.
+\index{grammar!regToGram@\texttt{regToGram}}%
+\index{regular expression!regToGram@\texttt{regToGram}}%
 
 Here is how we can convert the regular expression $\mathsf{01 +
 10(11)^*}$ to a grammar using Forlan:
@@ -31,6 +41,8 @@ Here is how we can convert the regular expression $\mathsf{01 +
 \subsection{Converting Finite Automata to Grammars}
 
 Suppose $M$ is an FA. We define a function/algorithm $\faToGram\in
+\index{grammar!faToGram@\texttt{faToGram}}%
+\index{finite automaton!faToGram@\texttt{faToGram}}%
 \FA\fun\Gram$ by, for all FAs $M$, $\faToGram\,M$ is the grammar
 $G$ defined below. If $Q_M\cap\alphabet\,M=\emptyset$, then $G$ is
 defined by
@@ -102,6 +114,8 @@ but is not regular, as we proved in
 Section~\ref{ThePumpingLemmaForRegularLanguages}.
 
 Summarizing, we have:
+\index{regular language!proper subset of context-free languages}%
+\index{context-free language!proper superset of regular languages}%
 
 \begin{theorem}
 The regular languages are a proper subset of the context-free
@@ -111,6 +125,11 @@ languages: $\RegLan\subsetneq\CFLan$.
 \subsection{Notes}
 
 The material in this section is standard.
+
+\index{regular expression!converting to grammar|)}%
+\index{finite automaton!converting to grammar|)}%
+\index{grammar!converting from regular expression|)}%
+\index{grammar!converting from finite automaton|)}%
 
 %%% Local Variables: 
 %%% mode: latex

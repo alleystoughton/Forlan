@@ -9,6 +9,7 @@ halting problem.
 
 \subsection{Diagonalization}
 
+\index{diagonalization}
 To find a non-r.e.\ language, we can use diagonalization, a technique
 we used in Section~\ref{BasisSetTheory} to show the uncountability of
 $\powset\,\nats$.
@@ -64,6 +65,10 @@ In general, there is no $n\in\nats$ such that $L(w_n)$ is our
 language.  Consequently our language is not recursively enumerable.
 
 We formalize the above ideas as follows.  Define languages
+\index{language!not recursively enumerable}%
+\index{language!diagonal}%
+\index{language!Ld@$L_d$}%
+\index{language!La@$L_a$}%
 $L_d$ (``d'' for ``diagonal'') and $L_a$ (``a'' for ``accepted'') by:
 \begin{align*}
 L_d &= \setof{w\in\Sigma^*}{w\not\in L(w)} , \eqtxtl{and} \\
@@ -135,6 +140,7 @@ $\Sigma^*-L_a=L_d$ is not recursively enumerable.
 \begin{corollary}
 \label{RECor2}
 
+\index{recursively enumerable language!not closed under difference}%
 There are recursively enumerable languages $L_1$ and $L_2$
 such that $L_1-L_2$ is not recursively enumerable.
 \end{corollary}
@@ -159,6 +165,10 @@ recursive---contradiction.  Thus $L_a$ is not recursive.
 
 Since $L_a\in\RELan$ and $L_a\not\in\RecLan$, we have:
 
+\index{recursive language!proper subset of recursively enumerable
+  languages}%
+\index{recursively enumerable language!proper superset of recursively
+  enumerable languages}%
 \begin{theorem}
 The recursive languages are a proper subset of the recursively
 enumerable languages: $\RecLan\subsetneq \RELan$.
@@ -176,6 +186,9 @@ from Sections~4.8 and 5.1, we have that
 
 \subsection{Undecidability of the Halting Problem}
 
+\index{halting problem|(}%
+
+\index{program!halts}%
 We say that a closed program $\pr$ \emph{halts} iff
 $\eval\,\pr\neq\nonterm$.
 
@@ -188,7 +201,7 @@ There is no value $\halts$ such that, for all closed programs $\pr$,
   \norm(\progconst(\progtrue))$; and
 
 \item If $\pr$ does not halt, then
-  $\eval(\progapp(\halts,\overline{\pr})) =\norm(\progconst(\progfalse))$.
+  $\eval(\progapp(\halts,\overline{\pr})) = \norm(\progconst(\progfalse))$.
 \end{itemize}
 \end{theorem}
 
@@ -241,6 +254,7 @@ Thus $L_a$ is recursive---contradiction.  Thus there is no such
 $\mathit{halt}$.
 \end{proof}
 
+\index{program: halts on}%
 We say that a value $\pr$ \emph{halts on} a value $\pr'$ iff
 $\eval(\progapp(\pr,\pr'))\neq\nonterm$.
 
@@ -272,6 +286,8 @@ Then this value satisfies the property of
 Theorem~\ref{Halting}---contradiction.  Thus such a $\haltsOn$ does
 not exist.
 \end{proof}
+
+\index{halting problem|)}%
 
 \subsection{Other Undecidable Problems}
 

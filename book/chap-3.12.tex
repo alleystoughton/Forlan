@@ -1,7 +1,6 @@
 \section{Closure Properties of Regular Languages}
 \label{ClosurePropertiesOfRegularLanguages}
 
-\index{closure properties of regular languages|(}%
 \index{regular languages!closure properties|(}%
 
 In this section, we show how to convert regular expressions to finite
@@ -81,7 +80,7 @@ $L(\symToNFA\,a)=\{a\}$.  Of course, $\symToNFA$ is also an element of
 $\Sym\fun\EFA$ and $\Sym\fun\FA$, and we say that $\symToNFA\,a$ is
 the \emph{canonical NFA/EFA/FA for} $a$.
 
-\index{union!finite automaton}%
+\index{language!union}%
 \index{finite automaton!union}%
 \index{finite automaton!union@$\union$}%
 Next, we define a function/algorithm $\union\in\FA\times\FA\fun\FA$
@@ -134,7 +133,7 @@ For all $M_1,M_2\in\FA$:
 For all $M_1,M_2\in\EFA$, $\union(M_1,M_2)\in\EFA$.
 \end{proposition}
 
-\index{concatenation!finite automaton}%
+\index{language!concatenation}%
 \index{finite automaton!concatenation}%
 \index{finite automaton!concat@$\concat$}%
 Next, we define a function/algorithm $\concat\in\FA\times\FA\fun\FA$
@@ -190,7 +189,7 @@ For all $M_1,M_2\in\FA$:
 For all $M_1,M_2\in\EFA$, $\concat(M_1,M_2)\in\EFA$.
 \end{proposition}
 
-\index{closure!finite automaton}%
+\index{language!closure}%
 \index{finite automaton!closure}%
 \index{finite automaton!closure@$\closure$}%
 Next, we define a function/algorithm $\closure\in\FA\fun\FA$ such that
@@ -928,7 +927,7 @@ Suppose $L$ is a language.  The following statements are equivalent:
 
 \subsection{More Closure Properties/Algorithms}
 
-\index{intersection! empty string finite automaton}%
+\index{language!intersection}%
 \index{empty string finite automaton!intersection}%
 Consider the EFAs $M_1$ and $M_2$:
 \begin{center}
@@ -1121,7 +1120,7 @@ Let $X=\setof{w\in\{\mathsf{0,1}\}^*}{\mathsf{000}\eqtxt{is not a
 \mathsf{000}\eqtxt{is a substring of}w} .
 \end{alignat*}
 
-\index{difference! deterministic finite automaton}%
+\index{language!difference}%
 \index{deterministic finite automaton!difference}%
 \index{deterministic finite automaton!minus@$\minus$}%
 We define a function/algorithm $\minus\in\DFA\times\DFA\fun\DFA$ by:
@@ -1196,7 +1195,6 @@ Next, we consider the reversal of languages, regular expressions,
 finite automata and empty-string finite automata.
 The \emph{reversal of}
 \index{language!reversal}%
-\index{reversal!language}%
 a language $L$ ($L^R\in\Lan$)
 \index{ reversal@$\cdot^R$}%
 \index{language! reversal@$\cdot^R$}%
@@ -1217,7 +1215,6 @@ proceed as follows:
 
 Define $\rev\in\Reg\fun\Reg$ by recursion:
 \index{regular expression!reversal}%
-\index{reversal!regular expression}%
 \index{rev@$\rev$}%
 \index{regular expression!rev@$\rev$}%
 \begin{align*}
@@ -1253,9 +1250,7 @@ $\%$-transitions to all of the original accepting states, and make the
 original start state be the unique accepting state.  Formally, we
 define a function $\rev\in\FA\fun\FA$ as
 \index{finite automaton!reversal}%
-\index{reversal!finite automaton}%
 \index{empty-string finite automaton!reversal}%
-\index{reversal!empty-string finite automaton}%
 \index{rev@$\rev$}%
 \index{finite automaton!rev@$\rev$}%
 \index{empty-string finite automaton!rev@$\rev$}%
@@ -1299,9 +1294,6 @@ Next, we consider the prefix-, suffix- and substring-closures of
 \index{language!prefix-closure}%
 \index{language!suffix-closure}%
 \index{language!substring-closure}%
-\index{prefix-closure!language}%
-\index{suffix-closure!language}%
-\index{substring-closure!language}%
 languages, as well as the associated operations on automata.  Suppose
 $L$ is a language.  Then:
 \begin{itemize}
@@ -1393,7 +1385,6 @@ For all $M\in\NFA$, $\prefix\,M\in\NFA$.
 \end{proposition}
 \index{nondeterministic finite automaton!prefix@$\prefix$}%
 \index{nondeterministic finite automaton!prefix-closure}%
-\index{prefix-closure!nondeterministic finite automaton}%
 
 Now we can define suffix-closure and substring-closure
 operations on EFAs as follows.  The functions $\suffix,\substring\in
@@ -1402,8 +1393,6 @@ operations on EFAs as follows.  The functions $\suffix,\substring\in
 \index{empty-string finite automaton!substring@$\substring$}%
 \index{empty-string finite automaton!suffix-closure}%
 \index{empty-string finite automaton!substring-closure}%
-\index{suffix-closure!empty-string finite automaton}%
-\index{substring-closure!empty-string finite automaton}%
 \begin{align*}
 \suffix\,M &= \rev(\prefix(\rev\,M))) , \eqtxt{and} \\
 \substring\,M &= \suffix(\prefix\,M)) .
@@ -1435,7 +1424,6 @@ $(\mathsf{01102})^f=\mathsf{12213}$.
 If $L$ is a language, and $f$ is a bijection from a set of symbols
 that is a superset of $\alphabet\,L$ (maybe $\alphabet\,L$ itself)
 to some set of symbols, then the \emph{renaming of} $L$ \emph{using}
-\index{alphabet renaming!language}%
 \index{language!alphabet renaming}%
 \index{ power@$\cdot^\cdot$}%
 \index{language! power@$\cdot^\cdot$}%
@@ -1639,11 +1627,7 @@ val renameAlphabet : reg * sym_rel -> reg
 \end{verbatim}
 \index{Reg@\texttt{Reg}!rev@\texttt{rev}}%
 \index{Reg@\texttt{Reg}!renameAlphabet@\texttt{renameAlphabet}}%
-which correspond to $\rev$ and $\renameAlphabet$
-\index{rev@$\rev$}%
-\index{regular expression!rev@$\rev$}%
-\index{renameAlphabet@$\renameAlphabet$}%
-\index{regular expression!renameAlphabet@$\renameAlphabet$}%
+which correspond to $\rev$ and $\renameAlphabet$.
 (\texttt{renameAlphabet} issues an error message and raises
 an exception if its second argument isn't legal).
 Here is an example of how these functions can be used:
@@ -1656,13 +1640,6 @@ val rev : fa -> fa
 \end{verbatim}
 \index{FA@\texttt{FA}!rev@\texttt{rev}}%
 which corresponds to $\rev$.
-\index{prefix@$\rev$}%
-\index{finite automaton!rev@$\rev$}%
-\index{finite automaton!reversal}%
-\index{reversal!finite automaton}%
-\index{empty-string finite automaton!rev@$\rev$}%
-\index{empty-string finite automaton!rev}%
-\index{reversal!empty-string finite automaton}%
 It is also inherited by the module \texttt{EFA}.
 \index{EFA@\texttt{EFA}!rev@\texttt{rev}}%
 Here is an example of how this function can be used:
@@ -1675,13 +1652,6 @@ val prefix : efa -> efa
 \end{verbatim}
 \index{EFA@\texttt{EFA}!prefix@\texttt{prefix}}%
 which corresponds to $\prefix$.
-\index{prefix@$\prefix$}%
-\index{nondeterministic finite automaton!prefix@$\prefix$}%
-\index{nondeterministic finite automaton!prefix-closure}%
-\index{prefix-closure!nondeterministic finite automaton}%
-\index{empty-string finite automaton!prefix@$\prefix$}%
-\index{empty-string finite automaton!prefix-closure}%
-\index{prefix-closure!empty-string finite automaton}%
 It is also inherited by the module \texttt{NFA}.
 \index{NFA@\texttt{NFA}!prefix@\texttt{prefix}}%
 Here is an example of how one of these functions can be used:
@@ -1695,11 +1665,6 @@ val renameAlphabet : FA * sym_rel -> FA
 \end{verbatim}
 \index{FA@\texttt{FA}!renameAlphabet@\texttt{renameAlphabet}}%
 which corresponds $\renameAlphabet$ (it issues an error message and
-\index{renameAlphabet@$\renameAlphabet$}%
-\index{finite automaton!renameAlphabet@$\renameAlphabet$}%
-\index{empty-string finite automaton!renameAlphabet@$\renameAlphabet$}%
-\index{nondeterministic finite automaton!renameAlphabet@$\renameAlphabet$}%
-\index{deterministic finite automaton!renameAlphabet@$\renameAlphabet$}%
 raises an exception if its second argument isn't legal).
 This function is also inherited by the modules \texttt{DFA},
 \texttt{NFA} and \texttt{EFA}.
@@ -1717,7 +1682,6 @@ DFAs that allows us to partially control the alphabet of the resulting
 DFA, we are able to give an algorithm for computing the difference of
 DFAs that works even when the DFAs have different alphabets.
 
-\index{closure properties of regular languages|)}%
 \index{regular languages!closure properties|)}%
 
 %%% Local Variables: 

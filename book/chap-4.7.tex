@@ -25,8 +25,10 @@ context-free.
 
 First, we consider some basic grammars and operations on grammars.
 The grammar, $\emptyStr$, with variable $\Asf$ and production
+\index{grammar!emptyStr@$\emptyStr$}%
 $\Asf\fun\%$ generates the language $\{\%\}$.  The grammar,
 $\emptySet$, with variable $\Asf$ and no productions generates the
+\index{grammar!emptySet@$\emptySet$}%
 language $\emptyset$.  If $w$ is a string, then the grammar with
 variable $\Asf$ and production $\Asf\fun w$ generates the language
 $\{w\}$.  Actually, we must be careful to chose a variable that
@@ -34,6 +36,8 @@ doesn't occur in $w$. We can do that by adding as many nested
 \texttt{<} and \texttt{>} around \texttt{A} as needed (\texttt{A},
 \texttt{<A>}, \texttt{<<A>>}, etc.). This defines functions
 $\strToGram\in\Str\fun\Gram$ and $\symToGram\in\Sym\fun\Gram$.
+\index{grammar!strToGram@$\strToGram$}%
+\index{grammar!symToGram@$\symToGram$}%
 
 Suppose $G_1$ and $G_2$ are grammars.  We can define a grammar $H$
 such that $L(H)=L(G_1)\cup L(G_2)$ by unioning together the variables
@@ -56,6 +60,8 @@ of $G_1$ and $G_2$, and chooses the start variable $q$,
 in a uniform way that makes the preceding properties hold.
 This gives us a function
 $\union\in\Gram\times\Gram\fun\Gram$.
+\index{grammar!union@$union$}%
+\index{grammar!union}%
 
 We do something similar when defining the other closure
 operations.  In what follows, though, we'll ignore this issue,
@@ -69,6 +75,8 @@ along with production
   q\fun s_{G_1}s_{G_2} .
 \end{gather*}
 This gives us a function $\concat\in\Gram\times\Gram\fun\Gram$.
+\index{grammar!concat@$\concat$}%
+\index{grammar!concatenation}%
 
 Suppose $G$ is a grammar.  We can define a grammar $H$ such that
 $L(H)=L(G)^*$ by adding to the variables and productions of $G$ a new
@@ -77,24 +85,22 @@ start variable $q$, along with productions
 q\fun \%\mid s_Gq .
 \end{gather*}
 This gives us a function $\closure\in\Gram\fun\Gram$.
+\index{grammar!closure@$\closure$}%
+\index{grammar!closure}%
 
 Next, we consider reversal and alphabet renaming operations on
 grammars.  Given a grammar $G$, we can define a grammar $H$ such that
 \index{grammar!reversal}%
-\index{reversal!grammar}%
-\index{language!reversal}%
-\index{reversal!language}%
 $L(H)=L(G)^R$ by simply reversing the right-sides of $G$'s
 productions.
 This gives a function $\rev\in\Gram\fun\Gram$.
+\index{grammar!rev@$\rev$}%
 
 Given a grammar $G$ and a bijection $f$ from a set of symbols that is
 a superset of $\alphabet\,G$ to some set of symbols, we can define a
 grammar $H$ such that $L(H)=L(G)^f$ by renaming the elements of
 \index{grammar!alphabet renaming}%
-\index{alphabet renaming!grammar}%
 \index{language!alphabet renaming}%
-\index{alphabet renaming!language}%
 $\alphabet\,G$ in the right-sides of $G$'s productions using $f$.
 Actually, we may have to rename the variables of $G$ to avoid clashes
 with the elements of the renamed alphabet.  Let
@@ -103,21 +109,16 @@ $X=\setof{(G,f)}{G\in\Gram\eqtxt{and}f\eqtxtl{is a bijection from a
     of}\alphabet\,G\eqtxtl{to some set of symbols}}$.  Then the above
 definition gives us a function
 $\renameAlphabet\in X\fun\Gram$.
+\index{grammar!renameAlphabet@$\renameAlphabet$}%
 
 From Section~\ref{ClosurePropertiesOfRegularLanguages},
 we know that if we can define a prefix-closure operation
 \index{language!prefix-closure}%
 \index{language!suffix-closure}%
 \index{language!substring-closure}%
-\index{prefix-closure!language}%
-\index{suffix-closure!language}%
-\index{substring-closure!language}%
 \index{grammar!prefix-closure}%
 \index{grammar!suffix-closure}%
 \index{grammar!substring-closure}%
-\index{prefix-closure!grammar}%
-\index{suffix-closure!grammar}%
-\index{substring-closure!grammar}%
 on grammmars, then we can obtain suffix-closure and substring-closure
 operations on grammars from the prefix-closure and grammar reversal
 operations.
@@ -153,6 +154,7 @@ be turned into productions that generated strings. Finally, the start
 variable of $H$ is $\langle\twosf,s_{G'}\rangle$.
 
 The above definition gives a function $\prefix\in\Gram\fun\Gram$.
+\index{grammar!prefix@$\prefix$}%
 For example, the grammar
 \begin{gather*}
 \Asf\fun \% \mid \zerosf\Asf\onesf
@@ -169,6 +171,8 @@ is turned into the grammar
 \langle\twosf,\onesf\rangle &\fun \% \mid \onesf .
 \end{align*}
 
+\index{language!intersection}%
+\index{grammar!intersection with EFA}%
 We now consider an algorithm for intersecting a grammar $G$ with an
 EFA $M$, resulting in $\simplify\,H$, where the grammar $H$ is defined
 as follows.
@@ -220,6 +224,7 @@ be a production of $H$.
 
 The above definition gives us a function
 $\inter\in\Gram\times\Gram\fun\Gram$.  For example, let $G$ be the
+\index{grammar!inter@$\inter$}%
 grammar
 \begin{gather*}
   \Asf \fun \% \mid \mathsf{0A1A} \mid \mathsf{1A0A} ,
