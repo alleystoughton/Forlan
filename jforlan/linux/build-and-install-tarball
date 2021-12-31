@@ -5,5 +5,6 @@ cp ../JForlan.jar jforlan
 tar cf jforlan.tar jforlan
 gzip jforlan.tar
 rm -f jforlan/JForlan.jar
+mkdir -p ../html/linux
 rm -rf ../html/linux/jforlan.tgz
 mv jforlan.tar.gz ../html/linux/jforlan.tgz

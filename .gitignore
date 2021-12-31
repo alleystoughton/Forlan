@@ -17,9 +17,10 @@
 
 jforlan/JForlan.app
 jforlan/JForlan.jar
-jforlan/html/linux/jforlan.tgz
-jforlan/html/mac/jforlan.tgz
-jforlan/html/windows/jforlan.zip
+jforlan/html/linux/
+jforlan/html/mac/
+jforlan/html/windows/
+
 toolset/src/.cm/
 toolset/manual/HTML
 toolset/manual/Info

@@ -4,5 +4,6 @@ rm -f jforlan/JForlan.jar
 cp ../JForlan.jar jforlan
 zip -r jforlan.zip jforlan
 rm -f jforlan/JForlan.jar
+mkdir -p ../html/windows
 rm -rf ../html/windows/jforlan.zip
 mv jforlan.zip ../html/windows
