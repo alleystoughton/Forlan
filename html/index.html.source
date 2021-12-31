@@ -38,6 +38,10 @@ Email: <a href="mailto:alley.stoughton@icloud.com">alley.stoughton@icloud.com</a
 <h2>What's New?</h2>
 
 <dl>
+<dt>Version 4.13</dt>
+<dd>Continuing revision of book, including filling in gaps
+in Section 3.3, and making a rough version of a complete index.</dd>
+
 <dt>Version 4.12</dt>
 <dd>
 Defined version of <kbd>eliminateVariable</kbd> that takes constraints
@@ -158,13 +162,11 @@ numerous, fully worked-out examples of how regular expressions, finite
 automata, grammars and programs (its substitute for Turing machines)
 can be designed and proved correct.</p>
 
-<p>The textbook is still a work-in-progress, but drafts are
-available. The most recent
-<a href="book-summer2019.pdf">full draft is from Summer 2019</a>.  But
-a <a href="book.pdf">revision is being made during the fall of
-2019</a>, in a series of steps.  The LaTeX source for the draft is
-part of Forlan's distribution.  It is released under the GNU Free
-Documentation License.</p>
+<p>The textbook is still a work-in-progress, but the most recent version
+is the
+<a href="book.pdf">Spring 2022 Draft</a>.  The LaTeX source for the
+draft is part of Forlan's distribution.  It is released under the GNU
+Free Documentation License.</p>
 
 <h2>Standard ML</h2>
 
@@ -182,7 +184,7 @@ is <a href="https://www.cl.cam.ac.uk/~lp15/MLbook/pub-details.html">available
 online</a>, for personal use.</p>
 
 <p>If you like learning from examples, here's a
-brief <a href="https://alleystoughton.us/getting-started-typed-fp/">tutorial
+brief <a href="https://alleystoughton.us/getting-started-typed-fp-sml/">tutorial
 on SML.</a></p>
 
 <p>You may also consult these other books and draft books:</p>

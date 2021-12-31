@@ -10,7 +10,7 @@ echo Building compressed tarball for Forlan Version $version and installing in $
 
 rm -rf /tmp/{forlan-$version,forlan-$version.tar,forlan-$version.tar.gz,forlan-$version.tgz}
 cd ..
-cp -R forlan-git /tmp/forlan-$version
+cp -R Forlan /tmp/forlan-$version
 cd /tmp/forlan-$version
 
 # get rid of temporary files and .git
