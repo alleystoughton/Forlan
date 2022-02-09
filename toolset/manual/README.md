@@ -47,5 +47,5 @@ notices in these files, run the script
 
 (e.g., `change-copyright 2022`).
 
-The script `cleanup` can be used to delete the automatically generated
-files in the subdirectories.
+The script [`cleanup`](cleanup) can be used to delete the
+automatically generated files in the subdirectories.
