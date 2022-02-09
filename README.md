@@ -23,9 +23,10 @@ The subdirectory:
   toolset, plus the [ML-Doc](https://people.cs.uchicago.edu/~jhr/)
   source for the toolset's manual;
 
-* [`jforlan`](jforlan) contains the distribution of JForlan;
+* [`jforlan`](jforlan) contains the distribution of
+  [JForlan](https://alleystoughton.us/forlan/jforlan/);
 
-* [`book`](book) contains the LaTeX source for the book.
+* [`book`](book) contains the LaTeX source for the [book](https://alleystoughton.us/forlan/book.pdf).
 
 The file [`version.txt`](version.txt) contains the current version of
 the Forlan Project.  It is read by various scripts.
