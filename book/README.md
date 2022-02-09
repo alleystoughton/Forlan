@@ -17,8 +17,9 @@ directory.
 Modifying the Book
 -----------------------------------------------------------------------------
 
-The `BASE.eepic` files were generated using `xfig` from the
-`BASE.fig` files.  Xfig should be started up with the
+The `BASE.eepic` files were generated using
+[`xfig`](http://mcj.sourceforge.net) from the `BASE.fig` files.  Xfig
+should be started up with the
 
 ```
   -latexfonts -specialtext -exportLanguage eepic
