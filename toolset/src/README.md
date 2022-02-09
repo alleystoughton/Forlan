@@ -17,7 +17,7 @@ files.
 The `.mldoc` files are actually symbolic links to `../manual/ML-Doc`.
 
 The `.sig` files should not be modified, they are created by the
-[`ml-doc-tool`](ml-doc-tool) script using ML-Doc.  See `forlan.cm` for
+[`mldoc-tool`](mldoc-tool) script using ML-Doc.  See `forlan.cm` for
 how CM is told to use `ml-doc-tool` to turn `.mldoc` files into `.sig`
 files.  (The files [`mldoc-ext.cm`](mldoc-ext.cm) and
 [`ml-doc-tool.sml`](ml-doc-tool.sml) assist in this.)
