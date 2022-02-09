@@ -50,10 +50,11 @@ and installs in the Forlan HTML directory:
 * the manual archives (see
   [`toolset/build-and-install-manual-archives`](toolset/build-and-install-manual-archives)),
 
-* the minimum source archives (see
+* the minimum source archives, which are all the files needed to build
+  the Forlan toolset (see
   [`toolset/build-and-install-min-src-archives`](toolset/build-and-install-min-src-archives)),
 
 * the JForlan web pages (see
-  [`jforlan/build-and-install`](jforlan/build-and-install); requires
+  [`jforlan/build-and-install`](jforlan/build-and-install)); requires
   that [Apache Ant](https://ant.apache.org) be installed and on the
   shell's PATH.
