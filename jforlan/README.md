@@ -31,12 +31,12 @@ The subdirectory:
     building a compressed tarball in html;
 
 * [`linux`](linux) contains Linux-specific resources, and a script for
-    building a compressed tarball in html
+    building a compressed tarball in html;
 
 * [`windows`](windows) contains Windows-specific resources, and a
-    script for building a zip archive in html
+    script for building a zip archive in html;
 
-* [`testing`](testing) contains a testing harness for JForlan
+* [`testing`](testing) contains a testing harness for JForlan.
 
 The script [`build-and-install`](build-and-install):
 
