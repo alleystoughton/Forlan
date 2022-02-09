@@ -29,7 +29,7 @@ options.
 
 The `chap-N.M-forlanL.tex` Forlan transcripts were generated from the
 `chap-N.M-forlanL` files, using the program
-[`smlnjtrans`](http://alleystoughton.us/smlnjtrans/).
+[`smlnjtrans`](https://github.com/alleystoughton/SMLNJtrans).
 
 This process was automated by the `chap-N.M-transcripts` shell
 scripts.  To run these scripts, you must have both `smlnjtrans` and
