@@ -10,7 +10,7 @@ Make sure that the pathnames in [`CATALOG`](CATALOG) and
 
 The subdirectory:
 
-* [`ML-Doc`](ML-Doc) contains the manual source, in .mldoc files;
+* [`ML-Doc`](ML-Doc) contains the manual source, in `.mldoc` files;
 
 * [`HTML`](HTML) is where generated HTML is placed (index.html is the
   root);
