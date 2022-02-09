@@ -42,12 +42,12 @@ The script [`build-and-install`](build-and-install):
 
 * builds JForlan from source, using [Apache
   Ant](https://ant.apache.org), which must be installed and on the
-  shell's PATH
+  shell's PATH;
 
 * builds the compressed tarballs for macOS and Linux, and the zip
   archive for Windows, puts these files in the html directory, and
   then installs the html directory in the Forlan html directory
-  (`$html`)
+  (`$html`).
 
 Leonard Lee and Jessica Sherrill designed and implemented graphical
 editors for Forlan finite automata (JFA), and regular expression and
