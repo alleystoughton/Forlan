@@ -27,8 +27,8 @@ The subdirectory:
 
 If you add/delete `.mldoc` files to/from `ML-Doc`, you must run the
 [`make-makefile`](make-makefile) script.  Occurrences of `SIGBODY`
-must name the SGML entity (see `Entities.sgml`) that names the `.sig`
-file that should be generated from it.
+must name the SGML entity (see [`Entities.sgml`](`Entities.sgml`))
+that names the `.sig` file that should be generated from it.
 
 The `.template` files can be modified to change the layout of pages, the
 table of contents (toc) and the index.  To change the Forlan version
