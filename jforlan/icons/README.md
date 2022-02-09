@@ -12,7 +12,7 @@ JForlan's Icon
   `JForlan.icns` (made using GIMP)
 
 * `JForlan.icns`: the Mac OS X icons file, constructed from
-  `JForlan-512x512.png` and `JForlan-128x128.png` using iconutil
+  `JForlan-512x512.png` and `JForlan-128x128.png` using `iconutil`
 
   First create a directory `JForlan.iconset` with elements
   `icon_128x128.png` and `icon_512x512.png` correponding to the two seeds.
