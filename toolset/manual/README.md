@@ -12,7 +12,7 @@ The subdirectory:
 
 * [`ML-Doc`](ML-Doc) contains the manual source, in `.mldoc` files;
 
-* [`HTML`](HTML) is where generated HTML is placed (index.html is the
+* [`HTML`](HTML) is where generated HTML is placed (`index.html` is the
   root);
 
 * [`Hardcopy`](Hardcopy) and [`Proof`](Proof) are where generated
