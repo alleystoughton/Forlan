@@ -1,4 +1,4 @@
-The Forlan Project
+Forlan Project
 ==========================================================================
 
 The [Forlan Project](https://alleystoughton.us/forlan) consists of
