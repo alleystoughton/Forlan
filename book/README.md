@@ -32,8 +32,8 @@ The `chap-N.M-forlanL.tex` Forlan transcripts were generated from the
 [`smlnjtrans`](http://alleystoughton.us/smlnjtrans/).
 
 This process was automated by the `chap-N.M-transcripts` shell
-scripts.  To run these scripts, you must have both smlnjtrans and
-forlan on your search path.  The script
+scripts.  To run these scripts, you must have both `smlnjtrans` and
+`forlan` on your search path.  The script
 [`book-transcripts`](book-transcripts) runs all of the transcripts.
 
 The script [`cleanup`](cleanup) can be used to delete all of the files
