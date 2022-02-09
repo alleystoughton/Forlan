@@ -20,7 +20,7 @@ The `.sig` files should not be modified, they are created by the
 [`mldoc-tool`](mldoc-tool) script using ML-Doc.  See `forlan.cm` for
 how CM is told to use `ml-doc-tool` to turn `.mldoc` files into `.sig`
 files.  (The files [`mldoc-ext.cm`](mldoc-ext.cm) and
-[`ml-doc-tool.sml`](ml-doc-tool.sml) assist in this.)
+[`mldoc-tool.sml`](mldoc-tool.sml) assist in this.)
 
 The files [`export.sig`](export.sig) and [`export.sml`](export.sml)
 are used to export a heap image.  They aren't documented in the Forlan
