@@ -20,7 +20,7 @@ This directory contains:
 
 To carry out the tests:
 
-* cd to this directory, making sure both forlan and jforlan are on
+* cd to this directory, making sure both `forlan` and `jforlan` are on
   your shell's search path;
 
 * invoke `forlan`;
