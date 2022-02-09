@@ -19,9 +19,10 @@ The subdirectory:
 * [`html`](html) contains the source for the [Forlan
   website](https://alleystoughton.us/forlan/);
 
-* [`toolset`](toolset) contains the Standard ML source for the
-  toolset, plus the [ML-Doc](https://people.cs.uchicago.edu/~jhr/)
-  source for the [toolset's manual](https://alleystoughton.us/forlan/manual/);
+* [`toolset`](toolset) contains the [Standard
+  ML](https://smlfamily.github.io) source for the toolset, plus the
+  [ML-Doc](https://people.cs.uchicago.edu/~jhr/) source for the
+  [toolset's manual](https://alleystoughton.us/forlan/manual/);
 
 * [`jforlan`](jforlan) contains the distribution of
   [JForlan](https://alleystoughton.us/forlan/jforlan/);
