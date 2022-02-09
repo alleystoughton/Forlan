@@ -1,5 +1,5 @@
 #!/bin/bash
 
-rm -rf *.aux *.aux.bak book.i* book.toc book.lof book.bbl book.blg \
-       book.brf book.out book.ps book.dvi book.log \
-       book.fdb_latexmk
+rm -f *.aux *.aux.bak book.i* book.toc book.lof book.bbl book.blg \
+      book.brf book.out book.ps book.dvi book.log \
+      book.fdb_latexmk

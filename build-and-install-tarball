@@ -8,7 +8,7 @@ version=$(cat version.txt)
 
 echo Building compressed tarball for Forlan Version $version and installing in $html
 
-rm -rf /tmp/{forlan-$version,forlan-$version.tar,forlan-$version.tar.gz,forlan-$version.tgz}
+rm -f /tmp/{forlan-$version,forlan-$version.tar,forlan-$version.tar.gz,forlan-$version.tgz}
 cd ..
 cp -R Forlan /tmp/forlan-$version
 cd /tmp/forlan-$version

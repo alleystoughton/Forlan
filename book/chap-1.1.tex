@@ -1461,6 +1461,7 @@ hold, and that $\some\,x=\some\,y$ only holds when $x=y$.
 (We won't make use of the particular way we've defined $\none$ and
 $\some\,x$.)
 For example, $\Option\,\Bool=\{\none,\some\,\true,\some\,\false\}$.
+We have that, if $X\sub Y$, then $\Option\,X\sub\Option\,Y$.
 
 The idea is that an element of $\Option\,X$ is an optional element
 of $X$.  E.g., when a function needs to either return an element of $X$
@@ -1562,7 +1563,8 @@ ranges are subsets of $X$, i.e., all of whose elements come
 from $X$.  E.g., $[\,]$ and $[3,5,7]$ are elements of $\List\,\nats$,
 the set of all lists of natural numbers.  It is easy to see that
 $[\,]\in\List\,X$, for all sets $X$, and that, for all sets $X$ and
-$f,g\in\List\,X$, $f\myconcat g\in\List\,X$.
+$f,g\in\List\,X$, $f\myconcat g\in\List\,X$. Furthermore, if $X\sub Y$,
+then $\List\,X\sub\List\,Y$.
 \index{list|)}%
 \index{data structure|)}%
 

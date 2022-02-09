@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<link type="text/css" rel="stylesheet" href="style.css"/>
+<meta name="viewport" content="initial-scale=1"/>
+<title>The Forlan Project (Version #VERSION#)</title>
+</head>
+
+<body>
+<h1>The Forlan Project (Version #VERSION#): Older News</h1>
+
+<hr/>
+
+<h2>Older News</h2>
+
+<dl>
+<dt>Version 4.10</dt>
+<dd>
+Generalized <kbd>eliminateVariable</kbd> to work when variable to be
+elminated has multiple productions (without self-recursion).
+Continuing revision of book.
+</dd>
+
+<dt>Version 4.9</dt>
+<dd>
+Added two functions for hand-simplification of grammars to 
+<kbd>Gram</kbd> module (see the manual and book for descriptions
+of <kbd>eliminateVariable</kbd> and <kbd>restart</kbd>). Continuing
+revision of book.
+</dd>
+
+<dt>Version 4.8</dt>
+<dd>
+Improved documentation of local and global regular expression
+simplification.  Continuing revision of book.
+</dd>
+
+<dt>Version 4.7</dt>
+<dd>
+Added functions to <kbd>StrSet</kbd> for prefix, suffix and substring
+closure. Minor documentation changes. Starting revision of book.
+</dd>
+
+<dt>Version 4.6</dt>
+<dd>
+Bringing Forlan up-to-date with most recent SML/NJ compiler (110.82).
+</dd>
+
+<dt>Version 4.5</dt>
+<dd>
+This release includes Version 2.1 of JForlan, which fixes a minor bug
+relating to regular expression tree error checking and includes the
+changes needed to make JForlan build using Apache Ant.</dd>
+
+<dt>Version 4.4</dt>
+<dd>
+This release features a new draft (September 2012) of the textbook, as
+well as some minor changes and additions to the Forlan toolset and
+manual. The <kbd>RFA</kbd> module of the toolset now exports functions
+for standardizing an RFA and for converting an RFA to a regular
+expression.
+</dd>
+
+<dt>Version 4.3</dt>
+<dd>
+This release features a new draft (August 2012) of the textbook, as
+well as some relatively minor changes and additions to the Forlan
+toolset and manual.  Most significantly, the textbook now includes a
+draft of Chapter 5, which uses a functional programming language to
+study the recursive and recursively enumerable languages.  I believe
+that the toolset is now in close to final form.  The textbook should
+be usable, but still needs substantial work.
+</dd>
+
+<dt>Version 4.2</dt>
+<dd>
+This release features changes to Forlan, JForlan, the Forlan manual,
+and the draft textbook.  Major changes have been made to Forlan's
+simplification algorithms for regular expressions, small changes have
+been made to the simplification algorithms for finite automata and
+grammars, and the parsing algorithm for context-free grammars has been
+improved.  The new release (Version 2.0) of JForlan contains numerous
+bug fixes and changes of functionality.  Error checking is now always
+turned on, and if there are no errors, the Forlan syntax of the
+current project's automaton or tree is displayed.  Projects now have a
+committable boolean attribute, which is true exactly when the project
+originated from Forlan.  Only committable projects may be committed
+back to Forlan. There is now a full draft of the Forlan manual.
+The draft textbook is now consistent with the toolset, and
+contains all the material that was only in the lecture slides in
+Version 4.1.  Those lecture slides are no longer part of the Forlan
+release.</dd>
+
+<dt>Version 4.1</dt>
+<dd>This release features small changes to the Forlan toolset's
+lexical analyzer.</dd>
+
+<dt>Version 4.0</dt>
+<dd>This release features a completely redesigned and redeveloped
+version of JForlan (Version 1.0), the graphical editor for Forlan
+automata and trees.</dd>
+</dl>
+
+<hr class="after"/>
+
+<address>
+<a href="..">Alley Stoughton</a>
+(<a href="mailto:alley.stoughton@icloud.com">alley.stoughton@icloud.com</a>)
+</address>
+</body>
+</html>

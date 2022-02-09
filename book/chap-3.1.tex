@@ -656,7 +656,7 @@ $\alpha\in\Reg$.  We define
 &= \setof{L\in\Lan}{L\eqtxtl{is regular}} .
 \end{align*}
 
-Since every regular expression can be described, e.g., in fully
+Since every regular expression can be uniquely described, e.g., in fully
 parenthesized form, by a finite sequence of ASCII characters, we can
 enumerate the regular expressions, and consequently we have that
 $\Reg$ is countably infinite.  Since $\{\mathsf{0}^0\}$,
@@ -753,12 +753,12 @@ introduced in the preceding subsection, where $\alpha\myconcat\beta$
 is always written as $\alpha\beta$, and we use parentheses
 to override default precedences/associativities, or simply
 for clarity.
-For example, $\mathsf{0^*10^*+\%}$ and $\mathsf{(0^*(1(0^*)))+\%}$
-are the same regular expression.  And, $\mathsf{((0^*)1)0^*+\%}$
+For example, \texttt{0*10* + \%} and \texttt{(0*(1(0*))) + \%}
+are the same regular expression.  And, \texttt{((0*)1)0* + \%}
 is a different regular expression, but one with the same meaning.
-Furthermore, $\mathsf{0^*1(0^*+\%)}$ is not only different from
+Furthermore, \texttt{0*1(0* + \%)} is not only different from
 the two preceding regular expressions, but it has a different
-meaning (it fails to generate $\%$.)
+meaning (it fails to generate $\%$).
 When regular expressions are outputted, as few parentheses as
 possible are used.
 

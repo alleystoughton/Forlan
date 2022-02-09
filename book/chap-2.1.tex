@@ -132,7 +132,7 @@ $\Sym$.  Thus, e.g.,
 \% < \mathsf{ab} < \mathsf{a\langle be\rangle} < \mathsf{a\langle by\rangle} <
 \mathsf{\langle can\rangle\langle be\rangle} < \mathsf{abc} .
 \end{gather*}
-Since every string can be written as a finite sequence of ASCII
+Since every string can be unambiguously written as a finite sequence of ASCII
 characters, it follows that $\Str$ is countably infinite.
 \index{countably infinite}%
 
@@ -169,7 +169,7 @@ From our study of lists, we know that:
 (xy)z = x(yz) .
 \end{gather*}
 
-\item $\%$ is the identify for concatenation: for all $x\in\Str$,
+\item $\%$ is the identity for concatenation: for all $x\in\Str$,
 \index{identity!string concatenation}%
 \index{concatenation!string!identity}%
 \index{string!concatenation!identity}%
@@ -379,7 +379,8 @@ is a finite subset of $\Sym$.  We use $\Sigma$
 (upper case Greek letter sigma) to name alphabets.  For example,
 $\emptyset$, $\mathsf{\{0\}}$ and $\mathsf{\{0,1\}}$ are alphabets.
 We write $\Alp$ for the set of all alphabets.  $\Alp$ is countably
-infinite.
+infinite (every alphabet can be unambiguously written as a finite
+sequence of ASCII characters).
 \index{countably infinite}%
 
 We define $\alphabet\in\Str\fun\Alp$
@@ -487,11 +488,11 @@ the \emph{alphabet}
 \index{alphabet!language}%
 \index{language!alphabet}%
 \begin{gather*}
-\bigcup\setof{\alphabet\,w}{w\in L} .
+\bigcup\setof{\alphabet\,w}{w\in L}
 \end{gather*}
 \emph{of} $L$.
 I.e., $\alphabet\,L$ consists of all of the symbols occurring in the
-strings of $L$.
+strings of $L$ (it is an alphabet because $L$ is a language).
 For example,
 \begin{align*}
 \alphabet\,\mathsf{\{011,112\}} &=
