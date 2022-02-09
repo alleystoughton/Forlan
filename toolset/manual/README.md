@@ -45,7 +45,7 @@ notices in these files, run the script
   change-copyright DDDD
 ```
 
-(e.g., `change-copyright 2005`).
+(e.g., `change-copyright 2022`).
 
 The script `cleanup` can be used to delete the automatically generated
 files in the subdirectories.
