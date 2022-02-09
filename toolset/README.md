@@ -32,7 +32,7 @@ The script:
 
 Before running any of these scripts, make sure that
 [ML-Doc](https://people.cs.uchicago.edu/~jhr/tools/ml-doc.html) is
-installed and properly configured (see manual/README.txt).
+installed and properly configured; see [`manual`](manual).
 
 The script [`cleanup`](cleanup) can be used to delete the
 automatically generated files in the subdirectories.
