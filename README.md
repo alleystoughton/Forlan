@@ -17,13 +17,13 @@ all released under free software/documentation licenses.
 The subdirectory:
 
 * [`html`](html) contains the source for the [Forlan
-  website](https://alleystoughton.us/forlan/)
+  website](https://alleystoughton.us/forlan/);
 
 * [`toolset`](toolset) contains the Standard ML source for the
   toolset, plus the [ML-Doc](https://people.cs.uchicago.edu/~jhr/)
-  source for the toolset's manual
+  source for the toolset's manual;
 
-* [`jforlan`](jforlan) contains the distribution of JForlan
+* [`jforlan`](jforlan) contains the distribution of JForlan;
 
 * [`book`](book) contains the LaTeX source for the book.
 
