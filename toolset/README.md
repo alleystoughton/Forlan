@@ -15,10 +15,10 @@ The script:
     for Forlan, which can be invoked by
     [`scripts/forlan`](scripts/forlan) (on Linux/macOS) and
     [`scripts/forlan.bat`](scripts/forlan.bat) (on Windows); installs
-    heap image in /tmp.
+    heap image in `/tmp`.
 
 * [`build-and-install-min-src-archives`](build-and-install-min-src-archives)
-    builds .zip and .tgz archives with just the source needed to build
+    builds `.zip` and `.tgz` archives with just the source needed to build
     Forlan, along with the shell scripts needed to build an SML/NJ
     heap image for Forlan from this source, and to run it; installs
     archives in an HTML directory.
@@ -27,7 +27,7 @@ The script:
     manual in an HTML directory.
 
 * [`build-and-install-manual-archives`](build-and-install-manual-archives)
-    builds .zip and .tgz archives of the Forlan manual in HTML format,
+    builds `.zip` and `.tgz` archives of the Forlan manual in HTML format,
     and installs them in an HTML directory.
 
 Before running any of these scripts, make sure that
