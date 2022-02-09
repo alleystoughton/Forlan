@@ -1,7 +1,7 @@
 Formal Language Theory: Integrating Experimentation with Proof
 =============================================================================
 
-This directory contains the LaTeX source for the above book.  The root
+This directory contains the LaTeX source for the book.  The root
 file is `book.tex`.
 
 Run
