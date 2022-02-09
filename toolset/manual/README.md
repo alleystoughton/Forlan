@@ -12,18 +12,18 @@ The subdirectory:
 
 * [`ML-Doc`](ML-Doc) contains the manual source, in `.mldoc` files;
 
-* [`HTML`](HTML) is where generated HTML is placed (`index.html` is the
-  root);
+* `HTML` (not in the repo) is where generated HTML is placed
+  (`index.html` is the root);
 
-* [`Hardcopy`](Hardcopy) and [`Proof`](Proof) are where generated
-    LaTeX is placed (in final and proof versions), but we're not using
-    this;
+* `Hardcopy` and `Proof` (not in the repo) are where generated LaTeX
+    is placed (in final and proof versions), but we're not using this;
 
-* [`Info`](Info) is where ML-Doc caches internal information;
+* `Info` (not in the repo) is where ML-Doc caches internal
+  information;
 
-* [`Sigs`](Sigs) is where generated Standard ML signatures are placed
-    (but they are automatically moved by `../src/ml-doc-tool` to
-    `../src`).
+* `Sigs` (not in the repo) is where generated Standard ML signatures
+    are placed (but they are automatically moved by
+    `../src/ml-doc-tool` to `../src`).
 
 If you add/delete `.mldoc` files to/from `ML-Doc`, you must run the
 [`make-makefile`](make-makefile) script.  Occurrences of `SIGBODY`
