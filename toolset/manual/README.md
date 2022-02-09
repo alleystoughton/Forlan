@@ -23,7 +23,7 @@ The subdirectory:
 
 * `Sigs` (not in the repo) is where generated Standard ML signatures
     are placed (but they are automatically moved by
-    `../src/ml-doc-tool` to `../src`).
+    [`../src/mldoc-tool`](../src/mldoc-tool) to [`../src`](../src)).
 
 If you add/delete `.mldoc` files to/from `ML-Doc`, you must run the
 [`make-makefile`](make-makefile) script.  Occurrences of `SIGBODY`
