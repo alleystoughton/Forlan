@@ -21,7 +21,7 @@ The subdirectory:
 
 * [`toolset`](toolset) contains the Standard ML source for the
   toolset, plus the [ML-Doc](https://people.cs.uchicago.edu/~jhr/)
-  source for the toolset's manual;
+  source for the [toolset's manual](https://alleystoughton.us/forlan/manual/);
 
 * [`jforlan`](jforlan) contains the distribution of
   [JForlan](https://alleystoughton.us/forlan/jforlan/);
@@ -42,7 +42,7 @@ The script [`build-and-install`](build-and-install) runs
 [`build-and-install-tarball`](build-and-install-tarball) and builds
 and installs in the Forlan HTML directory:
 
-* the general WWW pages (see [`html/install`](html/install)),
+* the general web pages (see [`html/install`](html/install)),
 
 * the manual (see [`toolset/install-manual`](toolset/install-manual)),
 
@@ -52,7 +52,7 @@ and installs in the Forlan HTML directory:
 * the minimum source archives (see
   [`toolset/build-and-install-min-src-archives`](toolset/build-and-install-min-src-archives)),
 
-* the JForlan WWW pages (see
+* the JForlan web pages (see
   [`jforlan/build-and-install`](jforlan/build-and-install); requires
   that [Apache Ant](https://ant.apache.org) be installed and on the
   shell's PATH.
