@@ -11,8 +11,8 @@ Run
 ```
 
 to generate the PDF version of the book: book.pdf.  A copy of
-[`latexmk`](http://www.phys.psu.edu/~collins/software/latexmk/) is in
-this directory.
+[`latexmk`](https://ctan.org/pkg/latexmk?lang=en) is in this
+directory.
 
 Modifying the Book
 -----------------------------------------------------------------------------
