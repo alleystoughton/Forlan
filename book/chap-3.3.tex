@@ -405,7 +405,7 @@ $\beta$ have the \emph{same complexity}.  Finally, we define a
 relation $\leqsimp$ on $\Reg$ by, for all $\alpha,\beta\in\Reg$,
 $\alpha\leqsimp\beta$ iff $\alpha\ltsimp\beta$ or
 $\alpha\equivsimp\beta$.  We read $\alpha\leqsimp\beta$ as $\alpha$ is
-at least as simpler as (no more complex) than $\beta$
+\emph{at least as simple as} (\emph{no more complex than}) $\beta$.
 
 For example, the following regular expressions are equivalent and have
 the same complexity:
@@ -424,7 +424,7 @@ the same complexity:
 $\alpha\ltsimp\beta$, $\beta\ltsimp\alpha$ or $\alpha\equivsimp\beta$.
 
 \item $\leqsimp$ is transitive, and, for all $\alpha,\beta\in\Reg$,
-$\alpha\equivsimp\beta$ iff $\alpha\leq\beta$ and $\beta\leq\alpha$.
+$\alpha\equivsimp\beta$ iff $\alpha\leqsimp\beta$ and $\beta\leqsimp\alpha$.
 \end{enumerate}
 \end{proposition}
 
@@ -1050,7 +1050,7 @@ Prove Proposition~\ref{WeakSimpProp1}.
 \begin{corollary}
 \label{WeakSimpProp1Cor}
 For all regular expressions $\alpha$,
-$\weaklySimplify(\alpha) \leqsimp \alpha$.
+$\weaklySimplify\,\alpha \leqsimp \alpha$.
 \end{corollary}
 
 \begin{proof}
@@ -1516,10 +1516,6 @@ $\simp$ is transitive.
 Suppose $\alpha, \beta, \gamma\in\Reg$.
 
 \begin{enumerate}[\quad(1)]
-\item If $\alpha\leqsimp\beta\simp\gamma$, then $\alpha\simp\gamma$.
-  
-\item If $\alpha\simp\beta\leqsimp\gamma$, then $\alpha\simp\gamma$.
-
 \item If $\alpha$ and $\beta$ have the same closure complexity, size,
   numbers of concatenations and numbers of symbols, and $\beta\simp\gamma$,
   then $\alpha\simp\gamma$.
@@ -1527,6 +1523,10 @@ Suppose $\alpha, \beta, \gamma\in\Reg$.
 \item If $\alpha\simp\beta$, and $\beta$ and $\gamma$ have the same
   closure complexity, size, numbers of concatenations and numbers of
   symbols, then $\alpha\simp\gamma$.
+
+\item If $\alpha\leqsimp\beta\simp\gamma$, then $\alpha\simp\gamma$.
+  
+\item If $\alpha\simp\beta\leqsimp\gamma$, then $\alpha\simp\gamma$.
 \end{enumerate}
 \end{proposition}
 
@@ -1694,6 +1694,12 @@ have that
  \cc\,\alpha \cup \overline{\cc\,\beta} = \cc(\alpha\beta^*) .
 \end{displaymath}
 
+\subsection*{Local Simplification}
+
+\index{regular expression!simplification!local|(}%
+\index{regular expression!local simplification|(}%
+\index{simplification!regular expression!local|(}%
+
 Suppose $\Sub$ is a conservative approximation to subset testing.
 \index{regular expression!locally simplified}%
 We say that a regular expression $\alpha$ is \emph{locally simplified with
@@ -1707,19 +1713,12 @@ iff
   our reduction rules (which may be applied to subtrees) applies.
 \end{itemize}
 
-\subsection*{Local Simplification}
-
-\index{regular expression!simplification!local|(}%
-\index{regular expression!local simplification|(}%
-\index{simplification!regular expression!local|(}%
 The \emph{local simplification of} a regular expression $\alpha$
 \emph{with respect to} a conservative approximation to subset testing
 $\Sub$ proceeds as follows.  It calls its main function with the weak
-simplification, $\beta$, of $\alpha$. Then the closure complexity,
-size, number of concatenations, and number of symbols of $\beta$ are
-no bigger than those of $\alpha$,
-$\alphabet\,\beta\sub\alphabet\,\alpha$,
-$\beta$ is equivalent to $\alpha$ and $\beta\leqsimp\alpha$.
+simplification, $\beta$, of $\alpha$. Then $\beta\leqsimp\alpha$,
+$\alphabet\,\beta\sub\alphabet\,\alpha$ and $\beta$ is equivalent to
+$\alpha$.
 
 The main function is defined by well-founded recursion on $\simp$.  It
 works as follows, when called with a weakly simplified argument,
@@ -1740,10 +1739,12 @@ $\alpha$.
   regular expressions---is selected).  Because (see
   Proposition~\ref{SimpTransLEQSimp})
   \begin{itemize}
-  \item the structural rules preserve closure complexity, size, number
-    of concatenations, and number of symbols,
+  \item the structural rules (even applied to subtrees) preserve
+    closure complexity, size, number of concatenations, and number of
+    symbols,
 
-  \item the reduction rules produce $\simp$-predecessors, and
+  \item the reduction rules (even applied to subtrees) produce
+    $\simp$-predecessors, and
 
   \item and weak simplification respects $\leqsimp$,
   \end{itemize}
@@ -1859,17 +1860,17 @@ reduction rules (which may be applied to subtrees). All of the
 elements of $X$ will have the same meaning as $\alpha$, and will have
 alphabets that are subsets of the alphabet of $\alpha$. Because
 \begin{itemize}
-\item weak simplification either preserves the closure complexity,
-  size, numbers of concatenations and numbers of symbols of a regular
-  expression, or results in a regular expression that is a
-  $\simp$-predecessor,
+\item weak simplification (even applied to subtrees) either preserves
+  the closure complexity, size, numbers of concatenations and numbers
+  of symbols of a regular expression, or results in a regular
+  expression that is a $\simp$-predecessor,
 
-\item the closure rules preserve the closure complexity,
-  size, numbers of concatenations and numbers of symbols of a regular
-  expression, and
+\item the structural rules (even applied to subtrees) preserve the
+  closure complexity, size, numbers of concatenations and numbers of
+  symbols of a regular expression, and
 
-\item the reduction rules produce regular expressions that are
-  $\simp$-predecessors,
+\item the reduction rules (even applied to subtrees) produce regular
+  expressions that are $\simp$-predecessors,
 \end{itemize}
 by Propositions~\ref{SimpTransLEQSimp} and \ref{SimpTrans}, all the
 elements of $X$ either are ${\simp}$-predecessors of $\alpha$ or have
@@ -2031,8 +2032,9 @@ the boolean result is always $\true$.  But if it is
 $\mathtt{SOME}\;n$, for $n\geq 1$, then at most $n$ elements of the
 set $X$ are generated (in order according to the number of steps
 needed to produce them from the original regular expression), before
-picking the simplest one, and the boolean result is $\false$ if this
-$n$ isn't enough to generate all of $X$.  The function
+picking the simplest one, and the boolean result is $\false$ iff this
+$n$ isn't enough to generate all of $X$, and so the returned regular
+expression isn't necessarily globally simplified.  The function
 \texttt{globallySimplify} works identically, except it doesn't issue
 tracing messages.
 

@@ -942,7 +942,8 @@ pair <CD>(<ARG/full/, <ARG/reg'/)</CD>, where <CD><ARG/reg'/</CD> is the
 global simplification of <CD><ARG/reg/</CD> with respect to
 <CD><ARG/sub/</CD>, except it curtails its search after
 considering <CD><ARG/n/</CD> candidates, and <CD><ARG/full/</CD> is
-<CD>true</CD> iff all <CD><ARG/n/</CD> candidates were considered.
+<CD>true</CD> iff all candidates were considered, and so
+<CD><ARG/reg'/</CD> is globally simplified.
 <CD>globallySimplifyTrace</CD> issues a series of tracing messages,
 explaining its operation.  Issues an error message if <CD><ARG/n/</CD>
 isn't at least <CD>1</CD>.</PP>
