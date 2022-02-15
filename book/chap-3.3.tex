@@ -521,12 +521,15 @@ string is $\%$, then $\alpha$ is $\%$.
 The three parts are proved in order, using induction on regular
 expressions.
 
-We will show the concatenation case of part~(3).  Suppose
-$\alpha,\beta\in\Reg$ and assume the inductive hypothesis: for all
-$a\in\Sym$, if $\alpha$ is weakly simplified and $L(\alpha)=\{a\}$,
-then $\alpha=a$, and for all $a\in\Sym$, if $\beta$ is weakly
-simplified and $L(\beta)=\{a\}$, then $\beta=a$.  Suppose $a\in\Sym$,
-and assume that $\alpha\beta$ is weakly simplified and
+For part~(3), suppose $a\in\Sym$. It will suffice to show that,
+for all $\alpha\in\Reg$, if $\alpha$ is weakly simplified and
+$L(\alpha)=\{a\}$, then $\alpha=a$.
+We will show the concatenation case of the induction.  Suppose
+$\alpha,\beta\in\Reg$ and assume the inductive hypothesis:
+if $\alpha$ is weakly simplified and $L(\alpha)=\{a\}$,
+then $\alpha=a$; and, if $\beta$ is weakly
+simplified and $L(\beta)=\{a\}$, then $\beta=a$.
+Assume that $\alpha\beta$ is weakly simplified and
 $L(\alpha\beta)=\{a\}$.  We must show that $\alpha\beta=a$.  Because
 $\alpha\beta$ is weakly simplified, so are $\alpha$ and $\beta$.
 
