@@ -127,7 +127,7 @@ Raises <CD>Empty</CD> if <CD><ARG/x/</CD> is empty.</PP>
 <VAL>allButLast<TY>str -> str</TY></VAL>
 <COMMENT>
 <PROTOTY>
-last x
+allButLast x
 </PROTOTY>
 <PP>returns all but the last element of <CD><ARG/x/</CD>.
 Raises <CD>Empty</CD> if <CD><ARG/x/</CD> is empty.</PP>
