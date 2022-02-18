@@ -1029,7 +1029,7 @@ For all $\alpha\in\Reg$:
 \begin{enumerate}[\quad(1)]
 \item $\weaklySimplify\,\alpha\approx\alpha$;
 
-\item $\alphabet(\weaklySimplify(\alpha))\sub\alphabet\,\alpha$;
+\item $\alphabet(\weaklySimplify\,\alpha)\sub\alphabet\,\alpha$;
 
 \item $\cc(\weaklySimplify\,\alpha)\leqcc\cc\,\alpha$;
 
@@ -1518,9 +1518,18 @@ $\simp$ is a well-founded relation on $\Reg$.
 \end{proposition}
 
 \begin{proof}
-Follows by Propositions~\ref{LTCCWellFounded}, \ref{LexWellFounded}
-and \ref{InverseImageWellFounded}, plus the fact that $<$ is
-well-founded on $\nats$ (Proposition~\ref{NonemptyLeastProp}).
+Define $f\in\Reg\fun \CC\times\nats\times\nats\times\nats$ by, for all
+$\alpha\in\Reg$,
+$f\,\alpha = (\cc\,\alpha,\mysize\,\alpha,
+\numConcats\,\alpha,\numSyms\,\alpha)$. Then
+${\ltcc} \lex {<} \lex {<} \lex {<}$ is a well-founded relation on
+$\CC\times\nats\times\nats\times\nats$, by
+Propositions~\ref{LTCCWellFounded} and \ref{LexWellFounded}, plus the
+fact that $<$ is well-founded on $\nats$
+(Proposition~\ref{NonemptyLeastProp}).  Hence
+$f^{-1}({\ltcc} \lex {<} \lex {<} \lex {<})$ is a well-founded
+relation on $\Reg$, by Proposition~\ref{InverseImageWellFounded}.
+Furthermore, this relation is equal to $\simp$, completing the proof.
 \end{proof}
 
 \begin{proposition}
