@@ -112,19 +112,19 @@ For all $q\in Q_M$ and $y\in S$,
 The ``only if'' (left-to-right) direction is by induction on $X$:
 we show that, for all $(q,y)\in X$, $q\in\Delta_M(P,\pre\,y)$.
 \begin{enumerate}[(1)]
-\item Suppose $p\in P$.  Then $p\in\Delta_M(P,\%)$.  But
-$\pre\,w=\%$, so that $p\in\Delta_M(P,\pre\,w)$.
+\item Suppose $p\in P$ (so that $(p,w)\in X$).  Then
+  $p\in\Delta_M(P,\%)$.  But $\pre\,w=\%$, so that
+  $p\in\Delta_M(P,\pre\,w)$.
 
 \item Suppose $q,r\in Q_M$, $x,y\in\Str$, $(q,xy)\in X$ and
-$(q,x,r)\in T_M$.  Assume the inductive hypothesis:
-$q\in\Delta_M(P,\pre(xy))$.
-Thus there is an $\lp\in\LP$
-such that $\pre(xy)$ is the label of $\lp$, $\lp$ is valid for $M$,
-the start state of $\lp$ is in $P$, and $q$ is the end state of $\lp$.
-Let $lp'\in\LP$ be the result of adding the step $q,x\Rightarrow r$ at
-the end of $\lp$.  Thus $\pre\,y$ is the label of $\lp'$, $\lp'$ is
-valid for $M$, the start state of $\lp'$ is in $P$, and $r$ is the end
-state of $\lp'$, showing that $r\in\Delta_M(P,\pre\,y)$.
+  $(q,x,r)\in T_M$.  Assume the inductive hypothesis:
+  $q\in\Delta_M(P,\pre(xy))$.  Thus there is an $\lp\in\LP$ such that
+  $\pre(xy)$ is the label of $\lp$, $\lp$ is valid for $M$, the start
+  state of $\lp$ is in $P$, and $q$ is the end state of $\lp$.  Let
+  $lp'\in\LP$ be the result of adding the step $q,x\Rightarrow r$ at
+  the end of $\lp$.  Thus $\pre\,y$ is the label of $\lp'$, $\lp'$ is
+  valid for $M$, the start state of $\lp'$ is in $P$, and $r$ is the
+  end state of $\lp'$, showing that $r\in\Delta_M(P,\pre\,y)$.
 \end{enumerate}
 
 For the `if'' (right-to-left) direction, we have that there is a
