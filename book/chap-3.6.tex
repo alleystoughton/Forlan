@@ -117,7 +117,7 @@ we show that, for all $(q,y)\in X$, $q\in\Delta_M(P,\pre\,y)$.
   $p\in\Delta_M(P,\pre\,w)$.
 
 \item Suppose $q,r\in Q_M$, $x,y\in\Str$, $(q,xy)\in X$ and
-  $(q,x,r)\in T_M$.  Assume the inductive hypothesis:
+  $(q,x,r)\in T_M$ (so that $(r, y)\in X$).  Assume the inductive hypothesis:
   $q\in\Delta_M(P,\pre(xy))$.  Thus there is an $\lp\in\LP$ such that
   $\pre(xy)$ is the label of $\lp$, $\lp$ is valid for $M$, the start
   state of $\lp$ is in $P$, and $q$ is the end state of $\lp$.  Let
@@ -130,15 +130,15 @@ we show that, for all $(q,y)\in X$, $q\in\Delta_M(P,\pre\,y)$.
 For the `if'' (right-to-left) direction, we have that there is a
 labeled path
 \begin{gather*}
-q_1\lparr{x_1}q_2\lparr{x_2}\cdots\,q_{n-1}\lparr{x_{n-1}}q_n ,
+q_1\lparr{x_1}q_2\lparr{x_2}\cdots\,q_{n}\lparr{x_{n}}q_{n+1} ,
 \end{gather*}
-that is valid for $M$ and where $\pre\,y=x_1x_2\cdots x_{n-1}$,
-$q_1\in P$ and $q_n=q$.  Since $q_1\in P$ and
-$w=(\pre\,y)y=x_1x_2\cdots x_{n-1}y$, we have that
-$(q_1, x_1x_2\cdots x_{n-1}y)=(q_1,w)\in X$, by (1).  But
-$(q_1,x_1,q_2)\in T_M$, and thus $(q_2, x_2\cdots x_{n-1}y)\in X$,
+that is valid for $M$ and where $\pre\,y=x_1x_2\cdots x_n$,
+$q_1\in P$ and $q_{n+1}=q$.  Since $q_1\in P$ and
+$w=(\pre\,y)y=x_1x_2\cdots x_ny$, we have that
+$(q_1, x_1x_2\cdots x_ny)=(q_1,w)\in X$, by (1).  But
+$(q_1,x_1,q_2)\in T_M$, and thus $(q_2, x_2\cdots x_ny)\in X$,
 by (2). Continuing on in this way (we could do this by mathematical
-induction), we finally get that $(q,y)=(q_n,y)\in X$.
+induction), we finally get that $(q,y)=(q_{n+1},y)\in X$.
 \end{proof}
 
 \begin{lemma}
