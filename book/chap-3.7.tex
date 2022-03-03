@@ -159,7 +159,8 @@ $\remRedun(U, V)$ proceeds as follows:
 In general, there are multiple---incompatible---ways of removing
 redundant transitions from an FA.  $\remRedun$ is defined so as to
 favor removing transitions that are larger in our total ordering on
-transitions.
+transitions (and so getting rid of transitions from a given state with
+longer strings).
 
 \begin{proposition}
 \label{RemRedunFA}
@@ -197,15 +198,16 @@ the finite automaton $N$ produced by the following process.
 \item $T_N=\emptyset$.
 \end{itemize}
 
-\item And, if $s_M$ is useful in $M$, then $N$ is defined by:
+\item And, if $s_M$ is useful in $M$, then $N$ is
+$\remRedun_{N'}(\emptyset, T_{N'})$, where $N'$ is defined by
 \begin{itemize}
-\item $Q_N=\setof{q\in Q_M}{q\eqtxtl{is useful in $M$}}$;
+\item $Q_{N'}=\setof{q\in Q_M}{q\eqtxtl{is useful in $M$}}$;
 
-\item $s_N = s_M$;
+\item $s_{N'} = s_M$;
 
-\item $A_N=A_M\cap Q_N=\setof{q\in A_M}{q\in Q_N}$; and
+\item $A_{N'}=A_M\cap Q_{N'}=\setof{q\in A_M}{q\in Q_{N'}}$; and
 
-\item $T_N=\remRedun(\emptyset, \setof{(q, x, r)\in T_M}{q,r\in Q_N})$.
+\item $T_{N'}=\setof{(q, x, r)\in T_M}{q,r\in Q_{N'}}$.
 \end{itemize}
 \end{itemize}
 
