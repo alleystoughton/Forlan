@@ -292,7 +292,6 @@ fun accepted fa =
       let val procStr   = processStr fa
           val start     = startState fa
           val accepting = acceptingStates fa
-          val alpha     = alphabet fa
 
           fun accepted x =
                 Set.isNonEmpty(SymSet.inter(procStr(Set.sing start, x),

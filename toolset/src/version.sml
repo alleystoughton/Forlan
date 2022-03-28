@@ -1,6 +1,6 @@
 (******************************** version.sml ********************************)
 
-(* Copyright (C) 2021 Alley Stoughton
+(* Copyright (C) 2022 Alley Stoughton
 
    The file is part of the Forlan toolset for experimenting with
    formal languages.  See the file COPYING.txt for copying and
