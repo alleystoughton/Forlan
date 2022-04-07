@@ -32,8 +32,9 @@ signature EFA =
     val accepted : efa -> Str.str -> bool
     val emptyClose : efa -> Sym.sym Set.set -> Sym.sym Set.set
     val emptyCloseBackwards : efa -> Sym.sym Set.set -> Sym.sym Set.set
-    val reachify : efa -> efa
-    val reachified : efa -> bool
+    val reachableStates : efa -> Sym.sym Set.set
+    val liveStates : efa -> Sym.sym Set.set
+    val deadStates : efa -> Sym.sym Set.set
     val renameStates : efa * SymRel.sym_rel -> efa
     val renameStatesCanonically : efa -> efa
     val isomorphism : efa * efa * SymRel.sym_rel -> bool

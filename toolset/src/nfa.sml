@@ -82,9 +82,11 @@ val processStr = FA.processStr
 
 val accepted = FA.accepted
 
-val reachify = FA.reachify
+val reachableStates = FA.reachableStates
 
-val reachified = FA.reachified
+val liveStates = FA.liveStates
+
+val deadStates = FA.deadStates
 
 val renameStates = FA.renameStates
 

@@ -32,8 +32,9 @@ signature NFA =
     val transitionFunBackwards : nfa -> Sym.sym * Str.str -> Sym.sym Set.set
     val processStr : nfa -> Sym.sym Set.set * Str.str -> Sym.sym Set.set
     val accepted : nfa -> Str.str -> bool
-    val reachify : nfa -> nfa
-    val reachified : nfa -> bool
+    val reachableStates : nfa -> Sym.sym Set.set
+    val liveStates : nfa -> Sym.sym Set.set
+    val deadStates : nfa -> Sym.sym Set.set
     val renameStates : nfa * SymRel.sym_rel -> nfa
     val renameStatesCanonically : nfa -> nfa
     val isomorphism : nfa * nfa * SymRel.sym_rel -> bool

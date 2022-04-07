@@ -36,10 +36,12 @@ signature FA =
     val transitionFunBackwards : fa -> Sym.sym * Str.str -> Sym.sym Set.set
     val processStr : fa -> Sym.sym Set.set * Str.str -> Sym.sym Set.set
     val accepted : fa -> Str.str -> bool
+    val reachableStates : fa -> Sym.sym Set.set
+    val liveStates : fa -> Sym.sym Set.set
+    val deadStates : fa -> Sym.sym Set.set
+    val reachified : fa -> bool
     val emptyClose : fa -> Sym.sym Set.set -> Sym.sym Set.set
     val emptyCloseBackwards : fa -> Sym.sym Set.set -> Sym.sym Set.set
-    val reachify : fa -> fa
-    val reachified : fa -> bool
     val renameStates : fa * SymRel.sym_rel -> fa
     val renameStatesCanonically : fa -> fa
     val isomorphism : fa * fa * SymRel.sym_rel -> bool

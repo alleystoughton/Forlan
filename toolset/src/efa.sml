@@ -1,6 +1,6 @@
 (********************************** efa.sml **********************************)
 
-(* Copyright (C) 2001-2012 Alley Stoughton
+(* Copyright (C) 2001-2022 Alley Stoughton
 
    The file is part of the Forlan toolset for experimenting with
    formal languages.  See the file COPYING.txt for copying and
@@ -82,9 +82,11 @@ val emptyClose = FA.emptyClose
 
 val emptyCloseBackwards = FA.emptyCloseBackwards
 
-val reachify = FA.reachify
+val reachableStates = FA.reachableStates
 
-val reachified = FA.reachified
+val liveStates = FA.liveStates
+
+val deadStates = FA.deadStates
 
 val renameStates = FA.renameStates
 

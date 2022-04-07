@@ -34,6 +34,10 @@ Email: <a href="mailto:alley.stoughton@icloud.com">alley.stoughton@icloud.com</a
 <h2>News</h2>
 
 <dl>
+<dt>Version 4.14</dt>
+<dd>Added functions for computing the reachable, live and dead states
+of finite automata. Small revisions to book.</dd>
+
 <dt>Version 4.13</dt>
 <dd>Continuing revision of book, including filling in gaps
 in Section 3.3, and making a rough version of a complete index.</dd>

@@ -1,6 +1,6 @@
 (*********************************** fa.sml **********************************)
 
-(* Copyright (C) 2001-2012 Alley Stoughton
+(* Copyright (C) 2001-2022 Alley Stoughton
 
    The file is part of the Forlan toolset for experimenting with
    formal languages.  See the file COPYING.txt for copying and
@@ -417,7 +417,18 @@ fun reachify fa =
           trans     = trans'}
       end
 
-fun reachified fa = equal(reachify fa, fa)
+fun reachableStates fa =
+      let val start = startState fa
+      in reachableFrom fa (Set.sing start) end
+
+fun liveStates fa =
+      let val accepting = acceptingStates fa
+      in reachableFromBackwards fa accepting end
+
+fun deadStates fa =
+      SymSet.minus(states fa, liveStates fa)
+
+fun reachified fa = SymSet.equal(reachableStates fa, states fa)
 
 fun validStatesRenaming(fa, rel) =
       let val stats = states fa

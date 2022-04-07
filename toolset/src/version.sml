@@ -9,7 +9,7 @@
 structure Version =
 struct
 
-fun getVersion() = "4.13"
+fun getVersion() = "4.14"
 
 fun getSMLNJVersion() = "110.99.2"
 

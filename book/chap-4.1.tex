@@ -261,9 +261,9 @@ Let's see why the parse tree $\Asf(\Bsf,\Asf(\%),\Bsf(\zerosf))$ is
 valid for $G$:
 \begin{itemize}
 \item Since $\Asf\fun\Bsf\Asf\Bsf\in P_G$ and the concatenation
-of the root labels of the sub-trees
+of the root labels of the children
 $\Bsf$, $\Asf(\%)$ and $\Bsf(\zerosf)$ is $\Bsf\Asf\Bsf$,
-the overall tree will be valid for $G$ if these sub-trees are valid
+the overall tree will be valid for $G$ if these children are valid
 for $G$.
 
 \item The parse tree $\Bsf$ is valid for $G$
@@ -272,12 +272,12 @@ since $\Bsf\in Q_G$.
 \item Since $\Asf\fun\%\in P_G$, the parse tree
 $\Asf(\%)$ is valid for $G$.
 
-\item Since $\Bsf\fun\zerosf\in P_G$ and the root label of the sub-tree
+\item Since $\Bsf\fun\zerosf\in P_G$ and the root label of the child
 $\zerosf$ is $\zerosf$, the parse tree
-$\Bsf(\zerosf)$ will be valid for $G$ if the sub-tree $\zerosf$
+$\Bsf(\zerosf)$ will be valid for $G$ if the child $\zerosf$
 is valid for $G$.
 
-\item The sub-tree $\zerosf$ is valid for $G$ since
+\item The child $\zerosf$ is valid for $G$ since
   $\zerosf\in\alphabet\,G$.
 \end{itemize}
 Thus, we have that

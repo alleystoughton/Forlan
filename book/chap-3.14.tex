@@ -98,7 +98,7 @@ Suppose $L$ is a regular language.  Thus there is a NFA $M$ such that
 $L(M)=L$.  Let $n=|Q_M|$.  Since $Q_M\neq\emptyset$, we have
 $n\geq 1$, so that $n\in\nats-\{0\}$.  Suppose $z\in\Str$, $z\in L$
 and $|z|\geq n$.  Let $m=|z|$.  Thus $1\leq n\leq|z|=m$.  Since
-$z\in L=L(M)$, there is a valid labeled path for $M$
+$z\in L=L(M)$ and $M$ is an NFA, there is a valid labeled path for $M$
 \begin{gather*}
 q_1\lparr{a_1}q_2\lparr{a_2}\cdots\,q_m\lparr{a_m}q_{m+1} ,
 \end{gather*}

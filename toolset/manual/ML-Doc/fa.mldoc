@@ -1,6 +1,6 @@
 <!-- fa.mldoc -->
 
-<!-- Copyright (C) 2001-2012 Alley Stoughton
+<!-- Copyright (C) 2001-2022 Alley Stoughton
 
      The file is part of the Forlan toolset for experimenting with
      formal languages.  See the file COPYING.txt for copying and
@@ -312,6 +312,46 @@ accepted <ARG/fa/ <ARG/x/
 </SPEC>
 
 <SPEC>
+<VAL>reachableStates<TY>fa -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+reachableStates <ARG/fa/
+</PROTOTY>
+<PP>returns the set of all reachable states of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>liveStates<TY>fa -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+liveStates <ARG/fa/
+</PROTOTY>
+<PP>returns the set of all live states of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>deadStates<TY>fa -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+deadStates <ARG/fa/
+</PROTOTY>
+<PP>returns the set of all dead states of <CD><ARG/fa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>reachified<TY>fa -> bool</TY></VAL>
+<COMMENT>
+<PROTOTY>
+reachify <ARG/fa/
+</PROTOTY>
+<PP>test whether all the states of <CD><ARG/fa/</CD> are reachable.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
 <VAL>emptyClose<TY>fa -> Sym.sym Set.set -> Sym.sym Set.set</TY></VAL>
 <COMMENT>
 <PROTOTY>
@@ -332,26 +372,6 @@ emptyCloseBackwards <ARG/fa/ <ARG/qs/
 <PP>returns the backwards empty-closure of <CD><ARG/qs/</CD>
 for <CD><ARG/fa/</CD>.  Issues an error message if <CD><ARG/qs/</CD>
 has an element that's not a state of <CD><ARG/fa/</CD>.</PP>
-</COMMENT>
-</SPEC>
-
-<SPEC>
-<VAL>reachify<TY>fa -> fa</TY></VAL>
-<COMMENT>
-<PROTOTY>
-reachify <ARG/fa/
-</PROTOTY>
-<PP>reachifies <CD><ARG/fa/</CD>.</PP>
-</COMMENT>
-</SPEC>
-
-<SPEC>
-<VAL>reachified<TY>fa -> bool</TY></VAL>
-<COMMENT>
-<PROTOTY>
-reachified <ARG/fa/
-</PROTOTY>
-<PP>tests whether <CD><ARG/fa/</CD> is reachified.</PP>
 </COMMENT>
 </SPEC>
 

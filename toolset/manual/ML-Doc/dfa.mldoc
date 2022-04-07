@@ -1,6 +1,6 @@
 <!-- dfa.mldoc -->
 
-<!-- Copyright (C) 2001-2018 Alley Stoughton
+<!-- Copyright (C) 2001-2022 Alley Stoughton
 
      The file is part of the Forlan toolset for experimenting with
      formal languages.  See the file COPYING.txt for copying and
@@ -320,24 +320,32 @@ accepted <ARG/dfa/ <ARG/x/
 </SPEC>
 
 <SPEC>
-<VAL>reachify<TY>dfa -> dfa</TY></VAL>
+<VAL>reachableStates<TY>dfa -> Sym.sym Set.set</TY></VAL>
 <COMMENT>
 <PROTOTY>
-reachify <ARG/dfa/
+reachableStates <ARG/dfa/
 </PROTOTY>
-<PP>reachifies <CD><ARG/dfa/</CD>. (Inherited
-from <CD><STRREF TOPID/FA/</CD>.)</PP>
+<PP>returns the set of all reachable states of <CD><ARG/dfa/</CD>.</PP>
 </COMMENT>
 </SPEC>
 
 <SPEC>
-<VAL>reachified<TY>dfa -> bool</TY></VAL>
+<VAL>liveStates<TY>dfa -> Sym.sym Set.set</TY></VAL>
 <COMMENT>
 <PROTOTY>
-reachified <ARG/dfa/
+liveStates <ARG/dfa/
 </PROTOTY>
-<PP>tests whether <CD><ARG/dfa/</CD> is reachified.
-(Inherited from <CD><STRREF TOPID/FA/</CD>.)</PP>
+<PP>returns the set of all live states of <CD><ARG/dfa/</CD>.</PP>
+</COMMENT>
+</SPEC>
+
+<SPEC>
+<VAL>deadStates<TY>dfa -> Sym.sym Set.set</TY></VAL>
+<COMMENT>
+<PROTOTY>
+deadStates <ARG/dfa/
+</PROTOTY>
+<PP>returns the set of all dead states of <CD><ARG/dfa/</CD>.</PP>
 </COMMENT>
 </SPEC>
 

@@ -34,8 +34,9 @@ signature DFA =
     val transitionFunBackwards : dfa -> Sym.sym * Str.str -> Sym.sym Set.set
     val processStr : dfa -> Sym.sym Set.set * Str.str -> Sym.sym Set.set
     val accepted : dfa -> Str.str -> bool
-    val reachify : dfa -> dfa
-    val reachified : dfa -> bool
+    val reachableStates : dfa -> Sym.sym Set.set
+    val liveStates : dfa -> Sym.sym Set.set
+    val deadStates : dfa -> Sym.sym Set.set
     val renameStates : dfa * SymRel.sym_rel -> dfa
     val renameStatesCanonically : dfa -> dfa
     val isomorphism : dfa * dfa * SymRel.sym_rel -> bool

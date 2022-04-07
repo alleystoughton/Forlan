@@ -22,8 +22,8 @@ In the following two subsections, we will work with a mostly
 unspecified alphabet $\Sigma$ representing some character set.  We
 assume that the symbols $\mathsf{0}$--$\mathsf{9}$,
 $\mathsf{a}$--$\mathsf{z}$, $\mathsf{A}$--$\mathsf{Z}$, $\spacesym$
-and $\newlinesym$ are elements of $\Sigma$.  A \emph{line} is a string
-consisting of an element of $(\Sigma-\{\newlinesym\})^*$; and, a
+and $\newlinesym$ are elements of $\Sigma$.  A \emph{line} is
+an element of $(\Sigma-\{\newlinesym\})^*$; and, a
 \emph{file} consists of the concatenation of some number of lines,
 separated by occurrences of $\newlinesym$.  E.g.,
 $\mathsf{0a\newlinesym\newlinesym 6}$ is a file with three lines
@@ -80,7 +80,8 @@ uses regular expressions.  E.g., this is the approach taken by the
 lexical analyzer generator Lex.
 
 A lexical analyzer specification consists of a list of regular
-expressions $\alpha_1,\alpha_2,\,\ldots,\alpha_n$, together with a
+expressions $\alpha_1,\alpha_2,\,\ldots,\alpha_n$ whose alphabets
+are subsets of $\Sigma$, together with a
 corresponding list of code fragments (in some programming language)
 $\code_1,\code_2,\,\ldots,\code_n$ that process elements of
 $\Sigma^*$.
@@ -148,8 +149,8 @@ that meets a given specification.  More sophisticated methods are
 described in compilers courses.
 
 First, we convert the regular expressions $\alpha_1,\,\ldots,\alpha_n$
-into DFAs $M_1,\,\ldots,M_n$.  Next we determine which of the states
-of the DFAs are dead/live.
+into DFAs $M_1,\,\ldots,M_n$ with alphabet $\Sigma$.  Next we
+determine which of the states of the DFAs are dead/live.
 
 Given its remaining input $x$, the lexical analyzer consumes the next
 token from $x$ and supplies the token to the appropriate code, as

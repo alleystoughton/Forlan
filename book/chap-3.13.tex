@@ -79,7 +79,11 @@ Finally, the algorithm checks that, for all $(q,r)\in X$,
 q\in A_{M'}\myiff r\in A_{N'} .
 \end{gather*}
 If this is true, it says that the machines are equivalent; otherwise
-it says they are not equivalent.
+it says they are not equivalent.  If we only want to test whether
+$L(M)\sub L(N)$, we test whether
+\begin{gather*}
+q\in A_{M'} \mathrel{\eqtxtn{implies}} r\in A_{N'} .
+\end{gather*}
 
 We can easily prove the correctness of our algorithm:
 \begin{itemize}
