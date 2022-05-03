@@ -225,8 +225,8 @@ $\overline{\progapp(\pr,\progstr(w))}$.
   using it to evaluate $\progapp(\pr,\progstr(w))$.  If the
   interpreter returns $\overline{\progconst(\progtrue)}$, then
   $\mathit{acc}$ returns $\progconst(\progtrue)$.  Otherwise, the
-  interpreter returns some other value, and $\mathit{acc}$ returns
-  $\progconst(\progfalse)$.
+  interpreter returns some other value (maybe an error indication),
+  and $\mathit{acc}$ returns $\progconst(\progfalse)$.
 
 \item Otherwise, $\halts$ returns $\progconst(\progfalse)$ (so we know that
   $\progapp(\pr,\progstr(w))$ does not halt), in which case
