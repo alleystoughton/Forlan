@@ -34,6 +34,12 @@ Email: <a href="mailto:alley.stoughton@icloud.com">alley.stoughton@icloud.com</a
 <h2>News</h2>
 
 <dl>
+<dt>Version 4.15</dt>
+<dd>The Forlan function for simplifying finite automata now favors
+removing transitions whose labels are longer, bringing it in agreement
+with the function for simplifying grammars.  Small revisions to
+book.</dd>
+
 <dt>Version 4.14</dt>
 <dd>Added functions for computing the reachable, live and dead states
 of finite automata. Small revisions to book.</dd>

@@ -150,17 +150,20 @@ $\remRedun(U, V)$ proceeds as follows:
 \begin{itemize}
 \item If $V=\emptyset$, then it returns $U$.
 
-\item Otherwise, let $v$ be the greatest element of $V$, and $V' = V -
-  \{v\}$.  If $v$ is implicit in $M/(U\cup V')$, then $\remRedun$
+\item Otherwise, let $v$ be the greatest element of $\setof{(q,x,r)\in
+    V}{\eqtxtr{there are no} q',r'\in\Sym \eqtxt{and} y\in\Str \eqtxt{such
+      that} (q',y,r')\in V \eqtxt{and} |y| > |x|}$, and $V' = V - \{v\}$.
+  If $v$ is implicit in $M/(U\cup V')$, then $\remRedun$
   returns the result of evaluating $\remRedun(U, V')$.  Otherwise, it
   returns the result of evaluating $\remRedun(U \cup \{v\}, V')$.
 \end{itemize}
 
 In general, there are multiple---incompatible---ways of removing
 redundant transitions from an FA.  $\remRedun$ is defined so as to
-favor removing transitions that are larger in our total ordering on
-transitions (and so getting rid of transitions from a given state with
-longer strings).
+favor removing transitions whose labels are longer; and
+among transitions whose labels have equal length, to favor
+removing transitions that are larger in our total ordering on
+transitions.
 
 \begin{proposition}
 \label{RemRedunFA}

@@ -32,11 +32,11 @@ $L_1\cup L_2$, $L_1L_2$, $L^*$, $L_1\cap L_2$ and $L_1-L_2$.
 \end{theorem}
 
 \begin{proof}
-Let's consider the concatenation case as an example.  Since $L_1$
-and $L_2$ are recursive languages, there are string predicate programs
-$\pr_1$ and $pr_2$ that test whether strings are in $L_1$ and $L_2$,
-respectively.
-We write a program $\pr$ with form
+Let's consider the concatenation case as an example.  (The closure
+case is similar, but using Proposition~\ref{LanExponNEChar2}.)  Since
+$L_1$ and $L_2$ are recursive languages, there are string predicate
+programs $\pr_1$ and $pr_2$ that test whether strings are in $L_1$ and
+$L_2$, respectively.  We write a program $\pr$ with form
 \begin{gather*}
 \mtab{\proglam(\TS\mathsf{w},\NL
 \progletSimp(\TS\mathsf{f1},\NL
@@ -95,9 +95,10 @@ are $L_1\cup L_2$, $L_1L_2$, $L^*$ and $L_1\cap L_2$.
 \end{theorem}
 
 \begin{proof}
-We consider the concatenation case as an example.  Since $L_1$ and
-$L_2$ are recursively enumerable, there are closed programs $\pr_1$ and
-$\pr_2$ such that, for all $w\in\Str$, $w\in L_1$ iff
+We consider the concatenation case as an example.  (The closure case
+is similar, but using Proposition~\ref{LanExponNEChar2}.)  Since $L_1$
+and $L_2$ are recursively enumerable, there are closed programs
+$\pr_1$ and $\pr_2$ such that, for all $w\in\Str$, $w\in L_1$ iff
 $\eval(\progapp(\pr_1,\progstr(w)))=\norm(\progconst(\progtrue))$, and
 for all $w\in\Str$, $w\in L_2$ iff
 $\eval(\progapp(\pr_2,\progstr(w)))=\norm(\progconst(\progtrue))$.

@@ -769,10 +769,19 @@ fun simplify fa =
                         else remRedun
                              (TranSet.union(trans, Set.sing tran), trans')
 
-                  (* favor keeping earlier transitions *)
+                  (* favor keeping transitions with shorter labels; next,
+                     favor earlier transitions *)
+
+                  fun altCompare(tran as (_, x, _), tran' as (_, y, _)) =
+                        case Int.compare(length x, length y) of
+                             LESS    => LESS
+                           | EQUAL   => Tran.compare(tran, tran')
+                           | GREATER => GREATER
 
                   fun removeRedundant trans =
-                        remRedun(Set.empty, rev(Set.toList trans'))
+                        remRedun
+                        (Set.empty,
+                         rev(Sort.sort (false, altCompare) (Set.toList trans)))
               in {stats     = stats',
                   start     = start',
                   accepting = accepting',

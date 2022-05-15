@@ -63,6 +63,9 @@ $\union\in\Gram\times\Gram\fun\Gram$.
 \index{grammar!union@$\union$}%
 \index{grammar!union}%
 \index{union!grammar}%
+And from $\union$, we define the generalized union,
+$\genUnion\in\List\,\Gram\fun\Gram$, as usual (it returns
+$\emptySet$ when the list is empty).
 
 We do something similar when defining the other closure
 operations.  In what follows, though, we'll ignore this issue,
@@ -79,6 +82,9 @@ This gives us a function $\concat\in\Gram\times\Gram\fun\Gram$.
 \index{grammar!concat@$\concat$}%
 \index{grammar!concatenation}%
 \index{concatenation!grammar}%
+And from $\concat$, we define the generalized concatentation,
+$\genConcat\in\List\,\Gram\fun\Gram$, as usual (it returns
+$\emptyStr$ when the list is empty).
 
 Suppose $G$ is a grammar.  We can define a grammar $H$ such that
 $L(H)=L(G)^*$ by adding to the variables and productions of $G$ a new

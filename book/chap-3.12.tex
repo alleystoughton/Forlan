@@ -134,6 +134,27 @@ For all $M_1,M_2\in\FA$:
 For all $M_1,M_2\in\EFA$, $\union(M_1,M_2)\in\EFA$.
 \end{proposition}
 
+We also have the generalized version of union, $\genUnion\in\List\,\FA\fun\FA$,
+\index{finite automaton!generalized union}
+\index{finite automaton!genUnion@$\genUnion$}
+defined by:
+\begin{align*}
+\genUnion\,[\,] &= \emptySet , \\
+\genUnion\,[M] &= M , \eqtxt{and} \\
+\genUnion([M] \myconcat \bar{N}) &=
+\union(M, \genUnion\,\bar{N}) , \eqtxt{if} \bar{N}\neq [\,] .
+\end{align*}
+Then:
+\begin{itemize}
+\item $L(\genUnion [M_1,\ldots,M_n]) = L(M_1)\cup\cdots\cup L(M_n)$
+  (where the right-hand side is $\emptyset$, when $n = 0$); and
+\item
+  $\alphabet(\genUnion [M_1,\ldots,M_n]) =
+  \alphabet(M_1)\cup\cdots\cup \alphabet(M_n)$ (where the right-hand
+  side is $\emptyset$, when $n = 0$).
+\end{itemize}
+If $\bar{M}\in\List\,\EFA$, then $\genUnion\,\bar{M}\in\EFA$.
+
 \index{language!concatenation}%
 \index{finite automaton!concatenation}%
 \index{finite automaton!concat@$\concat$}%
@@ -190,6 +211,27 @@ For all $M_1,M_2\in\FA$:
 \begin{proposition}
 For all $M_1,M_2\in\EFA$, $\concat(M_1,M_2)\in\EFA$.
 \end{proposition}
+
+We also have the generalized version of concatenation,
+$\genConcat\in\List\,\FA\fun\FA$,
+\index{finite automaton!generalized concatenation}
+\index{finite automaton!genConcat@$\genConcat$} defined by:
+\begin{align*}
+\genConcat\,[\,] &= \emptyStr , \\
+\genConcat\,[M] &= M , \eqtxt{and} \\
+\genConcat([M] \myconcat \bar{N}) &=
+\concat(M, \genConcat\,\bar{N}) , \eqtxt{if} \bar{N}\neq [\,] .
+\end{align*}
+Then:
+\begin{itemize}
+\item $L(\genConcat [M_1,\ldots,M_n]) = L(M_1)\cdots L(M_n)$ (where
+  the right-hand side is $\{\%\}$, when $n = 0$); and
+\item
+  $\alphabet(\genConcat [M_1,\ldots,M_n]) =
+  \alphabet(M_1)\cup\cdots\cup \alphabet(M_n)$ (where the right-hand
+  side is $\emptyset$, when $n = 0$).
+\end{itemize}
+If $\bar{M}\in\List\,\EFA$, then $\genConcat\,\bar{M}\in\EFA$.
 
 \index{language!closure}%
 \index{finite automaton!closure}%
@@ -1048,6 +1090,25 @@ For all $M_1,M_2\in\DFA$:
 \item $\alphabet(\inter(M_1,M_2)) = \alphabet\,M_1\cap\alphabet\,M_2$.
 \end{enumerate}
 \end{proposition}
+
+We also have the generalized version of intersection,
+$\genInter\in(\List\,\FA - \{[]\}\fun\FA$,
+\index{empty string finite automaton!generalized intersection}
+\index{empty string finite automaton!genInter@$\genInter$} defined by:
+\begin{align*}
+\genInter\,[M] &= M , \eqtxt{and} \\
+\genInter([M] \myconcat \bar{N}) &=
+\inter(M, \genInter\,\bar{N}), \eqtxt{if} \bar{N}\neq [\,].
+\end{align*}
+Then:
+\begin{itemize}
+\item $L(\genInter [M_1,\ldots,M_n]) = L(M_1)\cap\cdots\cap L(M_n)$;
+\item
+  $\alphabet(\genInter [M_1,\ldots,M_n]) =
+  \alphabet(M_1)\cup\cdots\cup \alphabet(M_n)$.
+\end{itemize}
+If $\bar{M}$ is a nonempty list of NFAs (resp., DFAs), then
+$\genInter\,\bar{M}$ is an NFA (resp., DFA).
 
 \index{complementation!deterministic finite automaton}%
 \index{deterministic finite automaton!complementation}%

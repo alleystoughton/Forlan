@@ -58,9 +58,11 @@ plus the following quantifiers and connectives:
 \item $\textbf{Not}\; P$ ($P$ does not hold; negation). The most typical
 \index{negation}%
 \index{logic!negation}%
+\index{logical contradiction}%
+\index{logic!contradiction}%
   way to prove such a formula is to show that, if we add $P$ to our
-  current assumptions, we can prove a contradiction---something obviously
-  false.
+  current assumptions, we can prove a
+  \emph{contradiction}---something obviously false.
 \end{itemize}
 
 In formulas involving the connectives \textbf{not}, \textbf{and} and
@@ -71,8 +73,7 @@ equivalent to $P \myand (Q \myand R)$, we don't need
 to use parentheses when combining multiple occurrences of
 \textbf{and}.  The same is true for \textbf{or}.
 When we write $P \myiffbf Q$ (``if and only if''), this means that
-$(P \myimplies Q) \myand (Q \myimplies P)$.  $P \myimplies Q$
-is equivalent to $\textbf{not}\;P \myor Q$.
+$(P \myimplies Q) \myand (Q \myimplies P)$.
 
 Universal and existential quantification have lower precedence
 than the connectives, and extend as far as possible. E.g.,
@@ -181,7 +182,11 @@ Finally, when proving $P$ using \emph{proof by contradiction}, we
 \index{logic!proof by contradiction}%
 temporarily add $\textbf{not}\;P$ to our assumptions and then try to
 derive a contradiction (i.e., prove something that's obviously
-false). If we succeed, then $P$ follows from our original assumptions.
+false). As explained above, this lets us conclude
+$\textbf{not}(\textbf{not}\;P)$, which is equivalent to $P$.
+If we prove $\textbf{not}\;P$ by assuming $P$ and obtaining
+a contradiction, we also consider this an instance of proof
+by contradiction.
 
 We write
 \begin{displaymath}

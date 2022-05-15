@@ -128,6 +128,28 @@ By mathematical induction on $n$.
 For example, we have that $\{\mathsf{01}\}^4=\{(\mathsf{01})^4\}=
 \{\mathsf{01010101}\}$.
 
+If we know that $w\in L^n$, it's not necessarily the case that
+$|w|\geq n$, because $L$ could include $\%$. But we have:
+
+\begin{proposition}
+\label{LanNEExponProp1}
+For all $n\in\nats$, for all $w\in (L-\{\%\})^n$, $|w| \geq n$.
+\end{proposition}
+
+\begin{proof}
+By mathematical induction.
+\end{proof}
+
+\begin{proposition}
+\label{LanNEExponProp2}
+For all $n\in\nats$, for all $w\in L^n$, there is an $m\in\nats$ such
+that $m\leq n$ and $w\in (L-\{\%\})^m$.
+\end{proposition}
+
+\begin{proof}
+By mathematical induction.
+\end{proof}
+
 Now we consider a language operation that is named after
 Stephen Cole Kleene, one of the founders of formal language theory.
 \index{closure!language}%
@@ -158,6 +180,37 @@ For example,
    \{a,ba\}\cup
    \{aa,aba,baa,baba\}\cup\cdots}
 \end{align*}
+
+We can understand $L^*$ in terms of powers of $L - \{\%\}$:
+
+\begin{proposition}
+\label{LanExponNEChar1}
+For all $w\in\Str$, $w\in L^*$ iff there is an $n\in\nats$ such that
+$w\in (L-\{\%\})^n$.
+\end{proposition}
+
+\begin{proof}
+Suppose $w\in\Str$.
+\begin{itemize}
+\item Suppose $w\in L^*$. Then $w\in L^m$ for some $m\in\nats$. By
+  Proposition~\ref{LanNEExponProp2}, it follows that $w\in (L-\{\%\})^n$
+  for some $n\in\nats$ such that $n\leq m$.
+
+\item Suppose $w\in (L-\{\%\})^n$ for some $n\in\nats$. We can show by
+  mathematical induction on $m$ that, for all $m\in\nats$,
+  $(L-\{\%\})^m\sub L^m$.  Thus $w\in L^n\sub L^*$.
+\end{itemize}
+\end{proof}
+
+\begin{proposition}
+\label{LanExponNEChar2}
+For all $w\in\Str$, $w\in L^*$ iff there is an $n\in\nats$ such that
+$n\leq |w|$ and $w\in (L-\{\%\})^n$.
+\end{proposition}
+
+\begin{proof}
+Follows by Propositions~\ref{LanExponNEChar1} and \ref{LanNEExponProp1}.
+\end{proof}
 
 If $L$ is a language, then $L\sub\Sigma^*$ for some alphabet $\Sigma$,
 and thus $L^*$ is also a subset of $\Sigma^*$---showing that $L^*$

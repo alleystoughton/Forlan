@@ -869,14 +869,14 @@ fun simplify gram =
                         else remRedun
                              (ProdSet.union(prods, Set.sing prod), prods')
 
+                  (* favor keeping productions with shorter right-hand
+                     sides; next, favor earlier productions *)
+
                   fun altCompare(prod as (_, x), prod' as (_, y)) =
                         case Int.compare(length x, length y) of
                              LESS    => LESS
                            | EQUAL   => Prod.compare(prod, prod')
                            | GREATER => GREATER
-
-                  (* favor keeping productions with shorter right-hand
-                     sides; next, favor earlier productions *)
 
                   fun removeRedundant prods =
                         remRedun
