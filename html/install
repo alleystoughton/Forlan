@@ -17,3 +17,4 @@ rm -f $indextmpfile $oldertmpfile
 cp style.css $html
 mv index.html $html
 mv older-news.html $html
+cp forlan.bib $html

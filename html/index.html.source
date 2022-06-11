@@ -26,6 +26,9 @@ Jersey (SML/NJ) implementation of Standard ML (SML).  It's used
 interactively, and users are able to extend Forlan by defining SML
 functions.</p>
 
+<p>When citing the book or project, you can use these
+<a href="forlan.bib">BibTeX entries</a>.
+
 <h2>Feedback Request</h2>
 
 <p>Feedback concerning the Forlan Project is very welcome.
