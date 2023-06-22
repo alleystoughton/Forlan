@@ -722,10 +722,10 @@ local
            | Sym a              => hasSym(a, reg')
            | Closure reg1       =>
                (case reg' of
-                     EmptyStr            => false  (* ass *)
-                   | EmptySet            => false
-                   | Sym _               => false
-                   | Closure _           => obviSub(reg1, reg')
+                     EmptyStr             => false  (* ass *)
+                   | EmptySet             => false
+                   | Sym _                => false
+                   | Closure _            => obviSub(reg1, reg')
                    | Concat(reg'1, reg'2) =>  (* loss *)
                        hasEmp reg'1 andalso obviSub(reg, reg'2) orelse
                        hasEmp reg'2 andalso obviSub(reg, reg'1)
