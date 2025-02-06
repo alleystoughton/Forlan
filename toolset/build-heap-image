@@ -6,7 +6,7 @@
 # newer than the BASE.mldoc files
 
 forlan_version=$(cat ../version.txt)
-smlnj_version=$(sml < /dev/null | grep 'Standard ML of New Jersey' | sed -e 's/Standard ML of New Jersey (64-bit) v//' -e 's/ \[built.*//')
+smlnj_version=$(sml < /dev/null | grep 'Standard ML of New Jersey' | sed -e 's/Standard ML of New Jersey \[Version //' -e 's/;.*//')
 
 echo "Building Heap Image for Forlan Version $version (based on SML/NJ Version $sml_version)"
 
